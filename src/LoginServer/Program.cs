@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Shared.Util;
 
 namespace Aura.LoginServer
 {
@@ -12,6 +13,11 @@ namespace Aura.LoginServer
 	{
 		static void Main(string[] args)
 		{
+			var config = new Conf();
+			config.Require("../../system/conf/login.conf");
+			config.Include("../../user/conf/login.conf");
+
+			Console.ReadLine();
 		}
 	}
 }
