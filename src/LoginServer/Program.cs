@@ -17,6 +17,20 @@ namespace Aura.LoginServer
 			config.Require("../../system/conf/login.conf");
 			config.Include("../../user/conf/login.conf");
 
+			Log.Archive = "../../log/archive/";
+			Log.LogFile = "../../log/login.txt";
+			Log.Info("test");
+			Log.Error("test");
+			try
+			{
+				var x = new int[10];
+				var i = x[11];
+			}
+			catch (Exception ex)
+			{
+				Log.Exception(ex, "Failed to do foo");
+			}
+
 			Console.ReadLine();
 		}
 	}
