@@ -8,7 +8,7 @@
     <ProjectGuid>{3C2D0134-1F31-45FC-9622-CDD28F17BCCE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aura.LoginServer</RootNamespace>
+    <RootNamespace>Aura.Login</RootNamespace>
     <AssemblyName>LoginServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -48,6 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Network\Handlers\Login.cs" />
+    <Compile Include="Network\LoginClient.cs" />
+    <Compile Include="Network\LoginServer.cs" />
+    <Compile Include="Network\Send.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,6 +64,7 @@
       <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

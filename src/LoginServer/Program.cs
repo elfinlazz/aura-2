@@ -6,30 +6,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Aura.Shared.Util;
+using Aura.Shared.Network;
+using Aura.Login.Network;
 
-namespace Aura.LoginServer
+namespace Aura.Login
 {
 	class Program
 	{
+		/// <summary>
+		/// <author></author>
+		/// </summary>
+		/// <param name="args"></param>
 		static void Main(string[] args)
 		{
+			ServerUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
+			ServerUtil.LoadingTitle();
+
 			var config = new Conf();
 			config.Require("../../system/conf/login.conf");
 			config.Include("../../user/conf/login.conf");
 
 			Log.Archive = "../../log/archive/";
 			Log.LogFile = "../../log/login.txt";
-			Log.Info("test");
-			Log.Error("test");
-			try
-			{
-				var x = new int[10];
-				var i = x[11];
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex, "Failed to do foo");
-			}
+			Log.Hide |= LogLevel.Exception;
+
+			LoginServer.Instance.Start(11000);
+			ServerUtil.RunningTitle();
 
 			Console.ReadLine();
 		}

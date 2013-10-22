@@ -36,6 +36,16 @@ namespace Aura.Shared.Util
 			Console.WriteLine("");
 		}
 
+		public static void LoadingTitle()
+		{
+			Console.Title = "* " + Console.Title;
+		}
+
+		public static void RunningTitle()
+		{
+			Console.Title = Console.Title.TrimStart('*', ' ');
+		}
+
 		/// <summary>
 		/// Waits for the return key, and closes the application afterwards.
 		/// </summary>
