@@ -5,6 +5,9 @@ using System;
 
 namespace Aura.Shared.Util
 {
+	/// <summary>
+	/// Wrapper around DateTime, to calculate the current time in Erinn.
+	/// </summary>
 	public class MabiTime
 	{
 		/// <summary>

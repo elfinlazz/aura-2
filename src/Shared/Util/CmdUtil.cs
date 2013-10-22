@@ -8,13 +8,14 @@ using System.Text;
 
 namespace Aura.Shared.Util
 {
-	public class ServerUtil
+	public class CmdUtil
 	{
 		/// <summary>
-		/// Prints Aura's standard header.
+		/// Prints Aura's ASCII art.
 		/// </summary>
-		/// <param name="title">Name of this server. Example: "Login Server"</param>
-		public static void WriteHeader(string title = null, ConsoleColor color = ConsoleColor.DarkGray)
+		/// <param name="title">Name of this server (for the console's title)</param>
+		/// <param name="color">Color of the header</param>
+		public static void WriteHeader(string title, ConsoleColor color)
 		{
 			if (title != null)
 				Console.Title = "Aura : " + title;

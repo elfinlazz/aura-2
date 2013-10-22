@@ -76,7 +76,7 @@ namespace Aura.Shared.Network
 			catch (Exception ex)
 			{
 				Log.Exception(ex, "Unable to set up socket; perhaps you're already running a server?");
-				ServerUtil.Exit(1);
+				CmdUtil.Exit(1);
 			}
 		}
 
@@ -236,7 +236,7 @@ namespace Aura.Shared.Network
 			}
 			catch { }
 
-			ServerUtil.Exit(1, false);
+			CmdUtil.Exit(1, false);
 		}
 
 		/// <summary>
