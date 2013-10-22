@@ -4,5 +4,8 @@ Changes
 * Logger renamed to Log.
 * Log logs everything to files now, and hides messages only from the command line.
 * Log.Exception can give an error message, which is not hidden by adding Exception to Hide.
-* Packet handler is its own class now, that the server is decorated with.
+* Log got an archive function.
 * Packet handlers are defined with an attribute.
+* World Server renamed to Channel Server, more accurate.
+* Aura.Shared renamed to Shared.
+* Aura.Net removed.

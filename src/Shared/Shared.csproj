@@ -57,7 +57,7 @@
     <Compile Include="Util\FileReader.cs" />
     <Compile Include="Util\Log.cs" />
     <Compile Include="Util\MabiTime.cs" />
-    <Compile Include="Util\ServerUtil.cs" />
+    <Compile Include="Util\CmdUtil.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
