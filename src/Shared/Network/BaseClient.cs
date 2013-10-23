@@ -14,9 +14,25 @@ namespace Aura.Shared.Network
 		public ClientState State { get; set; }
 		public MabiCrypto Crypto { get; protected set; }
 
+		private string _address;
 		public string Address
 		{
-			get { return (this.Socket != null && this.Socket.RemoteEndPoint != null ? this.Socket.RemoteEndPoint.ToString() : string.Empty); }
+			get
+			{
+				if (_address == null)
+				{
+					try
+					{
+						_address = this.Socket.RemoteEndPoint.ToString();
+					}
+					catch
+					{
+						_address = "?";
+					}
+				}
+
+				return _address;
+			}
 		}
 
 		public BaseClient()

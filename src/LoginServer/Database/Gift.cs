@@ -2,6 +2,7 @@
 // For more information, see licence file in the main folder
 
 using System;
+using Aura.Shared.Database;
 
 namespace Aura.Login.Database
 {

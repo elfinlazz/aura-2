@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Shared.Database
 {
@@ -64,5 +65,86 @@ namespace Aura.Shared.Database
 					conn.Close();
 			}
 		}
+
+		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Returns whether the account exists.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <returns></returns>
+		public bool AccountExists(string accountId)
+		{
+			using (var conn = this.Connection)
+			{
+				var mc = new MySqlCommand("SELECT `accountId` FROM `accounts` WHERE `accountId` = @accountId", conn);
+				mc.Parameters.AddWithValue("@accountId", accountId);
+
+				using (var reader = mc.ExecuteReader())
+					return reader.HasRows;
+			}
+		}
+
+		/// <summary>
+		/// Adds card to database and returns it as Card.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="type"></param>
+		/// <param name="race"></param>
+		/// <returns></returns>
+		public Card AddCard(string accountId, int type, int race)
+		{
+			using (var conn = this.Connection)
+			{
+				var mc = new MySqlCommand("INSERT INTO `cards` (`accountId`, `type`, `race`) VALUES (@accountId, @type, @race)", conn);
+				mc.Parameters.AddWithValue("@accountId", accountId);
+				mc.Parameters.AddWithValue("@type", type);
+				mc.Parameters.AddWithValue("@race", race);
+
+				mc.ExecuteNonQuery();
+
+				return new Card(mc.LastInsertedId, type, race);
+			}
+		}
+	}
+
+	public static class MySqlDataReaderExtension
+	{
+		public static bool IsDBNull(this MySqlDataReader reader, string index)
+		{
+			return reader.IsDBNull(reader.GetOrdinal(index));
+		}
+
+		/// <summary>
+		/// Same as GetString, except for a is null check. Returns null if NULL.
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		public static string GetStringSafe(this MySqlDataReader reader, string index)
+		{
+			if (IsDBNull(reader, index))
+				return null;
+			else
+				return reader.GetString(index);
+		}
+
+		/// <summary>
+		/// Returns DateTime of the index, or DateTime.MinValue, if value is null.
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		public static DateTime GetDateTimeSafe(this MySqlDataReader reader, string index)
+		{
+			return reader[index] as DateTime? ?? DateTime.MinValue;
+		}
+	}
+
+	public enum NameCheckResult : byte
+	{
+		Okay = 0,
+		Exists = 1,
+		Invalid = 2,
 	}
 }

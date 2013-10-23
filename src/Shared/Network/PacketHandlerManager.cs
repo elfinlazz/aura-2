@@ -68,21 +68,6 @@ namespace Aura.Shared.Network
 		}
 	}
 
-	public class AsdfHandler : PacketHandlerManager<BaseClient>
-	{
-		[PacketHandler(123)]
-		private void Test(BaseClient client, MabiPacket packet)
-		{
-			Console.WriteLine("Hi there");
-		}
-
-		[PacketHandler(123)]
-		private void Test2(BaseClient client, MabiPacket packet)
-		{
-			Console.WriteLine("Hi there");
-		}
-	}
-
 	public class PacketHandler : Attribute
 	{
 		public int Op { get; protected set; }

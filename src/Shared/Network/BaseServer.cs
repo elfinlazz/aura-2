@@ -108,7 +108,7 @@ namespace Aura.Shared.Network
 				client.Socket.BeginReceive(client.Buffer.Front, 0, client.Buffer.Front.Length, SocketFlags.None, new AsyncCallback(OnReceive), client);
 
 				this.AddClient(client);
-				Log.Info("Connection accepted from '{0}.", client.Address);
+				Log.Info("Connection established from '{0}.", client.Address);
 
 				this.OnClientConnected(client);
 			}
@@ -170,12 +170,17 @@ namespace Aura.Shared.Network
 
 				if (client.State != ClientState.Dead)
 					client.Socket.BeginReceive(client.Buffer.Front, 0, client.Buffer.Front.Length, SocketFlags.None, new AsyncCallback(OnReceive), client);
+				else
+				{
+					this.RemoveClient(client);
+					Log.Info("Killed connection from '{0}'.", client.Address);
+				}
 			}
 			catch (SocketException)
 			{
 				client.Kill();
 				this.RemoveClient(client);
-				Log.Info("Connection lost from '{0}.", client.Address);
+				Log.Info("Connection lost from '{0}'.", client.Address);
 			}
 			catch (ObjectDisposedException)
 			{
@@ -193,7 +198,10 @@ namespace Aura.Shared.Network
 		protected void AddClient(TClient client)
 		{
 			lock (_clients)
+			{
 				_clients.Add(client);
+				//Log.Status("Connected clients: {0}", _clients.Count);
+			}
 		}
 
 		/// <summary>
@@ -203,7 +211,10 @@ namespace Aura.Shared.Network
 		protected void RemoveClient(TClient client)
 		{
 			lock (_clients)
+			{
 				_clients.Remove(client);
+				//Log.Status("Connected clients: {0}", _clients.Count);
+			}
 		}
 
 		/// <summary>

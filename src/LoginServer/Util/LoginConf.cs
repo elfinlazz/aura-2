@@ -15,6 +15,8 @@ namespace Aura.Login.Util
 
 		// Login
 		public int Port;
+		public bool NewAccounts;
+		public bool EnableSecondaryPassword;
 
 		private LoginConf()
 		{
@@ -34,6 +36,8 @@ namespace Aura.Login.Util
 		public void LoadLogin()
 		{
 			this.Port = this.GetInt("login.port", 11000);
+			this.NewAccounts = this.GetBool("login.new_accounts", true);
+			this.EnableSecondaryPassword = this.GetBool("login.enable_secondary", false);
 		}
 	}
 }

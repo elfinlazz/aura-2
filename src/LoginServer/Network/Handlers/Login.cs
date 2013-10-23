@@ -7,14 +7,19 @@ using System.Linq;
 using System.Text;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Shared.Mabi;
+using Aura.Login.Util;
+using Aura.Shared.Database;
+using Aura.Login.Database;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Login.Network.Handlers
 {
 	public partial class LoginServerHandlers : PacketHandlerManager<LoginClient>
 	{
 		/// <summary>
-		/// First actualy packet from the client, includes client
-		/// identification hash, from "data\vf.dat".
+		/// First actual packet from the client, includes
+		/// identification hash from "data\vf.dat".
 		/// </summary>
 		/// <example>
 		/// NA166
@@ -37,7 +42,10 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			//if (ident != "WHO_Gives-A10211-799-107")
-			//    client.Kill();
+			//{
+			//    Send.CheckIdentR(client, false);
+			//    return;
+			//}
 
 			Send.CheckIdentR(client, true);
 		}
@@ -63,12 +71,190 @@ namespace Aura.Login.Network.Handlers
 		/// 007 [........00000000] Int    : 0
 		/// 008 [........00000000] Int    : 0
 		/// 009 [................] String : ...
-		/// 
 		/// </example>
 		[PacketHandler(Op.Login)]
 		public void Login(LoginClient client, MabiPacket packet)
 		{
-			Log.Debug(packet);
+			var loginType = (LoginType)packet.GetByte();
+			var accountId = packet.GetString();
+			var password = "";
+			var secondaryPassword = "";
+			var sessionKey = 0L;
+
+			switch (loginType)
+			{
+				// Normal login, password
+				case LoginType.Normal:
+				case LoginType.EU:
+				case LoginType.KR:
+				case LoginType.CmdLogin:
+
+					// [150100] From raw to MD5
+					// [KR180XYY] From MD5 to SHA1
+					var passbin = packet.GetBin();
+					password = Encoding.UTF8.GetString(passbin);
+
+					// Upgrade raw to MD5
+					if (loginType == LoginType.EU)
+						password = Password.RawToMD5(passbin);
+
+					// Upgrade MD5 to SHA1
+					if (password.Length == 32) // MD5
+						password = Password.MD5ToSHA256(password);
+
+					// Create new account
+					if (LoginConf.Instance.NewAccounts && (accountId.StartsWith("new//") || accountId.StartsWith("new__")))
+					{
+						accountId = accountId.Remove(0, 5);
+
+						if (!AuraDb.Instance.AccountExists(accountId) && password != "")
+						{
+							LoginDb.Instance.CreateAccount(accountId, password);
+							Log.Info("New account '{0}' was created.", accountId);
+						}
+					}
+
+					// Set login type to normal if it's not secondary,
+					// we have all information and don't care anymore.
+					if (loginType != LoginType.SecondaryPassword)
+						loginType = LoginType.Normal;
+
+					break;
+
+				// Logging in, comming from a channel
+				case LoginType.FromChannel:
+
+					// [160XXX] Double account name
+					{
+						packet.GetString();
+					}
+					sessionKey = packet.GetLong();
+
+					break;
+
+				// Second password
+				case LoginType.SecondaryPassword:
+
+					// [XXXXXX] Double account name
+					{
+						packet.GetString();
+					}
+					sessionKey = packet.GetLong();
+					secondaryPassword = packet.GetString(); // SSH1
+
+					break;
+
+				// Unsupported NX hash
+				case LoginType.NewHash:
+
+					Send.LoginR_Msg(client, Localization.Get("login.new_hash")); // Please don't use your official login information.
+
+					return;
+			}
+
+			var machineId = packet.GetBin();
+			var unkInt1 = packet.GetInt();
+			var unkInt2 = packet.GetInt();
+			var localClientIP = packet.GetString();
+
+			// Get account
+			var account = LoginDb.Instance.GetAccount(accountId);
+			if (account == null)
+			{
+				Send.LoginR_Fail(client, LoginResult.IdOrPassIncorrect);
+				return;
+			}
+
+			// Update account's secondary password
+			if (loginType == LoginType.SecondaryPassword && account.SecondaryPassword == null)
+			{
+				account.SecondaryPassword = secondaryPassword;
+				LoginDb.Instance.UpdateAccountSecondaryPassword(account);
+			}
+
+			// Check bans
+			if (account.BannedExpiration.CompareTo(DateTime.Now) > 0)
+			{
+				Send.LoginR_Msg(client, Localization.Get("login.banned"), account.BannedExpiration, account.BannedReason); // You've been banned, till {0}.\r\nReason: {1}
+				return;
+			}
+
+			// Check password/session
+			if (!Password.Check(password, account.Password) && account.SessionKey != sessionKey)
+			{
+				Send.LoginR_Fail(client, LoginResult.IdOrPassIncorrect);
+				return;
+			}
+
+			// Check secondary password
+			if (loginType == LoginType.SecondaryPassword)
+			{
+				// Set new secondary password
+				if (account.SecondaryPassword == null)
+				{
+					account.SecondaryPassword = secondaryPassword;
+					LoginDb.Instance.UpdateAccountSecondaryPassword(account);
+				}
+				// Check secondary
+				else if (account.SecondaryPassword != secondaryPassword)
+				{
+					Send.LoginR_Fail(client, LoginResult.SecondaryFail);
+					return;
+				}
+			}
+
+			// Check logged in already
+			if (account.LoggedIn)
+			{
+				Send.LoginR_Fail(client, LoginResult.AlreadyLoggedIn);
+				return;
+			}
+
+			account.SessionKey = LoginDb.Instance.CreateSession(account.Name);
+
+			// Second password, please!
+			if (LoginConf.Instance.EnableSecondaryPassword && loginType == LoginType.Normal)
+			{
+				Send.LoginR_Secondary(client, account, account.SessionKey);
+				return;
+			}
+
+			// Update account
+			account.LastLogin = DateTime.Now;
+			account.LoggedIn = true;
+			LoginDb.Instance.UpdateAccount(account);
+
+			// Req. Info
+			//account.CharacterCards = LoginDb.Instance.GetCharacterCards(account.Name);
+			//account.PetCards = LoginDb.Instance.GetPetCards(account.Name);
+			//account.Characters = LoginDb.Instance.GetCharacters(account.Name);
+			//account.Pets = LoginDb.Instance.GetPets(account.Name);
+			//account.Gifts = LoginDb.Instance.GetGifts(account.Name);
+
+			// Add free cards if there are none.
+			// If you don't have chars and char cards, you get a new free card,
+			// if you don't have pets or pet cards either, you'll also get a 7-day horse.
+			if (account.CharacterCards.Count < 1 && account.Characters.Count < 1)
+			{
+				// Free card
+				var card = AuraDb.Instance.AddCard(account.Name, 147, 0);
+				account.CharacterCards.Add(card);
+
+				if (account.PetCards.Count < 1 && account.Pets.Count < 1)
+				{
+					// 7-day Horse
+					card = AuraDb.Instance.AddCard(account.Name, MabiId.PetCardType, 260016);
+					account.PetCards.Add(card);
+				}
+			}
+
+			// Success
+			Send.LoginR(client, account, account.SessionKey, LoginServer.Instance.Servers.List);
+
+			client.Account = account;
+			client.State = ClientState.LoggedIn;
+
+			Log.Info("User '{0}' logged in.", account.Name);
 		}
 	}
 }
