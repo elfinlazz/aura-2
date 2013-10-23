@@ -65,7 +65,8 @@
     <Compile Include="Network\Op.cs" />
     <Compile Include="Network\PacketHandlerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\Conf.cs" />
+    <Compile Include="Util\BaseConf.cs" />
+    <Compile Include="Util\ConfFile.cs" />
     <Compile Include="Util\FileReader.cs" />
     <Compile Include="Util\Log.cs" />
     <Compile Include="Util\MabiTime.cs" />

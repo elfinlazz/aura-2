@@ -5,6 +5,7 @@ using System;
 using Aura.Login.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Database;
+using Aura.Login.Util;
 
 namespace Aura.Login
 {
@@ -15,41 +16,41 @@ namespace Aura.Login
 			CmdUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
 			CmdUtil.LoadingTitle();
 
-			var config = new Conf();
+			// Conf
 			try
 			{
-				config.RequireAndInclude("../../{0}/conf/login.conf", "system", "user");
+				LoginConf.Instance.RequireAndInclude("../../{0}/conf/login.conf", "system", "user");
+				LoginConf.Instance.Load();
 
-				if (config.GetBool("log.archive", true))
+				// Log
+				if (LoginConf.Instance.Archive)
 					Log.Archive = "../../log/archive/";
 				Log.LogFile = "../../log/login.txt";
-				Log.Hide |= (LogLevel)config.GetInt("log.cmd_hide", 8);
+				Log.Hide |= LoginConf.Instance.Hide;
 
 				Log.Info("Read configuration.");
 			}
 			catch (Exception ex)
 			{
-				Log.Exception(ex);
-				CmdUtil.Exit();
+				Log.Exception(ex, "Unable to read configuration. ({0})", ex.Message);
+				CmdUtil.Exit(1);
 			}
 
+			// Database
 			try
 			{
-				var host = config.GetString("database.host", "127.0.0.1");
-				var user = config.GetString("database.user", "root");
-				var pass = config.GetString("database.pas", "root");
-				var db = config.GetString("database.db", "aura");
-				AuraDb.Instance.Init(host, user, pass, db);
+				AuraDb.Instance.Init(LoginConf.Instance.Host, LoginConf.Instance.User, LoginConf.Instance.Pass, LoginConf.Instance.Db);
 
 				Log.Info("Initialized database.");
 			}
 			catch (Exception ex)
 			{
-				Log.Exception(ex, "Unable to open database connection.");
-				CmdUtil.Exit();
+				Log.Exception(ex, "Unable to open database connection. ({0})", ex.Message);
+				CmdUtil.Exit(1);
 			}
 
-			LoginServer.Instance.Start(config.GetInt("login.port", 11000));
+			// Start
+			LoginServer.Instance.Start(LoginConf.Instance.Port);
 
 			CmdUtil.RunningTitle();
 

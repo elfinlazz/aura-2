@@ -13,11 +13,11 @@ namespace Aura.Shared.Util
 	/// Uses $(FileReader) to read conf files, that are parsed in key:value pairs.
 	/// Separating character is a colon ':'.
 	/// </remarks>
-	public class Conf
+	public class ConfFile
 	{
 		private Dictionary<string, string> _options;
 
-		public Conf()
+		public ConfFile()
 		{
 			_options = new Dictionary<string, string>();
 		}
