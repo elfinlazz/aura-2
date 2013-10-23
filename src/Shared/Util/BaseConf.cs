@@ -19,10 +19,17 @@ namespace Aura.Shared.Util
 		{
 		}
 
-		protected void LoadLog()
+		public abstract void Load();
+
+		protected void LoadLog(string logFileName)
 		{
 			this.Archive = this.GetBool("log.archive", true);
 			this.Hide = (LogLevel)this.GetInt("log.cmd_hide", 8);
+
+			if (this.Archive)
+				Log.Archive = "../../log/archive/";
+			Log.LogFile = "../../log/" + logFileName + ".txt";
+			Log.Hide |= this.Hide;
 		}
 
 		protected void LoadDatabase()

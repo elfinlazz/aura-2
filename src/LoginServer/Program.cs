@@ -17,37 +17,10 @@ namespace Aura.Login
 			CmdUtil.LoadingTitle();
 
 			// Conf
-			try
-			{
-				LoginConf.Instance.RequireAndInclude("../../{0}/conf/login.conf", "system", "user");
-				LoginConf.Instance.Load();
-
-				// Log
-				if (LoginConf.Instance.Archive)
-					Log.Archive = "../../log/archive/";
-				Log.LogFile = "../../log/login.txt";
-				Log.Hide |= LoginConf.Instance.Hide;
-
-				Log.Info("Read configuration.");
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex, "Unable to read configuration. ({0})", ex.Message);
-				CmdUtil.Exit(1);
-			}
+			ServerUtil.LoadConf(LoginConf.Instance);
 
 			// Database
-			try
-			{
-				AuraDb.Instance.Init(LoginConf.Instance.Host, LoginConf.Instance.User, LoginConf.Instance.Pass, LoginConf.Instance.Db);
-
-				Log.Info("Initialized database.");
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex, "Unable to open database connection. ({0})", ex.Message);
-				CmdUtil.Exit(1);
-			}
+			ServerUtil.InitDatabase(LoginConf.Instance);
 
 			// Start
 			LoginServer.Instance.Start(LoginConf.Instance.Port);

@@ -71,6 +71,7 @@
     <Compile Include="Util\Log.cs" />
     <Compile Include="Util\MabiTime.cs" />
     <Compile Include="Util\CmdUtil.cs" />
+    <Compile Include="Util\ServerUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

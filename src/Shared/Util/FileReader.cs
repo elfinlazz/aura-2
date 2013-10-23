@@ -38,7 +38,7 @@ namespace Aura.Shared.Util
 		public FileReader(string filePath)
 		{
 			if (!File.Exists(filePath))
-				throw new FileNotFoundException("File '" + filePath + "' not be found.");
+				throw new FileNotFoundException("File '" + filePath + "' not found.");
 
 			_filePath = filePath;
 			_rootPath = Path.GetDirectoryName(Path.GetFullPath(filePath));

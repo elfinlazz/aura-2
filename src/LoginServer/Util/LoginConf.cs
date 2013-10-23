@@ -20,9 +20,13 @@ namespace Aura.Login.Util
 		{
 		}
 
-		public void Load()
+		public override void Load()
 		{
-			this.LoadLog();
+			LoginConf.Instance.RequireAndInclude("../../{0}/conf/log.conf", "system", "user");
+			LoginConf.Instance.RequireAndInclude("../../{0}/conf/database.conf", "system", "user");
+			LoginConf.Instance.RequireAndInclude("../../{0}/conf/login.conf", "system", "user");
+
+			this.LoadLog("login");
 			this.LoadDatabase();
 			this.LoadLogin();
 		}

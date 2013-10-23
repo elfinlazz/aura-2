@@ -5,6 +5,9 @@
 /log/
 /cache/
 
+/user/conf/*.conf
+!/user/conf/database-example.conf
+
 #################
 ## Visual Studio
 #################

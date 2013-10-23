@@ -87,7 +87,7 @@ namespace Aura.Shared.Util
 					if ((pos = line.IndexOf(':')) < 0)
 						return;
 
-					_options.Add(line.Substring(0, pos).Trim(), line.Substring(pos + 1).Trim());
+					_options[line.Substring(0, pos).Trim()] = line.Substring(pos + 1).Trim();
 				}
 			}
 		}
