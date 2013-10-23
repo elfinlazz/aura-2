@@ -14,11 +14,15 @@ namespace Aura.Login.Network
 	{
 		public static readonly LoginServer Instance = new LoginServer();
 
+		public ServerInfoManager Servers { get; private set; }
+
 		private LoginServer()
 			: base()
 		{
 			this.Handlers = new LoginServerHandlers();
 			this.Handlers.AutoLoad();
+
+			this.Servers = new ServerInfoManager();
 		}
 	}
 }
