@@ -55,8 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Const\MabiId.cs" />
+    <Compile Include="Mabi\Const\MabiId.cs" />
     <Compile Include="Database\AuraDb.cs" />
+    <Compile Include="Mabi\Structs\Items.cs" />
     <Compile Include="Network\BaseClient.cs" />
     <Compile Include="Network\BaseServer.cs" />
     <Compile Include="Network\MabiCrypto.cs" />

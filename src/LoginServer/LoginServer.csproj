@@ -48,6 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\Account.cs" />
+    <Compile Include="Database\Card.cs" />
+    <Compile Include="Database\Character.cs" />
+    <Compile Include="Database\Gift.cs" />
+    <Compile Include="Database\Item.cs" />
     <Compile Include="Network\Handlers\Login.cs" />
     <Compile Include="Network\LoginClient.cs" />
     <Compile Include="Network\LoginServer.cs" />

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see licence file in the main folder
 
-namespace Aura.Shared.Const
+namespace Aura.Shared.Mabi.Const
 {
 	public static class MabiId
 	{
@@ -24,7 +24,7 @@ namespace Aura.Shared.Const
 		public const long Items = 0x0050000000000001;
 		public const long TmpItems = 0x0050F00000000001;
 
-		// 00XX<word:region><word:area><word:id>
+		// 00XX<short:region><short:area><short:id>
 		public const long ServerProps = 0x00A1000000000000;
 		public const long AreaEvents = 0x00B0000000000000;
 
@@ -39,7 +39,7 @@ namespace Aura.Shared.Const
 		public const long Instances = 0x0100000000000001;
 
 		// Default type for pet/partner cards.
-		public const uint PetCardType = 102;
+		public const int PetCardType = 102;
 
 		// NPCs
 		public const long Nao = 0x0010FFFFFFFFFFFF;
