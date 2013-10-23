@@ -24,14 +24,12 @@ namespace Aura.Login.Network.Handlers
 		/// 004 [................] String : admin
 		/// 005 [................] String : admin
 		/// </example>
-		/// <param name="client"></param>
-		/// <param name="packet"></param>
 		[PacketHandler(Op.ClientIdent)]
 		public void ClientIdent(LoginClient client, MabiPacket packet)
 		{
 			var unkByte = packet.GetByte();
 			var ident = packet.GetString();
-			// Added some time in G18
+			// [180x00] Added some time in G18
 			{
 				var unkInt = packet.GetInt();
 				var accountName1 = packet.GetString(); // sometimes empty?
@@ -44,6 +42,29 @@ namespace Aura.Login.Network.Handlers
 			Send.CheckIdentR(client, true);
 		}
 
+		/// <summary>
+		/// Login packet
+		/// </summary>
+		/// <example>
+		/// 001 [..............05] Byte   : 5
+		/// 002 [................] String : admin
+		/// 003 [................] String : ...
+		/// 004 [................] Bin    : ...
+		/// 005 [........00000000] Int    : 0
+		/// 006 [........00000000] Int    : 0
+		/// 007 [................] String : 192.168.178.20
+		/// 
+		/// 001 [..............14] Byte   : 20
+		/// 002 [................] String : admin
+		/// 003 [................] String : admin
+		/// 004 [0000000000000000] Long   : ...
+		/// 005 [................] String : ...
+		/// 006 [................] Bin    : ...
+		/// 007 [........00000000] Int    : 0
+		/// 008 [........00000000] Int    : 0
+		/// 009 [................] String : ...
+		/// 
+		/// </example>
 		[PacketHandler(Op.Login)]
 		public void Login(LoginClient client, MabiPacket packet)
 		{

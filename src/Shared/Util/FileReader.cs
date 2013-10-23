@@ -68,7 +68,7 @@ namespace Aura.Shared.Util
 				bool require = false;
 				if (line.StartsWith("include ") || (require = line.StartsWith("require ")))
 				{
-					var includeFilePath = Path.Combine(_rootPath, line.Substring(8));
+					var includeFilePath = Path.Combine(_rootPath, line.Substring(8).Trim('"'));
 
 					// Silently ignore failed includes, only raise an
 					// exception on require.
