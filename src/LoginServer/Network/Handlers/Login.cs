@@ -2,16 +2,15 @@
 // For more information, see licence file in the main folder
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Aura.Shared.Network;
-using Aura.Shared.Util;
-using Aura.Shared.Mabi;
+using Aura.Login.Database;
 using Aura.Login.Util;
 using Aura.Shared.Database;
-using Aura.Login.Database;
+using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Network;
+using Aura.Shared.Util;
+using System.Collections.Generic;
 
 namespace Aura.Login.Network.Handlers
 {
@@ -225,11 +224,11 @@ namespace Aura.Login.Network.Handlers
 			LoginDb.Instance.UpdateAccount(account);
 
 			// Req. Info
-			//account.CharacterCards = LoginDb.Instance.GetCharacterCards(account.Name);
-			//account.PetCards = LoginDb.Instance.GetPetCards(account.Name);
-			//account.Characters = LoginDb.Instance.GetCharacters(account.Name);
-			//account.Pets = LoginDb.Instance.GetPets(account.Name);
-			//account.Gifts = LoginDb.Instance.GetGifts(account.Name);
+			account.CharacterCards = LoginDb.Instance.GetCharacterCards(account.Name);
+			account.PetCards = LoginDb.Instance.GetPetCards(account.Name);
+			account.Characters = LoginDb.Instance.GetCharacters(account.Name);
+			account.Pets = LoginDb.Instance.GetPetsAndPartners(account.Name);
+			account.Gifts = LoginDb.Instance.GetGifts(account.Name);
 
 			// Add free cards if there are none.
 			// If you don't have chars and char cards, you get a new free card,

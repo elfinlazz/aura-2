@@ -123,5 +123,169 @@ namespace Aura.Login.Database
 				mc.ExecuteNonQuery();
 			}
 		}
+		/// <summary>
+		/// Returns all character cards present for this account.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <returns></returns>
+		public List<Card> GetCharacterCards(string accountId)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				var mc = new MySqlCommand("SELECT `cardId`, `type` FROM `cards` WHERE `accountId` = @accountId AND race = 0 AND !`isGift`", conn);
+				mc.Parameters.AddWithValue("@accountId", accountId);
+
+				var result = new List<Card>();
+				using (var reader = mc.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						var card = new Card();
+						card.Id = reader.GetInt64("cardId");
+						card.Type = reader.GetInt32("type");
+
+						result.Add(card);
+					}
+				}
+
+				return result;
+			}
+		}
+
+		/// <summary>
+		/// Returns all pet and partner cards present for this account.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <returns></returns>
+		public List<Card> GetPetCards(string accountId)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				var mc = new MySqlCommand("SELECT `cardId`, `type`, `race` FROM `cards` WHERE `accountId` = @accountId AND race > 0 AND !`isGift`", conn);
+				mc.Parameters.AddWithValue("@accountId", accountId);
+
+				var result = new List<Card>();
+				using (var reader = mc.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						var card = new Card();
+						card.Id = reader.GetUInt32("cardId");
+						card.Type = reader.GetInt32("type");
+						card.Race = reader.GetInt32("race");
+
+						result.Add(card);
+					}
+				}
+
+				return result;
+			}
+		}
+
+		/// <summary>
+		/// Returns all gifted cards present for this account.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <returns></returns>
+		public List<Gift> GetGifts(string accountId)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				var mc = new MySqlCommand("SELECT * FROM `cards` WHERE `accountId` = @accountId AND `isGift`", conn);
+				mc.Parameters.AddWithValue("@accountId", accountId);
+
+				var result = new List<Gift>();
+				using (var reader = mc.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						var gift = new Gift();
+						gift.Id = reader.GetUInt32("cardId");
+						gift.Type = reader.GetInt32("type");
+						gift.Race = reader.GetInt32("race");
+						gift.Message = reader.GetStringSafe("message");
+						gift.Sender = reader.GetStringSafe("sender");
+						gift.SenderServer = reader.GetStringSafe("senderServer");
+						gift.Receiver = reader.GetStringSafe("receiver");
+						gift.ReceiverServer = reader.GetStringSafe("receiverServer");
+						gift.Added = reader.GetDateTimeSafe("added");
+
+						result.Add(gift);
+					}
+				}
+
+				return result;
+			}
+		}
+
+		/// <summary>
+		/// Returns a list of all characters on this account.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <returns></returns>
+		public List<Character> GetCharacters(string accountId)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				var result = new List<Character>();
+				this.GetCharacters(accountId, "characters", "characterId", CharacterType.Character, ref result, conn);
+
+				return result;
+			}
+		}
+
+		/// <summary>
+		/// Returns a list of all pets/partners on this account.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <returns></returns>
+		public List<Character> GetPetsAndPartners(string accountId)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				var result = new List<Character>();
+				this.GetCharacters(accountId, "pets", "petId", CharacterType.Pet, ref result, conn);
+				this.GetCharacters(accountId, "partners", "partnerId", CharacterType.Partner, ref result, conn);
+
+				return result;
+			}
+		}
+
+		private void GetCharacters(string accountId, string table, string primary, CharacterType type, ref List<Character> result, MySqlConnection conn)
+		{
+			var mc = new MySqlCommand(
+				"SELECT * " +
+				"FROM `" + table + "` AS c " +
+				"INNER JOIN `creatures` AS cr ON c.creatureId = cr.creatureId " +
+				"WHERE `accountId` = @accountId "
+			, conn);
+			mc.Parameters.AddWithValue("@accountId", accountId);
+
+			using (var reader = mc.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					var character = new Character(type);
+					character.Id = reader.GetInt64(primary);
+					character.Name = reader.GetStringSafe("name");
+					character.Server = reader.GetStringSafe("server");
+					character.Race = reader.GetInt32("race");
+					character.DeletionTime = reader.GetDateTimeSafe("deletionTime");
+					character.SkinColor = reader.GetByte("skinColor");
+					character.EyeType = reader.GetByte("eyeType");
+					character.EyeColor = reader.GetByte("eyeColor");
+					character.MouthType = reader.GetByte("mouthType");
+					character.Height = reader.GetFloat("height");
+					character.Weight = reader.GetFloat("weight");
+					character.Upper = reader.GetFloat("upper");
+					character.Lower = reader.GetUInt32("lower");
+					character.Color1 = reader.GetInt32("color1");
+					character.Color2 = reader.GetInt32("color2");
+					character.Color3 = reader.GetInt32("color3");
+
+					result.Add(character);
+				}
+			}
+		}
 	}
 }
