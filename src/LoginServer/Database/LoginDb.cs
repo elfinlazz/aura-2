@@ -170,7 +170,7 @@ namespace Aura.Login.Database
 					while (reader.Read())
 					{
 						var card = new Card();
-						card.Id = reader.GetUInt32("cardId");
+						card.Id = reader.GetInt64("cardId");
 						card.Type = reader.GetInt32("type");
 						card.Race = reader.GetInt32("race");
 
@@ -200,7 +200,7 @@ namespace Aura.Login.Database
 					while (reader.Read())
 					{
 						var gift = new Gift();
-						gift.Id = reader.GetUInt32("cardId");
+						gift.Id = reader.GetInt64("cardId");
 						gift.Type = reader.GetInt32("type");
 						gift.Race = reader.GetInt32("race");
 						gift.Message = reader.GetStringSafe("message");
@@ -278,7 +278,7 @@ namespace Aura.Login.Database
 					character.Height = reader.GetFloat("height");
 					character.Weight = reader.GetFloat("weight");
 					character.Upper = reader.GetFloat("upper");
-					character.Lower = reader.GetUInt32("lower");
+					character.Lower = reader.GetInt32("lower");
 					character.Color1 = reader.GetInt32("color1");
 					character.Color2 = reader.GetInt32("color2");
 					character.Color3 = reader.GetInt32("color3");
