@@ -183,7 +183,7 @@ namespace Aura.Login.Database
 		}
 
 		/// <summary>
-		/// Returns all gifted cards present for this account.
+		/// Returns all gifts present for this account.
 		/// </summary>
 		/// <param name="accountId"></param>
 		/// <returns></returns>
@@ -251,6 +251,15 @@ namespace Aura.Login.Database
 			}
 		}
 
+		/// <summary>
+		/// Queries characters/pets/partners and adds them to result.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="table"></param>
+		/// <param name="primary"></param>
+		/// <param name="type"></param>
+		/// <param name="result"></param>
+		/// <param name="conn"></param>
 		private void GetCharacters(string accountId, string table, string primary, CharacterType type, ref List<Character> result, MySqlConnection conn)
 		{
 			var mc = new MySqlCommand(
@@ -289,7 +298,12 @@ namespace Aura.Login.Database
 			}
 		}
 
-		public List<Item> GetItems(long creatureId)
+		/// <summary>
+		/// Returns list of all visible items on creature.
+		/// </summary>
+		/// <param name="creatureId"></param>
+		/// <returns></returns>
+		public List<Item> GetEquipment(long creatureId)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			{
