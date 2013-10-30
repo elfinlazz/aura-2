@@ -62,7 +62,7 @@ namespace Aura.Data.Database
 			info.Amount = entry.ReadUShort();
 			info.Chance = entry.ReadFloat();
 
-			var ii = MabiData.ItemDb.Find(info.ItemClass);
+			var ii = AuraData.ItemDb.Find(info.ItemClass);
 			if (ii == null)
 				throw new Exception(string.Format("Unknown item id '{0}'.", info.ItemClass));
 

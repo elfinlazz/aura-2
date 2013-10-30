@@ -8,7 +8,7 @@ namespace Aura.Data
 	/// <summary>
 	/// Easy access static wrapper for all file databases.
 	/// </summary>
-	public static class MabiData
+	public static class AuraData
 	{
 		public static AncientDropDb AncientDropDb = new AncientDropDb();
 		public static ChairDb ChairDb = new ChairDb();

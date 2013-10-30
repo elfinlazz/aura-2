@@ -67,7 +67,7 @@
     <Compile Include="Database\Weather.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="MabiData.cs" />
+    <Compile Include="AuraData.cs" />
     <Compile Include="MTRandom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

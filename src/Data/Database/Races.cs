@@ -155,29 +155,29 @@ namespace Aura.Data.Database
 
 			// External information from other dbs
 			SpeedInfo actionInfo;
-			if ((actionInfo = MabiData.SpeedDb.Find(info.Group + "/walk")) != null)
+			if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/walk")) != null)
 				info.SpeedWalk = actionInfo.Speed;
-			else if ((actionInfo = MabiData.SpeedDb.Find(info.Group + "/*")) != null)
+			else if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/*")) != null)
 				info.SpeedWalk = actionInfo.Speed;
-			else if ((actionInfo = MabiData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/walk")) != null)
+			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/walk")) != null)
 				info.SpeedWalk = actionInfo.Speed;
-			else if ((actionInfo = MabiData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/*")) != null)
+			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/*")) != null)
 				info.SpeedWalk = actionInfo.Speed;
 			else
 				info.SpeedWalk = 207.6892f;
 
-			if ((actionInfo = MabiData.SpeedDb.Find(info.Group + "/run")) != null)
+			if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/run")) != null)
 				info.SpeedRun = actionInfo.Speed;
-			else if ((actionInfo = MabiData.SpeedDb.Find(info.Group + "/*")) != null)
+			else if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/*")) != null)
 				info.SpeedRun = actionInfo.Speed;
-			else if ((actionInfo = MabiData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/run")) != null)
+			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/run")) != null)
 				info.SpeedRun = actionInfo.Speed;
-			else if ((actionInfo = MabiData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/*")) != null)
+			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/*")) != null)
 				info.SpeedRun = actionInfo.Speed;
 			else
 				info.SpeedRun = 373.850647f;
 
-			info.Skills = MabiData.RaceSkillDb.FindAll(info.Id);
+			info.Skills = AuraData.RaceSkillDb.FindAll(info.Id);
 
 			if (this.Entries.ContainsKey(info.Id))
 				throw new DatabaseWarningException("Duplicate: " + info.Id.ToString());

@@ -61,79 +61,79 @@ namespace Aura.Shared.Util
 			{
 				if ((toLoad & DataLoad.Races) != 0)
 				{
-					LoadDb(MabiData.AncientDropDb, "db/ancient_drops.txt", reload);
-					LoadDb(MabiData.RaceSkillDb, "db/race_skills.txt", reload);
-					LoadDb(MabiData.SpeedDb, "db/speed.txt", reload, false);
-					LoadDb(MabiData.RaceDb, "db/races.txt", reload);
+					LoadDb(AuraData.AncientDropDb, "db/ancient_drops.txt", reload);
+					LoadDb(AuraData.RaceSkillDb, "db/race_skills.txt", reload);
+					LoadDb(AuraData.SpeedDb, "db/speed.txt", reload, false);
+					LoadDb(AuraData.RaceDb, "db/races.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.StatsBase) != 0)
 				{
-					LoadDb(MabiData.StatsBaseDb, "db/stats_base.txt", reload);
+					LoadDb(AuraData.StatsBaseDb, "db/stats_base.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.StatsLevel) != 0)
 				{
-					LoadDb(MabiData.StatsLevelUpDb, "db/stats_levelup.txt", reload);
+					LoadDb(AuraData.StatsLevelUpDb, "db/stats_levelup.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Motions) != 0)
 				{
-					LoadDb(MabiData.MotionDb, "db/motions.txt", reload);
+					LoadDb(AuraData.MotionDb, "db/motions.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Cards) != 0)
 				{
-					LoadDb(MabiData.CharCardSetDb, "db/charcardsets.txt", reload, false);
-					LoadDb(MabiData.CharCardDb, "db/charcards.txt", reload);
+					LoadDb(AuraData.CharCardSetDb, "db/charcardsets.txt", reload, false);
+					LoadDb(AuraData.CharCardDb, "db/charcards.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Colors) != 0)
 				{
-					LoadDb(MabiData.ColorMapDb, "db/colormap.dat", reload);
+					LoadDb(AuraData.ColorMapDb, "db/colormap.dat", reload);
 				}
 
 				if ((toLoad & DataLoad.Items) != 0)
 				{
-					LoadDb(MabiData.ItemDb, "db/items.txt", reload);
-					LoadDb(MabiData.ChairDb, "db/chairs.txt", reload);
+					LoadDb(AuraData.ItemDb, "db/items.txt", reload);
+					LoadDb(AuraData.ChairDb, "db/chairs.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Skills) != 0)
 				{
-					LoadDb(MabiData.SkillRankDb, "db/skill_ranks.txt", reload, false);
-					LoadDb(MabiData.SkillDb, "db/skills.txt", reload);
+					LoadDb(AuraData.SkillRankDb, "db/skill_ranks.txt", reload, false);
+					LoadDb(AuraData.SkillDb, "db/skills.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Regions) != 0)
 				{
-					LoadDb(MabiData.RegionDb, "db/regions.txt", reload);
-					LoadDb(MabiData.RegionInfoDb, "db/regioninfo.dat", reload);
+					LoadDb(AuraData.RegionDb, "db/regions.txt", reload);
+					LoadDb(AuraData.RegionInfoDb, "db/regioninfo.dat", reload);
 				}
 
 				if ((toLoad & DataLoad.Shamala) != 0)
 				{
-					LoadDb(MabiData.ShamalaDb, "db/shamala.txt", reload);
+					LoadDb(AuraData.ShamalaDb, "db/shamala.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.PropDrops) != 0)
 				{
-					LoadDb(MabiData.PropDropDb, "db/prop_drops.txt", reload);
+					LoadDb(AuraData.PropDropDb, "db/prop_drops.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Exp) != 0)
 				{
-					LoadDb(MabiData.ExpDb, "db/exp.txt", reload);
+					LoadDb(AuraData.ExpDb, "db/exp.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Pets) != 0)
 				{
-					LoadDb(MabiData.PetDb, "db/pets.txt", reload);
+					LoadDb(AuraData.PetDb, "db/pets.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Weather) != 0)
 				{
-					LoadDb(MabiData.WeatherDb, "db/weather.txt", reload);
+					LoadDb(AuraData.WeatherDb, "db/weather.txt", reload);
 				}
 			}
 			catch (FileNotFoundException ex)

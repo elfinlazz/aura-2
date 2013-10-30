@@ -1,13 +1,30 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see licence file in the main folder
 
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 
 namespace Aura.Data
 {
-	public abstract class DatabaseDatIndexed<TIndex, TInfo> : DatabaseIndexed<TIndex, TInfo> where TInfo : class, new()
+	public abstract class DatabaseDatIndexed<TIndex, TInfo> : Database<Dictionary<TIndex, TInfo>, TInfo> where TInfo : class, new()
 	{
+		public override IEnumerator<TInfo> GetEnumerator()
+		{
+			foreach (var entry in this.Entries.Values)
+				yield return entry;
+		}
+
+		public TInfo Find(TIndex key)
+		{
+			return this.Entries.GetValueOrDefault(key);
+		}
+
+		public override void Clear()
+		{
+			this.Entries.Clear();
+		}
+
 		public override int Load(string path, bool clear)
 		{
 			if (clear)

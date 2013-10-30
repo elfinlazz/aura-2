@@ -58,7 +58,7 @@ namespace Aura.Data.Database
 			info.Name = entry.ReadString();
 			info.MasterTitle = entry.ReadShort();
 
-			info.RankInfo.AddRange(MabiData.SkillRankDb.Entries.FindAll(a => a.SkillId == info.Id).OrderBy(a => a.Rank));
+			info.RankInfo.AddRange(AuraData.SkillRankDb.Entries.FindAll(a => a.SkillId == info.Id).OrderBy(a => a.Rank));
 
 			this.Entries.Add(info.Id, info);
 		}
