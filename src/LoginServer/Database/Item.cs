@@ -2,6 +2,7 @@
 // For more information, see licence file in the main folder
 
 using Aura.Shared.Mabi.Structs;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Login.Database
 {
@@ -18,15 +19,15 @@ namespace Aura.Login.Database
 			get
 			{
 				// Head
-				if (this.Info.Pocket >= 3 && this.Info.Pocket <= 4)
+				if (this.Info.Pocket >= Pocket.Face && this.Info.Pocket <= Pocket.Hair)
 					return true;
 
 				// Equipment
-				if (this.Info.Pocket >= 5 && this.Info.Pocket <= 15)
+				if (this.Info.Pocket >= Pocket.Armor && this.Info.Pocket <= Pocket.Magazine2)
 					return true;
 
 				// Style
-				if (this.Info.Pocket >= 43 && this.Info.Pocket <= 47)
+				if (this.Info.Pocket >= Pocket.ArmorStyle && this.Info.Pocket <= Pocket.RobeStyle)
 					return true;
 
 				return false;

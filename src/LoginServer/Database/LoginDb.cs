@@ -9,6 +9,7 @@ using Aura.Shared.Database;
 using MySql.Data.MySqlClient;
 using Aura.Shared.Util;
 using Aura.Shared.Mabi;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Login.Database
 {
@@ -318,7 +319,7 @@ namespace Aura.Login.Database
 						var item = new Item();
 						item.Id = reader.GetInt64("itemId");
 						item.Info.Class = reader.GetInt32("class");
-						item.Info.Pocket = reader.GetByte("pocket");
+						item.Info.Pocket = (Pocket)reader.GetByte("pocket");
 						item.Info.Color1 = reader.GetUInt32("color1");
 						item.Info.Color2 = reader.GetUInt32("color2");
 						item.Info.Color3 = reader.GetUInt32("color3");

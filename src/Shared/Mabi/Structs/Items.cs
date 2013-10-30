@@ -2,13 +2,14 @@
 // For more information, see licence file in the main folder
 
 using System.Runtime.InteropServices;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Shared.Mabi.Structs
 {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct ItemInfo
 	{
-		public byte Pocket;
+		public Pocket Pocket;
 		private byte __unknown2;
 		private byte __unknown3;
 		private byte __unknown4;
@@ -60,7 +61,7 @@ namespace Aura.Shared.Mabi.Structs
 		public int Defense;
 		public short Protection;
 		public short EffectiveRange;
-		public byte AttackSpeed;
+		public AttackSpeed AttackSpeed;
 		public byte KnockCount;
 		public short Experience;
 		public byte EP;

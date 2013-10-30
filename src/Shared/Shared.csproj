@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\Card.cs" />
+    <Compile Include="Mabi\Const\Items.cs" />
     <Compile Include="Mabi\Const\MabiId.cs" />
     <Compile Include="Database\AuraDb.cs" />
     <Compile Include="Mabi\Password.cs" />
