@@ -43,7 +43,9 @@ namespace Aura.Shared.Network
 			{
 				foreach (PacketHandler attr in method.GetCustomAttributes(typeof(PacketHandler), false))
 				{
-					this.Add(attr.Op, (PacketHandlerFunc)Delegate.CreateDelegate(typeof(PacketHandlerFunc), this, method));
+					var del = (PacketHandlerFunc)Delegate.CreateDelegate(typeof(PacketHandlerFunc), this, method);
+					foreach (var op in attr.Ops)
+						this.Add(op, del);
 				}
 			}
 		}
@@ -70,11 +72,11 @@ namespace Aura.Shared.Network
 
 	public class PacketHandler : Attribute
 	{
-		public int Op { get; protected set; }
+		public int[] Ops { get; protected set; }
 
-		public PacketHandler(int op)
+		public PacketHandler(params int[] ops)
 		{
-			this.Op = op;
+			this.Ops = ops;
 		}
 	}
 }
