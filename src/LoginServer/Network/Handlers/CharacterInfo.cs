@@ -15,51 +15,32 @@ namespace Aura.Login.Network.Handlers
 		/// <summary>
 		/// Character information request, if client doesn't have it cached.
 		/// </summary>
+		/// <remarks>
+		/// Handles characters, pets, and partners. The results are pretty
+		/// much the same, aside from the op.
+		/// </remarks>
 		/// <example>
 		/// 0001 [................] String : mabius1
 		/// 0002 [0010000000000000] Long   : ...
 		/// </example>
-		[PacketHandler(Op.CharacterInfoRequest)]
+		[PacketHandler(Op.CharacterInfoRequest, Op.PetInfoRequest)]
 		public void CharacterInfoRequest(LoginClient client, MabiPacket packet)
 		{
 			var server = packet.GetString();
 			var characterId = packet.GetLong();
 
-			var character = client.Account.GetCharacter(characterId);
+			var op = packet.Op++;
+
+			var character = (packet.Op == Op.CharacterInfoRequest ? client.Account.GetCharacter(characterId) : client.Account.GetPet(characterId));
 			if (character == null)
 			{
-				Send.CharacterInfo_Fail(client);
+				Send.CharacterInfoRequestR_Fail(client, op);
 				return;
 			}
 
 			var items = LoginDb.Instance.GetEquipment(character.CreatureId);
 
-			Send.CharacterInfo(client, character, items);
-		}
-
-		/// <summary>
-		/// Pet/Partner information request, if client doesn't have it cached.
-		/// </summary>
-		/// <example>
-		/// 0001 [................] String : mabius1
-		/// 0002 [0010010000000000] Long   : ...
-		/// </example>
-		[PacketHandler(Op.PetInfoRequest)]
-		public void PetInfoRequest(LoginClient client, MabiPacket packet)
-		{
-			var server = packet.GetString();
-			var petId = packet.GetLong();
-
-			var character = client.Account.GetPet(petId);
-			if (character == null)
-			{
-				Send.CharacterInfo_Fail(client);
-				return;
-			}
-
-			var items = LoginDb.Instance.GetEquipment(character.CreatureId);
-
-			Send.CharacterInfo(client, character, items);
+			Send.CharacterInfoRequestR(client, packet.Op, character, items);
 		}
 	}
 }

@@ -115,23 +115,19 @@ namespace Aura.Login.Network
 			client.Send(packet);
 		}
 
-		public static void CharacterInfo_Fail(LoginClient client)
+		public static void CharacterInfoRequestR_Fail(LoginClient client, int op)
 		{
-			Send.CharacterInfo(client, Op.CharacterInfo, null, null);
+			Send.CharacterInfoRequestR(client, op, null, null);
 		}
 
-		public static void CharacterInfo(LoginClient client, Character character, List<Item> items)
-		{
-			Send.CharacterInfo(client, Op.CharacterInfo, character, items);
-		}
-
-		private static void CharacterInfo(LoginClient client, int op, Character character, List<Item> items)
+		public static void CharacterInfoRequestR(LoginClient client, int op, Character character, List<Item> items)
 		{
 			var packet = new MabiPacket(op, MabiId.Login);
 			if (character == null)
 			{
 				packet.PutByte(false);
 				client.Send(packet);
+				return;
 			}
 
 			packet.PutByte(true);

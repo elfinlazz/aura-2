@@ -18,7 +18,7 @@ namespace Aura.Shared.Network
 		public const int LoginR = 0x23;
 		public const int ChannelStatus = 0x26;
 		public const int CharacterInfoRequest = 0x29;
-		public const int CharacterInfo = 0x2A;
+		public const int CharacterInfoRequestR = 0x2A;
 		public const int CreateCharacter = 0x2B;
 		public const int CharacterCreated = 0x2C;
 		public const int DeleteCharRequest = 0x2D;
@@ -32,7 +32,7 @@ namespace Aura.Shared.Network
 		public const int NameCheck = 0x39;
 		public const int NameCheckR = 0x3A;
 		public const int PetInfoRequest = 0x3B;
-		public const int PetInfo = 0x3C;
+		public const int PetInfoRequestR = 0x3C;
 		public const int CreatePet = 0x3D;
 		public const int PetCreated = 0x3E;
 		public const int DeletePetRequest = 0x3F;
