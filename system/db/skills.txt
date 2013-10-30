@@ -1,0 +1,506 @@
+// Aura
+// Database file
+// 
+// Structure:
+// Id  Name  MasterTitle
+//---------------------------------------------------------------------------
+
+// Life
+//---------------------------------------------------------------------------
+10001,"Tailoring",10029
+10002,"Read in Detail",0
+10004,"Rest",0
+10007,"Town Cry",0
+10008,"Campfire",0
+10009,"First Aid",0
+10010,"Gathering",0
+10011,"Weaving",10026
+10012,"Milling",0
+10013,"Handicraft",10139
+10015,"Refining",10027
+10016,"Blacksmithing",10030
+10020,"Cooking",0
+10021,"Herbalism",10028
+10022,"Potion Making",10031
+10023,"Fishing",10032
+10024,"Production Mastery",10058
+10025,"Open Treasure Chest",0
+10026,"Taming Wild Animals",10140
+10027,"Control Paddle",0
+10028,"Metallurgy",10074
+10029,"Hot-Air Balloon Control",0
+10033,"Carpentry",10091
+10036,"Make Theatre Mission Pass",0
+10037,"Wine Making",50015
+10038,"Perfume Making",0
+10040,"Hillwen Engineering",10920
+10041,"Magic Craft",10921
+10042,"Rare Mineralogy",10922
+10043,"Shyllien Ecology",10923
+50005,"Web Spinning",0
+50115,"Wyvern Fire Breath",0
+50160,"Save Location",0
+50161,"Pet Teleport",0
+55001,"Sheep Shearing",10801
+55002,"Mining",10802
+55003,"Egg Gathering",10803
+55004,"Mushroom Gathering",10804
+55005,"Milking",10805
+55006,"Harvesting",10806
+55007,"Hoeing",10807
+55100,"Commerce Mastery",10808
+56001,"Transformation Mastery",10809
+
+// Combat
+//---------------------------------------------------------------------------
+20001,"Defense",10010
+20002,"Smash",10011
+20003,"Counterattack",10012
+20004,"Natural Shield",0
+20005,"Heavy Stander",0
+20006,"Mana Deflector",0
+20007,"Full Swing",0
+20008,"Final Smash",0
+20009,"Fury of Bard",0
+20010,"Jump",0
+20011,"Charge",10134
+20012,"Assault Slash",10121
+20013,"Berserker",10120
+20014,"Berserker(hidden)",0
+20016,"Lance Counter",10132
+20017,"Lance Charge",10133
+21001,"Ranged Attack",10022
+21002,"Magnum Shot",10024
+21003,"Arrow Revolver",0
+21004,"Arrow Revolver",10014
+21005,"Chaingun",0
+21006,"Support Shot",10096
+21007,"Mirage Missile",10049
+21008,"Bomb Ignition",0
+21009,"Spirit Bow Awakening",0
+21010,"Throwing Attack",10094
+21011,"Hot-Air Balloon Crossbow Shot",0
+22001,"Windmill",10013
+22002,"Stomp",0
+22003,"Self Destruction Active",0
+22004,"Final Hit",10048
+22005,"Spirit Sword Awakening",0
+22006,"Spirit BW Awakening",0
+22007,"Stomp",10073
+22008,"Wendigo Stomp",0
+22009,"Alligator Full Swing",0
+22010,"Giant Lion Roar",0
+22011,"Crash Shot",10097
+23001,"Instinctive Reaction",0
+23002,"Combat Mastery",10021
+23003,"Critical Hit",10023
+23004,"Natural Shield Passive",0
+23005,"Heavy Stander Passive",0
+23006,"Mana Deflector Passive",0
+23007,"Dark Lord",0
+23008,"Glas Ghaibhleann Skill",0
+23010,"Self Destruction",0
+23011,"Sharp Mind",0
+23012,"Sword Mastery",10112
+23013,"Axe Mastery",10113
+23014,"Blunt Mastery",10114
+23016,"Shield Mastery",10115
+23021,"Dragon Tail Attack",0
+23022,"Petrifying Roar",0
+23023,"Fire Breath",0
+23024,"Dash",0
+23025,"Sandworm Melee Attack",0
+23026,"Bite",0
+23027,"Smack",0
+23028,"Wind Guard",10075
+23029,"Taunt",10095
+23030,"Final Shot",10076
+23031,"Shadow Breath",0
+23032,"Dark Flame",0
+23033,"Light of Sword",0
+23034,"Claimh Solas Dash",0
+23035,"Claimh Solas Full Swing",0
+23036,"Scarecrow Curse",0
+23037,"Roar",0
+23038,"Wall Decoration Fire Bolt",0
+23039,"Wall Decoration Ice Bolt",0
+23040,"Wall Decoration Lightning Bolt",0
+23041,"Wall Decoration Bolt Attack",0
+23042,"Wall Decoration Poison Gas Attack",0
+23043,"Evasion",0
+23045,"Python Stone Short Range Attack",0
+23046,"Python Stone Breath",0
+23047,"Nuadha Smash",0
+23050,"Nuadha Light of Sword",0
+23051,"Nuadha Smash",0
+23052,"Roar",0
+23053,"Grim Reaper Vertical Attack",0
+23054,"Grim Reaper Horizontal Attack",0
+23055,"Grim Reaper Windmill",0
+23057,"Roar",0
+23060,"Bow Mastery",10117
+23061,"Crossbow Mastery",10118
+23062,"Lance Mastery",10131
+23101,"Bran's Shockwave",0
+23103,"Bran's Arm Swing",0
+23106,"Gold Strike",10162
+50062,"Snow Bomb",0
+50104,"Charge",0
+50105,"Playing Dead",0
+50110,"Dragon Meteor",0
+50111,"Red Dragon Fire Breath",0
+50112,"Thunder Rain",0
+50114,"Dragon Roar",0
+50116,"Wyvern Lightning",0
+50117,"Wyvern Ice Breath",0
+50119,"Dragon Support Meteor",0
+50121,"Bewilder",0
+50123,"Neid Roar",0
+50124,"Tail Whip",0
+50125,"Water Bomb",0
+50129,"Beholder Beam Attack",0
+50131,"Axe Throwing",0
+50132,"Chandelier Attack",0
+50135,"Summon",0
+50137,"Boost",0
+50144,"Running Boost",0
+50500,"SummonTester",0
+50501,"WhiteDragonFear",0
+50502,"BlackDragonFear",0
+50503,"MadnessPilgrimage",0
+50504,"HolyPilgrimage",0
+50505,"WhiteDragonBreath",0
+50506,"BlackDragonBreath",0
+50507,"StampFromHell",0
+50508,"DevilHug",0
+50509,"TightDefenseBlow",0
+50510,"CastleDefenseBlow",0
+52000,"Merrow Smash",0
+65002,"Super Windmill (GM Skill)",0
+
+// Magic
+//---------------------------------------------------------------------------
+23009,"Chain Casting",0
+23102,"Bran's Charge",0
+30003,"Meditation",0
+30005,"Enchant",10034
+30006,"Healing",10018
+30007,"Magic Mastery",10088
+30008,"Party Healing",10089
+30009,"Meditaion for Pets",0
+30010,"Life Drain",0
+30011,"Mirror Witch Rest",0
+30012,"Monster Resurrection",0
+30013,"Yarn Binding!",0
+30014,"Silent Move",0
+30016,"Fire Mastery",10104
+30017,"Ice Mastery",10105
+30018,"Lightning Mastery",10106
+30019,"Bolt Mastery",10107
+30020,"Magic Wand Mastery",10108
+30021,"Magic Staff Mastery",0
+30101,"Lightning Bolt",10015
+30102,"Thunder",10020
+30103,"Floating Stone Thunder",0
+30104,"Thunder",0
+30201,"Firebolt",10016
+30202,"Fireball",10019
+30203,"Training Fireball",0
+30204,"Floating Stone Fire Ball",0
+30301,"Icebolt",10017
+30302,"Ice Spear",10046
+30303,"icehug",0
+30304,"Super Ice Bolt (GM Skill)",0
+30305,"Water Spray",0
+30306,"Floating Stone Ice Spear",0
+30307,"Hail Storm",10122
+30401,"Spirit Wand Awakening",0
+30450,"Assault Slash",0
+30451,"Berserker",0
+30452,"Fire Lightning",0
+30453,"Fusion Bolt",10119
+30460,"Fire Shield",10136
+30461,"Ice Shield",10135
+30462,"Lightning Shield",10137
+30463,"Natural Shield",10138
+30464,"Mana Shield",0
+30470,"Blaze",10080
+30471,"Paper Airplane Bomb",0
+30472,"Invitation of Death",0
+30473,"Flames of Hell",0
+50102,"Swallow",0
+50103,"Bubble Blast",0
+50106,"Master Teleport",0
+50107,"Detection",0
+50109,"Hide",0
+50133,"Shadow Death",0
+50136,"Thunder Storm",0
+50138,"Thunder Breath",0
+50139,"Fire Storm",0
+50140,"Fire Breath",0
+50142,"Ice Storm",0
+50143,"Flame Dive",0
+50149,"Hands of Salvation",0
+50151,"Frost Storm",0
+50152,"Ice Breath",0
+50154,"Flame of Resurrection",0
+50155,"Explosive Resurrection",0
+50156,"Phoenix's Flame",0
+50157,"Devil's Dash",0
+50158,"Petrifying Roar",0
+50159,"Devil's Cry",0
+50162,"Restful Wind",0
+50163,"Holy Shower",0
+50164,"Holy Rush",0
+50166,"Pet Summoned Engine Shock",0
+52001,"Merrow Rising Dragon",0
+52002,"Merrow Tidal Wave",0
+
+// Alchemy
+//---------------------------------------------------------------------------
+10030,"Fragmentation",10144
+10031,"Synthesis",10143
+35001,"Mana Crystallization",10063
+35002,"Life Drain",10086
+35003,"Alchemy Mastery",10085
+35004,"Water Cannon",10064
+35005,"Crystallization",0
+35006,"Barrier Spikes",10066
+35007,"Wind Blast",10142
+35008,"Flame Burst",10072
+35009,"Sand Burst",10141
+35010,"Rain Casting",10070
+35011,"Frozen Blast",10071
+35012,"Metal Conversion",10078
+35013,"Shock",10084
+35014,"Heat Buster",10092
+35015,"Chain Cylinder",10093
+35016,"Fire Alchemy",10098
+35017,"Water Alchemy",10099
+35018,"Clay Alchemy",10100
+35019,"Wind Alchemy",10101
+35020,"AlchemyCylinderMastery",0
+35021,"Transmutation",10103
+35101,"Spirit Cylinder Awakening",0
+50032,"Summon Golem",10065
+50033,"Mana Crystallization Counter-Transmutation",0
+
+// Fighter
+//---------------------------------------------------------------------------
+23063,"Knuckle Mastery",13000
+24001,"Chain Mastery",13001
+24101,"Charging Strike",13004
+24102,"Focused Fist",13005
+24201,"Spinning Uppercut",13006
+24202,"Somersault Kick",13007
+24301,"Drop Kick",13009
+24302,"Pummel",13008
+25000,"Respite",13003
+25001,"Tumble",13002
+
+// Music
+//---------------------------------------------------------------------------
+10003,"Playing Instrument",10033
+10005,"Composing",0
+10006,"Musical Knowledge",0
+30015,"Enthralling Performance",10111
+53001,"Dischord",10706
+53101,"Battlefield Overture",10700
+53102,"Lullaby",10701
+53103,"Vivace",10703
+53104,"Enduring Melody",10702
+53105,"Harvest Song",10704
+53106,"March Song",10705
+
+// Puppet
+//---------------------------------------------------------------------------
+54001,"Control Marionette",10901
+54081,"Pierrot Marionette",10903
+54082,"Colossus Marionette",10902
+54101,"Act 2: Threshold Cutter",10904
+54102,"Act 1: Inciting Incident",10905
+54103,"Act 4: Rising Action",10906
+54104,"Act 6: Crisis",10907
+54105,"Act 7: Climactic Crash",10908
+54106,"Act 9: Invigorating Encore",10909
+54151,"Act 2: Threshold Cutter AI",0
+54152,"Act 1: Inciting Incident AI",0
+54153,"Act 4: Rising Action AI",0
+54154,"Act 6: Crisis AI",0
+54155,"Act 7: Climactic Crash AI",0
+54156,"Act 9: Invigorating Encore AI",0
+54201,"Wire Pull",10910
+54202,"Puppet's Snare",10911
+
+// Guns
+//---------------------------------------------------------------------------
+54302,"Dual Gun Mastery",10912
+54303,"Flash Launcher",10914
+54304,"Grapple Shot",10915
+54305,"Bullet Slide",10916
+54306,"Shooting Rush",10917
+54307,"Bullet Storm",10918
+54401,"Reload",10913
+54402,"Way of the Gun",10919
+
+// Transformation
+//---------------------------------------------------------------------------
+40001,"Spirit of Order",0
+40002,"Power of Order",0
+40003,"Eye of Order",0
+40004,"Sword of Order",0
+40011,"Pal. Natural Shield",0
+40012,"Pal. Heavy Stander",0
+40013,"Pal. Mana Deflector",0
+41001,"Soul of Chaos",0
+41002,"Control of Darkness",0
+41011,"Body of Chaos",0
+41012,"Mind of Chaos",0
+41013,"Hands of Chaos",0
+41021,"Dark Natural Shield",0
+41022,"Dark Heavy Stander",0
+41023,"Dark Mana Deflector",0
+42001,"Race Transformation",0
+43001,"Fury of Connous",0
+43002,"Elven Magic Missile",0
+43011,"Armor of Connous",0
+43012,"Mind of Connous",0
+43013,"Sharpness of Con.",0
+43021,"Natural Shield",0
+43022,"Heavy Stander",0
+43023,"Mana Deflector",0
+44001,"Daemon of Physis",0
+44002,"Giant Full Swing",0
+44011,"Shield of Physis",0
+44012,"Life of Physis",0
+44013,"Spell of Physis",0
+44021,"Natural Shield",0
+44022,"Heavy Stander",0
+44023,"Mana Deflector",0
+
+// Demi
+//---------------------------------------------------------------------------
+23048,"Nuadha Spear of Light",0
+23049,"Nuadha Fury of Light",0
+45001,"Awakening of Light",0
+45002,"Spear of Light",0
+45003,"Fury of Light",0
+45004,"Awakening of Light",0
+45005,"Spear of Light",0
+45006,"Fury of Light",0
+45007,"Shadow Spirit",0
+45008,"Wings of Eclipse",0
+45009,"Wings of Rage",0
+
+// Actions
+//---------------------------------------------------------------------------
+50013,"Sketch",0
+50014,"L-Rod Exploration",0
+50016,"Play dead",0
+50017,"Hide",0
+50018,"Performance",0
+50019,"Land Maker",0
+50020,"Rock Throwing",0
+50021,"Dice Tossing",0
+50022,"Jam Session",0
+50023,"Throw Paper Airplane",0
+50044,"Water Balloon\nThrowing",0
+50048,"Cylinder On/Off",0
+50057,"Continent Warp",0
+50058,"Add Seasoning",0
+50065,"Blow Balloon",0
+50066,"Party Motion",0
+50126,"Watering",0
+50127,"Fertilizing",0
+50128,"Bug Catching",0
+50146,"Umbrella",0
+50150,"Scare",0
+50153,"Normal Attack",0
+50165,"Spread Wings",0
+
+// Personas
+//---------------------------------------------------------------------------
+51001,"Hamlet's Anguish",0
+51002,"Claudius's Conspiracy",0
+51003,"Ophelia's Tears",0
+51004,"Romeo's Confession",0
+51005,"Tybalt's Fencing Skills",0
+51006,"Juliet's Feelings",0
+51007,"Shylock's Step",0
+
+// Hybrid
+//---------------------------------------------------------------------------
+10039,"Study: Potion Lore",14004
+21012,"Spider Shot",14002
+23058,"Doppleganger",10123
+23107,"Berserk",14003
+24103,"Chain: Counter Punch",14001
+30105,"Shockwave",14000
+
+// ???
+//---------------------------------------------------------------------------
+10032,"Exclusive Street Artist skill",0
+10034,"Gardening",0
+10035,"Install Kiosk",0
+20015,"Anger Management",0
+23015,"Dagger Mastery",0
+23017,"Dual Weapon Mastery",0
+23044,"Python Stone Long Range Attack",0
+23104,"Loot",0
+23105,"Escape",0
+50001,"Hidden Enchant",0
+50002,"Hidden Resurrection",0
+50003,"Hidden TownBack",0
+50004,"Hidden Guild Stone Setting",0
+50006,"Hidden Blessing",0
+50007,"Campfire Kit",0
+50008,"Skill Untrain Kit",0
+50009,"Big Blessing Water Kit",0
+50010,"Dye",0
+50011,"Elemental Enchant-All Slots",0
+50012,"Hidden Poison Lathering Skill",0
+50015,"Hide Bomb-Use Skill",0
+50024,"MakeChocoStatue",0
+50025,"Fossil Restoration",0
+50026,"SeesawJump",0
+50027,"SeesawCreate",0
+50029,"Dragon Support",0
+50030,"Ice Mine",0
+50031,"Scan",0
+50034,"Use support items",0
+50035,"Ticking Quiz Bomb",0
+50036,"Item Seal",0
+50037,"Item Unseal",0
+50038,"Use a Dungeon Pass",0
+50039,"Use an Elatha Item",0
+50040,"Throw Confetti",0
+50041,"Use Party Popper",0
+50042,"Feed Fish",0
+50043,"Hammer Game",0
+50045,"Spirit Shift",0
+50046,"B+ Bomb",0
+50047,"Name Color Change",0
+50049,"Holy Flame",0
+50050,"Use Morrighan's Feather",0
+50051,"Create Falias Portal",0
+50052,"UseItemChattingColorChange",0
+50053,"Install Private Farm Facility",0
+50054,"Reorient Homestead building",0
+50055,"Paint",0
+50056,"Mix Paint",0
+50059,"Water Balloon Attack",0
+50060,"Emergency Ice Bomb",0
+50061,"Marionette Hidden Resurrection",0
+50101,"Pet Buffing",0
+50108,"PetSealToItem",0
+50113,"Eat Volcanic Bomb",0
+50118,"CherryTreeKit",0
+50120,"Spin",0
+50122,"Rise and Dive",0
+50130,"Beholder Alarm",0
+50134,"GachaponSynthesis",0
+50145,"Flown Hot-Air Balloon",0
+50147,"Seal Item",0
+50148,"Cure Zombie",0
+65001,"Pickup Item (GM Skill)",0
+65003,"Block World (GM Skill)",0

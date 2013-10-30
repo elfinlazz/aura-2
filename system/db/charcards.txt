@@ -1,0 +1,39 @@
+// Aura
+// Database file
+// 
+// Races: Bitmask
+//        0x01  Humans F   0x02  Humans M   0x03  Humans
+//        0x04  Elves  F   0x08  Elves  M   0x0C  Elves
+//        0x10  Giants F   0x20  Giants M   0x30  Giants
+//        0x33  Humans + Giants
+//        0x3C  Elves  + Giants
+//        0xFF  Everybody
+// 
+// Structure:
+// Id  ItemSet  Races
+//---------------------------------------------------------------------------
+
+// Basic
+//---------------------------------------------------------------------------
+0,   1,  0x03   // Basic Human Card
+16,  1,  0x0C   // Basic Elf Card
+30,  1,  0x30   // Basic Giant Card
+
+// Premium
+//---------------------------------------------------------------------------
+1,   2,  0x03   // Premium Human Card
+17,  2,  0x0C   // Premium Elf Card
+31,  2,  0x30   // Premium Giant Card
+
+// Assist
+//---------------------------------------------------------------------------
+18,  1,  0x0C   // Elf Assistant Card
+32,  1,  0x30   // Giant Assistant Card
+
+// Free
+//---------------------------------------------------------------------------
+147, 1,  0xFF   // Free Card
+
+// Special
+//---------------------------------------------------------------------------
+

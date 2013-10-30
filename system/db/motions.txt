@@ -1,0 +1,64 @@
+// Aura
+// Database file
+// 
+// Structure:
+// Name  Category  Type  Loop
+//---------------------------------------------------------------------------
+
+salute,53,30,no
+courtesy,53,31,no
+dance1,53,33,no
+dance2,53,32,no
+dance3,53,34,no
+dance4,53,35,no
+greet,53,0,no
+laugh,53,1,no
+cry,53,2,no
+clap,53,3,no
+positive,53,4,no
+negative,53,5,no
+angry,53,9,no
+question,53,6,no
+surprise,53,7,no
+frustrate,53,8,no
+kiss,53,10,no
+beg,53,11,no
+listen_music,53,13,yes
+raise_hand,53,15,no
+hurrah,53,16,no
+provoke,53,17,no
+shy,53,18,no
+charge,53,19,no
+boast_costume,53,20,no
+boast_strength,53,21,no
+boast_shape,53,22,no
+hungry,53,23,no
+follow_me,53,24,no
+joke,53,25,no
+smell,53,26,no
+yes,53,27,no
+painful,53,28,no
+provoke2,53,29,no
+disregard,14,14,no
+victory,82,0,no
+proposal1,53,46,no
+proposal2,53,47,no
+
+// G17
+// Commented ones don't seem to work (yet).
+// ---------------------------------------------------------------------------
+//head_shake,53,48,no
+blow_away,53,49,no
+cold,53,50,no
+fold_arms,53,51,no
+gaze_around,53,52,no
+jump,53,53,no
+//politely_greeting,53,54,no
+revolution,53,55,no
+side_die,53,56,no
+surprise2,53,57,no
+trip,53,58,no
+offer,53,59,no
+//cuite,53,60,no
+//tarzan,53,61,no
+psydance,53,62,no

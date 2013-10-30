@@ -1,0 +1,57 @@
+// Aura
+// Database file
+// 
+// Region:
+//   One region, or multiple ones, seperated by colons ":".
+// 
+// Type:
+//   0 Official (not supported yet)
+//   1 Custom Seed
+//       Takes one value, the seed.
+//   2 Pattern
+//       Takes multiple values, making up the pattern.
+//   3 Open Weather Map
+//       Takes one value, the city id.
+//
+// Structure:
+// Region  Type  Values...
+//---------------------------------------------------------------------------
+
+// 1 - Tir, Dugald, Sliab Cuilin
+1:16:301, 1, 116301
+
+// 2 - Dunbarton, Gairech, Fiodh 
+14:30:49:50, 1, 14304950
+
+// 3 - Bangor
+31, 1, 311
+
+// 4 - Emain, Coill
+52:54:55, 1, 525455
+
+// 5 - Sen Mag, Dugald Residential, Sen Mag Residential
+53:200:201:202:203, 1, 53200201
+
+// 6 - Morva Aisle, Port Ceann
+96:100, 1, 96100
+
+// 7 - Rano
+3001, 1, 30011
+
+// 8 - Connous
+3100, 1, 31001
+
+// 9 - Courcle
+3300, 1, 33001
+
+// 10 - Zardine
+3400, 1, 34001
+
+// 11 - Shadow Missions
+// -
+
+// 12 - Taillteann, Abb Neagh, Corrib, Tara, Blago
+300:302:400:401:402, 1, 300302400
+
+// 13 - Sidhe Sneachta, Physis
+47:48:3200, 1, 47483200

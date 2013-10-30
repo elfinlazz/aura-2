@@ -1,0 +1,22 @@
+// Aura
+// Database file
+// 
+// Structure:
+// DropType  ItemId  MaxAmount  Chance
+//---------------------------------------------------------------------------
+
+// Signs, lamps, etc.
+1, 2000,  5, 80                        // Gold 1~5
+1, 52003, 1, 80                        // Large Nail
+1, 52002, 1, 80                        // Small Gem
+1, 52004, 1, 20                        // Small Green Gem
+1, 52005, 1, 20                        // Small Blue Gem
+1, 52006, 1, 20                        // Small Red Gem
+
+// Trees
+2, 50007, 1, 80                        // Berry
+2, 52001, 1, 80                        // Branch
+
+// Apple Trees
+54, 50003, 1, 80                       // Apple
+54, 52001, 1, 80                       // Branch

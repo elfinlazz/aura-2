@@ -50,10 +50,10 @@ namespace Aura.Shared.Mabi.Structs
 		public int Durability;
 		public int DurabilityMax;
 		public int DurabilityOriginal;
-		public short AttackMin;
-		public short AttackMax;
-		public short WAttackMin;
-		public short WAttackMax;
+		public ushort AttackMin;
+		public ushort AttackMax;
+		public ushort WAttackMin;
+		public ushort WAttackMax;
 		public byte Balance;
 		public byte Critical;
 		private byte __unknown24;

@@ -1,0 +1,18 @@
+// Aura
+// Database file
+// 
+// Structure:
+// ItemId  Name  PropId  GiantPropId  Effect
+//---------------------------------------------------------------------------
+
+50087,"School Chair",42598,42819,0
+50088,"Living Room Chair",42599,42820,0
+50089,"Reading Chair",42600,42821,0
+50091,"Fishing Chair",43158,43159,0
+50092,"Fishing Chair for 2",43160,43161,0
+50095,"Shroom Buddy Chair",44266,44267,0
+50096,"Loyal Royal Yeti Chair",44260,44261,0
+50097,"King Pepe Chair",44258,44259,0
+50098,"Rainy Fox Chair",44262,44263,345
+50099,"Single Sunbed",44323,44325,0
+50100,"Double Sunbed",44324,44326,0

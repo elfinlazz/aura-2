@@ -114,7 +114,7 @@ namespace Aura.Shared.Util
 			if (description != null)
 				WriteLine(LogLevel.Error, description, args);
 
-			WriteLine(LogLevel.Exception, "{0} in {1}", ex.Source, ex.TargetSite);
+			WriteLine(LogLevel.Exception, "{2} : {0} in {1}", ex.Source, ex.TargetSite, ex.GetType());
 			WriteLine(LogLevel.Exception, ex.Message + Environment.NewLine + ex.StackTrace);
 		}
 

@@ -1,0 +1,73 @@
+// Aura
+// Database file
+// 
+// Structure:
+// RaceId  SkillId  Rank
+//---------------------------------------------------------------------------
+
+// Gray Wolf
+20001, 23002, B   // Combat Mastery
+20001, 20002, F   // Smash
+20001, 20003, F   // Counter
+20001, 20001, F   // Defense
+
+// White Wolf
+20003, 23002, B   // Combat Mastery
+20003, 20002, F   // Smash
+20003, 20003, F   // Counter
+20003, 20001, F   // Defense
+
+// Black Wolf
+20002, 23002, B   // Combat Mastery
+20002, 20002, F   // Smash
+20002, 20003, F   // Counter
+20002, 20001, F   // Defense
+
+// Brown Dire Wolf
+20005, 23002, B   // Combat Mastery
+20005, 20002, F   // Smash
+20005, 20003, F   // Counter
+20005, 20001, F   // Defense
+
+// Brown Dire Wolf Cub
+20009, 23002, B   // Combat Mastery
+20009, 20002, F   // Smash
+20009, 20003, F   // Counter
+20009, 20001, F   // Defense
+
+// Brown Fox
+50001, 23002, F   // Combat Mastery
+50001, 20001, F   // Defense
+
+// Red Fox
+50002, 23002, F   // Combat Mastery
+50002, 20001, F   // Defense
+
+// Gray Fox
+50003, 23002, F   // Combat Mastery
+50003, 20001, F   // Defense
+
+// Young Brown Fox
+50007, 23002, F   // Combat Mastery
+50007, 20001, F   // Defense
+
+// Young Red Fox
+50005, 23002, F   // Combat Mastery
+50005, 20001, F   // Defense
+
+// Young Gray Fox
+50006, 23002, F   // Combat Mastery
+50006, 20001, F   // Defense
+
+// White Spider
+30001, 23002, F   // Combat Mastery
+
+// Red Spider
+30003, 23002, F   // Combat Mastery
+
+// Brown Bear
+70001, 23002, F   // Combat Mastery
+
+// Succubus
+10301, 23002, F   // Combat Mastery
+10301, 30201, F   // Firebolt
