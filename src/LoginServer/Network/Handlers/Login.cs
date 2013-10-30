@@ -53,6 +53,7 @@ namespace Aura.Login.Network.Handlers
 		/// Login packet
 		/// </summary>
 		/// <example>
+		/// NA166
 		/// 001 [..............05] Byte   : 5
 		/// 002 [................] String : admin
 		/// 003 [................] String : ...
@@ -61,6 +62,7 @@ namespace Aura.Login.Network.Handlers
 		/// 006 [........00000000] Int    : 0
 		/// 007 [................] String : 192.168.178.20
 		/// 
+		/// NA166
 		/// 001 [..............14] Byte   : 20
 		/// 002 [................] String : admin
 		/// 003 [................] String : admin

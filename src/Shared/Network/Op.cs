@@ -17,8 +17,8 @@ namespace Aura.Shared.Network
 		public const int Login = 0x0FD12002;
 		public const int LoginR = 0x23;
 		public const int ChannelStatus = 0x26;
-		public const int CharInfoRequest = 0x29;
-		public const int CharInfo = 0x2A;
+		public const int CharacterInfoRequest = 0x29;
+		public const int CharacterInfo = 0x2A;
 		public const int CreateCharacter = 0x2B;
 		public const int CharacterCreated = 0x2C;
 		public const int DeleteCharRequest = 0x2D;

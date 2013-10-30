@@ -9,3 +9,4 @@ Changes
 * World Server renamed to Channel Server, more accurate.
 * Aura.Shared renamed to Shared.
 * Aura.Net removed.
+* Characters, Pets, and Partners now have their own tables (for ids) and link to a collective creature table.

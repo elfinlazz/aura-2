@@ -45,29 +45,44 @@ namespace Aura.Login.Database
 			this.Pets = new List<Character>();
 		}
 
+		/// <summary>
+		/// Returns character card with id, or null if it doesn't exist.
+		/// </summary>
 		public Card GetCharacterCard(long id)
 		{
 			return this.CharacterCards.FirstOrDefault(a => a.Id == id);
 		}
 
+		/// <summary>
+		/// Returns pet/partner card with id, or null if it doesn't exist.
+		/// </summary>
 		public Card GetPetCard(long id)
 		{
 			return this.PetCards.FirstOrDefault(a => a.Id == id);
 		}
 
+		/// <summary>
+		/// Returns gift with id, or null if it doesn't exist.
+		/// </summary>
+		public Gift GetGift(long id)
+		{
+			return this.Gifts.FirstOrDefault(a => a.Id == id);
+		}
+
+		/// <summary>
+		/// Returns character with id, or null if it doesn't exist.
+		/// </summary>
 		public Character GetCharacter(long id)
 		{
 			return this.Characters.FirstOrDefault(a => a.Id == id);
 		}
 
+		/// <summary>
+		/// Returns pet/partner with id, or null if it doesn't exist.
+		/// </summary>
 		public Character GetPet(long id)
 		{
 			return this.Pets.FirstOrDefault(a => a.Id == id);
-		}
-
-		public Gift GetGift(long id)
-		{
-			return this.Gifts.FirstOrDefault(a => a.Id == id);
 		}
 	}
 }

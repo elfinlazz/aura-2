@@ -8,6 +8,7 @@ namespace Aura.Login.Database
 	public class Character
 	{
 		public long Id { get; set; }
+		public long CreatureId { get; set; }
 		public string Name { get; set; }
 		public string Server { get; set; }
 
@@ -20,9 +21,9 @@ namespace Aura.Login.Database
 		public float Weight { get; set; }
 		public float Upper { get; set; }
 		public float Lower { get; set; }
-		public int Color1 { get; set; }
-		public int Color2 { get; set; }
-		public int Color3 { get; set; }
+		public uint Color1 { get; set; }
+		public uint Color2 { get; set; }
+		public uint Color3 { get; set; }
 		public byte Age { get; set; }
 
 		public int Region { get; set; }

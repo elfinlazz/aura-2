@@ -2,13 +2,12 @@
 // For more information, see licence file in the main folder
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Collections.Generic;
+using Aura.Login.Database;
+using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
-using Aura.Shared.Util;
-using Aura.Login.Database;
 
 namespace Aura.Login.Network
 {
@@ -116,6 +115,83 @@ namespace Aura.Login.Network
 			client.Send(packet);
 		}
 
+		public static void CharacterInfo_Fail(LoginClient client)
+		{
+			Send.CharacterInfo(client, Op.CharacterInfo, null, null);
+		}
+
+		public static void CharacterInfo(LoginClient client, Character character, List<Item> items)
+		{
+			Send.CharacterInfo(client, Op.CharacterInfo, character, items);
+		}
+
+		private static void CharacterInfo(LoginClient client, int op, Character character, List<Item> items)
+		{
+			var packet = new MabiPacket(op, MabiId.Login);
+			if (character == null)
+			{
+				packet.PutByte(false);
+				client.Send(packet);
+			}
+
+			packet.PutByte(true);
+			packet.PutString(character.Server);
+			packet.PutLong(character.Id);
+			packet.PutByte(1);
+			packet.PutString(character.Name);
+			packet.PutString("");
+			packet.PutString("");
+			packet.PutInt(character.Race);
+			packet.PutByte(character.SkinColor);
+			packet.PutByte(character.EyeType);
+			packet.PutByte(character.EyeColor);
+			packet.PutByte(character.MouthType);
+			packet.PutInt(0);
+			packet.PutFloat(character.Height);
+			packet.PutFloat(character.Weight);
+			packet.PutFloat(character.Upper);
+			packet.PutFloat(character.Lower);
+			packet.PutInt(0);
+			packet.PutInt(0);
+			packet.PutInt(0);
+			packet.PutByte(0);
+			packet.PutInt(0);
+			packet.PutByte(0);
+			packet.PutInt((int)character.Color1);
+			packet.PutInt((int)character.Color2);
+			packet.PutInt((int)character.Color3);
+			packet.PutFloat(0.0f);
+			packet.PutString("");
+			packet.PutFloat(49.0f);
+			packet.PutFloat(49.0f);
+			packet.PutFloat(0.0f);
+			packet.PutFloat(49.0f);
+			packet.PutInt(0);
+			packet.PutInt(0);
+			packet.PutShort(0);
+			packet.PutLong(0);
+			packet.PutString("");
+			packet.PutByte(0);
+
+			packet.PutInt(items.Count);
+			foreach (var item in items)
+			{
+				packet.PutLong(item.Id);
+				packet.PutBin(item.Info);
+			}
+
+			packet.PutInt(0);  // PetRemainingTime
+			packet.PutLong(0); // PetLastTime
+			packet.PutLong(0); // PetExpireTime
+
+			client.Send(packet);
+		}
+
+		/// <summary>
+		/// Adds server and channel information to packet.
+		/// </summary>
+		/// <param name="packet"></param>
+		/// <param name="server"></param>
 		private static void Add(this MabiPacket packet, ServerInfo server)
 		{
 			packet.PutString(server.Name);
@@ -140,6 +216,11 @@ namespace Aura.Login.Network
 			}
 		}
 
+		/// <summary>
+		/// Adds account information to packet.
+		/// </summary>
+		/// <param name="packet"></param>
+		/// <param name="account"></param>
 		private static void Add(this  MabiPacket packet, Account account)
 		{
 			packet.PutLong(MabiTime.Now.TimeStamp);	// Last Login

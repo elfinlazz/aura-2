@@ -267,6 +267,7 @@ namespace Aura.Login.Database
 				{
 					var character = new Character(type);
 					character.Id = reader.GetInt64(primary);
+					character.CreatureId = reader.GetInt64("creatureId");
 					character.Name = reader.GetStringSafe("name");
 					character.Server = reader.GetStringSafe("server");
 					character.Race = reader.GetInt32("race");
@@ -279,12 +280,42 @@ namespace Aura.Login.Database
 					character.Weight = reader.GetFloat("weight");
 					character.Upper = reader.GetFloat("upper");
 					character.Lower = reader.GetInt32("lower");
-					character.Color1 = reader.GetInt32("color1");
-					character.Color2 = reader.GetInt32("color2");
-					character.Color3 = reader.GetInt32("color3");
+					character.Color1 = reader.GetUInt32("color1");
+					character.Color2 = reader.GetUInt32("color2");
+					character.Color3 = reader.GetUInt32("color3");
 
 					result.Add(character);
 				}
+			}
+		}
+
+		public List<Item> GetItems(long creatureId)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId", conn);
+				mc.Parameters.AddWithValue("@creatureId", creatureId);
+
+				var result = new List<Item>();
+				using (var reader = mc.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						var item = new Item();
+						item.Id = reader.GetInt64("itemId");
+						item.Info.Class = reader.GetInt32("class");
+						item.Info.Pocket = reader.GetByte("pocket");
+						item.Info.Color1 = reader.GetUInt32("color1");
+						item.Info.Color2 = reader.GetUInt32("color2");
+						item.Info.Color3 = reader.GetUInt32("color3");
+						item.Info.State = reader.GetByte("state");
+
+						if (item.IsVisible)
+							result.Add(item);
+					}
+				}
+
+				return result;
 			}
 		}
 	}

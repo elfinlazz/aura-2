@@ -13,9 +13,9 @@ namespace Aura.Shared.Mabi.Structs
 		private byte __unknown3;
 		private byte __unknown4;
 		public int Class;
-		public int Color1;
-		public int Color2;
-		public int Color3;
+		public uint Color1;
+		public uint Color2;
+		public uint Color3;
 		public short Amount;
 		private short __unknown7;
 		public int Region;
@@ -25,7 +25,7 @@ namespace Aura.Shared.Mabi.Structs
 		/// <summary>
 		/// State of the item? (eg. hoods and helmets)
 		/// </summary>
-		public byte FigureA;
+		public byte State; // FigureA
 
 		public byte uFigureB;
 		public byte uFigureC;
