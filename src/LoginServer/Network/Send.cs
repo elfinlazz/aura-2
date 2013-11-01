@@ -238,6 +238,57 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
+		/// Sends negative CreatePetR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		public static void CreatePetR_Fail(LoginClient client)
+		{
+			CreateCharacterR(client, null, 0);
+		}
+
+		/// <summary>
+		/// Semds CreatePetR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="serverName">Response is negative if null.</param>
+		/// <param name="id"></param>
+		public static void CreatePetR(LoginClient client, string serverName, long id)
+		{
+			var response = new MabiPacket(Op.CreatePetR, MabiId.Login);
+			response.PutByte(serverName != null);
+
+			if (serverName != null)
+			{
+				response.PutString(serverName);
+				response.PutLong(id);
+			}
+
+			client.Send(response);
+		}
+
+		/// <summary>
+		/// Sends PetCreationOptionsRequestR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="type"></param>
+		/// <param name="list">No overwrite if list is null.</param>
+		public static void PetCreationOptionsRequestR(LoginClient client, PetCreationOptionsListType type, List<int> list)
+		{
+			var packet = new MabiPacket(Op.PetCreationOptionsRequestR, MabiId.Login);
+			packet.PutByte(list != null);
+
+			if (list != null)
+			{
+				packet.PutByte((byte)type);
+				foreach (var race in list)
+					packet.PutInt(race);
+				packet.PutInt(-1); // End of list
+			}
+
+			client.Send(packet);
+		}
+
+		/// <summary>
 		/// Adds server and channel information to packet.
 		/// </summary>
 		/// <param name="packet"></param>
@@ -446,5 +497,10 @@ namespace Aura.Login.Network
 		SecondaryReq = 90,
 		SecondaryFail = 91,
 		Banned = 101,
+	}
+
+	public enum PetCreationOptionsListType : byte
+	{
+		BlackList = 0, WhiteList = 1
 	}
 }

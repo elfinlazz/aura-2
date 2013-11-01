@@ -277,7 +277,7 @@ namespace Aura.Login.Database
 			{
 				while (reader.Read())
 				{
-					var character = new Character(type);
+					var character = new Character();
 					character.Id = reader.GetInt64(primary);
 					character.CreatureId = reader.GetInt64("creatureId");
 					character.Name = reader.GetStringSafe("name");
@@ -340,10 +340,10 @@ namespace Aura.Login.Database
 		/// Creates creature:character combination for the account.
 		/// Returns false if either failed, true on success.
 		/// </summary>
-		/// <param name="accountName"></param>
+		/// <param name="accountId"></param>
 		/// <param name="character"></param>
 		/// <returns></returns>
-		public bool CreateCharacter(string accountName, Character character, List<CharCardSetInfo> items, List<ushort> keywords, List<Skill> skills)
+		public bool CreateCharacter(string accountId, Character character, List<CharCardSetInfo> items, List<ushort> keywords, List<Skill> skills)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			{
@@ -363,7 +363,7 @@ namespace Aura.Login.Database
 							"VALUES (@accountId, @creatureId)"
 						, conn, transaction);
 
-						mc.Parameters.AddWithValue("@accountId", accountName);
+						mc.Parameters.AddWithValue("@accountId", accountId);
 						mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
 
 						mc.ExecuteNonQuery();
@@ -386,6 +386,56 @@ namespace Aura.Login.Database
 				}
 				catch (Exception ex)
 				{
+					character.Id = character.CreatureId = 0;
+
+					transaction.Rollback();
+
+					Log.Exception(ex);
+
+					return false;
+				}
+			}
+		}
+
+		public bool CreatePet(string accountId, Character pet, List<Skill> skills)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				MySqlTransaction transaction = null;
+				try
+				{
+					transaction = conn.BeginTransaction();
+
+					// Creature
+					pet.CreatureId = this.CreateCreature(pet, conn, transaction);
+
+					// Pet
+					{
+						var mc = new MySqlCommand(
+							"INSERT INTO `pets` " +
+							"(`accountId`, `creatureId`) " +
+							"VALUES (@accountId, @creatureId)"
+						, conn, transaction);
+
+						mc.Parameters.AddWithValue("@accountId", accountId);
+						mc.Parameters.AddWithValue("@creatureId", pet.CreatureId);
+
+						mc.ExecuteNonQuery();
+
+						pet.Id = mc.LastInsertedId;
+					}
+
+					// Skills
+					this.AddSkills(pet.CreatureId, skills, conn, transaction);
+
+					transaction.Commit();
+
+					return true;
+				}
+				catch (Exception ex)
+				{
+					pet.Id = pet.CreatureId = 0;
+
 					transaction.Rollback();
 
 					Log.Exception(ex);
@@ -398,32 +448,48 @@ namespace Aura.Login.Database
 		/// <summary>
 		/// Creatures creature based on character and returns its id.
 		/// </summary>
-		/// <param name="character"></param>
+		/// <param name="creature"></param>
 		/// <param name="conn"></param>
 		/// <param name="transaction"></param>
 		/// <returns></returns>
-		private long CreateCreature(Character character, MySqlConnection conn, MySqlTransaction transaction)
+		private long CreateCreature(Character creature, MySqlConnection conn, MySqlTransaction transaction)
 		{
 			var mc = new MySqlCommand(
 				"INSERT INTO `creatures` " +
-				"(`server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`) " +
-				"VALUES (@server, @name, @race, @skinColor, @eyeType, @eyeColor, @mouthType, @height, @weight, @upper, @lower, @color1, @color2, @color3)"
+				"(`server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`, " +
+				" `lifeMax`, `lifeDelta`, `manaMax`, `manaDelta`, `staminaMax`, `staminaDelta`, `str`, `int`, `dex`, `will`, `luck`, `defense`, `protection`, `ap`) " +
+				"VALUES (@server, @name, @race, @skinColor, @eyeType, @eyeColor, @mouthType, @height, @weight, @upper, @lower, @color1, @color2, @color3, " +
+				" @lifeMax, @lifeDelta, @manaMax, @manaDelta, @staminaMax, @staminaDelta, @str, @int, @dex, @will, @luck, @defense, @protection, @ap)"
 			, conn, transaction);
 
-			mc.Parameters.AddWithValue("@server", character.Server);
-			mc.Parameters.AddWithValue("@name", character.Name);
-			mc.Parameters.AddWithValue("@race", character.Race);
-			mc.Parameters.AddWithValue("@skinColor", character.SkinColor);
-			mc.Parameters.AddWithValue("@eyeType", character.EyeType);
-			mc.Parameters.AddWithValue("@eyeColor", character.EyeColor);
-			mc.Parameters.AddWithValue("@mouthType", character.MouthType);
-			mc.Parameters.AddWithValue("@height", character.Height);
-			mc.Parameters.AddWithValue("@weight", character.Weight);
-			mc.Parameters.AddWithValue("@upper", character.Upper);
-			mc.Parameters.AddWithValue("@lower", character.Lower);
-			mc.Parameters.AddWithValue("@color1", character.Color1);
-			mc.Parameters.AddWithValue("@color2", character.Color2);
-			mc.Parameters.AddWithValue("@color3", character.Color3);
+			mc.Parameters.AddWithValue("@server", creature.Server);
+			mc.Parameters.AddWithValue("@name", creature.Name);
+			mc.Parameters.AddWithValue("@race", creature.Race);
+			mc.Parameters.AddWithValue("@skinColor", creature.SkinColor);
+			mc.Parameters.AddWithValue("@eyeType", creature.EyeType);
+			mc.Parameters.AddWithValue("@eyeColor", creature.EyeColor);
+			mc.Parameters.AddWithValue("@mouthType", creature.MouthType);
+			mc.Parameters.AddWithValue("@height", creature.Height);
+			mc.Parameters.AddWithValue("@weight", creature.Weight);
+			mc.Parameters.AddWithValue("@upper", creature.Upper);
+			mc.Parameters.AddWithValue("@lower", creature.Lower);
+			mc.Parameters.AddWithValue("@color1", creature.Color1);
+			mc.Parameters.AddWithValue("@color2", creature.Color2);
+			mc.Parameters.AddWithValue("@color3", creature.Color3);
+			mc.Parameters.AddWithValue("@lifeMax", creature.Life);
+			mc.Parameters.AddWithValue("@lifeDelta", creature.Life);
+			mc.Parameters.AddWithValue("@manaMax", creature.Mana);
+			mc.Parameters.AddWithValue("@manaDelta", creature.Mana);
+			mc.Parameters.AddWithValue("@staminaMax", creature.Stamina);
+			mc.Parameters.AddWithValue("@staminaDelta", creature.Stamina);
+			mc.Parameters.AddWithValue("@str", creature.Str);
+			mc.Parameters.AddWithValue("@int", creature.Int);
+			mc.Parameters.AddWithValue("@dex", creature.Dex);
+			mc.Parameters.AddWithValue("@will", creature.Will);
+			mc.Parameters.AddWithValue("@luck", creature.Luck);
+			mc.Parameters.AddWithValue("@defense", creature.Defense);
+			mc.Parameters.AddWithValue("@protection", creature.Protection);
+			mc.Parameters.AddWithValue("@ap", creature.AP);
 
 			mc.ExecuteNonQuery();
 

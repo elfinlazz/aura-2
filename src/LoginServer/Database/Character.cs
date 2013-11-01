@@ -45,8 +45,6 @@ namespace Aura.Login.Database
 		public short Defense { get; set; }
 		public float Protection { get; set; }
 
-		public CharacterType Type { get; set; }
-
 		/// <summary>
 		/// Time at which the character may be deleted for good.
 		/// </summary>
@@ -71,9 +69,9 @@ namespace Aura.Login.Database
 			}
 		}
 
-		public Character(CharacterType type)
+		public Character()
 		{
-			this.Type = type;
+			this.Height = 1;
 			this.Weight = 1;
 			this.Upper = 1;
 			this.Lower = 1;

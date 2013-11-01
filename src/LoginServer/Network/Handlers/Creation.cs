@@ -108,7 +108,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Create character
-			var character = new Character(CharacterType.Character);
+			var character = new Character();
 			character.Name = name;
 			character.Race = race;
 			character.Face = face;
@@ -150,6 +150,131 @@ namespace Aura.Login.Network.Handlers
 
 		L_Fail:
 			Send.CreateCharacterR_Fail(client);
+		}
+
+		/// <summary>
+		/// Pet creation request.
+		/// </summary>
+		/// <example>
+		/// 0001 [................] String : mabius1
+		/// 0002 [0000000000104054] Long   : 1065044
+		/// 0003 [................] String : ...
+		/// 0004 [........00000000] Int    : 0
+		/// 0005 [........00000000] Int    : 0
+		/// 0006 [........00000000] Int    : 0
+		/// </example>
+		[PacketHandler(Op.CreatePet)]
+		public void CreatePet(LoginClient client, MabiPacket packet)
+		{
+			var serverName = packet.GetString();
+			var cardId = packet.GetLong();
+			var name = packet.GetString();
+			var color1 = packet.GetUInt();
+			var color2 = packet.GetUInt();
+			var color3 = packet.GetUInt();
+
+			// Check card and server
+			var card = client.Account.GetPetCard(cardId);
+			if (card == null || !LoginServer.Instance.Servers.Has(serverName))
+			{
+				Log.Error("Pet creation: Missing card or server ({0}).", serverName);
+				goto L_Fail;
+			}
+
+			// Check pet info
+			var petInfo = AuraData.PetDb.Find(card.Race);
+			if (petInfo == null)
+			{
+				Log.Error("Pet creation: Missing pet info ({0}).", card.Race);
+				goto L_Fail;
+			}
+
+			// Check name
+			var nameCheck = AuraDb.Instance.NameOkay(name, serverName);
+			if (nameCheck != NameCheckResult.Okay)
+			{
+				Log.Error("Pet creation: Invalid name ({0}).", nameCheck);
+				goto L_Fail;
+			}
+
+			// Create pet
+			var pet = new Character();
+			pet.Name = name;
+			pet.Race = card.Race;
+			pet.Age = 1;
+			pet.Server = serverName;
+			pet.Height = petInfo.Height;
+			pet.Upper = petInfo.Upper;
+			pet.Lower = petInfo.Lower;
+
+			pet.Region = 1;
+			pet.X = 12800;
+			pet.Y = 38100;
+
+			pet.Life = petInfo.Life;
+			pet.Mana = petInfo.Mana;
+			pet.Stamina = petInfo.Stamina;
+			pet.Str = petInfo.Str;
+			pet.Int = petInfo.Int;
+			pet.Dex = petInfo.Dex;
+			pet.Will = petInfo.Will;
+			pet.Luck = petInfo.Luck;
+			pet.Defense = petInfo.Defense;
+			pet.Protection = petInfo.Protection;
+
+			if (color1 > 0 || color2 > 0 || color3 > 0)
+			{
+				pet.Color1 = color1;
+				pet.Color2 = color2;
+				pet.Color3 = color3;
+			}
+			else
+			{
+				pet.Color1 = petInfo.Color1;
+				pet.Color2 = petInfo.Color2;
+				pet.Color3 = petInfo.Color3;
+			}
+
+			// Try to create pet
+			if (!client.Account.CreatePet(pet))
+			{
+				Log.Error("Pet creation: Failed for unknown reasons.");
+				goto L_Fail;
+			}
+
+			// Success~
+			Send.CreatePetR(client, serverName, pet.Id);
+
+			return;
+
+		L_Fail:
+			Send.CreatePetR_Fail(client);
+		}
+
+		/// <summary>
+		/// Sent when entering pet creation, request for
+		/// potential option changes.
+		/// </summary>
+		/// <remarks>
+		/// Allows to modify the client-side pet list. A list of races can
+		/// be sent to the client, to be either included (white-list) or
+		/// excluded (black-list). White-list removes all races except for those
+		/// in the list, black-list removes all races in the list.
+		/// 
+		/// Client requires a re-start to accept a new list.
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.PetCreationOptionsRequest)]
+		public void PetCreationOptionsRequest(LoginClient client, MabiPacket packet)
+		{
+			//var availableRaces = new List<int>();
+			//availableRaces.Add(430505);
+
+			// TODO: Make this configurable.
+
+			Send.PetCreationOptionsRequestR(client, PetCreationOptionsListType.WhiteList, null);
 		}
 	}
 }

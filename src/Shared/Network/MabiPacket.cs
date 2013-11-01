@@ -187,6 +187,11 @@ namespace Aura.Shared.Network
 			return val;
 		}
 
+		public uint GetUInt()
+		{
+			return (uint)this.GetInt();
+		}
+
 		public long GetLong()
 		{
 			if (this.Peek() != PacketElementType.Long)

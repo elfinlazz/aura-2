@@ -34,7 +34,7 @@ namespace Aura.Shared.Network
 		public const int PetInfoRequest = 0x3B;
 		public const int PetInfoRequestR = 0x3C;
 		public const int CreatePet = 0x3D;
-		public const int PetCreated = 0x3E;
+		public const int CreatePetR = 0x3E;
 		public const int DeletePetRequest = 0x3F;
 		public const int DeletePetRequestR = 0x40;
 		public const int DeletePet = 0x41;
@@ -50,9 +50,9 @@ namespace Aura.Shared.Network
 		public const int RefuseGift = 0x4B;
 		public const int RefuseGiftR = 0x4C;
 		public const int Disconnect = 0x4D;
-		public const int EnterPetCreation = 0x50;
-		public const int CreatingPetR = 0x51;
-		public const int EnterPartnerCreation = 0x55;
-		public const int CreatingPartnerR = 0x56;
+		public const int PetCreationOptionsRequest = 0x50;
+		public const int PetCreationOptionsRequestR = 0x51;
+		public const int PartnerCreationOptionsRequest = 0x55;
+		public const int PartnerCreationOptionsRequestR = 0x56;
 	}
 }

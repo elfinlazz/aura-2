@@ -4,11 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Aura.Shared.Database;
-using Aura.Data.Database;
 using Aura.Data;
+using Aura.Data.Database;
+using Aura.Shared.Database;
 using Aura.Shared.Mabi.Const;
-using Aura.Shared.Util;
 
 namespace Aura.Login.Database
 {
@@ -99,7 +98,7 @@ namespace Aura.Login.Database
 		{
 			// Create start items for card and hair/face
 			var items = AuraData.CharCardSetDb.Find(cardInfo.SetId, character.Race);
-			this.RandomizeItemColors(ref items, (this.Name + character.Race + character.SkinColor + character.Hair + character.HairColor + character.Age + character.EyeType + character.EyeColor + character.MouthType + character.Face));
+			this.GenerateItemColors(ref items, (this.Name + character.Race + character.SkinColor + character.Hair + character.HairColor + character.Age + character.EyeType + character.EyeColor + character.MouthType + character.Face));
 			items.Add(new CharCardSetInfo { Class = character.Face, Pocket = (byte)Pocket.Face, Race = character.Race, Color1 = character.SkinColor });
 			items.Add(new CharCardSetInfo { Class = character.Hair, Pocket = (byte)Pocket.Hair, Race = character.Race, Color1 = character.HairColor + 0x10000000u });
 
@@ -167,7 +166,38 @@ namespace Aura.Login.Database
 			return true;
 		}
 
-		private void RandomizeItemColors(ref List<CharCardSetInfo> cardItems, string hash)
+		/// <summary>
+		/// Creates new pet for this account. Returns true if successful,
+		/// pet's ids are also set in that case.
+		/// </summary>
+		/// <param name="pet"></param>
+		/// <returns></returns>
+		public bool CreatePet(Character pet)
+		{
+			// Start skills
+			var skills = new List<Skill>();
+			skills.Add(new Skill(SkillId.MeleeCombatMastery, SkillRank.RF));
+
+			if (!LoginDb.Instance.CreatePet(this.Name, pet, skills))
+				return false;
+
+			this.Pets.Add(pet);
+
+			return true;
+		}
+
+		/// <summary>
+		/// Changes item colors, using MTRandom and hash.
+		/// </summary>
+		/// <remarks>
+		/// The hash is converted into an int, which is used as seed for
+		/// MTRandom, the RNG Mabi is using. That is used to get specific
+		/// "random" colors from the color map db.
+		/// 
+		/// Used to generate "random" colors on the equipment of
+		/// new characters and partners.
+		/// </remarks>
+		private void GenerateItemColors(ref List<CharCardSetInfo> cardItems, string hash)
 		{
 			int ihash = 5381;
 			foreach (var ch in hash)

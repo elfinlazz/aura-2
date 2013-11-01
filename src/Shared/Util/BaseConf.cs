@@ -24,7 +24,7 @@ namespace Aura.Shared.Util
 		protected void LoadLog(string logFileName)
 		{
 			this.Archive = this.GetBool("log.archive", true);
-			this.Hide = (LogLevel)this.GetInt("log.cmd_hide", 8);
+			this.Hide = (LogLevel)this.GetShort("log.cmd_hide", (short)(LogLevel.Debug));
 
 			if (this.Archive)
 				Log.Archive = "../../log/archive/";
