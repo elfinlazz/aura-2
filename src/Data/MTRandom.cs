@@ -75,7 +75,7 @@ namespace Aura.Data
 		/// Generates random number between 0 and uint max.
 		/// </summary>
 		/// <returns></returns>
-		public int GetInt32()
+		public uint GetUInt32()
 		{
 			if (_mti >= N)
 			{
@@ -104,7 +104,7 @@ namespace Aura.Data
 			y ^= (y << 7) & 0x9D2C5680U;
 			y ^= (y << 15) & 0xEFC60000U;
 			y ^= (y >> 18);
-			return (int)y;
+			return y;
 		}
 
 		/// <summary>
@@ -113,9 +113,9 @@ namespace Aura.Data
 		/// </summary>
 		/// <param name="max"></param>
 		/// <returns></returns>
-		public int GetInt32(uint max)
+		public uint GetUInt32(uint max)
 		{
-			return this.GetInt32(0, max - 1);
+			return this.GetUInt32(0, max - 1);
 		}
 
 		/// <summary>
@@ -125,9 +125,9 @@ namespace Aura.Data
 		/// <param name="min"></param>
 		/// <param name="max"></param>
 		/// <returns></returns>
-		public int GetInt32(uint min, uint max)
+		public uint GetUInt32(uint min, uint max)
 		{
-			return (int)(this.GetDouble() * (max + 1 - min) + min);
+			return (uint)(this.GetDouble() * (max + 1 - min) + min);
 		}
 
 		/// <summary>
@@ -136,7 +136,7 @@ namespace Aura.Data
 		/// <returns></returns>
 		public double GetDouble()
 		{
-			return ((double)this.GetInt32() / 0xFFFFFFFFU);
+			return ((double)this.GetUInt32() / 0xFFFFFFFFU);
 		}
 	}
 }

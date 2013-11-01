@@ -5,6 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Aura.Shared.Database;
+using Aura.Data.Database;
+using Aura.Data;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
 
 namespace Aura.Login.Database
 {
@@ -83,6 +87,103 @@ namespace Aura.Login.Database
 		public Character GetPet(long id)
 		{
 			return this.Pets.FirstOrDefault(a => a.Id == id);
+		}
+
+		/// <summary>
+		/// Creates new character for this account. Returns true if successful,
+		/// character's ids are also set in that case.
+		/// </summary>
+		/// <param name="character"></param>
+		/// <returns></returns>
+		public bool CreateCharacter(Character character, CharCardInfo cardInfo)
+		{
+			// Create start items for card and hair/face
+			var items = AuraData.CharCardSetDb.Find(cardInfo.SetId, character.Race);
+			this.RandomizeItemColors(ref items, (this.Name + character.Race + character.SkinColor + character.Hair + character.HairColor + character.Age + character.EyeType + character.EyeColor + character.MouthType + character.Face));
+			items.Add(new CharCardSetInfo { Class = character.Face, Pocket = (byte)Pocket.Face, Race = character.Race, Color1 = character.SkinColor });
+			items.Add(new CharCardSetInfo { Class = character.Hair, Pocket = (byte)Pocket.Hair, Race = character.Race, Color1 = character.HairColor + 0x10000000u });
+
+			// Start keywords
+			var keywords = new List<ushort>() { 1, 2, 3, 37, 38 };
+
+			// Start skills
+			var skills = new List<Skill>();
+			skills.Add(new Skill(SkillId.MeleeCombatMastery, SkillRank.RF));
+			skills.Add(new Skill(SkillId.HiddenEnchant));
+			skills.Add(new Skill(SkillId.HiddenResurrection));
+			skills.Add(new Skill(SkillId.HiddenTownBack));
+			skills.Add(new Skill(SkillId.HiddenGuildStoneSetting));
+			skills.Add(new Skill(SkillId.HiddenBlessing));
+			skills.Add(new Skill(SkillId.CampfireKit));
+			skills.Add(new Skill(SkillId.SkillUntrainKit));
+			skills.Add(new Skill(SkillId.BigBlessingWaterKit));
+			skills.Add(new Skill(SkillId.Dye));
+			skills.Add(new Skill(SkillId.EnchantElementalAllSlot));
+			skills.Add(new Skill(SkillId.HiddenPoison));
+			skills.Add(new Skill(SkillId.HiddenBomb));
+			skills.Add(new Skill(SkillId.FossilRestoration));
+			skills.Add(new Skill(SkillId.SeesawJump));
+			skills.Add(new Skill(SkillId.SeesawCreate));
+			skills.Add(new Skill(SkillId.DragonSupport));
+			skills.Add(new Skill(SkillId.IceMine));
+			skills.Add(new Skill(SkillId.Scan));
+			skills.Add(new Skill(SkillId.UseSupportItem));
+			skills.Add(new Skill(SkillId.TickingQuizBomb));
+			skills.Add(new Skill(SkillId.ItemSeal));
+			skills.Add(new Skill(SkillId.ItemUnseal));
+			skills.Add(new Skill(SkillId.ItemDungeonPass));
+			skills.Add(new Skill(SkillId.UseElathaItem));
+			skills.Add(new Skill(SkillId.UseMorrighansFeather));
+			skills.Add(new Skill(SkillId.PetBuffing));
+			skills.Add(new Skill(SkillId.CherryTreeKit));
+			skills.Add(new Skill(SkillId.ThrowConfetti));
+			skills.Add(new Skill(SkillId.UsePartyPopper));
+			skills.Add(new Skill(SkillId.HammerGame));
+			skills.Add(new Skill(SkillId.SpiritShift));
+			skills.Add(new Skill(SkillId.EmergencyEscapeBomb));
+			skills.Add(new Skill(SkillId.EmergencyIceBomb));
+			skills.Add(new Skill(SkillId.NameColorChange));
+			skills.Add(new Skill(SkillId.HolyFlame));
+			skills.Add(new Skill(SkillId.CreateFaliasPortal));
+			skills.Add(new Skill(SkillId.UseItemChattingColorChange));
+			skills.Add(new Skill(SkillId.InstallPrivateFarmFacility));
+			skills.Add(new Skill(SkillId.ReorientHomesteadbuilding));
+			skills.Add(new Skill(SkillId.GachaponSynthesis));
+			skills.Add(new Skill(SkillId.MakeChocoStatue));
+			skills.Add(new Skill(SkillId.Paint));
+			skills.Add(new Skill(SkillId.MixPaint));
+			skills.Add(new Skill(SkillId.PetSealToItem));
+			skills.Add(new Skill(SkillId.FlownHotAirBalloon));
+			skills.Add(new Skill(SkillId.ItemSeal2));
+			skills.Add(new Skill(SkillId.CureZombie));
+			skills.Add(new Skill(SkillId.ContinentWarp));
+			skills.Add(new Skill(SkillId.AddSeasoning));
+
+			if (!LoginDb.Instance.CreateCharacter(this.Name, character, items, keywords, skills))
+				return false;
+
+			this.Characters.Add(character);
+
+			return true;
+		}
+
+		private void RandomizeItemColors(ref List<CharCardSetInfo> cardItems, string hash)
+		{
+			int ihash = 5381;
+			foreach (var ch in hash)
+				ihash = ihash * 33 + (int)ch;
+
+			var rnd = new MTRandom(ihash);
+			foreach (var item in cardItems)
+			{
+				var dataInfo = AuraData.ItemDb.Find(item.Class);
+				if (dataInfo == null)
+					continue;
+
+				item.Color1 = (item.Color1 != 0 ? item.Color1 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap1, rnd));
+				item.Color2 = (item.Color2 != 0 ? item.Color2 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap2, rnd));
+				item.Color3 = (item.Color3 != 0 ? item.Color3 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap3, rnd));
+			}
 		}
 	}
 }

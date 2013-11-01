@@ -30,9 +30,9 @@ namespace Aura.Data.Database
 		/// <param name="race">0 = Human, 1 = Elf, 2 = Giant</param>
 		/// <param name="age">10-17</param>
 		/// <returns></returns>
-		public StatsBaseInfo Find(uint race, byte age)
+		public StatsBaseInfo Find(int race, byte age)
 		{
-			race = (uint)(race & ~3);
+			race = (race & ~3);
 			return this.Entries.FirstOrDefault(a => a.Race == race && a.Age == age);
 		}
 

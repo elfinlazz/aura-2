@@ -20,7 +20,7 @@ namespace Aura.Shared.Network
 		public const int CharacterInfoRequest = 0x29;
 		public const int CharacterInfoRequestR = 0x2A;
 		public const int CreateCharacter = 0x2B;
-		public const int CharacterCreated = 0x2C;
+		public const int CreateCharacterR = 0x2C;
 		public const int DeleteCharRequest = 0x2D;
 		public const int DeleteCharRequestR = 0x2E;
 		public const int EnterGame = 0x2F;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Aura.Shared.Network;
 using Aura.Login.Database;
+using Aura.Shared.Util;
 
 namespace Aura.Login.Network.Handlers
 {
@@ -29,7 +30,7 @@ namespace Aura.Login.Network.Handlers
 			var server = packet.GetString();
 			var characterId = packet.GetLong();
 
-			var op = packet.Op++;
+			var op = packet.Op + 1;
 
 			var character = (packet.Op == Op.CharacterInfoRequest ? client.Account.GetCharacter(characterId) : client.Account.GetPet(characterId));
 			if (character == null)
@@ -40,7 +41,7 @@ namespace Aura.Login.Network.Handlers
 
 			var items = LoginDb.Instance.GetEquipment(character.CreatureId);
 
-			Send.CharacterInfoRequestR(client, packet.Op, character, items);
+			Send.CharacterInfoRequestR(client, op, character, items);
 		}
 	}
 }

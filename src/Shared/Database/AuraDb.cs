@@ -2,11 +2,8 @@
 // For more information, see licence file in the main folder
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MySql.Data.MySqlClient;
-using Aura.Shared.Mabi.Const;
+using System.Text.RegularExpressions;
 
 namespace Aura.Shared.Database
 {
@@ -15,6 +12,8 @@ namespace Aura.Shared.Database
 		public static readonly AuraDb Instance = new AuraDb();
 
 		private string _connectionString;
+
+		private Regex _nameCheckRegex = new Regex(@"^[a-zA-Z][a-z0-9]{2,15}$", RegexOptions.Compiled);
 
 		/// <summary>
 		/// Returns new open connection.
@@ -105,6 +104,32 @@ namespace Aura.Shared.Database
 
 				return new Card(mc.LastInsertedId, type, race);
 			}
+		}
+
+		/// <summary>
+		/// Returns true if the name is valid and available.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public NameCheckResult NameOkay(string name, string serverName)
+		{
+			if (!_nameCheckRegex.IsMatch(name))
+				return NameCheckResult.Invalid;
+
+			using (var conn = this.Connection)
+			{
+				var mc = new MySqlCommand("SELECT `creatureId` FROM `creatures` WHERE `name` = @name AND `server` = @serverName", conn);
+				mc.Parameters.AddWithValue("@name", name);
+				mc.Parameters.AddWithValue("@serverName", serverName);
+
+				using (var reader = mc.ExecuteReader())
+				{
+					if (reader.HasRows)
+						return NameCheckResult.Exists;
+				}
+			}
+
+			return NameCheckResult.Okay;
 		}
 	}
 

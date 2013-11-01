@@ -13,7 +13,10 @@ namespace Aura.Login.Database
 		public string Server { get; set; }
 
 		public int Race { get; set; }
+		public int Face { get; set; }
 		public byte SkinColor { get; set; }
+		public int Hair { get; set; }
+		public byte HairColor { get; set; }
 		public byte EyeType { get; set; }
 		public byte EyeColor { get; set; }
 		public byte MouthType { get; set; }

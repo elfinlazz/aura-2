@@ -8,6 +8,8 @@ using Aura.Login.Database;
 using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Shared.Database;
+using Aura.Shared.Util;
 
 namespace Aura.Login.Network
 {
@@ -115,72 +117,124 @@ namespace Aura.Login.Network
 			client.Send(packet);
 		}
 
+		/// <summary>
+		/// Sends negative xInfoRequestR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="op"></param>
 		public static void CharacterInfoRequestR_Fail(LoginClient client, int op)
 		{
 			Send.CharacterInfoRequestR(client, op, null, null);
 		}
 
+		/// <summary>
+		/// Sends xInfoRequestR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="op"></param>
+		/// <param name="character"></param>
+		/// <param name="items"></param>
 		public static void CharacterInfoRequestR(LoginClient client, int op, Character character, List<Item> items)
 		{
 			var packet = new MabiPacket(op, MabiId.Login);
-			if (character == null)
+			packet.PutByte(character != null);
+
+			if (character != null)
 			{
-				packet.PutByte(false);
-				client.Send(packet);
-				return;
+				packet.PutString(character.Server);
+				packet.PutLong(character.Id);
+				packet.PutByte(1);
+				packet.PutString(character.Name);
+				packet.PutString("");
+				packet.PutString("");
+				packet.PutInt(character.Race);
+				packet.PutByte(character.SkinColor);
+				packet.PutByte(character.EyeType);
+				packet.PutByte(character.EyeColor);
+				packet.PutByte(character.MouthType);
+				packet.PutInt(0);
+				packet.PutFloat(character.Height);
+				packet.PutFloat(character.Weight);
+				packet.PutFloat(character.Upper);
+				packet.PutFloat(character.Lower);
+				packet.PutInt(0);
+				packet.PutInt(0);
+				packet.PutInt(0);
+				packet.PutByte(0);
+				packet.PutInt(0);
+				packet.PutByte(0);
+				packet.PutInt((int)character.Color1);
+				packet.PutInt((int)character.Color2);
+				packet.PutInt((int)character.Color3);
+				packet.PutFloat(0.0f);
+				packet.PutString("");
+				packet.PutFloat(49.0f);
+				packet.PutFloat(49.0f);
+				packet.PutFloat(0.0f);
+				packet.PutFloat(49.0f);
+				packet.PutInt(0);
+				packet.PutInt(0);
+				packet.PutShort(0);
+				packet.PutLong(0);
+				packet.PutString("");
+				packet.PutByte(0);
+
+				packet.PutInt(items.Count);
+				foreach (var item in items)
+				{
+					packet.PutLong(item.Id);
+					packet.PutBin(item.Info);
+				}
+
+				packet.PutInt(0);  // PetRemainingTime
+				packet.PutLong(0); // PetLastTime
+				packet.PutLong(0); // PetExpireTime
 			}
-
-			packet.PutByte(true);
-			packet.PutString(character.Server);
-			packet.PutLong(character.Id);
-			packet.PutByte(1);
-			packet.PutString(character.Name);
-			packet.PutString("");
-			packet.PutString("");
-			packet.PutInt(character.Race);
-			packet.PutByte(character.SkinColor);
-			packet.PutByte(character.EyeType);
-			packet.PutByte(character.EyeColor);
-			packet.PutByte(character.MouthType);
-			packet.PutInt(0);
-			packet.PutFloat(character.Height);
-			packet.PutFloat(character.Weight);
-			packet.PutFloat(character.Upper);
-			packet.PutFloat(character.Lower);
-			packet.PutInt(0);
-			packet.PutInt(0);
-			packet.PutInt(0);
-			packet.PutByte(0);
-			packet.PutInt(0);
-			packet.PutByte(0);
-			packet.PutInt((int)character.Color1);
-			packet.PutInt((int)character.Color2);
-			packet.PutInt((int)character.Color3);
-			packet.PutFloat(0.0f);
-			packet.PutString("");
-			packet.PutFloat(49.0f);
-			packet.PutFloat(49.0f);
-			packet.PutFloat(0.0f);
-			packet.PutFloat(49.0f);
-			packet.PutInt(0);
-			packet.PutInt(0);
-			packet.PutShort(0);
-			packet.PutLong(0);
-			packet.PutString("");
-			packet.PutByte(0);
-
-			packet.PutInt(items.Count);
-			foreach (var item in items)
-			{
-				packet.PutLong(item.Id);
-				packet.PutBin(item.Info);
-			}
-
-			packet.PutInt(0);  // PetRemainingTime
-			packet.PutLong(0); // PetLastTime
-			packet.PutLong(0); // PetExpireTime
 
 			client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends NameCheckR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="result"></param>
+		public static void NameCheckR(LoginClient client, NameCheckResult result)
+		{
+			var response = new MabiPacket(Op.NameCheckR, MabiId.Login);
+			response.PutByte(result == NameCheckResult.Okay);
+			response.PutByte((byte)result);
+
+			client.Send(response);
+		}
+
+		/// <summary>
+		/// Sends negative CreateCharacterR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		public static void CreateCharacterR_Fail(LoginClient client)
+		{
+			CreateCharacterR(client, null, 0);
+		}
+
+		/// <summary>
+		/// Semds CreateCharacterR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="serverName">Response is negative if null.</param>
+		/// <param name="id"></param>
+		public static void CreateCharacterR(LoginClient client, string serverName, long id)
+		{
+			var response = new MabiPacket(Op.CreateCharacterR, MabiId.Login);
+			response.PutByte(serverName != null);
+
+			if (serverName != null)
+			{
+				response.PutString(serverName);
+				response.PutLong(id);
+			}
+
+			client.Send(response);
 		}
 
 		/// <summary>

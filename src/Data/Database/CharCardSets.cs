@@ -7,18 +7,18 @@ namespace Aura.Data.Database
 {
 	public class CharCardSetInfo
 	{
-		public int SetId { get; internal set; }
-		public int Race { get; internal set; }
-		public int Class { get; internal set; }
-		public byte Pocket { get; internal set; }
-		public uint Color1 { get; internal set; }
-		public uint Color2 { get; internal set; }
-		public uint Color3 { get; internal set; }
+		public int SetId { get; set; }
+		public int Race { get; set; }
+		public int Class { get; set; }
+		public byte Pocket { get; set; }
+		public uint Color1 { get; set; }
+		public uint Color2 { get; set; }
+		public uint Color3 { get; set; }
 	}
 
 	public class CharCardSetDb : DatabaseCSV<CharCardSetInfo>
 	{
-		public List<CharCardSetInfo> Find(uint setId, uint race)
+		public List<CharCardSetInfo> Find(int setId, int race)
 		{
 			return this.Entries.FindAll(a => a.SetId == setId && a.Race == race);
 		}

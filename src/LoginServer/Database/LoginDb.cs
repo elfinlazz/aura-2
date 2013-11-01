@@ -10,6 +10,8 @@ using MySql.Data.MySqlClient;
 using Aura.Shared.Util;
 using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
+using Aura.Data.Database;
+using Aura.Data;
 
 namespace Aura.Login.Database
 {
@@ -331,6 +333,184 @@ namespace Aura.Login.Database
 				}
 
 				return result;
+			}
+		}
+
+		/// <summary>
+		/// Creates creature:character combination for the account.
+		/// Returns false if either failed, true on success.
+		/// </summary>
+		/// <param name="accountName"></param>
+		/// <param name="character"></param>
+		/// <returns></returns>
+		public bool CreateCharacter(string accountName, Character character, List<CharCardSetInfo> items, List<ushort> keywords, List<Skill> skills)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				MySqlTransaction transaction = null;
+				try
+				{
+					transaction = conn.BeginTransaction();
+
+					// Creature
+					character.CreatureId = this.CreateCreature(character, conn, transaction);
+
+					// Character
+					{
+						var mc = new MySqlCommand(
+							"INSERT INTO `characters` " +
+							"(`accountId`, `creatureId`) " +
+							"VALUES (@accountId, @creatureId)"
+						, conn, transaction);
+
+						mc.Parameters.AddWithValue("@accountId", accountName);
+						mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+
+						mc.ExecuteNonQuery();
+
+						character.Id = mc.LastInsertedId;
+					}
+
+					// Items
+					this.AddItems(character.CreatureId, items, conn, transaction);
+
+					// Keywords
+					this.AddKeywords(character.CreatureId, keywords, conn, transaction);
+
+					// Skills
+					this.AddSkills(character.CreatureId, skills, conn, transaction);
+
+					transaction.Commit();
+
+					return true;
+				}
+				catch (Exception ex)
+				{
+					transaction.Rollback();
+
+					Log.Exception(ex);
+
+					return false;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Creatures creature based on character and returns its id.
+		/// </summary>
+		/// <param name="character"></param>
+		/// <param name="conn"></param>
+		/// <param name="transaction"></param>
+		/// <returns></returns>
+		private long CreateCreature(Character character, MySqlConnection conn, MySqlTransaction transaction)
+		{
+			var mc = new MySqlCommand(
+				"INSERT INTO `creatures` " +
+				"(`server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`) " +
+				"VALUES (@server, @name, @race, @skinColor, @eyeType, @eyeColor, @mouthType, @height, @weight, @upper, @lower, @color1, @color2, @color3)"
+			, conn, transaction);
+
+			mc.Parameters.AddWithValue("@server", character.Server);
+			mc.Parameters.AddWithValue("@name", character.Name);
+			mc.Parameters.AddWithValue("@race", character.Race);
+			mc.Parameters.AddWithValue("@skinColor", character.SkinColor);
+			mc.Parameters.AddWithValue("@eyeType", character.EyeType);
+			mc.Parameters.AddWithValue("@eyeColor", character.EyeColor);
+			mc.Parameters.AddWithValue("@mouthType", character.MouthType);
+			mc.Parameters.AddWithValue("@height", character.Height);
+			mc.Parameters.AddWithValue("@weight", character.Weight);
+			mc.Parameters.AddWithValue("@upper", character.Upper);
+			mc.Parameters.AddWithValue("@lower", character.Lower);
+			mc.Parameters.AddWithValue("@color1", character.Color1);
+			mc.Parameters.AddWithValue("@color2", character.Color2);
+			mc.Parameters.AddWithValue("@color3", character.Color3);
+
+			mc.ExecuteNonQuery();
+
+			return mc.LastInsertedId;
+		}
+
+		/// <summary>
+		/// Adds items for creature.
+		/// </summary>
+		/// <param name="creatureId"></param>
+		/// <param name="cardItems"></param>
+		private void AddItems(long creatureId, List<CharCardSetInfo> cardItems, MySqlConnection conn, MySqlTransaction transaction)
+		{
+			var mc = new MySqlCommand(
+				"INSERT INTO `items` " +
+				"(`creatureId`, `class`, `pocket`, `color1`, `color2`, `color3`, `price`, `durability`, `durabilityMax`, " +
+				" `durabilityNew`, `attackMin`, `attackMax`, `balance`, `critical`, `defense`, `protection`, `attackSpeed`, `sellPrice`)" +
+				"VALUES (@creatureId, @class, @pocket, @color1, @color2, @color3, @price, @durability, @durabilityMax, " +
+				" @durabilityNew, @attackMin, @attackMax, @balance, @critical, @defense, @protection, @attackSpeed, @sellPrice)"
+			, conn, transaction);
+
+			foreach (var item in cardItems)
+			{
+				var dataInfo = AuraData.ItemDb.Find(item.Class);
+				if (dataInfo == null)
+				{
+					Log.Warning("Item '{0}' couldn't be found in the database.", item.Class);
+					continue;
+				}
+
+				mc.Parameters.Clear();
+				mc.Parameters.AddWithValue("@creatureId", creatureId);
+				mc.Parameters.AddWithValue("@class", item.Class);
+				mc.Parameters.AddWithValue("@pocket", item.Pocket);
+				mc.Parameters.AddWithValue("@color1", item.Color1);
+				mc.Parameters.AddWithValue("@color2", item.Color2);
+				mc.Parameters.AddWithValue("@color3", item.Color3);
+				mc.Parameters.AddWithValue("@price", dataInfo.Price);
+				mc.Parameters.AddWithValue("@durability", dataInfo.Durability);
+				mc.Parameters.AddWithValue("@durabilityMax", dataInfo.Durability);
+				mc.Parameters.AddWithValue("@durabilityNew", dataInfo.Durability);
+				mc.Parameters.AddWithValue("@attackMin", dataInfo.AttackMin);
+				mc.Parameters.AddWithValue("@attackMax", dataInfo.AttackMax);
+				mc.Parameters.AddWithValue("@balance", dataInfo.Balance);
+				mc.Parameters.AddWithValue("@critical", dataInfo.Critical);
+				mc.Parameters.AddWithValue("@defense", dataInfo.Defense);
+				mc.Parameters.AddWithValue("@protection", dataInfo.Protection);
+				mc.Parameters.AddWithValue("@attackSpeed", dataInfo.AttackSpeed);
+				mc.Parameters.AddWithValue("@sellPrice", dataInfo.SellingPrice);
+				mc.ExecuteNonQuery();
+			}
+		}
+
+		/// <summary>
+		/// Adds keywords for creature.
+		/// </summary>
+		/// <param name="creatureId"></param>
+		/// <param name="keywordIds"></param>
+		private void AddKeywords(long creatureId, List<ushort> keywordIds, MySqlConnection conn, MySqlTransaction transaction)
+		{
+			var mc = new MySqlCommand("INSERT INTO `keywords` (`keywordId`, `creatureId`) VALUES (@keywordId, @creatureId)", conn, transaction);
+
+			foreach (var keywordId in keywordIds)
+			{
+				mc.Parameters.Clear();
+				mc.Parameters.AddWithValue("@creatureId", creatureId);
+				mc.Parameters.AddWithValue("@keywordId", keywordId);
+				mc.ExecuteNonQuery();
+			}
+		}
+
+		/// <summary>
+		/// Adds skills for creature.
+		/// </summary>
+		/// <param name="creatureId"></param>
+		/// <param name="skills"></param>
+		private void AddSkills(long creatureId, List<Skill> skills, MySqlConnection conn, MySqlTransaction transaction)
+		{
+			var mc = new MySqlCommand("INSERT INTO `skills` VALUES (@skillId, @creatureId, @rank, 0)", conn, transaction);
+
+			foreach (var skill in skills)
+			{
+				mc.Parameters.Clear();
+				mc.Parameters.AddWithValue("@creatureId", creatureId);
+				mc.Parameters.AddWithValue("@skillId", (ushort)skill.Id);
+				mc.Parameters.AddWithValue("@rank", (byte)skill.Rank);
+				mc.ExecuteNonQuery();
 			}
 		}
 	}

@@ -25,6 +25,9 @@ namespace Aura.Login
 			// Data
 			ServerUtil.LoadData(DataLoad.LoginServer, false);
 
+			// Debug
+			LoginServer.Instance.Servers.Add("Aura");
+
 			// Start
 			LoginServer.Instance.Start(LoginConf.Instance.Port);
 

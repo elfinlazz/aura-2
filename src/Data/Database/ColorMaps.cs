@@ -22,15 +22,15 @@ namespace Aura.Data.Database
 	{
 		public uint GetRandom(byte id, MTRandom rnd)
 		{
-			return this.GetAt(id, rnd.GetInt32(), rnd.GetInt32());
+			return this.GetAt(id, rnd.GetUInt32(), rnd.GetUInt32());
 		}
 
 		public uint GetRandom(byte id, Random rnd)
 		{
-			return this.GetAt(id, rnd.Next(int.MaxValue), rnd.Next(int.MaxValue));
+			return this.GetAt(id, (uint)rnd.Next(int.MaxValue), (uint)rnd.Next(int.MaxValue));
 		}
 
-		public uint GetAt(byte id, int x, int y)
+		public uint GetAt(byte id, uint x, uint y)
 		{
 			var mapInfo = this.Find(id);
 			if (mapInfo == null)

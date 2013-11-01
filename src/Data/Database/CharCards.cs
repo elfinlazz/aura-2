@@ -16,6 +16,11 @@ namespace Aura.Data.Database
 		{
 			this.Races = new List<int>();
 		}
+
+		public bool Enabled(int race)
+		{
+			return this.Races.Contains(race);
+		}
 	}
 
 	/// <summary>

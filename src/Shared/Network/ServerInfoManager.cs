@@ -23,5 +23,16 @@ namespace Aura.Shared.Network
 					return _servers.Values.ToList();
 			}
 		}
+
+		public bool Has(string serverName)
+		{
+			return _servers.ContainsKey(serverName);
+		}
+
+		public void Add(string serverName)
+		{
+			if (!this.Has(serverName))
+				_servers.Add(serverName, new ServerInfo(serverName));
+		}
 	}
 }
