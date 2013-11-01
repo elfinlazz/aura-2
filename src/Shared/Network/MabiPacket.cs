@@ -363,7 +363,7 @@ namespace Aura.Shared.Network
 						result.Append(splitted[j - 1]);
 						if (j < splitted.Length)
 							if (j % 16 == 0)
-								result.Append(Environment.NewLine.PadRight(33, ' '));
+								result.Append(Environment.NewLine.PadRight(34, ' '));
 							else
 								result.Append(' ');
 					}
