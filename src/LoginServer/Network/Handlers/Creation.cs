@@ -414,5 +414,21 @@ namespace Aura.Login.Network.Handlers
 		L_Fail:
 			Send.CreatePetR_Fail(client);
 		}
+
+		/// <summary>
+		/// Sent when entering partner creation, request for
+		/// potential option changes?
+		/// </summary>
+		/// <remarks>
+		/// 
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.PartnerCreationOptionsRequest)]
+		public void PartnerCreationOptionsRequest(LoginClient client, MabiPacket packet)
+		{
+
+		}
 	}
 }
