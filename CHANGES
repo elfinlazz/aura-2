@@ -2,7 +2,7 @@ Changes
 
 * FileReader is now OOP.
 * Logger renamed to Log.
-* Log logs everything to files now, and hides messages only from the command line.
+* Log logs everything to files now and hides messages only from the command line.
 * Log.Exception can give an error message, which is not hidden by adding Exception to Hide.
 * Log got an archive function.
 * Packet handlers are defined with an attribute.
@@ -10,3 +10,5 @@ Changes
 * Aura.Shared renamed to Shared.
 * Aura.Net removed.
 * Characters, Pets, and Partners now have their own tables (for ids) and link to a collective creature table.
+* Aura.Data renamed to Data.
+

@@ -78,7 +78,10 @@ namespace Aura.Login.Network.Handlers
 
 			// Check face/hair
 			if (faceItem == null || hairItem == null || (faceItem.Type != ItemType.Hair && faceItem.Type != ItemType.Face) || (hairItem.Type != ItemType.Hair && hairItem.Type != ItemType.Face))
+			{
+				Log.Error("Character creation: Invalid face ({0}) or hair ({1}).", face, hair);
 				goto L_Fail;
+			}
 
 			// Check card type and if the race can use it.
 			var cardInfo = AuraData.CharCardDb.Find(card.Type);
