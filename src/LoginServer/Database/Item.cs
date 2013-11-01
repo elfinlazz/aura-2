@@ -11,6 +11,19 @@ namespace Aura.Login.Database
 		public long Id { get; set; }
 		public ItemInfo Info;
 
+		public Item()
+		{
+		}
+
+		public Item(int itemId, Pocket pocket, uint color1, uint color2, uint color3)
+		{
+			this.Info.Class = itemId;
+			this.Info.Pocket = pocket;
+			this.Info.Color1 = color1;
+			this.Info.Color2 = color2;
+			this.Info.Color3 = color3;
+		}
+
 		/// <summary>
 		/// Returns whether the item is in an equipment pocket (Head, Equip, Style).
 		/// </summary>

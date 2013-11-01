@@ -97,10 +97,13 @@ namespace Aura.Login.Database
 		public bool CreateCharacter(Character character, CharCardInfo cardInfo)
 		{
 			// Create start items for card and hair/face
-			var items = AuraData.CharCardSetDb.Find(cardInfo.SetId, character.Race);
+			var cardItems = AuraData.CharCardSetDb.Find(cardInfo.SetId, character.Race);
+
+			var items = this.CardItemsToItems(cardItems);
 			this.GenerateItemColors(ref items, (this.Name + character.Race + character.SkinColor + character.Hair + character.HairColor + character.Age + character.EyeType + character.EyeColor + character.MouthType + character.Face));
-			items.Add(new CharCardSetInfo { Class = character.Face, Pocket = (byte)Pocket.Face, Race = character.Race, Color1 = character.SkinColor });
-			items.Add(new CharCardSetInfo { Class = character.Hair, Pocket = (byte)Pocket.Hair, Race = character.Race, Color1 = character.HairColor + 0x10000000u });
+
+			items.Add(new Item(character.Face, Pocket.Face, character.SkinColor, 0, 0));
+			items.Add(new Item(character.Hair, Pocket.Hair, character.HairColor + 0x10000000u, 0, 0));
 
 			// Start keywords
 			var keywords = new List<ushort>() { 1, 2, 3, 37, 38 };
@@ -203,11 +206,14 @@ namespace Aura.Login.Database
 				setId = 1002;
 
 			// Create start items for card and hair/face
-			// TODO: Hash is incorrect.
-			var items = AuraData.CharCardSetDb.Find(setId, partner.Race);
+			var cardItems = AuraData.CharCardSetDb.Find(setId, partner.Race);
+
+			// TODO: Hash seems to be incorrect.
+			var items = this.CardItemsToItems(cardItems);
 			this.GenerateItemColors(ref items, (this.Name + partner.Race + partner.SkinColor + partner.Hair + partner.HairColor + 1 + partner.EyeType + partner.EyeColor + partner.MouthType + partner.Face));
-			items.Add(new CharCardSetInfo { Class = partner.Face, Pocket = (byte)Pocket.Face, Race = partner.Race, Color1 = partner.SkinColor });
-			items.Add(new CharCardSetInfo { Class = partner.Hair, Pocket = (byte)Pocket.Hair, Race = partner.Race, Color1 = partner.HairColor + 0x10000000u });
+
+			items.Add(new Item(partner.Face, Pocket.Face, partner.SkinColor, 0, 0));
+			items.Add(new Item(partner.Hair, Pocket.Hair, partner.HairColor + 0x10000000u, 0, 0));
 
 			// Start skills
 			var skills = new List<Skill>();
@@ -222,6 +228,23 @@ namespace Aura.Login.Database
 		}
 
 		/// <summary>
+		/// Returns list of items, based on CharCardSetInfo list.
+		/// </summary>
+		/// <param name="cardItems"></param>
+		/// <returns></returns>
+		private List<Item> CardItemsToItems(List<CharCardSetInfo> cardItems)
+		{
+			var result = new List<Item>();
+
+			foreach (var cardItem in cardItems)
+			{
+				result.Add(new Item(cardItem.Class, (Pocket)cardItem.Pocket, cardItem.Color1, cardItem.Color2, cardItem.Color3));
+			}
+
+			return result;
+		}
+
+		/// <summary>
 		/// Changes item colors, using MTRandom and hash.
 		/// </summary>
 		/// <remarks>
@@ -232,22 +255,22 @@ namespace Aura.Login.Database
 		/// Used to generate "random" colors on the equipment of
 		/// new characters and partners.
 		/// </remarks>
-		private void GenerateItemColors(ref List<CharCardSetInfo> cardItems, string hash)
+		private void GenerateItemColors(ref List<Item> items, string hash)
 		{
 			int ihash = 5381;
 			foreach (var ch in hash)
 				ihash = ihash * 33 + (int)ch;
 
 			var rnd = new MTRandom(ihash);
-			foreach (var item in cardItems)
+			foreach (var item in items.Where(a => a.Info.Pocket != Pocket.Face && a.Info.Pocket != Pocket.Hair))
 			{
-				var dataInfo = AuraData.ItemDb.Find(item.Class);
+				var dataInfo = AuraData.ItemDb.Find(item.Info.Class);
 				if (dataInfo == null)
 					continue;
 
-				item.Color1 = (item.Color1 != 0 ? item.Color1 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap1, rnd));
-				item.Color2 = (item.Color2 != 0 ? item.Color2 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap2, rnd));
-				item.Color3 = (item.Color3 != 0 ? item.Color3 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap3, rnd));
+				item.Info.Color1 = (item.Info.Color1 != 0 ? item.Info.Color1 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap1, rnd));
+				item.Info.Color2 = (item.Info.Color2 != 0 ? item.Info.Color2 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap2, rnd));
+				item.Info.Color3 = (item.Info.Color3 != 0 ? item.Info.Color3 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap3, rnd));
 			}
 		}
 

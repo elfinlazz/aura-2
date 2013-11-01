@@ -344,7 +344,7 @@ namespace Aura.Login.Database
 		/// <param name="accountId"></param>
 		/// <param name="character"></param>
 		/// <returns></returns>
-		public bool CreateCharacter(string accountId, Character character, List<CharCardSetInfo> items, List<ushort> keywords, List<Skill> skills)
+		public bool CreateCharacter(string accountId, Character character, List<Item> items, List<ushort> keywords, List<Skill> skills)
 		{
 			return this.Create("characters", accountId, character, items, keywords, skills);
 		}
@@ -372,7 +372,7 @@ namespace Aura.Login.Database
 		/// <param name="partner"></param>
 		/// <param name="skills"></param>
 		/// <returns></returns>
-		public bool CreatePartner(string accountId, Character partner, List<CharCardSetInfo> items, List<Skill> skills)
+		public bool CreatePartner(string accountId, Character partner, List<Item> items, List<Skill> skills)
 		{
 			return this.Create("partners", accountId, partner, items, null, skills);
 		}
@@ -389,7 +389,7 @@ namespace Aura.Login.Database
 		/// <param name="keywords"></param>
 		/// <param name="skills"></param>
 		/// <returns></returns>
-		private bool Create(string table, string accountId, Character character, List<CharCardSetInfo> items, List<ushort> keywords, List<Skill> skills)
+		private bool Create(string table, string accountId, Character character, List<Item> items, List<ushort> keywords, List<Skill> skills)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			{
@@ -501,8 +501,8 @@ namespace Aura.Login.Database
 		/// Adds items for creature.
 		/// </summary>
 		/// <param name="creatureId"></param>
-		/// <param name="cardItems"></param>
-		private void AddItems(long creatureId, List<CharCardSetInfo> cardItems, MySqlConnection conn, MySqlTransaction transaction)
+		/// <param name="items"></param>
+		private void AddItems(long creatureId, List<Item> items, MySqlConnection conn, MySqlTransaction transaction)
 		{
 			var mc = new MySqlCommand(
 				"INSERT INTO `items` " +
@@ -512,22 +512,22 @@ namespace Aura.Login.Database
 				" @durabilityNew, @attackMin, @attackMax, @balance, @critical, @defense, @protection, @attackSpeed, @sellPrice)"
 			, conn, transaction);
 
-			foreach (var item in cardItems)
+			foreach (var item in items)
 			{
-				var dataInfo = AuraData.ItemDb.Find(item.Class);
+				var dataInfo = AuraData.ItemDb.Find(item.Info.Class);
 				if (dataInfo == null)
 				{
-					Log.Warning("Item '{0}' couldn't be found in the database.", item.Class);
+					Log.Warning("Item '{0}' couldn't be found in the database.", item.Info.Class);
 					continue;
 				}
 
 				mc.Parameters.Clear();
 				mc.Parameters.AddWithValue("@creatureId", creatureId);
-				mc.Parameters.AddWithValue("@class", item.Class);
-				mc.Parameters.AddWithValue("@pocket", item.Pocket);
-				mc.Parameters.AddWithValue("@color1", item.Color1);
-				mc.Parameters.AddWithValue("@color2", item.Color2);
-				mc.Parameters.AddWithValue("@color3", item.Color3);
+				mc.Parameters.AddWithValue("@class", item.Info.Class);
+				mc.Parameters.AddWithValue("@pocket", (byte)item.Info.Pocket);
+				mc.Parameters.AddWithValue("@color1", item.Info.Color1);
+				mc.Parameters.AddWithValue("@color2", item.Info.Color2);
+				mc.Parameters.AddWithValue("@color3", item.Info.Color3);
 				mc.Parameters.AddWithValue("@price", dataInfo.Price);
 				mc.Parameters.AddWithValue("@durability", dataInfo.Durability);
 				mc.Parameters.AddWithValue("@durabilityMax", dataInfo.Durability);
