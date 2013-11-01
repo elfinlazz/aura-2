@@ -11,7 +11,7 @@ namespace Aura.Shared.Mabi
 {
 	public static class Password
 	{
-		private const int BCryptStrength = 12;
+		private const int BCryptStrength = 10;
 
 		private static MD5 _md5 = MD5.Create();
 		private static SHA256Managed _sha256 = new SHA256Managed();
