@@ -12,6 +12,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Database;
 using System.Text.RegularExpressions;
+using Aura.Login.Util;
 
 namespace Aura.Login.Network.Handlers
 {
@@ -140,6 +141,13 @@ namespace Aura.Login.Network.Handlers
 				goto L_Fail;
 			}
 
+			// Delete card
+			if (LoginConf.Instance.ConsumeCharacterCards)
+			{
+				if (!client.Account.DeleteCharacterCard(card))
+					goto L_Fail;
+			}
+
 			// Success~
 			Send.CreateCharacterR(client, serverName, character.Id);
 
@@ -239,6 +247,13 @@ namespace Aura.Login.Network.Handlers
 				goto L_Fail;
 			}
 
+			// Delete card
+			if (LoginConf.Instance.ConsumePetCards)
+			{
+				if (!client.Account.DeletePetCard(card))
+					goto L_Fail;
+			}
+
 			// Success~
 			Send.CreatePetR(client, serverName, pet.Id);
 
@@ -304,10 +319,10 @@ namespace Aura.Login.Network.Handlers
 			var personality = packet.GetInt();
 
 			// Check proprtions
-			height = Math.Min(1f, Math.Max(0f, height));
-			weight = Math.Min(2f, Math.Max(0f, weight));
-			upper = Math.Min(2f, Math.Max(0f, upper));
-			lower = Math.Min(2f, Math.Max(0f, lower));
+			height = Math.Max(0f, Math.Min(1f, height));
+			weight = Math.Max(0f, Math.Min(2f, weight));
+			upper = Math.Max(0f, Math.Min(2f, upper));
+			lower = Math.Max(0f, Math.Min(2f, lower));
 
 			// Get stuff
 			var card = client.Account.GetPetCard(cardId);
@@ -357,6 +372,11 @@ namespace Aura.Login.Network.Handlers
 			partner.MouthType = mouthType;
 			partner.Server = serverName;
 
+			partner.Height = height;
+			partner.Weight = weight;
+			partner.Upper = upper;
+			partner.Lower = lower;
+
 			partner.Life = petInfo.Life;
 			partner.Mana = petInfo.Mana;
 			partner.Stamina = petInfo.Stamina;
@@ -377,6 +397,13 @@ namespace Aura.Login.Network.Handlers
 			{
 				Log.Error("Partner creation: Failed for unknown reasons.");
 				goto L_Fail;
+			}
+
+			// Delete card
+			if (LoginConf.Instance.ConsumePartnerCards)
+			{
+				if (!client.Account.DeletePetCard(card))
+					goto L_Fail;
 			}
 
 			// Success~

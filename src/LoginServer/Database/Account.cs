@@ -250,5 +250,33 @@ namespace Aura.Login.Database
 				item.Color3 = (item.Color3 != 0 ? item.Color3 : AuraData.ColorMapDb.GetRandom(dataInfo.ColorMap3, rnd));
 			}
 		}
+
+		/// <summary>
+		/// Deletes character card from account.
+		/// </summary>
+		/// <param name="cardId"></param>
+		public bool DeleteCharacterCard(Card card)
+		{
+			if (!LoginDb.Instance.DeleteCard(card))
+				return false;
+
+			this.CharacterCards.Remove(card);
+
+			return true;
+		}
+
+		/// <summary>
+		/// Deletes pet card from account.
+		/// </summary>
+		/// <param name="cardId"></param>
+		public bool DeletePetCard(Card card)
+		{
+			if (!LoginDb.Instance.DeleteCard(card))
+				return false;
+
+			this.PetCards.Remove(card);
+
+			return true;
+		}
 	}
 }

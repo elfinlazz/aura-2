@@ -18,6 +18,10 @@ namespace Aura.Login.Util
 		public bool NewAccounts;
 		public bool EnableSecondaryPassword;
 
+		public bool ConsumeCharacterCards;
+		public bool ConsumePetCards;
+		public bool ConsumePartnerCards;
+
 		private LoginConf()
 		{
 		}
@@ -38,6 +42,10 @@ namespace Aura.Login.Util
 			this.Port = this.GetInt("login.port", 11000);
 			this.NewAccounts = this.GetBool("login.new_accounts", true);
 			this.EnableSecondaryPassword = this.GetBool("login.enable_secondary", false);
+
+			this.ConsumeCharacterCards = this.GetBool("login.consume_character_cards", true);
+			this.ConsumePetCards = this.GetBool("login.consume_pet_cards", true);
+			this.ConsumePartnerCards = this.GetBool("login.consume_partner_cards", true);
 		}
 	}
 }

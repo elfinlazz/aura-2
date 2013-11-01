@@ -580,5 +580,21 @@ namespace Aura.Login.Database
 				mc.ExecuteNonQuery();
 			}
 		}
+
+		/// <summary>
+		/// Removes the card from the db, returns true if successful.
+		/// </summary>
+		/// <param name="card"></param>
+		/// <returns></returns>
+		public bool DeleteCard(Card card)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				var mc = new MySqlCommand("DELETE FROM `cards` WHERE `cardId` = @cardId", conn);
+				mc.Parameters.AddWithValue("@cardId", card.Id);
+
+				return (mc.ExecuteNonQuery() > 0);
+			}
+		}
 	}
 }
