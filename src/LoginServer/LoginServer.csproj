@@ -65,6 +65,7 @@
     <Compile Include="Database\Skill.cs" />
     <Compile Include="Network\Handlers\CharacterInfo.cs" />
     <Compile Include="Network\Handlers\Creation.cs" />
+    <Compile Include="Network\Handlers\Disconnect.cs" />
     <Compile Include="Network\Handlers\Login.cs" />
     <Compile Include="Network\LoginClient.cs" />
     <Compile Include="Network\LoginServer.cs" />
