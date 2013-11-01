@@ -292,6 +292,57 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
+		/// Sends AcceptGiftR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="gift">Negative response if null</param>
+		public static void AcceptGiftR(LoginClient client, Gift gift)
+		{
+			var packet = new MabiPacket(Op.AcceptGiftR, MabiId.Login);
+			packet.PutByte(gift != null);
+
+			if (gift != null)
+			{
+				packet.PutByte(gift.IsCharacter);
+				packet.PutInt(0); // ?
+				packet.PutInt(0); // ?
+				packet.PutInt(gift.Type);
+				// ?
+			}
+
+			client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends RefuseGiftR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="success"></param>
+		public static void RefuseGiftR(LoginClient client, bool success)
+		{
+			var packet = new MabiPacket(Op.RefuseGiftR, MabiId.Login);
+			packet.PutByte(success);
+			// ?
+
+			client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends AccountInfoRequestR to client, with client's account's data.
+		/// </summary>
+		/// <param name="client"></param>
+		public static void AccountInfoRequestR(LoginClient client, bool success)
+		{
+			var packet = new MabiPacket(Op.AccountInfoRequestR, MabiId.Login);
+			packet.PutByte(success);
+
+			if (success)
+				packet.Add(client.Account);
+
+			client.Send(packet);
+		}
+
+		/// <summary>
 		/// Adds server and channel information to packet.
 		/// </summary>
 		/// <param name="packet"></param>

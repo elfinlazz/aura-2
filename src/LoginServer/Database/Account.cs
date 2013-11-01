@@ -301,5 +301,31 @@ namespace Aura.Login.Database
 
 			return true;
 		}
+
+		/// <summary>
+		/// Changes gift to an ordinary card.
+		/// </summary>
+		/// <param name="gift"></param>
+		public void ChangeGiftToCard(Gift gift)
+		{
+			this.Gifts.Remove(gift);
+
+			if (gift.IsCharacter)
+				this.CharacterCards.Add(gift);
+			else
+				this.PetCards.Add(gift);
+
+			LoginDb.Instance.ChangeGiftToCard(gift.Id);
+		}
+
+		/// <summary>
+		/// Deletes gift from account.
+		/// </summary>
+		/// <param name="gift"></param>
+		public void DeleteGift(Gift gift)
+		{
+			LoginDb.Instance.DeleteCard(gift);
+			this.Gifts.Remove(gift);
+		}
 	}
 }

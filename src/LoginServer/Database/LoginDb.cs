@@ -596,5 +596,20 @@ namespace Aura.Login.Database
 				return (mc.ExecuteNonQuery() > 0);
 			}
 		}
+
+		/// <summary>
+		/// Changes gift card with the given id to a normal card.
+		/// </summary>
+		/// <param name="giftId"></param>
+		public void ChangeGiftToCard(long giftId)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				var mc = new MySqlCommand("UPDATE `cards` SET `isGift` = FALSE WHERE `cardId` = @cardId", conn);
+				mc.Parameters.AddWithValue("@cardId", giftId);
+
+				mc.ExecuteNonQuery();
+			}
+		}
 	}
 }

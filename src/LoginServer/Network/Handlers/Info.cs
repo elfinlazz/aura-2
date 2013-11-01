@@ -43,5 +43,18 @@ namespace Aura.Login.Network.Handlers
 
 			Send.CharacterInfoRequestR(client, op, character, items);
 		}
+
+		/// <summary>
+		/// Requests update of the cards/chars.
+		/// Happens after gift handling.
+		/// </summary>
+		[PacketHandler(Op.AccountInfoRequest)]
+		public void AccountInfoRequest(LoginClient client, MabiPacket packet)
+		{
+			if (client.Account != null)
+				Send.AccountInfoRequestR(client, true);
+			else
+				Send.AccountInfoRequestR(client, false);
+		}
 	}
 }
