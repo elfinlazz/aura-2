@@ -59,10 +59,7 @@ namespace Aura.Login.Network.Handlers
 			var face = packet.GetInt();
 
 			// Check age
-			if (age < 10)
-				age = 10;
-			else if (age > 17)
-				age = 17;
+			age = Math.Min((byte)17, Math.Max((byte)10, age));
 
 			// Get stuff
 			var card = client.Account.GetCharacterCard(cardId);
@@ -275,6 +272,120 @@ namespace Aura.Login.Network.Handlers
 			// TODO: Make this configurable.
 
 			Send.PetCreationOptionsRequestR(client, PetCreationOptionsListType.WhiteList, null);
+		}
+
+		/// <summary>
+		/// Partner creation request.
+		/// </summary>
+		/// <remarks>
+		/// Uses pet creation response.
+		/// </remarks>
+		/// <example>
+		/// ...
+		/// </example>
+		[PacketHandler(Op.CreatePartner)]
+		public void CreatePartner(LoginClient client, MabiPacket packet)
+		{
+			var serverName = packet.GetString();
+			var cardId = packet.GetLong();
+			var name = packet.GetString();
+			var race = packet.GetInt();
+			var skinColor = packet.GetByte();
+			var hair = packet.GetInt();
+			var hairColor = packet.GetByte();
+			var eyeType = packet.GetByte();
+			var eyeColor = packet.GetByte();
+			var mouthType = packet.GetByte();
+			var face = packet.GetInt();
+			var height = packet.GetFloat();
+			var weight = packet.GetFloat();
+			var upper = packet.GetFloat();
+			var lower = packet.GetFloat();
+			var personality = packet.GetInt();
+
+			// Check proprtions
+			height = Math.Min(1f, Math.Max(0f, height));
+			weight = Math.Min(2f, Math.Max(0f, weight));
+			upper = Math.Min(2f, Math.Max(0f, upper));
+			lower = Math.Min(2f, Math.Max(0f, lower));
+
+			// Get stuff
+			var card = client.Account.GetPetCard(cardId);
+			var faceItem = AuraData.ItemDb.Find(face);
+			var hairItem = AuraData.ItemDb.Find(hair);
+
+			// Check card and server
+			if (card == null || !LoginServer.Instance.Servers.Has(serverName))
+			{
+				Log.Error("Partner creation: Missing card or server ({0}).", serverName);
+				goto L_Fail;
+			}
+
+			// Check face/hair
+			if (faceItem == null || hairItem == null || (faceItem.Type != ItemType.Hair && faceItem.Type != ItemType.Face) || (hairItem.Type != ItemType.Hair && hairItem.Type != ItemType.Face))
+			{
+				Log.Error("Partner creation: Invalid face ({0}) or hair ({1}).", face, hair);
+				goto L_Fail;
+			}
+
+			// Check pet info
+			var petInfo = AuraData.PetDb.Find(card.Race);
+			if (petInfo == null)
+			{
+				Log.Error("Partner creation: Missing pet info ({0}).", card.Race);
+				goto L_Fail;
+			}
+
+			// Check name
+			var nameCheck = AuraDb.Instance.NameOkay(name, serverName);
+			if (nameCheck != NameCheckResult.Okay)
+			{
+				Log.Error("Partner creation: Invalid name ({0}).", nameCheck);
+				goto L_Fail;
+			}
+
+			// Create partner
+			var partner = new Character();
+			partner.Name = name;
+			partner.Race = card.Race;
+			partner.Face = face;
+			partner.SkinColor = skinColor;
+			partner.Hair = hair;
+			partner.HairColor = hairColor;
+			partner.EyeType = eyeType;
+			partner.EyeColor = eyeColor;
+			partner.MouthType = mouthType;
+			partner.Server = serverName;
+
+			partner.Life = petInfo.Life;
+			partner.Mana = petInfo.Mana;
+			partner.Stamina = petInfo.Stamina;
+			partner.Str = petInfo.Str;
+			partner.Int = petInfo.Int;
+			partner.Dex = petInfo.Dex;
+			partner.Will = petInfo.Will;
+			partner.Luck = petInfo.Luck;
+			partner.Defense = petInfo.Defense;
+			partner.Protection = petInfo.Protection;
+
+			partner.Region = 1;
+			partner.X = 12800;
+			partner.Y = 38100;
+
+			// Try to create character
+			if (!client.Account.CreatePartner(partner))
+			{
+				Log.Error("Partner creation: Failed for unknown reasons.");
+				goto L_Fail;
+			}
+
+			// Success~
+			Send.CreatePetR(client, serverName, partner.Id);
+
+			return;
+
+		L_Fail:
+			Send.CreatePetR_Fail(client);
 		}
 	}
 }

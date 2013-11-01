@@ -339,11 +339,57 @@ namespace Aura.Login.Database
 		/// <summary>
 		/// Creates creature:character combination for the account.
 		/// Returns false if either failed, true on success.
+		/// character's ids are set to the new ids.
 		/// </summary>
 		/// <param name="accountId"></param>
 		/// <param name="character"></param>
 		/// <returns></returns>
 		public bool CreateCharacter(string accountId, Character character, List<CharCardSetInfo> items, List<ushort> keywords, List<Skill> skills)
+		{
+			return this.Create("characters", accountId, character, items, keywords, skills);
+		}
+
+		/// <summary>
+		/// Creates creature:pet combination for the account.
+		/// Returns false if either failed, true on success.
+		/// pet's ids are set to the new ids.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="pet"></param>
+		/// <param name="skills"></param>
+		/// <returns></returns>
+		public bool CreatePet(string accountId, Character pet, List<Skill> skills)
+		{
+			return this.Create("pets", accountId, pet, null, null, skills);
+		}
+
+		/// <summary>
+		/// Creates creature:partner combination for the account.
+		/// Returns false if either failed, true on success.
+		/// partner's ids are set to the new ids.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="partner"></param>
+		/// <param name="skills"></param>
+		/// <returns></returns>
+		public bool CreatePartner(string accountId, Character partner, List<CharCardSetInfo> items, List<Skill> skills)
+		{
+			return this.Create("partners", accountId, partner, items, null, skills);
+		}
+
+		/// <summary>
+		/// Creates creature:x combination for the account.
+		/// Returns false if either failed, true on success.
+		/// character's ids are set to the new ids.
+		/// </summary>
+		/// <param name="table"></param>
+		/// <param name="accountId"></param>
+		/// <param name="character"></param>
+		/// <param name="items"></param>
+		/// <param name="keywords"></param>
+		/// <param name="skills"></param>
+		/// <returns></returns>
+		private bool Create(string table, string accountId, Character character, List<CharCardSetInfo> items, List<ushort> keywords, List<Skill> skills)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			{
@@ -358,7 +404,7 @@ namespace Aura.Login.Database
 					// Character
 					{
 						var mc = new MySqlCommand(
-							"INSERT INTO `characters` " +
+							"INSERT INTO `" + table + "` " +
 							"(`accountId`, `creatureId`) " +
 							"VALUES (@accountId, @creatureId)"
 						, conn, transaction);
@@ -372,13 +418,16 @@ namespace Aura.Login.Database
 					}
 
 					// Items
-					this.AddItems(character.CreatureId, items, conn, transaction);
+					if (items != null)
+						this.AddItems(character.CreatureId, items, conn, transaction);
 
 					// Keywords
-					this.AddKeywords(character.CreatureId, keywords, conn, transaction);
+					if (keywords != null)
+						this.AddKeywords(character.CreatureId, keywords, conn, transaction);
 
 					// Skills
-					this.AddSkills(character.CreatureId, skills, conn, transaction);
+					if (skills != null)
+						this.AddSkills(character.CreatureId, skills, conn, transaction);
 
 					transaction.Commit();
 
@@ -387,54 +436,6 @@ namespace Aura.Login.Database
 				catch (Exception ex)
 				{
 					character.Id = character.CreatureId = 0;
-
-					transaction.Rollback();
-
-					Log.Exception(ex);
-
-					return false;
-				}
-			}
-		}
-
-		public bool CreatePet(string accountId, Character pet, List<Skill> skills)
-		{
-			using (var conn = AuraDb.Instance.Connection)
-			{
-				MySqlTransaction transaction = null;
-				try
-				{
-					transaction = conn.BeginTransaction();
-
-					// Creature
-					pet.CreatureId = this.CreateCreature(pet, conn, transaction);
-
-					// Pet
-					{
-						var mc = new MySqlCommand(
-							"INSERT INTO `pets` " +
-							"(`accountId`, `creatureId`) " +
-							"VALUES (@accountId, @creatureId)"
-						, conn, transaction);
-
-						mc.Parameters.AddWithValue("@accountId", accountId);
-						mc.Parameters.AddWithValue("@creatureId", pet.CreatureId);
-
-						mc.ExecuteNonQuery();
-
-						pet.Id = mc.LastInsertedId;
-					}
-
-					// Skills
-					this.AddSkills(pet.CreatureId, skills, conn, transaction);
-
-					transaction.Commit();
-
-					return true;
-				}
-				catch (Exception ex)
-				{
-					pet.Id = pet.CreatureId = 0;
 
 					transaction.Rollback();
 

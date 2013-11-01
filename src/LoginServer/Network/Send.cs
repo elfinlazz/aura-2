@@ -225,16 +225,7 @@ namespace Aura.Login.Network
 		/// <param name="id"></param>
 		public static void CreateCharacterR(LoginClient client, string serverName, long id)
 		{
-			var response = new MabiPacket(Op.CreateCharacterR, MabiId.Login);
-			response.PutByte(serverName != null);
-
-			if (serverName != null)
-			{
-				response.PutString(serverName);
-				response.PutLong(id);
-			}
-
-			client.Send(response);
+			CreateR(client, Op.CreateCharacterR, serverName, id);
 		}
 
 		/// <summary>
@@ -243,7 +234,7 @@ namespace Aura.Login.Network
 		/// <param name="client"></param>
 		public static void CreatePetR_Fail(LoginClient client)
 		{
-			CreateCharacterR(client, null, 0);
+			CreatePetR(client, null, 0);
 		}
 
 		/// <summary>
@@ -254,7 +245,19 @@ namespace Aura.Login.Network
 		/// <param name="id"></param>
 		public static void CreatePetR(LoginClient client, string serverName, long id)
 		{
-			var response = new MabiPacket(Op.CreatePetR, MabiId.Login);
+			CreateR(client, Op.CreatePetR, serverName, id);
+		}
+
+		/// <summary>
+		/// One response to respond them all.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="op"></param>
+		/// <param name="serverName"></param>
+		/// <param name="id"></param>
+		private static void CreateR(LoginClient client, int op, string serverName, long id)
+		{
+			var response = new MabiPacket(op, MabiId.Login);
 			response.PutByte(serverName != null);
 
 			if (serverName != null)
@@ -402,7 +405,7 @@ namespace Aura.Login.Network
 			packet.PutShort((short)account.CharacterCards.Count);
 			foreach (var card in account.CharacterCards)
 			{
-				packet.PutByte(0x01);
+				packet.PutByte(1);
 				packet.PutLong(card.Id);
 				packet.PutInt(card.Type);
 				packet.PutLong(0);

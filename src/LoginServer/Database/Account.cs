@@ -187,6 +187,41 @@ namespace Aura.Login.Database
 		}
 
 		/// <summary>
+		/// Creates new partner for this account. Returns true if successful,
+		/// pet's ids are also set in that case.
+		/// </summary>
+		/// <param name="partner"></param>
+		/// <returns></returns>
+		public bool CreatePartner(Character partner)
+		{
+			int setId = 0;
+			if (partner.Race == 730201 || partner.Race == 730202 || partner.Race == 730204 || partner.Race == 730205)
+				setId = 1000;
+			else if (partner.Race == 730203)
+				setId = 1001;
+			else if (partner.Race == 730206)
+				setId = 1002;
+
+			// Create start items for card and hair/face
+			// TODO: Hash is incorrect.
+			var items = AuraData.CharCardSetDb.Find(setId, partner.Race);
+			this.GenerateItemColors(ref items, (this.Name + partner.Race + partner.SkinColor + partner.Hair + partner.HairColor + 1 + partner.EyeType + partner.EyeColor + partner.MouthType + partner.Face));
+			items.Add(new CharCardSetInfo { Class = partner.Face, Pocket = (byte)Pocket.Face, Race = partner.Race, Color1 = partner.SkinColor });
+			items.Add(new CharCardSetInfo { Class = partner.Hair, Pocket = (byte)Pocket.Hair, Race = partner.Race, Color1 = partner.HairColor + 0x10000000u });
+
+			// Start skills
+			var skills = new List<Skill>();
+			skills.Add(new Skill(SkillId.MeleeCombatMastery, SkillRank.RF));
+
+			if (!LoginDb.Instance.CreatePartner(this.Name, partner, items, skills))
+				return false;
+
+			this.Pets.Add(partner);
+
+			return true;
+		}
+
+		/// <summary>
 		/// Changes item colors, using MTRandom and hash.
 		/// </summary>
 		/// <remarks>
