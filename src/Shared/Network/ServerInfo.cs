@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Aura.Shared.Network
 {
@@ -22,12 +20,12 @@ namespace Aura.Shared.Network
 
 	public class ChannelInfo
 	{
-		public string Name;
-		public string ServerName;
-		public string FullName;
-		public string IP;
-		public short Port;
-		public DateTime LastUpdate = DateTime.MinValue;
+		public string Name { get; set; }
+		public string ServerName { get; set; }
+		public string FullName { get; set; }
+		public string IP { get; set; }
+		public int Port { get; set; }
+		public DateTime LastUpdate { get; set; }
 
 		/// <summary>
 		/// 0 = Maintenance,
@@ -36,7 +34,7 @@ namespace Aura.Shared.Network
 		/// 3 = Full,
 		/// 5 = Error
 		/// </summary>
-		public ChannelState State;
+		public ChannelState State { get; set; }
 
 		/// <summary>
 		/// 0 = Normal,
@@ -44,14 +42,14 @@ namespace Aura.Shared.Network
 		/// 2 = PvP,
 		/// 3 = Event/PvP
 		/// </summary>
-		public ChannelEvent Events;
+		public ChannelEvent Events { get; set; }
 
 		/// <summary>
 		/// 0-75
 		/// </summary>
-		public byte Stress;
+		public byte Stress { get; set; }
 
-		public ChannelInfo(string name, string server, string ip, short port)
+		public ChannelInfo(string name, string server, string ip, int port)
 		{
 			this.Name = name;
 			this.ServerName = server;
@@ -61,6 +59,8 @@ namespace Aura.Shared.Network
 
 			this.State = ChannelState.Normal;
 			this.Events = ChannelEvent.Normal;
+
+			this.LastUpdate = DateTime.MinValue;
 		}
 	}
 

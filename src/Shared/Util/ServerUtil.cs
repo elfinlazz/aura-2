@@ -2,10 +2,7 @@
 // For more information, see licence file in the main folder
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using Aura.Data;
 using Aura.Shared.Database;
 
@@ -22,7 +19,7 @@ namespace Aura.Shared.Util
 		/// </summary>
 		public static void NavigateToRoot()
 		{
-			// Go back max 2 folders, the bins should be in aura/bin/(Debug|Release)
+			// Go back max 2 folders, the bins should be in [aura]/bin/(Debug|Release)
 			for (int i = 0; i < 3; ++i)
 			{
 				if (Directory.Exists("system"))

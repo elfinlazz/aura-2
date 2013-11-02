@@ -29,10 +29,29 @@ namespace Aura.Shared.Network
 			return _servers.ContainsKey(serverName);
 		}
 
-		public void Add(string serverName)
+		public ServerInfo Get(string serverName)
+		{
+			ServerInfo result;
+			_servers.TryGetValue(serverName, out result);
+			return result;
+		}
+
+		public ServerInfo Add(string serverName)
 		{
 			if (!this.Has(serverName))
-				_servers.Add(serverName, new ServerInfo(serverName));
+			{
+				var result = new ServerInfo(serverName);
+				_servers.Add(serverName, result);
+				return result;
+			}
+
+			return this.Get(serverName);
+		}
+
+		public void Add(ChannelInfo channel)
+		{
+			var server = this.Add(channel.ServerName);
+			server.Channels.Add(channel.Name, channel);
 		}
 	}
 }
