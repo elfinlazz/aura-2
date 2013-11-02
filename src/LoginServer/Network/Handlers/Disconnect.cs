@@ -17,7 +17,7 @@ namespace Aura.Login.Network.Handlers
 		/// </remarks>
 		/// <example>
 		/// 0001 [................] String : admin
-		/// 0002 [4D80902C6DF00000] Long   : ...
+		/// 0002 [4D80902C6DF00000] Long   : ?
 		/// 0003 [........800000EE] Int    : 2147483886
 		/// 0004 [........00000000] Int    : 0
 		/// 0005 [........00000000] Int    : 0

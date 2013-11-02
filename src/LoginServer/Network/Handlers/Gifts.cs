@@ -15,6 +15,9 @@ namespace Aura.Login.Network.Handlers
 		/// <remarks>
 		/// Turns the gift (card) into a character or pet card.
 		/// </remarks>
+		/// <example>
+		/// ...
+		/// </example>
 		[PacketHandler(Op.AcceptGift)]
 		public void AcceptGift(LoginClient client, MabiPacket packet)
 		{
@@ -30,6 +33,9 @@ namespace Aura.Login.Network.Handlers
 		/// <summary>
 		/// Refuses and deletes gift.
 		/// </summary>
+		/// <example>
+		/// ...
+		/// </example>
 		[PacketHandler(Op.RefuseGift)]
 		public void RefuseGift(LoginClient client, MabiPacket packet)
 		{

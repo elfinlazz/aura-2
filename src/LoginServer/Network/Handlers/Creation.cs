@@ -2,17 +2,13 @@
 // For more information, see licence file in the main folder
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Login.Database;
+using Aura.Login.Util;
+using Aura.Shared.Database;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
-using Aura.Shared.Database;
-using System.Text.RegularExpressions;
-using Aura.Login.Util;
 
 namespace Aura.Login.Network.Handlers
 {
@@ -24,7 +20,7 @@ namespace Aura.Login.Network.Handlers
 		/// </summary>
 		/// <example>
 		/// 0001 [................] String : mabius1
-		/// 0002 [................] String : ...
+		/// 0002 [................] String : name
 		/// </example>
 		[PacketHandler(Op.NameCheck)]
 		public void NameCheck(LoginClient client, MabiPacket packet)
@@ -60,7 +56,7 @@ namespace Aura.Login.Network.Handlers
 			var face = packet.GetInt();
 
 			// Check age
-			age = Math.Min((byte)17, Math.Max((byte)10, age));
+			age = Math.Max((byte)10, Math.Min((byte)17, age));
 
 			// Get stuff
 			var card = client.Account.GetCharacterCard(cardId);
@@ -163,7 +159,7 @@ namespace Aura.Login.Network.Handlers
 		/// <example>
 		/// 0001 [................] String : mabius1
 		/// 0002 [0000000000104054] Long   : 1065044
-		/// 0003 [................] String : ...
+		/// 0003 [................] String : name
 		/// 0004 [........00000000] Int    : 0
 		/// 0005 [........00000000] Int    : 0
 		/// 0006 [........00000000] Int    : 0
@@ -416,11 +412,10 @@ namespace Aura.Login.Network.Handlers
 		}
 
 		/// <summary>
-		/// Sent when entering partner creation, request for
-		/// potential option changes?
+		/// Sent when entering partner creation
 		/// </summary>
 		/// <remarks>
-		/// 
+		/// Request for potential option changes?
 		/// </remarks>
 		/// <example>
 		/// No parameters.

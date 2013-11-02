@@ -17,7 +17,7 @@ namespace Aura.Login.Network.Handlers
 		/// </remarks>
 		/// <example>
 		/// 0001 [................] String : mabius1
-		/// 0002 [0010000000000000] Long   : ...
+		/// 0002 [0010000000000000] Long   : id
 		/// </example>
 		[PacketHandler(Op.CharacterInfoRequest, Op.PetInfoRequest)]
 		public void CharacterInfoRequest(LoginClient client, MabiPacket packet)
@@ -40,9 +40,14 @@ namespace Aura.Login.Network.Handlers
 		}
 
 		/// <summary>
-		/// Requests update of the cards/chars.
-		/// Happens after gift handling.
+		/// Requests update of the cards/chars
 		/// </summary>
+		/// <remarks>
+		/// Apperantly only happens after gift handling.
+		/// </remarks>
+		/// <example>
+		/// ...
+		/// </example>
 		[PacketHandler(Op.AccountInfoRequest)]
 		public void AccountInfoRequest(LoginClient client, MabiPacket packet)
 		{
