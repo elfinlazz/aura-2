@@ -37,7 +37,19 @@ namespace Aura.Login.Network.Handlers
 		/// Character creation request.
 		/// </summary>
 		/// <example>
-		/// ...
+		/// Giant
+		// 001 [................] String : Aura
+		// 002 [........00000019] Long   : 25
+		// 003 [................] String : dfaff
+		// 004 [........00001F41] Int    : 8001
+		// 005 [..............13] Byte   : 19
+		// 006 [........00001B6E] Int    : 7022
+		// 007 [..............19] Byte   : 25
+		// 008 [..............0A] Byte   : 10
+		// 009 [..............41] Byte   : 65
+		// 010 [..............1F] Byte   : 31
+		// 011 [..............1F] Byte   : 31
+		// 012 [........00001EDC] Int    : 7900
 		/// </example>
 		[PacketHandler(Op.CreateCharacter)]
 		public void CreateCharacter(LoginClient client, MabiPacket packet)
