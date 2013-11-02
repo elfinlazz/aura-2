@@ -2,9 +2,6 @@
 // For more information, see licence file in the main folder
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Aura.Shared.Util
@@ -34,8 +31,16 @@ namespace Aura.Shared.Util
 		}
 	}
 
+	/// <summary>
+	/// Extensions for Random.
+	/// </summary>
 	public static class RandomExtension
 	{
+		/// <summary>
+		/// Returns random long.
+		/// </summary>
+		/// <param name="rnd"></param>
+		/// <returns></returns>
 		public static long NextInt64(this Random rnd)
 		{
 			return (((long)rnd.Next() << 8 * 4 - 1) + rnd.Next());

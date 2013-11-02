@@ -1,22 +1,24 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see licence file in the main folder
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Aura.Shared.Mabi.Const
 {
-	// The client calculates the Dan based on the rank id.
-	// 19 = Dan4, 30 = Dan15, etc.
+	/// <summary>
+	/// Skill ranks.
+	/// </summary>
 	public enum SkillRank
 	{
 		Novice = 0, RF = 1, RE = 2, RD = 3, RC = 4, RB = 5, RA = 6, R9 = 7,
 		R8 = 8, R7 = 9, R6 = 10, R5 = 11, R4 = 12, R3 = 13, R2 = 14, R1 = 15,
+
+		// The client calculates the Dan based on the rank id.
+		// 19 = Dan4, 30 = Dan15, etc.
 		Dan1 = 16, Dan2 = 17, Dan3 = 18
 	}
 
+	/// <summary>
+	/// Skill ids
+	/// </summary>
 	public enum SkillId : ushort
 	{
 		None = 0,

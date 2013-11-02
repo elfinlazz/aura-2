@@ -3,6 +3,9 @@
 
 namespace Aura.Shared.Mabi.Const
 {
+	/// <summary>
+	/// Various ids used by Mabi.
+	/// </summary>
 	public static class MabiId
 	{
 		// These ids are used as packet ids if there's no specific
@@ -31,7 +34,7 @@ namespace Aura.Shared.Mabi.Const
 		public const long Parties = 0x0040000000000001;
 
 		// Quests is probably 0x0060000000000001, but we'll leave some space
-		// between quests and items (quest items), just in case.
+		// between quests and (quest) items, just in case.
 		public const long Quests = 0x006000F000000001;
 		public const long QuestsTmp = 0x0060F00000000001;
 		public const long QuestItemOffset = 0x0010000000000000;

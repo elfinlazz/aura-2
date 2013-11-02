@@ -6,6 +6,9 @@ using Aura.Shared.Mabi.Const;
 
 namespace Aura.Shared.Mabi.Structs
 {
+	/// <summary>
+	/// Public item info.
+	/// </summary>
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct ItemInfo
 	{
@@ -37,6 +40,9 @@ namespace Aura.Shared.Mabi.Structs
 		private byte __unknown14;
 	}
 
+	/// <summary>
+	/// Private item info.
+	/// </summary>
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct ItemOptionInfo
 	{

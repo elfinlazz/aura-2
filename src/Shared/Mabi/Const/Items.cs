@@ -3,6 +3,12 @@
 
 namespace Aura.Shared.Mabi.Const
 {
+	/// <summary>
+	/// Inventory pockets
+	/// </summary>
+	/// <remarks>
+	/// Every item is stored in a specific pocket.
+	/// </remarks>
 	public enum Pocket : byte
 	{
 		None = 0,
@@ -56,6 +62,12 @@ namespace Aura.Shared.Mabi.Const
 		Max,
 	}
 
+	/// <summary>
+	/// Attack speed of a weapon.
+	/// </summary>
+	/// <remarks>
+	/// Used in ItemOptionInfo.
+	/// </remarks>
 	public enum AttackSpeed : byte
 	{
 		VeryFast,

@@ -16,7 +16,7 @@ namespace Aura.Shared.Database
 		private Regex _nameCheckRegex = new Regex(@"^[a-zA-Z][a-z0-9]{2,15}$", RegexOptions.Compiled);
 
 		/// <summary>
-		/// Returns new open connection.
+		/// Returns a valid connection.
 		/// </summary>
 		public MySqlConnection Connection
 		{
@@ -133,9 +133,18 @@ namespace Aura.Shared.Database
 		}
 	}
 
+	/// <summary>
+	/// Extensions for the MySqlDataReader.
+	/// </summary>
 	public static class MySqlDataReaderExtension
 	{
-		public static bool IsDBNull(this MySqlDataReader reader, string index)
+		/// <summary>
+		/// Returns true if value at index is null.
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		private static bool IsDBNull(this MySqlDataReader reader, string index)
 		{
 			return reader.IsDBNull(reader.GetOrdinal(index));
 		}
@@ -166,6 +175,9 @@ namespace Aura.Shared.Database
 		}
 	}
 
+	/// <summary>
+	/// Result of NameOkay.
+	/// </summary>
 	public enum NameCheckResult : byte
 	{
 		Okay = 0,

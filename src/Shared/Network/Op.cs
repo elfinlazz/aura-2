@@ -3,6 +3,9 @@
 
 namespace Aura.Shared.Network
 {
+	/// <summary>
+	/// All Op codes
+	/// </summary>
 	public static class Op
 	{
 		// Login Server

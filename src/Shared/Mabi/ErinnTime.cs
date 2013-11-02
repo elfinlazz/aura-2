@@ -8,7 +8,7 @@ namespace Aura.Shared.Mabi
 	/// <summary>
 	/// Wrapper around DateTime, to calculate the current time in Erinn.
 	/// </summary>
-	public class MabiTime
+	public class ErinnTime
 	{
 		/// <summary>
 		/// 1,500ms (1.5 seconds)
@@ -63,7 +63,7 @@ namespace Aura.Shared.Mabi
 		/// <summary>
 		/// Returns a new MabiTime instance based on the current time.
 		/// </summary>
-		public static MabiTime Now { get { return new MabiTime(); } }
+		public static ErinnTime Now { get { return new ErinnTime(); } }
 
 		/// <summary>
 		/// Returns true if the Erinn hour of this instance is between 6:00pm and 5:59am.
@@ -75,15 +75,15 @@ namespace Aura.Shared.Mabi
 		/// </summary>
 		public bool IsMidnight { get { return (this.Hour == 0 && this.Minute == 0); } }
 
-		public MabiTime() : this(DateTime.Now) { }
+		public ErinnTime() : this(DateTime.Now) { }
 
-		public MabiTime(DateTime dt)
+		public ErinnTime(DateTime dt)
 		{
 			this.DateTime = dt;
-			this.Hour = (byte)((this.DateTime.Ticks / TicksPerHour) % 24);
-			this.Minute = (byte)((this.DateTime.Ticks / TicksPerMinute) % 60);
+			this.Hour = (int)((this.DateTime.Ticks / TicksPerHour) % 24);
+			this.Minute = (int)((this.DateTime.Ticks / TicksPerMinute) % 60);
 
-			// Based on the theory that 1 year (1 week realtime) consts of
+			// Based on the theory that 1 year (1 week realtime) consists of
 			// 7 months (7 days) with 40 days (1440 / 36 min) each.
 			this.Year = (int)Math.Floor((this.DateTime.Ticks - BeginOfTime.Ticks) / TicksPerMinute / 60 / 24 / 280f);
 			this.Month = (int)this.DateTime.DayOfWeek;

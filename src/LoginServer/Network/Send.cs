@@ -24,7 +24,7 @@ namespace Aura.Login.Network
 		{
 			var packet = new MabiPacket(Op.ClientIdentR, MabiId.Login);
 			packet.PutByte(success);
-			packet.PutLong(MabiTime.Now.TimeStamp);
+			packet.PutLong(ErinnTime.Now.TimeStamp);
 
 			client.Send(packet);
 		}
@@ -378,8 +378,8 @@ namespace Aura.Login.Network
 		/// <param name="account"></param>
 		private static void Add(this  MabiPacket packet, Account account)
 		{
-			packet.PutLong(MabiTime.Now.TimeStamp);	// Last Login
-			packet.PutLong(MabiTime.Now.TimeStamp);	// Last Logout
+			packet.PutLong(ErinnTime.Now.TimeStamp);	// Last Login
+			packet.PutLong(ErinnTime.Now.TimeStamp);	// Last Logout
 			packet.PutInt(0);
 			packet.PutByte(1);
 			packet.PutByte(34);

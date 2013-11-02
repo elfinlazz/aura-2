@@ -7,10 +7,24 @@ using System.Text;
 
 namespace Aura.Shared.Util
 {
+	/// <summary>
+	/// Manages localization strings.
+	/// </summary>
 	public static class Localization
 	{
 		private static Dictionary<string, string> _storage = new Dictionary<string, string>();
 
+		/// <summary>
+		/// Starts parsing on path.
+		/// </summary>
+		/// <remarks>
+		/// If path is a file, it simply reads the file. If path is a directory,
+		/// it starts parsing all files recursively, using the folder structure
+		/// to make up the prefixes.
+		/// </remarks>
+		/// <param name="path">What to parse</param>
+		/// <param name="root">On root level? (base folder?)</param>
+		/// <param name="prefix">Dot prefix for the keys</param>
 		public static void Parse(string path, bool root = true, string prefix = "")
 		{
 			if (File.Exists(path))
@@ -46,6 +60,11 @@ namespace Aura.Shared.Util
 			}
 		}
 
+		/// <summary>
+		/// Adds strings in file to collection.
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="prefix"></param>
 		private static void LoadFile(string path, string prefix = "")
 		{
 			using (var sr = new StreamReader(path, Encoding.UTF8))
@@ -79,6 +98,11 @@ namespace Aura.Shared.Util
 			}
 		}
 
+		/// <summary>
+		/// Returns localization string, or the key, if it doesn't exist.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
 		public static string Get(string key)
 		{
 			string val;

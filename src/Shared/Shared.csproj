@@ -79,7 +79,7 @@
     <Compile Include="Util\FileReader.cs" />
     <Compile Include="Util\Localization.cs" />
     <Compile Include="Util\Log.cs" />
-    <Compile Include="Mabi\MabiTime.cs" />
+    <Compile Include="Mabi\ErinnTime.cs" />
     <Compile Include="Util\CmdUtil.cs" />
     <Compile Include="Util\RandomProvider.cs" />
     <Compile Include="Util\ServerUtil.cs" />

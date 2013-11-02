@@ -9,8 +9,21 @@ using Aura.Shared.Util;
 
 namespace Aura.Shared.Mabi
 {
+	/// <summary>
+	/// Handles hashing of passwords.
+	/// </summary>
+	/// <remarks>
+	/// Up until G15 the client was sending plain text passwords.
+	/// Then they would get hashed with MD5 before sending them to the server.
+	/// In G18 KR changed this again and is now sending passwords that are
+	/// first hashed with MD5 and then with SHA256.
+	/// To top it of, Aura hashes what comes from the client with BCrypt.
+	/// </remarks>
 	public static class Password
 	{
+		/// <summary>
+		/// Lower = Speedier login, Higher = More secure
+		/// </summary>
 		private const int BCryptStrength = 10;
 
 		private static MD5 _md5 = MD5.Create();
