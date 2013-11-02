@@ -343,6 +343,38 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
+		/// Sends negative (DeleteXRequest|RecoverX|DeleteX) to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="op"></param>
+		public static void DeleteR_Fail(LoginClient client, int op)
+		{
+			DeleteR(client, op, null, 0);
+		}
+
+		/// <summary>
+		/// Sends negative (DeleteXRequest|RecoverX|DeleteX) to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="op"></param>
+		/// <param name="serverName">Negative response if null</param>
+		/// <param name="id"></param>
+		public static void DeleteR(LoginClient client, int op, string serverName, long id)
+		{
+			var packet = new MabiPacket(op, MabiId.Login);
+			packet.PutByte(serverName != null);
+
+			if (serverName != null)
+			{
+				packet.PutString(serverName);
+				packet.PutLong(id);
+				packet.PutLong(0);
+			}
+
+			client.Send(packet);
+		}
+
+		/// <summary>
 		/// Adds server and channel information to packet.
 		/// </summary>
 		/// <param name="packet"></param>

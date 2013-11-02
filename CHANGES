@@ -15,3 +15,4 @@ Changes
 * Configuration is less redundant.
 * Improved server inheritance.
 * All data is read from system and user folders now, to make updates easier.
+* Server changes working directory to aura's root folder automatically.

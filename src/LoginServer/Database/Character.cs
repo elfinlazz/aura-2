@@ -48,6 +48,12 @@ namespace Aura.Login.Database
 		/// <summary>
 		/// Time at which the character may be deleted for good.
 		/// </summary>
+		/// <remarks>
+		/// If MinValue, the character is normal.
+		/// If MaxValue, it's "gone".
+		/// If it's above Now the character can be recovered.
+		/// If it's below Now, the character can be deleted.
+		/// </remarks>
 		public DateTime DeletionTime { get; set; }
 
 		/// <summary>

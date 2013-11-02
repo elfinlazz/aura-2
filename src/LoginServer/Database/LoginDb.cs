@@ -611,5 +611,31 @@ namespace Aura.Login.Database
 				mc.ExecuteNonQuery();
 			}
 		}
+
+		/// <summary>
+		/// Updates deletion time for character, or deletes it.
+		/// </summary>
+		/// <param name="character"></param>
+		public void UpdateDeletionTime(Character character)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				if (character.DeletionFlag == DeletionFlag.Delete)
+				{
+					var mc = new MySqlCommand("DELETE FROM `creatures` WHERE `creatureId` = @creatureId", conn);
+					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+
+					mc.ExecuteNonQuery();
+				}
+				else
+				{
+					var mc = new MySqlCommand("UPDATE `creatures` SET `deletionTime` = @deletionTime WHERE `creatureId` = @creatureId", conn);
+					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+					mc.Parameters.AddWithValue("@deletionTime", character.DeletionTime);
+
+					mc.ExecuteNonQuery();
+				}
+			}
+		}
 	}
 }

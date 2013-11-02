@@ -22,6 +22,8 @@ namespace Aura.Login.Util
 		public bool ConsumePetCards;
 		public bool ConsumePartnerCards;
 
+		public int DeletionWait;
+
 		private LoginConf()
 		{
 		}
@@ -47,6 +49,8 @@ namespace Aura.Login.Util
 			this.ConsumeCharacterCards = this.GetBool("login.consume_character_cards", true);
 			this.ConsumePetCards = this.GetBool("login.consume_pet_cards", true);
 			this.ConsumePartnerCards = this.GetBool("login.consume_partner_cards", true);
+
+			this.DeletionWait = this.GetInt("login.deletion_wait", 107);
 		}
 	}
 }
