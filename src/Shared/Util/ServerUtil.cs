@@ -57,6 +57,8 @@ namespace Aura.Shared.Util
 		/// </summary>
 		public static void LoadData(DataLoad toLoad, bool reload)
 		{
+			Log.Info("Loading data...");
+
 			try
 			{
 				if ((toLoad & DataLoad.Races) != 0)
@@ -179,6 +181,33 @@ namespace Aura.Shared.Util
 
 			if (log)
 				Log.Info("Done loading {0} entries from {1}.", db.Count, Path.GetFileName(path));
+		}
+
+		/// <summary>
+		/// Loads system and user localization files.
+		/// </summary>
+		public static void LoadLocalization(BaseConf conf)
+		{
+			Log.Info("Loading localization...");
+
+			// System
+			try
+			{
+				Localization.Parse(string.Format("../../system/localization/{0}", conf.Language));
+			}
+			catch (FileNotFoundException ex)
+			{
+				Log.Warning("Unable to load localization: " + ex.Message);
+			}
+
+			// User
+			try
+			{
+				Localization.Parse(string.Format("../../user/localization/{0}", conf.Language));
+			}
+			catch (FileNotFoundException)
+			{
+			}
 		}
 	}
 

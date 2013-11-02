@@ -1,0 +1,6 @@
+﻿// Aura
+// Localization file
+// --------------------------------------------------------------------------
+
+unimplemented			Unimplemented.
+unimplemented_skill		Partially unimplemented skill.

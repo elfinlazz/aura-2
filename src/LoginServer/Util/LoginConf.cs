@@ -34,6 +34,7 @@ namespace Aura.Login.Util
 
 			this.LoadLog("login");
 			this.LoadDatabase();
+			this.LoadLocalization();
 			this.LoadLogin();
 		}
 

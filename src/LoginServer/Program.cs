@@ -25,6 +25,9 @@ namespace Aura.Login
 			// Data
 			ServerUtil.LoadData(DataLoad.LoginServer, false);
 
+			// Localization
+			ServerUtil.LoadLocalization(LoginConf.Instance);
+
 			// Debug
 			LoginServer.Instance.Servers.Add("Aura");
 

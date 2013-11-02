@@ -1,0 +1,86 @@
+﻿// Aura
+// Localization file
+// --------------------------------------------------------------------------
+
+usage			Usage: {0} {1}
+error			Error while executing command.
+unknown			Unknown command.
+
+// >gmcp
+gmcp_auth		You're not authorized to use the GMCP.
+gmcp_summon		You've been summoned by '{0}'.
+gmcp_nochar		Character '{0}' couldn't be found.
+gmcp_kicked		'{0}' has been kicked.
+gmcp_banned		'{0}' has been banned till '{1}'.
+gmcp_disabled	The GMCP is currently disabled, or not available.
+
+// >where
+where			Region: {0}, X: {1}, Y: {2}, Area: {3}, Direction: {4}
+
+// >who
+who				Players online:
+who_region		Players online in region {0}:
+who_r			{0} - Region: {1}, X: {2}, Y: {3}
+who_none		None.
+
+// >item/drop
+item_nores		Item '{0}' not found in database.
+item_mures		Item '{0}' not found, using next best result, '{1}'.
+item_amount		Invalid amount.
+item_hex		Invalid hex color '{0}'.
+item_color		Unknown color '{0}'.
+
+// >iteminfo
+ii_none			No items found.
+ii_for			{0}: {1}
+ii_res			Results: {0} (Max. 20 shown)
+
+// >skillinfo
+si_none			No skills found.
+si_for			{0}: {1} (Max Rank: {2})
+si_res			Results: {0} (Max. 20 shown)
+
+// >raceinfo
+ri_none			No races found.
+ri_for			{0}: {1}
+ri_no_drop		None.
+ri_for_drop		{0} ({1}%),
+ri_drops		Drops:
+ri_res			Results: {0} (Max. 20 shown)
+
+// >set_inventory
+si_param		Unknown paramter '{0}'.
+si_param_pocket	Unknown paramter '{0}', please specify a pocket.
+si_pocket		Invalid pocket.
+si_cleared		Cleared pocket '{0}'. (Deleted items: {1})
+
+// >warp
+warp_region		Region '{0}' not found.
+
+// >go
+go_dest			Destinations:
+go_unk			Unknown destination.
+
+// >gesture
+gesture_unk		Unknown gesture.
+
+// >setrace
+setrace			Your race has been changed. You'll be logged out to complete the process.
+
+// >reloadx
+reloadscripts	Reloading NPCs...
+reloaddata		Reloading data...
+reloadconf		Reloading conf...
+reload_done		done.
+
+// >addcard
+addcard_id		Invalid card id.
+addcard_char	Character '{0}' not found.
+addcard_petcard	Unknown pet card ({0}).
+addcard_type	Invalid card type.
+addcard			Card added.
+
+// >shamala
+shamala_race	Race not found.
+shamala_trans	Transform~!
+shamala_end		Transformation ended.

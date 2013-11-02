@@ -11,4 +11,7 @@ Changes
 * Aura.Net removed.
 * Characters, Pets, and Partners now have their own tables (for ids) and link to a collective creature table.
 * Aura.Data renamed to Data.
-* Updated MySql connector
+* Updated MySql connector.
+* Configuration is less redundant.
+* Improved server inheritance.
+* All data is read from system and user folders now, to make updates easier.

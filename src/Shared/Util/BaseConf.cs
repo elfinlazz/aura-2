@@ -15,6 +15,9 @@ namespace Aura.Shared.Util
 		public string Pass;
 		public string Db;
 
+		// Localization
+		public string Language;
+
 		public BaseConf()
 		{
 		}
@@ -38,6 +41,11 @@ namespace Aura.Shared.Util
 			this.User = this.GetString("database.user", "root");
 			this.Pass = this.GetString("database.pass", "");
 			this.Db = this.GetString("database.db", "aura");
+		}
+
+		protected void LoadLocalization()
+		{
+			this.Language = this.GetString("localization.language", "us");
 		}
 	}
 }

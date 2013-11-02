@@ -1,0 +1,16 @@
+﻿// Aura
+// Localization file
+// --------------------------------------------------------------------------
+
+created		{0} Guild has been created. Guild leader: {1}
+intro		Guild stone for the {0} guild
+leaving		You have left the {0} guild
+rejection	You have been denied admission to the {0} guild.
+welcome		Welcome to the {0} guild!
+already_you	You are already a member of a guild
+already		{0} is already a member of a guild
+name_used	That name is not valid or is already in use.
+not_found	Guild does not exist
+pls_wait	Your application has been accepted.\nPlease wait for the Guild Leader to make the final confirmation.
+donated		You have donated {0} Gold
+points		Added {0} Point(s)
