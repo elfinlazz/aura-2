@@ -3,25 +3,50 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Aura.Shared.Database;
 using Aura.Data;
-using System.IO;
+using Aura.Shared.Database;
 
 namespace Aura.Shared.Util
 {
+	/// <summary>
+	/// General methods needed by all servers.
+	/// </summary>
 	public static class ServerUtil
 	{
+		/// <summary>
+		/// Tries to find aura root folder, and changes the working directory to it.
+		/// Exits if not successful.
+		/// </summary>
+		public static void NavigateToRoot()
+		{
+			// Go back max 2 folders, the bins should be in aura/bin/(Debug|Release)
+			for (int i = 0; i < 3; ++i)
+			{
+				if (Directory.Exists("system"))
+					return;
+
+				Directory.SetCurrentDirectory("..");
+			}
+
+			Log.Error("Unable to find root directory.");
+			CmdUtil.Exit(1);
+		}
+
 		/// <summary>
 		/// Tries to call conf's load method, exits on error.
 		/// </summary>
 		public static void LoadConf(BaseConf conf)
 		{
+			Log.Write(LogLevel.Info, "Reading configuration...");
+
 			try
 			{
 				conf.Load();
-				Log.Info("Read configuration.");
+
+				Log.WriteLine(LogLevel.None, " done.");
 			}
 			catch (Exception ex)
 			{
@@ -36,11 +61,13 @@ namespace Aura.Shared.Util
 		/// </summary>
 		public static void InitDatabase(BaseConf conf)
 		{
+			Log.Write(LogLevel.Info, "Initializing database...");
+
 			try
 			{
 				AuraDb.Instance.Init(conf.Host, conf.User, conf.Pass, conf.Db);
 
-				Log.Info("Initialized database.");
+				Log.WriteLine(LogLevel.None, " done.");
 			}
 			catch (Exception ex)
 			{
@@ -156,8 +183,8 @@ namespace Aura.Shared.Util
 		/// </summary>
 		private static void LoadDb(IDatabase db, string path, bool reload, bool log = true)
 		{
-			var systemPath = Path.Combine("../..", "system", path);
-			var userPath = Path.Combine("../..", "user", path);
+			var systemPath = Path.Combine("system", path);
+			var userPath = Path.Combine("user", path);
 
 			// System
 			{
@@ -180,7 +207,7 @@ namespace Aura.Shared.Util
 			}
 
 			if (log)
-				Log.Info("Done loading {0} entries from {1}.", db.Count, Path.GetFileName(path));
+				Log.Info("  done loading {0} entries from {1}.", db.Count, Path.GetFileName(path));
 		}
 
 		/// <summary>
@@ -188,12 +215,12 @@ namespace Aura.Shared.Util
 		/// </summary>
 		public static void LoadLocalization(BaseConf conf)
 		{
-			Log.Info("Loading localization...");
+			Log.Write(LogLevel.Info, "Loading localization...");
 
 			// System
 			try
 			{
-				Localization.Parse(string.Format("../../system/localization/{0}", conf.Language));
+				Localization.Parse(string.Format("system/localization/{0}", conf.Language));
 			}
 			catch (FileNotFoundException ex)
 			{
@@ -203,11 +230,13 @@ namespace Aura.Shared.Util
 			// User
 			try
 			{
-				Localization.Parse(string.Format("../../user/localization/{0}", conf.Language));
+				Localization.Parse(string.Format("user/localization/{0}", conf.Language));
 			}
 			catch (FileNotFoundException)
 			{
 			}
+
+			Log.WriteLine(LogLevel.None, " done.");
 		}
 	}
 

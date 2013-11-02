@@ -16,6 +16,8 @@ namespace Aura.Login
 			CmdUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
 			CmdUtil.LoadingTitle();
 
+			ServerUtil.NavigateToRoot();
+
 			// Conf
 			ServerUtil.LoadConf(LoginConf.Instance);
 
