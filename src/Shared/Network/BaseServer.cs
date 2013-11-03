@@ -3,14 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net.Sockets;
 using System.Net;
+using System.Net.Sockets;
 using Aura.Shared.Util;
 
 namespace Aura.Shared.Network
 {
+	/// <summary>
+	/// Base server, for specialized servers to inherit from.
+	/// </summary>
+	/// <typeparam name="TClient"></typeparam>
 	public abstract class BaseServer<TClient> where TClient : BaseClient, new()
 	{
 		private Socket _socket;

@@ -29,7 +29,7 @@ namespace Aura.Login.Network.Handlers
 		/// 005 [................] String : admin
 		/// </example>
 		[PacketHandler(Op.ClientIdent)]
-		public void ClientIdent(LoginClient client, MabiPacket packet)
+		public void ClientIdent(LoginClient client, Packet packet)
 		{
 			var unkByte = packet.GetByte();
 			var ident = packet.GetString();
@@ -74,7 +74,7 @@ namespace Aura.Login.Network.Handlers
 		/// 007 [................] String : local ip
 		/// </example>
 		[PacketHandler(Op.Login)]
-		public void Login(LoginClient client, MabiPacket packet)
+		public void Login(LoginClient client, Packet packet)
 		{
 			var loginType = (LoginType)packet.GetByte();
 			var accountId = packet.GetString();

@@ -10,7 +10,7 @@ using Aura.Login.Network.Handlers;
 
 namespace Aura.Login.Network
 {
-	public class LoginServer : MabiDefaultServer<LoginClient>
+	public class LoginServer : DefaultServer<LoginClient>
 	{
 		public static readonly LoginServer Instance = new LoginServer();
 

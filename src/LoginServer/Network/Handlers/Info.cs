@@ -20,7 +20,7 @@ namespace Aura.Login.Network.Handlers
 		/// 0002 [0010000000000000] Long   : id
 		/// </example>
 		[PacketHandler(Op.CharacterInfoRequest, Op.PetInfoRequest)]
-		public void CharacterInfoRequest(LoginClient client, MabiPacket packet)
+		public void CharacterInfoRequest(LoginClient client, Packet packet)
 		{
 			var server = packet.GetString();
 			var characterId = packet.GetLong();
@@ -49,7 +49,7 @@ namespace Aura.Login.Network.Handlers
 		/// ...
 		/// </example>
 		[PacketHandler(Op.AccountInfoRequest)]
-		public void AccountInfoRequest(LoginClient client, MabiPacket packet)
+		public void AccountInfoRequest(LoginClient client, Packet packet)
 		{
 			if (client.Account != null)
 				Send.AccountInfoRequestR(client, true);

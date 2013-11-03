@@ -19,7 +19,7 @@ namespace Aura.Login.Network.Handlers
 		/// ...
 		/// </example>
 		[PacketHandler(Op.AcceptGift)]
-		public void AcceptGift(LoginClient client, MabiPacket packet)
+		public void AcceptGift(LoginClient client, Packet packet)
 		{
 			var giftId = packet.GetLong();
 
@@ -37,7 +37,7 @@ namespace Aura.Login.Network.Handlers
 		/// ...
 		/// </example>
 		[PacketHandler(Op.RefuseGift)]
-		public void RefuseGift(LoginClient client, MabiPacket packet)
+		public void RefuseGift(LoginClient client, Packet packet)
 		{
 			var giftId = packet.GetLong();
 

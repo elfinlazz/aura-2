@@ -25,7 +25,7 @@ namespace Aura.Login.Network.Handlers
 		/// 003 [................] String : name
 		/// </example>
 		[PacketHandler(Op.DeleteCharacterRequest, Op.DeletePetRequest, Op.RecoverCharacter, Op.RecoverPet, Op.DeleteCharacter, Op.DeletePet)]
-		public void Delete(LoginClient client, MabiPacket packet)
+		public void Delete(LoginClient client, Packet packet)
 		{
 			var serverName = packet.GetString();
 			var id = packet.GetLong();

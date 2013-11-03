@@ -7,6 +7,9 @@ using Aura.Shared.Util;
 
 namespace Aura.Shared.Network
 {
+	/// <summary>
+	/// Base client, for specialized client classes in the servers.
+	/// </summary>
 	public class BaseClient
 	{
 		private const int BufferDefaultSize = 8192;
@@ -76,7 +79,7 @@ namespace Aura.Shared.Network
 		/// Builds buffer from packet and sends it.
 		/// </summary>
 		/// <param name="packet"></param>
-		public void Send(MabiPacket packet)
+		public void Send(Packet packet)
 		{
 			this.Send(packet.Build());
 		}

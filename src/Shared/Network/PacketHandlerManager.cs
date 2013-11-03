@@ -3,16 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Aura.Shared.Util;
-using System.Reflection;
 
 namespace Aura.Shared.Network
 {
+	/// <summary>
+	/// Packet handler manager base class.
+	/// </summary>
+	/// <typeparam name="TClient"></typeparam>
 	public abstract class PacketHandlerManager<TClient> where TClient : BaseClient
 	{
-		public delegate void PacketHandlerFunc(TClient client, MabiPacket packet);
+		public delegate void PacketHandlerFunc(TClient client, Packet packet);
 
 		private Dictionary<int, PacketHandlerFunc> _handlers;
 
@@ -50,7 +51,12 @@ namespace Aura.Shared.Network
 			}
 		}
 
-		public void Handle(TClient client, MabiPacket packet)
+		/// <summary>
+		/// Runs handler for packet's op, or logs it as unimplemented.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="packet"></param>
+		public void Handle(TClient client, Packet packet)
 		{
 			PacketHandlerFunc handler;
 			if (!_handlers.TryGetValue(packet.Op, out handler))
@@ -70,6 +76,10 @@ namespace Aura.Shared.Network
 		}
 	}
 
+	/// <summary>
+	/// Methods having this attribute are registered as packet handlers,
+	/// for the ops.
+	/// </summary>
 	public class PacketHandler : Attribute
 	{
 		public int[] Ops { get; protected set; }

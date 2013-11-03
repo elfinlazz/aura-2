@@ -23,7 +23,7 @@ namespace Aura.Login.Network.Handlers
 		/// 0002 [................] String : name
 		/// </example>
 		[PacketHandler(Op.NameCheck)]
-		public void NameCheck(LoginClient client, MabiPacket packet)
+		public void NameCheck(LoginClient client, Packet packet)
 		{
 			var server = packet.GetString();
 			var name = packet.GetString();
@@ -52,7 +52,7 @@ namespace Aura.Login.Network.Handlers
 		// 012 [........00001EDC] Int    : 7900
 		/// </example>
 		[PacketHandler(Op.CreateCharacter)]
-		public void CreateCharacter(LoginClient client, MabiPacket packet)
+		public void CreateCharacter(LoginClient client, Packet packet)
 		{
 			var serverName = packet.GetString();
 			var cardId = packet.GetLong();
@@ -179,7 +179,7 @@ namespace Aura.Login.Network.Handlers
 		/// 0006 [........00000000] Int    : 0
 		/// </example>
 		[PacketHandler(Op.CreatePet)]
-		public void CreatePet(LoginClient client, MabiPacket packet)
+		public void CreatePet(LoginClient client, Packet packet)
 		{
 			var serverName = packet.GetString();
 			var cardId = packet.GetLong();
@@ -291,7 +291,7 @@ namespace Aura.Login.Network.Handlers
 		/// No parameters.
 		/// </example>
 		[PacketHandler(Op.PetCreationOptionsRequest)]
-		public void PetCreationOptionsRequest(LoginClient client, MabiPacket packet)
+		public void PetCreationOptionsRequest(LoginClient client, Packet packet)
 		{
 			//var availableRaces = new List<int>();
 			//availableRaces.Add(430505);
@@ -311,7 +311,7 @@ namespace Aura.Login.Network.Handlers
 		/// ...
 		/// </example>
 		[PacketHandler(Op.CreatePartner)]
-		public void CreatePartner(LoginClient client, MabiPacket packet)
+		public void CreatePartner(LoginClient client, Packet packet)
 		{
 			var serverName = packet.GetString();
 			var cardId = packet.GetLong();
@@ -439,7 +439,7 @@ namespace Aura.Login.Network.Handlers
 		/// No parameters.
 		/// </example>
 		[PacketHandler(Op.PartnerCreationOptionsRequest)]
-		public void PartnerCreationOptionsRequest(LoginClient client, MabiPacket packet)
+		public void PartnerCreationOptionsRequest(LoginClient client, Packet packet)
 		{
 
 		}

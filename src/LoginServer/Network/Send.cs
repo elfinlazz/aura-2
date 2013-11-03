@@ -20,7 +20,7 @@ namespace Aura.Login.Network
 		/// <param name="success"></param>
 		public static void CheckIdentR(LoginClient client, bool success)
 		{
-			var packet = new MabiPacket(Op.ClientIdentR, MabiId.Login);
+			var packet = new Packet(Op.ClientIdentR, MabiId.Login);
 			packet.PutByte(success);
 			packet.PutLong(ErinnTime.Now.TimeStamp);
 
@@ -35,7 +35,7 @@ namespace Aura.Login.Network
 		/// <param name="args"></param>
 		public static void LoginR_Msg(LoginClient client, string format, params object[] args)
 		{
-			var packet = new MabiPacket(Op.LoginR, MabiId.Login);
+			var packet = new Packet(Op.LoginR, MabiId.Login);
 			packet.PutByte((byte)LoginResult.Message);
 			packet.PutInt(14);
 			packet.PutInt(1);
@@ -51,7 +51,7 @@ namespace Aura.Login.Network
 		/// <param name="result"></param>
 		public static void LoginR_Fail(LoginClient client, LoginResult result)
 		{
-			var packet = new MabiPacket(Op.LoginR, MabiId.Login);
+			var packet = new Packet(Op.LoginR, MabiId.Login);
 			packet.PutByte((byte)result);
 			if (result == LoginResult.SecondaryFail)
 			{
@@ -71,7 +71,7 @@ namespace Aura.Login.Network
 		/// <param name="servers"></param>
 		public static void LoginR(LoginClient client, Account account, long sessionKey, List<ServerInfo> servers)
 		{
-			var packet = new MabiPacket(Op.LoginR, MabiId.Login);
+			var packet = new Packet(Op.LoginR, MabiId.Login);
 			packet.PutByte((byte)LoginResult.Success);
 			packet.PutString(account.Name);
 			// [160XXX] Double account name
@@ -102,7 +102,7 @@ namespace Aura.Login.Network
 		/// <param name="sessionKey"></param>
 		public static void LoginR_Secondary(LoginClient client, Account account, long sessionKey)
 		{
-			var packet = new MabiPacket(Op.LoginR, MabiId.Login);
+			var packet = new Packet(Op.LoginR, MabiId.Login);
 			packet.PutByte((byte)LoginResult.SecondaryReq);
 			packet.PutString(account.Name); // Official seems to send this
 			packet.PutString(account.Name); // back hashed.
@@ -134,7 +134,7 @@ namespace Aura.Login.Network
 		/// <param name="items"></param>
 		public static void CharacterInfoRequestR(LoginClient client, int op, Character character, List<Item> items)
 		{
-			var packet = new MabiPacket(op, MabiId.Login);
+			var packet = new Packet(op, MabiId.Login);
 			packet.PutByte(character != null);
 
 			if (character != null)
@@ -199,7 +199,7 @@ namespace Aura.Login.Network
 		/// <param name="result"></param>
 		public static void NameCheckR(LoginClient client, NameCheckResult result)
 		{
-			var response = new MabiPacket(Op.NameCheckR, MabiId.Login);
+			var response = new Packet(Op.NameCheckR, MabiId.Login);
 			response.PutByte(result == NameCheckResult.Okay);
 			response.PutByte((byte)result);
 
@@ -255,7 +255,7 @@ namespace Aura.Login.Network
 		/// <param name="id"></param>
 		private static void CreateR(LoginClient client, int op, string serverName, long id)
 		{
-			var response = new MabiPacket(op, MabiId.Login);
+			var response = new Packet(op, MabiId.Login);
 			response.PutByte(serverName != null);
 
 			if (serverName != null)
@@ -275,7 +275,7 @@ namespace Aura.Login.Network
 		/// <param name="list">No overwrite if list is null.</param>
 		public static void PetCreationOptionsRequestR(LoginClient client, PetCreationOptionsListType type, List<int> list)
 		{
-			var packet = new MabiPacket(Op.PetCreationOptionsRequestR, MabiId.Login);
+			var packet = new Packet(Op.PetCreationOptionsRequestR, MabiId.Login);
 			packet.PutByte(list != null);
 
 			if (list != null)
@@ -296,7 +296,7 @@ namespace Aura.Login.Network
 		/// <param name="gift">Negative response if null</param>
 		public static void AcceptGiftR(LoginClient client, Gift gift)
 		{
-			var packet = new MabiPacket(Op.AcceptGiftR, MabiId.Login);
+			var packet = new Packet(Op.AcceptGiftR, MabiId.Login);
 			packet.PutByte(gift != null);
 
 			if (gift != null)
@@ -318,7 +318,7 @@ namespace Aura.Login.Network
 		/// <param name="success"></param>
 		public static void RefuseGiftR(LoginClient client, bool success)
 		{
-			var packet = new MabiPacket(Op.RefuseGiftR, MabiId.Login);
+			var packet = new Packet(Op.RefuseGiftR, MabiId.Login);
 			packet.PutByte(success);
 			// ?
 
@@ -331,7 +331,7 @@ namespace Aura.Login.Network
 		/// <param name="client"></param>
 		public static void AccountInfoRequestR(LoginClient client, bool success)
 		{
-			var packet = new MabiPacket(Op.AccountInfoRequestR, MabiId.Login);
+			var packet = new Packet(Op.AccountInfoRequestR, MabiId.Login);
 			packet.PutByte(success);
 
 			if (success)
@@ -359,7 +359,7 @@ namespace Aura.Login.Network
 		/// <param name="id"></param>
 		public static void DeleteR(LoginClient client, int op, string serverName, long id)
 		{
-			var packet = new MabiPacket(op, MabiId.Login);
+			var packet = new Packet(op, MabiId.Login);
 			packet.PutByte(serverName != null);
 
 			if (serverName != null)
@@ -377,7 +377,7 @@ namespace Aura.Login.Network
 		/// </summary>
 		/// <param name="packet"></param>
 		/// <param name="server"></param>
-		private static void Add(this MabiPacket packet, ServerInfo server)
+		private static void Add(this Packet packet, ServerInfo server)
 		{
 			packet.PutString(server.Name);
 			packet.PutShort(0); // Server type?
@@ -406,7 +406,7 @@ namespace Aura.Login.Network
 		/// </summary>
 		/// <param name="packet"></param>
 		/// <param name="account"></param>
-		private static void Add(this  MabiPacket packet, Account account)
+		private static void Add(this  Packet packet, Account account)
 		{
 			packet.PutLong(ErinnTime.Now.TimeStamp);	// Last Login
 			packet.PutLong(ErinnTime.Now.TimeStamp);	// Last Logout

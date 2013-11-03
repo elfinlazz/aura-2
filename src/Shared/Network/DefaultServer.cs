@@ -2,14 +2,14 @@
 // For more information, see license file in the main folder
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Aura.Shared.Util;
 
 namespace Aura.Shared.Network
 {
-	public abstract class MabiDefaultServer<TClient> : BaseServer<TClient> where TClient : BaseClient, new()
+	/// <summary>
+	/// Normal Mabi server (Login, World).
+	/// </summary>
+	/// <typeparam name="TClient"></typeparam>
+	public abstract class DefaultServer<TClient> : BaseServer<TClient> where TClient : BaseClient, new()
 	{
 		protected override int GetPacketLength(byte[] buffer, int ptr)
 		{
@@ -55,7 +55,7 @@ namespace Aura.Shared.Network
 				// Actual packets
 				else
 				{
-					var packet = new MabiPacket(buffer);
+					var packet = new Packet(buffer);
 					//Logger.Debug(packet);
 					this.Handlers.Handle(client, packet);
 				}

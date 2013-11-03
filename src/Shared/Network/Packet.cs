@@ -24,7 +24,7 @@ namespace Aura.Shared.Network
 	/// <summary>
 	/// General packet, used by Login and World.
 	/// </summary>
-	public class MabiPacket
+	public class Packet
 	{
 		/// <summary>
 		/// Default size for the buffer
@@ -52,7 +52,7 @@ namespace Aura.Shared.Network
 		/// </summary>
 		public long Id { get; set; }
 
-		public MabiPacket(int op, long id)
+		public Packet(int op, long id)
 		{
 			this.Op = op;
 			this.Id = id;
@@ -60,7 +60,7 @@ namespace Aura.Shared.Network
 			_buffer = new byte[DefaultSize];
 		}
 
-		public MabiPacket(byte[] buffer)
+		public Packet(byte[] buffer)
 		{
 			_built = true;
 			_buffer = buffer;
@@ -98,7 +98,7 @@ namespace Aura.Shared.Network
 		/// <param name="type"></param>
 		/// <param name="val"></param>
 		/// <returns></returns>
-		protected MabiPacket PutSimple(PacketElementType type, params byte[] val)
+		protected Packet PutSimple(PacketElementType type, params byte[] val)
 		{
 			this.EnsureEditable();
 
@@ -122,7 +122,7 @@ namespace Aura.Shared.Network
 		/// <param name="type"></param>
 		/// <param name="val"></param>
 		/// <returns></returns>
-		protected MabiPacket PutWithLength(PacketElementType type, byte[] val)
+		protected Packet PutWithLength(PacketElementType type, byte[] val)
 		{
 			this.EnsureEditable();
 
@@ -142,31 +142,31 @@ namespace Aura.Shared.Network
 		}
 
 		/// <summary>Writes val to buffer.</summary>
-		public MabiPacket PutByte(byte val) { return this.PutSimple(PacketElementType.Byte, val); }
+		public Packet PutByte(byte val) { return this.PutSimple(PacketElementType.Byte, val); }
 		/// <summary>Writes val as byte to buffer.</summary>
-		public MabiPacket PutByte(bool val) { return this.PutByte(val ? (byte)1 : (byte)0); }
+		public Packet PutByte(bool val) { return this.PutByte(val ? (byte)1 : (byte)0); }
 		/// <summary>Writes val to buffer.</summary>
-		public MabiPacket PutShort(short val) { return this.PutSimple(PacketElementType.Short, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
+		public Packet PutShort(short val) { return this.PutSimple(PacketElementType.Short, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
 		/// <summary>Writes val to buffer.</summary>
-		public MabiPacket PutInt(int val) { return this.PutSimple(PacketElementType.Int, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
+		public Packet PutInt(int val) { return this.PutSimple(PacketElementType.Int, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
 		/// <summary>Writes val to buffer.</summary>
-		public MabiPacket PutLong(long val) { return this.PutSimple(PacketElementType.Long, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
+		public Packet PutLong(long val) { return this.PutSimple(PacketElementType.Long, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
 		/// <summary>Writes val as long to buffer.</summary>
-		public MabiPacket PutLong(DateTime val) { return this.PutLong((long)(val.Ticks / 10000)); }
+		public Packet PutLong(DateTime val) { return this.PutLong((long)(val.Ticks / 10000)); }
 		/// <summary>Writes val to buffer.</summary>
-		public MabiPacket PutFloat(float val) { return this.PutSimple(PacketElementType.Float, BitConverter.GetBytes(val)); }
+		public Packet PutFloat(float val) { return this.PutSimple(PacketElementType.Float, BitConverter.GetBytes(val)); }
 		/// <summary>Writes val to buffer.</summary>
-		public MabiPacket PutFloat(double val) { return this.PutFloat((float)val); }
+		public Packet PutFloat(double val) { return this.PutFloat((float)val); }
 
 		/// <summary>Writes val as null-terminated UTF8 string to buffer.</summary>
-		public MabiPacket PutString(string val) { return this.PutWithLength(PacketElementType.String, Encoding.UTF8.GetBytes(val + "\0")); }
+		public Packet PutString(string val) { return this.PutWithLength(PacketElementType.String, Encoding.UTF8.GetBytes(val + "\0")); }
 		/// <summary>Writes val as null-terminated UTF8 string to buffer.</summary>
-		public MabiPacket PutString(string format, params object[] args) { return this.PutString(string.Format((format != null ? format : string.Empty), args)); }
+		public Packet PutString(string format, params object[] args) { return this.PutString(string.Format((format != null ? format : string.Empty), args)); }
 
 		/// <summary>Writes val to buffer.</summary>
-		public MabiPacket PutBin(byte[] val) { return this.PutWithLength(PacketElementType.Bin, val); }
+		public Packet PutBin(byte[] val) { return this.PutWithLength(PacketElementType.Bin, val); }
 		/// <summary>Converts struct to byte array and writes it as byte array to buffer.</summary>
-		public MabiPacket PutBin(object val)
+		public Packet PutBin(object val)
 		{
 			var type = val.GetType();
 			if (!type.IsValueType || type.IsPrimitive)
