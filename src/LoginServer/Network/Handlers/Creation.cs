@@ -159,6 +159,8 @@ namespace Aura.Login.Network.Handlers
 			// Success~
 			Send.CreateCharacterR(client, serverName, character.Id);
 
+			Log.Info("New character '{0}' created in account '{1}'.", name, client.Account.Name);
+
 			return;
 
 		L_Fail:
@@ -264,6 +266,8 @@ namespace Aura.Login.Network.Handlers
 
 			// Success~
 			Send.CreatePetR(client, serverName, pet.Id);
+
+			Log.Info("New pet '{0}' created in account '{1}'.", name, client.Account.Name);
 
 			return;
 
@@ -416,6 +420,8 @@ namespace Aura.Login.Network.Handlers
 
 			// Success~
 			Send.CreatePetR(client, serverName, partner.Id);
+
+			Log.Info("New partner '{0}' created in account '{1}'.", name, client.Account.Name);
 
 			return;
 

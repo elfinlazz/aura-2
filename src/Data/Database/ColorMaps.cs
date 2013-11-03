@@ -18,7 +18,7 @@ namespace Aura.Data.Database
 	/// Holds information about all colors a specific material can have.
 	/// Indexed by color map id.
 	/// </summary>
-	public class ColorMapDb : DatabaseDatIndexed<byte, ColorMapInfo>
+	public class ColorMapDb : DatabaseDatIndexed<int, ColorMapInfo>
 	{
 		public uint GetRandom(byte id, MTRandom rnd)
 		{
