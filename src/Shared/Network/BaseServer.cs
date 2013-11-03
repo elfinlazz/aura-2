@@ -105,7 +105,7 @@ namespace Aura.Shared.Network
 			try
 			{
 				client.Socket = (result.AsyncState as Socket).EndAccept(result);
-				client.Socket.BeginReceive(client.Buffer.Front, 0, client.Buffer.Front.Length, SocketFlags.None, new AsyncCallback(OnReceive), client);
+				client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, new AsyncCallback(OnReceive), client);
 
 				this.AddClient(client);
 				Log.Info("Connection established from '{0}.", client.Address);
@@ -136,50 +136,49 @@ namespace Aura.Shared.Network
 			try
 			{
 				int bytesReceived = client.Socket.EndReceive(result);
-				int bytesRead = 0;
+				int ptr = 0;
 
 				if (bytesReceived == 0)
 				{
-					client.Kill();
-					this.RemoveClient(client);
+					this.KillAndRemoveClient(client);
 					Log.Info("Connection closed from '{0}.", client.Address);
 					return;
 				}
 
-				while (bytesRead < bytesReceived)
+				// Handle all received bytes
+				while (bytesReceived > 0)
 				{
-					// New packet
-					if (client.Buffer.Remaining < 1)
-						client.Buffer.Remaining = this.GetPacketLength(client.Buffer.Front, bytesRead);
+					// Length of new packet
+					int length = this.GetPacketLength(client.Buffer, ptr);
 
-					// Copy 1 byte from front to back buffer.
-					client.Buffer.Back[client.Buffer.Ptr++] = client.Buffer.Front[bytesRead++];
+					// Shouldn't actually happen...
+					if (length > client.Buffer.Length)
+						throw new Exception(string.Format("Buffer too small to receive full packet ({0}).", length));
 
-					// Check if back buffer contains full packet.
-					if (--client.Buffer.Remaining > 0)
-						continue;
+					// Read whole packet and ...
+					var buffer = new byte[length];
+					Buffer.BlockCopy(client.Buffer, ptr, buffer, 0, length);
+					bytesReceived -= length;
+					ptr += length;
 
-					// Cut the back buffer
-					Array.Resize(ref client.Buffer.Back, client.Buffer.Ptr);
-
-					// Turn buffer into packet and handle it.
-					this.HandleBuffer(client, client.Buffer.Back);
-
-					client.Buffer.ResetBack();
+					// handle it
+					this.HandleBuffer(client, buffer);
 				}
 
-				if (client.State != ClientState.Dead)
-					client.Socket.BeginReceive(client.Buffer.Front, 0, client.Buffer.Front.Length, SocketFlags.None, new AsyncCallback(OnReceive), client);
-				else
+				// Stop if client was killed while handling.
+				if (client.State == ClientState.Dead)
 				{
 					this.RemoveClient(client);
 					Log.Info("Killed connection from '{0}'.", client.Address);
+					return;
 				}
+
+				// Round $round+1, receive!
+				client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, new AsyncCallback(OnReceive), client);
 			}
 			catch (SocketException)
 			{
-				client.Kill();
-				this.RemoveClient(client);
+				this.KillAndRemoveClient(client);
 				Log.Info("Connection lost from '{0}'.", client.Address);
 			}
 			catch (ObjectDisposedException)
@@ -187,8 +186,19 @@ namespace Aura.Shared.Network
 			}
 			catch (Exception ex)
 			{
+				this.KillAndRemoveClient(client);
 				Log.Exception(ex, "While receiving data from '{0}'.", client.Address);
 			}
+		}
+
+		/// <summary>
+		/// Kills and removes client from server.
+		/// </summary>
+		/// <param name="client"></param>
+		protected void KillAndRemoveClient(TClient client)
+		{
+			client.Kill();
+			this.RemoveClient(client);
 		}
 
 		/// <summary>

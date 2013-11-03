@@ -9,8 +9,10 @@ namespace Aura.Shared.Network
 {
 	public class BaseClient
 	{
+		private const int BufferDefaultSize = 8192;
+
 		public Socket Socket { get; set; }
-		public ClientSocketBuffer Buffer { get; set; }
+		public byte[] Buffer { get; set; }
 		public ClientState State { get; set; }
 		public MabiCrypto Crypto { get; protected set; }
 
@@ -37,7 +39,7 @@ namespace Aura.Shared.Network
 
 		public BaseClient()
 		{
-			this.Buffer = new ClientSocketBuffer();
+			this.Buffer = new byte[BufferDefaultSize];
 			this.Crypto = new MabiCrypto(0x41757261); // 0xAura
 		}
 
@@ -111,27 +113,6 @@ namespace Aura.Shared.Network
 		protected virtual void CleanUp()
 		{
 
-		}
-	}
-
-	public class ClientSocketBuffer
-	{
-		private const int Size = 0x1000;
-
-		public byte[] Front, Back;
-		public int Remaining, Ptr;
-
-		public ClientSocketBuffer()
-		{
-			this.Front = new byte[Size];
-			this.Back = new byte[Size];
-		}
-
-		public void ResetBack()
-		{
-			this.Back = new byte[Size];
-			this.Ptr = 0;
-			this.Remaining = 0;
 		}
 	}
 
