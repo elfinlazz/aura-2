@@ -373,6 +373,43 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
+		/// Sends negative ChannelInfoRequestR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="info"></param>
+		public static void ChannelInfoRequestR_Fail(LoginClient client)
+		{
+			ChannelInfoRequestR(client, null, 0);
+		}
+
+		/// <summary>
+		/// Sends ChannelInfoRequestR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="info">Negative response if null.</param>
+		public static void ChannelInfoRequestR(LoginClient client, ChannelInfo info, long characterId)
+		{
+			var packet = new Packet(Op.ChannelInfoRequestR, MabiId.World);
+			packet.PutByte(info != null);
+
+			if (info != null)
+			{
+				packet.PutString(info.ServerName);
+				packet.PutString(info.Name);
+				packet.PutShort(6); // Channel "Id"? (seems to be equal to channel nr)
+				packet.PutString(info.Host);
+				packet.PutString(info.Host);
+				packet.PutShort((short)info.Port);
+				packet.PutShort((short)(info.Port + 2));
+				packet.PutInt(1);
+				packet.PutLong(characterId);
+			}
+
+			client.Send(packet);
+
+		}
+
+		/// <summary>
 		/// Adds server and channel information to packet.
 		/// </summary>
 		/// <param name="packet"></param>

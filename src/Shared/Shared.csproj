@@ -66,8 +66,8 @@
     <Compile Include="Network\BaseClient.cs" />
     <Compile Include="Network\BaseServer.cs" />
     <Compile Include="Network\MabiCrypto.cs" />
-    <Compile Include="Network\MabiDefaultServer.cs" />
-    <Compile Include="Network\MabiPacket.cs" />
+    <Compile Include="Network\DefaultServer.cs" />
+    <Compile Include="Network\Packet.cs" />
     <Compile Include="Network\Op.cs" />
     <Compile Include="Network\PacketHandlerManager.cs" />
     <Compile Include="Network\ServerInfo.cs" />

@@ -12,7 +12,7 @@ namespace Aura.Shared.Network
 	/// </summary>
 	public class BaseClient
 	{
-		private const int BufferDefaultSize = 8192;
+		private const int BufferDefaultSize = 2048;
 
 		public Socket Socket { get; set; }
 		public byte[] Buffer { get; set; }

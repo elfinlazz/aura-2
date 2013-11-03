@@ -16,6 +16,18 @@ namespace Aura.Shared.Network
 			this.Name = name;
 			this.Channels = new Dictionary<string, ChannelInfo>();
 		}
+
+		/// <summary>
+		/// Returns channel info or null, if it doesn't exist.
+		/// </summary>
+		/// <param name="channelName"></param>
+		/// <returns></returns>
+		public ChannelInfo Get(string channelName)
+		{
+			ChannelInfo result;
+			this.Channels.TryGetValue(channelName, out result);
+			return result;
+		}
 	}
 
 	public class ChannelInfo
@@ -23,7 +35,7 @@ namespace Aura.Shared.Network
 		public string Name { get; set; }
 		public string ServerName { get; set; }
 		public string FullName { get; set; }
-		public string IP { get; set; }
+		public string Host { get; set; }
 		public int Port { get; set; }
 		public DateTime LastUpdate { get; set; }
 
@@ -54,7 +66,7 @@ namespace Aura.Shared.Network
 			this.Name = name;
 			this.ServerName = server;
 			this.FullName = name + "@" + server;
-			this.IP = ip;
+			this.Host = ip;
 			this.Port = port;
 
 			this.State = ChannelState.Normal;
