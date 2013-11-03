@@ -37,7 +37,7 @@ namespace Aura.Login.Database
 				var mc = new MySqlCommand("INSERT INTO `accounts` (`accountId`, `password`, `creation`) VALUES (@accountId, @password, @creation)", conn);
 				mc.Parameters.AddWithValue("@accountId", accountId);
 				mc.Parameters.AddWithValue("@password", password);
-				mc.Parameters.AddWithValue("@creation", ErinnTime.Now.DateTime);
+				mc.Parameters.AddWithValue("@creation", DateTime.Now);
 
 				mc.ExecuteNonQuery();
 			}

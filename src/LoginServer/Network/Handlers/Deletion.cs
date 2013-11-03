@@ -32,37 +32,39 @@ namespace Aura.Login.Network.Handlers
 
 			var isPet = (packet.Op >= Op.DeletePetRequest);
 			var character = (isPet ? client.Account.GetPet(id) : client.Account.GetCharacter(id));
-			var now = ErinnTime.Now.DateTime;
+			var now = DateTime.Now;
+
+			var isRequest = (packet.Op == Op.DeleteCharacterRequest || packet.Op == Op.DeletePetRequest);
+			var isRecover = (packet.Op == Op.RecoverCharacter || packet.Op == Op.RecoverPet);
+			var isDelete = (packet.Op == Op.DeleteCharacter || packet.Op == Op.DeletePet);
 
 			// The response op is always +1.
 			var op = packet.Op + 1;
 
 			// Check creature and whether it can be deleted already,
 			// if we got a delete request.
-			if (character == null || ((op == Op.DeleteCharacterR || op == Op.DeletePetR) && character.DeletionTime > now))
+			if (character == null || (isDelete && character.DeletionFlag != DeletionFlag.Ready))
 			{
 				Send.DeleteR_Fail(client, op);
 				return;
 			}
 
 			// If character is supposed to be deleted, or it's a request, and there is no delay configured
-			if (
-				(packet.Op == Op.DeleteCharacter || packet.Op == Op.DeletePet) ||
-				((packet.Op == Op.DeleteCharacterRequest || packet.Op == Op.DeletePetRequest) && LoginConf.Instance.DeletionWait == 0)
-			)
+			if (isDelete || (isRequest && LoginConf.Instance.DeletionWait == 0))
 			{
-				// Mark for deletion, will be done on UpdateDeletionTime.
-				character.DeletionTime = DateTime.MaxValue;
 				if (!isPet)
 					client.Account.Characters.Remove(character);
 				else
 					client.Account.Pets.Remove(character);
 
+				// Mark for deletion, will be done on UpdateDeletionTime.
+				character.DeletionTime = DateTime.MaxValue;
+
 				// Send account info, to remove char on client side
 				Send.AccountInfoRequestR(client, true);
 			}
 			// If character is being recovered
-			else if (packet.Op == Op.RecoverCharacter || packet.Op == Op.RecoverPet)
+			else if (isRecover)
 			{
 				// Reset time
 				character.DeletionTime = DateTime.MinValue;
