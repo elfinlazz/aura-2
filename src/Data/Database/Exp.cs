@@ -8,13 +8,13 @@ namespace Aura.Data.Database
 	public class ExpInfo
 	{
 		//public uint Race;
-		public short Level { get; internal set; }
+		public int Level { get; internal set; }
 		public int Exp { get; internal set; }
 	}
 
 	public class ExpDb : DatabaseCSV<ExpInfo>
 	{
-		public short MaxLevel { get; private set; }
+		public int MaxLevel { get; private set; }
 		public long MaxExp { get; private set; }
 
 		/// <summary>
@@ -22,7 +22,7 @@ namespace Aura.Data.Database
 		/// </summary>
 		/// <param name="currentLv"></param>
 		/// <returns></returns>
-		public int GetTotalForNextLevel(short currentLv)
+		public int GetTotalForNextLevel(int currentLv)
 		{
 			var result = 0;
 
@@ -42,7 +42,7 @@ namespace Aura.Data.Database
 		/// </summary>
 		/// <param name="currentLv"></param>
 		/// <returns></returns>
-		public int GetForLevel(short currentLv)
+		public int GetForLevel(int currentLv)
 		{
 			if (currentLv < 1)
 				return 0;
@@ -72,13 +72,13 @@ namespace Aura.Data.Database
 			while (!entry.End)
 			{
 				var info = new ExpInfo();
-				info.Level = (short)(entry.Pointer + 1);
+				info.Level = (entry.Pointer + 1);
 				info.Exp = entry.ReadInt();
 
 				this.Entries.Add(info);
 			}
 
-			this.MaxLevel = (short)this.Entries.Count;
+			this.MaxLevel = this.Entries.Count;
 			this.MaxExp = this.GetTotalForNextLevel(this.MaxLevel);
 		}
 	}

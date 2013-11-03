@@ -2,14 +2,12 @@
 // For more information, see license file in the main folder
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using Aura.Login.Database;
+using Aura.Shared.Database;
 using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
-using Aura.Shared.Database;
-using Aura.Shared.Util;
 
 namespace Aura.Login.Network
 {
