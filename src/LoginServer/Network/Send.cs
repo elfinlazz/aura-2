@@ -343,20 +343,20 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
-		/// Sends negative (DeleteXRequest|RecoverX|DeleteX) to client.
+		/// Sends negative (DeleteXRequestR|RecoverXR|DeleteXR) to client.
 		/// </summary>
 		/// <param name="client"></param>
-		/// <param name="op"></param>
+		/// <param name="op">(DeleteXRequestR|RecoverXR|DeleteXR)</param>
 		public static void DeleteR_Fail(LoginClient client, int op)
 		{
 			DeleteR(client, op, null, 0);
 		}
 
 		/// <summary>
-		/// Sends negative (DeleteXRequest|RecoverX|DeleteX) to client.
+		/// Sends (DeleteXRequestR|RecoverXR|DeleteXR) to client.
 		/// </summary>
 		/// <param name="client"></param>
-		/// <param name="op"></param>
+		/// <param name="op">(DeleteXRequestR|RecoverXR|DeleteXR)</param>
 		/// <param name="serverName">Negative response if null</param>
 		/// <param name="id"></param>
 		public static void DeleteR(LoginClient client, int op, string serverName, long id)
