@@ -21,19 +21,35 @@ namespace Aura.Shared.Network
 		Bin = 7,
 	}
 
+	/// <summary>
+	/// General packet, used by Login and World.
+	/// </summary>
 	public class MabiPacket
 	{
+		/// <summary>
+		/// Default size for the buffer
+		/// </summary>
 		private const int DefaultSize = 8192;
+
+		/// <summary>
+		/// Size added, every time it runs out of space
+		/// </summary>
 		private const int AddSize = 512;
 
 		protected byte[] _buffer;
 		protected int _ptr;
 		protected bool _built;
 		protected int _bodyStart;
-
 		private int _elements, _bodyLen;
 
+		/// <summary>
+		/// Packet's op code
+		/// </summary>
 		public int Op { get; set; }
+
+		/// <summary>
+		/// Usually sender or receiver
+		/// </summary>
 		public long Id { get; set; }
 
 		public MabiPacket(int op, long id)
@@ -62,16 +78,26 @@ namespace Aura.Shared.Network
 			_bodyStart = _ptr;
 		}
 
+		/// <summary>
+		/// Returns the next element's type.
+		/// </summary>
+		/// <returns></returns>
 		public PacketElementType Peek()
 		{
 			if (_ptr + 2 > _buffer.Length)
-				return 0;
+				return PacketElementType.None;
 			return (PacketElementType)_buffer[_ptr];
 		}
 
 		// Write
 		// ------------------------------------------------------------------
 
+		/// <summary>
+		/// Adds one byte for type and the bytes in val to buffer.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="val"></param>
+		/// <returns></returns>
 		protected MabiPacket PutSimple(PacketElementType type, params byte[] val)
 		{
 			this.EnsureEditable();
@@ -89,6 +115,13 @@ namespace Aura.Shared.Network
 			return this;
 		}
 
+		/// <summary>
+		/// Adds one byte for type, 2 bytes for the length of the val bytes,
+		/// and the vals itself to buffer.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="val"></param>
+		/// <returns></returns>
 		protected MabiPacket PutWithLength(PacketElementType type, byte[] val)
 		{
 			this.EnsureEditable();
@@ -108,19 +141,31 @@ namespace Aura.Shared.Network
 			return this;
 		}
 
+		/// <summary>Writes val to buffer.</summary>
 		public MabiPacket PutByte(byte val) { return this.PutSimple(PacketElementType.Byte, val); }
+		/// <summary>Writes val as byte to buffer.</summary>
 		public MabiPacket PutByte(bool val) { return this.PutByte(val ? (byte)1 : (byte)0); }
+		/// <summary>Writes val to buffer.</summary>
 		public MabiPacket PutShort(short val) { return this.PutSimple(PacketElementType.Short, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
+		/// <summary>Writes val to buffer.</summary>
 		public MabiPacket PutInt(int val) { return this.PutSimple(PacketElementType.Int, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
+		/// <summary>Writes val to buffer.</summary>
 		public MabiPacket PutLong(long val) { return this.PutSimple(PacketElementType.Long, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
+		/// <summary>Writes val as long to buffer.</summary>
 		public MabiPacket PutLong(DateTime val) { return this.PutLong((long)(val.Ticks / 10000)); }
+		/// <summary>Writes val to buffer.</summary>
 		public MabiPacket PutFloat(float val) { return this.PutSimple(PacketElementType.Float, BitConverter.GetBytes(val)); }
+		/// <summary>Writes val to buffer.</summary>
 		public MabiPacket PutFloat(double val) { return this.PutFloat((float)val); }
 
+		/// <summary>Writes val as null-terminated UTF8 string to buffer.</summary>
 		public MabiPacket PutString(string val) { return this.PutWithLength(PacketElementType.String, Encoding.UTF8.GetBytes(val + "\0")); }
+		/// <summary>Writes val as null-terminated UTF8 string to buffer.</summary>
 		public MabiPacket PutString(string format, params object[] args) { return this.PutString(string.Format((format != null ? format : string.Empty), args)); }
 
+		/// <summary>Writes val to buffer.</summary>
 		public MabiPacket PutBin(byte[] val) { return this.PutWithLength(PacketElementType.Bin, val); }
+		/// <summary>Converts struct to byte array and writes it as byte array to buffer.</summary>
 		public MabiPacket PutBin(object val)
 		{
 			var type = val.GetType();
@@ -138,12 +183,20 @@ namespace Aura.Shared.Network
 			return this.PutBin(arr);
 		}
 
+		/// <summary>
+		/// Resizes buffer, if there's not enough space for the required
+		/// amount of bytes.
+		/// </summary>
+		/// <param name="required"></param>
 		protected void EnsureSize(int required)
 		{
 			if (_ptr + required >= _buffer.Length)
 				Array.Resize(ref _buffer, _buffer.Length + AddSize);
 		}
 
+		/// <summary>
+		/// Throws exception if packet is locked (after being built).
+		/// </summary>
 		protected void EnsureEditable()
 		{
 			if (_built)
@@ -153,6 +206,10 @@ namespace Aura.Shared.Network
 		// Read
 		// ------------------------------------------------------------------
 
+		/// <summary>
+		/// Reads and returns byte from buffer.
+		/// </summary>
+		/// <returns></returns>
 		public byte GetByte()
 		{
 			if (this.Peek() != PacketElementType.Byte)
@@ -161,8 +218,17 @@ namespace Aura.Shared.Network
 			_ptr += 1;
 			return _buffer[_ptr++];
 		}
+
+		/// <summary>
+		/// Reads and returns bool (byte) from buffer.
+		/// </summary>
+		/// <returns></returns>
 		public bool GetBool() { return (this.GetByte() != 0); }
 
+		/// <summary>
+		/// Reads and returns short from buffer.
+		/// </summary>
+		/// <returns></returns>
 		public short GetShort()
 		{
 			if (this.Peek() != PacketElementType.Short)
@@ -175,6 +241,10 @@ namespace Aura.Shared.Network
 			return val;
 		}
 
+		/// <summary>
+		/// Reads and returns int from buffer.
+		/// </summary>
+		/// <returns></returns>
 		public int GetInt()
 		{
 			if (this.Peek() != PacketElementType.Int)
@@ -187,11 +257,19 @@ namespace Aura.Shared.Network
 			return val;
 		}
 
+		/// <summary>
+		/// Reads and returns uint from buffer.
+		/// </summary>
+		/// <returns></returns>
 		public uint GetUInt()
 		{
 			return (uint)this.GetInt();
 		}
 
+		/// <summary>
+		/// Reads and returns long from buffer.
+		/// </summary>
+		/// <returns></returns>
 		public long GetLong()
 		{
 			if (this.Peek() != PacketElementType.Long)
@@ -204,6 +282,10 @@ namespace Aura.Shared.Network
 			return val;
 		}
 
+		/// <summary>
+		/// Reads and returns float from buffer.
+		/// </summary>
+		/// <returns></returns>
 		public float GetFloat()
 		{
 			if (this.Peek() != PacketElementType.Float)
@@ -216,6 +298,10 @@ namespace Aura.Shared.Network
 			return val;
 		}
 
+		/// <summary>
+		/// Reads and returns string from buffer.
+		/// </summary>
+		/// <returns></returns>
 		public string GetString()
 		{
 			if (this.Peek() != PacketElementType.String)
@@ -231,6 +317,10 @@ namespace Aura.Shared.Network
 			return val;
 		}
 
+		/// <summary>
+		/// Reads and returns bin from buffer.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] GetBin()
 		{
 			if (this.Peek() != PacketElementType.Bin)
@@ -249,6 +339,11 @@ namespace Aura.Shared.Network
 
 		// ------------------------------------------------------------------
 
+		/// <summary>
+		/// Returns complete packet as byte array.
+		/// </summary>
+		/// <param name="includeProtocolHeader">If true, the length of the packet and the encryption flag are added.</param>
+		/// <returns></returns>
 		public byte[] Build(bool includeProtocolHeader = true)
 		{
 			if (_built)
