@@ -8,9 +8,9 @@ namespace Aura.Data.Database
 {
 	public class SkillInfo
 	{
-		public short Id { get; internal set; }
+		public ushort Id { get; internal set; }
 		public string Name { get; internal set; }
-		public short MasterTitle { get; internal set; }
+		public ushort MasterTitle { get; internal set; }
 
 		public List<SkillRankInfo> RankInfo { get; internal set; }
 
@@ -40,7 +40,7 @@ namespace Aura.Data.Database
 	/// Indexed by skill id.
 	/// Depends on: SkillRankDb
 	/// </summary>
-	public class SkillDb : DatabaseCSVIndexed<short, SkillInfo>
+	public class SkillDb : DatabaseCSVIndexed<ushort, SkillInfo>
 	{
 		public List<SkillInfo> FindAll(string name)
 		{
@@ -54,9 +54,9 @@ namespace Aura.Data.Database
 				throw new FieldCountException(3);
 
 			var info = new SkillInfo();
-			info.Id = entry.ReadShort();
+			info.Id = entry.ReadUShort();
 			info.Name = entry.ReadString();
-			info.MasterTitle = entry.ReadShort();
+			info.MasterTitle = entry.ReadUShort();
 
 			info.RankInfo.AddRange(AuraData.SkillRankDb.Entries.FindAll(a => a.SkillId == info.Id).OrderBy(a => a.Rank));
 

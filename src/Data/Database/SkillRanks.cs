@@ -7,7 +7,7 @@ namespace Aura.Data.Database
 {
 	public class SkillRankInfo
 	{
-		public short SkillId { get; internal set; }
+		public ushort SkillId { get; internal set; }
 		public int Race { get; internal set; }
 		public byte Rank { get; internal set; }
 		public byte Ap { get; internal set; }
@@ -96,7 +96,7 @@ namespace Aura.Data.Database
 			}
 		}
 
-		public SkillRankInfo Find(short id, byte rank)
+		public SkillRankInfo Find(ushort id, byte rank)
 		{
 			return this.Entries.FirstOrDefault(a => a.SkillId == id && a.Rank == rank);
 		}
@@ -107,7 +107,7 @@ namespace Aura.Data.Database
 				throw new FieldCountException(36);
 
 			var info = new SkillRankInfo();
-			info.SkillId = entry.ReadShort();
+			info.SkillId = entry.ReadUShort();
 			info.Race = entry.ReadInt();
 			info.Rank = entry.ReadByte();
 			info.Ap = entry.ReadByte();

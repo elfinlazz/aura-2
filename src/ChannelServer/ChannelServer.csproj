@@ -8,7 +8,7 @@
     <ProjectGuid>{1A902E04-6143-4D1D-9074-75EB133CC9E3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aura.ChannelServer</RootNamespace>
+    <RootNamespace>Aura.Channel</RootNamespace>
     <AssemblyName>ChannelServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -48,8 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Network\ChannelClient.cs" />
+    <Compile Include="Network\ChannelServer.cs" />
+    <Compile Include="Network\Handlers\Login.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ChannelConf.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

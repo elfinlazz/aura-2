@@ -17,6 +17,7 @@ namespace Aura.Data.Database
 		}
 
 		public PropDropInfo(int type)
+			: this()
 		{
 			this.Type = type;
 		}
