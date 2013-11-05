@@ -30,8 +30,8 @@ namespace Aura.Shared.Util
 			this.Hide = (LogLevel)this.GetShort("log.cmd_hide", (short)(LogLevel.Debug));
 
 			if (this.Archive)
-				Log.Archive = "../../log/archive/";
-			Log.LogFile = "../../log/" + logFileName + ".txt";
+				Log.Archive = "log/archive/";
+			Log.LogFile = "log/" + logFileName + ".txt";
 			Log.Hide |= this.Hide;
 		}
 

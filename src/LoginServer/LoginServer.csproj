@@ -63,6 +63,7 @@
     <Compile Include="Database\Item.cs" />
     <Compile Include="Database\LoginDb.cs" />
     <Compile Include="Database\Skill.cs" />
+    <Compile Include="Network\Handlers\ChannelInfo.cs" />
     <Compile Include="Network\Handlers\Info.cs" />
     <Compile Include="Network\Handlers\Creation.cs" />
     <Compile Include="Network\Handlers\Disconnect.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\LoginConf.cs" />
+    <Compile Include="Util\LoginConsoleCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

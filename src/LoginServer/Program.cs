@@ -3,9 +3,8 @@
 
 using System;
 using Aura.Login.Network;
-using Aura.Shared.Util;
-using Aura.Shared.Database;
 using Aura.Login.Util;
+using Aura.Shared.Util;
 
 namespace Aura.Login
 {
@@ -13,8 +12,8 @@ namespace Aura.Login
 	{
 		static void Main(string[] args)
 		{
-			CmdUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
-			CmdUtil.LoadingTitle();
+			CliUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
+			CliUtil.LoadingTitle();
 
 			ServerUtil.NavigateToRoot();
 
@@ -36,11 +35,11 @@ namespace Aura.Login
 			// Start
 			LoginServer.Instance.Start(LoginConf.Instance.Port);
 
-			CmdUtil.RunningTitle();
+			CliUtil.RunningTitle();
 
-			// commands
-
-			Console.ReadLine();
+			// Commands
+			var commands = new LoginConsoleCommands();
+			commands.Wait();
 		}
 	}
 }

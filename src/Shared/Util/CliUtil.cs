@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Aura.Shared.Util
 {
-	public class CmdUtil
+	public class CliUtil
 	{
 		/// <summary>
 		/// Prints Aura's ASCII art.

@@ -29,7 +29,7 @@ namespace Aura.Shared.Util
 			}
 
 			Log.Error("Unable to find root directory.");
-			CmdUtil.Exit(1);
+			CliUtil.Exit(1);
 		}
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace Aura.Shared.Util
 			catch (Exception ex)
 			{
 				Log.Exception(ex, "Unable to read configuration. ({0})", ex.Message);
-				CmdUtil.Exit(1);
+				CliUtil.Exit(1);
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace Aura.Shared.Util
 			catch (Exception ex)
 			{
 				Log.Exception(ex, "Unable to open database connection. ({0})", ex.Message);
-				CmdUtil.Exit(1);
+				CliUtil.Exit(1);
 			}
 		}
 
@@ -165,12 +165,12 @@ namespace Aura.Shared.Util
 			catch (FileNotFoundException ex)
 			{
 				Log.Error(ex.Message);
-				CmdUtil.Exit(1);
+				CliUtil.Exit(1);
 			}
 			catch (Exception ex)
 			{
 				Log.Exception(ex);
-				CmdUtil.Exit(1);
+				CliUtil.Exit(1);
 			}
 		}
 
