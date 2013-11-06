@@ -82,7 +82,7 @@ namespace Aura.Channel
 			this.LoadLocalization(this.Conf);
 
 			// Start
-			this.Server.Start(this.Conf.Channel.Host, this.Conf.Channel.Port);
+			this.Server.Start(this.Conf.Channel.ChannelPort);
 
 			CliUtil.RunningTitle();
 			_running = true;

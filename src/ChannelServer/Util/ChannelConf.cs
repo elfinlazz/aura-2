@@ -26,9 +26,6 @@ namespace Aura.Channel.Util
 
 	public class ChannelConfFile : ConfFile
 	{
-		public string Host { get; protected set; }
-		public int Port { get; protected set; }
-
 		public string LoginHost { get; protected set; }
 		public int LoginPort { get; protected set; }
 
@@ -41,9 +38,6 @@ namespace Aura.Channel.Util
 		public void Load()
 		{
 			this.RequireAndInclude("{0}/conf/channel.conf", "system", "user");
-
-			this.Host = this.GetString("channel.host", "127.0.0.1");
-			this.Port = this.GetInt("channel.port", 11020);
 
 			this.LoginHost = this.GetString("channel.login_host", "127.0.0.1");
 			this.LoginPort = this.GetInt("channel.login_port", 11020);
