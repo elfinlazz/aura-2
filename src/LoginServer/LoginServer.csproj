@@ -71,7 +71,7 @@
     <Compile Include="Network\Handlers\Deletion.cs" />
     <Compile Include="Network\Handlers\Login.cs" />
     <Compile Include="Network\LoginClient.cs" />
-    <Compile Include="Network\LoginServer.cs" />
+    <Compile Include="LoginServer.cs" />
     <Compile Include="Network\Send.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

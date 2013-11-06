@@ -84,7 +84,7 @@
     <Compile Include="Mabi\ErinnTime.cs" />
     <Compile Include="Util\CliUtil.cs" />
     <Compile Include="Util\RandomProvider.cs" />
-    <Compile Include="Util\ServerUtil.cs" />
+    <Compile Include="ServerMain.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

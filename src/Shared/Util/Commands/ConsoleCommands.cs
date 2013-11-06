@@ -17,6 +17,7 @@ namespace Aura.Shared.Util.Commands
 			_commands = new Dictionary<string, ConsoleCommand>();
 
 			this.Add("help", "Displays this help", HandleHelp);
+			this.Add("exit", "Closes application/server", HandleExit);
 			this.Add("status", "Displays application status", HandleStatus);
 		}
 
@@ -54,7 +55,7 @@ namespace Aura.Shared.Util.Commands
 			Log.Info("Type 'help' for a list of console commands.");
 
 			var line = "";
-			do
+			while (true)
 			{
 				line = Console.ReadLine();
 
@@ -62,27 +63,27 @@ namespace Aura.Shared.Util.Commands
 				if (args.Length == 0)
 					continue;
 
-				if (args[0] != "exit")
+				var command = this.GetCommand(args[0]);
+				if (command == null)
 				{
-					var command = this.GetCommand(args[0]);
-					if (command == null)
-					{
-						Log.Info("Unknown command '{0}'", args[0]);
-						continue;
-					}
+					Log.Info("Unknown command '{0}'", args[0]);
+					continue;
+				}
 
-					var result = command.Func(line, args);
-					if (result == CommandResult.Fail)
-					{
-						Log.Error("Failed to run command '{0}'.", command.Name);
-					}
-					else if (result == CommandResult.InvalidArgument)
-					{
-						Log.Info("Usage: {0} {1}", command.Name, command.Usage);
-					}
+				var result = command.Func(line, args);
+				if (result == CommandResult.Break)
+				{
+					break;
+				}
+				else if (result == CommandResult.Fail)
+				{
+					Log.Error("Failed to run command '{0}'.", command.Name);
+				}
+				else if (result == CommandResult.InvalidArgument)
+				{
+					Log.Info("Usage: {0} {1}", command.Name, command.Usage);
 				}
 			}
-			while (line != "exit");
 		}
 
 		private CommandResult HandleHelp(string command, string[] args)
@@ -99,6 +100,13 @@ namespace Aura.Shared.Util.Commands
 		private CommandResult HandleStatus(string command, string[] args)
 		{
 			Log.Status("Memory Usage: {0} KB", Math.Round(GC.GetTotalMemory(false) / 1024f));
+
+			return CommandResult.Okay;
+		}
+
+		protected virtual CommandResult HandleExit(string command, string[] args)
+		{
+			CliUtil.Exit(0, false);
 
 			return CommandResult.Okay;
 		}

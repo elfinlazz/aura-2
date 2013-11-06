@@ -12,29 +12,6 @@ namespace Aura.Channel
 	{
 		static void Main(string[] args)
 		{
-			CliUtil.WriteHeader("Channel Server", ConsoleColor.Magenta);
-			CliUtil.LoadingTitle();
-
-			ServerUtil.NavigateToRoot();
-
-			// Conf
-			ServerUtil.LoadConf(ChannelConf.Instance);
-
-			// Database
-			ServerUtil.InitDatabase(ChannelConf.Instance);
-
-			// Data
-			ServerUtil.LoadData(DataLoad.WorldServer, false);
-
-			// Localization
-			ServerUtil.LoadLocalization(ChannelConf.Instance);
-
-			// Start
-			ChannelServer.Instance.Start(ChannelConf.Instance.Port);
-
-			CliUtil.RunningTitle();
-
-			Console.ReadLine();
 		}
 	}
 }

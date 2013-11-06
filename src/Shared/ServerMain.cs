@@ -11,13 +11,13 @@ namespace Aura.Shared.Util
 	/// <summary>
 	/// General methods needed by all servers.
 	/// </summary>
-	public static class ServerUtil
+	public abstract class ServerMain
 	{
 		/// <summary>
 		/// Tries to find aura root folder, and changes the working directory to it.
 		/// Exits if not successful.
 		/// </summary>
-		public static void NavigateToRoot()
+		public void NavigateToRoot()
 		{
 			// Go back max 2 folders, the bins should be in [aura]/bin/(Debug|Release)
 			for (int i = 0; i < 3; ++i)
@@ -35,15 +35,13 @@ namespace Aura.Shared.Util
 		/// <summary>
 		/// Tries to call conf's load method, exits on error.
 		/// </summary>
-		public static void LoadConf(BaseConf conf)
+		public void LoadConf(BaseConf conf)
 		{
-			Log.Write(LogLevel.Info, "Reading configuration...");
+			Log.Info("Reading configuration...");
 
 			try
 			{
 				conf.Load();
-
-				Log.WriteLine(LogLevel.None, " done.");
 			}
 			catch (Exception ex)
 			{
@@ -56,15 +54,13 @@ namespace Aura.Shared.Util
 		/// Tries to initialize database, with the information from conf,
 		/// exits on error.
 		/// </summary>
-		public static void InitDatabase(BaseConf conf)
+		public void InitDatabase(BaseConf conf)
 		{
-			Log.Write(LogLevel.Info, "Initializing database...");
+			Log.Info("Initializing database...");
 
 			try
 			{
 				AuraDb.Instance.Init(conf.Host, conf.User, conf.Pass, conf.Db);
-
-				Log.WriteLine(LogLevel.None, " done.");
 			}
 			catch (Exception ex)
 			{
@@ -74,12 +70,14 @@ namespace Aura.Shared.Util
 		}
 
 		/// <summary>
-		/// (Re-)Loads the data with the data path as base, called on server
-		/// start and with some reload commands. Should only load required data,
-		/// e.g. Msgr Server doesn't need race data.
-		/// Calls Exit if there are any problems.
+		/// (Re-)Loads data files (db), exits on error.
 		/// </summary>
-		public static void LoadData(DataLoad toLoad, bool reload)
+		/// <remarks>
+		/// Called on server start and with some reload commands.
+		/// Should only load required data, e.g. Msgr Server doesn't
+		/// need race data.
+		/// </remarks>
+		public void LoadData(DataLoad toLoad, bool reload)
 		{
 			Log.Info("Loading data...");
 
@@ -178,7 +176,7 @@ namespace Aura.Shared.Util
 		/// Loads db, first from system, then from user.
 		/// Logs problems as warnings.
 		/// </summary>
-		private static void LoadDb(IDatabase db, string path, bool reload, bool log = true)
+		private void LoadDb(IDatabase db, string path, bool reload, bool log = true)
 		{
 			var systemPath = Path.Combine("system", path);
 			var userPath = Path.Combine("user", path);
@@ -204,15 +202,15 @@ namespace Aura.Shared.Util
 			}
 
 			if (log)
-				Log.Info("  done loading {0} entries from {1}.", db.Count, Path.GetFileName(path));
+				Log.Info("  done loading {0} entries from {1}", db.Count, Path.GetFileName(path));
 		}
 
 		/// <summary>
 		/// Loads system and user localization files.
 		/// </summary>
-		public static void LoadLocalization(BaseConf conf)
+		public void LoadLocalization(BaseConf conf)
 		{
-			Log.Write(LogLevel.Info, "Loading localization...");
+			Log.Info("Loading localization...");
 
 			// System
 			try
@@ -232,8 +230,6 @@ namespace Aura.Shared.Util
 			catch (FileNotFoundException)
 			{
 			}
-
-			Log.WriteLine(LogLevel.None, " done.");
 		}
 	}
 

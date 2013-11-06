@@ -104,7 +104,7 @@ namespace Aura.Login.Network.Handlers
 						password = Password.MD5ToSHA256(password);
 
 					// Create new account
-					if (LoginConf.Instance.NewAccounts && (accountId.StartsWith("new//") || accountId.StartsWith("new__")))
+					if (LoginServer.Instance.Conf.NewAccounts && (accountId.StartsWith("new//") || accountId.StartsWith("new__")))
 					{
 						accountId = accountId.Remove(0, 5);
 
@@ -214,7 +214,7 @@ namespace Aura.Login.Network.Handlers
 			account.SessionKey = LoginDb.Instance.CreateSession(account.Name);
 
 			// Second password, please!
-			if (LoginConf.Instance.EnableSecondaryPassword && loginType == LoginType.Normal)
+			if (LoginServer.Instance.Conf.EnableSecondaryPassword && loginType == LoginType.Normal)
 			{
 				Send.LoginR_Secondary(client, account, account.SessionKey);
 				return;
@@ -250,7 +250,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Success
-			Send.LoginR(client, account, account.SessionKey, LoginServer.Instance.Servers.List);
+			Send.LoginR(client, account, account.SessionKey, LoginServer.Instance.ServerList.List);
 
 			client.Account = account;
 			client.State = ClientState.LoggedIn;

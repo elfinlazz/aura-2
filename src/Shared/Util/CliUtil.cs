@@ -39,7 +39,8 @@ namespace Aura.Shared.Util
 
 		public static void LoadingTitle()
 		{
-			Console.Title = "* " + Console.Title;
+			if (!Console.Title.StartsWith("* "))
+				Console.Title = "* " + Console.Title;
 		}
 
 		public static void RunningTitle()

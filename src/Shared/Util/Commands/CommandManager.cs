@@ -94,5 +94,5 @@ namespace Aura.Shared.Util.Commands
 		}
 	}
 
-	public enum CommandResult { Okay, Fail, InvalidArgument }
+	public enum CommandResult { Okay, Fail, InvalidArgument, Break }
 }

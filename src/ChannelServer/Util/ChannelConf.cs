@@ -34,7 +34,7 @@ namespace Aura.Channel.Util
 			ChannelConf.Instance.RequireAndInclude("{0}/conf/database.conf", "system", "user");
 			ChannelConf.Instance.RequireAndInclude("{0}/conf/login.conf", "system", "user");
 
-			this.LoadLog("login");
+			this.LoadLog();
 			this.LoadDatabase();
 			this.LoadLocalization();
 			this.LoadChannel();

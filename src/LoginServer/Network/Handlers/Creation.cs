@@ -76,7 +76,7 @@ namespace Aura.Login.Network.Handlers
 			var hairItem = AuraData.ItemDb.Find(hair);
 
 			// Check card and server
-			if (card == null || !LoginServer.Instance.Servers.Has(serverName))
+			if (card == null || !LoginServer.Instance.ServerList.Has(serverName))
 			{
 				Log.Error("Character creation: Missing card or server ({0}).", serverName);
 				goto L_Fail;
@@ -150,7 +150,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Delete card
-			if (LoginConf.Instance.ConsumeCharacterCards)
+			if (LoginServer.Instance.Conf.ConsumeCharacterCards)
 			{
 				if (!client.Account.DeleteCharacterCard(card))
 					goto L_Fail;
@@ -190,7 +190,7 @@ namespace Aura.Login.Network.Handlers
 
 			// Check card and server
 			var card = client.Account.GetPetCard(cardId);
-			if (card == null || !LoginServer.Instance.Servers.Has(serverName))
+			if (card == null || !LoginServer.Instance.ServerList.Has(serverName))
 			{
 				Log.Error("Pet creation: Missing card or server ({0}).", serverName);
 				goto L_Fail;
@@ -258,7 +258,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Delete card
-			if (LoginConf.Instance.ConsumePetCards)
+			if (LoginServer.Instance.Conf.ConsumePetCards)
 			{
 				if (!client.Account.DeletePetCard(card))
 					goto L_Fail;
@@ -342,7 +342,7 @@ namespace Aura.Login.Network.Handlers
 			var hairItem = AuraData.ItemDb.Find(hair);
 
 			// Check card and server
-			if (card == null || !LoginServer.Instance.Servers.Has(serverName))
+			if (card == null || !LoginServer.Instance.ServerList.Has(serverName))
 			{
 				Log.Error("Partner creation: Missing card or server ({0}).", serverName);
 				goto L_Fail;
@@ -412,7 +412,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Delete card
-			if (LoginConf.Instance.ConsumePartnerCards)
+			if (LoginServer.Instance.Conf.ConsumePartnerCards)
 			{
 				if (!client.Account.DeletePetCard(card))
 					goto L_Fail;
