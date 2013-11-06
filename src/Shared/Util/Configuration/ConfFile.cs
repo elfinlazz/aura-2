@@ -121,7 +121,15 @@ namespace Aura.Shared.Util.Configuration
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
 
-			return byte.Parse(value);
+			try
+			{
+				return byte.Parse(value);
+			}
+			catch
+			{
+				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
+				return defaultValue;
+			}
 		}
 
 		/// <summary>
@@ -137,7 +145,15 @@ namespace Aura.Shared.Util.Configuration
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
 
-			return short.Parse(value);
+			try
+			{
+				return short.Parse(value);
+			}
+			catch
+			{
+				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
+				return defaultValue;
+			}
 		}
 
 		/// <summary>
@@ -153,7 +169,15 @@ namespace Aura.Shared.Util.Configuration
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
 
-			return int.Parse(value);
+			try
+			{
+				return int.Parse(value);
+			}
+			catch
+			{
+				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
+				return defaultValue;
+			}
 		}
 
 		/// <summary>
@@ -169,7 +193,15 @@ namespace Aura.Shared.Util.Configuration
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
 
-			return long.Parse(value);
+			try
+			{
+				return long.Parse(value);
+			}
+			catch
+			{
+				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
+				return defaultValue;
+			}
 		}
 
 		/// <summary>
