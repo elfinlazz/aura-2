@@ -49,11 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Network\ChannelClient.cs" />
-    <Compile Include="Network\ChannelServer.cs" />
+    <Compile Include="ChannelServer.cs" />
     <Compile Include="Network\Handlers\Login.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ChannelConf.cs" />
+    <Compile Include="Util\ChannelConsoleCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

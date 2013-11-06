@@ -2,29 +2,45 @@
 // For more information, see license file in the main folder
 
 using Aura.Shared.Util;
+using Aura.Shared.Util.Configuration;
 
 namespace Aura.Login.Util
 {
 	public class LoginConf : BaseConf
 	{
-		// Login
-		public int Port;
-		public bool NewAccounts;
-		public bool EnableSecondaryPassword;
+		/// <summary>
+		/// login.conf
+		/// </summary>
+		public LoginConfFile Login { get; protected set; }
 
-		public bool ConsumeCharacterCards;
-		public bool ConsumePetCards;
-		public bool ConsumePartnerCards;
-
-		public int DeletionWait;
+		public LoginConf()
+		{
+			this.Login = new LoginConfFile();
+		}
 
 		public override void Load()
 		{
 			this.LoadDefault();
-			this.LoadLogin();
+			this.Login.Load();
 		}
+	}
 
-		public void LoadLogin()
+	/// <summary>
+	/// Represents login.conf
+	/// </summary>
+	public class LoginConfFile : ConfFile
+	{
+		public int Port { get; protected set; }
+		public bool NewAccounts { get; protected set; }
+		public bool EnableSecondaryPassword { get; protected set; }
+
+		public bool ConsumeCharacterCards { get; protected set; }
+		public bool ConsumePetCards { get; protected set; }
+		public bool ConsumePartnerCards { get; protected set; }
+
+		public int DeletionWait { get; protected set; }
+
+		public void Load()
 		{
 			this.RequireAndInclude("{0}/conf/login.conf", "system", "user");
 

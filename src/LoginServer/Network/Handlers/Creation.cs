@@ -150,7 +150,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Delete card
-			if (LoginServer.Instance.Conf.ConsumeCharacterCards)
+			if (LoginServer.Instance.Conf.Login.ConsumeCharacterCards)
 			{
 				if (!client.Account.DeleteCharacterCard(card))
 					goto L_Fail;
@@ -258,7 +258,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Delete card
-			if (LoginServer.Instance.Conf.ConsumePetCards)
+			if (LoginServer.Instance.Conf.Login.ConsumePetCards)
 			{
 				if (!client.Account.DeletePetCard(card))
 					goto L_Fail;
@@ -412,7 +412,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Delete card
-			if (LoginServer.Instance.Conf.ConsumePartnerCards)
+			if (LoginServer.Instance.Conf.Login.ConsumePartnerCards)
 			{
 				if (!client.Account.DeletePetCard(card))
 					goto L_Fail;

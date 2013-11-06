@@ -1,25 +1,25 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using Aura.Login.Network;
-using Aura.Login.Network.Handlers;
-using Aura.Login.Util;
+using Aura.Channel.Network;
+using Aura.Channel.Network.Handlers;
+using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using System;
 
-namespace Aura.Login
+namespace Aura.Channel
 {
-	public class LoginServer : ServerMain
+	public class ChannelServer : ServerMain
 	{
-		public static readonly LoginServer Instance = new LoginServer();
+		public static readonly ChannelServer Instance = new ChannelServer();
 
 		private bool _running = false;
 
 		/// <summary>
 		/// Instance of the actual server component.
 		/// </summary>
-		private DefaultServer<LoginClient> Server { get; set; }
+		private DefaultServer<ChannelClient> Server { get; set; }
 
 		/// <summary>
 		/// List of servers and channels.
@@ -29,12 +29,12 @@ namespace Aura.Login
 		/// <summary>
 		/// Configuration
 		/// </summary>
-		public LoginConf Conf { get; private set; }
+		public ChannelConf Conf { get; private set; }
 
-		private LoginServer()
+		private ChannelServer()
 		{
-			this.Server = new DefaultServer<LoginClient>();
-			this.Server.Handlers = new LoginServerHandlers();
+			this.Server = new DefaultServer<ChannelClient>();
+			this.Server.Handlers = new ChannelServerHandlers();
 			this.Server.Handlers.AutoLoad();
 
 			this.ServerList = new ServerInfoManager();
@@ -48,34 +48,31 @@ namespace Aura.Login
 			if (_running)
 				throw new Exception("Server is already running.");
 
-			CliUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
+			CliUtil.WriteHeader("Channel Server", ConsoleColor.Magenta);
 			CliUtil.LoadingTitle();
 
 			this.NavigateToRoot();
 
 			// Conf
-			this.LoadConf(this.Conf = new LoginConf());
+			this.LoadConf(this.Conf = new ChannelConf());
 
 			// Database
 			this.InitDatabase(this.Conf);
 
 			// Data
-			this.LoadData(DataLoad.LoginServer, false);
+			this.LoadData(DataLoad.ChannelServer, false);
 
 			// Localization
 			this.LoadLocalization(this.Conf);
 
-			// Debug
-			this.ServerList.Add("Aura");
-
 			// Start
-			this.Server.Start(this.Conf.Login.Port);
+			this.Server.Start(this.Conf.Channel.Host, this.Conf.Channel.Port);
 
 			CliUtil.RunningTitle();
 			_running = true;
 
 			// Commands
-			var commands = new LoginConsoleCommands();
+			var commands = new ChannelConsoleCommands();
 			commands.Wait();
 		}
 	}

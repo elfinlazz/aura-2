@@ -4,13 +4,13 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Aura.Shared.Util
+namespace Aura.Shared.Util.Configuration
 {
 	/// <summary>
 	/// Configuration options manager.
 	/// </summary>
 	/// <remarks>
-	/// Uses $(FileReader) to read conf files, that are parsed in key:value pairs.
+	/// Uses <see cref="FileReader"/> to read conf files, that are parsed in key:value pairs.
 	/// Separating character is a colon ':'.
 	/// </remarks>
 	public class ConfFile

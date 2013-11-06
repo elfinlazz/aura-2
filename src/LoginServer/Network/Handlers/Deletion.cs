@@ -3,8 +3,6 @@
 
 using System;
 using Aura.Login.Database;
-using Aura.Login.Util;
-using Aura.Shared.Mabi;
 using Aura.Shared.Network;
 
 namespace Aura.Login.Network.Handlers
@@ -38,6 +36,8 @@ namespace Aura.Login.Network.Handlers
 			var isRecover = (packet.Op == Op.RecoverCharacter || packet.Op == Op.RecoverPet);
 			var isDelete = (packet.Op == Op.DeleteCharacter || packet.Op == Op.DeletePet);
 
+			var conf = LoginServer.Instance.Conf.Login;
+
 			// The response op is always +1.
 			var op = packet.Op + 1;
 
@@ -50,7 +50,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// If character is supposed to be deleted, or it's a request, and there is no delay configured
-			if (isDelete || (isRequest && LoginServer.Instance.Conf.DeletionWait == 0))
+			if (isDelete || (isRequest && conf.DeletionWait == 0))
 			{
 				if (!isPet)
 					client.Account.Characters.Remove(character);
@@ -72,14 +72,12 @@ namespace Aura.Login.Network.Handlers
 			// Op.DeleteCharRequest || Op.DeletePetRequest || Error?
 			else
 			{
-				var wait = LoginServer.Instance.Conf.DeletionWait;
-
 				// Set time at which the character can be deleted for good.
 				// Below 100 means x hours, above 100 tomorrow at x.
-				if (wait > 100)
-					character.DeletionTime = (now.AddDays(1).Date + new TimeSpan(wait - 100, 0, 0));
+				if (conf.DeletionWait > 100)
+					character.DeletionTime = (now.AddDays(1).Date + new TimeSpan(conf.DeletionWait - 100, 0, 0));
 				else
-					character.DeletionTime = now.AddHours(wait);
+					character.DeletionTime = now.AddHours(conf.DeletionWait);
 			}
 
 			LoginDb.Instance.UpdateDeletionTime(character);

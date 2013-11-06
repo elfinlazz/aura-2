@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using Aura.Data;
 using Aura.Shared.Database;
+using Aura.Shared.Util.Configuration;
 
 namespace Aura.Shared.Util
 {
@@ -60,7 +61,7 @@ namespace Aura.Shared.Util
 
 			try
 			{
-				AuraDb.Instance.Init(conf.Host, conf.User, conf.Pass, conf.Db);
+				AuraDb.Instance.Init(conf.Database.Host, conf.Database.User, conf.Database.Pass, conf.Database.Db);
 			}
 			catch (Exception ex)
 			{
@@ -215,7 +216,7 @@ namespace Aura.Shared.Util
 			// System
 			try
 			{
-				Localization.Parse(string.Format("system/localization/{0}", conf.Language));
+				Localization.Parse(string.Format("system/localization/{0}", conf.Localization.Language));
 			}
 			catch (FileNotFoundException ex)
 			{
@@ -225,7 +226,7 @@ namespace Aura.Shared.Util
 			// User
 			try
 			{
-				Localization.Parse(string.Format("user/localization/{0}", conf.Language));
+				Localization.Parse(string.Format("user/localization/{0}", conf.Localization.Language));
 			}
 			catch (FileNotFoundException)
 			{
@@ -257,7 +258,7 @@ namespace Aura.Shared.Util
 		All = 0xFFFF,
 
 		LoginServer = Races | StatsBase | Cards | Colors | Items | Pets,
-		WorldServer = All,
+		ChannelServer = All,
 		Npcs = Races,
 	}
 }

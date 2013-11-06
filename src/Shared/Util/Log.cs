@@ -9,7 +9,7 @@ namespace Aura.Shared.Util
 	/// <summary>
 	/// All log levels. Also used as bitmask, for hiding.
 	/// </summary>
-	public enum LogLevel : short
+	public enum LogLevel : int
 	{
 		Info = 0x0001,
 		Warning = 0x0002,
