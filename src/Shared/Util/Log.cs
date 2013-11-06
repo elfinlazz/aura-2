@@ -128,6 +128,11 @@ namespace Aura.Shared.Util
 			Write(level, format + Environment.NewLine, args);
 		}
 
+		public static void WriteLine()
+		{
+			WriteLine(LogLevel.None, "");
+		}
+
 		public static void Write(LogLevel level, string format, params object[] args)
 		{
 			lock (Console.Out)

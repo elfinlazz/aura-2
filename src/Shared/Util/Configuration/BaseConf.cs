@@ -22,11 +22,17 @@ namespace Aura.Shared.Util.Configuration
 		/// </summary>
 		public LocalizationConfFile Localization { get; protected set; }
 
+		/// <summary>
+		/// internal.conf
+		/// </summary>
+		public InternalConfFile Internal { get; protected set; }
+
 		public BaseConf()
 		{
 			this.Log = new LogConfFile();
 			this.Database = new DatabaseConfFile();
 			this.Localization = new LocalizationConfFile();
+			this.Internal = new InternalConfFile();
 		}
 
 		/// <summary>
@@ -38,6 +44,10 @@ namespace Aura.Shared.Util.Configuration
 			this.Log.Load();
 			this.Database.Load();
 			this.Localization.Load();
+			this.Internal.Load();
+
+			if (this.Internal.Password == "change_me")
+				Aura.Shared.Util.Log.Warning("Using the default inter server password is risky, please change it in 'internal.conf'.");
 		}
 
 		public abstract void Load();

@@ -59,7 +59,23 @@ namespace Aura.Shared.Network
 		/// <summary>
 		/// 0-75
 		/// </summary>
-		public byte Stress { get; set; }
+		public short Stress
+		{
+			get
+			{
+				return (short)(75f / this.MaxUsers * this.Users);
+			}
+		}
+
+		/// <summary>
+		/// Current users
+		/// </summary>
+		public int Users { get; set; }
+
+		/// <summary>
+		/// Max users able to connect
+		/// </summary>
+		public int MaxUsers { get; set; }
 
 		public ChannelInfo(string name, string server, string ip, int port)
 		{

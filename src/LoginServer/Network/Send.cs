@@ -406,7 +406,19 @@ namespace Aura.Login.Network
 			}
 
 			client.Send(packet);
+		}
 
+		/// <summary>
+		/// Sends Internal.ServerIdentifyR  to channel client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="success"></param>
+		public static void Internal_ServerIdentifyR(LoginClient client, bool success)
+		{
+			var packet = new Packet(Op.Internal.ServerIdentifyR, 0);
+			packet.PutByte(success);
+
+			client.Send(packet);
 		}
 
 		/// <summary>

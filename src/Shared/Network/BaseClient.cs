@@ -17,7 +17,7 @@ namespace Aura.Shared.Network
 		public Socket Socket { get; set; }
 		public byte[] Buffer { get; set; }
 		public ClientState State { get; set; }
-		public MabiCrypto Crypto { get; protected set; }
+		public MabiCrypto Crypto { get; set; }
 
 		private string _address;
 		public string Address

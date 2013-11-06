@@ -66,6 +66,8 @@ namespace Aura.Shared.Network
 		{
 			// Send seed
 			client.Socket.Send(BitConverter.GetBytes(client.Crypto.Seed));
+
+			base.OnClientConnected(client);
 		}
 	}
 }

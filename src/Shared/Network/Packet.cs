@@ -89,6 +89,15 @@ namespace Aura.Shared.Network
 			return (PacketElementType)_buffer[_ptr];
 		}
 
+		/// <summary>
+		/// Returns new empty packet.
+		/// </summary>
+		/// <returns></returns>
+		public static Packet Empty()
+		{
+			return new Packet(0, 0);
+		}
+
 		// Write
 		// ------------------------------------------------------------------
 

@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Collections.Generic;
 using Aura.Login.Network;
 using Aura.Login.Network.Handlers;
 using Aura.Login.Util;
@@ -31,6 +32,11 @@ namespace Aura.Login
 		/// </summary>
 		public LoginConf Conf { get; private set; }
 
+		/// <summary>
+		/// List of connected channel clients.
+		/// </summary>
+		public List<LoginClient> ChannelClients { get; private set; }
+
 		private LoginServer()
 		{
 			this.Server = new DefaultServer<LoginClient>();
@@ -38,6 +44,8 @@ namespace Aura.Login
 			this.Server.Handlers.AutoLoad();
 
 			this.ServerList = new ServerInfoManager();
+
+			this.ChannelClients = new List<LoginClient>();
 		}
 
 		/// <summary>
@@ -64,9 +72,6 @@ namespace Aura.Login
 
 			// Localization
 			this.LoadLocalization(this.Conf);
-
-			// Debug
-			this.ServerList.Add("Aura");
 
 			// Start
 			this.Server.Start(this.Conf.Login.Port);

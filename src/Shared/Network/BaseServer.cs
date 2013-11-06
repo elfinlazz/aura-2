@@ -20,10 +20,18 @@ namespace Aura.Shared.Network
 
 		public PacketHandlerManager<TClient> Handlers { get; set; }
 
+		/// <summary>
+		/// Raised when client successfully connected.
+		/// </summary>
+		public event ClientConnectionEventHandler ClientConnected;
+
+		/// <summary>
+		/// Raised when client disconnected for any reason.
+		/// </summary>
+		public event ClientConnectionEventHandler ClientDisconnected;
+
 		public BaseServer()
 		{
-			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-
 			_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			_clients = new List<TClient>();
 		}
@@ -128,10 +136,19 @@ namespace Aura.Shared.Network
 		}
 
 		/// <summary>
+		/// Starts receiving for client.
+		/// </summary>
+		/// <param name="client"></param>
+		public void AddReceivingClient(TClient client)
+		{
+			client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, new AsyncCallback(this.OnReceive), client);
+		}
+
+		/// <summary>
 		/// Handles sending packets, obviously.
 		/// </summary>
 		/// <param name="result"></param>
-		private void OnReceive(IAsyncResult result)
+		protected void OnReceive(IAsyncResult result)
 		{
 			var client = result.AsyncState as TClient;
 
@@ -142,8 +159,9 @@ namespace Aura.Shared.Network
 
 				if (bytesReceived == 0)
 				{
-					this.KillAndRemoveClient(client);
 					Log.Info("Connection closed from '{0}.", client.Address);
+					this.KillAndRemoveClient(client);
+					this.OnClientDisconnected(client);
 					return;
 				}
 
@@ -170,8 +188,9 @@ namespace Aura.Shared.Network
 				// Stop if client was killed while handling.
 				if (client.State == ClientState.Dead)
 				{
-					this.RemoveClient(client);
 					Log.Info("Killed connection from '{0}'.", client.Address);
+					this.RemoveClient(client);
+					this.OnClientDisconnected(client);
 					return;
 				}
 
@@ -180,16 +199,18 @@ namespace Aura.Shared.Network
 			}
 			catch (SocketException)
 			{
-				this.KillAndRemoveClient(client);
 				Log.Info("Connection lost from '{0}'.", client.Address);
+				this.KillAndRemoveClient(client);
+				this.OnClientDisconnected(client);
 			}
 			catch (ObjectDisposedException)
 			{
 			}
 			catch (Exception ex)
 			{
-				this.KillAndRemoveClient(client);
 				Log.Exception(ex, "While receiving data from '{0}'.", client.Address);
+				this.KillAndRemoveClient(client);
+				this.OnClientDisconnected(client);
 			}
 		}
 
@@ -230,39 +251,6 @@ namespace Aura.Shared.Network
 		}
 
 		/// <summary>
-		/// Handler for unhandled exceptions.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-		{
-			try
-			{
-				Log.Error("Oh no! Ferghus escaped his memory block and infected the rest of the server!");
-				Log.Error("Aura has encountered an unexpected and unrecoverable error. We're going to try to save as much as we can.");
-			}
-			catch { }
-			try
-			{
-				this.Stop();
-			}
-			catch { }
-			try
-			{
-				this.OnUnhandledException();
-			}
-			catch { }
-			try
-			{
-				Log.Exception((Exception)e.ExceptionObject);
-				Log.Status("Closing the server.");
-			}
-			catch { }
-
-			CliUtil.Exit(1, false);
-		}
-
-		/// <summary>
 		/// Returns length of the new incoming packet, so it can be received.
 		/// </summary>
 		/// <param name="buffer"></param>
@@ -272,31 +260,18 @@ namespace Aura.Shared.Network
 
 		protected abstract void HandleBuffer(TClient client, byte[] buffer);
 
-		/// <summary>
-		/// Called when a client got accepted.
-		/// </summary>
-		/// <param name="client"></param>
 		protected virtual void OnClientConnected(TClient client)
 		{
+			if (this.ClientConnected != null)
+				this.ClientConnected(client);
 		}
 
-		/// <summary>
-		/// Called when a connection was closed from the client, or lost.
-		/// </summary>
-		/// <param name="client"></param>
 		protected virtual void OnClientDisconnected(TClient client)
 		{
+			if (this.ClientDisconnected != null)
+				this.ClientDisconnected(client);
 		}
 
-		/// <summary>
-		/// Called when shit hits the fan.
-		/// </summary>
-		/// <remarks>
-		/// Only called when threads or events aren't secured properly.
-		/// </remarks>
-		protected virtual void OnUnhandledException()
-		{
-			//WorldManager.Instance.EmergencyShutdown();
-		}
+		public delegate void ClientConnectionEventHandler(TClient client);
 	}
 }

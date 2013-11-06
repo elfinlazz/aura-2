@@ -69,6 +69,7 @@
     <Compile Include="Network\Handlers\Disconnect.cs" />
     <Compile Include="Network\Handlers\Gifts.cs" />
     <Compile Include="Network\Handlers\Deletion.cs" />
+    <Compile Include="Network\Handlers\Internal.cs" />
     <Compile Include="Network\Handlers\Login.cs" />
     <Compile Include="Network\LoginClient.cs" />
     <Compile Include="LoginServer.cs" />
