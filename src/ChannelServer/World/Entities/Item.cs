@@ -40,7 +40,7 @@ namespace Aura.Channel.World.Entities
 
 		public Item(int itemId)
 		{
-			this.Info.Class = itemId;
+			this.Info.ItemId = itemId;
 
 			this.Data = AuraData.ItemDb.Find(itemId);
 		}

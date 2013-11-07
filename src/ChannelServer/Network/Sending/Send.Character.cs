@@ -99,7 +99,7 @@ namespace Aura.Channel.Network.Sending
 			{
 				packet.AddCreatureInfo(creature, CreaturePacketType.Private);
 			}
-			Log.Debug(packet);
+
 			client.Send(packet);
 		}
 

@@ -264,7 +264,7 @@ namespace Aura.Login.Database
 			var rnd = new MTRandom(ihash);
 			foreach (var item in items.Where(a => a.Info.Pocket != Pocket.Face && a.Info.Pocket != Pocket.Hair))
 			{
-				var dataInfo = AuraData.ItemDb.Find(item.Info.Class);
+				var dataInfo = AuraData.ItemDb.Find(item.Info.ItemId);
 				if (dataInfo == null)
 					continue;
 

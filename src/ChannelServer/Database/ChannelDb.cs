@@ -152,6 +152,24 @@ namespace Aura.Channel.Database
 					var x = reader.GetInt32("x");
 					var y = reader.GetInt32("y");
 					character.SetPosition(x, y);
+					character.Level = reader.GetInt16("level");
+					character.LevelTotal = reader.GetInt32("levelTotal");
+					character.Exp = reader.GetInt64("exp");
+					character.AbilityPoints = reader.GetInt16("ap");
+					character.Age = reader.GetInt16("age");
+					character.Injuries = reader.GetFloat("injuries");
+					character.Life = (character.LifeMaxBase = reader.GetFloat("lifeMax"));
+					character.Life -= reader.GetFloat("lifeDelta");
+					character.Mana = (character.ManaMaxBase = reader.GetFloat("manaMax"));
+					character.Mana -= reader.GetFloat("manaDelta");
+					character.Hunger = reader.GetFloat("hunger");
+					character.Stamina = (character.StaminaMaxBase = reader.GetFloat("staminaMax"));
+					character.Stamina -= reader.GetFloat("staminaDelta");
+					character.StrBase = reader.GetFloat("str");
+					character.DexBase = reader.GetFloat("dex");
+					character.IntBase = reader.GetFloat("int");
+					character.WillBase = reader.GetFloat("will");
+					character.LuckBase = reader.GetFloat("luck");
 				}
 
 				var items = this.GetItems(character.CreatureId, conn);

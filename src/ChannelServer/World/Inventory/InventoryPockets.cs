@@ -114,7 +114,7 @@ namespace Aura.Channel.World
 
 			this.TryGetCollidingItem(targetX, targetY, newItem, out collidingItem);
 
-			if (collidingItem != null && ((collidingItem.Data.StackType == StackType.Sac && (collidingItem.Data.StackItem == newItem.Info.Class || collidingItem.Data.StackItem == newItem.Data.StackItem)) || (newItem.Data.StackType == StackType.Stackable && newItem.Info.Class == collidingItem.Info.Class)))
+			if (collidingItem != null && ((collidingItem.Data.StackType == StackType.Sac && (collidingItem.Data.StackItem == newItem.Info.ItemId || collidingItem.Data.StackItem == newItem.Data.StackItem)) || (newItem.Data.StackType == StackType.Stackable && newItem.Info.ItemId == collidingItem.Info.ItemId)))
 			{
 				if (collidingItem.Info.Amount < collidingItem.Data.StackMax)
 				{
@@ -287,7 +287,7 @@ namespace Aura.Channel.World
 						continue;
 
 					// If same class or item is stack item of inventory item
-					if (item.Info.Class == invItem.Info.Class || invItem.Data.StackItem == item.Info.Class)
+					if (item.Info.ItemId == invItem.Info.ItemId || invItem.Data.StackItem == item.Info.ItemId)
 					{
 						// If item fits into stack 100%
 						if ((uint)invItem.Info.Amount + (uint)item.Info.Amount <= (uint)invItem.Data.StackMax)
@@ -334,7 +334,7 @@ namespace Aura.Channel.World
 						continue;
 
 					// Normal
-					if (item.Info.Class == itemId && item.Data.StackType == StackType.None)
+					if (item.Info.ItemId == itemId && item.Data.StackType == StackType.None)
 					{
 						result++;
 						amount--;
@@ -344,7 +344,7 @@ namespace Aura.Channel.World
 					}
 
 					// Sacs/Stackables
-					if (item.Data.StackItem == itemId || (item.Info.Class == itemId && item.Data.StackType == StackType.Stackable))
+					if (item.Data.StackItem == itemId || (item.Info.ItemId == itemId && item.Data.StackType == StackType.Stackable))
 					{
 						if (amount >= item.Info.Amount)
 						{
@@ -381,7 +381,7 @@ namespace Aura.Channel.World
 			var result = 0;
 
 			foreach (var item in _items.Values)
-				if (item.Info.Class == itemId || item.Data.StackItem == itemId)
+				if (item.Info.ItemId == itemId || item.Data.StackItem == itemId)
 					result += item.Info.Amount;
 
 			return result;
@@ -479,7 +479,7 @@ namespace Aura.Channel.World
 
 		public override int Count(int itemId)
 		{
-			if (_item != null && _item.Info.Class == itemId)
+			if (_item != null && _item.Info.ItemId == itemId)
 				return _item.Info.Amount;
 			return 0;
 		}
@@ -564,7 +564,7 @@ namespace Aura.Channel.World
 			var result = 0;
 
 			foreach (var item in _items)
-				if (item.Info.Class == itemId || item.Data.StackItem == itemId)
+				if (item.Info.ItemId == itemId || item.Data.StackItem == itemId)
 					result += item.Info.Amount;
 
 			return result;

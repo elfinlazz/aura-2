@@ -111,37 +111,118 @@ namespace Aura.Channel.World.Entities
 		public short Age { get; set; }
 		public short AbilityPoints { get; set; }
 
-		public float CombatPower { get; set; }
-
-		public float Life { get; set; }
-		public float LifeInjured { get; set; }
-		public float LifeMaxBaseTotal { get; set; }
-		public float LifeMaxMod { get; set; }
-
-		public float Mana { get; set; }
-		public float ManaMaxBaseTotal { get; set; }
-		public float ManaMaxMod { get; set; }
-
-		public float Stamina { get; set; }
-		public float StaminaMaxBaseTotal { get; set; }
-		public float StaminaMaxMod { get; set; }
-		public float StaminaHunger { get; set; }
-
-		public float StrBaseTotal { get; set; }
-		public float StrMod { get; set; }
-		public float DexBaseTotal { get; set; }
-		public float DexMod { get; set; }
-		public float IntBaseTotal { get; set; }
-		public float IntMod { get; set; }
-		public float WillBaseTotal { get; set; }
-		public float WillMod { get; set; }
-		public float LuckBaseTotal { get; set; }
-		public float LuckMod { get; set; }
+		public virtual float CombatPower { get { return (this.RaceInfo != null ? this.RaceInfo.CombatPower : 1); } }
 
 		public float ProtectionMod { get; set; }
 		public float ProtectionPassive { get; set; }
 		public short DefenseMod { get; set; }
 		public short DefensePassive { get; set; }
+
+		public float StrBaseSkill { get; set; }
+		public float DexBaseSkill { get; set; }
+		public float IntBaseSkill { get; set; }
+		public float WillBaseSkill { get; set; }
+		public float LuckBaseSkill { get; set; }
+
+		public float StrMod { get; set; }
+		public float DexMod { get; set; }
+		public float IntMod { get; set; }
+		public float WillMod { get; set; }
+		public float LuckMod { get; set; }
+
+		public float StrBase { get; set; }
+		public float DexBase { get; set; }
+		public float IntBase { get; set; }
+		public float WillBase { get; set; }
+		public float LuckBase { get; set; }
+		public float StrBaseTotal { get { return this.StrBase + this.StrBaseSkill; } }
+		public float DexBaseTotal { get { return this.DexBase + this.DexBaseSkill; } }
+		public float IntBaseTotal { get { return this.IntBase + this.IntBaseSkill; } }
+		public float WillBaseTotal { get { return this.WillBase + this.WillBaseSkill; } }
+		public float LuckBaseTotal { get { return this.LuckBase + this.LuckBaseSkill; } }
+		public float Str { get { return this.StrBaseTotal + this.StrMod; } }
+		public float Dex { get { return this.DexBaseTotal + this.DexMod; } }
+		public float Int { get { return this.IntBaseTotal + this.IntMod; } }
+		public float Will { get { return this.WillBaseTotal + this.WillMod; } }
+		public float Luck { get { return this.LuckBaseTotal + this.LuckMod; } }
+
+		// Life
+		// ------------------------------------------------------------------
+
+		public float LifeMaxBaseSkill { get; set; }
+		public float ManaMaxBaseSkill { get; set; }
+		public float StaminaMaxBaseSkill { get; set; }
+
+		public float LifeMaxMod { get; set; }
+		public float ManaMaxMod { get; set; }
+		public float StaminaMaxMod { get; set; }
+
+		private float _life, _injuries;
+		public float Life
+		{
+			get { return _life; }
+			set
+			{
+				if (value > this.LifeInjured)
+					_life = this.LifeInjured;
+				else if (value < -this.LifeMax)
+					_life = -this.LifeMax;
+				else
+					_life = value;
+
+				//if (_life < 0 && !this.Has(CreatureConditionA.Deadly))
+				//{
+				//    this.Activate(CreatureConditionA.Deadly);
+				//}
+				//else if (_life >= 0 && this.Has(CreatureConditionA.Deadly))
+				//{
+				//    this.Deactivate(CreatureConditionA.Deadly);
+				//}
+
+			}
+		}
+		public float Injuries
+		{
+			get { return _injuries; }
+			set { _injuries = Math.Max(0, Math.Min(this.LifeMax, value)); }
+		}
+		public float LifeMaxBase { get; set; }
+		public float LifeMaxBaseTotal { get { return this.LifeMaxBase + this.LifeMaxBaseSkill; } }
+		public float LifeMax { get { return this.LifeMaxBaseTotal + this.LifeMaxMod; } }
+		public float LifeInjured { get { return this.LifeMax - _injuries; } }
+
+		// Mana
+		// ------------------------------------------------------------------
+
+		private float _mana;
+		public float Mana
+		{
+			get { return _mana; }
+			set { _mana = Math.Max(0, Math.Min(this.ManaMax, value)); }
+		}
+
+		public float ManaMaxBase { get; set; }
+		public float ManaMaxBaseTotal { get { return this.ManaMaxBase + this.ManaMaxBaseSkill; } }
+		public float ManaMax { get { return ManaMaxBaseTotal + this.ManaMaxMod; } }
+
+		// Stamina
+		// ------------------------------------------------------------------
+
+		private float _stamina, _hunger;
+		public float Stamina
+		{
+			get { return _stamina; }
+			set { _stamina = Math.Max(0, Math.Min(this.StaminaHunger, value)); }
+		}
+		public float Hunger
+		{
+			get { return _hunger; }
+			set { _hunger = Math.Max(0, Math.Min(this.StaminaMax / 2, value)); }
+		}
+		public float StaminaMaxBase { get; set; }
+		public float StaminaMaxBaseTotal { get { return this.StaminaMaxBase + this.StaminaMaxBaseSkill; } }
+		public float StaminaMax { get { return this.StaminaMaxBaseTotal + this.StaminaMaxMod; } }
+		public float StaminaHunger { get { return this.StaminaMax - _hunger; } }
 
 		// ------------------------------------------------------------------
 

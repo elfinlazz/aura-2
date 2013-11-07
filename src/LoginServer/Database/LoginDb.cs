@@ -320,7 +320,7 @@ namespace Aura.Login.Database
 					{
 						var item = new Item();
 						item.Id = reader.GetInt64("entityId");
-						item.Info.Class = reader.GetInt32("itemId");
+						item.Info.ItemId = reader.GetInt32("itemId");
 						item.Info.Pocket = (Pocket)reader.GetByte("pocket");
 						item.Info.Color1 = reader.GetUInt32("color1");
 						item.Info.Color2 = reader.GetUInt32("color2");
@@ -458,9 +458,9 @@ namespace Aura.Login.Database
 			var mc = new MySqlCommand(
 				"INSERT INTO `creatures` " +
 				"(`server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`, " +
-				" `lifeMax`, `lifeDelta`, `manaMax`, `manaDelta`, `staminaMax`, `staminaDelta`, `str`, `int`, `dex`, `will`, `luck`, `defense`, `protection`, `ap`) " +
+				" `lifeMax`, `manaMax`, `staminaMax`, `str`, `int`, `dex`, `will`, `luck`, `defense`, `protection`, `ap`) " +
 				"VALUES (@server, @name, @race, @skinColor, @eyeType, @eyeColor, @mouthType, @height, @weight, @upper, @lower, @color1, @color2, @color3, " +
-				" @lifeMax, @lifeDelta, @manaMax, @manaDelta, @staminaMax, @staminaDelta, @str, @int, @dex, @will, @luck, @defense, @protection, @ap)"
+				" @lifeMax, @manaMax, @staminaMax, @str, @int, @dex, @will, @luck, @defense, @protection, @ap)"
 			, conn, transaction);
 
 			mc.Parameters.AddWithValue("@server", creature.Server);
@@ -478,11 +478,8 @@ namespace Aura.Login.Database
 			mc.Parameters.AddWithValue("@color2", creature.Color2);
 			mc.Parameters.AddWithValue("@color3", creature.Color3);
 			mc.Parameters.AddWithValue("@lifeMax", creature.Life);
-			mc.Parameters.AddWithValue("@lifeDelta", creature.Life);
 			mc.Parameters.AddWithValue("@manaMax", creature.Mana);
-			mc.Parameters.AddWithValue("@manaDelta", creature.Mana);
 			mc.Parameters.AddWithValue("@staminaMax", creature.Stamina);
-			mc.Parameters.AddWithValue("@staminaDelta", creature.Stamina);
 			mc.Parameters.AddWithValue("@str", creature.Str);
 			mc.Parameters.AddWithValue("@int", creature.Int);
 			mc.Parameters.AddWithValue("@dex", creature.Dex);
@@ -514,16 +511,16 @@ namespace Aura.Login.Database
 
 			foreach (var item in items)
 			{
-				var dataInfo = AuraData.ItemDb.Find(item.Info.Class);
+				var dataInfo = AuraData.ItemDb.Find(item.Info.ItemId);
 				if (dataInfo == null)
 				{
-					Log.Warning("Item '{0}' couldn't be found in the database.", item.Info.Class);
+					Log.Warning("Item '{0}' couldn't be found in the database.", item.Info.ItemId);
 					continue;
 				}
 
 				mc.Parameters.Clear();
 				mc.Parameters.AddWithValue("@creatureId", creatureId);
-				mc.Parameters.AddWithValue("@class", item.Info.Class);
+				mc.Parameters.AddWithValue("@class", item.Info.ItemId);
 				mc.Parameters.AddWithValue("@pocket", (byte)item.Info.Pocket);
 				mc.Parameters.AddWithValue("@color1", item.Info.Color1);
 				mc.Parameters.AddWithValue("@color2", item.Info.Color2);

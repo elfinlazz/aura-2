@@ -16,7 +16,7 @@ namespace Aura.Shared.Mabi.Structs
 		private byte __unknown2;
 		private byte __unknown3;
 		private byte __unknown4;
-		public int Class;
+		public int ItemId;
 		public uint Color1;
 		public uint Color2;
 		public uint Color3;
@@ -31,7 +31,7 @@ namespace Aura.Shared.Mabi.Structs
 		/// </summary>
 		public byte State; // FigureA
 
-		public byte uFigureB;
+		public byte uFigureB; // related to giant's beards
 		public byte uFigureC;
 		public byte uFigureD;
 		public byte KnockCount;
