@@ -2,7 +2,6 @@
 // For more information, see license file in the main folder
 
 using System;
-using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 
@@ -34,7 +33,7 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="client"></param>
 		public static void ChannelDisconnectR(ChannelClient client)
 		{
-			var packet = new Packet(Op.ChannelDisconnectR, MabiId.Channel);
+			var packet = new Packet(Op.DisconnectRequestR, MabiId.Channel);
 			packet.PutByte(0);
 
 			client.Send(packet);

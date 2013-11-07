@@ -22,7 +22,7 @@ namespace Aura.Login.Network.Handlers
 		/// 0004 [........00000000] Int    : 0
 		/// 0005 [........00000000] Int    : 0
 		/// </example>
-		[PacketHandler(Op.Disconnect)]
+		[PacketHandler(Op.DisconnectInform)]
 		public void Disconnect(LoginClient client, Packet packet)
 		{
 			var accountName = packet.GetString();

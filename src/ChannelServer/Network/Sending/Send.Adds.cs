@@ -2,13 +2,9 @@
 // For more information, see license file in the main folder
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Aura.Channel.World.Entities;
-using Aura.Shared.Network;
 using Aura.Data;
-using Aura.Shared.Util;
+using Aura.Shared.Network;
 
 namespace Aura.Channel.Network.Sending
 {

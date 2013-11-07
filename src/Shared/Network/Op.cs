@@ -47,7 +47,7 @@ namespace Aura.Shared.Network
 		public const int AcceptGiftR = 0x4A;
 		public const int RefuseGift = 0x4B;
 		public const int RefuseGiftR = 0x4C;
-		public const int Disconnect = 0x4D;
+		public const int DisconnectInform = 0x4D;
 		public const int PetCreationOptionsRequest = 0x50;
 		public const int PetCreationOptionsRequestR = 0x51;
 		public const int PartnerCreationOptionsRequest = 0x55;
@@ -59,8 +59,8 @@ namespace Aura.Shared.Network
 		// ------------------------------------------------------------------
 		public const int ChannelLogin = 0x4E22;
 		public const int ChannelLoginR = 0x4E23;
-		public const int ChannelDisconnect = 0x4E24;
-		public const int ChannelDisconnectR = 0x4E25;
+		public const int DisconnectRequest = 0x4E24;
+		public const int DisconnectRequestR = 0x4E25;
 		public const int RequestClientDisconnect = 0x4E26;
 		public const int Disappear = 0x4E2A;
 		//public const int GoRebirth = 0x4E32;

@@ -65,10 +65,9 @@
     <Compile Include="Network\ChannelClient.cs" />
     <Compile Include="ChannelServer.cs" />
     <Compile Include="Network\Handlers\Internal.cs" />
-    <Compile Include="Network\Handlers\Logout.cs" />
-    <Compile Include="Network\Handlers\Login.cs" />
+    <Compile Include="Network\Handlers\LogInOut.cs" />
     <Compile Include="Network\Sending\Send.Character.cs" />
-    <Compile Include="Network\Sending\Send.Login.cs" />
+    <Compile Include="Network\Sending\Send.LogInOut.cs" />
     <Compile Include="Network\Sending\Send.Internal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

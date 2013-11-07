@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using Aura.Shared.Mabi;
-using Aura.Shared.Network;
 using System;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Network;
 
 namespace Aura.Channel.Network.Sending
 {
