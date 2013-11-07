@@ -81,6 +81,7 @@ namespace Aura.Shared.Network
 		/// <param name="packet"></param>
 		public void Send(Packet packet)
 		{
+			//Log.Debug(packet);
 			this.Send(packet.Build());
 		}
 

@@ -60,19 +60,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\Account.cs" />
     <Compile Include="Database\ChannelDb.cs" />
     <Compile Include="Network\ChannelClient.cs" />
     <Compile Include="ChannelServer.cs" />
     <Compile Include="Network\Handlers\Internal.cs" />
+    <Compile Include="Network\Handlers\Logout.cs" />
     <Compile Include="Network\Handlers\Login.cs" />
+    <Compile Include="Network\Sending\Send.Character.cs" />
+    <Compile Include="Network\Sending\Send.Login.cs" />
     <Compile Include="Network\Sending\Send.Internal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ChannelConf.cs" />
     <Compile Include="Util\ChannelConsoleCommands.cs" />
+    <Compile Include="World\Entities\Creatures\CreatureTemp.cs" />
+    <Compile Include="World\Entities\PlayerCreature.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Compile Include="Network\Sending\Send.Adds.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">

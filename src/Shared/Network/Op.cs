@@ -66,8 +66,8 @@ namespace Aura.Shared.Network
 		//public const int GoRebirth = 0x4E32;
 		public const int WarpUnk1 = 0x4E39;
 
-		public const int WorldCharInfoRequest = 0x5208;
-		public const int WorldCharInfoRequestR = 0x5209;
+		public const int ChannelCharacterInfoRequest = 0x5208;
+		public const int ChannelCharacterInfoRequestR = 0x5209;
 		public const int EntityAppears = 0x520C;
 		public const int EntityDisappears = 0x520D;
 		public const int ItemAppears = 0x5211;
@@ -147,12 +147,12 @@ namespace Aura.Shared.Network
 
 		public const int SetLocation = 0x6594;
 		public const int TurnTo = 0x6596;
-		public const int EnterRegionPermission = 0x6597;
-		public const int EnterRegion = 0x6598;
+		public const int EnterRegion = 0x6597;
+		public const int EnterRegionRequest = 0x6598;
 		public const int WarpRegion = 0x6599;
 		public const int RunTo = 0x659A;  // Used for correcting positions?
 		public const int WalkTo = 0x659B; // Used for correcting positions?
-		public const int EnterRegionR = 0x659C;
+		public const int EnterRegionRequestR = 0x659C;
 		public const int TakeOff = 0x65A8;
 		public const int TakingOff = 0x65A9;
 		public const int TakeOffR = 0x65AA;

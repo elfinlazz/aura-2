@@ -152,28 +152,46 @@ namespace Aura.Shared.Network
 
 		/// <summary>Writes val to buffer.</summary>
 		public Packet PutByte(byte val) { return this.PutSimple(PacketElementType.Byte, val); }
+
 		/// <summary>Writes val as byte to buffer.</summary>
 		public Packet PutByte(bool val) { return this.PutByte(val ? (byte)1 : (byte)0); }
+
 		/// <summary>Writes val to buffer.</summary>
 		public Packet PutShort(short val) { return this.PutSimple(PacketElementType.Short, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
+
+		/// <summary>Writes val to buffer.</summary>
+		public Packet PutUShort(ushort val) { return this.PutShort((short)val); }
+
 		/// <summary>Writes val to buffer.</summary>
 		public Packet PutInt(int val) { return this.PutSimple(PacketElementType.Int, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
+
+		/// <summary>Writes val to buffer.</summary>
+		public Packet PutUInt(uint val) { return this.PutInt((int)val); }
+
 		/// <summary>Writes val to buffer.</summary>
 		public Packet PutLong(long val) { return this.PutSimple(PacketElementType.Long, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(val))); }
+
+		/// <summary>Writes val to buffer.</summary>
+		public Packet PutULong(ulong val) { return this.PutLong((long)val); }
+
 		/// <summary>Writes val as long to buffer.</summary>
 		public Packet PutLong(DateTime val) { return this.PutLong((long)(val.Ticks / 10000)); }
+
 		/// <summary>Writes val to buffer.</summary>
 		public Packet PutFloat(float val) { return this.PutSimple(PacketElementType.Float, BitConverter.GetBytes(val)); }
+
 		/// <summary>Writes val to buffer.</summary>
 		public Packet PutFloat(double val) { return this.PutFloat((float)val); }
 
 		/// <summary>Writes val as null-terminated UTF8 string to buffer.</summary>
 		public Packet PutString(string val) { return this.PutWithLength(PacketElementType.String, Encoding.UTF8.GetBytes(val + "\0")); }
+
 		/// <summary>Writes val as null-terminated UTF8 string to buffer.</summary>
 		public Packet PutString(string format, params object[] args) { return this.PutString(string.Format((format != null ? format : string.Empty), args)); }
 
 		/// <summary>Writes val to buffer.</summary>
 		public Packet PutBin(byte[] val) { return this.PutWithLength(PacketElementType.Bin, val); }
+
 		/// <summary>Converts struct to byte array and writes it as byte array to buffer.</summary>
 		public Packet PutBin(object val)
 		{
@@ -444,7 +462,7 @@ namespace Aura.Shared.Network
 				else if (type == PacketElementType.Long)
 				{
 					var data = this.GetLong();
-					result.AppendFormat("{0:000} [{1}] Long   : {2}", i, data.ToString("X8").PadLeft(16, '.'), data);
+					result.AppendFormat("{0:000} [{1}] Long   : {2}", i, data.ToString("X16"), data);
 				}
 				else if (type == PacketElementType.Float)
 				{

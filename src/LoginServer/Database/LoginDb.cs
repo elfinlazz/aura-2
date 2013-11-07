@@ -231,7 +231,7 @@ namespace Aura.Login.Database
 			using (var conn = AuraDb.Instance.Connection)
 			{
 				var result = new List<Character>();
-				this.GetCharacters(accountId, "characters", "characterId", CharacterType.Character, ref result, conn);
+				this.GetCharacters(accountId, "characters", CharacterType.Character, ref result, conn);
 
 				return result;
 			}
@@ -247,8 +247,8 @@ namespace Aura.Login.Database
 			using (var conn = AuraDb.Instance.Connection)
 			{
 				var result = new List<Character>();
-				this.GetCharacters(accountId, "pets", "petId", CharacterType.Pet, ref result, conn);
-				this.GetCharacters(accountId, "partners", "partnerId", CharacterType.Partner, ref result, conn);
+				this.GetCharacters(accountId, "pets", CharacterType.Pet, ref result, conn);
+				this.GetCharacters(accountId, "partners", CharacterType.Partner, ref result, conn);
 
 				return result;
 			}
@@ -263,7 +263,7 @@ namespace Aura.Login.Database
 		/// <param name="type"></param>
 		/// <param name="result"></param>
 		/// <param name="conn"></param>
-		private void GetCharacters(string accountId, string table, string primary, CharacterType type, ref List<Character> result, MySqlConnection conn)
+		private void GetCharacters(string accountId, string table, CharacterType type, ref List<Character> result, MySqlConnection conn)
 		{
 			var mc = new MySqlCommand(
 				"SELECT * " +
@@ -278,7 +278,7 @@ namespace Aura.Login.Database
 				while (reader.Read())
 				{
 					var character = new Character();
-					character.Id = reader.GetInt64(primary);
+					character.Id = reader.GetInt64("entityId");
 					character.CreatureId = reader.GetInt64("creatureId");
 					character.Name = reader.GetStringSafe("name");
 					character.Server = reader.GetStringSafe("server");
@@ -319,8 +319,8 @@ namespace Aura.Login.Database
 					while (reader.Read())
 					{
 						var item = new Item();
-						item.Id = reader.GetInt64("itemId");
-						item.Info.Class = reader.GetInt32("class");
+						item.Id = reader.GetInt64("entityId");
+						item.Info.Class = reader.GetInt32("itemId");
 						item.Info.Pocket = (Pocket)reader.GetByte("pocket");
 						item.Info.Color1 = reader.GetUInt32("color1");
 						item.Info.Color2 = reader.GetUInt32("color2");

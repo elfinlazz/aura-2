@@ -6,7 +6,7 @@ using Aura.Shared.Network;
 
 namespace Aura.Channel.Network.Sending
 {
-	public static class Send
+	public static partial class Send
 	{
 		/// <summary>
 		/// Sends Internal.ServerIdentify to login server.

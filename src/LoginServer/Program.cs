@@ -18,7 +18,7 @@ namespace Aura.Login
 			}
 			catch (Exception ex)
 			{
-				Log.Exception(ex, "An exception occured, while starting the server.");
+				Log.Exception(ex, "An exception occured while starting the server.");
 				CliUtil.Exit(1);
 			}
 		}

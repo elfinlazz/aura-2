@@ -62,6 +62,7 @@ namespace Aura.Shared.Network
 			if (!_handlers.TryGetValue(packet.Op, out handler))
 			{
 				Log.Unimplemented("PacketHandlerManager: Handler for '{0:X4}'", packet.Op);
+				Log.Debug(packet);
 				return;
 			}
 

@@ -389,7 +389,7 @@ namespace Aura.Login.Network
 		/// <param name="info">Negative response if null.</param>
 		public static void ChannelInfoRequestR(LoginClient client, ChannelInfo info, long characterId)
 		{
-			var packet = new Packet(Op.ChannelInfoRequestR, MabiId.World);
+			var packet = new Packet(Op.ChannelInfoRequestR, MabiId.Channel);
 			packet.PutByte(info != null);
 
 			if (info != null)

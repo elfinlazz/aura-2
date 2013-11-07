@@ -138,10 +138,6 @@ namespace Aura.Login.Network.Handlers
 			character.Luck = ageInfo.Luck;
 			character.AP = ageInfo.AP;
 
-			character.Region = 1;
-			character.X = 12800;
-			character.Y = 38100;
-
 			// Try to create character
 			if (!client.Account.CreateCharacter(character, cardInfo))
 			{
@@ -221,10 +217,6 @@ namespace Aura.Login.Network.Handlers
 			pet.Height = petInfo.Height;
 			pet.Upper = petInfo.Upper;
 			pet.Lower = petInfo.Lower;
-
-			pet.Region = 1;
-			pet.X = 12800;
-			pet.Y = 38100;
 
 			pet.Life = petInfo.Life;
 			pet.Mana = petInfo.Mana;
@@ -399,10 +391,6 @@ namespace Aura.Login.Network.Handlers
 			partner.Luck = petInfo.Luck;
 			partner.Defense = petInfo.Defense;
 			partner.Protection = petInfo.Protection;
-
-			partner.Region = 1;
-			partner.X = 12800;
-			partner.Y = 38100;
 
 			// Try to create character
 			if (!client.Account.CreatePartner(partner))
