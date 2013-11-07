@@ -3,15 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Aura.Shared.Mabi.Const;
-using Aura.Data.Database;
-using Aura.Data;
+using Aura.Channel.Network;
 using Aura.Channel.World.Entities.Creatures;
+using Aura.Data;
+using Aura.Data.Database;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.World.Entities
 {
+	/// <summary>
+	/// An entity is any being or object that can be send in EntityAppears.
+	/// </summary>
 	public abstract class Entity
 	{
 		public long EntityId { get; set; }
@@ -28,6 +30,8 @@ namespace Aura.Channel.World.Entities
 	{
 		// General
 		// ------------------------------------------------------------------
+
+		public ChannelClient Client { get; set; }
 
 		public string Name { get; set; }
 
@@ -62,6 +66,14 @@ namespace Aura.Channel.World.Entities
 		public uint Color1 { get; set; }
 		public uint Color2 { get; set; }
 		public uint Color3 { get; set; }
+
+		// Inventory
+		// ------------------------------------------------------------------
+
+		public CreatureInventory Inventory { get; protected set; }
+		public Item RightHand { get { return this.Inventory.RightHand; } }
+		public Item LeftHand { get { return this.Inventory.LeftHand; } }
+		public Item Magazine { get { return this.Inventory.Magazine; } }
 
 		// Movement
 		// ------------------------------------------------------------------
@@ -135,11 +147,16 @@ namespace Aura.Channel.World.Entities
 
 		public Creature()
 		{
+			this.Client = new DummyClient();
+
 			this.Temp = new CreatureTemp();
 			this.Titles = new Dictionary<ushort, bool>();
 			this.Keywords = new List<short>();
 
 			this.RaceInfo = AuraData.RaceDb.Find(10002);
+
+			this.Inventory = new CreatureInventory(this);
+			this.Inventory.AddMainInventory();
 		}
 
 		private Position _position;

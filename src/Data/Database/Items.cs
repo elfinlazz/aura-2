@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Aura.Data.Database
 {
-	public class ItemInfo
+	public class ItemData
 	{
 		public int Id { get; internal set; }
 		public int Version { get; internal set; }
@@ -53,15 +53,15 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Item database, indexed by item id.
 	/// </summary>
-	public class ItemDb : DatabaseCSVIndexed<int, ItemInfo>
+	public class ItemDb : DatabaseCSVIndexed<int, ItemData>
 	{
-		public ItemInfo Find(string name)
+		public ItemData Find(string name)
 		{
 			name = name.ToLower();
 			return this.Entries.FirstOrDefault(a => a.Value.Name.ToLower() == name).Value;
 		}
 
-		public List<ItemInfo> FindAll(string name)
+		public List<ItemData> FindAll(string name)
 		{
 			name = name.ToLower();
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
@@ -72,14 +72,14 @@ namespace Aura.Data.Database
 			if (entry.Count < 29)
 				throw new FieldCountException(29);
 
-			var info = new ItemInfo();
+			var info = new ItemData();
 			info.Id = entry.ReadInt();
 			info.Version = entry.ReadInt();
 
 			info.Name = entry.ReadString();
 			info.KorName = entry.ReadString();
-			info.Type = (ItemType)entry.ReadShort();
-			info.StackType = (StackType)entry.ReadShort();
+			info.Type = (ItemType)entry.ReadInt();
+			info.StackType = (StackType)entry.ReadInt();
 			info.StackMax = entry.ReadUShort();
 
 			if (info.StackMax < 1)
@@ -97,7 +97,7 @@ namespace Aura.Data.Database
 			info.Durability = entry.ReadInt();
 			info.Defense = entry.ReadInt();
 			info.Protection = entry.ReadShort();
-			info.InstrumentType = (InstrumentType)entry.ReadByte();
+			info.InstrumentType = (InstrumentType)entry.ReadInt();
 			info.WeaponType = entry.ReadByte();
 			if (info.WeaponType == 0)
 			{
@@ -122,7 +122,7 @@ namespace Aura.Data.Database
 		}
 	}
 
-	public enum ItemType : ushort
+	public enum ItemType
 	{
 		Armor = 0,
 		Headgear = 1,
@@ -162,14 +162,14 @@ namespace Aura.Data.Database
 		Misc = 1001,
 	}
 
-	public enum StackType : byte
+	public enum StackType
 	{
 		None = 0,
 		Stackable = 1,
 		Sac = 2,
 	}
 
-	public enum InstrumentType : byte
+	public enum InstrumentType
 	{
 		Lute = 0,
 		Ukulele = 1,

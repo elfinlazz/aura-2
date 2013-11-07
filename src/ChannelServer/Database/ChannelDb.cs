@@ -124,12 +124,13 @@ namespace Aura.Channel.Database
 				var mc = new MySqlCommand("SELECT * FROM `" + table + "` AS c INNER JOIN `creatures` AS cr ON c.creatureId = cr.creatureId WHERE `entityId` = @entityId", conn);
 				mc.Parameters.AddWithValue("@entityId", entityId);
 
+				var character = new TCreature();
+
 				using (var reader = mc.ExecuteReader())
 				{
 					if (!reader.Read())
 						return null;
 
-					var character = new TCreature();
 					character.EntityId = reader.GetInt64("entityId");
 					character.CreatureId = reader.GetInt64("creatureId");
 					character.Name = reader.GetStringSafe("name");
@@ -151,10 +152,59 @@ namespace Aura.Channel.Database
 					var x = reader.GetInt32("x");
 					var y = reader.GetInt32("y");
 					character.SetPosition(x, y);
+				}
 
-					return character;
+				var items = this.GetItems(character.CreatureId, conn);
+				foreach (var item in items)
+					character.Inventory.ForceAdd(item, item.Info.Pocket);
+
+				return character;
+			}
+		}
+
+		private List<Item> GetItems(long creatureId, MySqlConnection conn)
+		{
+			var result = new List<Item>();
+
+			var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId", conn);
+			mc.Parameters.AddWithValue("@creatureId", creatureId);
+
+			using (var reader = mc.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					var itemId = reader.GetInt32("itemId");
+
+					var item = new Item(itemId);
+					item.EntityId = reader.GetInt64("entityId");
+					item.Info.Pocket = (Pocket)reader.GetInt32("pocket");
+					item.Info.X = reader.GetInt32("x");
+					item.Info.Y = reader.GetInt32("y");
+					item.Info.Color1 = reader.GetUInt32("color1");
+					item.Info.Color3 = reader.GetUInt32("color2");
+					item.Info.Color3 = reader.GetUInt32("color3");
+					item.Info.Amount = reader.GetUInt16("amount");
+					item.Info.State = reader.GetByte("state");
+					item.OptionInfo.Price = reader.GetInt32("price");
+					item.OptionInfo.SellingPrice = reader.GetInt32("sellPrice");
+					item.OptionInfo.Durability = reader.GetInt32("durability");
+					item.OptionInfo.DurabilityMax = reader.GetInt32("durabilityMax");
+					item.OptionInfo.DurabilityNew = reader.GetInt32("durabilityNew");
+					item.OptionInfo.AttackMin = reader.GetUInt16("attackMin");
+					item.OptionInfo.AttackMax = reader.GetUInt16("attackMax");
+					item.OptionInfo.Balance = reader.GetByte("balance");
+					item.OptionInfo.Critical = reader.GetByte("critical");
+					item.OptionInfo.Defense = reader.GetInt32("defense");
+					item.OptionInfo.Protection = reader.GetInt16("protection");
+					item.OptionInfo.EffectiveRange = reader.GetInt16("range");
+					item.OptionInfo.AttackSpeed = (AttackSpeed)reader.GetByte("attackSpeed");
+					item.OptionInfo.Experience = reader.GetInt16("experience");
+
+					result.Add(item);
 				}
 			}
+
+			return result;
 		}
 	}
 

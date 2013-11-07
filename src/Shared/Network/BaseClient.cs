@@ -55,7 +55,7 @@ namespace Aura.Shared.Network
 		/// Sends buffer (duh).
 		/// </summary>
 		/// <param name="buffer"></param>
-		public void Send(byte[] buffer)
+		public virtual void Send(byte[] buffer)
 		{
 			if (this.State == ClientState.Dead)
 				return;
@@ -79,7 +79,7 @@ namespace Aura.Shared.Network
 		/// Builds buffer from packet and sends it.
 		/// </summary>
 		/// <param name="packet"></param>
-		public void Send(Packet packet)
+		public virtual void Send(Packet packet)
 		{
 			//Log.Debug(packet);
 			this.Send(packet.Build());
@@ -88,7 +88,7 @@ namespace Aura.Shared.Network
 		/// <summary>
 		/// Kills client connection.
 		/// </summary>
-		public void Kill()
+		public virtual void Kill()
 		{
 			if (this.State != ClientState.Dead)
 			{

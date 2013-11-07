@@ -63,6 +63,24 @@ namespace Aura.Shared.Mabi.Const
 	}
 
 	/// <summary>
+	/// Extensions for Pocket enum.
+	/// </summary>
+	public static class PocketExtensions
+	{
+		/// <summary>
+		/// Returns true if pocket is an equipment pocket (incl Face and Hair).
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		public static bool IsEquip(this Pocket pocket)
+		{
+			if ((pocket >= Pocket.Face && pocket <= Pocket.Accessory2) || (pocket >= Pocket.ArmorStyle && pocket <= Pocket.RobeStyle))
+				return true;
+			return false;
+		}
+	}
+
+	/// <summary>
 	/// Attack speed of a weapon.
 	/// </summary>
 	/// <remarks>

@@ -5,6 +5,7 @@ using System;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -98,7 +99,7 @@ namespace Aura.Channel.Network.Sending
 			{
 				packet.AddCreatureInfo(creature, CreaturePacketType.Private);
 			}
-
+			Log.Debug(packet);
 			client.Send(packet);
 		}
 

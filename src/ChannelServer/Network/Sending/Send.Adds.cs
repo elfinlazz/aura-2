@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Linq;
 using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Shared.Network;
@@ -255,15 +256,14 @@ namespace Aura.Channel.Network.Sending
 				packet.PutString("");
 				packet.PutByte(0);
 
-				//var items = creature.Inventory.Equipment;
+				var items = creature.Inventory.Equipment;
 
-				packet.PutInt(0); // --v
-				//packet.PutSInt(items.Count());
-				//foreach (var item in items)
-				//{
-				//    packet.PutLong(item.Id);
-				//    packet.PutBin(item.Info);
-				//}
+				packet.PutInt(items.Count());
+				foreach (var item in items)
+				{
+					packet.PutLong(item.EntityId);
+					packet.PutBin(item.Info);
+				}
 
 				packet.PutInt(0);  // PetRemainingTime
 				packet.PutLong(0); // PetLastTime
@@ -297,10 +297,15 @@ namespace Aura.Channel.Network.Sending
 				packet.PutInt(creature.RaceInfo.InvWidth);
 				packet.PutInt(creature.RaceInfo.InvHeight);
 
+				var items = creature.Inventory.Items;
+				packet.PutInt(items.Count());
+				foreach (var item in items)
+					packet.AddItemInfo(item, ItemPacketType.Private);
+				// --v
+
 				// A little dirty, but better than actually saving and managing
 				// the quest items imo... [exec]
 
-				packet.PutInt(0); // --v
 				//var items = creature.Inventory.Items;
 				//packet.PutSInt(items.Count() + incompleteQuestsCount);
 				//foreach (var item in items)
@@ -310,15 +315,14 @@ namespace Aura.Channel.Network.Sending
 			}
 			else if (type == CreaturePacketType.Public)
 			{
-				//var items = creature.Inventory.Equipment;
+				var items = creature.Inventory.Equipment;
 
-				packet.PutInt(0); // --v
-				//packet.PutSInt(items.Count());
-				//foreach (var item in items)
-				//{
-				//    packet.PutLong(item.Id);
-				//    packet.PutBin(item.Info);
-				//}
+				packet.PutInt(items.Count());
+				foreach (var item in items)
+				{
+					packet.PutLong(item.EntityId);
+					packet.PutBin(item.Info);
+				}
 			}
 
 			// [180300, NA169 (23.10.2013)] ?
@@ -1069,6 +1073,37 @@ namespace Aura.Channel.Network.Sending
 			//foreach (var title in titles)
 			//    packet.PutShort(title);
 		}
+
+		private static void AddItemInfo(this Packet packet, Item item, ItemPacketType type)
+		{
+			packet.PutLong(item.EntityId);
+			packet.PutByte((byte)type);
+			packet.PutBin(item.Info);
+
+			if (type == ItemPacketType.Public)
+			{
+				packet.PutByte(1);
+				packet.PutByte(0);
+
+				//packet.PutByte(0); // Bitmask
+				// if & 1
+				//     float
+				packet.PutByte(1);
+				packet.PutFloat(1); // Size multiplicator *hint: Server side giant key mod*
+
+				packet.PutByte(item.FirstTimeAppear); // 0: No bouncing, 1: Bouncing, 2: Delayed bouncing
+			}
+			else if (type == ItemPacketType.Private)
+			{
+				packet.PutBin(item.OptionInfo);
+				packet.PutString(""); // item.Tags
+				packet.PutString("");
+				packet.PutByte(0); // upgrade count?
+				// for upgrades
+				//     Bin    : 01 00 00 00 68 21 11 00 00 00 00 00 05 00 1E 00 00 00 00 00 0A 00 00 00 D3 E4 90 65 0A 00 00 00 F0 18 9E 65
+				packet.PutLong(item.QuestId);
+			}
+		}
 	}
 
 	public enum CreaturePacketType : byte
@@ -1086,4 +1121,6 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		Public = 5,
 	}
+
+	public enum ItemPacketType : byte { Public = 1, Private = 2 }
 }

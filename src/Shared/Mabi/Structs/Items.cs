@@ -20,7 +20,7 @@ namespace Aura.Shared.Mabi.Structs
 		public uint Color1;
 		public uint Color2;
 		public uint Color3;
-		public short Amount;
+		public ushort Amount;
 		private short __unknown7;
 		public int Region;
 		public int X;
@@ -55,7 +55,7 @@ namespace Aura.Shared.Mabi.Structs
 		public int LinkedPocketId;
 		public int Durability;
 		public int DurabilityMax;
-		public int DurabilityOriginal;
+		public int DurabilityNew;
 		public ushort AttackMin;
 		public ushort AttackMax;
 		public ushort WAttackMin;

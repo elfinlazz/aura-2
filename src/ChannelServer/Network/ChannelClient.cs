@@ -32,4 +32,20 @@ namespace Aura.Channel.Network
 			return this.GetCreature(id) as PlayerCreature;
 		}
 	}
+
+	/// <summary>
+	/// Dummy client for creatures, so we don't have to care about who is
+	/// actually able to receive data.
+	/// </summary>
+	public class DummyClient : ChannelClient
+	{
+		public override void Send(byte[] buffer)
+		{ }
+
+		public override void Send(Packet packet)
+		{ }
+
+		public override void Kill()
+		{ }
+	}
 }
