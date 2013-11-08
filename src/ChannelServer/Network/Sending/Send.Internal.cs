@@ -24,9 +24,6 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		public static void Internal_ChannelStatus()
 		{
-			if (ChannelServer.Instance.LoginServer.State != ClientState.LoggedIn)
-				return;
-
 			var cur = 0;// WorldManager.Instance.GetCharactersCount();
 			var max = ChannelServer.Instance.Conf.Channel.MaxUsers;
 
@@ -37,6 +34,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(ChannelServer.Instance.Conf.Channel.ChannelPort);
 			packet.PutInt(cur);
 			packet.PutInt(max);
+			packet.PutInt((int)ChannelState.Normal);
 
 			ChannelServer.Instance.LoginServer.Send(packet);
 		}

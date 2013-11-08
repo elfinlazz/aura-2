@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Aura.Login.Network;
 using Aura.Login.Network.Handlers;
@@ -42,6 +43,7 @@ namespace Aura.Login
 			this.Server = new DefaultServer<LoginClient>();
 			this.Server.Handlers = new LoginServerHandlers();
 			this.Server.Handlers.AutoLoad();
+			this.Server.ClientDisconnected += this.OnClientDisconnected;
 
 			this.ServerList = new ServerInfoManager();
 
@@ -82,6 +84,44 @@ namespace Aura.Login
 			// Commands
 			var commands = new LoginConsoleCommands();
 			commands.Wait();
+		}
+
+		private void OnClientDisconnected(LoginClient client)
+		{
+			var update = false;
+
+			lock (this.ChannelClients)
+			{
+				if (this.ChannelClients.Contains(client))
+				{
+					this.ChannelClients.Remove(client);
+					update = true;
+				}
+			}
+
+			if (update)
+			{
+				var channel = this.ServerList.GetChannel(client.Account.Name);
+				if (channel == null)
+				{
+					Log.Warning("Unregistered channel '{0}' disconnected.", client.Account.Name);
+					return;
+				}
+				channel.State = ChannelState.Maintenance;
+
+				Send.ChannelUpdate();
+			}
+		}
+
+		public void Broadcast(Packet packet)
+		{
+			lock (this.Server.Clients)
+			{
+				foreach (var client in this.Server.Clients.Where(a => a.State == ClientState.LoggedIn))
+				{
+					client.Send(packet);
+				}
+			}
 		}
 	}
 }

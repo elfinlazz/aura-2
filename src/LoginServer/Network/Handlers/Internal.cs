@@ -5,6 +5,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Mabi;
 using Aura.Shared.Util;
 using System;
+using Aura.Login.Database;
 
 namespace Aura.Login.Network.Handlers
 {
@@ -50,6 +51,7 @@ namespace Aura.Login.Network.Handlers
 			var port = packet.GetInt();
 			var users = packet.GetInt();
 			var maxUsers = packet.GetInt();
+			var state = (ChannelState)packet.GetInt();
 
 			var server = LoginServer.Instance.ServerList.Add(serverName);
 
@@ -63,11 +65,21 @@ namespace Aura.Login.Network.Handlers
 				Log.Info("New channel registered: {0}", channel.FullName);
 			}
 
+			// A way to identify the channel of this client
+			if (client.Account == null)
+			{
+				client.Account = new Account();
+				client.Account.Name = channel.FullName;
+			}
+
 			channel.Host = host;
 			channel.Port = port;
 			channel.Users = users;
 			channel.MaxUsers = maxUsers;
 			channel.LastUpdate = DateTime.Now;
+			channel.State = state;
+
+			Send.ChannelUpdate();
 		}
 	}
 }

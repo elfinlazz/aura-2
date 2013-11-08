@@ -39,7 +39,7 @@ namespace Aura.Shared.Network
 		/// </summary>
 		/// <param name="serverName"></param>
 		/// <returns></returns>
-		public ServerInfo Get(string serverName)
+		public ServerInfo GetServer(string serverName)
 		{
 			ServerInfo result;
 			_servers.TryGetValue(serverName, out result);
@@ -53,13 +53,35 @@ namespace Aura.Shared.Network
 		/// <param name="serverName"></param>
 		/// <param name="channelName"></param>
 		/// <returns></returns>
-		public ChannelInfo Get(string serverName, string channelName)
+		public ChannelInfo GetChannel(string serverName, string channelName)
 		{
-			var server = this.Get(serverName);
+			var server = this.GetServer(serverName);
 			if (server == null)
 				return null;
 
 			return server.Get(channelName);
+		}
+
+		/// <summary>
+		/// Returns channel info or null, if channel doesn't exist.
+		/// </summary>
+		/// <param name="fullName"></param>
+		/// <returns></returns>
+		public ChannelInfo GetChannel(string fullName)
+		{
+			lock (this.List)
+			{
+				foreach (var server in this.List)
+				{
+					foreach (var channel in server.Channels.Values)
+					{
+						if (channel.FullName == fullName)
+							return channel;
+					}
+				}
+			}
+
+			return null;
 		}
 
 		/// <summary>
@@ -77,7 +99,7 @@ namespace Aura.Shared.Network
 				return result;
 			}
 
-			return this.Get(serverName);
+			return this.GetServer(serverName);
 		}
 
 		/// <summary>

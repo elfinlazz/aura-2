@@ -40,7 +40,7 @@ namespace Aura.Login.Network.Handlers
 			var characterId = packet.GetLong();
 
 			// Check channel and character
-			var channelInfo = LoginServer.Instance.ServerList.Get(serverName, channelName);
+			var channelInfo = LoginServer.Instance.ServerList.GetChannel(serverName, channelName);
 			var character = client.Account.GetCharacter(characterId);
 			if (character == null)
 				character = client.Account.GetPet(characterId);

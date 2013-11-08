@@ -422,6 +422,20 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
+		/// Sends server/channel status update to all connected clients,
+		/// incl channels.
+		/// </summary>
+		public static void ChannelUpdate()
+		{
+			var packet = new Packet(Op.ChannelStatus, MabiId.Login);
+			packet.PutByte((byte)LoginServer.Instance.ServerList.List.Count);
+			foreach (var server in LoginServer.Instance.ServerList.List)
+				packet.Add(server);
+
+			LoginServer.Instance.Broadcast(packet);
+		}
+
+		/// <summary>
 		/// Adds server and channel information to packet.
 		/// </summary>
 		/// <param name="packet"></param>

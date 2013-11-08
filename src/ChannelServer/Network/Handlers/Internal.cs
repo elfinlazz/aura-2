@@ -24,5 +24,28 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.Internal_ChannelStatus();
 		}
+
+		/// <summary>
+		/// Sent to all connected clients by the login server,
+		/// list of servers and channels
+		/// </summary>
+		/// <example>
+		/// 001 [..............01] Byte   : 1
+		/// 002 [................] String : Aura
+		/// 003 [............0000] Short  : 0
+		/// 004 [............0000] Short  : 0
+		/// 005 [..............01] Byte   : 1
+		/// 006 [........00000001] Int    : 1
+		/// 007 [................] String : Ch1
+		/// 008 [........00000001] Int    : 1
+		/// 009 [........00000000] Int    : 0
+		/// 010 [........00000000] Int    : 0
+		/// 011 [............0000] Short  : 0
+		/// </example>
+		[PacketHandler(Op.ChannelStatus)]
+		public void ChannelStatus(ChannelClient client, Packet packet)
+		{
+			// Read servers and channels
+		}
 	}
 }

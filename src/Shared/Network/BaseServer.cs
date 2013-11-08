@@ -16,7 +16,7 @@ namespace Aura.Shared.Network
 	public abstract class BaseServer<TClient> where TClient : BaseClient, new()
 	{
 		private Socket _socket;
-		private List<TClient> _clients;
+		public List<TClient> Clients { get; set; }
 
 		public PacketHandlerManager<TClient> Handlers { get; set; }
 
@@ -33,7 +33,7 @@ namespace Aura.Shared.Network
 		public BaseServer()
 		{
 			_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-			_clients = new List<TClient>();
+			this.Clients = new List<TClient>();
 		}
 
 		/// <summary>
@@ -230,9 +230,9 @@ namespace Aura.Shared.Network
 		/// <param name="client"></param>
 		protected void AddClient(TClient client)
 		{
-			lock (_clients)
+			lock (this.Clients)
 			{
-				_clients.Add(client);
+				this.Clients.Add(client);
 				//Log.Status("Connected clients: {0}", _clients.Count);
 			}
 		}
@@ -243,9 +243,9 @@ namespace Aura.Shared.Network
 		/// <param name="client"></param>
 		protected void RemoveClient(TClient client)
 		{
-			lock (_clients)
+			lock (this.Clients)
 			{
-				_clients.Remove(client);
+				this.Clients.Remove(client);
 				//Log.Status("Connected clients: {0}", _clients.Count);
 			}
 		}

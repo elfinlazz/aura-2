@@ -22,7 +22,11 @@ namespace Aura.Channel
 		/// </summary>
 		private const int LoginTryTime = 10 * 1000;
 
+		private const int UpdateTime = 60 * 1000;
+
 		private bool _running = false;
+
+		private Timer _statusUpdateTimer;
 
 		/// <summary>
 		/// Instance of the actual server component.
@@ -84,10 +88,12 @@ namespace Aura.Channel
 			// Start
 			this.Server.Start(this.Conf.Channel.ChannelPort);
 
+			// Inter
+			this.ConnectToLogin(true);
+			this.StartStatusUpdateTimer();
+
 			CliUtil.RunningTitle();
 			_running = true;
-
-			this.ConnectToLogin(true);
 
 			// Commands
 			var commands = new ChannelConsoleCommands();
@@ -194,6 +200,21 @@ namespace Aura.Channel
 			catch { }
 
 			CliUtil.Exit(1, false);
+		}
+
+		private void StartStatusUpdateTimer()
+		{
+			if (_statusUpdateTimer != null)
+				return;
+
+			_statusUpdateTimer = new Timer((_) =>
+			{
+				if (this.LoginServer == null || this.LoginServer.State != ClientState.LoggedIn)
+					return;
+
+				Send.Internal_ChannelStatus();
+			}
+			, null, UpdateTime, UpdateTime);
 		}
 	}
 }
