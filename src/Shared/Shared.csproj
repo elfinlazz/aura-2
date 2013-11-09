@@ -64,7 +64,10 @@
     <Compile Include="Database\AuraDb.cs" />
     <Compile Include="Mabi\Const\Skills.cs" />
     <Compile Include="Mabi\Password.cs" />
+    <Compile Include="Mabi\Structs\CreatureProperties.cs" />
     <Compile Include="Mabi\Structs\Items.cs" />
+    <Compile Include="Mabi\Structs\Props.cs" />
+    <Compile Include="Mabi\Structs\Skills.cs" />
     <Compile Include="Network\BaseClient.cs" />
     <Compile Include="Network\BaseServer.cs" />
     <Compile Include="Network\MabiCrypto.cs" />
