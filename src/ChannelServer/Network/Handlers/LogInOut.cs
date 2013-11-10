@@ -56,6 +56,7 @@ namespace Aura.Channel.Network.Handlers
 			client.Account = account;
 			client.Character = character;
 			client.Creatures.Add(client.Character.EntityId, client.Character);
+			character.Client = client;
 
 			client.State = ClientState.LoggedIn;
 

@@ -64,6 +64,7 @@
     <Compile Include="Database\ChannelDb.cs" />
     <Compile Include="Network\ChannelClient.cs" />
     <Compile Include="ChannelServer.cs" />
+    <Compile Include="Network\Handlers\Chat.cs" />
     <Compile Include="Network\Handlers\Internal.cs" />
     <Compile Include="Network\Handlers\LogInOut.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
