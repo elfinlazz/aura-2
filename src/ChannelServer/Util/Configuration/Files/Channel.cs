@@ -3,27 +3,8 @@
 
 using Aura.Shared.Util.Configuration;
 
-namespace Aura.Channel.Util
+namespace Aura.Channel.Util.Configuration.Files
 {
-	public class ChannelConf : BaseConf
-	{
-		/// <summary>
-		/// channel.conf
-		/// </summary>
-		public ChannelConfFile Channel { get; protected set; }
-
-		public ChannelConf()
-		{
-			this.Channel = new ChannelConfFile();
-		}
-
-		public override void Load()
-		{
-			this.LoadDefault();
-			this.Channel.Load();
-		}
-	}
-
 	public class ChannelConfFile : ConfFile
 	{
 		public string LoginHost { get; protected set; }

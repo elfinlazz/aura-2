@@ -16,11 +16,15 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.Chat)]
 		public void Chat(ChannelClient client, Packet packet)
 		{
-			var type = packet.GetByte();
+			var unkByte = packet.GetByte();
 			var message = packet.GetString();
 
 			var creature = client.GetPlayerCreature(packet.Id);
 			if (creature == null)
+				return;
+
+			// Don't send message if it's a valid command
+			if (ChannelServer.Instance.CommandProcessor.Process(client, creature, message))
 				return;
 
 			Send.Chat(creature, message);

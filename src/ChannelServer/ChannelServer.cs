@@ -8,9 +8,10 @@ using Aura.Channel.Network;
 using Aura.Channel.Network.Handlers;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Util;
+using Aura.Channel.Util.Configuration;
+using Aura.Channel.World;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
-using Aura.Channel.World;
 
 namespace Aura.Channel
 {
@@ -49,6 +50,8 @@ namespace Aura.Channel
 		/// </summary>
 		public ChannelClient LoginServer { get; private set; }
 
+		public GmCommandManager CommandProcessor { get; private set; }
+
 		private ChannelServer()
 		{
 			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -59,6 +62,8 @@ namespace Aura.Channel
 			this.Server.ClientDisconnected += this.OnClientDisconnected;
 
 			this.ServerList = new ServerInfoManager();
+
+			this.CommandProcessor = new GmCommandManager();
 		}
 
 		/// <summary>

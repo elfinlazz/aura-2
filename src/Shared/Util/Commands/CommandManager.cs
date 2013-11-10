@@ -30,7 +30,7 @@ namespace Aura.Shared.Util.Commands
 		protected void Add(TCommand command)
 		{
 			if (_commands.ContainsKey(command.Name))
-				Log.Warning("Console command '{0}' is being overwritten.", command);
+				Log.Warning("Command '{0}' is being overwritten in '{1}'.", command, this.GetType());
 
 			_commands[command.Name] = command;
 		}
