@@ -2,12 +2,6 @@
 // For more information, see license file in the main folder
 
 using System;
-using System.Collections.Generic;
-using Aura.Channel.Network;
-using Aura.Channel.World.Entities.Creatures;
-using Aura.Data;
-using Aura.Data.Database;
-using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.World.Entities
 {

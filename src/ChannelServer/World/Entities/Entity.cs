@@ -9,12 +9,16 @@ namespace Aura.Channel.World.Entities
 	public abstract class Entity
 	{
 		public long EntityId { get; set; }
-		public int Region { get; set; }
+
+		public virtual int RegionId { get; set; }
+		public Region Region { get; set; }
 
 		public abstract EntityType EntityType { get; }
+		public abstract DataType DataType { get; }
 
 		public abstract Position GetPosition();
 	}
 
 	public enum EntityType { Undefined, Character, Pet, Item, NPC, Prop }
+	public enum DataType : short { Creature = 16, Item = 80, Prop = 160 }
 }

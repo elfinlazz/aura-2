@@ -16,6 +16,8 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public abstract class Creature : Entity
 	{
+		public override DataType DataType { get { return DataType.Creature; } }
+
 		// General
 		// ------------------------------------------------------------------
 
@@ -238,6 +240,12 @@ namespace Aura.Channel.World.Entities
 		public Position SetPosition(int x, int y)
 		{
 			return _position = new Position(x, y);
+		}
+
+		public void SetLocation(int region, int x, int y)
+		{
+			this.RegionId = region;
+			this.SetPosition(x, y);
 		}
 	}
 }

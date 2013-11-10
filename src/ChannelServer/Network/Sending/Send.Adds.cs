@@ -5,13 +5,36 @@ using System;
 using System.Linq;
 using Aura.Channel.World.Entities;
 using Aura.Data;
+using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 
 namespace Aura.Channel.Network.Sending
 {
 	public static partial class Send
 	{
-		public static void AddCreatureInfo(this Packet packet, Creature creature, CreaturePacketType type)
+		private static Packet AddPublicEntityInfo(this Packet packet, Entity entity)
+		{
+			switch (entity.EntityType)
+			{
+				case EntityType.Character:
+				case EntityType.Pet:
+				case EntityType.NPC:
+					packet.AddCreatureInfo(entity as Creature, CreaturePacketType.Public);
+					break;
+				case EntityType.Item:
+					packet.AddItemInfo(entity as Item, ItemPacketType.Public);
+					break;
+				case EntityType.Prop:
+					packet.AddPropInfo(entity as Prop);
+					break;
+				default:
+					throw new Exception("Unknown entity class '" + entity.GetType().ToString() + "'");
+			}
+
+			return packet;
+		}
+
+		public static Packet AddCreatureInfo(this Packet packet, Creature creature, CreaturePacketType type)
 		{
 			// Check for MabiPC for private data.
 			var character = creature as PlayerCreature;
@@ -59,7 +82,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutFloat(creature.Weight);
 			packet.PutFloat(creature.Upper);
 			packet.PutFloat(creature.Lower);
-			packet.PutInt(creature.Region);
+			packet.PutInt(creature.RegionId);
 			packet.PutInt(pos.X);
 			packet.PutInt(pos.Y);
 			packet.PutByte(creature.Direction);
@@ -269,7 +292,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutLong(0); // PetLastTime
 				packet.PutLong(0); // PetExpireTime
 
-				return;
+				return packet;
 			}
 
 			// Mate
@@ -911,7 +934,7 @@ namespace Aura.Channel.Network.Sending
 					packet.PutByte(1);
 				}
 
-				return;
+				return packet;
 			}
 
 			// private:
@@ -977,9 +1000,11 @@ namespace Aura.Channel.Network.Sending
 
 				packet.PutLong(0);
 			}
+
+			return packet;
 		}
 
-		private static void AddPvPInfo(this Packet packet, Creature creature)
+		private static Packet AddPvPInfo(this Packet packet, Creature creature)
 		{
 			packet.PutByte(0);
 			packet.PutInt(0);
@@ -1016,9 +1041,11 @@ namespace Aura.Channel.Network.Sending
 				packet.PutInt(0);
 				packet.PutInt(0);
 			}
+
+			return packet;
 		}
 
-		private static void AddPrivateTalentInfo(this Packet packet, Creature creature)
+		private static Packet AddPrivateTalentInfo(this Packet packet, Creature creature)
 		{
 			packet.PutShort(0);
 			packet.PutByte(0);
@@ -1072,9 +1099,11 @@ namespace Aura.Channel.Network.Sending
 			//packet.PutByte((byte)titles.Count);
 			//foreach (var title in titles)
 			//    packet.PutShort(title);
+
+			return packet;
 		}
 
-		private static void AddItemInfo(this Packet packet, Item item, ItemPacketType type)
+		private static Packet AddItemInfo(this Packet packet, Item item, ItemPacketType type)
 		{
 			packet.PutLong(item.EntityId);
 			packet.PutByte((byte)type);
@@ -1103,6 +1132,41 @@ namespace Aura.Channel.Network.Sending
 				//     Bin    : 01 00 00 00 68 21 11 00 00 00 00 00 05 00 1E 00 00 00 00 00 0A 00 00 00 D3 E4 90 65 0A 00 00 00 F0 18 9E 65
 				packet.PutLong(item.QuestId);
 			}
+
+			return packet;
+		}
+
+		private static Packet AddPropInfo(this Packet packet, Prop prop)
+		{
+			// Client side props (A0 range, instead of A1)
+			// look a bit different.
+			if (prop.EntityId >= MabiId.ServerProps)
+			{
+				packet.PutLong(prop.EntityId);
+				packet.PutInt(prop.Info.Id);
+				packet.PutString(prop.Name);
+				packet.PutString(prop.Title);
+				packet.PutBin(prop.Info);
+				packet.PutString(prop.State);
+				packet.PutLong(0);
+
+				packet.PutByte(true); // Extra data?
+				packet.PutString(prop.ExtraData);
+
+				packet.PutInt(0);
+				packet.PutShort(0);
+			}
+			else
+			{
+				packet.PutLong(prop.EntityId);
+				packet.PutInt(prop.Info.Id);
+				packet.PutString(prop.State);
+				packet.PutLong(DateTime.Now);
+				packet.PutByte(false);
+				packet.PutFloat(prop.Info.Direction);
+			}
+
+			return packet;
 		}
 	}
 

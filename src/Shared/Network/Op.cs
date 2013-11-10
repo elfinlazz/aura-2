@@ -145,14 +145,15 @@ namespace Aura.Shared.Network
 		public const int NPCTalkKeyword = 0x5DC4;
 		public const int NPCTalkKeywordR = 0x5DC5;
 
+		public const int AddObserverRequest = 0x61A8;
 		public const int SetLocation = 0x6594;
 		public const int TurnTo = 0x6596;
 		public const int EnterRegion = 0x6597;
 		public const int EnterRegionRequest = 0x6598;
-		public const int WarpRegion = 0x6599;
-		public const int RunTo = 0x659A;  // Used for correcting positions?
-		public const int WalkTo = 0x659B; // Used for correcting positions?
-		public const int EnterRegionRequestR = 0x659C;
+		public const int WarpRegion = 0x6599; // on warp
+		public const int ForceRunTo = 0x659A;
+		public const int ForceWalkTo = 0x659B;
+		public const int EnterRegionRequestR = 0x659C; // on login
 		public const int TakeOff = 0x65A8;
 		public const int TakingOff = 0x65A9;
 		public const int TakeOffR = 0x65AA;
@@ -177,7 +178,7 @@ namespace Aura.Shared.Network
 		public const int SkillStackUpdate = 0x6992;
 		public const int UseMotion = 0x6D62;
 		public const int MotionCancel = 0x6D65;
-		public const int MotionCancel2 = 0x6D66; //Delayed?
+		public const int MotionCancel2 = 0x6D66; // Delayed?
 		public const int LevelUp = 0x6D69;
 		public const int RankUp = 0x6D6A;
 		public const int SitDown = 0x6D6C;
@@ -233,7 +234,7 @@ namespace Aura.Shared.Network
 		public const int CombatUsedSkill = 0x7927;
 		public const int CombatAttackR = 0x7D01;
 
-		public const int AreaChange = 0x88B8; // More like "event triggered"?
+		public const int EventInform = 0x88B8;
 		public const int QuestNew = 0x8CA0;
 		public const int QuestClear = 0x8CA1;
 		public const int QuestUpdate = 0x8CA2;
@@ -329,8 +330,8 @@ namespace Aura.Shared.Network
 		public const int Transformation = 0xA41C;
 		//public const int Pet??? = 0xA41D;
 		public const int SharpMind = 0xA41E;
-		public const int MoonGateRequest = 0xA428;
-		public const int MoonGateRequestR = 0xA429;
+		public const int MoonGateInfoRequest = 0xA428;
+		public const int MoonGateInfoRequestR = 0xA429;
 		public const int MoonGateMap = 0xA42D;
 		public const int MoonGateUse = 0xA42E;
 		public const int MoonGateUseR = 0xA42F;

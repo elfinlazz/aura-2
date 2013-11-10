@@ -66,10 +66,12 @@
     <Compile Include="ChannelServer.cs" />
     <Compile Include="Network\Handlers\Internal.cs" />
     <Compile Include="Network\Handlers\LogInOut.cs" />
+    <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Sending\Send.Character.cs" />
     <Compile Include="Network\Sending\Send.LogInOut.cs" />
     <Compile Include="Network\Sending\Send.Internal.cs" />
     <Compile Include="Network\Sending\Send.Messages.cs" />
+    <Compile Include="Network\Sending\Send.World.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ChannelConf.cs" />
@@ -79,11 +81,15 @@
     <Compile Include="World\Entities\Creatures\CreatureTemp.cs" />
     <Compile Include="World\Entities\Entity.cs" />
     <Compile Include="World\Entities\Item.cs" />
+    <Compile Include="World\Entities\NPC.cs" />
     <Compile Include="World\Entities\Pet.cs" />
     <Compile Include="World\Entities\PlayerCreature.cs" />
+    <Compile Include="World\Entities\Prop.cs" />
     <Compile Include="World\Inventory\CreatureInventory.cs" />
     <Compile Include="World\Inventory\InventoryPockets.cs" />
     <Compile Include="World\Position.cs" />
+    <Compile Include="World\Region.cs" />
+    <Compile Include="World\WorldManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

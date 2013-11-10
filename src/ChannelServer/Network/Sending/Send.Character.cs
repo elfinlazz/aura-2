@@ -47,7 +47,7 @@ namespace Aura.Channel.Network.Sending
 			var packet = new Packet(Op.EnterRegion, MabiId.Channel);
 			packet.PutLong(creature.EntityId);
 			packet.PutByte(true); // success?
-			packet.PutInt(creature.Region);
+			packet.PutInt(creature.RegionId);
 			packet.PutInt(pos.X);
 			packet.PutInt(pos.Y);
 
@@ -116,7 +116,7 @@ namespace Aura.Channel.Network.Sending
 
 			var packet = new Packet(Op.WarpRegion, creature.EntityId);
 			packet.PutByte(true);
-			packet.PutInt(creature.Region);
+			packet.PutInt(creature.RegionId);
 			packet.PutInt(pos.X);
 			packet.PutInt(pos.Y);
 

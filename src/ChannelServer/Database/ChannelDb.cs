@@ -148,7 +148,7 @@ namespace Aura.Channel.Database
 					character.Color1 = reader.GetUInt32("color1");
 					character.Color2 = reader.GetUInt32("color2");
 					character.Color3 = reader.GetUInt32("color3");
-					character.Region = reader.GetInt32("region");
+					character.RegionId = reader.GetInt32("region");
 					var x = reader.GetInt32("x");
 					var y = reader.GetInt32("y");
 					character.SetPosition(x, y);

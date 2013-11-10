@@ -15,6 +15,18 @@ namespace Aura.Channel.World.Entities
 	public class Item : Entity
 	{
 		public override EntityType EntityType { get { return EntityType.Item; } }
+		public override DataType DataType { get { return DataType.Item; } }
+		public override int RegionId
+		{
+			get
+			{
+				return this.Info.Region;
+			}
+			set
+			{
+				this.Info.Region = value;
+			}
+		}
 
 		public ItemInfo Info;
 		public ItemOptionInfo OptionInfo;
@@ -65,7 +77,7 @@ namespace Aura.Channel.World.Entities
 		public void Move(int region, int x, int y)
 		{
 			this.Info.Pocket = Pocket.None;
-			this.Info.Region = this.Region = region;
+			this.Info.Region = this.RegionId = region;
 			this.Info.X = x;
 			this.Info.Y = y;
 		}

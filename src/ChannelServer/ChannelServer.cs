@@ -10,6 +10,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.World;
 
 namespace Aura.Channel
 {
@@ -84,6 +85,9 @@ namespace Aura.Channel
 
 			// Localization
 			this.LoadLocalization(this.Conf);
+
+			// World
+			this.InitializeWorld();
 
 			// Start
 			this.Server.Start(this.Conf.Channel.ChannelPort);
@@ -215,6 +219,16 @@ namespace Aura.Channel
 				Send.Internal_ChannelStatus();
 			}
 			, null, UpdateTime, UpdateTime);
+		}
+
+		private void InitializeWorld()
+		{
+			Log.Info("Initilizing world...");
+
+			WorldManager.Instance.Initialize();
+			// Weather
+
+			Log.Info("  done loading {0} regions.", WorldManager.Instance.Count);
 		}
 	}
 }

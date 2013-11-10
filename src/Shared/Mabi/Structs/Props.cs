@@ -8,8 +8,8 @@ namespace Aura.Shared.Mabi.Structs
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct PropInfo
 	{
-		public uint Id;
-		public uint Region;
+		public int Id;
+		public int Region;
 		public float X;
 		public float Altitude;
 		public float Y;

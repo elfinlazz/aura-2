@@ -5,6 +5,7 @@ using Aura.Channel.Database;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -60,9 +61,9 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.ChannelLoginR(client);
 
-			if (client.Character.Region == 0)
+			if (client.Character.RegionId == 0)
 			{
-				client.Character.Region = 1;
+				client.Character.RegionId = 1;
 				client.Character.SetPosition(12800, 38100);
 			}
 
@@ -83,16 +84,47 @@ namespace Aura.Channel.Network.Handlers
 			if (creature == null)
 				return;
 
+			var region = WorldManager.Instance.GetRegion(creature.RegionId);
+			if (region == null)
+			{
+				Log.Warning("Player '{0}' tried to enter unknown region '{1}'.", creature.Name, creature.RegionId);
+				creature.RegionId = 0;
+				return;
+			}
+
+			var first = (creature.Region == null);
+			if (!first)
+				creature.Region.RemoveCreature(creature);
+
+			region.AddCreature(creature);
+
 			Send.CharacterUnlock(client, creature, LockType.Unk1);
 
-			Send.EnterRegionRequestR(client, creature);
+			if (first)
+				Send.EnterRegionRequestR(client, creature);
+			else
+				Send.WarpRegion(client, creature);
 
-			//Send.WarpRegion(client, creature);
+			Send.EntitiesAppear(client, region.GetEntitiesInRange(creature));
+		}
 
-			//var chrpck = new Packet(0, 0);
-			//chrpck.AddCreatureInfo(creature, CreaturePacketType.Public);
-			//var chrpckbuilt = chrpck.Build(false);
-			//client.Send(new Packet(Op.EntitiesAppear, MabiId.Broadcast).PutShort(1).PutShort((short)EntityType.Character).PutInt(chrpckbuilt.Length).PutBin(chrpckbuilt));
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Judging by the name I'd guess you normally get the entities here.
+		/// Sent when logging in, spawning a pet, etc.
+		/// </remarks>
+		/// <example>
+		/// Op: 000061A8, Id: 200000000000000F
+		/// 0001 [0010010000000001] Long   : 4504699138998273
+		/// </example>
+		[PacketHandler(Op.AddObserverRequest)]
+		public void AddObserverRequest(ChannelClient client, Packet packet)
+		{
+			var id = packet.GetLong();
+
+			// ...
 		}
 
 		/// <summary>
