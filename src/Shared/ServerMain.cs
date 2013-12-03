@@ -65,7 +65,7 @@ namespace Aura.Shared.Util
 			}
 			catch (Exception ex)
 			{
-				Log.Exception(ex, "Unable to open database connection. ({0})", ex.Message);
+				Log.Error("Unable to open database connection. ({0})", ex.Message);
 				CliUtil.Exit(1);
 			}
 		}

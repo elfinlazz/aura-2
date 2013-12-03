@@ -8,6 +8,7 @@ using System.Text;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 using Aura.Shared.Network;
+using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.World
 {
@@ -35,7 +36,7 @@ namespace Aura.Channel.World
 
 			creature.Region = this;
 
-			// Send.EntityAppears(creature)
+			Send.EntityAppears(creature);
 
 			Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
 		}
@@ -47,7 +48,7 @@ namespace Aura.Channel.World
 
 			creature.Region = null;
 
-			// Send.EntityDisappears(creature)
+			Send.EntityDisappears(creature);
 
 			Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
 		}
@@ -60,16 +61,10 @@ namespace Aura.Channel.World
 			var result = new List<Entity>();
 
 			lock (_creatures)
-			{
-				foreach (var entity in _creatures.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range)))
-					result.Add(entity);
-			}
+				result.AddRange(_creatures.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range)));
 
 			lock (_items)
-			{
-				foreach (var entity in _items.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range)))
-					result.Add(entity);
-			}
+				result.AddRange(_items.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range)));
 
 			lock (_props)
 				result.AddRange(_props.Values);

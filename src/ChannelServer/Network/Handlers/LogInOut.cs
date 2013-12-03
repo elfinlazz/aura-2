@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Linq;
 using Aura.Channel.Database;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Network;
@@ -166,8 +167,8 @@ namespace Aura.Channel.Network.Handlers
 
 			//ChannelDb.Instance.SaveAccount(client.Account);
 
-			//foreach (var pc in client.Creatures.Where(cr => cr is PlayerCreature))
-			//    WorldManager.Instance.RemoveCreature(pc);
+			foreach (var creature in client.Creatures.Values.Where(a => a.Region != null))
+				creature.Region.RemoveCreature(client.Character);
 
 			client.Creatures.Clear();
 			client.Character = null;

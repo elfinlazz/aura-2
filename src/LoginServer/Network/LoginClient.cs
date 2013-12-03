@@ -6,7 +6,7 @@ using Aura.Shared.Network;
 
 namespace Aura.Login.Network
 {
-	public class LoginClient : BaseClient
+	public class LoginClient : Client
 	{
 		public Account Account { get; set; }
 	}

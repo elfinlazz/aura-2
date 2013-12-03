@@ -192,6 +192,9 @@ namespace Aura.Shared.Network
 		/// <summary>Writes val to buffer.</summary>
 		public Packet PutBin(byte[] val) { return this.PutWithLength(PacketElementType.Bin, val); }
 
+		/// <summary>Writes bin containing a single 0 to buffer.</summary>
+		public Packet PutBin() { return this.PutBin(new byte[] { 0 }); }
+
 		/// <summary>Converts struct to byte array and writes it as byte array to buffer.</summary>
 		public Packet PutBin(object val)
 		{

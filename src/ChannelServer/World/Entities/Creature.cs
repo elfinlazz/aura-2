@@ -8,6 +8,7 @@ using Aura.Channel.World.Entities.Creatures;
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Network;
 
 namespace Aura.Channel.World.Entities
 {
@@ -21,7 +22,7 @@ namespace Aura.Channel.World.Entities
 		// General
 		// ------------------------------------------------------------------
 
-		public ChannelClient Client { get; set; }
+		public Client Client { get; set; }
 
 		public string Name { get; set; }
 

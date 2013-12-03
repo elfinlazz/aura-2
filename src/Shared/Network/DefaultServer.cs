@@ -9,7 +9,7 @@ namespace Aura.Shared.Network
 	/// Normal Mabi server (Login, World).
 	/// </summary>
 	/// <typeparam name="TClient"></typeparam>
-	public class DefaultServer<TClient> : BaseServer<TClient> where TClient : BaseClient, new()
+	public class DefaultServer<TClient> : BaseServer<TClient> where TClient : Client, new()
 	{
 		protected override int GetPacketLength(byte[] buffer, int ptr)
 		{

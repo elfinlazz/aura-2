@@ -96,12 +96,12 @@ namespace Aura.Shared.Network
 		public const int DeadFeather = 0x5403;
 		public const int UseGesture = 0x540E;
 		public const int UseGestureR = 0x540F;
-		public const int NPCTalkStart = 0x55F0;
-		public const int NPCTalkStartR = 0x55F1;
-		public const int NPCTalkEnd = 0x55F2;
-		public const int NPCTalkEndR = 0x55F3;
-		public const int NPCTalkPartner = 0x55F8;
-		public const int NPCTalkPartnerR = 0x55F9;
+		public const int NpcTalkStart = 0x55F0;
+		public const int NpcTalkStartR = 0x55F1;
+		public const int NpcTalkEnd = 0x55F2;
+		public const int NpcTalkEndR = 0x55F3;
+		public const int NpcTalkPartner = 0x55F8;
+		public const int NpcTalkPartnerR = 0x55F9;
 		public const int ItemMove = 0x59D8;
 		public const int ItemMoveR = 0x59D9;
 		public const int ItemPickUp = 0x59DA;
@@ -142,8 +142,8 @@ namespace Aura.Shared.Network
 		public const int OptionSet = 0x5BE7;
 		public const int OptionSetR = 0x5BE8;
 		public const int NewKeyword = 0x5DC1;
-		public const int NPCTalkKeyword = 0x5DC4;
-		public const int NPCTalkKeywordR = 0x5DC5;
+		public const int NpcTalkKeyword = 0x5DC4;
+		public const int NpcTalkKeywordR = 0x5DC5;
 
 		public const int AddObserverRequest = 0x61A8;
 		public const int SetLocation = 0x6594;
@@ -381,8 +381,8 @@ namespace Aura.Shared.Network
 		public const int ShamalaTransformationEnd = 0xAB1A;
 		public const int ShamalaTransformationEndR = 0xAB1B;
 
-		public const int NPCTalk = 0x13882;
-		public const int NPCTalkSelect = 0x13883;
+		public const int NpcTalk = 0x13882;
+		public const int NpcTalkSelect = 0x13883;
 
 		public const int SpecialLogin = 0x15F90; // ?
 		public const int EnterSoulStream = 0x15F91;

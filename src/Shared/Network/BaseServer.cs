@@ -13,7 +13,7 @@ namespace Aura.Shared.Network
 	/// Base server, for specialized servers to inherit from.
 	/// </summary>
 	/// <typeparam name="TClient"></typeparam>
-	public abstract class BaseServer<TClient> where TClient : BaseClient, new()
+	public abstract class BaseServer<TClient> where TClient : Client, new()
 	{
 		private Socket _socket;
 		public List<TClient> Clients { get; set; }
@@ -181,7 +181,7 @@ namespace Aura.Shared.Network
 					bytesReceived -= length;
 					ptr += length;
 
-					// handle it
+					// Handle it
 					this.HandleBuffer(client, buffer);
 				}
 

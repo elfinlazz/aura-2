@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Aura.Channel.Network
 {
-	public class ChannelClient : BaseClient
+	public class ChannelClient : Client
 	{
 		public Account Account { get; set; }
 
@@ -37,7 +37,7 @@ namespace Aura.Channel.Network
 	/// Dummy client for creatures, so we don't have to care about who is
 	/// actually able to receive data.
 	/// </summary>
-	public class DummyClient : ChannelClient
+	public class DummyClient : Client
 	{
 		public override void Send(byte[] buffer)
 		{ }

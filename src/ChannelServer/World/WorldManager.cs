@@ -66,12 +66,6 @@ namespace Aura.Channel.World
 			{
 				this.AddRegion(region.Id);
 			}
-
-			var creature = new NPC();
-			creature.Name = "_nao";
-			creature.Race = 10001;
-			creature.SetLocation(1, 13000, 38200);
-			_regions[creature.RegionId].AddCreature(creature);
 		}
 	}
 }

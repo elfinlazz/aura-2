@@ -10,7 +10,7 @@ namespace Aura.Shared.Network
 	/// <summary>
 	/// Base client, for specialized client classes in the servers.
 	/// </summary>
-	public class BaseClient
+	public class Client
 	{
 		private const int BufferDefaultSize = 2048;
 
@@ -40,7 +40,7 @@ namespace Aura.Shared.Network
 			}
 		}
 
-		public BaseClient()
+		public Client()
 		{
 			this.Buffer = new byte[BufferDefaultSize];
 			this.Crypto = new MabiCrypto(0x41757261); // 0xAura
