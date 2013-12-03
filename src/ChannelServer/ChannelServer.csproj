@@ -109,7 +109,6 @@
     <Compile Include="Scripting\Compilers\Compiler.cs" />
     <Compile Include="Scripting\Compilers\CompilerErrors.cs" />
     <Compile Include="Scripting\Compilers\CSharpCompiler.cs" />
-    <Compile Include="Scripting\Directory.cs" />
     <Compile Include="Scripting\ScriptManager.cs" />
     <Compile Include="Util\Configuration\ChannelConf.cs" />
     <Compile Include="Util\ChannelConsoleCommands.cs" />

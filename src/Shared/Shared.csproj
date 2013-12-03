@@ -63,6 +63,7 @@
     <Compile Include="Mabi\Const\MabiId.cs" />
     <Compile Include="Database\AuraDb.cs" />
     <Compile Include="Mabi\Const\Skills.cs" />
+    <Compile Include="Mabi\MabiDictionary.cs" />
     <Compile Include="Mabi\Password.cs" />
     <Compile Include="Mabi\Structs\CreatureProperties.cs" />
     <Compile Include="Mabi\Structs\Items.cs" />
