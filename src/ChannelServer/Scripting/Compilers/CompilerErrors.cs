@@ -22,12 +22,14 @@ namespace Aura.Channel.Scripting.Compilers
 	{
 		public string File { get; protected set; }
 		public int Line { get; protected set; }
+		public int Column { get; protected set; }
 
-		public CompilerError(string file, int line, string message)
+		public CompilerError(string file, int line, int column, string message)
 			: base(message)
 		{
 			this.File = file;
 			this.Line = line;
+			this.Column = column;
 		}
 	}
 }

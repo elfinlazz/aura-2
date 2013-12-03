@@ -30,7 +30,7 @@ namespace Aura.Channel.Scripting.Compilers
 
 				foreach (System.CodeDom.Compiler.CompilerError err in errors)
 				{
-					var newEx = new CompilerError(path, err.Line, err.ErrorText);
+					var newEx = new CompilerError(path, err.Line, err.Column, err.ErrorText);
 					newExs.Errors.Add(newEx);
 				}
 

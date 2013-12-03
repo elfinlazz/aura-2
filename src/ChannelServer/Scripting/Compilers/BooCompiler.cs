@@ -31,15 +31,15 @@ namespace Aura.Channel.Scripting.Compilers
 				var context = compiler.Run();
 				if (context.GeneratedAssembly == null)
 				{
-					foreach (var error in context.Errors)
-						Console.WriteLine(error.ToString());
+					//foreach (var error in context.Errors)
+					//    Console.WriteLine(error.ToString());
 
 					var errors = context.Errors;
 					var newExs = new CompilerErrorsException();
 
 					foreach (var err in errors)
 					{
-						var newEx = new CompilerError(path, 0, err.Message);
+						var newEx = new CompilerError(path, err.LexicalInfo.Line, err.LexicalInfo.Column, err.Message);
 						newExs.Errors.Add(newEx);
 					}
 
@@ -49,6 +49,10 @@ namespace Aura.Channel.Scripting.Compilers
 				asm = context.GeneratedAssembly;
 
 				//this.SaveAssembly(asm, outPath);
+			}
+			catch (CompilerErrorsException ex)
+			{
+				throw ex;
 			}
 			catch (UnauthorizedAccessException)
 			{

@@ -24,11 +24,6 @@ namespace Aura.Channel.Scripting.Scripts
 			this.NPC = new NPC();
 		}
 
-		public override void Load()
-		{
-			Log.Debug("!!!!!!!!!!!!!!!!!!!");
-		}
-
 		// ------------------------------------------------------------------
 
 		public virtual IEnumerator Talk(Creature creature)
