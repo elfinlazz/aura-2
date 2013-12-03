@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace Aura.Shared.Util
@@ -123,6 +124,14 @@ namespace Aura.Shared.Util
 			WriteLine(LogLevel.Unimplemented, format, args);
 		}
 
+		public static void Progress(int current, int max)
+		{
+			var donePerc = (100f / max * current);
+			var done = (int)Math.Ceiling(20f / max * current);
+
+			Write(LogLevel.Info, false, "[" + ("".PadRight(done, '#') + "".PadLeft(20 - done, '.')) + "] {0,5}%\r", donePerc.ToString("0.0", CultureInfo.InvariantCulture));
+		}
+
 		public static void WriteLine(LogLevel level, string format, params object[] args)
 		{
 			Write(level, format + Environment.NewLine, args);
@@ -134,6 +143,11 @@ namespace Aura.Shared.Util
 		}
 
 		public static void Write(LogLevel level, string format, params object[] args)
+		{
+			Write(level, true, format, args);
+		}
+
+		private static void Write(LogLevel level, bool toFile, string format, params object[] args)
 		{
 			lock (Console.Out)
 			{
@@ -161,14 +175,14 @@ namespace Aura.Shared.Util
 					Console.Write(format, args);
 				}
 
-				if (_logFile != null)
+				if (_logFile != null && toFile)
 				{
 					using (var file = new StreamWriter(_logFile, true))
 					{
 						file.Write(DateTime.Now + " ");
 						if (level != LogLevel.None)
 							file.Write("[{0}] - ", level);
-						file.WriteLine(format.TrimEnd(), args);
+						file.Write(format, args);
 						file.Flush();
 					}
 				}

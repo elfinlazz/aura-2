@@ -12,6 +12,7 @@ using Aura.Channel.Util.Configuration;
 using Aura.Channel.World;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.Scripting;
 
 namespace Aura.Channel
 {
@@ -52,6 +53,8 @@ namespace Aura.Channel
 
 		public GmCommandManager CommandProcessor { get; private set; }
 
+		public ScriptManager ScriptManager { get; private set; }
+
 		private ChannelServer()
 		{
 			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -64,6 +67,8 @@ namespace Aura.Channel
 			this.ServerList = new ServerInfoManager();
 
 			this.CommandProcessor = new GmCommandManager();
+
+			this.ScriptManager = new ScriptManager();
 		}
 
 		/// <summary>
@@ -93,6 +98,9 @@ namespace Aura.Channel
 
 			// World
 			this.InitializeWorld();
+
+			// Scripts
+			this.LoadScripts();
 
 			// Start
 			this.Server.Start(this.Conf.Channel.ChannelPort);
@@ -234,6 +242,11 @@ namespace Aura.Channel
 			// Weather
 
 			Log.Info("  done loading {0} regions.", WorldManager.Instance.Count);
+		}
+
+		private void LoadScripts()
+		{
+			this.ScriptManager.Load();
 		}
 	}
 }
