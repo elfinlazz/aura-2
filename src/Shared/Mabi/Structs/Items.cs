@@ -16,7 +16,7 @@ namespace Aura.Shared.Mabi.Structs
 		private byte __unknown2;
 		private byte __unknown3;
 		private byte __unknown4;
-		public int ItemId;
+		public int Id;
 		public uint Color1;
 		public uint Color2;
 		public uint Color3;

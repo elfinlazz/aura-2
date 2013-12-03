@@ -12,35 +12,35 @@ namespace Aura.Channel.Network.Sending
 	public static partial class Send
 	{
 		/// <summary>
-		/// Sends CharacterLock to client.
+		/// Sends CharacterLock to creature's client.
 		/// </summary>
-		public static void CharacterLock(ChannelClient client, PlayerCreature creature, LockType type)
+		public static void CharacterLock(PlayerCreature creature, LockType type)
 		{
 			var packet = new Packet(Op.CharacterLock, creature.EntityId);
 			packet.PutUInt((uint)type);
 			packet.PutInt(0);
 
-			client.Send(packet);
+			creature.Client.Send(packet);
 		}
 
 		/// <summary>
-		/// Sends CharacterUnlock to client.
+		/// Sends CharacterUnlock to creature's client.
 		/// </summary>
-		public static void CharacterUnlock(ChannelClient client, PlayerCreature creature, LockType type)
+		public static void CharacterUnlock(PlayerCreature creature, LockType type)
 		{
 			var packet = new Packet(Op.CharacterUnlock, creature.EntityId);
 			packet.PutUInt((uint)type);
 
-			client.Send(packet);
+			creature.Client.Send(packet);
 		}
 
 		/// <summary>
-		/// Sends EnterRegion to client.
+		/// Sends EnterRegion to creature's client.
 		/// </summary>
 		/// <remarks>
 		/// ...
 		/// </remarks>
-		public static void EnterRegion(ChannelClient client, PlayerCreature creature)
+		public static void EnterRegion(PlayerCreature creature)
 		{
 			var pos = creature.GetPosition();
 
@@ -51,18 +51,18 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(pos.X);
 			packet.PutInt(pos.Y);
 
-			client.Send(packet);
+			creature.Client.Send(packet);
 		}
 
 		/// <summary>
-		/// Sends EnterRegionRequestR for creature to client.
+		/// Sends EnterRegionRequestR for creature to creature's client.
 		/// </summary>
 		/// <remarks>
 		/// Negative response doesn't actually do anything, stucks.
 		/// </remarks>
 		/// <param name="client"></param>
 		/// <param name="creature">Negative response if null</param>
-		public static void EnterRegionRequestR(ChannelClient client, PlayerCreature creature)
+		public static void EnterRegionRequestR(PlayerCreature creature)
 		{
 			var packet = new Packet(Op.EnterRegionRequestR, MabiId.Channel);
 			packet.PutByte(creature != null);
@@ -73,7 +73,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutLong(DateTime.Now);
 			}
 
-			client.Send(packet);
+			creature.Client.Send(packet);
 		}
 
 		/// <summary>
@@ -104,13 +104,13 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
-		/// Sends WarpRegion for creature to client.
+		/// Sends WarpRegion for creature to creature's client.
 		/// </summary>
 		/// <remarks>
 		/// Makes client load the region and move the creature there.
 		/// Uses current position of creature, move beforehand.
 		/// </remarks>
-		public static void WarpRegion(ChannelClient client, PlayerCreature creature)
+		public static void WarpRegion(PlayerCreature creature)
 		{
 			var pos = creature.GetPosition();
 
@@ -120,7 +120,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(pos.X);
 			packet.PutInt(pos.Y);
 
-			client.Send(packet);
+			creature.Client.Send(packet);
 		}
 	}
 

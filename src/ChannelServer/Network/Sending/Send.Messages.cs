@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Aura.Shared.Network;
 using Aura.Channel.World.Entities;
+using Aura.Shared.Network;
 
 namespace Aura.Channel.Network.Sending
 {

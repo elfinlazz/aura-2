@@ -15,11 +15,11 @@ namespace Aura.Channel.Network.Sending
 		/// <remarks>
 		/// Sending a negative response doesn't do anything.
 		/// </remarks>
-		public static void ChannelLoginR(ChannelClient client)
+		public static void ChannelLoginR(ChannelClient client, long creatureId)
 		{
 			var packet = new Packet(Op.ChannelLoginR, MabiId.Channel);
 			packet.PutByte(true);
-			packet.PutLong(client.Character.EntityId);
+			packet.PutLong(creatureId);
 			packet.PutLong(DateTime.Now);
 			packet.PutInt((int)DateTime.Now.DayOfWeek);
 			packet.PutString(""); // http://211.218.233.238/korea/

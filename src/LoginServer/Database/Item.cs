@@ -17,7 +17,7 @@ namespace Aura.Login.Database
 
 		public Item(int itemId, Pocket pocket, uint color1, uint color2, uint color3)
 		{
-			this.Info.ItemId = itemId;
+			this.Info.Id = itemId;
 			this.Info.Pocket = pocket;
 			this.Info.Color1 = color1;
 			this.Info.Color2 = color2;

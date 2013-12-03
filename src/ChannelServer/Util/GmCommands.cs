@@ -65,7 +65,7 @@ namespace Aura.Channel.Util
 
 			if (command == null || client.Account.Authority < command.Auth)
 			{
-				Send.ServerMessage(client.Character, "Unknown command '{0}'.", args[0]);
+				Send.ServerMessage(creature, "Unknown command '{0}'.", args[0]);
 				return true;
 			}
 
@@ -73,13 +73,13 @@ namespace Aura.Channel.Util
 
 			if (result == CommandResult.InvalidArgument)
 			{
-				Send.ServerMessage(client.Character, "Usage: {0} {1}", command.Name, command.Usage);
+				Send.ServerMessage(creature, "Usage: {0} {1}", command.Name, command.Usage);
 				return true;
 			}
 
 			if (result == CommandResult.Fail)
 			{
-				Send.ServerMessage(client.Character, "Failed to process command.");
+				Send.ServerMessage(creature, "Failed to process command.");
 				return true;
 			}
 

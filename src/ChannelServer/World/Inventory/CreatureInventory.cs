@@ -458,7 +458,7 @@ namespace Aura.Channel.World
 				//Send.EquipmentChanged(_creature, item);
 
 				// TODO: Equip/Unequip item scripts
-				switch (item.Info.ItemId)
+				switch (item.Info.Id)
 				{
 					// Umbrella Skill
 					case 41021:

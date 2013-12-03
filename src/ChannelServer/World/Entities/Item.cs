@@ -52,7 +52,7 @@ namespace Aura.Channel.World.Entities
 
 		public Item(int itemId)
 		{
-			this.Info.ItemId = itemId;
+			this.Info.Id = itemId;
 
 			this.Data = AuraData.ItemDb.Find(itemId);
 		}

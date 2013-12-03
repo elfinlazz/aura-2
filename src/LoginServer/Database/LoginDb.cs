@@ -320,7 +320,7 @@ namespace Aura.Login.Database
 					{
 						var item = new Item();
 						item.Id = reader.GetInt64("entityId");
-						item.Info.ItemId = reader.GetInt32("itemId");
+						item.Info.Id = reader.GetInt32("itemId");
 						item.Info.Pocket = (Pocket)reader.GetByte("pocket");
 						item.Info.Color1 = reader.GetUInt32("color1");
 						item.Info.Color2 = reader.GetUInt32("color2");
@@ -511,16 +511,16 @@ namespace Aura.Login.Database
 
 			foreach (var item in items)
 			{
-				var dataInfo = AuraData.ItemDb.Find(item.Info.ItemId);
+				var dataInfo = AuraData.ItemDb.Find(item.Info.Id);
 				if (dataInfo == null)
 				{
-					Log.Warning("Item '{0}' couldn't be found in the database.", item.Info.ItemId);
+					Log.Warning("Item '{0}' couldn't be found in the database.", item.Info.Id);
 					continue;
 				}
 
 				mc.Parameters.Clear();
 				mc.Parameters.AddWithValue("@creatureId", creatureId);
-				mc.Parameters.AddWithValue("@class", item.Info.ItemId);
+				mc.Parameters.AddWithValue("@class", item.Info.Id);
 				mc.Parameters.AddWithValue("@pocket", (byte)item.Info.Pocket);
 				mc.Parameters.AddWithValue("@color1", item.Info.Color1);
 				mc.Parameters.AddWithValue("@color2", item.Info.Color2);

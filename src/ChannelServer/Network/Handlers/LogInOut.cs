@@ -55,22 +55,22 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			client.Account = account;
-			client.Character = character;
-			client.Creatures.Add(client.Character.EntityId, client.Character);
+			//client.Character = character;
+			client.Creatures.Add(character.EntityId, character);
 			character.Client = client;
 
 			client.State = ClientState.LoggedIn;
 
-			Send.ChannelLoginR(client);
+			Send.ChannelLoginR(client, character.EntityId);
 
-			if (client.Character.RegionId == 0)
+			if (character.RegionId == 0)
 			{
-				client.Character.RegionId = 1;
-				client.Character.SetPosition(12800, 38100);
+				character.RegionId = 1;
+				character.SetPosition(12800, 38100);
 			}
 
-			Send.CharacterLock(client, client.Character, LockType.Unk1);
-			Send.EnterRegion(client, client.Character);
+			Send.CharacterLock(character, LockType.Unk1);
+			Send.EnterRegion(character);
 		}
 
 		/// <summary>
@@ -100,12 +100,12 @@ namespace Aura.Channel.Network.Handlers
 
 			region.AddCreature(creature);
 
-			Send.CharacterUnlock(client, creature, LockType.Unk1);
+			Send.CharacterUnlock(creature, LockType.Unk1);
 
 			if (first)
-				Send.EnterRegionRequestR(client, creature);
+				Send.EnterRegionRequestR(creature);
 			else
-				Send.WarpRegion(client, creature);
+				Send.WarpRegion(creature);
 
 			Send.EntitiesAppear(client, region.GetEntitiesInRange(creature));
 		}
@@ -168,10 +168,10 @@ namespace Aura.Channel.Network.Handlers
 			//ChannelDb.Instance.SaveAccount(client.Account);
 
 			foreach (var creature in client.Creatures.Values.Where(a => a.Region != null))
-				creature.Region.RemoveCreature(client.Character);
+				creature.Region.RemoveCreature(creature);
 
 			client.Creatures.Clear();
-			client.Character = null;
+			//client.Character = null;
 			client.Account = null;
 
 			Send.ChannelDisconnectR(client);

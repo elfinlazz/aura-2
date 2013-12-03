@@ -12,7 +12,7 @@ namespace Aura.Channel.Network
 	{
 		public Account Account { get; set; }
 
-		public PlayerCreature Character { get; set; }
+		//public PlayerCreature Character { get; set; }
 		public Dictionary<long, Creature> Creatures { get; protected set; }
 
 		public ChannelClient()
