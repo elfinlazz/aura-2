@@ -16,6 +16,11 @@ namespace Aura.Channel.Database
 
 		public int Authority { get; set; }
 
+		public DateTime LastLogin { get; set; }
+
+		public string BanReason { get; set; }
+		public DateTime BanExpiration { get; set; }
+
 		public List<Character> Characters { get; set; }
 		public List<Pet> Pets { get; set; }
 
@@ -23,6 +28,8 @@ namespace Aura.Channel.Database
 		{
 			this.Characters = new List<Character>();
 			this.Pets = new List<Pet>();
+
+			this.LastLogin = DateTime.Now;
 		}
 
 		public Character GetCharacter(long entityId)

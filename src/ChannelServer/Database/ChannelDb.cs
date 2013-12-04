@@ -13,6 +13,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
 using Aura.Channel.World.Entities;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Database
 {
@@ -112,7 +113,7 @@ namespace Aura.Channel.Database
 		}
 
 		/// <summary>
-		/// Returns creature with entityId from table.
+		/// Returns creature by entityId from table.
 		/// </summary>
 		/// <typeparam name="TCreature"></typeparam>
 		/// <param name="entityId"></param>
@@ -152,6 +153,9 @@ namespace Aura.Channel.Database
 					var x = reader.GetInt32("x");
 					var y = reader.GetInt32("y");
 					character.SetPosition(x, y);
+					character.Direction = reader.GetByte("direction");
+					//character.BattleState = reader.GetByte("battleState");
+					//character.Inventory.WeaponSet = (WeaponSet)reader.GetByte("weaponSet");
 					character.Level = reader.GetInt16("level");
 					character.LevelTotal = reader.GetInt32("levelTotal");
 					character.Exp = reader.GetInt64("exp");
@@ -223,6 +227,89 @@ namespace Aura.Channel.Database
 			}
 
 			return result;
+		}
+
+		public void SaveAccount(Account account)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				var up = new UpdatePack();
+				up.Set("authority", (byte)account.Authority);
+				up.Set("lastlogin", account.LastLogin);
+				up.Set("banReason", account.BanReason);
+				up.Set("banExpiration", account.BanExpiration);
+
+				var mc = new MySqlCommand("UPDATE `accounts` SET " + up.ToString() + " WHERE `accountId` = @accountId", conn);
+
+				mc.Parameters.AddWithValue("@accountId", account.Id);
+				mc.Parameters.AddCollection(up);
+
+				mc.ExecuteNonQuery();
+			}
+
+			// Save characters
+			foreach (var character in account.Characters.Where(a => a.Save))
+				this.SaveCreature(character);
+
+			foreach (var pet in account.Pets.Where(a => a.Save))
+				this.SaveCreature(pet);
+		}
+
+		public void SaveCreature(PlayerCreature creature)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				// Corrections
+				// ----------------------------------------------------------
+				// Inside dungeon, would make ppl stuck at loading.
+				// TODO: Other areas should not be saved, eg Alby Arena (29)
+				if (creature.RegionId >= 10000 && creature.RegionId <= 20000)
+				{
+					// TODO: Implement a "return to" location.
+					creature.SetLocation(13, 3329, 2948); // Alby altar
+				}
+
+				var characterLocation = creature.GetPosition();
+
+				var up = new UpdatePack();
+				up.Set("region", creature.RegionId);
+				up.Set("x", characterLocation.X);
+				up.Set("y", characterLocation.Y);
+				up.Set("direction", creature.Direction);
+				//up.Set("battleState", creature.BattleState);
+				//up.Set("weaponSet", (byte)creature.Inventory.WeaponSet);
+				up.Set("lifeDelta", creature.LifeMax - creature.Life);
+				up.Set("injuries", creature.Injuries);
+				up.Set("lifeMax", creature.LifeMaxBase);
+				up.Set("manaDelta", creature.ManaMax - creature.Mana);
+				up.Set("manaMax", creature.ManaMaxBase);
+				up.Set("staminaDelta", creature.StaminaMax - creature.Stamina);
+				up.Set("staminaMax", creature.StaminaMaxBase);
+				up.Set("hunger", creature.Hunger);
+				up.Set("level", creature.Level);
+				up.Set("levelTotal", creature.LevelTotal);
+				up.Set("exp", creature.Exp);
+				up.Set("str", creature.StrBase);
+				up.Set("dex", creature.DexBase);
+				up.Set("int", creature.IntBase);
+				up.Set("will", creature.WillBase);
+				up.Set("luck", creature.LuckBase);
+				up.Set("ap", creature.AbilityPoints);
+
+				var mc = new MySqlCommand("UPDATE `creatures` SET " + up.ToString() + " WHERE `creatureId` = @creatureId", conn);
+
+				mc.Parameters.AddWithValue("@creatureId", creature.CreatureId);
+				mc.Parameters.AddCollection(up);
+
+				mc.ExecuteNonQuery();
+			}
+
+			//this.SaveQuests(character);
+			//this.SaveItems(character);
+			//this.SaveKeywords(character);
+			//this.SaveSkills(character);
+			//this.SaveTitles(character);
+			//this.SaveCooldowns(character);
 		}
 	}
 

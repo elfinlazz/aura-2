@@ -24,11 +24,11 @@ namespace Aura.Data.Database
 		public uint Color2 { get; internal set; }
 		public uint Color3 { get; internal set; }
 
-		public float SpeedRun { get; internal set; }
-		public float SpeedWalk { get; internal set; }
+		public float RunningSpeed { get; internal set; }
+		public float WalkingSpeed { get; internal set; }
 
-		public int InvWidth { get; internal set; }
-		public int InvHeight { get; internal set; }
+		public int InventoryWidth { get; internal set; }
+		public int InventoryHeight { get; internal set; }
 
 		public short AttackSkill { get; internal set; }
 		public int AttackRange { get; internal set; }
@@ -103,8 +103,8 @@ namespace Aura.Data.Database
 			info.Gender = (Gender)entry.ReadByte();
 			info.VehicleType = entry.ReadInt();
 			info.DefaultState = entry.ReadIntHex();
-			info.InvWidth = entry.ReadInt();
-			info.InvHeight = entry.ReadInt();
+			info.InventoryWidth = entry.ReadInt();
+			info.InventoryHeight = entry.ReadInt();
 			info.AttackSkill = 23002; // Combat Mastery, they all use this anyway.
 			info.AttackMin = entry.ReadInt();
 			info.AttackMax = entry.ReadInt();
@@ -156,26 +156,26 @@ namespace Aura.Data.Database
 			// External information from other dbs
 			SpeedInfo actionInfo;
 			if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/walk")) != null)
-				info.SpeedWalk = actionInfo.Speed;
+				info.WalkingSpeed = actionInfo.Speed;
 			else if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/*")) != null)
-				info.SpeedWalk = actionInfo.Speed;
+				info.WalkingSpeed = actionInfo.Speed;
 			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/walk")) != null)
-				info.SpeedWalk = actionInfo.Speed;
+				info.WalkingSpeed = actionInfo.Speed;
 			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/*")) != null)
-				info.SpeedWalk = actionInfo.Speed;
+				info.WalkingSpeed = actionInfo.Speed;
 			else
-				info.SpeedWalk = 207.6892f;
+				info.WalkingSpeed = 207.6892f;
 
 			if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/run")) != null)
-				info.SpeedRun = actionInfo.Speed;
+				info.RunningSpeed = actionInfo.Speed;
 			else if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/*")) != null)
-				info.SpeedRun = actionInfo.Speed;
+				info.RunningSpeed = actionInfo.Speed;
 			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/run")) != null)
-				info.SpeedRun = actionInfo.Speed;
+				info.RunningSpeed = actionInfo.Speed;
 			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/*")) != null)
-				info.SpeedRun = actionInfo.Speed;
+				info.RunningSpeed = actionInfo.Speed;
 			else
-				info.SpeedRun = 373.850647f;
+				info.RunningSpeed = 373.850647f;
 
 			info.Skills = AuraData.RaceSkillDb.FindAll(info.Id);
 

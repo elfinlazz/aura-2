@@ -36,5 +36,10 @@ namespace Aura.Channel.World.Entities
 		/// Time of last rebirth.
 		/// </summary>
 		public DateTime LastRebirth { get; set; }
+
+		/// <summary>
+		/// Set to true if creature is supposed to be saved.
+		/// </summary>
+		public bool Save { get; set; }
 	}
 }

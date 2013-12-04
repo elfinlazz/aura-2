@@ -15,6 +15,7 @@ namespace Aura.Channel.Util
 		public GmCommandManager()
 		{
 			Add(99, "test", "", HandleTest);
+			Add(99, "where", "", HandleWhere);
 		}
 
 		// ------------------------------------------------------------------
@@ -94,6 +95,15 @@ namespace Aura.Channel.Util
 			{
 				Send.ServerMessage(sender, "Arg{0}: {1}", i, args[i]);
 			}
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleWhere(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			var pos = sender.GetPosition();
+
+			Send.ServerMessage(sender, "You're here: {0} @ {1}, {2}", sender.RegionId, pos.X, pos.Y);
 
 			return CommandResult.Okay;
 		}

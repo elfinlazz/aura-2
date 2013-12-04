@@ -94,6 +94,7 @@
     <Compile Include="Network\Handlers\LogInOut.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Handlers\NPCs.cs" />
+    <Compile Include="Network\Sending\Send.Creature.cs" />
     <Compile Include="Network\Sending\Send.NPCs.cs" />
     <Compile Include="Network\Sending\Send.Character.cs" />
     <Compile Include="Network\Sending\Send.LogInOut.cs" />

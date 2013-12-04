@@ -94,6 +94,8 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			creature.Save = true;
+
 			var first = (creature.Region == null);
 			if (!first)
 				creature.Region.RemoveCreature(creature);
@@ -165,7 +167,7 @@ namespace Aura.Channel.Network.Handlers
 
 			Log.Info("'{0}' is closing the connection. Saving...", client.Account.Id);
 
-			//ChannelDb.Instance.SaveAccount(client.Account);
+			ChannelDb.Instance.SaveAccount(client.Account);
 
 			foreach (var creature in client.Creatures.Values.Where(a => a.Region != null))
 				creature.Region.RemoveCreature(creature);

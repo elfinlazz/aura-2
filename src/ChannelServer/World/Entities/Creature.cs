@@ -9,6 +9,8 @@ using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Shared.Mabi;
+using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.World.Entities
 {
@@ -69,10 +71,13 @@ namespace Aura.Channel.World.Entities
 		// Movement
 		// ------------------------------------------------------------------
 
+		private Position _position, _destination;
+		private DateTime _moveStartTime;
+		private double _moveDuration, _movementX, _movementY;
+
 		public byte Direction { get; set; }
-		public bool IsMoving { get { return false; } }
+		public bool IsMoving { get { return (_position != _destination); } }
 		public bool IsWalking { get; protected set; }
-		public Position Destination { get; protected set; }
 
 		// Misc
 		// ------------------------------------------------------------------
@@ -231,22 +236,88 @@ namespace Aura.Channel.World.Entities
 			this.Inventory.AddMainInventory();
 		}
 
-		private Position _position;
-
+		/// <summary>
+		/// Returns current position.
+		/// </summary>
+		/// <returns></returns>
 		public override Position GetPosition()
 		{
-			return _position;
+			if (!this.IsMoving)
+				return _position;
+
+			var passed = (DateTime.Now - _moveStartTime).TotalSeconds;
+			if (passed >= _moveDuration)
+				return this.SetPosition(_destination.X, _destination.Y);
+
+			var xt = _position.X + (_movementX * passed);
+			var yt = _position.Y + (_movementY * passed);
+
+			return new Position((int)xt, (int)yt);
 		}
 
+		/// <summary>
+		/// Returns current destination.
+		/// </summary>
+		/// <returns></returns>
+		public Position GetDestination()
+		{
+			return _destination;
+		}
+
+		/// <summary>
+		/// Sets position and destination.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public Position SetPosition(int x, int y)
 		{
-			return _position = new Position(x, y);
+			return _position = _destination = new Position(x, y);
 		}
 
+		/// <summary>
+		/// Sets RegionId and position.
+		/// </summary>
+		/// <param name="region"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
 		public void SetLocation(int region, int x, int y)
 		{
 			this.RegionId = region;
 			this.SetPosition(x, y);
+		}
+
+		/// <summary>
+		/// Starts movement from current position to destination.
+		/// Sends Running|Walking.
+		/// </summary>
+		/// <param name="destination"></param>
+		/// <param name="walking"></param>
+		public void Move(Position destination, bool walking)
+		{
+			_position = this.GetPosition();
+			_destination = destination;
+			_moveStartTime = DateTime.Now;
+			this.IsWalking = walking;
+
+			var diffX = _destination.X - _position.X;
+			var diffY = _destination.Y - _position.Y;
+			_moveDuration = Math.Sqrt(diffX * diffX + diffY * diffY) / this.GetSpeed();
+			_movementX = diffX / _moveDuration;
+			_movementY = diffY / _moveDuration;
+
+			this.Direction = MabiMath.DirectionToByte(_movementX, _movementY);
+
+			Send.Move(this, _position, _destination, walking);
+		}
+
+		/// <summary>
+		/// Returns current movement speed.
+		/// </summary>
+		/// <returns></returns>
+		public float GetSpeed()
+		{
+			return (!this.IsWalking ? this.RaceInfo.RunningSpeed : this.RaceInfo.WalkingSpeed);
 		}
 	}
 }

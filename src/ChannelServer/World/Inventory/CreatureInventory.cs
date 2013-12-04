@@ -120,8 +120,8 @@ namespace Aura.Channel.World
 			if (_creature.RaceInfo == null)
 				Log.Warning("Race for creature '{0}' ({1:X016}) not loaded before initializing main inventory.", _creature.Name, _creature.EntityId);
 
-			var width = (_creature.RaceInfo != null ? _creature.RaceInfo.InvWidth : DefaultWidth);
-			var height = (_creature.RaceInfo != null ? _creature.RaceInfo.InvHeight : DefaultHeight);
+			var width = (_creature.RaceInfo != null ? _creature.RaceInfo.InventoryWidth : DefaultWidth);
+			var height = (_creature.RaceInfo != null ? _creature.RaceInfo.InventoryHeight : DefaultHeight);
 
 			this.Add(new InventoryPocketNormal(Pocket.Inventory, width, height));
 			this.Add(new InventoryPocketNormal(Pocket.PersonalInventory, width, height));

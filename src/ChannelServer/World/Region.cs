@@ -29,6 +29,10 @@ namespace Aura.Channel.World
 			_items = new Dictionary<long, Item>();
 		}
 
+		/// <summary>
+		/// Adds creature to region, sends EntityAppears.
+		/// </summary>
+		/// <param name="creature"></param>
 		public void AddCreature(Creature creature)
 		{
 			lock (_creatures)
@@ -41,18 +45,28 @@ namespace Aura.Channel.World
 			Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
 		}
 
+		/// <summary>
+		/// Removes creature from region, sends EntityDisappears.
+		/// </summary>
+		/// <param name="creature"></param>
 		public void RemoveCreature(Creature creature)
 		{
 			lock (_creatures)
 				_creatures.Remove(creature.EntityId);
 
-			creature.Region = null;
-
 			Send.EntityDisappears(creature);
+
+			creature.Region = null;
 
 			Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
 		}
 
+		/// <summary>
+		/// Returns new list of all entities within range of source.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="range"></param>
+		/// <returns></returns>
 		public List<Entity> GetEntitiesInRange(Entity source, int range = -1)
 		{
 			if (range < 0)
@@ -72,6 +86,10 @@ namespace Aura.Channel.World
 			return result;
 		}
 
+		/// <summary>
+		/// Broadcasts packet in region.
+		/// </summary>
+		/// <param name="packet"></param>
 		public void Broadcast(Packet packet)
 		{
 			lock (_creatures)
@@ -82,15 +100,24 @@ namespace Aura.Channel.World
 			}
 		}
 
+		/// <summary>
+		/// Broadcasts packet to all creatures in range of source.
+		/// </summary>
+		/// <param name="packet"></param>
+		/// <param name="source"></param>
+		/// <param name="sendToSource"></param>
+		/// <param name="range"></param>
 		public void Broadcast(Packet packet, Entity source, bool sendToSource = true, int range = -1)
 		{
 			if (range < 0)
 				range = 2500; // TODO: read from region data
 
+			var pos = source.GetPosition();
+
 			lock (_creatures)
 			{
 				// TODO: Don't send to the same client twice
-				foreach (var creature in _creatures.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range)))
+				foreach (var creature in _creatures.Values.Where(a => a.GetPosition().InRange(pos, range)))
 				{
 					if (creature == source && !sendToSource)
 						continue;

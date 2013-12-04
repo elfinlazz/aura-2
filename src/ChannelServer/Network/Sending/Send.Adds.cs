@@ -317,8 +317,8 @@ namespace Aura.Channel.Network.Sending
 			// --------------------------------------------------------------
 			if (type == CreaturePacketType.Private)
 			{
-				packet.PutInt(creature.RaceInfo.InvWidth);
-				packet.PutInt(creature.RaceInfo.InvHeight);
+				packet.PutInt(creature.RaceInfo.InventoryWidth);
+				packet.PutInt(creature.RaceInfo.InventoryHeight);
 
 				var items = creature.Inventory.Items;
 				packet.PutInt(items.Count());
@@ -909,9 +909,11 @@ namespace Aura.Channel.Network.Sending
 				}
 				else
 				{
+					var dest = creature.GetDestination();
+
 					packet.PutByte((byte)(!creature.IsWalking ? 2 : 1));
-					packet.PutInt(creature.Destination.X);
-					packet.PutInt(creature.Destination.Y);
+					packet.PutInt(dest.X);
+					packet.PutInt(dest.Y);
 				}
 
 				if (creature.EntityType == EntityType.NPC)

@@ -45,5 +45,25 @@ namespace Aura.Channel.World
 		{
 			return (Math.Pow(X - otherPos.X, 2) + Math.Pow(Y - otherPos.Y, 2) <= Math.Pow(range, 2));
 		}
+
+		public static bool operator ==(Position pos1, Position pos2)
+		{
+			return (pos1.X == pos2.X && pos1.Y == pos2.Y);
+		}
+
+		public static bool operator !=(Position pos1, Position pos2)
+		{
+			return !(pos1 == pos2);
+		}
+
+		public override int GetHashCode()
+		{
+			return this.X.GetHashCode() ^ this.Y.GetHashCode();
+		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is Position && this == (Position)obj;
+		}
 	}
 }
