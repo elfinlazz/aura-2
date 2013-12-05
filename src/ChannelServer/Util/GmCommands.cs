@@ -7,6 +7,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util.Commands;
 using Aura.Shared.Util;
+using System.Globalization;
 
 namespace Aura.Channel.Util
 {
@@ -91,10 +92,10 @@ namespace Aura.Channel.Util
 
 		public CommandResult HandleTest(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
-			for (int i = 0; i < args.Length; ++i)
-			{
-				Send.ServerMessage(sender, "Arg{0}: {1}", i, args[i]);
-			}
+			//for (int i = 0; i < args.Length; ++i)
+			//{
+			//    Send.ServerMessage(sender, "Arg{0}: {1}", i, args[i]);
+			//}
 
 			return CommandResult.Okay;
 		}

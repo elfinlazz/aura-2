@@ -50,10 +50,6 @@ namespace Aura.Channel.Scripting.Compilers
 
 				//this.SaveAssembly(asm, outPath);
 			}
-			catch (CompilerErrorsException ex)
-			{
-				throw ex;
-			}
 			catch (UnauthorizedAccessException)
 			{
 				// Thrown if file can't be copied. Happens if script was

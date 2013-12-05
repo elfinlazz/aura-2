@@ -7,6 +7,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.World;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -69,7 +70,7 @@ namespace Aura.Channel.Network.Handlers
 				character.SetPosition(12800, 38100);
 			}
 
-			Send.CharacterLock(character, LockType.Unk1);
+			Send.CharacterLock(character, Locks.Default);
 			Send.EnterRegion(character);
 		}
 
@@ -102,7 +103,7 @@ namespace Aura.Channel.Network.Handlers
 
 			region.AddCreature(creature);
 
-			Send.CharacterUnlock(creature, LockType.Unk1);
+			Send.CharacterUnlock(creature, Locks.Default);
 
 			if (first)
 				Send.EnterRegionRequestR(creature);

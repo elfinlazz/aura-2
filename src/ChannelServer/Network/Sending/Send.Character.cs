@@ -14,7 +14,7 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Sends CharacterLock to creature's client.
 		/// </summary>
-		public static void CharacterLock(PlayerCreature creature, LockType type)
+		public static void CharacterLock(Creature creature, Locks type)
 		{
 			var packet = new Packet(Op.CharacterLock, creature.EntityId);
 			packet.PutUInt((uint)type);
@@ -26,7 +26,7 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Sends CharacterUnlock to creature's client.
 		/// </summary>
-		public static void CharacterUnlock(PlayerCreature creature, LockType type)
+		public static void CharacterUnlock(Creature creature, Locks type)
 		{
 			var packet = new Packet(Op.CharacterUnlock, creature.EntityId);
 			packet.PutUInt((uint)type);
@@ -122,15 +122,5 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
-	}
-
-	public enum LockType : uint
-	{
-		/// <summary>
-		/// 0xEFFFFFFE
-		/// </summary>
-		Unk1 = 0xEFFFFFFE,
-
-		All = 0xFFFFFFFF,
 	}
 }
