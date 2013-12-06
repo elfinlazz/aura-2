@@ -319,5 +319,13 @@ namespace Aura.Channel.World.Entities
 		{
 			return (!this.IsWalking ? this.RaceInfo.RunningSpeed : this.RaceInfo.WalkingSpeed);
 		}
+
+		/// <summary>
+		/// Warps creature to target location.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public abstract void Warp(int regionId, int x, int y);
 	}
 }

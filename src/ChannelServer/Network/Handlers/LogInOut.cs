@@ -91,7 +91,6 @@ namespace Aura.Channel.Network.Handlers
 			if (region == null)
 			{
 				Log.Warning("Player '{0}' tried to enter unknown region '{1}'.", creature.Name, creature.RegionId);
-				creature.RegionId = 0;
 				return;
 			}
 

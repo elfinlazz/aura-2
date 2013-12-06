@@ -15,6 +15,7 @@ namespace Aura.Channel.Util
 	{
 		public GmCommandManager()
 		{
+			Add(40, "warp", "", HandleWarp);
 			Add(99, "test", "", HandleTest);
 			Add(99, "where", "", HandleWhere);
 		}
@@ -105,6 +106,26 @@ namespace Aura.Channel.Util
 			var pos = sender.GetPosition();
 
 			Send.ServerMessage(sender, "You're here: {0} @ {1}, {2}", sender.RegionId, pos.X, pos.Y);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleWarp(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			var pos = target.GetPosition();
+			int regionId = 0, x = pos.X, y = pos.Y;
+
+			if (!int.TryParse(args[1], out regionId))
+				return CommandResult.InvalidArgument;
+			if (args.Length > 2 && !int.TryParse(args[2], out x))
+				return CommandResult.InvalidArgument;
+			if (args.Length > 3 && !int.TryParse(args[3], out y))
+				return CommandResult.InvalidArgument;
+
+			target.Warp(regionId, x, y);
 
 			return CommandResult.Okay;
 		}

@@ -4,6 +4,7 @@
 using System.Threading;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.Scripting.Scripts;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Entities
 {
@@ -25,6 +26,20 @@ namespace Aura.Channel.World.Entities
 			this.Height = this.Weight = this.Upper = this.Lower = 1;
 			this.RegionId = 0;
 			this.Life = this.LifeMaxBase = 1000000;
+		}
+
+		public override void Warp(int regionId, int x, int y)
+		{
+			var region = WorldManager.Instance.GetRegion(regionId);
+			if (region == null)
+			{
+				Log.Error("NPC.Warp: Region '{0}' doesn't exist.", regionId);
+				return;
+			}
+
+			this.SetLocation(regionId, x, y);
+
+			region.AddCreature(this);
 		}
 	}
 }

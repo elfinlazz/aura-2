@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.World.Entities
 {
@@ -41,5 +42,11 @@ namespace Aura.Channel.World.Entities
 		/// Set to true if creature is supposed to be saved.
 		/// </summary>
 		public bool Save { get; set; }
+
+		public override void Warp(int region, int x, int y)
+		{
+			this.SetLocation(region, x, y);
+			Send.EnterRegion(this);
+		}
 	}
 }

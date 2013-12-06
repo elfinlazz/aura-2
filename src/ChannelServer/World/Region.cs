@@ -9,6 +9,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 using Aura.Shared.Network;
 using Aura.Channel.Network.Sending;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.World
 {
@@ -38,11 +39,15 @@ namespace Aura.Channel.World
 			lock (_creatures)
 				_creatures.Add(creature.EntityId, creature);
 
+			if (creature.Region != null)
+				creature.Region.RemoveCreature(creature);
+
 			creature.Region = this;
 
 			Send.EntityAppears(creature);
 
-			//Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
+			if (creature.EntityId < MabiId.Npcs)
+				Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
 		}
 
 		/// <summary>
@@ -58,7 +63,8 @@ namespace Aura.Channel.World
 
 			creature.Region = null;
 
-			//Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
+			if (creature.EntityId < MabiId.Npcs)
+				Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
 		}
 
 		/// <summary>
