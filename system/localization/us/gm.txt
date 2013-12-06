@@ -15,7 +15,8 @@ gmcp_banned		'{0}' has been banned till '{1}'.
 gmcp_disabled	The GMCP is currently disabled, or not available.
 
 // >where
-where			Region: {0}, X: {1}, Y: {2}, Area: {3}, Direction: {4}
+where_you		You're here: {0} @ {1}, {2}
+where_target	{3} is here: {0} @ {1}, {2}
 
 // >who
 who				Players online:
@@ -55,7 +56,10 @@ si_pocket		Invalid pocket.
 si_cleared		Cleared pocket '{0}'. (Deleted items: {1})
 
 // >warp
-warp_region		Region '{0}' not found.
+warp_invalid_id	Invalid region id.
+warp_invalid_x	Invalid X coordinate.
+warp_invalid_y	Invalid Y coordinate.
+warp_target		You've been warped by '{0}'.
 
 // >go
 go_dest			Destinations:

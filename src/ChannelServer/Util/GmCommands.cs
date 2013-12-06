@@ -5,10 +5,9 @@ using System;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
-using Aura.Shared.Util.Commands;
-using Aura.Shared.Util;
-using System.Globalization;
 using Aura.Data;
+using Aura.Shared.Util;
+using Aura.Shared.Util.Commands;
 
 namespace Aura.Channel.Util
 {
@@ -16,11 +15,18 @@ namespace Aura.Channel.Util
 	{
 		public GmCommandManager()
 		{
+			// Players
+			Add(00, "where", "", HandleWhere);
+
+			// VIPs
 			Add(01, "go", "<location>", HandleGo);
+
+			// GMs
 			Add(40, "warp", "<region> [x] [y]", HandleWarp);
 			Add(40, "jump", "[x] [y]", HandleWarp);
+
+			// Admins
 			Add(99, "test", "", HandleTest);
-			Add(99, "where", "", HandleWhere);
 		}
 
 		// ------------------------------------------------------------------
@@ -46,7 +52,7 @@ namespace Aura.Channel.Util
 		{
 			var command = this.GetCommand(commandName);
 			if (command == null)
-				throw new Exception("Aliasing: Command " + commandName + " not found");
+				throw new Exception("Aliasing: Command '" + commandName + "' not found");
 
 			_commands[alias] = command;
 		}
@@ -107,9 +113,9 @@ namespace Aura.Channel.Util
 		public CommandResult HandleWhere(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
 			var pos = target.GetPosition();
-			var start = (sender == target ? "You're" : target.Name + " is");
+			var msg = Localization.Get(sender == target ? "gm.where_you" : "gm.where_target"); // (You're|{3} is) here: {0} @ {1}, {2}
 
-			Send.ServerMessage(sender, start + " here: {0} @ {1}, {2}", target.RegionId, pos.X, pos.Y);
+			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name);
 
 			return CommandResult.Okay;
 		}
@@ -130,7 +136,7 @@ namespace Aura.Channel.Util
 			{
 				if (!int.TryParse(args[1], out regionId))
 				{
-					Send.ServerMessage(sender, "Invalid region id.");
+					Send.ServerMessage(sender, Localization.Get("gm.warp_invalid_id")); // Invalid region id.
 					return CommandResult.InvalidArgument;
 				}
 			}
@@ -142,14 +148,14 @@ namespace Aura.Channel.Util
 			// Parse X
 			if (args.Length > 1 + offset && !int.TryParse(args[1 + offset], out x))
 			{
-				Send.ServerMessage(sender, "Invalid X coordinate.");
+				Send.ServerMessage(sender, Localization.Get("gm.warp_invalid_x")); // Invalid X coordinate.
 				return CommandResult.InvalidArgument;
 			}
 
 			// Parse Y
 			if (args.Length > 2 + offset && !int.TryParse(args[2 + offset], out y))
 			{
-				Send.ServerMessage(sender, "Invalid Y coordinate.");
+				Send.ServerMessage(sender, Localization.Get("gm.warp_invalid_y")); // Invalid Y coordinate.
 				return CommandResult.InvalidArgument;
 			}
 
@@ -164,7 +170,7 @@ namespace Aura.Channel.Util
 			target.Warp(regionId, x, y);
 
 			if (sender != target)
-				Send.ServerMessage(target, "You've been warped by '{0}'.", sender.Name);
+				Send.ServerMessage(target, Localization.Get("gm.warp_target"), sender.Name); // You've been warped by '{0}'.
 
 			return CommandResult.Okay;
 		}
@@ -208,7 +214,7 @@ namespace Aura.Channel.Util
 			target.Warp(regionId, x, y);
 
 			if (sender != target)
-				Send.ServerMessage(target, "You've been warped by '{0}'.", sender.Name);
+				Send.ServerMessage(target, Localization.Get("gm.warp_target"), sender.Name); // You've been warped by '{0}'.
 
 			return CommandResult.Okay;
 		}
