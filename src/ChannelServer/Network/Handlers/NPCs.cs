@@ -125,6 +125,12 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			var response = match.Groups["result"].Value;
+
+			// Cut @input "prefix" added for <input> element.
+			if (response.StartsWith("@input"))
+				response = response.Substring(7).Trim();
+
 			client.NpcSession.SetResponse(match.Groups["result"].Value);
 			client.NpcSession.Continue();
 		}

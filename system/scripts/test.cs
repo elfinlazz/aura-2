@@ -18,7 +18,7 @@ public class TestScript : NpcScript
 		Msg(c, "test", Button("Yes"), Button("No"));
 		var r = Select(c);
 
-		Msg(c, "Response: " + r);
+		Msg(c, "Response: " + r, Bgm("npc_owen.mp3"));
 
 		Call(Test(c));
 
