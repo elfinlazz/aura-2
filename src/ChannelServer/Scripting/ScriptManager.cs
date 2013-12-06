@@ -168,7 +168,7 @@ namespace Aura.Channel.Scripting
 		{
 			foreach (var type in asm.GetTypes().Where(a => a.IsSubclassOf(typeof(BaseScript))))
 			{
-				if (type.IsAbstract)
+				if (type.IsAbstract || type.Name.StartsWith("_"))
 					continue;
 
 				var scriptObj = Activator.CreateInstance(type);
@@ -197,7 +197,8 @@ namespace Aura.Channel.Scripting
 					continue;
 				}
 
-				Log.Error("Unknown script type '{0}'.", type);
+				// Unknown Script, just load it.
+				(scriptObj as BaseScript).Load();
 			}
 		}
 

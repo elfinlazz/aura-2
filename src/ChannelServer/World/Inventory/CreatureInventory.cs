@@ -118,7 +118,7 @@ namespace Aura.Channel.World
 		public void AddMainInventory()
 		{
 			if (_creature.RaceInfo == null)
-				Log.Warning("Race for creature '{0}' ({1:X016}) not loaded before initializing main inventory.", _creature.Name, _creature.EntityId);
+				Log.Warning("Race for creature '{0}' ({1}) not loaded before initializing main inventory.", _creature.Name, _creature.EntityIdHex);
 
 			var width = (_creature.RaceInfo != null ? _creature.RaceInfo.InventoryWidth : DefaultWidth);
 			var height = (_creature.RaceInfo != null ? _creature.RaceInfo.InventoryHeight : DefaultHeight);

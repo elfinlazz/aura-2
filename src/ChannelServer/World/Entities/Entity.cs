@@ -9,6 +9,7 @@ namespace Aura.Channel.World.Entities
 	public abstract class Entity
 	{
 		public long EntityId { get; set; }
+		public string EntityIdHex { get { return this.EntityId.ToString("X16"); } }
 
 		public virtual int RegionId { get; set; }
 		public Region Region { get; set; }
@@ -20,5 +21,9 @@ namespace Aura.Channel.World.Entities
 	}
 
 	public enum EntityType { Undefined, Character, Pet, Item, NPC, Prop }
+
+	/// <summary>
+	/// Vague entity data type, used in EntityAppears.
+	/// </summary>
 	public enum DataType : short { Creature = 16, Item = 80, Prop = 160 }
 }

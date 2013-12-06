@@ -30,8 +30,8 @@ namespace Aura.Data.Database
 
 	public class PropInfo
 	{
-		public long Id { get; internal set; }
-		public int Class { get; internal set; }
+		public long EntityId { get; internal set; }
+		public int Id { get; internal set; }
 		public float X { get; internal set; }
 		public float Y { get; internal set; }
 		public float Direction { get; internal set; }
@@ -150,7 +150,7 @@ namespace Aura.Data.Database
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <returns></returns>
-		public int GetAreaId(int region, uint x, uint y)
+		public int GetAreaId(int region, int x, int y)
 		{
 			var ri = this.Find(region);
 			if (ri == null)
@@ -195,8 +195,8 @@ namespace Aura.Data.Database
 					for (int j = 0; j < cProps; ++j)
 					{
 						var pi = new PropInfo();
-						pi.Id = br.ReadInt64();
-						pi.Class = br.ReadInt32();
+						pi.EntityId = br.ReadInt64();
+						pi.Id = br.ReadInt32();
 						pi.X = br.ReadSingle();
 						pi.Y = br.ReadSingle();
 						pi.Direction = br.ReadSingle();
@@ -219,8 +219,8 @@ namespace Aura.Data.Database
 							pi.Shapes.Add(si);
 						}
 
-						ai.Props.Add(pi.Id, pi);
-						this.PropEntries.Add(pi.Id, pi);
+						ai.Props.Add(pi.EntityId, pi);
+						this.PropEntries.Add(pi.EntityId, pi);
 					}
 
 					var cEvents = br.ReadInt32();

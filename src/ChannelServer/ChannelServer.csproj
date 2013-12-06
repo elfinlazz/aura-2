@@ -89,11 +89,15 @@
     <Compile Include="Database\ChannelDb.cs" />
     <Compile Include="Network\ChannelClient.cs" />
     <Compile Include="ChannelServer.cs" />
+    <Compile Include="Network\Handlers\Battle.cs" />
     <Compile Include="Network\Handlers\Chat.cs" />
     <Compile Include="Network\Handlers\Internal.cs" />
     <Compile Include="Network\Handlers\LogInOut.cs" />
+    <Compile Include="Network\Handlers\Misc.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Handlers\NPCs.cs" />
+    <Compile Include="Network\Sending\Send.Misc.cs" />
+    <Compile Include="Network\Sending\Send.Battle.cs" />
     <Compile Include="Network\Sending\Send.Creature.cs" />
     <Compile Include="Network\Sending\Send.NPCs.cs" />
     <Compile Include="Network\Sending\Send.Character.cs" />
@@ -107,6 +111,7 @@
     <Compile Include="Scripting\NpcSession.cs" />
     <Compile Include="Scripting\Scripts\BaseScript.cs" />
     <Compile Include="Scripting\Scripts\DialogElements.cs" />
+    <Compile Include="Scripting\Scripts\BaseScript.Props.cs" />
     <Compile Include="Scripting\Scripts\NpcScript.cs" />
     <Compile Include="Scripting\Compilers\Compiler.cs" />
     <Compile Include="Scripting\Compilers\CompilerErrors.cs" />

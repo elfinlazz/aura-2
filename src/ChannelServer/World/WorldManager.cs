@@ -67,5 +67,23 @@ namespace Aura.Channel.World
 				this.AddRegion(region.Id);
 			}
 		}
+
+		/// <summary>
+		/// Returns first prop with the given id, from any region,
+		/// or null, if none was found.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public Prop GetProp(long id)
+		{
+			foreach (var region in _regions.Values)
+			{
+				var prop = region.GetProp(id);
+				if (prop != null)
+					return prop;
+			}
+
+			return null;
+		}
 	}
 }

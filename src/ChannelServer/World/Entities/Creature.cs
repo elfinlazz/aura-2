@@ -82,10 +82,12 @@ namespace Aura.Channel.World.Entities
 		// Misc
 		// ------------------------------------------------------------------
 
-		public int BattleState { get; set; }
+		public BattleStance BattleStance { get; set; }
 		public byte WeaponSet { get; set; }
 
 		public List<short> Keywords { get; protected set; }
+
+		public bool IsDead { get { return this.Has(CreatureStates.Dead); } }
 
 		// Title
 		// ------------------------------------------------------------------
@@ -327,5 +329,12 @@ namespace Aura.Channel.World.Entities
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		public abstract void Warp(int regionId, int x, int y);
+
+		public bool Has(CreatureConditionA condition) { return ((this.Conditions.A & condition) != 0); }
+		public bool Has(CreatureConditionB condition) { return ((this.Conditions.B & condition) != 0); }
+		public bool Has(CreatureConditionC condition) { return ((this.Conditions.C & condition) != 0); }
+		public bool Has(CreatureConditionD condition) { return ((this.Conditions.D & condition) != 0); }
+		public bool Has(CreatureStates state) { return ((this.State & state) != 0); }
+
 	}
 }

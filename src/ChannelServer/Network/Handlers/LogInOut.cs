@@ -14,7 +14,7 @@ namespace Aura.Channel.Network.Handlers
 	public partial class ChannelServerHandlers : PacketHandlerManager<ChannelClient>
 	{
 		/// <summary>
-		/// 
+		/// Login.
 		/// </summary>
 		/// <example>
 		/// 001 [................] String : admin
@@ -97,8 +97,6 @@ namespace Aura.Channel.Network.Handlers
 			creature.Save = true;
 
 			var first = (creature.Region == null);
-			if (!first)
-				creature.Region.RemoveCreature(creature);
 
 			region.AddCreature(creature);
 

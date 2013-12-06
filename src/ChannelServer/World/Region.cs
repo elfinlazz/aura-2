@@ -10,6 +10,7 @@ using Aura.Shared.Util;
 using Aura.Shared.Network;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Mabi.Const;
+using Aura.Data;
 
 namespace Aura.Channel.World
 {
@@ -28,6 +29,24 @@ namespace Aura.Channel.World
 			_creatures = new Dictionary<long, Creature>();
 			_props = new Dictionary<long, Prop>();
 			_items = new Dictionary<long, Item>();
+
+			this.LoadClientProps();
+		}
+
+		/// <summary>
+		/// Adds all props found in the client for this region.
+		/// </summary>
+		private void LoadClientProps()
+		{
+			var props = AuraData.RegionInfoDb.Find(this.Id);
+			foreach (var area in props.Areas.Values)
+			{
+				foreach (var prop in area.Props.Values)
+				{
+					var add = new Prop(prop.EntityId, "", "", "", prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0);
+					this.AddProp(add);
+				}
+			}
 		}
 
 		/// <summary>
@@ -91,6 +110,52 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		///  Spawns prop, sends EntityAppears.
+		/// </summary>
+		/// <param name="prop"></param>
+		public void AddProp(Prop prop)
+		{
+			lock (_props)
+				_props.Add(prop.EntityId, prop);
+
+			prop.Region = this;
+
+			Send.EntityAppears(prop);
+		}
+
+		/// <summary>
+		/// Despawns prop, sends EntityDisappears.
+		/// </summary>
+		/// <param name="creature"></param>
+		public void RemoveProp(Prop prop)
+		{
+			if (!prop.ServerSide)
+			{
+				Log.Error("RemoveProp: Client side props can't be removed.");
+				return;
+			}
+
+			lock (_props)
+				_props.Remove(prop.EntityId);
+
+			Send.EntityDisappears(prop);
+
+			prop.Region = null;
+		}
+
+		/// <summary>
+		/// Returns prop or null.
+		/// </summary>
+		/// <param name="creature"></param>
+		public Prop GetProp(long entityId)
+		{
+			Prop result;
+			lock (_props)
+				_props.TryGetValue(entityId, out result);
+			return result;
+		}
+
+		/// <summary>
 		/// Returns new list of all entities within range of source.
 		/// </summary>
 		/// <param name="source"></param>
@@ -109,8 +174,13 @@ namespace Aura.Channel.World
 			lock (_items)
 				result.AddRange(_items.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range)));
 
+			// All props spawned by the server, without range check.
 			lock (_props)
-				result.AddRange(_props.Values);
+			{
+				foreach (var prop in _props.Values.Where(a => a.ServerSide))
+					Log.Debug(prop);
+				result.AddRange(_props.Values.Where(a => a.ServerSide));
+			}
 
 			return result;
 		}

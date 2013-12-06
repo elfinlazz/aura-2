@@ -185,9 +185,9 @@ namespace Aura.Shared.Network
 		public const int StandUp = 0x6D6D;
 		public const int ArenaHideOn = 0x6D6F;
 		public const int ArenaHideOff = 0x6D70;
-		public const int ChangeStance = 0x6E28;
-		public const int ChangeStanceR = 0x6E29;
-		public const int ChangesStance = 0x6E2A;
+		public const int ChangeStanceRequest = 0x6E28;
+		public const int ChangeStanceRequestR = 0x6E29;
+		public const int ChangeStance = 0x6E2A;
 
 		public const int BackFromTheDead2 = 0x701D;
 		public const int CharacterLock = 0x701E;
@@ -339,8 +339,11 @@ namespace Aura.Shared.Network
 		public const int PartyWindowUpdate = 0xA43C;
 		public const int PartyTypeUpdate = 0xA44B;
 		public const int OpenItemShop = 0xA44D;
-		public const int MailsRequest = 0xA898;
-		public const int MailsRequestR = 0xA899;
+
+		// [150000~180000] Something was removed here
+
+		public const int MailsRequest = 0xA897;
+		public const int MailsRequestR = 0xA898;
 		public const int WarpUnk3 = 0xA8AF;
 		public const int UmbrellaJump = 0xA8E0;
 		public const int UmbrellaJumpR = 0xA8E1;
@@ -348,8 +351,8 @@ namespace Aura.Shared.Network
 		public const int SetBgm = 0xA910;
 		public const int UnsetBgm = 0xA911;
 		public const int EnableRoyalAlchemist = 0xA9A3;
-		public const int SosButton = 0xA9A9;
-		public const int SosButtonR = 0xA9AA;
+		public const int SosButtonRequest = 0xA9A9;
+		public const int SosButtonRequestR = 0xA9AA;
 		public const int SubsribeStun = 0xAA1C; // ?
 		public const int StunMeter = 0xAA1D;
 		//public const int StunMeter? = 0xAA1E;
@@ -431,4 +434,7 @@ namespace Aura.Shared.Network
 			public const int ChannelStatus = 0x42420101;
 		}
 	}
+
+	// public const int MailsRequest = 0xA898;
+	// public const int MailsRequestR = 0xA899;
 }

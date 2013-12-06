@@ -33,3 +33,11 @@ public class TestScript : NpcScript
 		Return();
 	}
 }
+
+public class PropSpawnTest : BaseScript
+{
+	public override void Load()
+	{
+		SpawnProp(1, 1, 12000, 38000, 0);
+	}
+}

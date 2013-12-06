@@ -49,5 +49,31 @@ namespace Aura.Channel.Network.Handlers
 
 			creature.Move(to, (packet.Op == Op.Walk));
 		}
+
+		/// <summary>
+		/// Sent when a client side event is triggered.
+		/// </summary>
+		/// <remarks>
+		/// For example, when entering a new area.
+		/// On the client events also trigger new BGM and stuff like that.
+		/// </remarks>
+		/// <example>
+		/// 001 [00B0000100090576] Long   : 49539600196633974
+		/// 002 [........00000065] Int    : 101
+		/// 003 [................] String : 
+		/// </example>
+		[PacketHandler(Op.EventInform)]
+		public void EventInform(ChannelClient client, Packet packet)
+		{
+			var eventId = packet.GetLong();
+			var eventType = packet.GetInt();
+			var unkString = packet.GetString();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			// Do something with this information?
+		}
 	}
 }
