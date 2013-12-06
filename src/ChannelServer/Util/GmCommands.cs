@@ -8,6 +8,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Util.Commands;
 using Aura.Shared.Util;
 using System.Globalization;
+using Aura.Data;
 
 namespace Aura.Channel.Util
 {
@@ -15,7 +16,9 @@ namespace Aura.Channel.Util
 	{
 		public GmCommandManager()
 		{
-			Add(40, "warp", "", HandleWarp);
+			Add(01, "go", "<location>", HandleGo);
+			Add(40, "warp", "<region> [x] [y]", HandleWarp);
+			Add(40, "jump", "[x] [y]", HandleWarp);
 			Add(99, "test", "", HandleTest);
 			Add(99, "where", "", HandleWhere);
 		}
@@ -103,29 +106,109 @@ namespace Aura.Channel.Util
 
 		public CommandResult HandleWhere(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
-			var pos = sender.GetPosition();
+			var pos = target.GetPosition();
+			var start = (sender == target ? "You're" : target.Name + " is");
 
-			Send.ServerMessage(sender, "You're here: {0} @ {1}, {2}", sender.RegionId, pos.X, pos.Y);
+			Send.ServerMessage(sender, start + " here: {0} @ {1}, {2}", target.RegionId, pos.X, pos.Y);
 
 			return CommandResult.Okay;
 		}
 
 		public CommandResult HandleWarp(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
-			if (args.Length < 2)
+			// Handles both warp and jump
+
+			var warp = (args[0] == "warp");
+			var offset = (warp ? 1 : 0);
+
+			if (warp && args.Length < 2)
 				return CommandResult.InvalidArgument;
 
-			var pos = target.GetPosition();
-			int regionId = 0, x = pos.X, y = pos.Y;
+			// Get region id
+			int regionId = 0;
+			if (warp)
+			{
+				if (!int.TryParse(args[1], out regionId))
+				{
+					Send.ServerMessage(sender, "Invalid region id.");
+					return CommandResult.InvalidArgument;
+				}
+			}
+			else
+				regionId = target.RegionId;
 
-			if (!int.TryParse(args[1], out regionId))
+			int x = -1, y = -1;
+
+			// Parse X
+			if (args.Length > 1 + offset && !int.TryParse(args[1 + offset], out x))
+			{
+				Send.ServerMessage(sender, "Invalid X coordinate.");
 				return CommandResult.InvalidArgument;
-			if (args.Length > 2 && !int.TryParse(args[2], out x))
+			}
+
+			// Parse Y
+			if (args.Length > 2 + offset && !int.TryParse(args[2 + offset], out y))
+			{
+				Send.ServerMessage(sender, "Invalid Y coordinate.");
 				return CommandResult.InvalidArgument;
-			if (args.Length > 3 && !int.TryParse(args[3], out y))
-				return CommandResult.InvalidArgument;
+			}
+
+			// Random coordinates if none were specified
+			if (x == -1 && y == -1)
+			{
+				var rndc = AuraData.RegionInfoDb.RandomCoord(regionId);
+				if (x < 0) x = rndc.X;
+				if (y < 0) y = rndc.Y;
+			}
 
 			target.Warp(regionId, x, y);
+
+			if (sender != target)
+				Send.ServerMessage(target, "You've been warped by '{0}'.", sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleGo(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+			{
+				Send.ServerMessage(sender,
+					Localization.Get("gm.go_dest") + // Destinations:
+					" Tir Chonaill, Dugald Isle, Dunbarton, Gairech, Bangor, Emain Macha, Taillteann, Nekojima, GM Island"
+				);
+				return CommandResult.InvalidArgument;
+			}
+
+			int regionId = -1, x = -1, y = -1;
+			var destination = message.Substring(args[0].Length + 1).Trim();
+
+			if (destination.StartsWith("tir")) { regionId = 1; x = 12801; y = 38397; }
+			else if (destination.StartsWith("dugald")) { regionId = 16; x = 23017; y = 61244; }
+			else if (destination.StartsWith("dun")) { regionId = 14; x = 38001; y = 38802; }
+			else if (destination.StartsWith("gairech")) { regionId = 30; x = 39295; y = 53279; }
+			else if (destination.StartsWith("bangor")) { regionId = 31; x = 12904; y = 12200; }
+			else if (destination.StartsWith("emain")) { regionId = 52; x = 39818; y = 41621; }
+			else if (destination.StartsWith("tail")) { regionId = 300; x = 212749; y = 192720; }
+			else if (destination.StartsWith("neko")) { regionId = 600; x = 114430; y = 79085; }
+			else if (destination.StartsWith("gm")) { regionId = 22; x = 2500; y = 2500; }
+			else
+			{
+				Send.ServerMessage(sender, Localization.Get("gm.go_unk"), args[1]);
+				return CommandResult.InvalidArgument;
+			}
+
+			if (regionId == -1 || x == -1 || y == -1)
+			{
+				Send.ServerMessage(sender, "Error while choosing destination.");
+				Log.Error("HandleGo: Incomplete destination '{0}'.", args[1]);
+				return CommandResult.Fail;
+			}
+
+			target.Warp(regionId, x, y);
+
+			if (sender != target)
+				Send.ServerMessage(target, "You've been warped by '{0}'.", sender.Name);
 
 			return CommandResult.Okay;
 		}

@@ -72,6 +72,8 @@ namespace Aura.Data.Database
 		public Dictionary<long, PropInfo> PropEntries = new Dictionary<long, PropInfo>();
 		public Dictionary<long, EventInfo> EventEntries = new Dictionary<long, EventInfo>();
 
+		private Random _rnd = new Random(Environment.TickCount);
+
 		public override void Clear()
 		{
 			base.Clear();
@@ -79,6 +81,12 @@ namespace Aura.Data.Database
 			this.EventEntries.Clear();
 		}
 
+		/// <summary>
+		/// Returns area data if it exists, or null.
+		/// </summary>
+		/// <param name="region"></param>
+		/// <param name="area"></param>
+		/// <returns></returns>
 		public AreaInfo Find(int region, int area)
 		{
 			if (!this.Entries.ContainsKey(region))
@@ -89,6 +97,11 @@ namespace Aura.Data.Database
 			return this.Entries[region].Areas[area];
 		}
 
+		/// <summary>
+		/// Returns event data if it exists, or null.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public EventInfo FindEvent(long id)
 		{
 			EventInfo result;
@@ -96,6 +109,11 @@ namespace Aura.Data.Database
 			return result;
 		}
 
+		/// <summary>
+		/// Returns prop data if it exists, or null.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public PropInfo FindProp(long id)
 		{
 			PropInfo result;
@@ -103,6 +121,11 @@ namespace Aura.Data.Database
 			return result;
 		}
 
+		/// <summary>
+		/// Returns random coordinates inside the actual region.
+		/// </summary>
+		/// <param name="region"></param>
+		/// <returns></returns>
 		public Point RandomCoord(int region)
 		{
 			var result = new Point();
@@ -110,14 +133,23 @@ namespace Aura.Data.Database
 			var ri = this.Find(region);
 			if (ri != null)
 			{
-				var rnd = new Random(Environment.TickCount);
-				result.X = (uint)rnd.Next((int)ri.X1, (int)ri.X2);
-				result.Y = (uint)rnd.Next((int)ri.Y1, (int)ri.Y2);
+				lock (_rnd)
+				{
+					result.X = _rnd.Next(ri.X1, ri.X2);
+					result.Y = _rnd.Next(ri.Y1, ri.Y2);
+				}
 			}
 
 			return result;
 		}
 
+		/// <summary>
+		/// Returns area id for the given location, or 0 if no area exists.
+		/// </summary>
+		/// <param name="region"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public int GetAreaId(int region, uint x, uint y)
 		{
 			var ri = this.Find(region);
@@ -229,10 +261,10 @@ namespace Aura.Data.Database
 
 	public struct Point
 	{
-		public uint X;
-		public uint Y;
+		public int X;
+		public int Y;
 
-		public Point(uint x, uint y)
+		public Point(int x, int y)
 		{
 			this.X = x;
 			this.Y = y;
