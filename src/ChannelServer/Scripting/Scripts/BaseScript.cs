@@ -13,7 +13,6 @@ namespace Aura.Channel.Scripting.Scripts
 	{
 		public virtual void Load()
 		{
-			Log.Debug("virtual load");
 		}
 	}
 }

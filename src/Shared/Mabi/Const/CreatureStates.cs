@@ -22,8 +22,22 @@ namespace Aura.Shared.Mabi.Const
 		EscortNpc = 0x02000000,
 		UntouchableNpc = 0x08000000,
 		InstantNpc = 0x10000000,
+
+		/// <summary>
+		/// Attackable, if not active.
+		/// </summary>
 		GoodNpc = 0x20000000,
+
+		/// <summary>
+		/// If not active, name == race name.
+		/// Also required for conversation.
+		/// </summary>
 		NamedNpc = 0x40000000,
+
+		/// <summary>
+		/// Enables conversation and name lookup
+		/// (in combination with NamedNpc).
+		/// </summary>
 		Npc = 0x80000000,
 	}
 

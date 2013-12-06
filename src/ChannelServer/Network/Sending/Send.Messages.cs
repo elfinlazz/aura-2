@@ -88,5 +88,57 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Sends MsgBox to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public static void MsgBox(Creature creature, string format, params object[] args)
+		{
+			MsgBox(creature, MsgBoxTitle.Notice, MsgBoxButtons.Close, MsgBoxAlign.Center, format, args);
+		}
+
+		/// <summary>
+		/// Sends MsgBox to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="title"></param>
+		/// <param name="buttons"></param>
+		/// <param name="align"></param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public static void MsgBox(Creature creature, MsgBoxTitle title, MsgBoxButtons buttons, MsgBoxAlign align, string format, params object[] args)
+		{
+			MsgBox(creature, title.ToString(), MsgBoxButtons.Close, MsgBoxAlign.Center, format, args);
+		}
+
+		/// <summary>
+		/// Sends MsgBox to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="title"></param>
+		/// <param name="buttons"></param>
+		/// <param name="align"></param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public static void MsgBox(Creature creature, string title, MsgBoxButtons buttons, MsgBoxAlign align, string format, params object[] args)
+		{
+			var packet = new Packet(Op.MsgBox, creature.EntityId);
+			packet.PutString(format, args);
+
+			// Can be sent with the title enum as byte as well.
+			packet.PutString(title);
+
+			packet.PutByte((byte)buttons);
+			packet.PutByte((byte)align);
+
+			creature.Client.Send(packet);
+		}
 	}
+	public enum MsgBoxTitle { Notice, Info, Warning, Confirm }
+	public enum MsgBoxButtons { None, Close, OkCancel, YesNoCancel }
+	public enum MsgBoxAlign { Left, Center }
+	public enum NoticeType { Top = 1, TopRed, MiddleTop, Middle, Left, TopGreen, MiddleSystem, System, MiddleLower }
 }

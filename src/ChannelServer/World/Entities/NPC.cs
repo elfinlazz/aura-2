@@ -3,6 +3,7 @@
 
 using System.Threading;
 using Aura.Shared.Mabi.Const;
+using Aura.Channel.Scripting.Scripts;
 
 namespace Aura.Channel.World.Entities
 {
@@ -11,6 +12,8 @@ namespace Aura.Channel.World.Entities
 		private static long _npcId = MabiId.Npcs;
 
 		public override EntityType EntityType { get { return EntityType.NPC; } }
+
+		public NpcScript Script { get; set; }
 
 		public NPC()
 		{
@@ -21,6 +24,7 @@ namespace Aura.Channel.World.Entities
 			this.Race = 190140; // Wood dummy
 			this.Height = this.Weight = this.Upper = this.Lower = 1;
 			this.RegionId = 0;
+			this.Life = this.LifeMaxBase = 1000000;
 		}
 	}
 }

@@ -12,6 +12,8 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.World;
+using System.Text.RegularExpressions;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -26,12 +28,27 @@ namespace Aura.Channel.Scripting.Scripts
 
 		// ------------------------------------------------------------------
 
-		public virtual IEnumerator Talk(Creature creature)
+		public virtual IEnumerable Talk(Creature creature)
 		{
 			Msg(creature, "...");
 			yield break;
 		}
 
+		// Setup
+		// ------------------------------------------------------------------
+
+		protected void SetName(string name)
+		{
+			this.NPC.Name = name;
+		}
+
+		protected void SetLocation(int regionId, int x, int y, byte direction = 0)
+		{
+			this.NPC.SetLocation(regionId, x, y);
+			this.NPC.Direction = direction;
+		}
+
+		// Built-in
 		// ------------------------------------------------------------------
 
 		protected void Msg(Creature creature, string message, params DialogElement[] elements)
@@ -48,6 +65,41 @@ namespace Aura.Channel.Scripting.Scripts
 			this.SendScript(creature, new DialogElement(elements));
 		}
 
+		/// <summary>
+		/// Closes dialog box, by sending NpcTalkEndR.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="message">Dialog closes immediately if null.</param>
+		protected void Close(Creature creature, string message = null)
+		{
+			Send.NpcTalkEndR(creature, this.NPC.EntityId, message);
+			creature.Client.NpcSession.Clear();
+		}
+
+		public virtual void Select(Creature creature)
+		{
+			var script = string.Format(
+				"<call convention='thiscall' syncmode='sync' session='{1}'>" +
+					"<this type='character'>{0}</this>" +
+					"<function>" +
+						"<prototype>string character::SelectInTalk(string)</prototype>" +
+						"<arguments><argument type='string'>&#60;keyword&#62;&#60;gift&#62;</argument></arguments>" +
+					"</function>" +
+				"</call>"
+			, creature.EntityId, creature.Client.NpcSession.Id);
+
+			Send.NpcTalk(creature, script);
+		}
+
+		// Dialog factory
+		// ------------------------------------------------------------------
+
+		protected DialogButton Button(string text, string keyword = null, string onFrame = null)
+		{
+			return new DialogButton(text, keyword, onFrame);
+		}
+
+		// Building
 		// ------------------------------------------------------------------
 
 		protected void SendScript(Creature creature, DialogElement element)

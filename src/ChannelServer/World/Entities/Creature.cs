@@ -24,7 +24,7 @@ namespace Aura.Channel.World.Entities
 		// General
 		// ------------------------------------------------------------------
 
-		public Client Client { get; set; }
+		public ChannelClient Client { get; set; }
 
 		public string Name { get; set; }
 

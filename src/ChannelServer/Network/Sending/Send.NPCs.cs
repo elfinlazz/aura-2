@@ -25,5 +25,49 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends negative NpcTalkStartR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void NpcTalkStartR_Fail(Creature creature)
+		{
+			NpcTalkStartR(creature, 0);
+		}
+
+		/// <summary>
+		/// Sends NpcTalkStartR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="npcId">Negative response if 0.</param>
+		public static void NpcTalkStartR(Creature creature, long npcId)
+		{
+			var packet = new Packet(Op.NpcTalkStartR, creature.EntityId);
+			packet.PutByte(npcId != 0);
+			if (npcId != 0)
+				packet.PutLong(npcId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends NpcTalkEndR to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// If no message is specified "<end/>" is sent,
+		/// to close the dialog box immediately.
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="npcId"></param>
+		/// <param name="message">Last message before closing.</param>
+		public static void NpcTalkEndR(Creature creature, long npcId, string message = null)
+		{
+			var p = new Packet(Op.NpcTalkEndR, creature.EntityId);
+			p.PutByte(true);
+			p.PutLong(npcId);
+			p.PutString(message ?? "<end/>");
+
+			creature.Client.Send(p);
+		}
 	}
 }

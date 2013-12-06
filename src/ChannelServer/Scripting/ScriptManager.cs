@@ -178,7 +178,8 @@ namespace Aura.Channel.Scripting
 				if (npcScript != null)
 				{
 					npcScript.Load();
-					npcScript.NPC.State = CreatureStates.GoodNpc | CreatureStates.NamedNpc;
+					npcScript.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
+					npcScript.NPC.Script = npcScript;
 
 					if (npcScript.NPC.RegionId > 0)
 					{

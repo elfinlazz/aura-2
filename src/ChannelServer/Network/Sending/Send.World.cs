@@ -52,7 +52,6 @@ namespace Aura.Channel.Network.Sending
 			packet.PutShort((short)entities.Count);
 			foreach (var entity in entities)
 			{
-				// XXX: Could be cached
 				var data = Packet.Empty().AddPublicEntityInfo(entity).Build(false);
 
 				packet.PutShort((short)entity.DataType);

@@ -42,7 +42,7 @@ namespace Aura.Channel.World
 
 			Send.EntityAppears(creature);
 
-			Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
+			//Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
 		}
 
 		/// <summary>
@@ -58,7 +58,30 @@ namespace Aura.Channel.World
 
 			creature.Region = null;
 
-			Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
+			//Log.Status("Creatures in region {0}: {1}", this.Id, _creatures.Count);
+		}
+
+		/// <summary>
+		/// Returns creature with entityId, or null, if it doesn't exist.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public Creature GetCreature(long entityId)
+		{
+			Creature creature;
+			lock (_creatures)
+				_creatures.TryGetValue(entityId, out creature);
+			return creature;
+		}
+
+		/// <summary>
+		/// Returns NPC with entityId, or null, if no NPC with that id exists.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public NPC GetNpc(long entityId)
+		{
+			return this.GetCreature(entityId) as NPC;
 		}
 
 		/// <summary>

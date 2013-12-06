@@ -18,8 +18,7 @@ namespace Aura.Shared.Util
 		{
 			lock (_seed)
 				return new Random(_seed.Next());
-		}
-		);
+		});
 
 		/// <summary>
 		/// Returns an instance of Random for the calling thread.
