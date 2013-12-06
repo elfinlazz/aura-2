@@ -176,12 +176,18 @@ namespace Aura.Channel.Database
 					character.LuckBase = reader.GetFloat("luck");
 				}
 
-				var items = this.GetItems(character.CreatureId, conn);
-				foreach (var item in items)
-					character.Inventory.ForceAdd(item, item.Info.Pocket);
+				this.GetCharacterItems(character, conn);
+				this.GetCharacterKeywords(character, conn);
 
 				return character;
 			}
+		}
+
+		private void GetCharacterItems(PlayerCreature character, MySqlConnection conn)
+		{
+			var items = this.GetItems(character.CreatureId, conn);
+			foreach (var item in items)
+				character.Inventory.ForceAdd(item, item.Info.Pocket);
 		}
 
 		private List<Item> GetItems(long creatureId, MySqlConnection conn)
@@ -227,6 +233,23 @@ namespace Aura.Channel.Database
 			}
 
 			return result;
+		}
+
+		private void GetCharacterKeywords(PlayerCreature character, MySqlConnection conn)
+		{
+			using (var mc = new MySqlCommand("SELECT * FROM `keywords` WHERE `creatureId` = @creatureId", conn))
+			{
+				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+
+				using (var reader = mc.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						var keywordId = reader.GetInt16("keywordId");
+						character.Keywords.Add(keywordId);
+					}
+				}
+			}
 		}
 
 		public void SaveAccount(Account account)

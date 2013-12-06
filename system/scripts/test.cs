@@ -15,7 +15,8 @@ public class TestScript : NpcScript
 
 	public override IEnumerable Talk(Creature c)
 	{
-		Msg(c, "test", Button("Yes"), Button("No"));
+		Msg(c, "test");
+		ShowKeywords(c);
 		var r = Select(c);
 
 		Msg(c, "Response: " + r, Bgm("npc_owen.mp3"));

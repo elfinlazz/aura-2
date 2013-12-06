@@ -69,5 +69,31 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(p);
 		}
+
+		/// <summary>
+		/// Sends negative NpcTalkKeywordR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="keyword"></param>
+		public static void NpcTalkKeywordR_Fail(Creature creature)
+		{
+			NpcTalkKeywordR(creature, null);
+		}
+
+		/// <summary>
+		/// Sends NpcTalkKeywordR to creature's client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="success"></param>
+		/// <param name="keyword">Negative response if null</param>
+		public static void NpcTalkKeywordR(Creature creature, string keyword)
+		{
+			var packet = new Packet(Op.NpcTalkKeywordR, creature.EntityId);
+			packet.PutByte(keyword != null);
+			if (keyword != null)
+				packet.PutString(keyword);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

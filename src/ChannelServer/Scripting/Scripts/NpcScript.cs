@@ -39,6 +39,11 @@ namespace Aura.Channel.Scripting.Scripts
 			yield break;
 		}
 
+		public virtual void EndConversation(Creature creature)
+		{
+			Close(creature, "(You ended your conversation with <npcname/>.)");
+		}
+
 		// Setup
 		// ------------------------------------------------------------------
 

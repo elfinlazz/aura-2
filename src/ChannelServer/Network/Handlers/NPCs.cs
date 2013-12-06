@@ -127,12 +127,51 @@ namespace Aura.Channel.Network.Handlers
 
 			var response = match.Groups["result"].Value;
 
+			if (response == "@end")
+			{
+				client.NpcSession.Target.Script.EndConversation(creature);
+				return;
+			}
+
 			// Cut @input "prefix" added for <input> element.
 			if (response.StartsWith("@input"))
 				response = response.Substring(7).Trim();
 
 			client.NpcSession.SetResponse(match.Groups["result"].Value);
 			client.NpcSession.Continue();
+		}
+
+		/// <summary>
+		/// Sent when selecting a keyword, to check the validity.
+		/// </summary>
+		/// <remarks>
+		/// Client blocks until the server answers it.
+		/// </remarks>
+		/// <example>
+		/// 001 [................] String : personal_info
+		/// </example>
+		[PacketHandler(Op.NpcTalkKeyword)]
+		public void NpcTalkKeyword(ChannelClient client, Packet packet)
+		{
+			var keyword = packet.GetString();
+
+			var character = client.GetPlayerCreature(packet.Id);
+			if (character == null)
+				return;
+
+			// Check session
+			if (!client.NpcSession.IsValid())
+			{
+				Send.NpcTalkKeywordR_Fail(character);
+				Log.Warning("Player '{0}' sent a keyword without valid NPC session.", character.Name);
+				return;
+			}
+
+			// TODO: Actually check keyword
+			//if(character doesn't have keyword)
+			//	Send.NpcTalkKeywordR_Fail(character);
+
+			Send.NpcTalkKeywordR(character, keyword);
 		}
 	}
 }
