@@ -1,18 +1,17 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Aura.Shared.Util;
-using Aura.Channel.World.Entities;
 using Aura.Channel.World;
+using Aura.Channel.World.Entities;
+using Aura.Data;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
 {
 	public abstract partial class BaseScript
 	{
+		private const int PropDropRadius = 50;
+
 		/// <summary>
 		/// Creates prop and spawns it.
 		/// </summary>
@@ -45,6 +44,47 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 
 			prop.Behavior = behavior;
+		}
+
+		// Behaviors
+		// ------------------------------------------------------------------
+
+		protected PropFunc PropDrop(int dropType)
+		{
+			return (creature, prop) =>
+			{
+				//if (RandomProvider.Get().NextDouble() > ChannelServer.Instance.Conf.World.PropDropRate)
+				//    return;
+
+				var dropInfo = AuraData.PropDropDb.Find(dropType);
+				if (dropInfo == null)
+				{
+					Log.Warning("PropDrop Behavior: Unknown prop drop type '{0}'.", dropType);
+					return;
+				}
+
+				var rnd = RandomProvider.Get();
+				var pos = creature.GetPosition();
+
+				// Get random item from potential drops
+				var dropItemInfo = dropInfo.GetRndItem(rnd);
+				var item = new Item(dropItemInfo.ItemClass);
+				item.Info.Amount = dropItemInfo.Amount > 1 ? (ushort)rnd.Next(1, dropItemInfo.Amount) : (ushort)1;
+
+				// Get random drop position
+				var x = rnd.Next(pos.X - PropDropRadius, pos.X + PropDropRadius + 1);
+				var y = rnd.Next(pos.Y - PropDropRadius, pos.Y + PropDropRadius + 1);
+
+				prop.Region.DropItem(item, x, y);
+			};
+		}
+
+		protected PropFunc PropWarp(int region, int x, int y)
+		{
+			return (creature, prop) =>
+			{
+				creature.Warp(region, x, y);
+			};
 		}
 	}
 }

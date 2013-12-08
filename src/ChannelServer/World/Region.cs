@@ -52,7 +52,6 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Adds creature to region, sends EntityAppears.
 		/// </summary>
-		/// <param name="creature"></param>
 		public void AddCreature(Creature creature)
 		{
 			lock (_creatures)
@@ -72,7 +71,6 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Removes creature from region, sends EntityDisappears.
 		/// </summary>
-		/// <param name="creature"></param>
 		public void RemoveCreature(Creature creature)
 		{
 			lock (_creatures)
@@ -89,8 +87,6 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Returns creature with entityId, or null, if it doesn't exist.
 		/// </summary>
-		/// <param name="entityId"></param>
-		/// <returns></returns>
 		public Creature GetCreature(long entityId)
 		{
 			Creature creature;
@@ -102,8 +98,6 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Returns NPC with entityId, or null, if no NPC with that id exists.
 		/// </summary>
-		/// <param name="entityId"></param>
-		/// <returns></returns>
 		public NPC GetNpc(long entityId)
 		{
 			return this.GetCreature(entityId) as NPC;
@@ -112,7 +106,6 @@ namespace Aura.Channel.World
 		/// <summary>
 		///  Spawns prop, sends EntityAppears.
 		/// </summary>
-		/// <param name="prop"></param>
 		public void AddProp(Prop prop)
 		{
 			lock (_props)
@@ -126,7 +119,6 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Despawns prop, sends EntityDisappears.
 		/// </summary>
-		/// <param name="creature"></param>
 		public void RemoveProp(Prop prop)
 		{
 			if (!prop.ServerSide)
@@ -146,7 +138,6 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Returns prop or null.
 		/// </summary>
-		/// <param name="creature"></param>
 		public Prop GetProp(long entityId)
 		{
 			Prop result;
@@ -156,11 +147,57 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		///  Adds item, sends EntityAppears.
+		/// </summary>
+		public void AddItem(Item item)
+		{
+			lock (_items)
+				_items.Add(item.EntityId, item);
+
+			item.Region = this;
+
+			Send.EntityAppears(item);
+		}
+
+		/// <summary>
+		/// Despawns item, sends EntityDisappears.
+		/// </summary>
+		public void RemoveItem(Item item)
+		{
+			lock (_items)
+				_items.Remove(item.EntityId);
+
+			Send.EntityDisappears(item);
+
+			item.Region = null;
+		}
+
+		/// <summary>
+		/// Returns item or null.
+		/// </summary>
+		public Item GetItem(long entityId)
+		{
+			Item result;
+			lock (_items)
+				_items.TryGetValue(entityId, out result);
+			return result;
+		}
+
+		/// <summary>
+		/// Drops item into region and makes it disappear after x seconds.
+		/// Sends EntityAppears.
+		/// </summary>
+		public void DropItem(Item item, int x, int y)
+		{
+			item.Move(this.Id, x, y);
+			item.DisappearTime = DateTime.Now.AddSeconds(Math.Max(60, (item.OptionInfo.Price / 100) * 60));
+
+			this.AddItem(item);
+		}
+
+		/// <summary>
 		/// Returns new list of all entities within range of source.
 		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="range"></param>
-		/// <returns></returns>
 		public List<Entity> GetEntitiesInRange(Entity source, int range = -1)
 		{
 			if (range < 0)
@@ -176,11 +213,7 @@ namespace Aura.Channel.World
 
 			// All props spawned by the server, without range check.
 			lock (_props)
-			{
-				foreach (var prop in _props.Values.Where(a => a.ServerSide))
-					Log.Debug(prop);
 				result.AddRange(_props.Values.Where(a => a.ServerSide));
-			}
 
 			return result;
 		}
@@ -188,12 +221,11 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Broadcasts packet in region.
 		/// </summary>
-		/// <param name="packet"></param>
 		public void Broadcast(Packet packet)
 		{
 			lock (_creatures)
 			{
-				// TODO: Don't send to the same client twice
+				// TODO: Don't send to the same client twice (pets)
 				foreach (var creature in _creatures.Values)
 					creature.Client.Send(packet);
 			}
@@ -202,10 +234,6 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Broadcasts packet to all creatures in range of source.
 		/// </summary>
-		/// <param name="packet"></param>
-		/// <param name="source"></param>
-		/// <param name="sendToSource"></param>
-		/// <param name="range"></param>
 		public void Broadcast(Packet packet, Entity source, bool sendToSource = true, int range = -1)
 		{
 			if (range < 0)
@@ -215,7 +243,7 @@ namespace Aura.Channel.World
 
 			lock (_creatures)
 			{
-				// TODO: Don't send to the same client twice
+				// TODO: Don't send to the same client twice (pets)
 				foreach (var creature in _creatures.Values.Where(a => a.GetPosition().InRange(pos, range)))
 				{
 					if (creature == source && !sendToSource)

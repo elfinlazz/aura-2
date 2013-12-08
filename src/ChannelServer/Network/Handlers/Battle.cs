@@ -67,14 +67,24 @@ namespace Aura.Channel.Network.Handlers
 			}
 			else
 			{
-				Send.HittingProp(creature, prop.EntityId);
-
-				if (prop.Behavior != null)
+				if (creature.GetPosition().InRange(prop.GetPosition(), 400))
 				{
-					prop.Behavior(creature, prop);
+					Send.HittingProp(creature, prop.EntityId);
+
+					if (prop.Behavior != null)
+					{
+						prop.Behavior(creature, prop);
+					}
+					else
+					{
+						Log.Unimplemented("No prop behavior for '{0}'.", prop.EntityIdHex);
+					}
 				}
 				else
-					Log.Unimplemented("No prop behavior for '{0}'.", prop.EntityIdHex);
+				{
+					Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("world.too_far"));
+					Log.Warning("Player '{0}' tried to hit prop out of range.", creature.Name);
+				}
 			}
 
 			Send.HitPropR(creature);

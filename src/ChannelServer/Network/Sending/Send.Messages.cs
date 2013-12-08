@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -133,6 +134,37 @@ namespace Aura.Channel.Network.Sending
 
 			packet.PutByte((byte)buttons);
 			packet.PutByte((byte)align);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends Notice to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="type"></param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public static void Notice(Creature creature, NoticeType type, string format, params object[] args)
+		{
+			Notice(creature, type, 0, format, args);
+		}
+
+		/// <summary>
+		/// Sends Notice to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="type"></param>
+		/// <param name="duration"></param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public static void Notice(Creature creature, NoticeType type, int duration, string format, params object[] args)
+		{
+			var packet = new Packet(Op.Notice, MabiId.Broadcast);
+			packet.PutByte((byte)type);
+			packet.PutString(string.Format(format, args));
+			if (duration > 0)
+				packet.PutInt(duration);
 
 			creature.Client.Send(packet);
 		}

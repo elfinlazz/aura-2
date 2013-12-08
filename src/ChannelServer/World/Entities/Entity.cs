@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Channel.World.Entities
 {
 	/// <summary>
@@ -16,6 +18,8 @@ namespace Aura.Channel.World.Entities
 
 		public abstract EntityType EntityType { get; }
 		public abstract DataType DataType { get; }
+
+		public DateTime DisappearTime { get; set; }
 
 		public abstract Position GetPosition();
 	}

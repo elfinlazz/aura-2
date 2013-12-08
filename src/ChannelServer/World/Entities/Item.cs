@@ -9,11 +9,14 @@ using Aura.Shared.Mabi.Structs;
 using Aura.Data.Database;
 using Aura.Data;
 using Aura.Shared.Mabi.Const;
+using System.Threading;
 
 namespace Aura.Channel.World.Entities
 {
 	public class Item : Entity
 	{
+		private static long _itemId = MabiId.TmpItems;
+
 		public override EntityType EntityType { get { return EntityType.Item; } }
 		public override DataType DataType { get { return DataType.Item; } }
 		public override int RegionId
@@ -52,6 +55,7 @@ namespace Aura.Channel.World.Entities
 
 		public Item(int itemId)
 		{
+			this.EntityId = Interlocked.Increment(ref _itemId);
 			this.Info.Id = itemId;
 
 			this.Data = AuraData.ItemDb.Find(itemId);

@@ -38,6 +38,6 @@ public class PropSpawnTest : BaseScript
 {
 	public override void Load()
 	{
-		SpawnProp(1, 1, 12000, 38000, 0);
+		SpawnProp(1, 1, 12000, 38000, 0, PropDrop(2));
 	}
 }
