@@ -8,6 +8,8 @@ using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
+using Aura.Channel.World;
+using System.Collections.Generic;
 
 namespace Aura.Channel.Util
 {
@@ -16,17 +18,17 @@ namespace Aura.Channel.Util
 		public GmCommandManager()
 		{
 			// Players
-			Add(00, "where", "", HandleWhere);
+			Add(00, 40, "where", "", HandleWhere);
 
 			// VIPs
-			Add(01, "go", "<location>", HandleGo);
+			Add(01, 40, "go", "<location>", HandleGo);
 
 			// GMs
-			Add(40, "warp", "<region> [x] [y]", HandleWarp);
-			Add(40, "jump", "[x] [y]", HandleWarp);
+			Add(40, 40, "warp", "<region> [x] [y]", HandleWarp);
+			Add(40, 40, "jump", "[x] [y]", HandleWarp);
 
 			// Admins
-			Add(99, "test", "", HandleTest);
+			Add(99, 99, "test", "", HandleTest);
 		}
 
 		// ------------------------------------------------------------------
@@ -40,7 +42,19 @@ namespace Aura.Channel.Util
 		/// <param name="func"></param>
 		public void Add(int auth, string name, string usage, GmCommandFunc func)
 		{
-			this.Add(new GmCommand(auth, name, usage, func));
+			this.Add(auth, 100, name, usage, func);
+		}
+
+		/// <summary>
+		/// Adds new command.
+		/// </summary>
+		/// <param name="auth"></param>
+		/// <param name="name"></param>
+		/// <param name="usage"></param>
+		/// <param name="func"></param>
+		public void Add(int auth, int charAuth, string name, string usage, GmCommandFunc func)
+		{
+			this.Add(new GmCommand(auth, charAuth, name, usage, func));
 		}
 
 		/// <summary>
@@ -71,21 +85,47 @@ namespace Aura.Channel.Util
 			if (message.Length < 2 || !message.StartsWith(ChannelServer.Instance.Conf.Commands.Prefix.ToString()))
 				return false;
 
+			// Parse arguments
 			var args = this.ParseLine(message);
 			args[0].TrimStart(ChannelServer.Instance.Conf.Commands.Prefix);
-			var command = this.GetCommand(args[0]);
 
-			if (command == null || client.Account.Authority < command.Auth)
+			// Handle char commands
+			var sender = creature;
+			var target = creature;
+			var charCommand = message.StartsWith(ChannelServer.Instance.Conf.Commands.Prefix2);
+			if (charCommand)
+			{
+				// Get target player
+				if (args.Length < 2 || (target == WorldManager.Instance.GetPlayer(args[1])))
+				{
+					Send.ServerMessage(creature, "Target not found.");
+					return true;
+				}
+
+				// =/
+				var tmp = new List<string>(args);
+				tmp.RemoveAt(1);
+				args = tmp.ToArray();
+			}
+
+			// Check command
+			var command = this.GetCommand(args[0]);
+			if (command == null || ((!charCommand && client.Account.Authority < command.Auth) || (charCommand && client.Account.Authority < command.CharAuth)))
 			{
 				Send.ServerMessage(creature, "Unknown command '{0}'.", args[0]);
 				return true;
 			}
 
-			var result = command.Func(client, creature, creature, message, args);
+			// Run
+			var result = command.Func(client, sender, target, message, args);
 
+			// Handle result
 			if (result == CommandResult.InvalidArgument)
 			{
 				Send.ServerMessage(creature, "Usage: {0} {1}", command.Name, command.Usage);
+				if (command.CharAuth < 100)
+					Send.ServerMessage(creature, "Usage: {0} <target> {1}", command.Name, command.Usage);
+
 				return true;
 			}
 
@@ -223,11 +263,13 @@ namespace Aura.Channel.Util
 	public class GmCommand : Command<GmCommandFunc>
 	{
 		public int Auth { get; private set; }
+		public int CharAuth { get; private set; }
 
-		public GmCommand(int auth, string name, string usage, GmCommandFunc func)
+		public GmCommand(int auth, int charAuth, string name, string usage, GmCommandFunc func)
 			: base(name, usage, "", func)
 		{
 			this.Auth = auth;
+			this.CharAuth = charAuth;
 		}
 	}
 

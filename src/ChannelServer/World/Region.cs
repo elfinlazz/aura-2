@@ -104,6 +104,16 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns first player creature with the given name, or null.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public PlayerCreature GetPlayer(string name)
+		{
+			return _creatures.Values.FirstOrDefault(a => a is PlayerCreature && a.Name == name) as PlayerCreature;
+		}
+
+		/// <summary>
 		///  Spawns prop, sends EntityAppears.
 		/// </summary>
 		public void AddProp(Prop prop)

@@ -8,12 +8,14 @@ namespace Aura.Channel.Util.Configuration.Files
 	public class CommandsConfFile : ConfFile
 	{
 		public char Prefix { get; protected set; }
+		public string Prefix2 { get; protected set; }
 
 		public void Load()
 		{
 			this.RequireAndInclude("{0}/conf/commands.conf", "system", "user");
 
 			this.Prefix = this.GetString("commands.prefix", ">")[0];
+			this.Prefix2 = new string(this.Prefix, 2);
 		}
 	}
 }

@@ -85,5 +85,22 @@ namespace Aura.Channel.World
 
 			return null;
 		}
+
+		/// <summary>
+		/// Returns player creature with the given name, or null.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public PlayerCreature GetPlayer(string name)
+		{
+			foreach (var region in _regions.Values)
+			{
+				var creature = region.GetPlayer(name);
+				if (creature != null)
+					return creature;
+			}
+
+			return null;
+		}
 	}
 }
