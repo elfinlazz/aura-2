@@ -57,8 +57,8 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			return (creature, prop) =>
 			{
-				//if (RandomProvider.Get().NextDouble() > ChannelServer.Instance.Conf.World.PropDropRate)
-				//    return;
+				if (RandomProvider.Get().NextDouble() > ChannelServer.Instance.Conf.World.PropDropRate)
+					return;
 
 				var dropInfo = AuraData.PropDropDb.Find(dropType);
 				if (dropInfo == null)

@@ -121,6 +121,7 @@
     <Compile Include="Util\ChannelConsoleCommands.cs" />
     <Compile Include="Util\Configuration\Files\Channel.cs" />
     <Compile Include="Util\Configuration\Files\Commands.cs" />
+    <Compile Include="Util\Configuration\Files\World.cs" />
     <Compile Include="Util\GmCommands.cs" />
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\Creature.cs" />

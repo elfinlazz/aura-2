@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Globalization;
 
 namespace Aura.Shared.Util.Configuration
 {
@@ -218,6 +219,30 @@ namespace Aura.Shared.Util.Configuration
 				return defaultValue;
 
 			return value;
+		}
+
+		/// <summary>
+		/// Returns the option as float, or the default value, if the option
+		/// doesn't exist.
+		/// </summary>
+		/// <param name="option"></param>
+		/// <param name="defaultValue"></param>
+		/// <returns></returns>
+		public float GetFloat(string option, float defaultValue = 0)
+		{
+			string value;
+			if (!_options.TryGetValue(option, out value))
+				return defaultValue;
+
+			try
+			{
+				return float.Parse(value, CultureInfo.InvariantCulture);
+			}
+			catch
+			{
+				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
+				return defaultValue;
+			}
 		}
 	}
 }
