@@ -6,24 +6,24 @@ using System.Linq;
 
 namespace Aura.Data.Database
 {
-	public class SkillInfo
+	public class SkillData
 	{
 		public ushort Id { get; internal set; }
 		public string Name { get; internal set; }
 		public ushort MasterTitle { get; internal set; }
 
-		public List<SkillRankInfo> RankInfo { get; internal set; }
+		public List<SkillRankData> RankInfo { get; internal set; }
 
-		public SkillInfo()
+		public SkillData()
 		{
-			this.RankInfo = new List<SkillRankInfo>();
+			this.RankInfo = new List<SkillRankData>();
 		}
 
-		public SkillRankInfo GetRankInfo(byte level, int race)
+		public SkillRankData GetRankInfo(byte level, int race)
 		{
 			race = race & ~3;
 
-			SkillRankInfo info;
+			SkillRankData info;
 			if ((info = this.RankInfo.FirstOrDefault(a => a.Rank == level && a.Race == race)) == null)
 			{
 				if ((info = this.RankInfo.FirstOrDefault(a => a.Rank == level && a.Race == 0)) == null)
@@ -40,9 +40,9 @@ namespace Aura.Data.Database
 	/// Indexed by skill id.
 	/// Depends on: SkillRankDb
 	/// </summary>
-	public class SkillDb : DatabaseCSVIndexed<ushort, SkillInfo>
+	public class SkillDb : DatabaseCSVIndexed<ushort, SkillData>
 	{
-		public List<SkillInfo> FindAll(string name)
+		public List<SkillData> FindAll(string name)
 		{
 			name = name.ToLower();
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
@@ -53,7 +53,7 @@ namespace Aura.Data.Database
 			if (entry.Count < 3)
 				throw new FieldCountException(3);
 
-			var info = new SkillInfo();
+			var info = new SkillData();
 			info.Id = entry.ReadUShort();
 			info.Name = entry.ReadString();
 			info.MasterTitle = entry.ReadUShort();

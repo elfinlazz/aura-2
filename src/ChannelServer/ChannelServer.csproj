@@ -117,6 +117,9 @@
     <Compile Include="Scripting\Compilers\CompilerErrors.cs" />
     <Compile Include="Scripting\Compilers\CSharpCompiler.cs" />
     <Compile Include="Scripting\ScriptManager.cs" />
+    <Compile Include="Skills\Base\Interfaces.cs" />
+    <Compile Include="Skills\Skill.cs" />
+    <Compile Include="Skills\SkillManager.cs" />
     <Compile Include="Util\Configuration\ChannelConf.cs" />
     <Compile Include="Util\ChannelConsoleCommands.cs" />
     <Compile Include="Util\Configuration\Files\Channel.cs" />

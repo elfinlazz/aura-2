@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Aura.Data.Database
 {
-	public class SkillRankInfo
+	public class SkillRankData
 	{
 		public ushort SkillId { get; internal set; }
 		public int Race { get; internal set; }
@@ -60,7 +60,7 @@ namespace Aura.Data.Database
 		public float Var9 { get; internal set; }
 	}
 
-	public class SkillRankDb : DatabaseCSV<SkillRankInfo>
+	public class SkillRankDb : DatabaseCSV<SkillRankData>
 	{
 		public override int Load(string path, bool clear)
 		{
@@ -96,7 +96,7 @@ namespace Aura.Data.Database
 			}
 		}
 
-		public SkillRankInfo Find(ushort id, byte rank)
+		public SkillRankData Find(ushort id, byte rank)
 		{
 			return this.Entries.FirstOrDefault(a => a.SkillId == id && a.Rank == rank);
 		}
@@ -106,7 +106,7 @@ namespace Aura.Data.Database
 			if (entry.Count < 36)
 				throw new FieldCountException(36);
 
-			var info = new SkillRankInfo();
+			var info = new SkillRankData();
 			info.SkillId = entry.ReadUShort();
 			info.Race = entry.ReadInt();
 			info.Rank = entry.ReadByte();
