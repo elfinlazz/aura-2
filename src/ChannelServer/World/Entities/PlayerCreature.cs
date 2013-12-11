@@ -66,7 +66,7 @@ namespace Aura.Channel.World.Entities
 			Send.EntitiesAppear(this.Client, appear);
 			Send.EntitiesDisappear(this.Client, disappear);
 
-			_visibleEntities = currentlyVisible.ToList();
+			_visibleEntities = currentlyVisible;
 		}
 	}
 }

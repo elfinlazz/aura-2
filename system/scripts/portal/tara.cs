@@ -1,0 +1,48 @@
+using Aura.Channel.Scripting.Scripts;
+
+public class TaraPortals : BaseScript
+{
+	public override void Load()
+	{
+		SetPropBehavior(45037770095198216, PropWarp(401, 122834, 126325));
+		SetPropBehavior(45037770095198217, PropWarp(401, 117861, 124277));
+		SetPropBehavior(45037722850754562, PropWarp(401, 139396, 58779));
+		SetPropBehavior(45037761505263626, PropWarp(401, 116939, 118567));
+		SetPropBehavior(45037761505263627, PropWarp(401, 112409, 118820));
+		SetPropBehavior(45037714260951129, PropWarp(401, 71375, 137967));
+		SetPropBehavior(45037718556180493, PropWarp(400, 57651, 32144));
+		SetPropBehavior(45037718556966913, PropWarp(402, 17539, 16841));
+		SetPropBehavior(45037718556770460, PropWarp(413, 9814, 10399));
+		SetPropBehavior(45037718556770842, PropWarp(411, 11298, 8055));
+		SetPropBehavior(45037718556770851, PropWarp(411, 8891, 6722));
+		SetPropBehavior(45037718556378126, PropWarp(421, 3005, 4504));
+		SetPropBehavior(45037718556378141, PropWarp(421, 5701, 6675));
+		SetPropBehavior(45037718556770428, PropWarp(413, 9198, 8466));
+		SetPropBehavior(45037718556115105, PropWarp(428, 65509, 109496));
+		SetPropBehavior(45037718556115173, PropWarp(428, 69845, 113261));
+		SetPropBehavior(45037718556115301, PropWarp(428, 72940, 110772));
+		SetPropBehavior(45037718556115366, PropWarp(428, 75455, 107670));
+		SetPropBehavior(45037718556115426, PropWarp(428, 71657, 103338));
+		SetPropBehavior(45037718556705774, PropWarp(429, 1361, 2609));
+		SetPropBehavior(45037718556705793, PropWarp(430, 1346, 1595));
+		SetPropBehavior(45037718556705794, PropWarp(431, 759, 2078));
+		SetPropBehavior(45037718556705187, PropWarp(434, 2073, 891));
+		SetPropBehavior(45037718556705779, PropWarp(435, 2128, 1330));
+		SetPropBehavior(45037718556704924, PropWarp(432, 1945, 1010));
+		SetPropBehavior(45037718556705780, PropWarp(433, 1317, 2511));
+		SetPropBehavior(45037834519838812, PropWarp(401, 65509, 109496));
+		SetPropBehavior(45037834519838861, PropWarp(401, 69845, 113261));
+		SetPropBehavior(45037834519838956, PropWarp(401, 72940, 110772));
+		SetPropBehavior(45037834519839010, PropWarp(401, 75455, 107670));
+		SetPropBehavior(45037834519839044, PropWarp(401, 71657, 103338));
+		SetPropBehavior(45037804455002143, PropWarp(401, 86001, 85150));
+		SetPropBehavior(45037804455002144, PropWarp(401, 87916, 82398));
+		SetPropBehavior(45037838814740486, PropWarp(401, 108600, 86429));
+		SetPropBehavior(45037843109773314, PropWarp(401, 112250, 87350));
+		SetPropBehavior(45037847404675074, PropWarp(401, 109808, 94600));
+		SetPropBehavior(45037860289576965, PropWarp(401, 105675, 84315));
+		SetPropBehavior(45037864584544261, PropWarp(401, 107778, 84332));
+		SetPropBehavior(45037851699642374, PropWarp(401, 108673, 84342));
+		SetPropBehavior(45037855994609667, PropWarp(401, 111306, 83830));
+	}
+}

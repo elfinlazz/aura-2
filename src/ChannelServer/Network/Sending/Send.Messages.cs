@@ -145,6 +145,18 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="type"></param>
 		/// <param name="format"></param>
 		/// <param name="args"></param>
+		public static void Notice(Creature creature, string format, params object[] args)
+		{
+			Notice(creature, NoticeType.Middle, 0, format, args);
+		}
+
+		/// <summary>
+		/// Sends Notice to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="type"></param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
 		public static void Notice(Creature creature, NoticeType type, string format, params object[] args)
 		{
 			Notice(creature, type, 0, format, args);

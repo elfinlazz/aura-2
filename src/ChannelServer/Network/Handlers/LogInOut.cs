@@ -107,7 +107,8 @@ namespace Aura.Channel.Network.Handlers
 			else
 				Send.WarpRegion(creature);
 
-			Send.EntitiesAppear(client, region.GetEntitiesInRange(creature));
+			// Automatically done by the world update
+			//Send.EntitiesAppear(client, region.GetEntitiesInRange(creature));
 		}
 
 		/// <summary>

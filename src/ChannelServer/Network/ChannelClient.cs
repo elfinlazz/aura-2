@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Linq;
 using System.Collections.Generic;
 using Aura.Channel.Database;
 using Aura.Channel.Scripting;
@@ -38,6 +39,12 @@ namespace Aura.Channel.Network
 		{
 			return this.GetCreature(id) as PlayerCreature;
 		}
+
+		protected override void CleanUp()
+		{
+			foreach (var creature in this.Creatures.Values.Where(a => a.Region != null))
+				creature.Region.RemoveCreature(creature);
+		}
 	}
 
 	/// <summary>
@@ -53,6 +60,9 @@ namespace Aura.Channel.Network
 		{ }
 
 		public override void Kill()
+		{ }
+
+		protected override void CleanUp()
 		{ }
 	}
 }

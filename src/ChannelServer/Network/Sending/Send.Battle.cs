@@ -36,35 +36,5 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
-
-		/// <summary>
-		/// Broadcasts HittingProp in range of creature.
-		/// </summary>
-		/// <param name="creature"></param>
-		public static void HittingProp(Creature creature, long propEntityId)
-		{
-			var pos = creature.GetPosition();
-
-			var packet = new Packet(Op.HittingProp, creature.EntityId);
-			packet.PutLong(propEntityId);
-			packet.PutInt(2000);
-			packet.PutFloat(pos.X);
-			packet.PutFloat(pos.Y);
-
-			creature.Region.Broadcast(packet, creature);
-		}
-
-		/// <summary>
-		/// Sends HitPropR to creature's client.
-		/// </summary>
-		/// <param name="creature"></param>
-		/// <param name="propEntityId"></param>
-		public static void HitPropR(Creature creature)
-		{
-			var packet = new Packet(Op.HitPropR, creature.EntityId);
-			packet.PutByte(true);
-
-			creature.Client.Send(packet);
-		}
 	}
 }

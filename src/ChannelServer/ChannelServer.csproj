@@ -92,11 +92,13 @@
     <Compile Include="Network\Handlers\Battle.cs" />
     <Compile Include="Network\Handlers\Chat.cs" />
     <Compile Include="Network\Handlers\Internal.cs" />
+    <Compile Include="Network\Handlers\Props.cs" />
     <Compile Include="Network\Handlers\Skills.cs" />
     <Compile Include="Network\Handlers\LogInOut.cs" />
     <Compile Include="Network\Handlers\Misc.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Handlers\NPCs.cs" />
+    <Compile Include="Network\Sending\Send.Props.cs" />
     <Compile Include="Network\Sending\Send.Misc.cs" />
     <Compile Include="Network\Sending\Send.Battle.cs" />
     <Compile Include="Network\Sending\Send.Creature.cs" />

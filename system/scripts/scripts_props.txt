@@ -1,0 +1,32 @@
+// Aura
+// NPC list file
+//
+// All NPCs listed here will be loaded.
+//---------------------------------------------------------------------------
+
+//===========================================================================
+// Portals                                                                  |
+//===========================================================================
+portal/tir.cs
+portal/dunbarton.cs
+portal/bangor.cs
+portal/taillteann.cs
+portal/tara.cs
+portal/rano.cs
+portal/connous.cs
+portal/physis.cs
+portal/zardine.cs
+portal/courcle.cs
+portal/unsorted.cs
+
+//===========================================================================
+// Drops                                                                    |
+//===========================================================================
+prop/drops.cs
+
+//===========================================================================
+// Others                                                                   |
+//===========================================================================
+//prop/arena.cs
+//prop/moongates_new.cs
+//prop/sealstones.cs
