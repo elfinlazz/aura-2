@@ -92,6 +92,7 @@
     <Compile Include="Network\Handlers\Battle.cs" />
     <Compile Include="Network\Handlers\Chat.cs" />
     <Compile Include="Network\Handlers\Internal.cs" />
+    <Compile Include="Network\Handlers\Skills.cs" />
     <Compile Include="Network\Handlers\LogInOut.cs" />
     <Compile Include="Network\Handlers\Misc.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Scripting\Compilers\CSharpCompiler.cs" />
     <Compile Include="Scripting\ScriptManager.cs" />
     <Compile Include="Skills\Base\Interfaces.cs" />
+    <Compile Include="Skills\Life\Rest.cs" />
     <Compile Include="Skills\Skill.cs" />
     <Compile Include="Skills\SkillManager.cs" />
     <Compile Include="Util\Configuration\ChannelConf.cs" />

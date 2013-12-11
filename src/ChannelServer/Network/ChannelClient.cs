@@ -13,7 +13,10 @@ namespace Aura.Channel.Network
 	{
 		public Account Account { get; set; }
 
-		//public PlayerCreature Character { get; set; }
+		/// <summary>
+		/// Main creature this client controls.
+		/// </summary>
+		public Creature Controlling { get; set; }
 		public Dictionary<long, Creature> Creatures { get; protected set; }
 
 		public NpcSession NpcSession { get; set; }

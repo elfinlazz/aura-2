@@ -75,6 +75,16 @@ namespace Aura.Shared.Mabi
 		/// </summary>
 		public bool IsMidnight { get { return (this.Hour == 0 && this.Minute == 0); } }
 
+		/// <summary>
+		/// Returns true if time of this instance is 6:00am.
+		/// </summary>
+		public bool IsDawn { get { return (this.Hour == 6 && this.Minute == 0); } }
+
+		/// <summary>
+		/// Returns true if time of this instance is 6:00pm.
+		/// </summary>
+		public bool IsDusk { get { return (this.Hour == 18 && this.Minute == 0); } }
+
 		public ErinnTime() : this(DateTime.Now) { }
 
 		public ErinnTime(DateTime dt)

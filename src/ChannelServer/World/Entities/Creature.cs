@@ -335,6 +335,5 @@ namespace Aura.Channel.World.Entities
 		public bool Has(CreatureConditionC condition) { return ((this.Conditions.C & condition) != 0); }
 		public bool Has(CreatureConditionD condition) { return ((this.Conditions.D & condition) != 0); }
 		public bool Has(CreatureStates state) { return ((this.State & state) != 0); }
-
 	}
 }

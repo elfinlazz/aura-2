@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Collections.Generic;
+using System.Linq;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
-using System.Collections.Generic;
-using Aura.Shared.Util;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -46,10 +46,19 @@ namespace Aura.Channel.Network.Sending
 			entity.Region.Broadcast(packet, entity, false);
 		}
 
-		public static void EntitiesAppear(ChannelClient client, IList<Entity> entities)
+		/// <summary>
+		/// Sends EntitiesAppear to client, unless entities is empty.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="entities"></param>
+		public static void EntitiesAppear(ChannelClient client, IEnumerable<Entity> entities)
 		{
+			var count = (short)entities.Count();
+			if (count < 1)
+				return;
+
 			var packet = new Packet(Op.EntitiesAppear, MabiId.Broadcast);
-			packet.PutShort((short)entities.Count);
+			packet.PutShort(count);
 			foreach (var entity in entities)
 			{
 				var data = Packet.Empty().AddPublicEntityInfo(entity).Build(false);
@@ -57,6 +66,28 @@ namespace Aura.Channel.Network.Sending
 				packet.PutShort((short)entity.DataType);
 				packet.PutInt(data.Length);
 				packet.PutBin(data);
+			}
+
+			client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends EntitiesDisappear to client, unless entities is empty.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="entities"></param>
+		public static void EntitiesDisappear(ChannelClient client, IEnumerable<Entity> entities)
+		{
+			var count = (short)entities.Count();
+			if (count < 1)
+				return;
+
+			var packet = new Packet(Op.EntitiesDisappear, MabiId.Broadcast);
+			packet.PutShort(count);
+			foreach (var entity in entities)
+			{
+				packet.PutShort((short)entity.DataType);
+				packet.PutLong(entity.EntityId);
 			}
 
 			client.Send(packet);

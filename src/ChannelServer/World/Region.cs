@@ -4,23 +4,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Aura.Channel.World.Entities;
-using Aura.Shared.Util;
-using Aura.Shared.Network;
+using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
-using Aura.Shared.Mabi.Const;
+using Aura.Channel.World.Entities;
 using Aura.Data;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Network;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World
 {
 	public class Region
 	{
+		// TODO: Data?
+		public const int VisibleRange = 5000;
+
 		public int Id { get; protected set; }
 
 		protected Dictionary<long, Creature> _creatures;
 		protected Dictionary<long, Prop> _props;
 		protected Dictionary<long, Item> _items;
+
+		protected HashSet<ChannelClient> _clients;
 
 		public Region(int id)
 		{
@@ -29,6 +34,8 @@ namespace Aura.Channel.World
 			_creatures = new Dictionary<long, Creature>();
 			_props = new Dictionary<long, Prop>();
 			_items = new Dictionary<long, Item>();
+
+			_clients = new HashSet<ChannelClient>();
 
 			this.LoadClientProps();
 		}
@@ -50,6 +57,95 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Updates all entites, removing dead ones, updating visibility, etc.
+		/// </summary>
+		public void UpdateEntities()
+		{
+			this.RemoveOverdueEntities();
+			this.UpdateVisibility();
+		}
+
+		/// <summary>
+		/// Removes expired entities. 
+		/// </summary>
+		private void RemoveOverdueEntities()
+		{
+			var now = DateTime.Now;
+
+			// Get all expired entities
+			var disappear = new List<Entity>();
+			lock (_creatures)
+				disappear.AddRange(_creatures.Values.Where(a => a.DisappearTime > DateTime.MinValue && a.DisappearTime < now));
+			lock (_items)
+				disappear.AddRange(_items.Values.Where(a => a.DisappearTime > DateTime.MinValue && a.DisappearTime < now));
+			lock (_props)
+				disappear.AddRange(_props.Values.Where(a => a.DisappearTime > DateTime.MinValue && a.DisappearTime < now));
+
+			// Remove them from the region
+			foreach (var entity in disappear)
+			{
+				if (entity.DataType == DataType.Creature)
+				{
+					this.RemoveCreature(entity as Creature);
+
+					// Respawn
+					//var npc = entity as NPC;
+					//if (npc != null && npc.SpawnId > 0)
+					//{
+					//    ScriptManager.Instance.Spawn(npc.SpawnId, 1);
+					//}
+				}
+				else if (entity.DataType == DataType.Item)
+				{
+					this.RemoveItem(entity as Item);
+				}
+				else if (entity.DataType == DataType.Prop)
+				{
+					this.RemoveProp(entity as Prop);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Updates visible entities on all clients.
+		/// </summary>
+		private void UpdateVisibility()
+		{
+			lock (_creatures)
+			{
+				foreach (var creature in _creatures.Values)
+				{
+					var pc = creature as PlayerCreature;
+
+					// Only update player creatures
+					if (pc == null)
+						continue;
+
+					pc.LookAround();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns a list of visible entities, from the view point of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		public List<Entity> GetVisibleEntities(Creature creature)
+		{
+			var result = new List<Entity>();
+			var pos = creature.GetPosition();
+
+			lock (_creatures)
+				result.AddRange(_creatures.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange) && !a.Has(CreatureConditionA.Invisible)));
+			lock (_props)
+				result.AddRange(_props.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange)));
+			lock (_items)
+				result.AddRange(_items.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange)));
+
+			return result;
+		}
+
+		/// <summary>
 		/// Adds creature to region, sends EntityAppears.
 		/// </summary>
 		public void AddCreature(Creature creature)
@@ -61,6 +157,13 @@ namespace Aura.Channel.World
 				creature.Region.RemoveCreature(creature);
 
 			creature.Region = this;
+
+			// Save reference to client if it's controlling mainly this creature.
+			if (creature.Client.Controlling == creature)
+			{
+				lock (_clients)
+					_clients.Add(creature.Client);
+			}
 
 			Send.EntityAppears(creature);
 
@@ -79,6 +182,9 @@ namespace Aura.Channel.World
 			Send.EntityDisappears(creature);
 
 			creature.Region = null;
+
+			lock (_clients)
+				_clients.Remove(creature.Client);
 
 			if (creature.EntityId < MabiId.Npcs)
 				Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
@@ -211,7 +317,7 @@ namespace Aura.Channel.World
 		public List<Entity> GetEntitiesInRange(Entity source, int range = -1)
 		{
 			if (range < 0)
-				range = 2500;
+				range = VisibleRange;
 
 			var result = new List<Entity>();
 
@@ -233,11 +339,10 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void Broadcast(Packet packet)
 		{
-			lock (_creatures)
+			lock (_clients)
 			{
-				// TODO: Don't send to the same client twice (pets)
-				foreach (var creature in _creatures.Values)
-					creature.Client.Send(packet);
+				foreach (var client in _clients)
+					client.Send(packet);
 			}
 		}
 
@@ -247,19 +352,21 @@ namespace Aura.Channel.World
 		public void Broadcast(Packet packet, Entity source, bool sendToSource = true, int range = -1)
 		{
 			if (range < 0)
-				range = 2500; // TODO: read from region data
+				range = VisibleRange;
 
 			var pos = source.GetPosition();
 
-			lock (_creatures)
+			lock (_clients)
 			{
-				// TODO: Don't send to the same client twice (pets)
-				foreach (var creature in _creatures.Values.Where(a => a.GetPosition().InRange(pos, range)))
+				foreach (var client in _clients)
 				{
-					if (creature == source && !sendToSource)
+					if (!client.Controlling.GetPosition().InRange(pos, range))
 						continue;
 
-					creature.Client.Send(packet);
+					if (client.Controlling == source && !sendToSource)
+						continue;
+
+					client.Send(packet);
 				}
 			}
 		}

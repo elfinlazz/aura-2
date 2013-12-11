@@ -152,9 +152,8 @@ namespace Aura.Channel.Scripting
 			}
 			catch (Exception ex)
 			{
-				File.Delete(outPath);
-
 				Log.Exception(ex, "LoadScript: Problem while loading script '{0}'", path);
+				//File.Delete(outPath);
 				return false;
 			}
 		}

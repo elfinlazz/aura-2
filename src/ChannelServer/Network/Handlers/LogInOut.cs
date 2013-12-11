@@ -56,7 +56,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			client.Account = account;
-			//client.Character = character;
+			client.Controlling = character;
 			client.Creatures.Add(character.EntityId, character);
 			character.Client = client;
 
@@ -96,13 +96,13 @@ namespace Aura.Channel.Network.Handlers
 
 			creature.Save = true;
 
-			var first = (creature.Region == null);
+			var firstSpawn = (creature.Region == null);
 
 			region.AddCreature(creature);
 
 			Send.CharacterUnlock(creature, Locks.Default);
 
-			if (first)
+			if (firstSpawn)
 				Send.EnterRegionRequestR(creature);
 			else
 				Send.WarpRegion(creature);

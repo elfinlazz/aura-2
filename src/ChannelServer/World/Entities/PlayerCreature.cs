@@ -2,6 +2,8 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.World.Entities
@@ -11,6 +13,8 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public abstract class PlayerCreature : Creature
 	{
+		private List<Entity> _visibleEntities = new List<Entity>();
+
 		public override EntityType EntityType { get { return EntityType.Character; } }
 
 		/// <summary>
@@ -47,6 +51,22 @@ namespace Aura.Channel.World.Entities
 		{
 			this.SetLocation(region, x, y);
 			Send.EnterRegion(this);
+		}
+
+		/// <summary>
+		/// Updates visible creatures, sends Entities(Dis)Appear.
+		/// </summary>
+		public void LookAround()
+		{
+			var currentlyVisible = this.Region.GetVisibleEntities(this);
+
+			var appear = currentlyVisible.Except(_visibleEntities);
+			var disappear = _visibleEntities.Except(currentlyVisible);
+
+			Send.EntitiesAppear(this.Client, appear);
+			Send.EntitiesDisappear(this.Client, disappear);
+
+			_visibleEntities = currentlyVisible.ToList();
 		}
 	}
 }
