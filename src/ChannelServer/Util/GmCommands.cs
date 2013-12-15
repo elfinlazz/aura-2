@@ -2,14 +2,14 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Collections.Generic;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
-using Aura.Channel.World;
-using System.Collections.Generic;
 
 namespace Aura.Channel.Util
 {
@@ -18,14 +18,14 @@ namespace Aura.Channel.Util
 		public GmCommandManager()
 		{
 			// Players
-			Add(00, 40, "where", "", HandleWhere);
+			Add(00, 50, "where", "", HandleWhere);
 
 			// VIPs
-			Add(01, 40, "go", "<location>", HandleGo);
+			Add(01, 50, "go", "<location>", HandleGo);
 
 			// GMs
-			Add(40, 40, "warp", "<region> [x] [y]", HandleWarp);
-			Add(40, 40, "jump", "[x] [y]", HandleWarp);
+			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
+			Add(50, 50, "jump", "[x] [y]", HandleWarp);
 
 			// Admins
 			Add(99, 99, "test", "", HandleTest);

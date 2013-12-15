@@ -18,6 +18,7 @@ namespace Aura.Data
 		public static ExpDb ExpDb = new ExpDb();
 		//public static FlightDb FlightDb = new FlightDb();
 		public static ItemDb ItemDb = new ItemDb();
+		public static KeywordDb KeywordDb = new KeywordDb();
 		public static MotionDb MotionDb = new MotionDb();
 		public static PetDb PetDb = new PetDb();
 		public static PropDropDb PropDropDb = new PropDropDb();

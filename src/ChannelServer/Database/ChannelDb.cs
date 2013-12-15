@@ -14,6 +14,7 @@ using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World;
+using Aura.Channel.World.Entities.Creatures;
 
 namespace Aura.Channel.Database
 {
@@ -67,8 +68,8 @@ namespace Aura.Channel.Database
 							continue;
 
 						// Add GM titles for the characters of authority 50+ accounts
-						if (account.Authority >= Authority.GameMaster) character.Titles.Add(60000, true); // GM
-						if (account.Authority >= Authority.Admin) character.Titles.Add(60001, true); // devCat
+						if (account.Authority >= 50) character.Titles.Add(60000, TitleState.Usable); // GM
+						if (account.Authority >= 99) character.Titles.Add(60001, TitleState.Usable); // devCat
 
 						account.Characters.Add(character);
 					}
@@ -120,12 +121,12 @@ namespace Aura.Channel.Database
 		/// <returns></returns>
 		private TCreature GetCharacter<TCreature>(long entityId, string table) where TCreature : PlayerCreature, new()
 		{
-			using (var conn = AuraDb.Instance.Connection)
-			{
-				var mc = new MySqlCommand("SELECT * FROM `" + table + "` AS c INNER JOIN `creatures` AS cr ON c.creatureId = cr.creatureId WHERE `entityId` = @entityId", conn);
-				mc.Parameters.AddWithValue("@entityId", entityId);
+			var character = new TCreature();
 
-				var character = new TCreature();
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `" + table + "` AS c INNER JOIN `creatures` AS cr ON c.creatureId = cr.creatureId WHERE `entityId` = @entityId", conn))
+			{
+				mc.Parameters.AddWithValue("@entityId", entityId);
 
 				using (var reader = mc.ExecuteReader())
 				{
@@ -175,68 +176,86 @@ namespace Aura.Channel.Database
 					character.WillBase = reader.GetFloat("will");
 					character.LuckBase = reader.GetFloat("luck");
 				}
-
-				this.GetCharacterItems(character, conn);
-				this.GetCharacterKeywords(character, conn);
-
-				return character;
 			}
+
+			this.GetCharacterItems(character);
+			this.GetCharacterKeywords(character);
+			this.GetCharacterTitles(character);
+
+			return character;
 		}
 
-		private void GetCharacterItems(PlayerCreature character, MySqlConnection conn)
+		/// <summary>
+		/// Reads items from database and adds them to character.
+		/// </summary>
+		/// <param name="character"></param>
+		private void GetCharacterItems(PlayerCreature character)
 		{
-			var items = this.GetItems(character.CreatureId, conn);
+			var items = this.GetItems(character.CreatureId);
 			foreach (var item in items)
 				character.Inventory.ForceAdd(item, item.Info.Pocket);
 		}
 
-		private List<Item> GetItems(long creatureId, MySqlConnection conn)
+		/// <summary>
+		/// Returns list of items for creature with the given id.
+		/// </summary>
+		/// <param name="creatureId"></param>
+		/// <returns></returns>
+		private List<Item> GetItems(long creatureId)
 		{
 			var result = new List<Item>();
 
-			var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId", conn);
-			mc.Parameters.AddWithValue("@creatureId", creatureId);
-
-			using (var reader = mc.ExecuteReader())
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId", conn))
 			{
-				while (reader.Read())
+				mc.Parameters.AddWithValue("@creatureId", creatureId);
+
+				using (var reader = mc.ExecuteReader())
 				{
-					var itemId = reader.GetInt32("itemId");
+					while (reader.Read())
+					{
+						var itemId = reader.GetInt32("itemId");
 
-					var item = new Item(itemId);
-					item.EntityId = reader.GetInt64("entityId");
-					item.Info.Pocket = (Pocket)reader.GetInt32("pocket");
-					item.Info.X = reader.GetInt32("x");
-					item.Info.Y = reader.GetInt32("y");
-					item.Info.Color1 = reader.GetUInt32("color1");
-					item.Info.Color3 = reader.GetUInt32("color2");
-					item.Info.Color3 = reader.GetUInt32("color3");
-					item.Info.Amount = reader.GetUInt16("amount");
-					item.Info.State = reader.GetByte("state");
-					item.OptionInfo.Price = reader.GetInt32("price");
-					item.OptionInfo.SellingPrice = reader.GetInt32("sellPrice");
-					item.OptionInfo.Durability = reader.GetInt32("durability");
-					item.OptionInfo.DurabilityMax = reader.GetInt32("durabilityMax");
-					item.OptionInfo.DurabilityNew = reader.GetInt32("durabilityNew");
-					item.OptionInfo.AttackMin = reader.GetUInt16("attackMin");
-					item.OptionInfo.AttackMax = reader.GetUInt16("attackMax");
-					item.OptionInfo.Balance = reader.GetByte("balance");
-					item.OptionInfo.Critical = reader.GetByte("critical");
-					item.OptionInfo.Defense = reader.GetInt32("defense");
-					item.OptionInfo.Protection = reader.GetInt16("protection");
-					item.OptionInfo.EffectiveRange = reader.GetInt16("range");
-					item.OptionInfo.AttackSpeed = (AttackSpeed)reader.GetByte("attackSpeed");
-					item.OptionInfo.Experience = reader.GetInt16("experience");
+						var item = new Item(itemId);
+						item.EntityId = reader.GetInt64("entityId");
+						item.Info.Pocket = (Pocket)reader.GetInt32("pocket");
+						item.Info.X = reader.GetInt32("x");
+						item.Info.Y = reader.GetInt32("y");
+						item.Info.Color1 = reader.GetUInt32("color1");
+						item.Info.Color3 = reader.GetUInt32("color2");
+						item.Info.Color3 = reader.GetUInt32("color3");
+						item.Info.Amount = reader.GetUInt16("amount");
+						item.Info.State = reader.GetByte("state");
+						item.OptionInfo.Price = reader.GetInt32("price");
+						item.OptionInfo.SellingPrice = reader.GetInt32("sellPrice");
+						item.OptionInfo.Durability = reader.GetInt32("durability");
+						item.OptionInfo.DurabilityMax = reader.GetInt32("durabilityMax");
+						item.OptionInfo.DurabilityNew = reader.GetInt32("durabilityNew");
+						item.OptionInfo.AttackMin = reader.GetUInt16("attackMin");
+						item.OptionInfo.AttackMax = reader.GetUInt16("attackMax");
+						item.OptionInfo.Balance = reader.GetByte("balance");
+						item.OptionInfo.Critical = reader.GetByte("critical");
+						item.OptionInfo.Defense = reader.GetInt32("defense");
+						item.OptionInfo.Protection = reader.GetInt16("protection");
+						item.OptionInfo.EffectiveRange = reader.GetInt16("range");
+						item.OptionInfo.AttackSpeed = (AttackSpeed)reader.GetByte("attackSpeed");
+						item.OptionInfo.Experience = reader.GetInt16("experience");
 
-					result.Add(item);
+						result.Add(item);
+					}
 				}
 			}
 
 			return result;
 		}
 
-		private void GetCharacterKeywords(PlayerCreature character, MySqlConnection conn)
+		/// <summary>
+		/// Reads keywords from database and adds them to character.
+		/// </summary>
+		/// <param name="character"></param>
+		private void GetCharacterKeywords(PlayerCreature character)
 		{
+			using (var conn = AuraDb.Instance.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `keywords` WHERE `creatureId` = @creatureId", conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
@@ -245,102 +264,171 @@ namespace Aura.Channel.Database
 				{
 					while (reader.Read())
 					{
-						var keywordId = reader.GetInt16("keywordId");
+						var keywordId = reader.GetUInt16("keywordId");
 						character.Keywords.Add(keywordId);
 					}
 				}
 			}
 		}
 
+		/// <summary>
+		/// Reads titles from database and adds them to character.
+		/// </summary>
+		/// <param name="character"></param>
+		private void GetCharacterTitles(PlayerCreature character)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `titles` WHERE `creatureId` = @creatureId", conn))
+			{
+				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+
+				using (var reader = mc.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						var id = reader.GetUInt16("titleId");
+						var usable = (reader.GetBoolean("usable") ? TitleState.Usable : TitleState.Known);
+						character.Titles.Add(id, usable);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Saves account, incl. all character data.
+		/// </summary>
+		/// <param name="account"></param>
 		public void SaveAccount(Account account)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new UpdateCommand("UPDATE `accounts` SET {0} WHERE `accountId` = @accountId", conn))
 			{
-				var up = new UpdatePack();
-				up.Set("authority", (byte)account.Authority);
-				up.Set("lastlogin", account.LastLogin);
-				up.Set("banReason", account.BanReason);
-				up.Set("banExpiration", account.BanExpiration);
+				cmd.AddParameter("@accountId", account.Id);
+				cmd.Set("authority", (byte)account.Authority);
+				cmd.Set("lastlogin", account.LastLogin);
+				cmd.Set("banReason", account.BanReason);
+				cmd.Set("banExpiration", account.BanExpiration);
 
-				var mc = new MySqlCommand("UPDATE `accounts` SET " + up.ToString() + " WHERE `accountId` = @accountId", conn);
-
-				mc.Parameters.AddWithValue("@accountId", account.Id);
-				mc.Parameters.AddCollection(up);
-
-				mc.ExecuteNonQuery();
+				cmd.Execute();
 			}
 
 			// Save characters
 			foreach (var character in account.Characters.Where(a => a.Save))
 				this.SaveCreature(character);
-
 			foreach (var pet in account.Pets.Where(a => a.Save))
 				this.SaveCreature(pet);
 		}
 
+		/// <summary>
+		/// Saves creature and all its data.
+		/// </summary>
+		/// <param name="creature"></param>
 		public void SaveCreature(PlayerCreature creature)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new UpdateCommand("UPDATE `creatures` SET {0} WHERE `creatureId` = @creatureId", conn))
 			{
-				// Corrections
-				// ----------------------------------------------------------
-				// Inside dungeon, would make ppl stuck at loading.
-				// TODO: Other areas should not be saved, eg Alby Arena (29)
-				if (creature.RegionId >= 10000 && creature.RegionId <= 20000)
-				{
-					// TODO: Implement a "return to" location.
-					creature.SetLocation(13, 3329, 2948); // Alby altar
-				}
-
 				var characterLocation = creature.GetPosition();
 
-				var up = new UpdatePack();
-				up.Set("region", creature.RegionId);
-				up.Set("x", characterLocation.X);
-				up.Set("y", characterLocation.Y);
-				up.Set("direction", creature.Direction);
+				cmd.AddParameter("@creatureId", creature.CreatureId);
+				cmd.Set("region", creature.RegionId);
+				cmd.Set("x", characterLocation.X);
+				cmd.Set("y", characterLocation.Y);
+				cmd.Set("direction", creature.Direction);
 				//up.Set("battleState", creature.BattleState);
 				//up.Set("weaponSet", (byte)creature.Inventory.WeaponSet);
-				up.Set("lifeDelta", creature.LifeMax - creature.Life);
-				up.Set("injuries", creature.Injuries);
-				up.Set("lifeMax", creature.LifeMaxBase);
-				up.Set("manaDelta", creature.ManaMax - creature.Mana);
-				up.Set("manaMax", creature.ManaMaxBase);
-				up.Set("staminaDelta", creature.StaminaMax - creature.Stamina);
-				up.Set("staminaMax", creature.StaminaMaxBase);
-				up.Set("hunger", creature.Hunger);
-				up.Set("level", creature.Level);
-				up.Set("levelTotal", creature.LevelTotal);
-				up.Set("exp", creature.Exp);
-				up.Set("str", creature.StrBase);
-				up.Set("dex", creature.DexBase);
-				up.Set("int", creature.IntBase);
-				up.Set("will", creature.WillBase);
-				up.Set("luck", creature.LuckBase);
-				up.Set("ap", creature.AbilityPoints);
+				cmd.Set("lifeDelta", creature.LifeMax - creature.Life);
+				cmd.Set("injuries", creature.Injuries);
+				cmd.Set("lifeMax", creature.LifeMaxBase);
+				cmd.Set("manaDelta", creature.ManaMax - creature.Mana);
+				cmd.Set("manaMax", creature.ManaMaxBase);
+				cmd.Set("staminaDelta", creature.StaminaMax - creature.Stamina);
+				cmd.Set("staminaMax", creature.StaminaMaxBase);
+				cmd.Set("hunger", creature.Hunger);
+				cmd.Set("level", creature.Level);
+				cmd.Set("levelTotal", creature.LevelTotal);
+				cmd.Set("exp", creature.Exp);
+				cmd.Set("str", creature.StrBase);
+				cmd.Set("dex", creature.DexBase);
+				cmd.Set("int", creature.IntBase);
+				cmd.Set("will", creature.WillBase);
+				cmd.Set("luck", creature.LuckBase);
+				cmd.Set("ap", creature.AbilityPoints);
 
-				var mc = new MySqlCommand("UPDATE `creatures` SET " + up.ToString() + " WHERE `creatureId` = @creatureId", conn);
-
-				mc.Parameters.AddWithValue("@creatureId", creature.CreatureId);
-				mc.Parameters.AddCollection(up);
-
-				mc.ExecuteNonQuery();
+				cmd.Execute();
 			}
 
-			//this.SaveQuests(character);
-			//this.SaveItems(character);
-			//this.SaveKeywords(character);
-			//this.SaveSkills(character);
-			//this.SaveTitles(character);
-			//this.SaveCooldowns(character);
+			this.SaveCreatureKeywords(creature);
+			this.SaveCreatureTitles(creature);
+			//this.SaveQuests(creature);
+			//this.SaveItems(creature);
+			//this.SaveSkills(creature);
+			//this.SaveCooldowns(creature);
 		}
-	}
 
-	public static class Authority
-	{
-		public const int Player = 0;
-		public const int VIP = 1;
-		public const int GameMaster = 50;
-		public const int Admin = 99;
+		/// <summary>
+		/// Writes all of creature's keywords to the database.
+		/// </summary>
+		/// <param name="creature"></param>
+		private void SaveCreatureKeywords(PlayerCreature creature)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var transaction = conn.BeginTransaction())
+			{
+				using (var mc = new MySqlCommand("DELETE FROM `keywords` WHERE `creatureId` = @creatureId", conn, transaction))
+				{
+					mc.Parameters.AddWithValue("@creatureId", creature.CreatureId);
+					mc.ExecuteNonQuery();
+				}
+
+				foreach (var keyword in creature.Keywords)
+				{
+					using (var cmd = new InsertCommand("INSERT INTO `keywords` {0}", conn, transaction))
+					{
+						cmd.Set("creatureId", creature.CreatureId);
+						cmd.Set("keywordId", keyword);
+
+						cmd.Execute();
+					}
+				}
+
+				transaction.Commit();
+			}
+		}
+
+		/// <summary>
+		/// Writes all of creature's titles to the database.
+		/// </summary>
+		/// <param name="creature"></param>
+		private void SaveCreatureTitles(PlayerCreature creature)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var transaction = conn.BeginTransaction())
+			{
+				using (var mc = new MySqlCommand("DELETE FROM `titles` WHERE `creatureId` = @creatureId", conn, transaction))
+				{
+					mc.Parameters.AddWithValue("@creatureId", creature.CreatureId);
+					mc.ExecuteNonQuery();
+				}
+
+				foreach (var title in creature.Titles)
+				{
+					// Dynamic titles shouldn't be saved
+					if (title.Key == 60000 || title.Key == 60001 || title.Key == 50000) // GM, devCAT, Guild
+						continue;
+
+					using (var cmd = new InsertCommand("INSERT INTO `titles` {0}", conn, transaction))
+					{
+						cmd.Set("creatureId", creature.CreatureId);
+						cmd.Set("titleId", title.Key);
+						cmd.Set("usable", (title.Value == TitleState.Usable));
+
+						cmd.Execute();
+					}
+				}
+
+				transaction.Commit();
+			}
+		}
 	}
 }

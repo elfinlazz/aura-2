@@ -92,6 +92,7 @@
     <Compile Include="Network\Handlers\Battle.cs" />
     <Compile Include="Network\Handlers\Chat.cs" />
     <Compile Include="Network\Handlers\Internal.cs" />
+    <Compile Include="Network\Handlers\Character.cs" />
     <Compile Include="Network\Handlers\Props.cs" />
     <Compile Include="Network\Handlers\Skills.cs" />
     <Compile Include="Network\Handlers\LogInOut.cs" />
@@ -133,6 +134,8 @@
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\Creature.cs" />
     <Compile Include="World\Entities\Creatures\CreatureTemp.cs" />
+    <Compile Include="World\Entities\Creatures\CreatureTitles.cs" />
+    <Compile Include="World\Entities\Creatures\CreatureKeywords.cs" />
     <Compile Include="World\Entities\Entity.cs" />
     <Compile Include="World\Entities\Item.cs" />
     <Compile Include="World\Entities\NPC.cs" />

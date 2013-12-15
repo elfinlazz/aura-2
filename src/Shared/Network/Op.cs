@@ -141,7 +141,7 @@ namespace Aura.Shared.Network
 		public const int ViewEquipmentR = 0x5BE0;
 		public const int OptionSet = 0x5BE7;
 		public const int OptionSetR = 0x5BE8;
-		public const int NewKeyword = 0x5DC1;
+		public const int AddKeyword = 0x5DC1;
 		public const int NpcTalkKeyword = 0x5DC4;
 		public const int NpcTalkKeywordR = 0x5DC5;
 

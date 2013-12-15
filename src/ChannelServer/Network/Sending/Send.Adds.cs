@@ -254,8 +254,8 @@ namespace Aura.Channel.Network.Sending
 
 			// Titles
 			// --------------------------------------------------------------
-			packet.PutShort(creature.Title);
-			packet.PutLong(creature.TitleApplied);
+			packet.PutUShort(creature.Titles.SelectedTitle);
+			packet.PutLong(creature.Titles.Applied);
 			if (type == CreaturePacketType.Private)
 			{
 				// List of available titles
@@ -263,13 +263,13 @@ namespace Aura.Channel.Network.Sending
 				foreach (var title in character.Titles)
 				{
 					packet.PutUShort(title.Key);
-					packet.PutByte(title.Value);
+					packet.PutByte((byte)title.Value);
 					packet.PutInt(0);
 				}
 			}
 			if (type == CreaturePacketType.Private || type == CreaturePacketType.Public)
 			{
-				packet.PutShort(creature.OptionTitle);
+				packet.PutUShort(creature.Titles.SelectedOptionTitle);
 			}
 
 			// Items and expiring? (Last part of minimal)
@@ -368,7 +368,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutShort((short)character.Keywords.Count);
 				foreach (var keyword in character.Keywords)
 				{
-					packet.PutShort(keyword);
+					packet.PutUShort(keyword);
 				}
 			}
 

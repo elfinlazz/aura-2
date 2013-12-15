@@ -146,6 +146,8 @@ namespace Aura.Channel.Network.Handlers
 		/// </summary>
 		/// <remarks>
 		/// Client blocks until the server answers it.
+		/// Failing it unblocks the client and makes it not send Select,
+		/// effectively ignoring the keyword click.
 		/// </remarks>
 		/// <example>
 		/// 001 [................] String : personal_info
@@ -163,13 +165,17 @@ namespace Aura.Channel.Network.Handlers
 			if (!client.NpcSession.IsValid())
 			{
 				Send.NpcTalkKeywordR_Fail(character);
-				Log.Warning("Player '{0}' sent a keyword without valid NPC session.", character.Name);
+				Log.Warning("NpcTalkKeyword: Player '{0}' sent a keyword without valid NPC session.", character.Name);
 				return;
 			}
 
-			// TODO: Actually check keyword
-			//if(character doesn't have keyword)
-			//	Send.NpcTalkKeywordR_Fail(character);
+			// Check keyword
+			if (!character.Keywords.Has(keyword))
+			{
+				Send.NpcTalkKeywordR_Fail(character);
+				Log.Warning("NpcTalkKeyword: Player '{0}' tried using keyword '{1}', without knowing it.", character.Name, keyword);
+				return;
+			}
 
 			Send.NpcTalkKeywordR(character, keyword);
 		}

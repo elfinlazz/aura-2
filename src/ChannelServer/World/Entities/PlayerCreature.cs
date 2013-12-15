@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.World.Entities.Creatures;
 
 namespace Aura.Channel.World.Entities
 {
@@ -46,6 +47,10 @@ namespace Aura.Channel.World.Entities
 		/// Set to true if creature is supposed to be saved.
 		/// </summary>
 		public bool Save { get; set; }
+
+		public PlayerCreature()
+		{
+		}
 
 		public override void Warp(int region, int x, int y)
 		{

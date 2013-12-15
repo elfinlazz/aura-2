@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MySql.Data.MySqlClient;
+using System;
 
 namespace Aura.Shared.Database
 {
@@ -26,55 +27,178 @@ namespace Aura.Shared.Database
 	/// mc.Parameters.AddWithValue("@creatureId", creature.CreatureId);
 	/// up.AddToCommand(mc);
 	/// </code></example>
-	public class UpdatePack : IParameterCollection
+	//public class UpdatePack : IParameterCollection
+	//{
+	//    private Dictionary<string, object> _set;
+
+	//    public Dictionary<string, object> Parameters { get { return _set; } }
+
+	//    public UpdatePack()
+	//    {
+	//        _set = new Dictionary<string, object>();
+	//    }
+
+	//    /// <summary>
+	//    /// Adds value for column.
+	//    /// </summary>
+	//    /// <param name="field"></param>
+	//    /// <param name="value"></param>
+	//    /// <returns></returns>
+	//    public UpdatePack Set(string field, object value)
+	//    {
+	//        _set[field] = value;
+	//        return this;
+	//    }
+
+	//    /// <summary>
+	//    /// Returns query ready list of parameters.
+	//    /// </summary>
+	//    /// <returns></returns>
+	//    public override string ToString()
+	//    {
+	//        var sb = new StringBuilder();
+
+	//        foreach (var parameter in _set.Keys)
+	//            sb.AppendFormat("`{0}` = @{0}, ", parameter);
+
+	//        return sb.ToString().Trim(' ', ',');
+	//    }
+	//}
+
+	//public interface IParameterCollection
+	//{
+	//    Dictionary<string, object> Parameters { get; }
+	//}
+
+	//public static class MySqlParameterCollectionExt
+	//{
+	//    public static void AddCollection(this MySqlParameterCollection parameters, IParameterCollection col)
+	//    {
+	//        foreach (var parameter in col.Parameters)
+	//            parameters.AddWithValue("@" + parameter.Key, parameter.Value);
+	//    }
+	//}
+
+	public class UpdateCommand : IDisposable
 	{
+		private MySqlCommand _mc;
 		private Dictionary<string, object> _set;
 
-		public Dictionary<string, object> Parameters { get { return _set; } }
-
-		public UpdatePack()
+		public UpdateCommand(string command, MySqlConnection conn, MySqlTransaction trans = null)
 		{
+			_mc = new MySqlCommand(command, conn, trans);
 			_set = new Dictionary<string, object>();
 		}
 
 		/// <summary>
-		/// Adds value for column.
+		/// Adds a parameter that's not handled by Set.
 		/// </summary>
-		/// <param name="field"></param>
+		/// <param name="name"></param>
 		/// <param name="value"></param>
-		/// <returns></returns>
-		public UpdatePack Set(string field, object value)
+		public void AddParameter(string name, object value)
 		{
-			_set[field] = value;
-			return this;
+			_mc.Parameters.AddWithValue(name, value);
 		}
 
 		/// <summary>
-		/// Returns query ready list of parameters.
+		/// Sets value for field.
+		/// </summary>
+		/// <param name="field"></param>
+		/// <param name="value"></param>
+		public void Set(string field, object value)
+		{
+			_set[field] = value;
+		}
+
+		/// <summary>
+		/// Runs MySqlCommand.ExecuteNonQuery
 		/// </summary>
 		/// <returns></returns>
-		public override string ToString()
+		public int Execute()
 		{
+			// Build setting part
 			var sb = new StringBuilder();
-
 			foreach (var parameter in _set.Keys)
 				sb.AppendFormat("`{0}` = @{0}, ", parameter);
 
-			return sb.ToString().Trim(' ', ',');
+			// Add setting part
+			_mc.CommandText = string.Format(_mc.CommandText, sb.ToString().Trim(' ', ','));
+
+			// Add parameters
+			foreach (var parameter in _set)
+				_mc.Parameters.AddWithValue("@" + parameter.Key, parameter.Value);
+
+			// Run
+			return _mc.ExecuteNonQuery();
+		}
+
+		public void Dispose()
+		{
+			_mc.Dispose();
 		}
 	}
 
-	public interface IParameterCollection
+	public class InsertCommand : IDisposable
 	{
-		Dictionary<string, object> Parameters { get; }
-	}
+		private MySqlCommand _mc;
+		private Dictionary<string, object> _set;
 
-	public static class MySqlParameterCollectionExt
-	{
-		public static void AddCollection(this MySqlParameterCollection parameters, IParameterCollection col)
+		public InsertCommand(string command, MySqlConnection conn, MySqlTransaction transaction = null)
 		{
-			foreach (var parameter in col.Parameters)
-				parameters.AddWithValue("@" + parameter.Key, parameter.Value);
+			_mc = new MySqlCommand(command, conn, transaction);
+			_set = new Dictionary<string, object>();
+		}
+
+		/// <summary>
+		/// Adds a parameter that's not handled by Set.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="value"></param>
+		public void AddParameter(string name, object value)
+		{
+			_mc.Parameters.AddWithValue(name, value);
+		}
+
+		/// <summary>
+		/// Sets value for field.
+		/// </summary>
+		/// <param name="field"></param>
+		/// <param name="value"></param>
+		public void Set(string field, object value)
+		{
+			_set[field] = value;
+		}
+
+		/// <summary>
+		/// Runs MySqlCommand.ExecuteNonQuery
+		/// </summary>
+		/// <returns></returns>
+		public int Execute()
+		{
+			// Build values part
+			var sb1 = new StringBuilder();
+			var sb2 = new StringBuilder();
+			foreach (var parameter in _set.Keys)
+			{
+				sb1.AppendFormat("`{0}`, ", parameter);
+				sb2.AppendFormat("@{0}, ", parameter);
+			}
+
+			// Add values part
+			var values = "(" + (sb1.ToString().Trim(' ', ',')) + ") VALUES (" + (sb2.ToString().Trim(' ', ',')) + ")";
+			_mc.CommandText = string.Format(_mc.CommandText, values);
+
+			// Add parameters
+			foreach (var parameter in _set)
+				_mc.Parameters.AddWithValue("@" + parameter.Key, parameter.Value);
+
+			// Run
+			return _mc.ExecuteNonQuery();
+		}
+
+		public void Dispose()
+		{
+			_mc.Dispose();
 		}
 	}
 }

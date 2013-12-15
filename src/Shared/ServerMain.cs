@@ -86,79 +86,84 @@ namespace Aura.Shared.Util
 			{
 				if ((toLoad & DataLoad.Races) != 0)
 				{
-					LoadDb(AuraData.AncientDropDb, "db/ancient_drops.txt", reload);
-					LoadDb(AuraData.RaceSkillDb, "db/race_skills.txt", reload);
-					LoadDb(AuraData.SpeedDb, "db/speed.txt", reload, false);
-					LoadDb(AuraData.RaceDb, "db/races.txt", reload);
+					this.LoadDb(AuraData.AncientDropDb, "db/ancient_drops.txt", reload);
+					this.LoadDb(AuraData.RaceSkillDb, "db/race_skills.txt", reload);
+					this.LoadDb(AuraData.SpeedDb, "db/speed.txt", reload, false);
+					this.LoadDb(AuraData.RaceDb, "db/races.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.StatsBase) != 0)
 				{
-					LoadDb(AuraData.StatsBaseDb, "db/stats_base.txt", reload);
+					this.LoadDb(AuraData.StatsBaseDb, "db/stats_base.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.StatsLevel) != 0)
 				{
-					LoadDb(AuraData.StatsLevelUpDb, "db/stats_levelup.txt", reload);
+					this.LoadDb(AuraData.StatsLevelUpDb, "db/stats_levelup.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Motions) != 0)
 				{
-					LoadDb(AuraData.MotionDb, "db/motions.txt", reload);
+					this.LoadDb(AuraData.MotionDb, "db/motions.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Cards) != 0)
 				{
-					LoadDb(AuraData.CharCardSetDb, "db/charcardsets.txt", reload, false);
-					LoadDb(AuraData.CharCardDb, "db/charcards.txt", reload);
+					this.LoadDb(AuraData.CharCardSetDb, "db/charcardsets.txt", reload, false);
+					this.LoadDb(AuraData.CharCardDb, "db/charcards.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Colors) != 0)
 				{
-					LoadDb(AuraData.ColorMapDb, "db/colormap.dat", reload);
+					this.LoadDb(AuraData.ColorMapDb, "db/colormap.dat", reload);
 				}
 
 				if ((toLoad & DataLoad.Items) != 0)
 				{
-					LoadDb(AuraData.ItemDb, "db/items.txt", reload);
-					LoadDb(AuraData.ChairDb, "db/chairs.txt", reload);
+					this.LoadDb(AuraData.ItemDb, "db/items.txt", reload);
+					this.LoadDb(AuraData.ChairDb, "db/chairs.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Skills) != 0)
 				{
-					LoadDb(AuraData.SkillRankDb, "db/skill_ranks.txt", reload, false);
-					LoadDb(AuraData.SkillDb, "db/skills.txt", reload);
+					this.LoadDb(AuraData.SkillRankDb, "db/skill_ranks.txt", reload, false);
+					this.LoadDb(AuraData.SkillDb, "db/skills.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Regions) != 0)
 				{
-					LoadDb(AuraData.RegionDb, "db/regions.txt", reload);
-					LoadDb(AuraData.RegionInfoDb, "db/regioninfo.dat", reload);
+					this.LoadDb(AuraData.RegionDb, "db/regions.txt", reload);
+					this.LoadDb(AuraData.RegionInfoDb, "db/regioninfo.dat", reload);
 				}
 
 				if ((toLoad & DataLoad.Shamala) != 0)
 				{
-					LoadDb(AuraData.ShamalaDb, "db/shamala.txt", reload);
+					this.LoadDb(AuraData.ShamalaDb, "db/shamala.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.PropDrops) != 0)
 				{
-					LoadDb(AuraData.PropDropDb, "db/prop_drops.txt", reload);
+					this.LoadDb(AuraData.PropDropDb, "db/prop_drops.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Exp) != 0)
 				{
-					LoadDb(AuraData.ExpDb, "db/exp.txt", reload);
+					this.LoadDb(AuraData.ExpDb, "db/exp.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Pets) != 0)
 				{
-					LoadDb(AuraData.PetDb, "db/pets.txt", reload);
+					this.LoadDb(AuraData.PetDb, "db/pets.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Weather) != 0)
 				{
-					LoadDb(AuraData.WeatherDb, "db/weather.txt", reload);
+					this.LoadDb(AuraData.WeatherDb, "db/weather.txt", reload);
+				}
+
+				if ((toLoad & DataLoad.Keywords) != 0)
+				{
+					this.LoadDb(AuraData.KeywordDb, "db/keywords.txt", reload);
 				}
 			}
 			catch (FileNotFoundException ex)
@@ -237,7 +242,7 @@ namespace Aura.Shared.Util
 	/// <summary>
 	/// Used in LoadData, to specify which db files should be loaded.
 	/// </summary>
-	public enum DataLoad
+	public enum DataLoad : uint
 	{
 		//Spawns = 0x01,
 		Skills = 0x02,
@@ -254,8 +259,9 @@ namespace Aura.Shared.Util
 		Exp = 0x1000,
 		Pets = 0x2000,
 		Weather = 0x4000,
+		Keywords = 0x8000,
 
-		All = 0xFFFF,
+		All = 0xFFFFFFFF,
 
 		LoginServer = Races | StatsBase | Cards | Colors | Items | Pets,
 		ChannelServer = All,

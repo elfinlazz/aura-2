@@ -6,6 +6,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.World.Entities.Creatures;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -119,6 +120,65 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(creature.RegionId);
 			packet.PutInt(pos.X);
 			packet.PutInt(pos.Y);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends AddKeyword to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="keywordId"></param>
+		public static void AddKeyword(Creature creature, ushort keywordId)
+		{
+			var packet = new Packet(Op.AddKeyword, creature.EntityId);
+			packet.PutUShort(keywordId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends AddTitle(Knowledge) to creature's client,
+		/// depending on state.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="titleId"></param>
+		/// <param name="state"></param>
+		public static void AddTitle(Creature creature, ushort titleId, TitleState state)
+		{
+			var op = (state == TitleState.Known ? Op.AddTitleKnowledge : Op.AddTitle);
+
+			var packet = new Packet(op, creature.EntityId);
+			packet.PutUShort(titleId);
+			packet.PutInt(0);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts TitleUpdate in creature's range.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void TitleUpdate(Creature creature)
+		{
+			var packet = new Packet(Op.TitleUpdate, creature.EntityId);
+			packet.PutUShort(creature.Titles.SelectedTitle);
+			packet.PutUShort(creature.Titles.SelectedOptionTitle);
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Sends ChangeTitleR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="titleSuccess"></param>
+		/// <param name="optionTitleSuccess"></param>
+		public static void ChangeTitleR(Creature creature, bool titleSuccess, bool optionTitleSuccess)
+		{
+			var packet = new Packet(Op.ChangeTitleR, creature.EntityId);
+			packet.PutByte(titleSuccess);
+			packet.PutByte(optionTitleSuccess);
 
 			creature.Client.Send(packet);
 		}

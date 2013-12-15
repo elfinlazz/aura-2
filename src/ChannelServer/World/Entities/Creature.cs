@@ -39,6 +39,8 @@ namespace Aura.Channel.World.Entities
 		public Creature Owner { get; set; }
 
 		public CreatureTemp Temp { get; protected set; }
+		public CreatureKeywords Keywords { get; protected set; }
+		public CreatureTitles Titles { get; protected set; }
 
 		// Look
 		// ------------------------------------------------------------------
@@ -79,25 +81,13 @@ namespace Aura.Channel.World.Entities
 		public bool IsMoving { get { return (_position != _destination); } }
 		public bool IsWalking { get; protected set; }
 
-		// Misc
+		// Battle
 		// ------------------------------------------------------------------
 
 		public BattleStance BattleStance { get; set; }
 		public byte WeaponSet { get; set; }
 
-		public List<short> Keywords { get; protected set; }
-
 		public bool IsDead { get { return this.Has(CreatureStates.Dead); } }
-
-		// Title
-		// ------------------------------------------------------------------
-
-		public short Title { get; set; }
-		public DateTime TitleApplied { get; set; }
-
-		public Dictionary<ushort, bool> Titles { get; protected set; }
-
-		public short OptionTitle { get; set; }
 
 		// Stats
 		// ------------------------------------------------------------------
@@ -229,8 +219,8 @@ namespace Aura.Channel.World.Entities
 			this.Client = new DummyClient();
 
 			this.Temp = new CreatureTemp();
-			this.Titles = new Dictionary<ushort, bool>();
-			this.Keywords = new List<short>();
+			this.Titles = new CreatureTitles(this);
+			this.Keywords = new CreatureKeywords(this);
 
 			this.RaceInfo = AuraData.RaceDb.Find(10002);
 

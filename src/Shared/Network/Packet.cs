@@ -272,6 +272,15 @@ namespace Aura.Shared.Network
 		}
 
 		/// <summary>
+		/// Reads and returns ushort from buffer.
+		/// </summary>
+		/// <returns></returns>
+		public ushort GetUShort()
+		{
+			return (ushort)this.GetShort();
+		}
+
+		/// <summary>
 		/// Reads and returns int from buffer.
 		/// </summary>
 		/// <returns></returns>

@@ -94,7 +94,20 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="elements"></param>
 		protected void Msg(Creature creature, params DialogElement[] elements)
 		{
-			this.SendScript(creature, new DialogElement(elements));
+			var xml = string.Format(
+				"<call convention='thiscall' syncmode='non-sync'>" +
+					"<this type='character'>{0}</this>" +
+					"<function>" +
+						"<prototype>void character::ShowTalkMessage(character, string)</prototype>" +
+							"<arguments>" +
+								"<argument type='character'>{0}</argument>" +
+								"<argument type='string'>{1}</argument>" +
+							"</arguments>" +
+						"</function>" +
+				"</call>",
+			creature.EntityId, HttpUtility.HtmlEncode(new DialogElement(elements).ToString()));
+
+			Send.NpcTalk(creature, xml);
 		}
 
 		/// <summary>
@@ -211,32 +224,6 @@ namespace Aura.Channel.Scripting.Scripts
 		protected DialogMovie Movie(string file, int width, int height, bool loop = true)
 		{
 			return new DialogMovie(file, width, height, loop);
-		}
-
-		// Building
-		// ------------------------------------------------------------------
-
-		/// <summary>
-		/// Renders dialog element and sends it as NpcTalk.
-		/// </summary>
-		/// <param name="creature"></param>
-		/// <param name="element"></param>
-		protected void SendScript(Creature creature, DialogElement element)
-		{
-			var xml = string.Format(
-				"<call convention='thiscall' syncmode='non-sync'>" +
-					"<this type='character'>{0}</this>" +
-					"<function>" +
-						"<prototype>void character::ShowTalkMessage(character, string)</prototype>" +
-							"<arguments>" +
-								"<argument type='character'>{0}</argument>" +
-								"<argument type='string'>{1}</argument>" +
-							"</arguments>" +
-						"</function>" +
-				"</call>",
-			creature.EntityId, HttpUtility.HtmlEncode(element.ToString()));
-
-			Send.NpcTalk(creature, xml);
 		}
 	}
 }

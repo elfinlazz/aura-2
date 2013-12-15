@@ -113,7 +113,12 @@ namespace Aura.Shared.Util
 		public static void Exception(Exception ex, string description = null, params object[] args)
 		{
 			if (description != null)
+			{
+				if (Hide.HasFlag(LogLevel.Exception))
+					description += " See log file for more details.";
+
 				WriteLine(LogLevel.Error, description, args);
+			}
 
 			WriteLine(LogLevel.Exception, "{2} : {0} in {1}", ex.Source, ex.TargetSite, ex.GetType());
 			WriteLine(LogLevel.Exception, ex.Message + Environment.NewLine + ex.StackTrace);

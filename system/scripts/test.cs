@@ -16,9 +16,28 @@ public class TestScript : NpcScript
 	public override IEnumerable Talk(Creature c)
 	{
 		Msg(c, "test");
+	L_Keywords:
 		ShowKeywords(c);
 		var r = Select(c);
 
+		switch(r)
+		{
+			default:
+				Msg(c, "Hm... no idea. How about a talk about breasts?");
+				c.Keywords.Give("breast");
+				goto L_Keywords;
+			case "rumor":
+				Msg(c, "Titles anyone?");
+				if(!c.Titles.Knows(8))
+					c.Titles.Show(8);
+				else
+					c.Titles.Enable(8);
+				break;
+			case "breast":
+				Msg(c, "=DD");
+				break;
+		}
+		
 		Msg(c, "Response: " + r, Bgm("npc_owen.mp3"));
 
 		Call(Test(c));
