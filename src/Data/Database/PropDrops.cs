@@ -52,11 +52,9 @@ namespace Aura.Data.Database
 
 	public class PropDropDb : DatabaseCSVIndexed<int, PropDropData>
 	{
+		[MinFieldCount(3)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 3)
-				throw new FieldCountException(3);
-
 			var info = new PropDropItemInfo();
 			info.Type = entry.ReadInt();
 			info.ItemClass = entry.ReadInt();

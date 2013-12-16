@@ -23,11 +23,9 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.SetId == setId && a.Race == race);
 		}
 
+		[MinFieldCount(7)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 7)
-				throw new FieldCountException(7);
-
 			var info = new CharCardSetData();
 			info.SetId = entry.ReadInt();
 			info.Race = entry.ReadInt();

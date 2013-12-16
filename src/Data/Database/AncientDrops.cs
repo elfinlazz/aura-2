@@ -5,11 +5,9 @@ namespace Aura.Data.Database
 {
 	public class AncientDropDb : DatabaseCSV<DropInfo>
 	{
+		[MinFieldCount(2)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 2)
-				throw new FieldCountException(2);
-
 			var info = new DropInfo();
 
 			info.ItemId = entry.ReadInt(0);

@@ -17,11 +17,9 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class SpeedDb : DatabaseCSVIndexed<string, SpeedData>
 	{
+		[MinFieldCount(2)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 2)
-				throw new FieldCountException(2);
-
 			var info = new SpeedData();
 			info.Ident = entry.ReadString();
 			info.Speed = entry.ReadFloat();

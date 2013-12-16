@@ -36,11 +36,9 @@ namespace Aura.Data.Database
 			return this.Entries.FirstOrDefault(a => a.Race == race && a.Age == age);
 		}
 
+		[MinFieldCount(11)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 11)
-				throw new FieldCountException(11);
-
 			var info = new StatsBaseData();
 			info.Age = entry.ReadByte();
 			info.Race = entry.ReadShort();

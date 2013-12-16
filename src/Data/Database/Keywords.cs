@@ -22,11 +22,9 @@ namespace Aura.Data.Database
 			return this.IdEntries.GetValueOrDefault(id);
 		}
 
+		[MinFieldCount(2)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 2)
-				throw new FieldCountException(2);
-
 			var info = new KeywordData();
 			info.Id = entry.ReadUShort();
 			info.Name = entry.ReadString();

@@ -16,11 +16,9 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class ChairDb : DatabaseCSVIndexed<int, ChairData>
 	{
+		[MinFieldCount(5)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 5)
-				throw new FieldCountException(5);
-
 			var info = new ChairData();
 			info.ItemId = entry.ReadInt();
 			entry.ReadString();

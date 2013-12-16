@@ -16,11 +16,9 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class MotionDb : DatabaseCSVIndexed<string, MotionData>
 	{
+		[MinFieldCount(4)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 4)
-				throw new FieldCountException(4);
-
 			var info = new MotionData();
 			info.Name = entry.ReadString();
 			info.Category = entry.ReadShort();

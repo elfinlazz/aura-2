@@ -101,11 +101,9 @@ namespace Aura.Data.Database
 			return this.Entries.FirstOrDefault(a => a.SkillId == id && a.Rank == rank);
 		}
 
+		[MinFieldCount(36)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 36)
-				throw new FieldCountException(36);
-
 			var info = new SkillRankData();
 			info.SkillId = entry.ReadUShort();
 			info.Race = entry.ReadInt();

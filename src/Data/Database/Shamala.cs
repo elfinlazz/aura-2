@@ -48,11 +48,9 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class ShamalaDb : DatabaseCSVIndexed<int, ShamalaData>
 	{
+		[MinFieldCount(11)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 11)
-				throw new FieldCountException(11);
-
 			var info = new ShamalaData();
 			info.Id = entry.ReadInt();
 			info.Name = entry.ReadString();

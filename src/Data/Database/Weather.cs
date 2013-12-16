@@ -18,11 +18,9 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class WeatherDb : DatabaseCSVIndexed<int, WeatherData>
 	{
+		[MinFieldCount(3)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 3)
-				throw new FieldCountException(3);
-
 			// Read everything first, we might need it for multiple regions.
 			var regions = entry.ReadStringList();
 			var type = (WeatherInfoType)entry.ReadByte();

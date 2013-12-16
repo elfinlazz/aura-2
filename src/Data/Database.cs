@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 namespace Aura.Data
 {
@@ -34,6 +35,16 @@ namespace Aura.Data
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
+		}
+	}
+
+	public class MinFieldCountAttribute : Attribute
+	{
+		public int Count { get; protected set; }
+
+		public MinFieldCountAttribute(int count)
+		{
+			this.Count = count;
 		}
 	}
 }

@@ -2,9 +2,10 @@
 // For more information, see license file in the main folder
 
 using System;
-using System.IO;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace Aura.Data
 {
@@ -19,12 +20,20 @@ namespace Aura.Data
 
 			this.Warnings.Clear();
 
+			var min = 0;
+			var attr = this.GetType().GetMethod("ReadEntry", BindingFlags.NonPublic | BindingFlags.Instance).GetCustomAttributes(typeof(MinFieldCountAttribute), true);
+			if (attr.Length > 0)
+				min = (attr[0] as MinFieldCountAttribute).Count;
+
 			using (var csv = new CSVReader(path))
 			{
 				foreach (var entry in csv.Next())
 				{
 					try
 					{
+						if (entry.Count < min)
+							throw new FieldCountException(min);
+
 						this.ReadEntry(entry);
 					}
 					catch (DatabaseWarningException ex)

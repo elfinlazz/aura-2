@@ -91,11 +91,9 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower() == name);
 		}
 
+		[MinFieldCount(24)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 24)
-				throw new FieldCountException(24);
-
 			var info = new RaceData();
 			info.Id = entry.ReadInt();
 			info.Name = entry.ReadString();

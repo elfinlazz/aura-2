@@ -28,11 +28,9 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class CharCardDb : DatabaseCSVIndexed<int, CharCardData>
 	{
+		[MinFieldCount(3)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 3)
-				throw new FieldCountException(3);
-
 			var info = new CharCardData();
 			info.Id = entry.ReadInt();
 			info.SetId = entry.ReadInt();

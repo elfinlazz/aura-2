@@ -33,11 +33,9 @@ namespace Aura.Data.Database
 
 	public class PetDb : DatabaseCSVIndexed<int, PetData>
 	{
+		[MinFieldCount(20)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 20)
-				throw new FieldCountException(20);
-
 			var info = new PetData();
 			info.RaceId = entry.ReadInt();
 			entry.ReadString(); // Name

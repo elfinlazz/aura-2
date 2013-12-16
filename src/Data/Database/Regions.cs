@@ -34,11 +34,9 @@ namespace Aura.Data.Database
 			return regionId;
 		}
 
+		[MinFieldCount(2)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 2)
-				throw new FieldCountException(2);
-
 			var info = new MapData();
 			info.Id = entry.ReadInt();
 			info.Name = entry.ReadString();

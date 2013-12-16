@@ -19,11 +19,9 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.MonsterId == id);
 		}
 
+		[MinFieldCount(3)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
-			if (entry.Count < 3)
-				throw new FieldCountException(3);
-
 			var info = new RaceSkillData();
 			info.MonsterId = entry.ReadInt();
 			info.SkillId = entry.ReadShort();
