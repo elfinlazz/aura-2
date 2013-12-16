@@ -7,28 +7,28 @@ using System.IO;
 
 namespace Aura.Data.Database
 {
-	public class RegionInfo
+	public class RegionData
 	{
 		public int Id { get; internal set; }
 		public int X1 { get; internal set; }
 		public int Y1 { get; internal set; }
 		public int X2 { get; internal set; }
 		public int Y2 { get; internal set; }
-		public Dictionary<int, AreaInfo> Areas { get; internal set; }
+		public Dictionary<int, AreaData> Areas { get; internal set; }
 	}
 
-	public class AreaInfo
+	public class AreaData
 	{
 		public int Id { get; internal set; }
 		public int X1 { get; internal set; }
 		public int Y1 { get; internal set; }
 		public int X2 { get; internal set; }
 		public int Y2 { get; internal set; }
-		public Dictionary<long, PropInfo> Props { get; internal set; }
-		public Dictionary<long, EventInfo> Events { get; internal set; }
+		public Dictionary<long, PropData> Props { get; internal set; }
+		public Dictionary<long, EventData> Events { get; internal set; }
 	}
 
-	public class PropInfo
+	public class PropData
 	{
 		public long EntityId { get; internal set; }
 		public int Id { get; internal set; }
@@ -36,10 +36,10 @@ namespace Aura.Data.Database
 		public float Y { get; internal set; }
 		public float Direction { get; internal set; }
 		public float Scale { get; internal set; }
-		public List<PropShapeInfo> Shapes { get; internal set; }
+		public List<PropShapeData> Shapes { get; internal set; }
 	}
 
-	public class PropShapeInfo
+	public class PropShapeData
 	{
 		public int X1 { get; internal set; }
 		public int Y1 { get; internal set; }
@@ -51,26 +51,26 @@ namespace Aura.Data.Database
 		public int Y4 { get; internal set; }
 	}
 
-	public class EventInfo
+	public class EventData
 	{
 		public long Id { get; internal set; }
 		public int Type { get; internal set; }
 		public float X { get; internal set; }
 		public float Y { get; internal set; }
 		public bool IsAltar { get; internal set; }
-		public List<EventElementInfo> Elements { get; internal set; }
+		public List<EventElementData> Elements { get; internal set; }
 	}
 
-	public class EventElementInfo
+	public class EventElementData
 	{
 		public int Type { get; internal set; }
 		public int Unk { get; internal set; }
 	}
 
-	public class RegionInfoDb : DatabaseDatIndexed<int, RegionInfo>
+	public class RegionInfoDb : DatabaseDatIndexed<int, RegionData>
 	{
-		public Dictionary<long, PropInfo> PropEntries = new Dictionary<long, PropInfo>();
-		public Dictionary<long, EventInfo> EventEntries = new Dictionary<long, EventInfo>();
+		public Dictionary<long, PropData> PropEntries = new Dictionary<long, PropData>();
+		public Dictionary<long, EventData> EventEntries = new Dictionary<long, EventData>();
 
 		private Random _rnd = new Random(Environment.TickCount);
 
@@ -87,7 +87,7 @@ namespace Aura.Data.Database
 		/// <param name="region"></param>
 		/// <param name="area"></param>
 		/// <returns></returns>
-		public AreaInfo Find(int region, int area)
+		public AreaData Find(int region, int area)
 		{
 			if (!this.Entries.ContainsKey(region))
 				return null;
@@ -102,9 +102,9 @@ namespace Aura.Data.Database
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public EventInfo FindEvent(long id)
+		public EventData FindEvent(long id)
 		{
-			EventInfo result;
+			EventData result;
 			this.EventEntries.TryGetValue(id, out result);
 			return result;
 		}
@@ -114,9 +114,9 @@ namespace Aura.Data.Database
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public PropInfo FindProp(long id)
+		public PropData FindProp(long id)
 		{
-			PropInfo result;
+			PropData result;
 			this.PropEntries.TryGetValue(id, out result);
 			return result;
 		}
@@ -170,7 +170,7 @@ namespace Aura.Data.Database
 			var cRegions = br.ReadInt32();
 			for (int l = 0; l < cRegions; ++l)
 			{
-				var ri = new RegionInfo();
+				var ri = new RegionData();
 
 				ri.Id = br.ReadInt32();
 				ri.X1 = br.ReadInt32();
@@ -179,10 +179,10 @@ namespace Aura.Data.Database
 				ri.Y2 = br.ReadInt32();
 
 				var cAreas = br.ReadInt32();
-				ri.Areas = new Dictionary<int, AreaInfo>();
+				ri.Areas = new Dictionary<int, AreaData>();
 				for (int i = 0; i < cAreas; ++i)
 				{
-					var ai = new AreaInfo();
+					var ai = new AreaData();
 
 					ai.Id = br.ReadInt32();
 					ai.X1 = br.ReadInt32();
@@ -191,10 +191,10 @@ namespace Aura.Data.Database
 					ai.Y2 = br.ReadInt32();
 
 					var cProps = br.ReadInt32();
-					ai.Props = new Dictionary<long, PropInfo>();
+					ai.Props = new Dictionary<long, PropData>();
 					for (int j = 0; j < cProps; ++j)
 					{
-						var pi = new PropInfo();
+						var pi = new PropData();
 						pi.EntityId = br.ReadInt64();
 						pi.Id = br.ReadInt32();
 						pi.X = br.ReadSingle();
@@ -203,10 +203,10 @@ namespace Aura.Data.Database
 						pi.Scale = br.ReadSingle();
 
 						var cShapes = br.ReadInt32();
-						pi.Shapes = new List<PropShapeInfo>();
+						pi.Shapes = new List<PropShapeData>();
 						for (int k = 0; k < cShapes; ++k)
 						{
-							var si = new PropShapeInfo();
+							var si = new PropShapeData();
 							si.X1 = br.ReadInt32();
 							si.Y1 = br.ReadInt32();
 							si.X2 = br.ReadInt32();
@@ -224,20 +224,20 @@ namespace Aura.Data.Database
 					}
 
 					var cEvents = br.ReadInt32();
-					ai.Events = new Dictionary<long, EventInfo>();
+					ai.Events = new Dictionary<long, EventData>();
 					for (int j = 0; j < cEvents; ++j)
 					{
-						var ei = new EventInfo();
+						var ei = new EventData();
 						ei.Id = br.ReadInt64();
 						ei.X = br.ReadSingle();
 						ei.Y = br.ReadSingle();
 						ei.Type = br.ReadInt32();
 
 						var cElements = br.ReadInt32();
-						ei.Elements = new List<EventElementInfo>();
+						ei.Elements = new List<EventElementData>();
 						for (int k = 0; k < cElements; ++k)
 						{
-							var eei = new EventElementInfo();
+							var eei = new EventElementData();
 							eei.Type = br.ReadInt32();
 							eei.Unk = br.ReadInt32();
 

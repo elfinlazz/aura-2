@@ -103,6 +103,10 @@ namespace Aura.Channel.World
 				this.Add(new InventoryPocketSingle(i));
 		}
 
+		/// <summary>
+		/// Adds pocket to inventory.
+		/// </summary>
+		/// <param name="inventoryPocket"></param>
 		public void Add(InventoryPocket inventoryPocket)
 		{
 			if (_pockets.ContainsKey(inventoryPocket.Pocket))
@@ -117,11 +121,11 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddMainInventory()
 		{
-			if (_creature.RaceInfo == null)
+			if (_creature.RaceData == null)
 				Log.Warning("Race for creature '{0}' ({1}) not loaded before initializing main inventory.", _creature.Name, _creature.EntityIdHex);
 
-			var width = (_creature.RaceInfo != null ? _creature.RaceInfo.InventoryWidth : DefaultWidth);
-			var height = (_creature.RaceInfo != null ? _creature.RaceInfo.InventoryHeight : DefaultHeight);
+			var width = (_creature.RaceData != null ? _creature.RaceData.InventoryWidth : DefaultWidth);
+			var height = (_creature.RaceData != null ? _creature.RaceData.InventoryHeight : DefaultHeight);
 
 			this.Add(new InventoryPocketNormal(Pocket.Inventory, width, height));
 			this.Add(new InventoryPocketNormal(Pocket.PersonalInventory, width, height));

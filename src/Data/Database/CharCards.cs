@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
-	public class CharCardInfo
+	public class CharCardData
 	{
 		public int Id { get; internal set; }
 		public string Name { get; internal set; }
 		public int SetId { get; internal set; }
 		public List<int> Races { get; internal set; }
 
-		public CharCardInfo()
+		public CharCardData()
 		{
 			this.Races = new List<int>();
 		}
@@ -26,14 +26,14 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by char card id.
 	/// </summary>
-	public class CharCardDb : DatabaseCSVIndexed<int, CharCardInfo>
+	public class CharCardDb : DatabaseCSVIndexed<int, CharCardData>
 	{
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			if (entry.Count < 3)
 				throw new FieldCountException(3);
 
-			var info = new CharCardInfo();
+			var info = new CharCardData();
 			info.Id = entry.ReadInt();
 			info.SetId = entry.ReadInt();
 

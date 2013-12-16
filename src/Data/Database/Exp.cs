@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
-	public class ExpInfo
+	public class ExpData
 	{
 		//public uint Race;
 		public int Level { get; internal set; }
 		public int Exp { get; internal set; }
 	}
 
-	public class ExpDb : DatabaseCSV<ExpInfo>
+	public class ExpDb : DatabaseCSV<ExpData>
 	{
 		public int MaxLevel { get; private set; }
 		public long MaxExp { get; private set; }
@@ -67,11 +67,11 @@ namespace Aura.Data.Database
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			// Replace previous values if there is more than 1 line.
-			this.Entries = new List<ExpInfo>(entry.Count);
+			this.Entries = new List<ExpData>(entry.Count);
 
 			while (!entry.End)
 			{
-				var info = new ExpInfo();
+				var info = new ExpData();
 				info.Level = (entry.Pointer + 1);
 				info.Exp = entry.ReadInt();
 

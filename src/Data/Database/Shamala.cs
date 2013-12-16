@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
-	public class ShamalaInfo
+	public class ShamalaData
 	{
 		public int Id { get; internal set; }
 		public string Name { get; internal set; }
@@ -20,7 +20,7 @@ namespace Aura.Data.Database
 		public uint Color3 { get; internal set; }
 		public List<int> Races { get; internal set; }
 
-		public ShamalaInfo()
+		public ShamalaData()
 		{
 			this.Rank = 1;
 			this.Rate = 100;
@@ -46,14 +46,14 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by transformation id.
 	/// </summary>
-	public class ShamalaDb : DatabaseCSVIndexed<int, ShamalaInfo>
+	public class ShamalaDb : DatabaseCSVIndexed<int, ShamalaData>
 	{
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			if (entry.Count < 11)
 				throw new FieldCountException(11);
 
-			var info = new ShamalaInfo();
+			var info = new ShamalaData();
 			info.Id = entry.ReadInt();
 			info.Name = entry.ReadString();
 			info.Category = entry.ReadString();

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Aura.Data.Database
 {
-	public class ColorMapInfo
+	public class ColorMapData
 	{
 		public int Id { get; internal set; }
 		public int Width { get; internal set; }
@@ -18,7 +18,7 @@ namespace Aura.Data.Database
 	/// Holds information about all colors a specific material can have.
 	/// Indexed by color map id.
 	/// </summary>
-	public class ColorMapDb : DatabaseDatIndexed<int, ColorMapInfo>
+	public class ColorMapDb : DatabaseDatIndexed<int, ColorMapData>
 	{
 		public uint GetRandom(byte id, MTRandom rnd)
 		{
@@ -44,7 +44,7 @@ namespace Aura.Data.Database
 
 		protected override void Read(BinaryReader br)
 		{
-			var info = new ColorMapInfo();
+			var info = new ColorMapData();
 			info.Id = br.ReadByte();
 			info.Width = br.ReadInt16();
 			info.Height = br.ReadInt16();

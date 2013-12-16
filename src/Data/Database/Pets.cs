@@ -3,7 +3,7 @@
 
 namespace Aura.Data.Database
 {
-	public class PetInfo
+	public class PetData
 	{
 		public int RaceId { get; internal set; }
 
@@ -31,14 +31,14 @@ namespace Aura.Data.Database
 		public uint Color3 { get; internal set; }
 	}
 
-	public class PetDb : DatabaseCSVIndexed<int, PetInfo>
+	public class PetDb : DatabaseCSVIndexed<int, PetData>
 	{
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			if (entry.Count < 20)
 				throw new FieldCountException(20);
 
-			var info = new PetInfo();
+			var info = new PetData();
 			info.RaceId = entry.ReadInt();
 			entry.ReadString(); // Name
 			info.TimeLimit = entry.ReadShort();

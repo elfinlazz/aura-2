@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
-	public class CharCardSetInfo
+	public class CharCardSetData
 	{
 		public int SetId { get; internal set; }
 		public int Race { get; internal set; }
@@ -16,9 +16,9 @@ namespace Aura.Data.Database
 		public uint Color3 { get; internal set; }
 	}
 
-	public class CharCardSetDb : DatabaseCSV<CharCardSetInfo>
+	public class CharCardSetDb : DatabaseCSV<CharCardSetData>
 	{
-		public List<CharCardSetInfo> Find(int setId, int race)
+		public List<CharCardSetData> Find(int setId, int race)
 		{
 			return this.Entries.FindAll(a => a.SetId == setId && a.Race == race);
 		}
@@ -28,7 +28,7 @@ namespace Aura.Data.Database
 			if (entry.Count < 7)
 				throw new FieldCountException(7);
 
-			var info = new CharCardSetInfo();
+			var info = new CharCardSetData();
 			info.SetId = entry.ReadInt();
 			info.Race = entry.ReadInt();
 			info.Class = entry.ReadInt();

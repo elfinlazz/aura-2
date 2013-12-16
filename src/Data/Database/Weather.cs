@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
-	public class WeatherInfo
+	public class WeatherData
 	{
 		public int Region { get; internal set; }
 		public WeatherInfoType Type { get; internal set; }
@@ -16,7 +16,7 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by region.
 	/// </summary>
-	public class WeatherDb : DatabaseCSVIndexed<int, WeatherInfo>
+	public class WeatherDb : DatabaseCSVIndexed<int, WeatherData>
 	{
 		protected override void ReadEntry(CSVEntry entry)
 		{
@@ -36,7 +36,7 @@ namespace Aura.Data.Database
 
 			foreach (var region in regions)
 			{
-				var info = new WeatherInfo();
+				var info = new WeatherData();
 				info.Region = Convert.ToInt32(region);
 				info.Type = type;
 				info.Values = values;

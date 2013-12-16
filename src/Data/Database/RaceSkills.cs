@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
-	public class RaceSkillInfo
+	public class RaceSkillData
 	{
 		public int MonsterId { get; internal set; }
 		public short SkillId { get; internal set; }
 		public byte Rank { get; internal set; }
 	}
 
-	public class RaceSkillDb : DatabaseCSV<RaceSkillInfo>
+	public class RaceSkillDb : DatabaseCSV<RaceSkillData>
 	{
-		public List<RaceSkillInfo> FindAll(int id)
+		public List<RaceSkillData> FindAll(int id)
 		{
 			return this.Entries.FindAll(a => a.MonsterId == id);
 		}
@@ -24,7 +24,7 @@ namespace Aura.Data.Database
 			if (entry.Count < 3)
 				throw new FieldCountException(3);
 
-			var info = new RaceSkillInfo();
+			var info = new RaceSkillData();
 			info.MonsterId = entry.ReadInt();
 			info.SkillId = entry.ReadShort();
 			info.Rank = (byte)(16 - entry.ReadByteHex());

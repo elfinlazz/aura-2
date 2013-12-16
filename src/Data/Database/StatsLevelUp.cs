@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Aura.Data.Database
 {
-	public class StatsLevelUpInfo
+	public class StatsLevelUpData
 	{
 		public byte Age { get; internal set; }
 		public short Race { get; internal set; }
@@ -22,7 +22,7 @@ namespace Aura.Data.Database
 		public float Luck { get; internal set; }
 	}
 
-	public class StatsLevelUpDb : DatabaseCSV<StatsLevelUpInfo>
+	public class StatsLevelUpDb : DatabaseCSV<StatsLevelUpData>
 	{
 		/// <summary>
 		/// Returns the age info for the given race
@@ -31,7 +31,7 @@ namespace Aura.Data.Database
 		/// <param name="race"></param>
 		/// <param name="age"></param>
 		/// <returns></returns>
-		public StatsLevelUpInfo Find(int race, byte age)
+		public StatsLevelUpData Find(int race, byte age)
 		{
 			race = (race & ~3);
 			return this.Entries.FirstOrDefault(a => a.Race == race && a.Age == Math.Min((byte)25, age));
@@ -42,7 +42,7 @@ namespace Aura.Data.Database
 			if (entry.Count < 11)
 				throw new FieldCountException(11);
 
-			var info = new StatsLevelUpInfo();
+			var info = new StatsLevelUpData();
 			info.Age = entry.ReadByte();
 			info.Race = entry.ReadShort();
 			info.AP = entry.ReadShort();

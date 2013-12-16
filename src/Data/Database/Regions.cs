@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Aura.Data.Database
 {
-	public class MapInfo
+	public class MapData
 	{
 		public int Id { get; internal set; }
 		public string Name { get; internal set; }
@@ -14,9 +14,9 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by map name.
 	/// </summary>
-	public class RegionDb : DatabaseCSVIndexed<string, MapInfo>
+	public class RegionDb : DatabaseCSVIndexed<string, MapData>
 	{
-		public MapInfo Find(uint id)
+		public MapData Find(uint id)
 		{
 			return this.Entries.FirstOrDefault(a => a.Value.Id == id).Value;
 		}
@@ -39,7 +39,7 @@ namespace Aura.Data.Database
 			if (entry.Count < 2)
 				throw new FieldCountException(2);
 
-			var info = new MapInfo();
+			var info = new MapData();
 			info.Id = entry.ReadInt();
 			info.Name = entry.ReadString();
 

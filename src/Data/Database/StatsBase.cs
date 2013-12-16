@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Aura.Data.Database
 {
-	public class StatsBaseInfo
+	public class StatsBaseData
 	{
 		public byte Age { get; internal set; }
 		public short Race { get; internal set; }
@@ -21,7 +21,7 @@ namespace Aura.Data.Database
 		public byte Luck { get; internal set; }
 	}
 
-	public class StatsBaseDb : DatabaseCSV<StatsBaseInfo>
+	public class StatsBaseDb : DatabaseCSV<StatsBaseData>
 	{
 		/// <summary>
 		/// Returns the age info (base stats) for the given race
@@ -30,7 +30,7 @@ namespace Aura.Data.Database
 		/// <param name="race">0 = Human, 1 = Elf, 2 = Giant</param>
 		/// <param name="age">10-17</param>
 		/// <returns></returns>
-		public StatsBaseInfo Find(int race, byte age)
+		public StatsBaseData Find(int race, byte age)
 		{
 			race = (race & ~3);
 			return this.Entries.FirstOrDefault(a => a.Race == race && a.Age == age);
@@ -41,7 +41,7 @@ namespace Aura.Data.Database
 			if (entry.Count < 11)
 				throw new FieldCountException(11);
 
-			var info = new StatsBaseInfo();
+			var info = new StatsBaseData();
 			info.Age = entry.ReadByte();
 			info.Race = entry.ReadShort();
 			info.AP = entry.ReadByte();

@@ -6,17 +6,17 @@ using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
-	public class PropDropInfo
+	public class PropDropData
 	{
 		public int Type { get; internal set; }
 		public List<PropDropItemInfo> Items { get; internal set; }
 
-		public PropDropInfo()
+		public PropDropData()
 		{
 			this.Items = new List<PropDropItemInfo>();
 		}
 
-		public PropDropInfo(int type)
+		public PropDropData(int type)
 			: this()
 		{
 			this.Type = type;
@@ -50,7 +50,7 @@ namespace Aura.Data.Database
 		public float Chance { get; internal set; }
 	}
 
-	public class PropDropDb : DatabaseCSVIndexed<int, PropDropInfo>
+	public class PropDropDb : DatabaseCSVIndexed<int, PropDropData>
 	{
 		protected override void ReadEntry(CSVEntry entry)
 		{
@@ -72,7 +72,7 @@ namespace Aura.Data.Database
 
 			// The file contains PropDropItemInfo, here we organize it into PropDropInfo structs.
 			if (!this.Entries.ContainsKey(info.Type))
-				this.Entries.Add(info.Type, new PropDropInfo(info.Type));
+				this.Entries.Add(info.Type, new PropDropData(info.Type));
 			this.Entries[info.Type].Items.Add(info);
 		}
 	}

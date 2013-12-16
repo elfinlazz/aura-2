@@ -3,7 +3,7 @@
 
 namespace Aura.Data.Database
 {
-	public class ChairInfo
+	public class ChairData
 	{
 		public int ItemId { get; internal set; }
 		public int PropId { get; internal set; }
@@ -14,14 +14,14 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by item id.
 	/// </summary>
-	public class ChairDb : DatabaseCSVIndexed<int, ChairInfo>
+	public class ChairDb : DatabaseCSVIndexed<int, ChairData>
 	{
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			if (entry.Count < 5)
 				throw new FieldCountException(5);
 
-			var info = new ChairInfo();
+			var info = new ChairData();
 			info.ItemId = entry.ReadInt();
 			entry.ReadString();
 			info.PropId = entry.ReadInt();

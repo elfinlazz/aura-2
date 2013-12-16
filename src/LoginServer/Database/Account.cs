@@ -94,7 +94,7 @@ namespace Aura.Login.Database
 		/// </summary>
 		/// <param name="character"></param>
 		/// <returns></returns>
-		public bool CreateCharacter(Character character, CharCardInfo cardInfo)
+		public bool CreateCharacter(Character character, CharCardData cardInfo)
 		{
 			// Create start items for card and hair/face
 			var cardItems = AuraData.CharCardSetDb.Find(cardInfo.SetId, character.Race);
@@ -232,7 +232,7 @@ namespace Aura.Login.Database
 		/// </summary>
 		/// <param name="cardItems"></param>
 		/// <returns></returns>
-		private List<Item> CardItemsToItems(List<CharCardSetInfo> cardItems)
+		private List<Item> CardItemsToItems(List<CharCardSetData> cardItems)
 		{
 			var result = new List<Item>();
 

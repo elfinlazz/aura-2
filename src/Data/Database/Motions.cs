@@ -3,7 +3,7 @@
 
 namespace Aura.Data.Database
 {
-	public class MotionInfo
+	public class MotionData
 	{
 		public string Name { get; internal set; }
 		public short Category { get; internal set; }
@@ -14,14 +14,14 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by motion name.
 	/// </summary>
-	public class MotionDb : DatabaseCSVIndexed<string, MotionInfo>
+	public class MotionDb : DatabaseCSVIndexed<string, MotionData>
 	{
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			if (entry.Count < 4)
 				throw new FieldCountException(4);
 
-			var info = new MotionInfo();
+			var info = new MotionData();
 			info.Name = entry.ReadString();
 			info.Category = entry.ReadShort();
 			info.Type = entry.ReadShort();

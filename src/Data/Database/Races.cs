@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Aura.Data.Database
 {
-	public class RaceInfo
+	public class RaceData
 	{
 		public int Id { get; internal set; }
 		public string Name { get; internal set; }
@@ -53,12 +53,12 @@ namespace Aura.Data.Database
 		public int GoldMax { get; internal set; }
 		public List<DropInfo> Drops { get; internal set; }
 
-		public List<RaceSkillInfo> Skills { get; internal set; }
+		public List<RaceSkillData> Skills { get; internal set; }
 
-		public RaceInfo()
+		public RaceData()
 		{
 			this.Drops = new List<DropInfo>();
-			this.Skills = new List<RaceSkillInfo>();
+			this.Skills = new List<RaceSkillData>();
 		}
 
 		public bool Is(RaceStands stand)
@@ -83,9 +83,9 @@ namespace Aura.Data.Database
 	/// Indexed by race id.
 	/// Depends on: SpeedDb, FlightDb, RaceSkillDb
 	/// </summary>
-	public class RaceDb : DatabaseCSVIndexed<int, RaceInfo>
+	public class RaceDb : DatabaseCSVIndexed<int, RaceData>
 	{
-		public List<RaceInfo> FindAll(string name)
+		public List<RaceData> FindAll(string name)
 		{
 			name = name.ToLower();
 			return this.Entries.FindAll(a => a.Value.Name.ToLower() == name);
@@ -96,7 +96,7 @@ namespace Aura.Data.Database
 			if (entry.Count < 24)
 				throw new FieldCountException(24);
 
-			var info = new RaceInfo();
+			var info = new RaceData();
 			info.Id = entry.ReadInt();
 			info.Name = entry.ReadString();
 			info.Group = entry.ReadString();
@@ -154,7 +154,7 @@ namespace Aura.Data.Database
 			}
 
 			// External information from other dbs
-			SpeedInfo actionInfo;
+			SpeedData actionInfo;
 			if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/walk")) != null)
 				info.WalkingSpeed = actionInfo.Speed;
 			else if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/*")) != null)

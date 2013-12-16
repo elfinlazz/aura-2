@@ -317,8 +317,8 @@ namespace Aura.Channel.Network.Sending
 			// --------------------------------------------------------------
 			if (type == CreaturePacketType.Private)
 			{
-				packet.PutInt(creature.RaceInfo.InventoryWidth);
-				packet.PutInt(creature.RaceInfo.InventoryHeight);
+				packet.PutInt(creature.RaceData.InventoryWidth);
+				packet.PutInt(creature.RaceData.InventoryHeight);
 
 				var items = creature.Inventory.Items;
 				packet.PutInt(items.Count());

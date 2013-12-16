@@ -34,7 +34,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureCondition Conditions { get; set; }
 
 		public int Race { get; set; }
-		public RaceInfo RaceInfo { get; protected set; }
+		public RaceData RaceData { get; protected set; }
 
 		public Creature Owner { get; set; }
 
@@ -99,7 +99,7 @@ namespace Aura.Channel.World.Entities
 		public short Age { get; set; }
 		public short AbilityPoints { get; set; }
 
-		public virtual float CombatPower { get { return (this.RaceInfo != null ? this.RaceInfo.CombatPower : 1); } }
+		public virtual float CombatPower { get { return (this.RaceData != null ? this.RaceData.CombatPower : 1); } }
 
 		public float ProtectionMod { get; set; }
 		public float ProtectionPassive { get; set; }
@@ -222,7 +222,7 @@ namespace Aura.Channel.World.Entities
 			this.Titles = new CreatureTitles(this);
 			this.Keywords = new CreatureKeywords(this);
 
-			this.RaceInfo = AuraData.RaceDb.Find(10002);
+			this.RaceData = AuraData.RaceDb.Find(10002);
 
 			this.Inventory = new CreatureInventory(this);
 			this.Inventory.AddMainInventory();
@@ -309,7 +309,7 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public float GetSpeed()
 		{
-			return (!this.IsWalking ? this.RaceInfo.RunningSpeed : this.RaceInfo.WalkingSpeed);
+			return (!this.IsWalking ? this.RaceData.RunningSpeed : this.RaceData.WalkingSpeed);
 		}
 
 		/// <summary>

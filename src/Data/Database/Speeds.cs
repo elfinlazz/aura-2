@@ -3,7 +3,7 @@
 
 namespace Aura.Data.Database
 {
-	public class SpeedInfo
+	public class SpeedData
 	{
 		public string Ident { get; internal set; }
 		public float Speed { get; internal set; }
@@ -15,14 +15,14 @@ namespace Aura.Data.Database
 	/// the speed would require client modifications.
 	/// Indexed by group identification.
 	/// </summary>
-	public class SpeedDb : DatabaseCSVIndexed<string, SpeedInfo>
+	public class SpeedDb : DatabaseCSVIndexed<string, SpeedData>
 	{
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			if (entry.Count < 2)
 				throw new FieldCountException(2);
 
-			var info = new SpeedInfo();
+			var info = new SpeedData();
 			info.Ident = entry.ReadString();
 			info.Speed = entry.ReadFloat();
 
