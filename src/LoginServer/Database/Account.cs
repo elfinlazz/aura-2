@@ -77,7 +77,7 @@ namespace Aura.Login.Database
 		/// </summary>
 		public Character GetCharacter(long id)
 		{
-			return this.Characters.FirstOrDefault(a => a.Id == id);
+			return this.Characters.FirstOrDefault(a => a.EntityId == id);
 		}
 
 		/// <summary>
@@ -85,7 +85,7 @@ namespace Aura.Login.Database
 		/// </summary>
 		public Character GetPet(long id)
 		{
-			return this.Pets.FirstOrDefault(a => a.Id == id);
+			return this.Pets.FirstOrDefault(a => a.EntityId == id);
 		}
 
 		/// <summary>

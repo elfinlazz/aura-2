@@ -140,7 +140,7 @@ namespace Aura.Login.Network
 			if (character != null)
 			{
 				packet.PutString(character.Server);
-				packet.PutLong(character.Id);
+				packet.PutLong(character.EntityId);
 				packet.PutByte(1);
 				packet.PutString(character.Name);
 				packet.PutString("");
@@ -517,7 +517,7 @@ namespace Aura.Login.Network
 			foreach (var character in account.Characters)
 			{
 				packet.PutString(character.Server);
-				packet.PutLong(character.Id);
+				packet.PutLong(character.EntityId);
 				packet.PutString(character.Name);
 				packet.PutByte((byte)character.DeletionFlag);
 				packet.PutLong(0);
@@ -533,7 +533,7 @@ namespace Aura.Login.Network
 			foreach (var pet in account.Pets)
 			{
 				packet.PutString(pet.Server);
-				packet.PutLong(pet.Id);
+				packet.PutLong(pet.EntityId);
 				packet.PutString(pet.Name);
 				packet.PutByte((byte)pet.DeletionFlag);
 				packet.PutLong(0);

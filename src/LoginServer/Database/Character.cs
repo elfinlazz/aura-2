@@ -7,7 +7,7 @@ namespace Aura.Login.Database
 {
 	public class Character
 	{
-		public long Id { get; set; }
+		public long EntityId { get; set; }
 		public long CreatureId { get; set; }
 		public string Name { get; set; }
 		public string Server { get; set; }

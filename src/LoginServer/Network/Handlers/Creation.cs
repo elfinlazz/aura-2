@@ -153,7 +153,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Success~
-			Send.CreateCharacterR(client, serverName, character.Id);
+			Send.CreateCharacterR(client, serverName, character.EntityId);
 
 			Log.Info("New character '{0}' created in account '{1}'.", name, client.Account.Name);
 
@@ -257,7 +257,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Success~
-			Send.CreatePetR(client, serverName, pet.Id);
+			Send.CreatePetR(client, serverName, pet.EntityId);
 
 			Log.Info("New pet '{0}' created in account '{1}'.", name, client.Account.Name);
 
@@ -407,7 +407,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Success~
-			Send.CreatePetR(client, serverName, partner.Id);
+			Send.CreatePetR(client, serverName, partner.EntityId);
 
 			Log.Info("New partner '{0}' created in account '{1}'.", name, client.Account.Name);
 

@@ -39,73 +39,81 @@ namespace Aura.Channel.Database
 			{
 				// Account
 				// ----------------------------------------------------------
-				var mc = new MySqlCommand("SELECT * FROM `accounts` WHERE `accountId` = @accountId", conn);
-				mc.Parameters.AddWithValue("@accountId", accountId);
-
-				using (var reader = mc.ExecuteReader())
+				using (var mc = new MySqlCommand("SELECT * FROM `accounts` WHERE `accountId` = @accountId", conn))
 				{
-					if (!reader.HasRows)
-						return null;
+					mc.Parameters.AddWithValue("@accountId", accountId);
 
-					reader.Read();
+					using (var reader = mc.ExecuteReader())
+					{
+						if (!reader.HasRows)
+							return null;
 
-					account.Id = reader.GetStringSafe("accountId");
-					account.SessionKey = reader.GetInt64("sessionKey");
-					account.Authority = reader.GetByte("authority");
+						reader.Read();
+
+						account.Id = reader.GetStringSafe("accountId");
+						account.SessionKey = reader.GetInt64("sessionKey");
+						account.Authority = reader.GetByte("authority");
+					}
 				}
 
 				// Characters
 				// ----------------------------------------------------------
-				mc = new MySqlCommand("SELECT * FROM `characters` WHERE `accountId` = @accountId", conn);
-				mc.Parameters.AddWithValue("@accountId", accountId);
-
-				using (var reader = mc.ExecuteReader())
+				using (var mc = new MySqlCommand("SELECT * FROM `characters` WHERE `accountId` = @accountId", conn))
 				{
-					while (reader.Read())
+					mc.Parameters.AddWithValue("@accountId", accountId);
+
+					using (var reader = mc.ExecuteReader())
 					{
-						var character = this.GetCharacter<Character>(reader.GetInt64("entityId"), "characters");
-						if (character == null)
-							continue;
+						while (reader.Read())
+						{
+							var character = this.GetCharacter<Character>(reader.GetInt64("entityId"), "characters");
+							if (character == null)
+								continue;
 
-						// Add GM titles for the characters of authority 50+ accounts
-						if (account.Authority >= 50) character.Titles.Add(60000, TitleState.Usable); // GM
-						if (account.Authority >= 99) character.Titles.Add(60001, TitleState.Usable); // devCat
+							// Add GM titles for the characters of authority 50+ accounts
+							if (account.Authority >= 50) character.Titles.Add(60000, TitleState.Usable); // GM
+							if (account.Authority >= 99) character.Titles.Add(60001, TitleState.Usable); // devCat
 
-						account.Characters.Add(character);
+							account.Characters.Add(character);
+						}
 					}
 				}
 
 				// Pets
 				// ----------------------------------------------------------
-				mc = new MySqlCommand("SELECT * FROM `pets` WHERE `accountId` = @accountId", conn);
-				mc.Parameters.AddWithValue("@accountId", accountId);
-
-				using (var reader = mc.ExecuteReader())
+				using (var mc = new MySqlCommand("SELECT * FROM `pets` WHERE `accountId` = @accountId", conn))
 				{
-					while (reader.Read())
-					{
-						var character = this.GetCharacter<Pet>(reader.GetInt64("entityId"), "pets");
-						if (character == null)
-							continue;
+					mc.Parameters.AddWithValue("@accountId", accountId);
 
-						account.Pets.Add(character);
+					using (var reader = mc.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							var character = this.GetCharacter<Pet>(reader.GetInt64("entityId"), "pets");
+							if (character == null)
+								continue;
+
+							account.Pets.Add(character);
+						}
 					}
 				}
 
 				// Partners
 				// ----------------------------------------------------------
-				mc = new MySqlCommand("SELECT * FROM `partners` WHERE `accountId` = @accountId", conn);
-				mc.Parameters.AddWithValue("@accountId", accountId);
-
-				using (var reader = mc.ExecuteReader())
+				using (var mc = new MySqlCommand("SELECT * FROM `partners` WHERE `accountId` = @accountId", conn))
 				{
-					while (reader.Read())
-					{
-						var character = this.GetCharacter<Pet>(reader.GetInt64("entityId"), "partners");
-						if (character == null)
-							continue;
+					mc.Parameters.AddWithValue("@accountId", accountId);
 
-						account.Pets.Add(character);
+					using (var reader = mc.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							var character = this.GetCharacter<Pet>(reader.GetInt64("entityId"), "partners");
+							if (character == null)
+								continue;
+
+							account.Pets.Add(character);
+						}
 					}
 				}
 			}
@@ -288,6 +296,7 @@ namespace Aura.Channel.Database
 					{
 						var id = reader.GetUInt16("titleId");
 						var usable = (reader.GetBoolean("usable") ? TitleState.Usable : TitleState.Known);
+
 						character.Titles.Add(id, usable);
 					}
 				}
@@ -381,12 +390,12 @@ namespace Aura.Channel.Database
 					mc.ExecuteNonQuery();
 				}
 
-				foreach (var keyword in creature.Keywords)
+				foreach (var keywordId in creature.Keywords)
 				{
 					using (var cmd = new InsertCommand("INSERT INTO `keywords` {0}", conn, transaction))
 					{
 						cmd.Set("creatureId", creature.CreatureId);
-						cmd.Set("keywordId", keyword);
+						cmd.Set("keywordId", keywordId);
 
 						cmd.Execute();
 					}
@@ -414,6 +423,7 @@ namespace Aura.Channel.Database
 				foreach (var title in creature.Titles)
 				{
 					// Dynamic titles shouldn't be saved
+					// TODO: Title db that tells us this?
 					if (title.Key == 60000 || title.Key == 60001 || title.Key == 50000) // GM, devCAT, Guild
 						continue;
 

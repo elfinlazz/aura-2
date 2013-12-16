@@ -30,16 +30,16 @@ namespace Aura.Login.Database
 		/// <param name="password"></param>
 		public void CreateAccount(string accountId, string password)
 		{
+			password = Password.Hash(password);
+
 			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new InsertCommand("INSERT INTO `accounts` {0}", conn))
 			{
-				password = Password.Hash(password);
+				cmd.Set("accountId", accountId);
+				cmd.Set("password", password);
+				cmd.Set("creation", DateTime.Now);
 
-				var mc = new MySqlCommand("INSERT INTO `accounts` (`accountId`, `password`, `creation`) VALUES (@accountId, @password, @creation)", conn);
-				mc.Parameters.AddWithValue("@accountId", accountId);
-				mc.Parameters.AddWithValue("@password", password);
-				mc.Parameters.AddWithValue("@creation", DateTime.Now);
-
-				mc.ExecuteNonQuery();
+				cmd.Execute();
 			}
 		}
 
@@ -51,8 +51,8 @@ namespace Aura.Login.Database
 		public Account GetAccount(string accountId)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `accounts` WHERE `accountId` = @accountId", conn))
 			{
-				var mc = new MySqlCommand("SELECT * FROM `accounts` WHERE `accountId` = @accountId", conn);
 				mc.Parameters.AddWithValue("@accountId", accountId);
 
 				using (var reader = mc.ExecuteReader())
@@ -80,8 +80,8 @@ namespace Aura.Login.Database
 		public void UpdateAccountSecondaryPassword(Account account)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("UPDATE `accounts` SET `secondaryPassword` = @secondaryPassword WHERE `accountId` = @accountId", conn))
 			{
-				var mc = new MySqlCommand("UPDATE `accounts` SET `secondaryPassword` = @secondaryPassword WHERE `accountId` = @accountId", conn);
 				mc.Parameters.AddWithValue("@accountId", account.Name);
 				mc.Parameters.AddWithValue("@secondaryPassword", account.SecondaryPassword);
 
@@ -97,10 +97,10 @@ namespace Aura.Login.Database
 		public long CreateSession(string accountId)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("UPDATE `accounts` SET `sessionKey` = @sessionKey WHERE `accountId` = @accountId", conn))
 			{
 				var sessionKey = RandomProvider.Get().NextInt64();
 
-				var mc = new MySqlCommand("UPDATE `accounts` SET `sessionKey` = @sessionKey WHERE `accountId` = @accountId", conn);
 				mc.Parameters.AddWithValue("@accountId", accountId);
 				mc.Parameters.AddWithValue("@sessionKey", sessionKey);
 
@@ -117,13 +117,13 @@ namespace Aura.Login.Database
 		public void UpdateAccount(Account account)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new UpdateCommand("UPDATE `accounts` SET `lastLogin` = @lastLogin, `loggedIn` = @loggedIn WHERE `accountId` = @accountId", conn))
 			{
-				var mc = new MySqlCommand("UPDATE `accounts` SET `lastLogin` = @lastLogin, `loggedIn` = @loggedIn WHERE `accountId` = @accountId", conn);
-				mc.Parameters.AddWithValue("@accountId", account.Name);
-				mc.Parameters.AddWithValue("@lastLogin", account.LastLogin);
-				mc.Parameters.AddWithValue("@loggedIn", account.LoggedIn);
+				cmd.Set("accountId", account.Name);
+				cmd.Set("lastLogin", account.LastLogin);
+				cmd.Set("loggedIn", account.LoggedIn);
 
-				mc.ExecuteNonQuery();
+				cmd.Execute();
 			}
 		}
 		/// <summary>
@@ -134,8 +134,8 @@ namespace Aura.Login.Database
 		public List<Card> GetCharacterCards(string accountId)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT `cardId`, `type` FROM `cards` WHERE `accountId` = @accountId AND race = 0 AND !`isGift`", conn))
 			{
-				var mc = new MySqlCommand("SELECT `cardId`, `type` FROM `cards` WHERE `accountId` = @accountId AND race = 0 AND !`isGift`", conn);
 				mc.Parameters.AddWithValue("@accountId", accountId);
 
 				var result = new List<Card>();
@@ -163,8 +163,8 @@ namespace Aura.Login.Database
 		public List<Card> GetPetCards(string accountId)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT `cardId`, `type`, `race` FROM `cards` WHERE `accountId` = @accountId AND race > 0 AND !`isGift`", conn))
 			{
-				var mc = new MySqlCommand("SELECT `cardId`, `type`, `race` FROM `cards` WHERE `accountId` = @accountId AND race > 0 AND !`isGift`", conn);
 				mc.Parameters.AddWithValue("@accountId", accountId);
 
 				var result = new List<Card>();
@@ -193,8 +193,8 @@ namespace Aura.Login.Database
 		public List<Gift> GetGifts(string accountId)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `cards` WHERE `accountId` = @accountId AND `isGift`", conn))
 			{
-				var mc = new MySqlCommand("SELECT * FROM `cards` WHERE `accountId` = @accountId AND `isGift`", conn);
 				mc.Parameters.AddWithValue("@accountId", accountId);
 
 				var result = new List<Gift>();
@@ -265,38 +265,40 @@ namespace Aura.Login.Database
 		/// <param name="conn"></param>
 		private void GetCharacters(string accountId, string table, CharacterType type, ref List<Character> result, MySqlConnection conn)
 		{
-			var mc = new MySqlCommand(
+			using (var mc = new MySqlCommand(
 				"SELECT * " +
 				"FROM `" + table + "` AS c " +
 				"INNER JOIN `creatures` AS cr ON c.creatureId = cr.creatureId " +
 				"WHERE `accountId` = @accountId "
-			, conn);
-			mc.Parameters.AddWithValue("@accountId", accountId);
-
-			using (var reader = mc.ExecuteReader())
+			, conn))
 			{
-				while (reader.Read())
-				{
-					var character = new Character();
-					character.Id = reader.GetInt64("entityId");
-					character.CreatureId = reader.GetInt64("creatureId");
-					character.Name = reader.GetStringSafe("name");
-					character.Server = reader.GetStringSafe("server");
-					character.Race = reader.GetInt32("race");
-					character.DeletionTime = reader.GetDateTimeSafe("deletionTime");
-					character.SkinColor = reader.GetByte("skinColor");
-					character.EyeType = reader.GetByte("eyeType");
-					character.EyeColor = reader.GetByte("eyeColor");
-					character.MouthType = reader.GetByte("mouthType");
-					character.Height = reader.GetFloat("height");
-					character.Weight = reader.GetFloat("weight");
-					character.Upper = reader.GetFloat("upper");
-					character.Lower = reader.GetInt32("lower");
-					character.Color1 = reader.GetUInt32("color1");
-					character.Color2 = reader.GetUInt32("color2");
-					character.Color3 = reader.GetUInt32("color3");
+				mc.Parameters.AddWithValue("@accountId", accountId);
 
-					result.Add(character);
+				using (var reader = mc.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						var character = new Character();
+						character.EntityId = reader.GetInt64("entityId");
+						character.CreatureId = reader.GetInt64("creatureId");
+						character.Name = reader.GetStringSafe("name");
+						character.Server = reader.GetStringSafe("server");
+						character.Race = reader.GetInt32("race");
+						character.DeletionTime = reader.GetDateTimeSafe("deletionTime");
+						character.SkinColor = reader.GetByte("skinColor");
+						character.EyeType = reader.GetByte("eyeType");
+						character.EyeColor = reader.GetByte("eyeColor");
+						character.MouthType = reader.GetByte("mouthType");
+						character.Height = reader.GetFloat("height");
+						character.Weight = reader.GetFloat("weight");
+						character.Upper = reader.GetFloat("upper");
+						character.Lower = reader.GetInt32("lower");
+						character.Color1 = reader.GetUInt32("color1");
+						character.Color2 = reader.GetUInt32("color2");
+						character.Color3 = reader.GetUInt32("color3");
+
+						result.Add(character);
+					}
 				}
 			}
 		}
@@ -309,8 +311,8 @@ namespace Aura.Login.Database
 		public List<Item> GetEquipment(long creatureId)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId", conn))
 			{
-				var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId", conn);
 				mc.Parameters.AddWithValue("@creatureId", creatureId);
 
 				var result = new List<Item>();
@@ -392,29 +394,22 @@ namespace Aura.Login.Database
 		private bool Create(string table, string accountId, Character character, List<Item> items, List<ushort> keywords, List<Skill> skills)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var transaction = conn.BeginTransaction())
 			{
-				MySqlTransaction transaction = null;
 				try
 				{
-					transaction = conn.BeginTransaction();
-
 					// Creature
 					character.CreatureId = this.CreateCreature(character, conn, transaction);
 
 					// Character
+					using (var cmd = new InsertCommand("INSERT INTO `" + table + "` {0}", conn, transaction))
 					{
-						var mc = new MySqlCommand(
-							"INSERT INTO `" + table + "` " +
-							"(`accountId`, `creatureId`) " +
-							"VALUES (@accountId, @creatureId)"
-						, conn, transaction);
+						cmd.Set("accountId", accountId);
+						cmd.Set("creatureId", character.CreatureId);
 
-						mc.Parameters.AddWithValue("@accountId", accountId);
-						mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+						cmd.Execute();
 
-						mc.ExecuteNonQuery();
-
-						character.Id = mc.LastInsertedId;
+						character.EntityId = cmd.LastId;
 					}
 
 					// Items
@@ -435,9 +430,7 @@ namespace Aura.Login.Database
 				}
 				catch (Exception ex)
 				{
-					character.Id = character.CreatureId = 0;
-
-					transaction.Rollback();
+					character.EntityId = character.CreatureId = 0;
 
 					Log.Exception(ex);
 
@@ -455,43 +448,38 @@ namespace Aura.Login.Database
 		/// <returns></returns>
 		private long CreateCreature(Character creature, MySqlConnection conn, MySqlTransaction transaction)
 		{
-			var mc = new MySqlCommand(
-				"INSERT INTO `creatures` " +
-				"(`server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`, " +
-				" `lifeMax`, `manaMax`, `staminaMax`, `str`, `int`, `dex`, `will`, `luck`, `defense`, `protection`, `ap`) " +
-				"VALUES (@server, @name, @race, @skinColor, @eyeType, @eyeColor, @mouthType, @height, @weight, @upper, @lower, @color1, @color2, @color3, " +
-				" @lifeMax, @manaMax, @staminaMax, @str, @int, @dex, @will, @luck, @defense, @protection, @ap)"
-			, conn, transaction);
+			using (var cmd = new InsertCommand("INSERT INTO `creatures` {0}", conn, transaction))
+			{
+				cmd.Set("server", creature.Server);
+				cmd.Set("name", creature.Name);
+				cmd.Set("race", creature.Race);
+				cmd.Set("skinColor", creature.SkinColor);
+				cmd.Set("eyeType", creature.EyeType);
+				cmd.Set("eyeColor", creature.EyeColor);
+				cmd.Set("mouthType", creature.MouthType);
+				cmd.Set("height", creature.Height);
+				cmd.Set("weight", creature.Weight);
+				cmd.Set("upper", creature.Upper);
+				cmd.Set("lower", creature.Lower);
+				cmd.Set("color1", creature.Color1);
+				cmd.Set("color2", creature.Color2);
+				cmd.Set("color3", creature.Color3);
+				cmd.Set("lifeMax", creature.Life);
+				cmd.Set("manaMax", creature.Mana);
+				cmd.Set("staminaMax", creature.Stamina);
+				cmd.Set("str", creature.Str);
+				cmd.Set("int", creature.Int);
+				cmd.Set("dex", creature.Dex);
+				cmd.Set("will", creature.Will);
+				cmd.Set("luck", creature.Luck);
+				cmd.Set("defense", creature.Defense);
+				cmd.Set("protection", creature.Protection);
+				cmd.Set("ap", creature.AP);
 
-			mc.Parameters.AddWithValue("@server", creature.Server);
-			mc.Parameters.AddWithValue("@name", creature.Name);
-			mc.Parameters.AddWithValue("@race", creature.Race);
-			mc.Parameters.AddWithValue("@skinColor", creature.SkinColor);
-			mc.Parameters.AddWithValue("@eyeType", creature.EyeType);
-			mc.Parameters.AddWithValue("@eyeColor", creature.EyeColor);
-			mc.Parameters.AddWithValue("@mouthType", creature.MouthType);
-			mc.Parameters.AddWithValue("@height", creature.Height);
-			mc.Parameters.AddWithValue("@weight", creature.Weight);
-			mc.Parameters.AddWithValue("@upper", creature.Upper);
-			mc.Parameters.AddWithValue("@lower", creature.Lower);
-			mc.Parameters.AddWithValue("@color1", creature.Color1);
-			mc.Parameters.AddWithValue("@color2", creature.Color2);
-			mc.Parameters.AddWithValue("@color3", creature.Color3);
-			mc.Parameters.AddWithValue("@lifeMax", creature.Life);
-			mc.Parameters.AddWithValue("@manaMax", creature.Mana);
-			mc.Parameters.AddWithValue("@staminaMax", creature.Stamina);
-			mc.Parameters.AddWithValue("@str", creature.Str);
-			mc.Parameters.AddWithValue("@int", creature.Int);
-			mc.Parameters.AddWithValue("@dex", creature.Dex);
-			mc.Parameters.AddWithValue("@will", creature.Will);
-			mc.Parameters.AddWithValue("@luck", creature.Luck);
-			mc.Parameters.AddWithValue("@defense", creature.Defense);
-			mc.Parameters.AddWithValue("@protection", creature.Protection);
-			mc.Parameters.AddWithValue("@ap", creature.AP);
+				cmd.Execute();
 
-			mc.ExecuteNonQuery();
-
-			return mc.LastInsertedId;
+				return cmd.LastId;
+			}
 		}
 
 		/// <summary>
@@ -501,14 +489,6 @@ namespace Aura.Login.Database
 		/// <param name="items"></param>
 		private void AddItems(long creatureId, List<Item> items, MySqlConnection conn, MySqlTransaction transaction)
 		{
-			var mc = new MySqlCommand(
-				"INSERT INTO `items` " +
-				"(`creatureId`, `class`, `pocket`, `color1`, `color2`, `color3`, `price`, `durability`, `durabilityMax`, " +
-				" `durabilityNew`, `attackMin`, `attackMax`, `balance`, `critical`, `defense`, `protection`, `attackSpeed`, `sellPrice`)" +
-				"VALUES (@creatureId, @class, @pocket, @color1, @color2, @color3, @price, @durability, @durabilityMax, " +
-				" @durabilityNew, @attackMin, @attackMax, @balance, @critical, @defense, @protection, @attackSpeed, @sellPrice)"
-			, conn, transaction);
-
 			foreach (var item in items)
 			{
 				var dataInfo = AuraData.ItemDb.Find(item.Info.Id);
@@ -518,26 +498,29 @@ namespace Aura.Login.Database
 					continue;
 				}
 
-				mc.Parameters.Clear();
-				mc.Parameters.AddWithValue("@creatureId", creatureId);
-				mc.Parameters.AddWithValue("@class", item.Info.Id);
-				mc.Parameters.AddWithValue("@pocket", (byte)item.Info.Pocket);
-				mc.Parameters.AddWithValue("@color1", item.Info.Color1);
-				mc.Parameters.AddWithValue("@color2", item.Info.Color2);
-				mc.Parameters.AddWithValue("@color3", item.Info.Color3);
-				mc.Parameters.AddWithValue("@price", dataInfo.Price);
-				mc.Parameters.AddWithValue("@durability", dataInfo.Durability);
-				mc.Parameters.AddWithValue("@durabilityMax", dataInfo.Durability);
-				mc.Parameters.AddWithValue("@durabilityNew", dataInfo.Durability);
-				mc.Parameters.AddWithValue("@attackMin", dataInfo.AttackMin);
-				mc.Parameters.AddWithValue("@attackMax", dataInfo.AttackMax);
-				mc.Parameters.AddWithValue("@balance", dataInfo.Balance);
-				mc.Parameters.AddWithValue("@critical", dataInfo.Critical);
-				mc.Parameters.AddWithValue("@defense", dataInfo.Defense);
-				mc.Parameters.AddWithValue("@protection", dataInfo.Protection);
-				mc.Parameters.AddWithValue("@attackSpeed", dataInfo.AttackSpeed);
-				mc.Parameters.AddWithValue("@sellPrice", dataInfo.SellingPrice);
-				mc.ExecuteNonQuery();
+				using (var cmd = new InsertCommand("INSERT INTO `items` {0}", conn, transaction))
+				{
+					cmd.Set("creatureId", creatureId);
+					cmd.Set("itemId", item.Info.Id);
+					cmd.Set("pocket", (byte)item.Info.Pocket);
+					cmd.Set("color1", item.Info.Color1);
+					cmd.Set("color2", item.Info.Color2);
+					cmd.Set("color3", item.Info.Color3);
+					cmd.Set("price", dataInfo.Price);
+					cmd.Set("durability", dataInfo.Durability);
+					cmd.Set("durabilityMax", dataInfo.Durability);
+					cmd.Set("durabilityNew", dataInfo.Durability);
+					cmd.Set("attackMin", dataInfo.AttackMin);
+					cmd.Set("attackMax", dataInfo.AttackMax);
+					cmd.Set("balance", dataInfo.Balance);
+					cmd.Set("critical", dataInfo.Critical);
+					cmd.Set("defense", dataInfo.Defense);
+					cmd.Set("protection", dataInfo.Protection);
+					cmd.Set("attackSpeed", dataInfo.AttackSpeed);
+					cmd.Set("sellPrice", dataInfo.SellingPrice);
+
+					cmd.Execute();
+				}
 			}
 		}
 
@@ -548,14 +531,15 @@ namespace Aura.Login.Database
 		/// <param name="keywordIds"></param>
 		private void AddKeywords(long creatureId, List<ushort> keywordIds, MySqlConnection conn, MySqlTransaction transaction)
 		{
-			var mc = new MySqlCommand("INSERT INTO `keywords` (`keywordId`, `creatureId`) VALUES (@keywordId, @creatureId)", conn, transaction);
-
 			foreach (var keywordId in keywordIds)
 			{
-				mc.Parameters.Clear();
-				mc.Parameters.AddWithValue("@creatureId", creatureId);
-				mc.Parameters.AddWithValue("@keywordId", keywordId);
-				mc.ExecuteNonQuery();
+				using (var cmd = new InsertCommand("INSERT INTO `keywords` {0}", conn, transaction))
+				{
+					cmd.Set("creatureId", creatureId);
+					cmd.Set("keywordId", keywordId);
+
+					cmd.Execute();
+				}
 			}
 		}
 
@@ -566,15 +550,16 @@ namespace Aura.Login.Database
 		/// <param name="skills"></param>
 		private void AddSkills(long creatureId, List<Skill> skills, MySqlConnection conn, MySqlTransaction transaction)
 		{
-			var mc = new MySqlCommand("INSERT INTO `skills` VALUES (@skillId, @creatureId, @rank, 0)", conn, transaction);
-
 			foreach (var skill in skills)
 			{
-				mc.Parameters.Clear();
-				mc.Parameters.AddWithValue("@creatureId", creatureId);
-				mc.Parameters.AddWithValue("@skillId", (ushort)skill.Id);
-				mc.Parameters.AddWithValue("@rank", (byte)skill.Rank);
-				mc.ExecuteNonQuery();
+				using (var cmd = new InsertCommand("INSERT INTO `skills` {0}", conn, transaction))
+				{
+					cmd.Set("creatureId", creatureId);
+					cmd.Set("skillId", (ushort)skill.Id);
+					cmd.Set("rank", (byte)skill.Rank);
+
+					cmd.Execute();
+				}
 			}
 		}
 
@@ -586,8 +571,8 @@ namespace Aura.Login.Database
 		public bool DeleteCard(Card card)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("DELETE FROM `cards` WHERE `cardId` = @cardId", conn))
 			{
-				var mc = new MySqlCommand("DELETE FROM `cards` WHERE `cardId` = @cardId", conn);
 				mc.Parameters.AddWithValue("@cardId", card.Id);
 
 				return (mc.ExecuteNonQuery() > 0);
@@ -601,8 +586,8 @@ namespace Aura.Login.Database
 		public void ChangeGiftToCard(long giftId)
 		{
 			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("UPDATE `cards` SET `isGift` = FALSE WHERE `cardId` = @cardId", conn))
 			{
-				var mc = new MySqlCommand("UPDATE `cards` SET `isGift` = FALSE WHERE `cardId` = @cardId", conn);
 				mc.Parameters.AddWithValue("@cardId", giftId);
 
 				mc.ExecuteNonQuery();
@@ -619,18 +604,21 @@ namespace Aura.Login.Database
 			{
 				if (character.DeletionFlag == DeletionFlag.Delete)
 				{
-					var mc = new MySqlCommand("DELETE FROM `creatures` WHERE `creatureId` = @creatureId", conn);
-					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
-
-					mc.ExecuteNonQuery();
+					using (var mc = new MySqlCommand("DELETE FROM `creatures` WHERE `creatureId` = @creatureId", conn))
+					{
+						mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+						mc.ExecuteNonQuery();
+					}
 				}
 				else
 				{
-					var mc = new MySqlCommand("UPDATE `creatures` SET `deletionTime` = @deletionTime WHERE `creatureId` = @creatureId", conn);
-					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
-					mc.Parameters.AddWithValue("@deletionTime", character.DeletionTime);
+					using (var cmd = new UpdateCommand("UPDATE `creatures` SET {0} WHERE `creatureId` = @creatureId", conn))
+					{
+						cmd.AddParameter("@creatureId", character.CreatureId);
+						cmd.Set("deletionTime", character.DeletionTime);
 
-					mc.ExecuteNonQuery();
+						cmd.Execute();
+					}
 				}
 			}
 		}

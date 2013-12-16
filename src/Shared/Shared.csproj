@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\Card.cs" />
-    <Compile Include="Database\Packs.cs" />
+    <Compile Include="Database\Commands.cs" />
     <Compile Include="Mabi\Const\Conditions.cs" />
     <Compile Include="Mabi\Const\CreatureStates.cs" />
     <Compile Include="Mabi\Const\Items.cs" />
