@@ -25,7 +25,7 @@ namespace Aura.Data.Database
 			info.Type = entry.ReadShort();
 			info.Loop = entry.ReadBool();
 
-			this.Entries.Add(info.Name, info);
+			this.Entries[info.Name] = info;
 		}
 	}
 }

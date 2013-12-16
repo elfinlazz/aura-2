@@ -62,7 +62,7 @@ namespace Aura.Data.Database
 			info.Color2 = entry.ReadUIntHex();
 			info.Color3 = entry.ReadUIntHex();
 
-			this.Entries.Add(info.RaceId, info);
+			this.Entries[info.RaceId] = info;
 		}
 	}
 }

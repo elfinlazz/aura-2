@@ -116,7 +116,7 @@ namespace Aura.Data.Database
 			info.OnEquip = entry.ReadString();
 			info.OnUnequip = entry.ReadString();
 
-			this.Entries.Add(info.Id, info);
+			this.Entries[info.Id] = info;
 		}
 	}
 

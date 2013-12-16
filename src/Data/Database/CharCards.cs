@@ -43,7 +43,7 @@ namespace Aura.Data.Database
 			if ((races & 0x10) != 0) info.Races.Add(8001);
 			if ((races & 0x20) != 0) info.Races.Add(8002);
 
-			this.Entries.Add(info.Id, info);
+			this.Entries[info.Id] = info;
 		}
 	}
 }

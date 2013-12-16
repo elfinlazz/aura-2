@@ -177,9 +177,7 @@ namespace Aura.Data.Database
 
 			info.Skills = AuraData.RaceSkillDb.FindAll(info.Id);
 
-			if (this.Entries.ContainsKey(info.Id))
-				throw new DatabaseWarningException("Duplicate: " + info.Id.ToString());
-			this.Entries.Add(info.Id, info);
+			this.Entries[info.Id] = info;
 		}
 	}
 

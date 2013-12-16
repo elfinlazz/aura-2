@@ -43,9 +43,6 @@ namespace Aura.Data.Database
 
 			var exists = this.Entries.ContainsKey(info.Name);
 			this.Entries[info.Name] = info;
-
-			if (exists)
-				throw new DatabaseWarningException("Duplicate '{0}', replacing.", info.Name);
 		}
 	}
 }

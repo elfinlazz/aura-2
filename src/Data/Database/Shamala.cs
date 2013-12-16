@@ -67,9 +67,7 @@ namespace Aura.Data.Database
 			foreach (var race in races)
 				info.Races.Add(Convert.ToInt32(race));
 
-			if (this.Entries.ContainsKey(info.Id))
-				throw new DatabaseWarningException("Duplicate: " + info.Id);
-			this.Entries.Add(info.Id, info);
+			this.Entries[info.Id] = info;
 		}
 	}
 }

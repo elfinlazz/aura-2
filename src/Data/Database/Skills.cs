@@ -58,7 +58,7 @@ namespace Aura.Data.Database
 
 			info.RankInfo.AddRange(AuraData.SkillRankDb.Entries.FindAll(a => a.SkillId == info.Id).OrderBy(a => a.Rank));
 
-			this.Entries.Add(info.Id, info);
+			this.Entries[info.Id] = info;
 		}
 	}
 }

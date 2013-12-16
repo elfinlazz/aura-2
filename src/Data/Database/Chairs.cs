@@ -26,7 +26,7 @@ namespace Aura.Data.Database
 			info.GiantPropId = entry.ReadInt();
 			info.Effect = entry.ReadInt();
 
-			this.Entries.Add(info.ItemId, info);
+			this.Entries[info.ItemId] = info;
 		}
 	}
 }

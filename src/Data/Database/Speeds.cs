@@ -24,9 +24,7 @@ namespace Aura.Data.Database
 			info.Ident = entry.ReadString();
 			info.Speed = entry.ReadFloat();
 
-			if (this.Entries.ContainsKey(info.Ident))
-				throw new DatabaseWarningException("Duplicate: " + info.Ident);
-			this.Entries.Add(info.Ident, info);
+			this.Entries[info.Ident] = info;
 		}
 	}
 }
