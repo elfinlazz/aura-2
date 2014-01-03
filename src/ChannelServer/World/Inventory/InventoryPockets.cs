@@ -33,12 +33,18 @@ namespace Aura.Channel.World
 		public abstract bool TryAdd(Item item, byte targetX, byte targetY, out Item colliding);
 
 		/// <summary>
-		/// Puts item into the pocket, at the location it has.
+		/// Adds item to pocket, at the first possible position.
 		/// </summary>
 		/// <param name="item"></param>
-		public abstract void ForceAdd(Item item);
-
+		/// <returns></returns>
 		public abstract bool Add(Item item);
+
+		/// <summary>
+		/// Adds item to pocket, at its position.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public abstract void AddUnsafe(Item item);
 
 		/// <summary>
 		/// Fills stacks that take this item. Returns true if item has been
@@ -112,7 +118,7 @@ namespace Aura.Channel.World
 			if (targetX + newItem.Data.Width > _width || targetY + newItem.Data.Height > _height)
 				return false;
 
-			this.TryGetCollidingItem(targetX, targetY, newItem, out collidingItem);
+			collidingItem = this.GetCollidingItem(targetX, targetY, newItem);
 
 			if (collidingItem != null && ((collidingItem.Data.StackType == StackType.Sac && (collidingItem.Data.StackItem == newItem.Info.Id || collidingItem.Data.StackItem == newItem.Data.StackItem)) || (newItem.Data.StackType == StackType.Stackable && newItem.Info.Id == collidingItem.Info.Id)))
 			{
@@ -171,19 +177,8 @@ namespace Aura.Channel.World
 			}
 		}
 
-		/// <summary>
-		/// Checks if there's a colliding item in the target space.
-		/// Returns true if a colliding item was found.
-		/// </summary>
-		/// <param name="targetX"></param>
-		/// <param name="targetY"></param>
-		/// <param name="item"></param>
-		/// <param name="collidingItem"></param>
-		/// <returns></returns>
-		protected bool TryGetCollidingItem(uint targetX, uint targetY, Item item, out Item collidingItem)
+		protected Item GetCollidingItem(uint targetX, uint targetY, Item item)
 		{
-			collidingItem = null;
-
 			for (var x = targetX; x < targetX + item.Data.Width; ++x)
 			{
 				for (var y = targetY; y < targetY + item.Data.Height; ++y)
@@ -193,20 +188,12 @@ namespace Aura.Channel.World
 
 					if (_map[x, y] != null)
 					{
-						collidingItem = _map[x, y];
-						return true;
+						return _map[x, y];
 					}
 				}
 			}
 
-			return false;
-		}
-
-		public override void ForceAdd(Item item)
-		{
-			this.AddToMap(item);
-			_items.Add(item.EntityId, item);
-			item.Info.Pocket = this.Pocket;
+			return null;
 		}
 
 		public override bool Remove(Item item)
@@ -222,8 +209,6 @@ namespace Aura.Channel.World
 
 		public override bool Add(Item item)
 		{
-			Item collidingItem;
-
 			for (byte y = 0; y <= _height - item.Data.Height; ++y)
 			{
 				for (byte x = 0; x <= _width - item.Data.Width; ++x)
@@ -231,15 +216,23 @@ namespace Aura.Channel.World
 					if (_map[x, y] != null)
 						continue;
 
-					if (!this.TryGetCollidingItem(x, y, item, out collidingItem))
+					if (this.GetCollidingItem(x, y, item) == null)
 					{
-						this.TryAdd(item, x, y, out collidingItem);
+						item.Move(this.Pocket, x, y);
+						this.AddUnsafe(item);
 						return true;
 					}
 				}
 			}
 
 			return false;
+		}
+
+		public override void AddUnsafe(Item item)
+		{
+			this.AddToMap(item);
+			_items.Add(item.EntityId, item);
+			item.Info.Pocket = this.Pocket;
 		}
 
 		public void TestMap()
@@ -430,12 +423,6 @@ namespace Aura.Channel.World
 			return true;
 		}
 
-		public override void ForceAdd(Item item)
-		{
-			_item = item;
-			_item.Move(this.Pocket, 0, 0);
-		}
-
 		public override bool Remove(Item item)
 		{
 			if (_item == item)
@@ -452,8 +439,14 @@ namespace Aura.Channel.World
 			if (_item != null)
 				return false;
 
-			this.ForceAdd(item);
+			this.AddUnsafe(item);
 			return true;
+		}
+
+		public override void AddUnsafe(Item item)
+		{
+			item.Move(this.Pocket, 0, 0);
+			_item = item;
 		}
 
 		public override Item GetItemAt(int x, int y)
@@ -521,12 +514,6 @@ namespace Aura.Channel.World
 			return true;
 		}
 
-		public override void ForceAdd(Item item)
-		{
-			_items.Add(item);
-			item.Move(this.Pocket, 0, 0);
-		}
-
 		public override bool Remove(Item item)
 		{
 			return _items.Remove(item);
@@ -534,8 +521,14 @@ namespace Aura.Channel.World
 
 		public override bool Add(Item item)
 		{
-			this.ForceAdd(item);
+			this.AddUnsafe(item);
 			return true;
+		}
+
+		public override void AddUnsafe(Item item)
+		{
+			item.Move(this.Pocket, 0, 0);
+			_items.Add(item);
 		}
 
 		public override Item GetItemAt(int x, int y)

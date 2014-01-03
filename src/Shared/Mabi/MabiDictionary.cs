@@ -116,7 +116,7 @@ namespace Aura.Shared.Mabi
 		}
 
 		/// <summary>
-		/// Returns tags in the format "key:varType:value;...".
+		/// Returns dictionary in the format "key:varType:value;...".
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
@@ -182,8 +182,8 @@ namespace Aura.Shared.Mabi
 		/// <returns></returns>
 		public static T Fetch<T>(string key, string from)
 		{
-			var tags = new MabiDictionary(from);
-			return tags.Get<T>(key);
+			var dict = new MabiDictionary(from);
+			return dict.Get<T>(key);
 		}
 	}
 }

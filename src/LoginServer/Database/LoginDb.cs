@@ -509,7 +509,7 @@ namespace Aura.Login.Database
 					cmd.Set("price", dataInfo.Price);
 					cmd.Set("durability", dataInfo.Durability);
 					cmd.Set("durabilityMax", dataInfo.Durability);
-					cmd.Set("durabilityNew", dataInfo.Durability);
+					cmd.Set("durabilityOriginal", dataInfo.Durability);
 					cmd.Set("attackMin", dataInfo.AttackMin);
 					cmd.Set("attackMax", dataInfo.AttackMax);
 					cmd.Set("balance", dataInfo.Balance);

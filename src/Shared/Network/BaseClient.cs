@@ -81,7 +81,10 @@ namespace Aura.Shared.Network
 		/// <param name="packet"></param>
 		public virtual void Send(Packet packet)
 		{
-			//Log.Debug(packet);
+			// Don't log internal packets
+			//if (packet.Op < Op.Internal.ServerIdentify)
+			//    Log.Debug("S: " + packet);
+
 			this.Send(packet.Build());
 		}
 

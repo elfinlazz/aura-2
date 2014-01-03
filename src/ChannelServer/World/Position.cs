@@ -65,5 +65,10 @@ namespace Aura.Channel.World
 		{
 			return obj is Position && this == (Position)obj;
 		}
+
+		public override string ToString()
+		{
+			return "(Position: " + this.X + ", " + this.Y + ")";
+		}
 	}
 }

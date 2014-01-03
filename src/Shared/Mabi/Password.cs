@@ -24,7 +24,7 @@ namespace Aura.Shared.Mabi
 		/// <summary>
 		/// Lower = Speedier login, Higher = More secure
 		/// </summary>
-		private const int BCryptStrength = 10;
+		private const int BCryptStrength = 12;
 
 		private static MD5 _md5 = MD5.Create();
 		private static SHA256Managed _sha256 = new SHA256Managed();

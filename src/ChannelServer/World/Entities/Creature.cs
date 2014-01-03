@@ -313,6 +313,27 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Stops movement, returning new current position.
+		/// Sends Force(Walk|Run)To.
+		/// </summary>
+		/// <returns></returns>
+		public Position StopMove()
+		{
+			if (!this.IsMoving)
+				return _position;
+
+			var pos = this.GetPosition();
+			this.SetPosition(pos.X, pos.Y);
+
+			if (this.IsWalking)
+				Send.ForceWalkTo(this, pos);
+			else
+				Send.ForceRunTo(this, pos);
+
+			return pos;
+		}
+
+		/// <summary>
 		/// Warps creature to target location.
 		/// </summary>
 		/// <param name="regionId"></param>

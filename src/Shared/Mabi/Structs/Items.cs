@@ -55,7 +55,7 @@ namespace Aura.Shared.Mabi.Structs
 		public int LinkedPocketId;
 		public int Durability;
 		public int DurabilityMax;
-		public int DurabilityNew;
+		public int DurabilityOriginal;
 		public ushort AttackMin;
 		public ushort AttackMax;
 		public ushort WAttackMin;

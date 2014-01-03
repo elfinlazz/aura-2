@@ -158,13 +158,12 @@ namespace Aura.Channel.Database
 					character.Color1 = reader.GetUInt32("color1");
 					character.Color2 = reader.GetUInt32("color2");
 					character.Color3 = reader.GetUInt32("color3");
-					character.RegionId = reader.GetInt32("region");
+					var r = reader.GetInt32("region");
 					var x = reader.GetInt32("x");
 					var y = reader.GetInt32("y");
-					character.SetPosition(x, y);
+					character.SetLocation(r, x, y);
 					character.Direction = reader.GetByte("direction");
-					//character.BattleState = reader.GetByte("battleState");
-					//character.Inventory.WeaponSet = (WeaponSet)reader.GetByte("weaponSet");
+					character.Inventory.WeaponSet = (WeaponSet)reader.GetByte("weaponSet");
 					character.Level = reader.GetInt16("level");
 					character.LevelTotal = reader.GetInt32("levelTotal");
 					character.Exp = reader.GetInt64("exp");
@@ -201,7 +200,12 @@ namespace Aura.Channel.Database
 		{
 			var items = this.GetItems(character.CreatureId);
 			foreach (var item in items)
-				character.Inventory.ForceAdd(item, item.Info.Pocket);
+			{
+				if (!character.Inventory.InitAdd(item, item.Info.Pocket))
+				{
+					Log.Error("GetCharacterItems: Unable to add item '{0}' ({1}) to inventory.", item.Info.Id, item.EntityId);
+				}
+			}
 		}
 
 		/// <summary>
@@ -238,7 +242,7 @@ namespace Aura.Channel.Database
 						item.OptionInfo.SellingPrice = reader.GetInt32("sellPrice");
 						item.OptionInfo.Durability = reader.GetInt32("durability");
 						item.OptionInfo.DurabilityMax = reader.GetInt32("durabilityMax");
-						item.OptionInfo.DurabilityNew = reader.GetInt32("durabilityNew");
+						item.OptionInfo.DurabilityOriginal = reader.GetInt32("durabilityOriginal");
 						item.OptionInfo.AttackMin = reader.GetUInt16("attackMin");
 						item.OptionInfo.AttackMax = reader.GetUInt16("attackMax");
 						item.OptionInfo.Balance = reader.GetByte("balance");
@@ -323,16 +327,16 @@ namespace Aura.Channel.Database
 
 			// Save characters
 			foreach (var character in account.Characters.Where(a => a.Save))
-				this.SaveCreature(character);
+				this.SaveCharacter(character);
 			foreach (var pet in account.Pets.Where(a => a.Save))
-				this.SaveCreature(pet);
+				this.SaveCharacter(pet);
 		}
 
 		/// <summary>
 		/// Saves creature and all its data.
 		/// </summary>
 		/// <param name="creature"></param>
-		public void SaveCreature(PlayerCreature creature)
+		public void SaveCharacter(PlayerCreature creature)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			using (var cmd = new UpdateCommand("UPDATE `creatures` SET {0} WHERE `creatureId` = @creatureId", conn))
@@ -344,8 +348,6 @@ namespace Aura.Channel.Database
 				cmd.Set("x", characterLocation.X);
 				cmd.Set("y", characterLocation.Y);
 				cmd.Set("direction", creature.Direction);
-				//up.Set("battleState", creature.BattleState);
-				//up.Set("weaponSet", (byte)creature.Inventory.WeaponSet);
 				cmd.Set("lifeDelta", creature.LifeMax - creature.Life);
 				cmd.Set("injuries", creature.Injuries);
 				cmd.Set("lifeMax", creature.LifeMaxBase);
@@ -363,23 +365,24 @@ namespace Aura.Channel.Database
 				cmd.Set("will", creature.WillBase);
 				cmd.Set("luck", creature.LuckBase);
 				cmd.Set("ap", creature.AbilityPoints);
+				cmd.Set("weaponSet", (byte)creature.Inventory.WeaponSet);
 
 				cmd.Execute();
 			}
 
-			this.SaveCreatureKeywords(creature);
-			this.SaveCreatureTitles(creature);
-			//this.SaveQuests(creature);
-			//this.SaveItems(creature);
-			//this.SaveSkills(creature);
-			//this.SaveCooldowns(creature);
+			this.SaveCharacterItems(creature);
+			this.SaveCharacterKeywords(creature);
+			this.SaveCharacterTitles(creature);
+			//this.SaveCharacterQuests(creature);
+			//this.SaveCharacterSkills(creature);
+			//this.SaveCharacterCooldowns(creature);
 		}
 
 		/// <summary>
 		/// Writes all of creature's keywords to the database.
 		/// </summary>
 		/// <param name="creature"></param>
-		private void SaveCreatureKeywords(PlayerCreature creature)
+		private void SaveCharacterKeywords(PlayerCreature creature)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			using (var transaction = conn.BeginTransaction())
@@ -409,7 +412,7 @@ namespace Aura.Channel.Database
 		/// Writes all of creature's titles to the database.
 		/// </summary>
 		/// <param name="creature"></param>
-		private void SaveCreatureTitles(PlayerCreature creature)
+		private void SaveCharacterTitles(PlayerCreature creature)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			using (var transaction = conn.BeginTransaction())
@@ -432,6 +435,62 @@ namespace Aura.Channel.Database
 						cmd.Set("creatureId", creature.CreatureId);
 						cmd.Set("titleId", title.Key);
 						cmd.Set("usable", (title.Value == TitleState.Usable));
+
+						cmd.Execute();
+					}
+				}
+
+				transaction.Commit();
+			}
+		}
+
+		/// <summary>
+		/// Saves all of creature's items.
+		/// </summary>
+		/// <param name="creature"></param>
+		private void SaveCharacterItems(PlayerCreature creature)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var transaction = conn.BeginTransaction())
+			{
+				using (var mc = new MySqlCommand("DELETE FROM `items` WHERE `creatureId` = @creatureId", conn, transaction))
+				{
+					mc.Parameters.AddWithValue("@creatureId", creature.CreatureId);
+					mc.ExecuteNonQuery();
+				}
+
+				foreach (var item in creature.Inventory.Items)
+				{
+					using (var cmd = new InsertCommand("INSERT INTO `items` {0}", conn, transaction))
+					{
+						cmd.Set("creatureId", creature.CreatureId);
+						if (item.EntityId < MabiId.Items)
+							cmd.Set("entityId", item.EntityId);
+						cmd.Set("itemId", item.Info.Id);
+						cmd.Set("pocket", (byte)item.Info.Pocket);
+						cmd.Set("x", item.Info.X);
+						cmd.Set("y", item.Info.Y);
+						cmd.Set("color1", item.Info.Color1);
+						cmd.Set("color2", item.Info.Color2);
+						cmd.Set("color3", item.Info.Color3);
+						cmd.Set("price", item.OptionInfo.Price);
+						cmd.Set("sellPrice", item.OptionInfo.SellingPrice);
+						cmd.Set("amount", item.Info.Amount);
+						cmd.Set("linkedPocket", item.OptionInfo.LinkedPocketId);
+						cmd.Set("state", item.Info.State);
+						cmd.Set("durability", item.OptionInfo.Durability);
+						cmd.Set("durabilityMax", item.OptionInfo.DurabilityMax);
+						cmd.Set("durabilityOriginal", item.OptionInfo.DurabilityOriginal);
+						cmd.Set("attackMin", item.OptionInfo.AttackMin);
+						cmd.Set("attackMax", item.OptionInfo.AttackMax);
+						cmd.Set("balance", item.OptionInfo.Balance);
+						cmd.Set("critical", item.OptionInfo.Critical);
+						cmd.Set("defense", item.OptionInfo.Defense);
+						cmd.Set("protection", item.OptionInfo.Protection);
+						cmd.Set("range", item.OptionInfo.EffectiveRange);
+						cmd.Set("attackSpeed", (byte)item.OptionInfo.AttackSpeed);
+						cmd.Set("experience", item.OptionInfo.Experience);
+						cmd.Set("extra", item.Extra.ToString());
 
 						cmd.Execute();
 					}

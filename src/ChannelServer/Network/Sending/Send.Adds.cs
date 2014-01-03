@@ -1127,7 +1127,7 @@ namespace Aura.Channel.Network.Sending
 			else if (type == ItemPacketType.Private)
 			{
 				packet.PutBin(item.OptionInfo);
-				packet.PutString(""); // item.Tags
+				packet.PutString(item.Extra.ToString());
 				packet.PutString("");
 				packet.PutByte(0); // upgrade count?
 				// for upgrades
