@@ -10,6 +10,7 @@ using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
+using Aura.Channel.Util.Configuration.Files;
 
 namespace Aura.Channel.Util
 {
@@ -102,15 +103,18 @@ namespace Aura.Channel.Util
 					return true;
 				}
 
-				// =/
+				// Any better way to remove the target? =/
 				var tmp = new List<string>(args);
 				tmp.RemoveAt(1);
 				args = tmp.ToArray();
 			}
 
-			// Check command
+			// Get command
 			var command = this.GetCommand(args[0]);
-			if (command == null || ((!charCommand && client.Account.Authority < command.Auth) || (charCommand && client.Account.Authority < command.CharAuth)))
+			var commandConf = ChannelServer.Instance.Conf.Commands.GetAuth(args[0], command.Auth, command.CharAuth);
+
+			// Check command
+			if (command == null || ((!charCommand && client.Account.Authority < commandConf.Auth) || (charCommand && client.Account.Authority < commandConf.CharAuth)))
 			{
 				Send.ServerMessage(creature, "Unknown command '{0}'.", args[0]);
 				return true;

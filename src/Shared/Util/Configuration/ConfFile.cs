@@ -16,7 +16,7 @@ namespace Aura.Shared.Util.Configuration
 	/// </remarks>
 	public class ConfFile
 	{
-		private Dictionary<string, string> _options;
+		protected Dictionary<string, string> _options;
 
 		public ConfFile()
 		{
