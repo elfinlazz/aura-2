@@ -92,6 +92,7 @@ namespace Aura.Channel.World.Entities
 		public void Move(Pocket pocket, int x, int y)
 		{
 			this.Info.Pocket = pocket;
+			this.Info.Region = 0;
 			this.Info.X = x;
 			this.Info.Y = y;
 		}
@@ -130,7 +131,7 @@ namespace Aura.Channel.World.Entities
 			var x = rnd.Next(pos.X - DropRadius, pos.X + DropRadius + 1);
 			var y = rnd.Next(pos.Y - DropRadius, pos.Y + DropRadius + 1);
 
-			this.SetNewEntityId();
+			//this.SetNewEntityId();
 			this.Move(region.Id, x, y);
 			this.DisappearTime = DateTime.Now.AddSeconds((int)Math.Max(60, (this.OptionInfo.Price / 100) * 60));
 

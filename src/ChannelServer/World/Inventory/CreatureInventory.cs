@@ -321,9 +321,12 @@ namespace Aura.Channel.World
 			// Add new items as long as needed
 			while (item.Info.Amount > 0)
 			{
-				// Sadly generates a new id every time, but it's kinda hard to
-				// change the items' position for the pocket, while we still
-				// need its region position for broadcasting disappearance.
+				// Making a copy of the item, and generating a new temp id,
+				// ensures that we can still remove the item from the ground
+				// after moving it (region, x, y) to the pocket.
+				// We also need the new id to prevent conflicts in the db
+				// (SVN r67).
+
 				var newStackItem = new Item(item);
 				newStackItem.Info.Amount = Math.Min(item.Info.Amount, item.Data.StackMax);
 
@@ -343,47 +346,6 @@ namespace Aura.Channel.World
 			}
 
 			return false;
-
-			//if (item.Data.StackType == StackType.Stackable)
-			//{
-			//    // Try stacks/sacs first
-			//    List<Item> changed;
-			//    _pockets[Pocket.Inventory].FillStacks(item, out changed);
-			//    this.UpdateChangedItems(changed);
-
-			//    // Add new item stacks as long as needed.
-			//    while (item.Info.Amount > item.Data.StackMax)
-			//    {
-			//        var newStackItem = new Item(item);
-			//        newStackItem.Info.Amount = item.Data.StackMax;
-
-			//        // Break if no new items can be added (no space left)
-			//        if (!_pockets[Pocket.Inventory].Add(newStackItem))
-			//            break;
-
-			//        Send.ItemNew(_creature, newStackItem);
-			//        item.Info.Amount -= item.Data.StackMax;
-			//    }
-
-			//    // Success if item was completely filled into the inv
-			//    if (item.Info.Amount == 0)
-			//    {
-			//        _creature.Region.RemoveItem(item);
-			//        return true;
-			//    }
-			//    // Fail if there's more than the max left (inv is full)
-			//    else if (item.Info.Amount > item.Data.StackMax)
-			//        return false;
-			//}
-
-			//var success = _pockets[Pocket.Inventory].Add(item);
-			//if (success)
-			//{
-			//    _creature.Region.RemoveItem(item);
-			//    Send.ItemNew(_creature, item);
-			//}
-
-			//return success;
 		}
 
 		public void Debug()
