@@ -44,15 +44,15 @@ namespace Aura.Login.Util
 		{
 			this.RequireAndInclude("{0}/conf/login.conf", "system", "user");
 
-			this.Port = this.GetInt("login.port", 11000);
-			this.NewAccounts = this.GetBool("login.new_accounts", true);
-			this.EnableSecondaryPassword = this.GetBool("login.enable_secondary", false);
+			this.Port = this.GetInt("port", 11000);
+			this.NewAccounts = this.GetBool("new_accounts", true);
+			this.EnableSecondaryPassword = this.GetBool("enable_secondary", false);
 
-			this.ConsumeCharacterCards = this.GetBool("login.consume_character_cards", true);
-			this.ConsumePetCards = this.GetBool("login.consume_pet_cards", true);
-			this.ConsumePartnerCards = this.GetBool("login.consume_partner_cards", true);
+			this.ConsumeCharacterCards = this.GetBool("consume_character_cards", true);
+			this.ConsumePetCards = this.GetBool("consume_pet_cards", true);
+			this.ConsumePartnerCards = this.GetBool("consume_partner_cards", true);
 
-			this.DeletionWait = this.GetInt("login.deletion_wait", 107);
+			this.DeletionWait = this.GetInt("deletion_wait", 107);
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace Aura.Shared.Util.Configuration.Files
 		{
 			this.RequireAndInclude("{0}/conf/localization.conf", "system", "user");
 
-			this.Language = this.GetString("localization.language", "us");
+			this.Language = this.GetString("language", "us");
 		}
 	}
 }

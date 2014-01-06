@@ -15,8 +15,8 @@ namespace Aura.Shared.Util.Configuration.Files
 		{
 			this.RequireAndInclude("{0}/conf/log.conf", "system", "user");
 
-			this.Archive = this.GetBool("log.archive", true);
-			this.Hide = (LogLevel)this.GetInt("log.cmd_hide", (int)(LogLevel.Debug));
+			this.Archive = this.GetBool("archive", true);
+			this.Hide = (LogLevel)this.GetInt("cmd_hide", (int)(LogLevel.Debug));
 
 			if (this.Archive)
 				Log.Archive = "log/archive/";

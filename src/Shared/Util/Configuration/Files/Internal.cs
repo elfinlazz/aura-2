@@ -14,7 +14,7 @@ namespace Aura.Shared.Util.Configuration.Files
 		{
 			this.RequireAndInclude("{0}/conf/internal.conf", "system", "user");
 
-			this.Password = this.GetString("internal.password", "change_me");
+			this.Password = this.GetString("password", "change_me");
 		}
 	}
 }
