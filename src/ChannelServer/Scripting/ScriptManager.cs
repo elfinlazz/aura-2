@@ -183,14 +183,13 @@ namespace Aura.Channel.Scripting
 					if (npcScript.NPC.RegionId > 0)
 					{
 						var region = WorldManager.Instance.GetRegion(npcScript.NPC.RegionId);
-						if (region != null)
-						{
-							region.AddCreature(npcScript.NPC);
-						}
-						else
+						if (region == null)
 						{
 							Log.Error("Failed to spawn '{0}', region '{1}' not found.", type, npcScript.NPC.RegionId);
+							continue;
 						}
+
+						region.AddCreature(npcScript.NPC);
 					}
 
 					continue;

@@ -87,6 +87,15 @@ namespace Aura.Channel.Scripting.Compilers
 				"$1$4Select($5); $2$3Object = new Response(); yield return $3Object; $2$3 = $3Object.Value;",
 				RegexOptions.Compiled);
 
+			// duplicate <new_class> : <old_class> { <content_of_load> }
+			// --> public class <new_class> : <old_class> { public override void OnLoad() { base.OnLoad(); <content_of_load> } }
+			// Makes a new class, based on another one, calls the inherited
+			// load first, and the new load afterwards.
+			script = Regex.Replace(script,
+			   @"duplicate +([^\s:]+) *: *([^\s{]+) *{ *([^}]+) *}",
+			   "public class $1 : $2 { public override void Load() { base.Load(); $3 } }",
+			   RegexOptions.Compiled);
+
 			return script;
 		}
 	}

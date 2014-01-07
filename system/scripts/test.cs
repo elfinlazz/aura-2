@@ -60,3 +60,5 @@ public class PropSpawnTest : BaseScript
 		SpawnProp(1, 1, 12000, 38000, 0, PropDrop(2));
 	}
 }
+
+duplicate TestScript2 : TestScript { SetName("_nao2"); SetLocation(1, 12850, 38019, 0); }
