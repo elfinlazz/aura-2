@@ -234,7 +234,7 @@ namespace Aura.Channel.Database
 						item.Info.X = reader.GetInt32("x");
 						item.Info.Y = reader.GetInt32("y");
 						item.Info.Color1 = reader.GetUInt32("color1");
-						item.Info.Color3 = reader.GetUInt32("color2");
+						item.Info.Color2 = reader.GetUInt32("color2");
 						item.Info.Color3 = reader.GetUInt32("color3");
 						item.Info.Amount = reader.GetUInt16("amount");
 						item.Info.State = reader.GetByte("state");
