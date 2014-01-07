@@ -22,14 +22,8 @@ namespace Aura.Channel.World.Entities
 		public override DataType DataType { get { return DataType.Item; } }
 		public override int RegionId
 		{
-			get
-			{
-				return this.Info.Region;
-			}
-			set
-			{
-				this.Info.Region = value;
-			}
+			get { return this.Info.Region; }
+			set { this.Info.Region = value; }
 		}
 
 		public ItemInfo Info;
@@ -54,6 +48,16 @@ namespace Aura.Channel.World.Entities
 		}
 
 		public long QuestId { get; set; }
+
+		/// <summary>
+		/// Sets and returns the current amount (Info.Amount).
+		/// Setting is restricted to a minimum of 0 and a maximum of StackMax.
+		/// </summary>
+		public int Amount
+		{
+			get { return this.Info.Amount; }
+			set { this.Info.Amount = (ushort)Math2.MinMax(0, this.Data.StackMax, value); }
+		}
 
 		/// <summary>
 		/// New item based on item id.

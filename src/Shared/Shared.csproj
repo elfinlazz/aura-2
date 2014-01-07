@@ -96,8 +96,10 @@
     <Compile Include="Util\Log.cs" />
     <Compile Include="Mabi\ErinnTime.cs" />
     <Compile Include="Util\CliUtil.cs" />
+    <Compile Include="Util\Math2.cs" />
     <Compile Include="Util\RandomProvider.cs" />
     <Compile Include="ServerMain.cs" />
+    <Compile Include="Util\String.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

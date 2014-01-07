@@ -26,10 +26,13 @@ who_none		None.
 
 // >item/drop
 item_nores		Item '{0}' not found in database.
-item_mures		Item '{0}' not found, using next best result, '{1}'.
+item_mures		No exact match found for '{0}', using best result, '{1}' ({2}%).
 item_amount		Invalid amount.
 item_hex		Invalid hex color '{0}'.
 item_color		Unknown color '{0}'.
+item_target		Item '{0}' has been spawned by '{1}'.
+item_spawned	Item '{0}' has been spawned.
+item_fail		Failed to spawn item.
 
 // >iteminfo
 ii_none			No items found.
