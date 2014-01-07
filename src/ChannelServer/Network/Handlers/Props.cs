@@ -1,14 +1,9 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Aura.Shared.Network;
 using Aura.Channel.Network.Sending;
+using Aura.Shared.Network;
 using Aura.Shared.Util;
-using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -64,6 +59,9 @@ namespace Aura.Channel.Network.Handlers
 		/// <summary>
 		/// Sent when prop is "touched".
 		/// </summary>
+		/// <remarks>
+		/// Mabinogi, hitting and touching props since 2004.
+		/// </remarks>
 		/// <example>
 		/// 001 [00A000010009042A] Long   : 45036000569263146
 		/// </example>
@@ -87,8 +85,6 @@ namespace Aura.Channel.Network.Handlers
 			{
 				if (creature.GetPosition().InRange(prop.GetPosition(), 400))
 				{
-					Send.HittingProp(creature, prop.EntityId);
-
 					if (prop.Behavior != null)
 					{
 						prop.Behavior(creature, prop);
