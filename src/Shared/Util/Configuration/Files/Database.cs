@@ -20,7 +20,7 @@ namespace Aura.Shared.Util.Configuration.Files
 			this.Host = this.GetString("host", "127.0.0.1");
 			this.User = this.GetString("user", "root");
 			this.Pass = this.GetString("pass", "");
-			this.Db = this.GetString("db", "aura");
+			this.Db = this.GetString("database", "aura");
 		}
 	}
 }
