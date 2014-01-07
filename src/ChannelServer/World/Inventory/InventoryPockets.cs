@@ -76,10 +76,28 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public abstract Item GetItemAt(int x, int y);
 
-		public abstract Item GetItem(long id);
+		/// <summary>
+		/// Returns item by entity id, or null.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public abstract Item GetItem(long entityId);
 
+		/// <summary>
+		/// Removes items by item id and amount. Modified items are returned
+		/// as a list.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <param name="changed"></param>
+		/// <returns></returns>
 		public abstract int Remove(int itemId, int amount, ref List<Item> changed);
 
+		/// <summary>
+		/// Returns amount if items by item id.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
 		public abstract int Count(int itemId);
 	}
 

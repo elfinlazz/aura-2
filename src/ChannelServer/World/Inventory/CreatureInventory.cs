@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Aura.Shared.Util;
-using Aura.Shared.Mabi.Const;
+using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Data.Database;
-using Aura.Channel.Network.Sending;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World
 {
@@ -75,10 +75,24 @@ namespace Aura.Channel.World
 			}
 		}
 
+		/// <summary>
+		/// Reference to the item currently equipped in the right hand.
+		/// </summary>
 		public Item RightHand { get; protected set; }
+
+		/// <summary>
+		/// Reference to the item currently equipped in the left hand.
+		/// </summary>
 		public Item LeftHand { get; protected set; }
+
+		/// <summary>
+		/// Reference to the item currently equipped in the magazine (eg arrows).
+		/// </summary>
 		public Item Magazine { get; protected set; }
 
+		/// <summary>
+		/// Returns the amount of gold items in the inventory.
+		/// </summary>
 		public int Gold
 		{
 			get { return this.Count(GoldItemId); }
@@ -145,13 +159,13 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Returns item with the id, or null.
 		/// </summary>
-		/// <param name="itemId"></param>
+		/// <param name="entityId"></param>
 		/// <returns></returns>
-		public Item GetItem(long itemId)
+		public Item GetItem(long entityId)
 		{
 			foreach (var pocket in _pockets.Values)
 			{
-				var item = pocket.GetItem(itemId);
+				var item = pocket.GetItem(entityId);
 				if (item != null)
 					return item;
 			}
@@ -278,6 +292,14 @@ namespace Aura.Channel.World
 			return success;
 		}
 
+		/// <summary>
+		/// Tries to add item to one of the main inventories,
+		/// using temp as fallback. Unlike "Add" the item will be filled
+		/// into stacks first, if possible, before calling Add.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="tempFallback"></param>
+		/// <returns></returns>
 		public bool Insert(Item item, bool tempFallback)
 		{
 			if (item.Data.StackType == StackType.Stackable)
@@ -308,6 +330,13 @@ namespace Aura.Channel.World
 			return this.Add(item, tempFallback);
 		}
 
+		/// <summary>
+		/// Tries to put item into the inventory, by filling stacks and adding it.
+		/// If it was completely added to the inventory, it's removed
+		/// from the region the inventory's creature is in.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
 		public bool PickUp(Item item)
 		{
 			// Try stacks/sacs first
@@ -348,6 +377,10 @@ namespace Aura.Channel.World
 			return false;
 		}
 
+		/// <summary>
+		/// Prints some debug information in chat box and server console.
+		/// (To be removed)
+		/// </summary>
 		public void Debug()
 		{
 			(_pockets[Pocket.Inventory] as InventoryPocketNormal).TestMap();
@@ -367,6 +400,11 @@ namespace Aura.Channel.World
 				Send.ServerMessage(_creature, this.Magazine.ToString());
 		}
 
+		/// <summary>
+		/// Removes item from inventory, if it is in it, and sends update packets.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
 		public bool Remove(Item item)
 		{
 			foreach (var pocket in _pockets.Values)
@@ -383,6 +421,12 @@ namespace Aura.Channel.World
 			return false;
 		}
 
+		/// <summary>
+		/// Checks and updates all equipment references for source and target.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="source"></param>
+		/// <param name="target"></param>
 		private void UpdateInventory(Item item, Pocket source, Pocket target)
 		{
 			this.CheckLeftHand(item, source, target);
@@ -390,6 +434,11 @@ namespace Aura.Channel.World
 			this.CheckEquipMoved(item, source, target);
 		}
 
+		/// <summary>
+		/// Sends amount update or remove packets for all items, depending on
+		/// their amount.
+		/// </summary>
+		/// <param name="items"></param>
 		private void UpdateChangedItems(IEnumerable<Item> items)
 		{
 			if (items == null)
@@ -449,6 +498,10 @@ namespace Aura.Channel.World
 			}
 		}
 
+		/// <summary>
+		/// Updates quick access equipment refernces.
+		/// </summary>
+		/// <param name="toCheck"></param>
 		private void UpdateEquipReferences(params Pocket[] toCheck)
 		{
 			var firstSet = (this.WeaponSet == WeaponSet.First);
@@ -469,6 +522,12 @@ namespace Aura.Channel.World
 			}
 		}
 
+		/// <summary>
+		/// Runs equipment updates if necessary.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="source"></param>
+		/// <param name="target"></param>
 		private void CheckEquipMoved(Item item, Pocket source, Pocket target)
 		{
 			if (source.IsEquip())
@@ -478,6 +537,13 @@ namespace Aura.Channel.World
 				Send.EquipmentChanged(_creature, item);
 		}
 
+		/// <summary>
+		/// Reduces item's amount and sends the necessary update packets.
+		/// Also removes the item, if it's not a sack and its amount reaches 0.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
 		public bool Decrement(Item item, ushort amount = 1)
 		{
 			if (!this.Has(item) || item.Info.Amount == 0 || item.Info.Amount < amount)
@@ -498,6 +564,11 @@ namespace Aura.Channel.World
 			return true;
 		}
 
+		/// <summary>
+		/// Returns true uf the item exists in this inventory.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
 		public bool Has(Item item)
 		{
 			foreach (var pocket in _pockets.Values)
@@ -507,18 +578,30 @@ namespace Aura.Channel.World
 			return false;
 		}
 
+		/// <summary>
+		/// Adds a new item to the inventory.
+		/// </summary>
+		/// <remarks>
+		/// For stackables and sacs the amount is capped at stack max.
+		/// - If item is stackable, it will be added to existing stacks first.
+		///   New stacks are added afterwards, if necessary.
+		/// - If item is a sac it's simply added as one item.
+		/// - If it's a normal item, it's added times the amount.
+		/// </remarks>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
 		public bool Add(int itemId, int amount = 1)
 		{
 			var newItem = new Item(itemId);
+			newItem.Amount = amount;
 
 			if (newItem.Data.StackType == StackType.Stackable)
 			{
-				newItem.Info.Amount = (ushort)Math.Min(amount, ushort.MaxValue);
 				return this.Insert(newItem, true);
 			}
 			else if (newItem.Data.StackType == StackType.Sac)
 			{
-				newItem.Info.Amount = (ushort)Math.Min(amount, ushort.MaxValue);
 				return this.Add(newItem, true);
 			}
 			else
@@ -529,6 +612,13 @@ namespace Aura.Channel.World
 			}
 		}
 
+		/// <summary>
+		/// Adds new gold stacks to the inventory until the amount was added.
+		/// Spare gold will simply be ignored.
+		/// TODO: Add it to temp? Drop it?
+		/// </summary>
+		/// <param name="amount"></param>
+		/// <returns></returns>
 		public bool AddGold(int amount)
 		{
 			// Add gold, stack for stack
@@ -543,13 +633,19 @@ namespace Aura.Channel.World
 			return true;
 		}
 
+		/// <summary>
+		/// Removes the amount of items with the id from the inventory.
+		/// Returns true if the specified amount was removed.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
 		public bool Remove(int itemId, int amount = 1)
 		{
 			if (amount < 0)
 				amount = 0;
 
 			var changed = new List<Item>();
-
 
 			foreach (var pocket in _pockets.Values)
 			{
@@ -564,11 +660,22 @@ namespace Aura.Channel.World
 			return (amount == 0);
 		}
 
+		/// <summary>
+		/// Removes the amount of gold from the inventory.
+		/// Returns true if the specified amount was removed.
+		/// </summary>
+		/// <param name="amount"></param>
+		/// <returns></returns>
 		public bool RemoveGold(int amount)
 		{
 			return this.Remove(GoldItemId, amount);
 		}
 
+		/// <summary>
+		/// Returns the amount of items with this id in the inventory.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
 		public int Count(int itemId)
 		{
 			var result = 0;
@@ -579,11 +686,22 @@ namespace Aura.Channel.World
 			return result;
 		}
 
+		/// <summary>
+		/// Returns wheather inventory contains the item in this amount.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
 		public bool Has(int itemId, int amount = 1)
 		{
 			return (this.Count(itemId) >= amount);
 		}
 
+		/// <summary>
+		/// Returns wheather inventory contains gold in this amount.
+		/// </summary>
+		/// <param name="amount"></param>
+		/// <returns></returns>
 		public bool HasGold(int amount)
 		{
 			return this.Has(GoldItemId, amount);
