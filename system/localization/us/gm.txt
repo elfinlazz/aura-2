@@ -59,6 +59,7 @@ si_pocket		Invalid pocket.
 si_cleared		Cleared pocket '{0}'. (Deleted items: {1})
 
 // >warp
+warp_unknown	Region doesn't exist.
 warp_invalid_id	Invalid region id.
 warp_invalid_x	Invalid X coordinate.
 warp_invalid_y	Invalid Y coordinate.

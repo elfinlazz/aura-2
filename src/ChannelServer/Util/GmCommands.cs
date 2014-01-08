@@ -194,6 +194,13 @@ namespace Aura.Channel.Util
 			else
 				regionId = target.RegionId;
 
+			// Check region
+			if (warp && !WorldManager.Instance.HasRegion(regionId))
+			{
+				Send.ServerMessage(sender, Localization.Get("gm.warp_unknown")); // Region doesn't exist.
+				return CommandResult.Fail;
+			}
+
 			int x = -1, y = -1;
 
 			// Parse X
@@ -211,7 +218,7 @@ namespace Aura.Channel.Util
 			}
 
 			// Random coordinates if none were specified
-			if (x == -1 && y == -1)
+			if (x == -1 || y == -1)
 			{
 				var rndc = AuraData.RegionInfoDb.RandomCoord(regionId);
 				if (x < 0) x = rndc.X;
