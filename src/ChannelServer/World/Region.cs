@@ -46,6 +46,9 @@ namespace Aura.Channel.World
 		private void LoadClientProps()
 		{
 			var props = AuraData.RegionInfoDb.Find(this.Id);
+			if (props == null || props.Areas == null)
+				return;
+
 			foreach (var area in props.Areas.Values)
 			{
 				foreach (var prop in area.Props.Values)
@@ -150,15 +153,15 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddCreature(Creature creature)
 		{
-			lock (_creatures)
-				_creatures.Add(creature.EntityId, creature);
-
 			if (creature.Region != null)
 				creature.Region.RemoveCreature(creature);
 
+			lock (_creatures)
+				_creatures.Add(creature.EntityId, creature);
+
 			creature.Region = this;
 
-			// Save reference to client if it's controlling mainly this creature.
+			// Save reference to client if it's mainly controlling this creature.
 			if (creature.Client.Controlling == creature)
 			{
 				lock (_clients)

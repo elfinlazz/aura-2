@@ -161,7 +161,15 @@ namespace Aura.Channel.World
 		public void AddRegion(int regionId)
 		{
 			lock (_regions)
+			{
+				if (_regions.ContainsKey(regionId))
+				{
+					Log.Warning("Region '{0}' already exists.", regionId);
+					return;
+				}
+
 				_regions.Add(regionId, new Region(regionId));
+			}
 		}
 
 		/// <summary>
