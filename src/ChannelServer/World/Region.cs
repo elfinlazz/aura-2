@@ -141,7 +141,7 @@ namespace Aura.Channel.World
 			lock (_creatures)
 				result.AddRange(_creatures.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange) && !a.Has(CreatureConditionA.Invisible)));
 			lock (_props)
-				result.AddRange(_props.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange)));
+				result.AddRange(_props.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange) && a.ServerSide));
 			lock (_items)
 				result.AddRange(_items.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange)));
 
