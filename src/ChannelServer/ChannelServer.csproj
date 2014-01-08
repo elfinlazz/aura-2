@@ -146,6 +146,7 @@
     <Compile Include="World\Entities\Prop.cs" />
     <Compile Include="World\Inventory\CreatureInventory.cs" />
     <Compile Include="World\Inventory\InventoryPockets.cs" />
+    <Compile Include="World\Location.cs" />
     <Compile Include="World\Position.cs" />
     <Compile Include="World\Region.cs" />
     <Compile Include="World\WorldManager.cs" />

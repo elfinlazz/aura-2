@@ -196,6 +196,16 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns true if region exists.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <returns></returns>
+		public bool HasRegion(int regionId)
+		{
+			return _regions.ContainsKey(regionId);
+		}
+
+		/// <summary>
 		/// Returns first prop with the given id, from any region,
 		/// or null, if none was found.
 		/// </summary>

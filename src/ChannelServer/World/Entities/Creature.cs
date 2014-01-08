@@ -81,6 +81,21 @@ namespace Aura.Channel.World.Entities
 		public bool IsMoving { get { return (_position != _destination); } }
 		public bool IsWalking { get; protected set; }
 
+		/// <summary>
+		/// Location if the creature before the warp.
+		/// </summary>
+		public Location LastLocation { get; set; }
+
+		/// <summary>
+		/// Location to fall back to, when saving in a temp region.
+		/// </summary>
+		public Location FallbackLocation { get; set; }
+
+		/// <summary>
+		/// True while character is warping somewhere.
+		/// </summary>
+		public bool Warping { get; set; }
+
 		// Battle
 		// ------------------------------------------------------------------
 
@@ -334,12 +349,14 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Warps creature to target location.
+		/// Warps creature to target location,
+		/// returns false if warp is unsuccessful.
 		/// </summary>
 		/// <param name="regionId"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		public abstract void Warp(int regionId, int x, int y);
+		/// <returns></returns>
+		public abstract bool Warp(int regionId, int x, int y);
 
 		public bool Has(CreatureConditionA condition) { return ((this.Conditions.A & condition) != 0); }
 		public bool Has(CreatureConditionB condition) { return ((this.Conditions.B & condition) != 0); }

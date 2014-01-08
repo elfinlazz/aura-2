@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities.Creatures;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Entities
 {
@@ -52,10 +53,29 @@ namespace Aura.Channel.World.Entities
 		{
 		}
 
-		public override void Warp(int region, int x, int y)
+		/// <summary>
+		/// Instructs client to move to target location.
+		/// Returns false if region doesn't exist.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public override bool Warp(int regionId, int x, int y)
 		{
-			this.SetLocation(region, x, y);
+			if (!WorldManager.Instance.HasRegion(regionId))
+			{
+				Send.ServerMessage(this, "Warp failed, region doesn't exist.");
+				Log.Error("PC.Warp: Region '{0}' doesn't exist.", regionId);
+				return false;
+			}
+
+			this.LastLocation = new Location(this.RegionId, this.GetPosition());
+			this.SetLocation(regionId, x, y);
+			this.Warping = true;
 			Send.EnterRegion(this);
+
+			return true;
 		}
 
 		/// <summary>

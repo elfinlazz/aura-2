@@ -44,6 +44,9 @@ namespace Aura.Shared.Mabi.Const
 		/// </remarks>
 		Default = 0xEFFFFFFE,
 
-		Flying = 0xFFFFBDDF,  // on take off and landing
+		/// <summary>
+		/// Set on take off and landing
+		/// </summary>
+		Flying = 0xFFFFBDDF,
 	}
 }

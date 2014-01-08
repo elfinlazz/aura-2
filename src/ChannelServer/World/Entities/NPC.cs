@@ -28,18 +28,28 @@ namespace Aura.Channel.World.Entities
 			this.Life = this.LifeMaxBase = 1000000;
 		}
 
-		public override void Warp(int regionId, int x, int y)
+		/// <summary>
+		/// Moves NPC to target location and adds it to the region.
+		/// Returns false if region doesn't exist.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public override bool Warp(int regionId, int x, int y)
 		{
 			var region = WorldManager.Instance.GetRegion(regionId);
 			if (region == null)
 			{
 				Log.Error("NPC.Warp: Region '{0}' doesn't exist.", regionId);
-				return;
+				return false;
 			}
 
 			this.SetLocation(regionId, x, y);
 
 			region.AddCreature(this);
+
+			return true;
 		}
 	}
 }

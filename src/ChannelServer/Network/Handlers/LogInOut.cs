@@ -72,6 +72,8 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.CharacterLock(character, Locks.Default);
 			Send.EnterRegion(character);
+
+			character.Warping = true;
 		}
 
 		/// <summary>
@@ -84,8 +86,10 @@ namespace Aura.Channel.Network.Handlers
 		public void EnterRegionRequest(ChannelClient client, Packet packet)
 		{
 			var creature = client.GetPlayerCreature(packet.Id);
-			if (creature == null)
+			if (creature == null || !creature.Warping)
 				return;
+
+			creature.Warping = false;
 
 			var region = WorldManager.Instance.GetRegion(creature.RegionId);
 			if (region == null)
