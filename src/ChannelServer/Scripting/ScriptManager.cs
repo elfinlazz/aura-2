@@ -51,6 +51,7 @@ namespace Aura.Channel.Scripting
 				{
 					foreach (var line in fr)
 					{
+						// Get script path for either user or system
 						var scriptPath = Path.Combine(userIndexRoot, line);
 						if (!File.Exists(scriptPath))
 							scriptPath = Path.Combine(systemIndexRoot, line);
@@ -61,7 +62,7 @@ namespace Aura.Channel.Scripting
 						}
 
 						// Easiest way to get a unique, ordered list.
-						toLoad[scriptPath] = true;
+						toLoad[line] = scriptPath;
 					}
 				}
 			}
@@ -73,7 +74,7 @@ namespace Aura.Channel.Scripting
 
 			// Load scripts
 			int done = 0, loaded = 0;
-			foreach (string filePath in toLoad.Keys)
+			foreach (string filePath in toLoad.Values)
 			{
 				if (this.LoadScript(filePath))
 					loaded++;
@@ -101,7 +102,7 @@ namespace Aura.Channel.Scripting
 		{
 			if (!File.Exists(path))
 			{
-				Log.Error("Script not found: ", path);
+				Log.Error("Script '{0}' not found.", path);
 				return false;
 			}
 
@@ -167,6 +168,8 @@ namespace Aura.Channel.Scripting
 		{
 			foreach (var type in asm.GetTypes().Where(a => a.IsSubclassOf(typeof(BaseScript))))
 			{
+				// Ignore abstract class and ones starting with underscore,
+				// those are used for inheritance.
 				if (type.IsAbstract || type.Name.StartsWith("_"))
 					continue;
 
