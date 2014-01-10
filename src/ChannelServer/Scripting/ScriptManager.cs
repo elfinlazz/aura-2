@@ -34,7 +34,8 @@ namespace Aura.Channel.Scripting
 			Log.Info("Loading scripts...");
 
 			var indexPath = "system/scripts/scripts.txt";
-			var indexRoot = Path.GetDirectoryName(indexPath);
+			var systemIndexRoot = Path.GetDirectoryName("system/scripts/");
+			var userIndexRoot = Path.GetDirectoryName("user/scripts/");
 
 			if (!File.Exists(indexPath))
 			{
@@ -50,7 +51,9 @@ namespace Aura.Channel.Scripting
 				{
 					foreach (var line in fr)
 					{
-						var scriptPath = Path.Combine(indexRoot, line);
+						var scriptPath = Path.Combine(userIndexRoot, line);
+						if (!File.Exists(scriptPath))
+							scriptPath = Path.Combine(systemIndexRoot, line);
 						if (!File.Exists(scriptPath))
 						{
 							Log.Warning("Script not found: {0}", line);
