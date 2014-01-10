@@ -4,10 +4,12 @@
 // All NPCs listed here will be loaded.
 //---------------------------------------------------------------------------
 
-include scripts_npcs.txt
-include scripts_props.txt
-include scripts_quest.txt
-include scripts_custom.txt
+divert  "/user/scripts/scripts.txt"
+include "/user/scripts/scripts_custom.txt"
+
+include "scripts_npcs.txt"
+include "scripts_props.txt"
+include "scripts_quest.txt"
 
 test.boo
 test.cs

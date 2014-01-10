@@ -13,7 +13,7 @@ namespace Aura.Shared.Util.Configuration.Files
 
 		public void Load()
 		{
-			this.RequireAndInclude("{0}/conf/log.conf", "system", "user");
+			this.Require("system/conf/log.conf");
 
 			this.Archive = this.GetBool("archive", true);
 			this.Hide = (LogLevel)this.GetInt("cmd_hide", (int)(LogLevel.Debug));

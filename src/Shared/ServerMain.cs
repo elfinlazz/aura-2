@@ -216,7 +216,7 @@ namespace Aura.Shared.Util
 		/// </summary>
 		public void LoadLocalization(BaseConf conf)
 		{
-			Log.Info("Loading localization...");
+			Log.Info("Loading localization ({0})...", conf.Localization.Language);
 
 			// System
 			try

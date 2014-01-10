@@ -13,7 +13,7 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public void Load()
 		{
-			this.RequireAndInclude("{0}/conf/world.conf", "system", "user");
+			this.Require("system/conf/world.conf");
 
 			this.DropRate = this.GetFloat("drop_rate", 100) / 100.0f;
 			this.GoldDropRate = this.GetFloat("gold_drop_rate", 30) / 100.0f;

@@ -18,7 +18,7 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public void Load()
 		{
-			this.RequireAndInclude("{0}/conf/channel.conf", "system", "user");
+			this.Require("system/conf/channel.conf");
 
 			this.LoginHost = this.GetString("login_host", "127.0.0.1");
 			this.LoginPort = this.GetInt("login_port", 11020);

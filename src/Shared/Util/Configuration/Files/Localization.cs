@@ -12,7 +12,7 @@ namespace Aura.Shared.Util.Configuration.Files
 
 		public void Load()
 		{
-			this.RequireAndInclude("{0}/conf/localization.conf", "system", "user");
+			this.Require("system/conf/localization.conf");
 
 			this.Language = this.GetString("language", "us");
 		}

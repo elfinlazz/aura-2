@@ -15,7 +15,7 @@ namespace Aura.Shared.Util.Configuration.Files
 
 		public void Load()
 		{
-			this.RequireAndInclude("{0}/conf/database.conf", "system", "user");
+			this.Require("system/conf/database.conf");
 
 			this.Host = this.GetString("host", "127.0.0.1");
 			this.User = this.GetString("user", "root");

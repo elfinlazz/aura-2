@@ -16,7 +16,7 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public void Load()
 		{
-			this.RequireAndInclude("{0}/conf/commands.conf", "system", "user");
+			this.Require("system/conf/commands.conf");
 
 			// Prefix
 			this.Prefix = this.GetString("prefix", ">")[0];

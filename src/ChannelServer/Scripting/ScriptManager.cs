@@ -17,9 +17,6 @@ namespace Aura.Channel.Scripting
 {
 	public class ScriptManager
 	{
-		public const string UserIndex = "user/scripts/scripts.txt";
-		public const string SystemIndex = "system/scripts/scripts.txt";
-
 		private Dictionary<string, Compiler> _compilers;
 
 		public ScriptManager()
@@ -36,12 +33,12 @@ namespace Aura.Channel.Scripting
 		{
 			Log.Info("Loading scripts...");
 
-			var indexPath = File.Exists(UserIndex) ? UserIndex : SystemIndex;
+			var indexPath = "system/scripts/scripts.txt";
 			var indexRoot = Path.GetDirectoryName(indexPath);
 
 			if (!File.Exists(indexPath))
 			{
-				Log.Error("Script list not found.");
+				Log.Error("Script list not found at '{0}'.", indexPath);
 				return;
 			}
 

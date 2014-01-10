@@ -47,32 +47,6 @@ namespace Aura.Shared.Util.Configuration
 		}
 
 		/// <summary>
-		/// Uses filePath as format string, replaces {0} with the folders,
-		/// one after the other. Requires the first, includes the others.
-		/// </summary>
-		/// <example>
-		/// This would require the database file from system conf and
-		/// include the one from user conf:
-		/// filePath: ../../{0}/conf/database.conf
-		/// folders:  system, user
-		/// </example>
-		/// <param name="filePath"></param>
-		/// <param name="folders"></param>
-		public void RequireAndInclude(string filePath, params string[] folders)
-		{
-			if (folders.Length < 1)
-				return;
-
-			for (int i = 0; i < folders.Length; ++i)
-			{
-				if (i == 0)
-					this.Require(string.Format(filePath, folders[i]));
-				else
-					this.Include(string.Format(filePath, folders[i]));
-			}
-		}
-
-		/// <summary>
 		/// Loads all options in the file, and included files.
 		/// </summary>
 		/// <param name="filePath"></param>

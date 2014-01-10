@@ -30,7 +30,7 @@ namespace Aura.Shared.Util
 	public class FileReader : IEnumerable<string>, IDisposable
 	{
 		private string _filePath;
-		private string _rootPath;
+		private string _relativePath;
 		private StreamReader _streamReader;
 
 		public int CurrentLine { get; protected set; }
@@ -41,7 +41,7 @@ namespace Aura.Shared.Util
 				throw new FileNotFoundException("File '" + filePath + "' not found.");
 
 			_filePath = filePath;
-			_rootPath = Path.GetDirectoryName(Path.GetFullPath(filePath));
+			_relativePath = Path.GetDirectoryName(Path.GetFullPath(filePath));
 
 			_streamReader = new StreamReader(filePath);
 		}
@@ -65,10 +65,11 @@ namespace Aura.Shared.Util
 					continue;
 
 				// Include files
-				bool require = false;
-				if (line.StartsWith("include ") || (require = line.StartsWith("require ")))
+				bool require = false, divert = false;
+				if (line.StartsWith("include ") || (require = line.StartsWith("require ")) || (divert = line.StartsWith("divert ")))
 				{
-					var includeFilePath = Path.Combine(_rootPath, line.Substring(8).Trim('"'));
+					var fileName = line.Substring(line.IndexOf(' ')).Trim(' ', '"');
+					var includeFilePath = Path.Combine((!fileName.StartsWith("/") ? _relativePath : ""), fileName.TrimStart('/'));
 
 					// Silently ignore failed includes, only raise an
 					// exception on require.
@@ -79,6 +80,10 @@ namespace Aura.Shared.Util
 							foreach (var incLine in fr)
 								yield return incLine;
 						}
+
+						// Stop reading current file if noname was successful
+						if (divert)
+							yield break;
 					}
 					else if (require)
 					{

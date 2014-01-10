@@ -42,7 +42,7 @@ namespace Aura.Login.Util
 
 		public void Load()
 		{
-			this.RequireAndInclude("{0}/conf/login.conf", "system", "user");
+			this.Require("system/conf/login.conf");
 
 			this.Port = this.GetInt("port", 11000);
 			this.NewAccounts = this.GetBool("new_accounts", true);
