@@ -14,6 +14,7 @@ using Aura.Channel.Util.Configuration.Files;
 using Aura.Data.Database;
 using System.Globalization;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Network;
 
 namespace Aura.Channel.Util
 {
@@ -33,6 +34,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "item", "<id|name> [amount|color1 [color2 [color 3]]]", HandleItem);
 
 			// Admins
+			Add(99, 99, "variant", "<xml_file>", HandleVariant);
 			Add(99, 99, "test", "", HandleTest);
 
 			// Aliases
@@ -404,6 +406,42 @@ namespace Aura.Channel.Util
 				Send.ServerMessage(sender, Localization.Get("gm.item_fail")); // Failed to spawn item.
 				return CommandResult.Fail;
 			}
+		}
+
+		public CommandResult HandleVariant(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			var actualId = 1;
+			var dynamicId = 35001;
+			var x = 12800;
+			var y = 38100;
+
+			WorldManager.Instance.AddRegion(35001);
+			sender.SetLocation(dynamicId, x, y);
+			sender.Warping = true;
+
+			var pp = new Packet(0x0000A97E, MabiId.Broadcast);
+			pp.PutLong(sender.EntityId);
+			pp.PutInt(actualId);
+			pp.PutInt(dynamicId);
+			pp.PutInt(x);
+			pp.PutInt(y);
+			pp.PutInt(0);
+			pp.PutInt(1);
+			pp.PutInt(dynamicId);
+			pp.PutString("DynamicRegion" + dynamicId);
+			pp.PutUInt(0x80000001);
+			pp.PutInt(1);
+			pp.PutString("uladh_main");
+			pp.PutInt(200);
+			pp.PutByte(0);
+			pp.PutString("data/world/uladh_main/" + args[1] + ".xml"); // region_variation_797208
+
+			client.Send(pp);
+
+			return CommandResult.Okay;
 		}
 	}
 

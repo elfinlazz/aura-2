@@ -86,8 +86,14 @@ namespace Aura.Channel.Network.Handlers
 		public void EnterRegionRequest(ChannelClient client, Packet packet)
 		{
 			var creature = client.GetPlayerCreature(packet.Id);
-			if (creature == null || !creature.Warping)
+			if (creature == null)
 				return;
+
+			if (!creature.Warping)
+			{
+				Log.Warning("Unauthorized warp attemp from '{0}'.", creature.Name);
+				return;
+			}
 
 			creature.Warping = false;
 
