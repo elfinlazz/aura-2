@@ -63,7 +63,7 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public override bool Warp(int regionId, int x, int y)
 		{
-			if (!WorldManager.Instance.HasRegion(regionId))
+			if (!ChannelServer.Instance.World.HasRegion(regionId))
 			{
 				Send.ServerMessage(this, "Warp failed, region doesn't exist.");
 				Log.Error("PC.Warp: Region '{0}' doesn't exist.", regionId);

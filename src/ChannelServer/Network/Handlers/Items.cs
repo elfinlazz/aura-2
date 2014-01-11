@@ -239,7 +239,7 @@ namespace Aura.Channel.Network.Handlers
 			creature.Inventory.WeaponSet = set;
 
 			Send.UpdateWeaponSet(creature);
-			//WorldManager.Instance.CreatureStatsUpdate(creature);
+			//ChannelServer.Instance.World.CreatureStatsUpdate(creature);
 
 			Send.SwitchSetR(creature, true);
 		}

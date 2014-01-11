@@ -7,12 +7,12 @@ using System.Threading;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Handlers;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Scripting;
 using Aura.Channel.Util;
 using Aura.Channel.Util.Configuration;
 using Aura.Channel.World;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
-using Aura.Channel.Scripting;
 
 namespace Aura.Channel
 {
@@ -25,11 +25,7 @@ namespace Aura.Channel
 		/// </summary>
 		private const int LoginTryTime = 10 * 1000;
 
-		private const int UpdateTime = 60 * 1000;
-
 		private bool _running = false;
-
-		private Timer _statusUpdateTimer;
 
 		/// <summary>
 		/// Instance of the actual server component.
@@ -54,6 +50,8 @@ namespace Aura.Channel
 		public GmCommandManager CommandProcessor { get; private set; }
 
 		public ScriptManager ScriptManager { get; private set; }
+
+		public WorldManager World { get; private set; }
 
 		private ChannelServer()
 		{
@@ -221,27 +219,23 @@ namespace Aura.Channel
 
 		private void StartStatusUpdateTimer()
 		{
-			if (_statusUpdateTimer != null)
-				return;
-
-			_statusUpdateTimer = new Timer((_) =>
+			this.World.MinutesTimeTick += (_) =>
 			{
 				if (this.LoginServer == null || this.LoginServer.State != ClientState.LoggedIn)
 					return;
 
 				Send.Internal_ChannelStatus();
-			}
-			, null, UpdateTime, UpdateTime);
+			};
 		}
 
 		private void InitializeWorld()
 		{
 			Log.Info("Initilizing world...");
 
-			WorldManager.Instance.Initialize();
-			// Weather
+			this.World = new WorldManager();
+			this.World.Initialize();
 
-			Log.Info("  done loading {0} regions.", WorldManager.Instance.Count);
+			Log.Info("  done loading {0} regions.", this.World.Count);
 		}
 
 		private void LoadScripts()

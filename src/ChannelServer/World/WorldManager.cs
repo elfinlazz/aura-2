@@ -3,25 +3,32 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Aura.Data;
-using Aura.Channel.World.Entities;
-using Aura.Shared.Util;
 using System.Threading;
+using Aura.Channel.World.Entities;
+using Aura.Data;
 using Aura.Shared.Mabi;
+using Aura.Shared.Util;
+using Aura.Channel.Util;
 
 namespace Aura.Channel.World
 {
 	public class WorldManager
 	{
-		public static readonly WorldManager Instance = new WorldManager();
-
 		private Dictionary<int, Region> _regions;
 
+		public event TimeEventHandler SecondsTimeTick;
+		public event TimeEventHandler MinutesTimeTick;
+		public event TimeEventHandler HoursTimeTick;
+		public event TimeEventHandler ErinnTimeTick;
+		public event TimeEventHandler ErinnDaytimeTick;
+		public event TimeEventHandler ErinnMidnightTick;
+
+		/// <summary>
+		/// Returns number of regions.
+		/// </summary>
 		public int Count { get { return _regions.Count; } }
 
-		private WorldManager()
+		public WorldManager()
 		{
 			_regions = new Dictionary<int, Region>();
 		}
@@ -98,41 +105,38 @@ namespace Aura.Channel.World
 			if ((_secondsTime += diff) >= Second)
 			{
 				_secondsTime = 0;
-				// Raise seconds tick
+				SecondsTimeTick.Raise(new ErinnTime(now));
 			}
 
 			// Minutes event
 			if ((_minutesTime += diff) >= Minute)
 			{
 				_minutesTime = (now.Second * Second + now.Millisecond);
-				// Raise minutes tick
+				MinutesTimeTick.Raise(new ErinnTime(now));
 			}
 
 			// Hours event
 			if ((_hoursTime += diff) >= Hour)
 			{
 				_hoursTime = (now.Minute * Minute + now.Second * Second + now.Millisecond);
-				// Raise hours tick
+				HoursTimeTick.Raise(new ErinnTime(now));
 			}
 
 			// Erinn time event
 			if ((_erinnTime += diff) >= ErinnMinute)
 			{
 				_erinnTime = 0;
+				ErinnTimeTick.Raise(new ErinnTime(now));
 
 				var et = new ErinnTime(now);
 
 				// Erinn daytime event
 				if (et.IsDawn || et.IsDusk)
-				{
-					// Raise Erinn daytime tick
-				}
+					ErinnDaytimeTick.Raise(new ErinnTime(now));
 
 				// Erinn midnight event
 				if (et.IsMidnight)
-				{
-					// Raise Erinn midnight tick
-				}
+					ErinnMidnightTick.Raise(new ErinnTime(now));
 			}
 
 			this.UpdateEntities();

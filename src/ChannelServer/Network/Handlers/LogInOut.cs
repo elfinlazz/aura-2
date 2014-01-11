@@ -97,7 +97,7 @@ namespace Aura.Channel.Network.Handlers
 
 			creature.Warping = false;
 
-			var region = WorldManager.Instance.GetRegion(creature.RegionId);
+			var region = ChannelServer.Instance.World.GetRegion(creature.RegionId);
 			if (region == null)
 			{
 				Log.Warning("Player '{0}' tried to enter unknown region '{1}'.", creature.Name, creature.RegionId);

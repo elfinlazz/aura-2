@@ -185,7 +185,7 @@ namespace Aura.Channel.Scripting
 
 					if (npcScript.NPC.RegionId > 0)
 					{
-						var region = WorldManager.Instance.GetRegion(npcScript.NPC.RegionId);
+						var region = ChannelServer.Instance.World.GetRegion(npcScript.NPC.RegionId);
 						if (region == null)
 						{
 							Log.Error("Failed to spawn '{0}', region '{1}' not found.", type, npcScript.NPC.RegionId);

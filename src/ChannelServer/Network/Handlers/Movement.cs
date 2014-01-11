@@ -38,14 +38,14 @@ namespace Aura.Channel.Network.Handlers
 			// Old Aura code ahead
 			// Collision
 			MabiVertex intersection;
-			if (WorldManager.Instance.FindCollisionInTree(creature.Region, pos, dest, out intersection))
+			if (ChannelServer.Instance.World.FindCollisionInTree(creature.Region, pos, dest, out intersection))
 			{
 				//Logger.Debug("intersection " + intersection);
 				// TODO: Uhm... do something.
 			}
 #endif
 
-			//WorldManager.Instance.ActivateMobs(creature, from, to);
+			//ChannelServer.Instance.World.ActivateMobs(creature, from, to);
 
 			creature.Move(to, (packet.Op == Op.Walk));
 		}

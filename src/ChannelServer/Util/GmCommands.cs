@@ -106,7 +106,7 @@ namespace Aura.Channel.Util
 			if (charCommand)
 			{
 				// Get target player
-				if (args.Length < 2 || (target = WorldManager.Instance.GetPlayer(args[1])) == null)
+				if (args.Length < 2 || (target = ChannelServer.Instance.World.GetPlayer(args[1])) == null)
 				{
 					Send.ServerMessage(creature, "Target not found.");
 					return true;
@@ -197,7 +197,7 @@ namespace Aura.Channel.Util
 				regionId = target.RegionId;
 
 			// Check region
-			if (warp && !WorldManager.Instance.HasRegion(regionId))
+			if (warp && !ChannelServer.Instance.World.HasRegion(regionId))
 			{
 				Send.ServerMessage(sender, Localization.Get("gm.warp_unknown")); // Region doesn't exist.
 				return CommandResult.Fail;
@@ -418,7 +418,7 @@ namespace Aura.Channel.Util
 			var x = 12800;
 			var y = 38100;
 
-			WorldManager.Instance.AddRegion(35001);
+			ChannelServer.Instance.World.AddRegion(35001);
 			sender.SetLocation(dynamicId, x, y);
 			sender.Warping = true;
 

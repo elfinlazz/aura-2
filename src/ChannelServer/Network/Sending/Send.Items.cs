@@ -180,7 +180,7 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 
-			//WorldManager.Instance.CreatureStatsUpdate(creature);
+			//ChannelServer.Instance.World.CreatureStatsUpdate(creature);
 		}
 
 		/// <summary>
@@ -196,7 +196,7 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 
-			//WorldManager.Instance.CreatureStatsUpdate(creature);
+			//ChannelServer.Instance.World.CreatureStatsUpdate(creature);
 		}
 
 		/// <summary>

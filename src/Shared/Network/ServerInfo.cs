@@ -59,6 +59,9 @@ namespace Aura.Shared.Network
 		/// <summary>
 		/// 0-75
 		/// </summary>
+		/// <remarks>
+		/// It's probably 0-100%, and the last 25% aren't visible.
+		/// </remarks>
 		public short Stress
 		{
 			get

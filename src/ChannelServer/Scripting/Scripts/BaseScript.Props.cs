@@ -17,7 +17,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		protected Prop SpawnProp(int id, int regionId, int x, int y, float direction, PropFunc behavior = null)
 		{
-			var region = WorldManager.Instance.GetRegion(regionId);
+			var region = ChannelServer.Instance.World.GetRegion(regionId);
 			if (region == null)
 			{
 				Log.Error("SpawnProp: Region '{0}' doesn't exist.", regionId);
@@ -38,7 +38,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		protected Prop SetPropBehavior(long entityId, PropFunc behavior)
 		{
-			var prop = WorldManager.Instance.GetProp(entityId);
+			var prop = ChannelServer.Instance.World.GetProp(entityId);
 			if (prop == null)
 			{
 				Log.Error("SetPropBehavior: Prop '{0}' doesn't exist.", entityId.ToString("X16"));
