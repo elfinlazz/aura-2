@@ -1,25 +1,18 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
-using Aura.Channel.Network;
-using Aura.Channel.World.Entities;
-using Aura.Shared.Network;
-using Aura.Shared.Util;
 using Aura.Channel.Network.Sending;
-using Aura.Channel.World;
-using System.Text.RegularExpressions;
+using Aura.Channel.World.Entities;
+using Aura.Channel.World.Shops;
 
 namespace Aura.Channel.Scripting.Scripts
 {
 	public abstract class NpcScript : BaseScript
 	{
 		public NPC NPC { get; protected set; }
+		public NpcShop Shop { get; protected set; }
 
 		public NpcScript()
 		{
@@ -171,6 +164,21 @@ namespace Aura.Channel.Scripting.Scripts
 			, creature.EntityId);
 
 			Send.NpcTalk(creature, script);
+		}
+
+		/// <summary>
+		/// Opens NPC shop for creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		protected void OpenShop(Creature creature)
+		{
+			if (this.Shop == null)
+			{
+				this.Close(creature, "(Missing shop.)");
+				return;
+			}
+
+			Send.OpenNpcShop(creature, this.Shop);
 		}
 
 		// Dialog factory

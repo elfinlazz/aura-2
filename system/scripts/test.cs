@@ -3,6 +3,7 @@ using Aura.Channel.Network;
 using Aura.Channel.Scripting;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
+using Aura.Channel.World.Shops;
 using Aura.Shared.Util;
 
 public class TestScript : NpcScript
@@ -11,6 +12,14 @@ public class TestScript : NpcScript
 	{
 		SetName("_nao");
 		SetLocation(1, 12750, 38219, 0);
+		
+		Shop = new NpcShop();
+		Shop.Add("Etc", 50646, 5); // 5 Whatever
+		Shop.Add("Etc", 50009, 5); // 5 Whatever
+		
+		var item = new Item(50001);
+		item.OptionInfo.DucatPrice = 100;
+		Shop.Add("Etc", item);
 	}
 
 	public override IEnumerable Talk(Creature c)
@@ -35,6 +44,8 @@ public class TestScript : NpcScript
 				break;
 			case "breast":
 				Msg(c, "=DD");
+				OpenShop(c);
+				Return();
 				break;
 		}
 		

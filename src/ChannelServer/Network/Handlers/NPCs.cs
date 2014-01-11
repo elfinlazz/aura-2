@@ -10,6 +10,9 @@ using Aura.Shared.Util;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting;
 using System.Text.RegularExpressions;
+using Aura.Data.Database;
+using Aura.Shared.Mabi.Const;
+using Aura.Data;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -178,6 +181,136 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			Send.NpcTalkKeywordR(character, keyword);
+		}
+
+		/// <summary>
+		/// Sent when buying an item from a regular NPC shop.
+		/// </summary>
+		/// <example>
+		/// 0001 [005000CBB3152F26] Long   : 22518873019723558
+		/// 0002 [..............00] Byte   : 0
+		/// 0003 [..............00] Byte   : 0
+		/// </example>
+		[PacketHandler(Op.NpcShopBuyItem)]
+		public void NpcShopBuyItem(ChannelClient client, Packet packet)
+		{
+			var entityId = packet.GetLong();
+			var targetPocket = packet.GetByte(); // 0:cursor, 1:inv
+			var unk = packet.GetByte(); // storage gold?
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			// Check session
+			if (!client.NpcSession.IsValid())
+			{
+				Log.Warning("NpcShopBuyItem: Player '{0}' is in invalid session.", creature.Name);
+				Send.NpcShopBuyItemR(creature, false);
+				return;
+			}
+
+			// Get item
+			var item = client.NpcSession.Target.Script.Shop.GetItem(entityId);
+			if (item == null)
+			{
+				Log.Warning("NpcShopBuyItem: Item '{0}' doesn't exist in shop.", entityId.ToString("X16"));
+				Send.NpcShopBuyItemR(creature, false);
+				return;
+			}
+
+			// The client expects the price for a full stack to be sent
+			// in the ItemOptionInfo, so we have to calculate the actual price here.
+			var price = item.OptionInfo.Price;
+			if (item.Data.StackType == StackType.Stackable)
+				price = (int)(price / (float)item.Data.StackMax * item.Amount);
+
+			// Check gold
+			if (creature.Inventory.Gold < price)
+			{
+				Send.MsgBox(creature, Localization.Get("world.shop_gold")); // Insufficient amount of gold.
+				Send.NpcShopBuyItemR(creature, false);
+				return;
+			}
+
+			var success = false;
+
+			// Cursor
+			if (targetPocket == 0)
+				success = creature.Inventory.Add(item, Pocket.Cursor);
+			// Inventory
+			else if (targetPocket == 1)
+				success = creature.Inventory.Add(item, false);
+
+			if (success)
+				creature.Inventory.RemoveGold(price);
+
+			Send.NpcShopBuyItemR(creature, success);
+		}
+
+		/// <summary>
+		/// Sent when selling an item from the inventory to a regular NPC shop.
+		/// </summary>
+		/// <example>
+		/// 0001 [005000CBB3154E13] Long   : 22518873019731475
+		/// 0002 [..............00] Byte   : 0
+		/// </example>
+		[PacketHandler(Op.NpcShopSellItem)]
+		public void NpcShopSellItem(ChannelClient client, Packet packet)
+		{
+			var entityId = packet.GetLong();
+			var unk = packet.GetByte();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			// Check session
+			if (!client.NpcSession.IsValid())
+			{
+				Log.Warning("NpcShopSellItem: Player '{0}' is in invalid session.", creature.Name);
+				Send.NpcShopBuyItemR(creature, false);
+				return;
+			}
+
+			// Get item
+			var item = creature.Inventory.GetItem(entityId);
+			if (item == null)
+			{
+				Log.Warning("NpcShopSellItem: Item '{0}' doesn't exist in '{1}'s inventory.", entityId.ToString("X16"), creature.Name);
+				goto L_End;
+			}
+
+			// Calculate selling price
+			int sellingPrice = sellingPrice = item.OptionInfo.SellingPrice;
+			if (item.Data.StackType == StackType.Sac)
+			{
+				// Add costs of the items inside the sac
+				var stackItemData = AuraData.ItemDb.Find(item.Data.StackItem);
+				if (stackItemData != null)
+					sellingPrice += (int)((item.Info.Amount / (float)stackItemData.StackMax) * stackItemData.SellingPrice);
+				else
+					Log.Warning("NpcShopSellItem: Missing stack item data for '{0}'.", item.Data.StackItem);
+			}
+			else if (item.Data.StackType == StackType.Stackable)
+			{
+				// Individuel price for this stack
+				sellingPrice = (int)((item.Amount / (float)item.Data.StackMax) * sellingPrice);
+			}
+
+			// Remove item from inv
+			if (!creature.Inventory.Remove(item))
+			{
+				Log.Warning("NpcShopSellItem: Failed to remove item '{0}' from '{1}'s inventory.", entityId.ToString("X16"), creature.Name);
+				goto L_End;
+			}
+
+			// Add gold
+			// TODO: What if there's no space for the gold? Space check?
+			creature.Inventory.AddGold(sellingPrice);
+
+		L_End:
+			Send.NpcShopSellItemR(creature);
 		}
 	}
 }

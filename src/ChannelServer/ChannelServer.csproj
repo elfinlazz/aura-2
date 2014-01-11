@@ -149,6 +149,7 @@
     <Compile Include="World\Location.cs" />
     <Compile Include="World\Position.cs" />
     <Compile Include="World\Region.cs" />
+    <Compile Include="World\Shops\NpcShop.cs" />
     <Compile Include="World\WorldManager.cs" />
   </ItemGroup>
   <ItemGroup>

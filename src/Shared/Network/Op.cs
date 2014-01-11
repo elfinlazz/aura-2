@@ -196,11 +196,11 @@ namespace Aura.Shared.Network
 		public const int CloseUmbrella = 0x7026;
 		public const int SpreadWingsOn = 0x702E;
 		public const int SpreadWingsOff = 0x702F;
-		public const int ShopBuyItem = 0x7150;
-		public const int ShopBuyItemR = 0x7151;
-		public const int ShopSellItem = 0x7152;
-		public const int ShopSellItemR = 0x7153;
-		public const int OpenNPCShop = 0x715E;
+		public const int NpcShopBuyItem = 0x7150;
+		public const int NpcShopBuyItemR = 0x7151;
+		public const int NpcShopSellItem = 0x7152;
+		public const int NpcShopSellItemR = 0x7153;
+		public const int OpenNpcShop = 0x715E;
 		public const int OpenMail = 0x7242;
 		public const int CloseMail = 0x7243;
 		public const int ConfirmMailRecipent = 0x7244;

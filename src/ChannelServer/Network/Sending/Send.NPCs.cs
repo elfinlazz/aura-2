@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Aura.Shared.Network;
 using Aura.Channel.World.Entities;
+using Aura.Channel.World.Shops;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -92,6 +93,61 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(keyword != null);
 			if (keyword != null)
 				packet.PutString(keyword);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends OpenNpcShop to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="shop"></param>
+		public static void OpenNpcShop(Creature creature, NpcShop shop)
+		{
+			var packet = new Packet(Op.OpenNpcShop, creature.EntityId);
+			packet.PutString("shopname");
+			packet.PutByte(0);
+			packet.PutByte(0);
+			packet.PutInt(0);
+			packet.PutByte((byte)shop.Tabs.Count);
+			foreach (var tab in shop.Tabs)
+			{
+				packet.PutString("[{0}]{1}", tab.Order, tab.Title);
+
+				// [160200] ?
+				{
+					packet.PutByte(0);
+				}
+
+				packet.PutShort((short)tab.Items.Count);
+				foreach (var item in tab.Items)
+					packet.AddItemInfo(item, ItemPacketType.Private);
+			}
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends ShopBuyItemR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void NpcShopBuyItemR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.NpcShopBuyItemR, creature.EntityId);
+			if (!success)
+				packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends ShopSellItemR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void NpcShopSellItemR(Creature creature)
+		{
+			var packet = new Packet(Op.NpcShopSellItemR, creature.EntityId);
 
 			creature.Client.Send(packet);
 		}
