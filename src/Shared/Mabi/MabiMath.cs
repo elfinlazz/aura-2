@@ -17,6 +17,12 @@ namespace Aura.Shared.Mabi
 			return (float)Math.PI * 2 / 255 * direction;
 		}
 
+		/// <summary>
+		/// Converts direction into Mabi's byte direction.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public static byte DirectionToByte(double x, double y)
 		{
 			return (byte)(Math.Floor(Math.Atan2(x, y) / 0.02454369260617026));

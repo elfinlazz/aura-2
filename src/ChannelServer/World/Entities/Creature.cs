@@ -11,13 +11,14 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Mabi;
 using Aura.Channel.Network.Sending;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Entities
 {
 	/// <summary>
 	/// Base class for all "creaturly" entities.
 	/// </summary>
-	public abstract class Creature : Entity
+	public abstract class Creature : Entity, IDisposable
 	{
 		public override DataType DataType { get { return DataType.Creature; } }
 
@@ -149,6 +150,8 @@ namespace Aura.Channel.World.Entities
 		public float Will { get { return this.WillBaseTotal + this.WillMod; } }
 		public float Luck { get { return this.LuckBaseTotal + this.LuckMod; } }
 
+		public CreatureRegen Regens { get; protected set; }
+
 		// Life
 		// ------------------------------------------------------------------
 
@@ -166,12 +169,7 @@ namespace Aura.Channel.World.Entities
 			get { return _life; }
 			set
 			{
-				if (value > this.LifeInjured)
-					_life = this.LifeInjured;
-				else if (value < -this.LifeMax)
-					_life = -this.LifeMax;
-				else
-					_life = value;
+				_life = Math2.MinMax(-this.LifeMax, this.LifeInjured, value);
 
 				//if (_life < 0 && !this.Has(CreatureConditionA.Deadly))
 				//{
@@ -187,7 +185,7 @@ namespace Aura.Channel.World.Entities
 		public float Injuries
 		{
 			get { return _injuries; }
-			set { _injuries = Math.Max(0, Math.Min(this.LifeMax, value)); }
+			set { _injuries = Math2.MinMax(0, this.LifeMax, value); }
 		}
 		public float LifeMaxBase { get; set; }
 		public float LifeMaxBaseTotal { get { return this.LifeMaxBase + this.LifeMaxBaseSkill; } }
@@ -201,9 +199,8 @@ namespace Aura.Channel.World.Entities
 		public float Mana
 		{
 			get { return _mana; }
-			set { _mana = Math.Max(0, Math.Min(this.ManaMax, value)); }
+			set { _mana = Math2.MinMax(0, this.ManaMax, value); }
 		}
-
 		public float ManaMaxBase { get; set; }
 		public float ManaMaxBaseTotal { get { return this.ManaMaxBase + this.ManaMaxBaseSkill; } }
 		public float ManaMax { get { return ManaMaxBaseTotal + this.ManaMaxMod; } }
@@ -215,12 +212,18 @@ namespace Aura.Channel.World.Entities
 		public float Stamina
 		{
 			get { return _stamina; }
-			set { _stamina = Math.Max(0, Math.Min(this.StaminaHunger, value)); }
+			set { _stamina = Math2.MinMax(0, this.StaminaMax, value); }
 		}
+		/// <summary>
+		/// The amount of stamina that's not usable because of hunger.
+		/// </summary>
+		/// <remarks>
+		/// While regen is limited to 50%, hunger can actually go higher.
+		/// </remarks>
 		public float Hunger
 		{
 			get { return _hunger; }
-			set { _hunger = Math.Max(0, Math.Min(this.StaminaMax / 2, value)); }
+			set { _hunger = Math2.MinMax(0, this.StaminaMax, value); }
 		}
 		public float StaminaMaxBase { get; set; }
 		public float StaminaMaxBaseTotal { get { return this.StaminaMaxBase + this.StaminaMaxBaseSkill; } }
@@ -236,11 +239,46 @@ namespace Aura.Channel.World.Entities
 			this.Temp = new CreatureTemp();
 			this.Titles = new CreatureTitles(this);
 			this.Keywords = new CreatureKeywords(this);
-
-			this.RaceData = AuraData.RaceDb.Find(10002);
-
 			this.Inventory = new CreatureInventory(this);
+			this.Regens = new CreatureRegen(this);
+		}
+
+		/// <summary>
+		/// Loads race and handles some basic stuff, like adding regens.
+		/// </summary>
+		public void LoadDefault()
+		{
+			if (this.Race == 0)
+				throw new Exception("Set race before calling LoadDefault.");
+
+			this.RaceData = AuraData.RaceDb.Find(this.Race);
+			if (this.RaceData == null)
+			{
+				// Try to default to Human
+				this.RaceData = AuraData.RaceDb.Find(10000);
+				if (this.RaceData == null)
+					throw new Exception("Unable to load race data, race '" + this.Race.ToString() + "' not found.");
+
+				Log.Warning("Race '{0}' not found, using human instead.", this.Race);
+			}
+
 			this.Inventory.AddMainInventory();
+
+			// The wiki says it's 0.125 life, but the packets have 0.12.
+			this.Regens.Add(Stat.Life, 0.12f, this.LifeMax);
+			this.Regens.Add(Stat.Mana, 0.05f, this.ManaMax);
+			this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
+			this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
+			this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
+		}
+
+		/// <summary>
+		/// Called when creature is removed from the server.
+		/// (Killed NPC, disconnect, etc)
+		/// </summary>
+		public void Dispose()
+		{
+			this.Regens.Dispose();
 		}
 
 		/// <summary>

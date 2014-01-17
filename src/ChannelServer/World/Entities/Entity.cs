@@ -6,7 +6,7 @@ using System;
 namespace Aura.Channel.World.Entities
 {
 	/// <summary>
-	/// An entity is any being or object that can be send in EntityAppears.
+	/// An entity is any being or object that can be sent in Entity(Dis)Appears.
 	/// </summary>
 	public abstract class Entity
 	{
@@ -22,12 +22,18 @@ namespace Aura.Channel.World.Entities
 		public DateTime DisappearTime { get; set; }
 
 		public abstract Position GetPosition();
-	}
 
-	public enum EntityType { Undefined, Character, Pet, Item, NPC, Prop }
+		public bool Is(EntityType type) { return (this.EntityType == type); }
+		public bool Is(DataType type) { return (this.DataType == type); }
+	}
 
 	/// <summary>
 	/// Vague entity data type, used in EntityAppears.
 	/// </summary>
 	public enum DataType : short { Creature = 16, Item = 80, Prop = 160 }
+
+	/// <summary>
+	/// More exact entity type, used only by Aura.
+	/// </summary>
+	public enum EntityType { Undefined, Character, Pet, Item, NPC, Prop }
 }

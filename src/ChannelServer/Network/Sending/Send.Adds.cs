@@ -7,6 +7,7 @@ using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Channel.World.Entities.Creatures;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -14,21 +15,13 @@ namespace Aura.Channel.Network.Sending
 	{
 		private static Packet AddPublicEntityInfo(this Packet packet, Entity entity)
 		{
-			switch (entity.EntityType)
+			switch (entity.DataType)
 			{
-				case EntityType.Character:
-				case EntityType.Pet:
-				case EntityType.NPC:
-					packet.AddCreatureInfo(entity as Creature, CreaturePacketType.Public);
-					break;
-				case EntityType.Item:
-					packet.AddItemInfo(entity as Item, ItemPacketType.Public);
-					break;
-				case EntityType.Prop:
-					packet.AddPropInfo(entity as Prop);
-					break;
+				case DataType.Creature: packet.AddCreatureInfo(entity as Creature, CreaturePacketType.Public); break;
+				case DataType.Item: packet.AddItemInfo(entity as Item, ItemPacketType.Public); break;
+				case DataType.Prop: packet.AddPropInfo(entity as Prop); break;
 				default:
-					throw new Exception("Unknown entity class '" + entity.GetType().ToString() + "'");
+					throw new Exception("Unknown entity type '" + entity.GetType().ToString() + "', '" + entity.DataType + "'.");
 			}
 
 			return packet;
@@ -231,10 +224,10 @@ namespace Aura.Channel.Network.Sending
 				packet.PutByte(0);					 // ElementFire
 				packet.PutByte(0);					 // ElementIce
 
-				packet.PutInt(0); // --v
-				//packet.PutInt((uint)creature.StatRegens.Count);
-				//foreach (var mod in creature.StatRegens)
-				//    mod.AddToPacket(packet);
+				var regens = creature.Regens.GetList();
+				packet.PutInt(regens.Count);
+				foreach (var regen in regens)
+					packet.AddRegen(regen);
 			}
 			else if (type == CreaturePacketType.Public || type == CreaturePacketType.Minimal)
 			{
@@ -243,10 +236,10 @@ namespace Aura.Channel.Network.Sending
 				packet.PutFloat(creature.LifeMaxMod);
 				packet.PutFloat(creature.LifeInjured);
 
-				packet.PutInt(0); // --v
-				//packet.PutInt((uint)creature.StatRegens.Count);
-				//foreach (var mod in creature.StatRegens)
-				//    mod.AddToPacket(packet);
+				var regens = creature.Regens.GetPublicList();
+				packet.PutInt(regens.Count);
+				foreach (var regen in regens)
+					packet.AddRegen(regen);
 
 				// Another 6 elements list?
 				packet.PutInt(0);
@@ -658,8 +651,9 @@ namespace Aura.Channel.Network.Sending
 			// --------------------------------------------------------------
 			packet.PutByte(0);				     // EventFullSuitIndex
 			packet.PutByte(0);				     // TeamId
-			// packet.PutInt					 // HitPoint
-			// packet.PutInt					 // MaxHitPoint
+			// if?
+			//   packet.PutInt					 // HitPoint
+			//   packet.PutInt					 // MaxHitPoint
 
 			// [170300] ?
 			{
@@ -691,7 +685,6 @@ namespace Aura.Channel.Network.Sending
 			}
 			else if (type == CreaturePacketType.Public)
 			{
-				//packet.PutInt(0);			         // JoustId
 				packet.PutLong(0);			         // HorseId
 				packet.PutFloat(0);	                 // Life
 				packet.PutInt(100);		             // LifeMax
@@ -742,7 +735,7 @@ namespace Aura.Channel.Network.Sending
 
 			// [150100] NPC options
 			// --------------------------------------------------------------
-			if (type == CreaturePacketType.Public && creature.EntityType == EntityType.NPC)
+			if (type == CreaturePacketType.Public && creature.Is(EntityType.NPC))
 			{
 				packet.PutShort(0);		         // OnlyShowFilter
 				packet.PutShort(0);		         // HideFilter
@@ -916,7 +909,7 @@ namespace Aura.Channel.Network.Sending
 					packet.PutInt(dest.Y);
 				}
 
-				if (creature.EntityType == EntityType.NPC)
+				if (creature.Is(EntityType.NPC))
 				{
 					packet.PutString(creature.StandStyleTalking);
 				}
@@ -990,6 +983,8 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(2);
 
 			// [150100] Pocket ExpireTime List
+			// Apperantly a list of "pockets"?, incl expiration time.
+			// Ends with a long 0?
 			// --------------------------------------------------------------
 			{
 				// Style
@@ -1140,12 +1135,13 @@ namespace Aura.Channel.Network.Sending
 
 		private static Packet AddPropInfo(this Packet packet, Prop prop)
 		{
+			packet.PutLong(prop.EntityId);
+			packet.PutInt(prop.Info.Id);
+
 			// Client side props (A0 range, instead of A1)
 			// look a bit different.
 			if (prop.EntityId >= MabiId.ServerProps)
 			{
-				packet.PutLong(prop.EntityId);
-				packet.PutInt(prop.Info.Id);
 				packet.PutString(prop.Name);
 				packet.PutString(prop.Title);
 				packet.PutBin(prop.Info);
@@ -1160,13 +1156,27 @@ namespace Aura.Channel.Network.Sending
 			}
 			else
 			{
-				packet.PutLong(prop.EntityId);
-				packet.PutInt(prop.Info.Id);
 				packet.PutString(prop.State);
 				packet.PutLong(DateTime.Now);
 				packet.PutByte(false);
 				packet.PutFloat(prop.Info.Direction);
 			}
+
+			return packet;
+		}
+
+		private static Packet AddRegen(this Packet packet, StatRegen regen)
+		{
+			packet.PutInt(regen.Id);
+
+			// It makes more sense for us to *increase* the hunger, but the
+			// client wants to *decrease* the amount of available Stamina.
+			packet.PutFloat(regen.Stat != Stat.Hunger ? regen.Change : -regen.Change);
+
+			packet.PutInt(regen.TimeLeft);
+			packet.PutInt((int)regen.Stat);
+			packet.PutByte(0); // ?
+			packet.PutFloat(regen.Max);
 
 			return packet;
 		}
@@ -1189,4 +1199,6 @@ namespace Aura.Channel.Network.Sending
 	}
 
 	public enum ItemPacketType : byte { Public = 1, Private = 2 }
+
+	public enum StatUpdateType : byte { Private = 3, Public = 4 }
 }

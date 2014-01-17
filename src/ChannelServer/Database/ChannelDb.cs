@@ -174,15 +174,17 @@ namespace Aura.Channel.Database
 					character.Life -= reader.GetFloat("lifeDelta");
 					character.Mana = (character.ManaMaxBase = reader.GetFloat("manaMax"));
 					character.Mana -= reader.GetFloat("manaDelta");
-					character.Hunger = reader.GetFloat("hunger");
 					character.Stamina = (character.StaminaMaxBase = reader.GetFloat("staminaMax"));
 					character.Stamina -= reader.GetFloat("staminaDelta");
+					character.Hunger = reader.GetFloat("hunger");
 					character.StrBase = reader.GetFloat("str");
 					character.DexBase = reader.GetFloat("dex");
 					character.IntBase = reader.GetFloat("int");
 					character.WillBase = reader.GetFloat("will");
 					character.LuckBase = reader.GetFloat("luck");
 				}
+
+				character.LoadDefault();
 			}
 
 			this.GetCharacterItems(character);

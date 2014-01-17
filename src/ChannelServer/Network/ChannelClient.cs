@@ -44,6 +44,9 @@ namespace Aura.Channel.Network
 		{
 			foreach (var creature in this.Creatures.Values.Where(a => a.Region != null))
 				creature.Region.RemoveCreature(creature);
+
+			foreach (var creature in this.Creatures.Values)
+				creature.Dispose();
 		}
 	}
 

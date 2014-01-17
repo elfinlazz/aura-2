@@ -64,11 +64,9 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.ChannelLoginR(client, character.EntityId);
 
-			if (character.RegionId == 0)
-			{
-				character.RegionId = 1;
-				character.SetPosition(12800, 38100);
-			}
+			// Fallback for invalid region ids, like 0, dynamics, and dungeons.
+			if (character.RegionId == 0 || Math2.Between(character.RegionId, 35000, 40000) || Math2.Between(character.RegionId, 10000, 11000))
+				character.SetLocation(1, 12800, 38100);
 
 			Send.CharacterLock(character, Locks.Default);
 			Send.EnterRegion(character);
@@ -180,6 +178,9 @@ namespace Aura.Channel.Network.Handlers
 
 			foreach (var creature in client.Creatures.Values.Where(a => a.Region != null))
 				creature.Region.RemoveCreature(creature);
+
+			foreach (var creature in client.Creatures.Values)
+				creature.Dispose();
 
 			client.Creatures.Clear();
 			//client.Character = null;

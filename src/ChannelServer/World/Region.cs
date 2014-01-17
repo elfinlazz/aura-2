@@ -87,7 +87,7 @@ namespace Aura.Channel.World
 			// Remove them from the region
 			foreach (var entity in disappear)
 			{
-				if (entity.DataType == DataType.Creature)
+				if (entity.Is(DataType.Creature))
 				{
 					this.RemoveCreature(entity as Creature);
 
@@ -98,11 +98,11 @@ namespace Aura.Channel.World
 					//    ScriptManager.Instance.Spawn(npc.SpawnId, 1);
 					//}
 				}
-				else if (entity.DataType == DataType.Item)
+				else if (entity.Is(DataType.Item))
 				{
 					this.RemoveItem(entity as Item);
 				}
-				else if (entity.DataType == DataType.Prop)
+				else if (entity.Is(DataType.Prop))
 				{
 					this.RemoveProp(entity as Prop);
 				}

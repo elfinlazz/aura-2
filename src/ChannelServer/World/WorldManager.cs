@@ -63,7 +63,7 @@ namespace Aura.Channel.World
 		/// </summary>
 		public const int HeartbeatTime = 500;
 		public const int Second = 1000, Minute = Second * 60, Hour = Minute * 60;
-		public const int ErinnMinute = 1500;
+		public const int ErinnMinute = 1500, ErinnHour = ErinnMinute * 60, ErinnDay = ErinnHour * 24;
 
 		private bool _initialized;
 		private Timer _heartbeatTimer;

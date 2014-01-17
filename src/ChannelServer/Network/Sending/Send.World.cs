@@ -18,9 +18,9 @@ namespace Aura.Channel.Network.Sending
 		public static void EntityAppears(Entity entity)
 		{
 			var op = Op.EntityAppears;
-			if (entity.EntityType == EntityType.Item)
+			if (entity.Is(EntityType.Item))
 				op = Op.ItemAppears;
-			else if (entity.EntityType == EntityType.Prop)
+			else if (entity.Is(EntityType.Prop))
 				op = Op.PropAppears;
 
 			var packet = new Packet(op, MabiId.Broadcast);
@@ -36,7 +36,7 @@ namespace Aura.Channel.Network.Sending
 		public static void EntityDisappears(Entity entity)
 		{
 			var op = Op.EntityDisappears;
-			if (entity.EntityType == EntityType.Item)
+			if (entity.Is(EntityType.Item))
 				op = Op.ItemDisappears;
 
 			var packet = new Packet(op, MabiId.Broadcast);
