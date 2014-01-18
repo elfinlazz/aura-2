@@ -169,19 +169,29 @@ namespace Aura.Channel.Database
 					character.Exp = reader.GetInt64("exp");
 					character.AbilityPoints = reader.GetInt16("ap");
 					character.Age = reader.GetInt16("age");
+
+					character.LifeFoodMod = reader.GetFloat("lifeFood");
+					character.ManaFoodMod = reader.GetFloat("manaFood");
+					character.StaminaFoodMod = reader.GetFloat("staminaFood");
+					character.LifeMaxBase = reader.GetFloat("lifeMax");
+					character.ManaMaxBase = reader.GetFloat("manaMax");
+					character.StaminaMaxBase = reader.GetFloat("staminaMax");
 					character.Injuries = reader.GetFloat("injuries");
-					character.Life = (character.LifeMaxBase = reader.GetFloat("lifeMax"));
-					character.Life -= reader.GetFloat("lifeDelta");
-					character.Mana = (character.ManaMaxBase = reader.GetFloat("manaMax"));
-					character.Mana -= reader.GetFloat("manaDelta");
-					character.Stamina = (character.StaminaMaxBase = reader.GetFloat("staminaMax"));
-					character.Stamina -= reader.GetFloat("staminaDelta");
 					character.Hunger = reader.GetFloat("hunger");
+					character.Life = character.LifeMax - reader.GetFloat("lifeDelta");
+					character.Mana = character.ManaMax - reader.GetFloat("manaDelta");
+					character.Stamina = character.StaminaMax - reader.GetFloat("staminaDelta");
+
 					character.StrBase = reader.GetFloat("str");
 					character.DexBase = reader.GetFloat("dex");
 					character.IntBase = reader.GetFloat("int");
 					character.WillBase = reader.GetFloat("will");
 					character.LuckBase = reader.GetFloat("luck");
+					character.StrFoodMod = reader.GetFloat("strFood");
+					character.IntFoodMod = reader.GetFloat("intFood");
+					character.DexFoodMod = reader.GetFloat("dexFood");
+					character.WillFoodMod = reader.GetFloat("willFood");
+					character.LuckFoodMod = reader.GetFloat("luckFood");
 				}
 
 				character.LoadDefault();
@@ -346,6 +356,10 @@ namespace Aura.Channel.Database
 				var characterLocation = creature.GetPosition();
 
 				cmd.AddParameter("@creatureId", creature.CreatureId);
+				cmd.Set("height", creature.Height);
+				cmd.Set("weight", creature.Weight);
+				cmd.Set("upper", creature.Upper);
+				cmd.Set("lower", creature.Lower);
 				cmd.Set("region", creature.RegionId);
 				cmd.Set("x", characterLocation.X);
 				cmd.Set("y", characterLocation.Y);
@@ -368,6 +382,14 @@ namespace Aura.Channel.Database
 				cmd.Set("luck", creature.LuckBase);
 				cmd.Set("ap", creature.AbilityPoints);
 				cmd.Set("weaponSet", (byte)creature.Inventory.WeaponSet);
+				cmd.Set("lifeFood", creature.LifeFoodMod);
+				cmd.Set("manaFood", creature.ManaFoodMod);
+				cmd.Set("staminaFood", creature.StaminaFoodMod);
+				cmd.Set("strFood", creature.StrFoodMod);
+				cmd.Set("intFood", creature.IntFoodMod);
+				cmd.Set("dexFood", creature.DexFoodMod);
+				cmd.Set("willFood", creature.WillFoodMod);
+				cmd.Set("luckFood", creature.LuckFoodMod);
 
 				cmd.Execute();
 			}

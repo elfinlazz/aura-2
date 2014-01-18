@@ -2,15 +2,15 @@
 // For more information, see license file in the main folder
 
 using System;
-using System.Collections.Generic;
+using System.Text;
 using Aura.Channel.Network;
+using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities.Creatures;
 using Aura.Data;
 using Aura.Data.Database;
-using Aura.Shared.Mabi.Const;
-using Aura.Shared.Network;
 using Aura.Shared.Mabi;
-using Aura.Channel.Network.Sending;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Mabi.Structs;
 using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Entities
@@ -20,6 +20,9 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public abstract class Creature : Entity, IDisposable
 	{
+		private const float MinWeight = 0.7f, MaxWeight = 1.5f;
+		private const float MaxFoodStatBonus = 100;
+
 		public override DataType DataType { get { return DataType.Creature; } }
 
 		// General
@@ -51,10 +54,11 @@ namespace Aura.Channel.World.Entities
 		public byte EyeColor { get; set; }
 		public byte MouthType { get; set; }
 
+		private float _weight, _upper, _lower;
 		public float Height { get; set; }
-		public float Weight { get; set; }
-		public float Upper { get; set; }
-		public float Lower { get; set; }
+		public float Weight { get { return _weight; } set { _weight = Math2.MinMax(MinWeight, MaxWeight, value); } }
+		public float Upper { get { return _upper; } set { _upper = Math2.MinMax(MinWeight, MaxWeight, value); } }
+		public float Lower { get { return _lower; } set { _lower = Math2.MinMax(MinWeight, MaxWeight, value); } }
 
 		public string StandStyle { get; set; }
 		public string StandStyleTalking { get; set; }
@@ -62,6 +66,22 @@ namespace Aura.Channel.World.Entities
 		public uint Color1 { get; set; }
 		public uint Color2 { get; set; }
 		public uint Color3 { get; set; }
+
+		/// <summary>
+		/// Returns body proportions
+		/// </summary>
+		public BodyProportions Body
+		{
+			get
+			{
+				BodyProportions result;
+				result.Height = this.Height;
+				result.Weight = this.Weight;
+				result.Upper = this.Upper;
+				result.Lower = this.Lower;
+				return result;
+			}
+		}
 
 		// Inventory
 		// ------------------------------------------------------------------
@@ -144,13 +164,28 @@ namespace Aura.Channel.World.Entities
 		public float IntBaseTotal { get { return this.IntBase + this.IntBaseSkill; } }
 		public float WillBaseTotal { get { return this.WillBase + this.WillBaseSkill; } }
 		public float LuckBaseTotal { get { return this.LuckBase + this.LuckBaseSkill; } }
-		public float Str { get { return this.StrBaseTotal + this.StrMod; } }
-		public float Dex { get { return this.DexBaseTotal + this.DexMod; } }
-		public float Int { get { return this.IntBaseTotal + this.IntMod; } }
-		public float Will { get { return this.WillBaseTotal + this.WillMod; } }
-		public float Luck { get { return this.LuckBaseTotal + this.LuckMod; } }
+		public float Str { get { return this.StrBaseTotal + this.StrMod + this.StrFoodMod; } }
+		public float Dex { get { return this.DexBaseTotal + this.DexMod + this.DexFoodMod; } }
+		public float Int { get { return this.IntBaseTotal + this.IntMod + this.IntFoodMod; } }
+		public float Will { get { return this.WillBaseTotal + this.WillMod + this.WillFoodMod; } }
+		public float Luck { get { return this.LuckBaseTotal + this.LuckMod + this.LuckFoodMod; } }
 
 		public CreatureRegen Regens { get; protected set; }
+
+		// Food Mods
+		// ------------------------------------------------------------------
+
+		private float _lifeFoodMod, _manaFoodMod, _staminaFoodMod;
+		private float _strFoodMod, _intFoodMod, _dexFoodMod, _willFoodMod, _luckFoodMod;
+
+		public float LifeFoodMod { get { return _lifeFoodMod; } set { _lifeFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
+		public float ManaFoodMod { get { return _manaFoodMod; } set { _manaFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
+		public float StaminaFoodMod { get { return _staminaFoodMod; } set { _staminaFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
+		public float StrFoodMod { get { return _strFoodMod; } set { _strFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
+		public float IntFoodMod { get { return _intFoodMod; } set { _intFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
+		public float DexFoodMod { get { return _dexFoodMod; } set { _dexFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
+		public float WillFoodMod { get { return _willFoodMod; } set { _willFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
+		public float LuckFoodMod { get { return _luckFoodMod; } set { _luckFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
 
 		// Life
 		// ------------------------------------------------------------------
@@ -189,7 +224,7 @@ namespace Aura.Channel.World.Entities
 		}
 		public float LifeMaxBase { get; set; }
 		public float LifeMaxBaseTotal { get { return this.LifeMaxBase + this.LifeMaxBaseSkill; } }
-		public float LifeMax { get { return this.LifeMaxBaseTotal + this.LifeMaxMod; } }
+		public float LifeMax { get { return this.LifeMaxBaseTotal + this.LifeMaxMod + this.LifeFoodMod; } }
 		public float LifeInjured { get { return this.LifeMax - _injuries; } }
 
 		// Mana
@@ -203,7 +238,7 @@ namespace Aura.Channel.World.Entities
 		}
 		public float ManaMaxBase { get; set; }
 		public float ManaMaxBaseTotal { get { return this.ManaMaxBase + this.ManaMaxBaseSkill; } }
-		public float ManaMax { get { return ManaMaxBaseTotal + this.ManaMaxMod; } }
+		public float ManaMax { get { return ManaMaxBaseTotal + this.ManaMaxMod + this.ManaFoodMod; } }
 
 		// Stamina
 		// ------------------------------------------------------------------
@@ -227,13 +262,13 @@ namespace Aura.Channel.World.Entities
 		}
 		public float StaminaMaxBase { get; set; }
 		public float StaminaMaxBaseTotal { get { return this.StaminaMaxBase + this.StaminaMaxBaseSkill; } }
-		public float StaminaMax { get { return this.StaminaMaxBaseTotal + this.StaminaMaxMod; } }
+		public float StaminaMax { get { return this.StaminaMaxBaseTotal + this.StaminaMaxMod + this.StaminaFoodMod; } }
 		public float StaminaHunger { get { return this.StaminaMax - _hunger; } }
 
 		/// <summary>
 		/// Returns multiplicator to be used when regenerating stamina.
 		/// </summary>
-		public float StaminaHungryMultiplicator { get { return (this.Stamina < this.StaminaHunger ? 1f : 0.2f); } }
+		public float StaminaRegenMultiplicator { get { return (this.Stamina < this.StaminaHunger ? 1f : 0.2f); } }
 
 		// ------------------------------------------------------------------
 
@@ -275,6 +310,8 @@ namespace Aura.Channel.World.Entities
 			this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
 			this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
 			this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
+
+			ChannelServer.Instance.World.MabiTick += this.OnMabiTick;
 		}
 
 		/// <summary>
@@ -284,6 +321,7 @@ namespace Aura.Channel.World.Entities
 		public void Dispose()
 		{
 			this.Regens.Dispose();
+			ChannelServer.Instance.World.MabiTick -= this.OnMabiTick;
 		}
 
 		/// <summary>
@@ -406,5 +444,118 @@ namespace Aura.Channel.World.Entities
 		public bool Has(CreatureConditionC condition) { return ((this.Conditions.C & condition) != 0); }
 		public bool Has(CreatureConditionD condition) { return ((this.Conditions.D & condition) != 0); }
 		public bool Has(CreatureStates state) { return ((this.State & state) != 0); }
+
+		/// <summary>
+		/// Called every 5 minutes, checks changes through food.
+		/// </summary>
+		/// <param name="time"></param>
+		public void OnMabiTick(ErinnTime time)
+		{
+			var weight = this.Temp.WeightFoodChange;
+			var upper = this.Temp.UpperFoodChange;
+			var lower = this.Temp.LowerFoodChange;
+			var life = this.Temp.LifeFoodChange;
+			var mana = this.Temp.ManaFoodChange;
+			var stm = this.Temp.StaminaFoodChange;
+			var str = this.Temp.StrFoodChange;
+			var int_ = this.Temp.IntFoodChange;
+			var dex = this.Temp.DexFoodChange;
+			var will = this.Temp.WillFoodChange;
+			var luck = this.Temp.LuckFoodChange;
+			var changes = false;
+
+			var sb = new StringBuilder();
+
+			if (weight != 0)
+			{
+				changes = true;
+				this.Weight += weight;
+				sb.Append(Localization.Get(weight > 0 ? "world.weight_plus" : "world.weight_minus") + "\r\n");
+			}
+
+			if (upper != 0)
+			{
+				changes = true;
+				this.Upper += upper;
+				sb.Append(Localization.Get(upper > 0 ? "world.upper_plus" : "world.upper_minus") + "\r\n");
+			}
+
+			if (lower != 0)
+			{
+				changes = true;
+				this.Lower += lower;
+				sb.Append(Localization.Get(lower > 0 ? "world.lower_plus" : "world.lower_minus") + "\r\n");
+			}
+
+			if (life != 0)
+			{
+				changes = true;
+				this.LifeFoodMod += life;
+			}
+
+			if (mana != 0)
+			{
+				changes = true;
+				this.ManaFoodMod += mana;
+			}
+
+			if (stm != 0)
+			{
+				changes = true;
+				this.StaminaFoodMod += stm;
+			}
+
+			if (str != 0)
+			{
+				changes = true;
+				this.StrFoodMod += str;
+			}
+
+			if (int_ != 0)
+			{
+				changes = true;
+				this.IntFoodMod += int_;
+			}
+
+			if (dex != 0)
+			{
+				changes = true;
+				this.DexFoodMod += dex;
+			}
+
+			if (will != 0)
+			{
+				changes = true;
+				this.WillFoodMod += will;
+			}
+
+			if (luck != 0)
+			{
+				changes = true;
+				this.LuckFoodMod += luck;
+			}
+
+			if (!changes)
+				return;
+
+			this.Temp.WeightFoodChange = 0;
+			this.Temp.UpperFoodChange = 0;
+			this.Temp.LowerFoodChange = 0;
+			this.Temp.LifeFoodChange = 0;
+			this.Temp.ManaFoodChange = 0;
+			this.Temp.StaminaFoodChange = 0;
+			this.Temp.StrFoodChange = 0;
+			this.Temp.IntFoodChange = 0;
+			this.Temp.DexFoodChange = 0;
+			this.Temp.WillFoodChange = 0;
+			this.Temp.LuckFoodChange = 0;
+
+			Send.StatUpdate(this, StatUpdateType.Private, Stat.LifeMaxFoodMod, Stat.ManaMaxFoodMod, Stat.StaminaMaxFoodMod, Stat.StrFoodMod, Stat.IntFoodMod, Stat.DexFoodMod, Stat.WillFoodMod, Stat.LuckFoodMod);
+			Send.StatUpdate(this, StatUpdateType.Public, Stat.LifeMaxFoodMod);
+			Send.CreatureBodyUpdate(this);
+
+			if (sb.Length > 0)
+				Send.Notice(this, sb.ToString());
+		}
 	}
 }

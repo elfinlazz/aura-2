@@ -14,6 +14,9 @@ namespace Aura.Channel.Scripting.Scripts
 	/// </remarks>
 	public abstract class ItemScript : BaseScript
 	{
+		private const float WeightChangePlus = 0.0015f;
+		private const float WeightChangeMinus = 0.000375f;
+
 		/// <summary>
 		/// Executed when item is used.
 		/// </summary>
@@ -52,7 +55,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			creature.Life += (float)life;
 			creature.Mana += (float)mana;
-			creature.Stamina += (float)stamina * creature.StaminaHungryMultiplicator;
+			creature.Stamina += (float)stamina * creature.StaminaRegenMultiplicator;
 		}
 
 		/// <summary>
@@ -97,25 +100,32 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Reduces hunger by amount and handles weight gain/loss
 		/// and stat bonuses.
 		/// </summary>
-		/// <param name="creature"></param>
-		/// <param name="hunger"></param>
-		/// <param name="weight"></param>
-		/// <param name="upper"></param>
-		/// <param name="lower"></param>
-		/// <param name="str"></param>
-		/// <param name="int_"></param>
-		/// <param name="dex"></param>
-		/// <param name="will"></param>
-		/// <param name="luck"></param>
-		/// <param name="life"></param>
-		/// <param name="mana"></param>
-		/// <param name="stm"></param>
+		/// <remarks>
+		/// Body and stat changes are applied inside Creature,
+		/// on MabiTick (every 5 minutes).
+		/// </remarks>
 		protected void Feed(Creature creature, double hunger, double weight = 0, double upper = 0, double lower = 0, double str = 0, double int_ = 0, double dex = 0, double will = 0, double luck = 0, double life = 0, double mana = 0, double stm = 0)
 		{
+			// Hunger
+			var diff = creature.Hunger;
 			creature.Hunger -= (float)hunger;
+			diff -= creature.Hunger;
 
-			// handle weight
-			// handle stats
+			// Weight (multiplicators guessed, based on packets)
+			// Only increase weight if you eat above 0% Hunger?
+			if (diff < hunger)
+			{
+				creature.Temp.WeightFoodChange += (float)weight * (weight >= 0 ? WeightChangePlus : WeightChangeMinus);
+				creature.Temp.UpperFoodChange += (float)upper * (upper >= 0 ? WeightChangePlus : WeightChangeMinus);
+				creature.Temp.LowerFoodChange += (float)lower * (lower >= 0 ? WeightChangePlus : WeightChangeMinus);
+			}
+
+			// Stats
+			creature.Temp.StrFoodChange += MabiMath.FoodStatBonus(str, hunger, diff, creature.Age);
+			creature.Temp.IntFoodChange += MabiMath.FoodStatBonus(int_, hunger, diff, creature.Age);
+			creature.Temp.DexFoodChange += MabiMath.FoodStatBonus(dex, hunger, diff, creature.Age);
+			creature.Temp.WillFoodChange += MabiMath.FoodStatBonus(will, hunger, diff, creature.Age);
+			creature.Temp.LuckFoodChange += MabiMath.FoodStatBonus(luck, hunger, diff, creature.Age);
 		}
 
 		/// <summary>

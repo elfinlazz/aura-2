@@ -11,6 +11,7 @@ using Aura.Channel.World.Entities.Creatures;
 using System.Collections;
 using System.Collections.Generic;
 using Aura.Data;
+using Aura.Shared.Mabi.Structs;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -281,6 +282,18 @@ namespace Aura.Channel.Network.Sending
 				creature.Client.Send(packet);
 			else if (creature.Region != null)
 				creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Broadcasts CreatureBodyUpdate in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void CreatureBodyUpdate(Creature creature)
+		{
+			var packet = new Packet(Op.CreatureBodyUpdate, creature.EntityId);
+			packet.PutBin(creature.Body);
+
+			creature.Region.Broadcast(packet, creature);
 		}
 	}
 }

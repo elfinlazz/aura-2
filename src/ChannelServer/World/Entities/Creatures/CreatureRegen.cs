@@ -151,7 +151,7 @@ namespace Aura.Channel.World.Entities.Creatures
 					{
 						case Stat.Life: this.Creature.Life += regen.Change; break;
 						case Stat.Mana: this.Creature.Mana += regen.Change; break;
-						case Stat.Stamina: this.Creature.Stamina += regen.Change * this.Creature.StaminaHungryMultiplicator; break;
+						case Stat.Stamina: this.Creature.Stamina += regen.Change * this.Creature.StaminaRegenMultiplicator; break;
 						case Stat.Hunger:
 							// Regen can't lower hunger below a certain amount.
 							this.Creature.Hunger += regen.Change;

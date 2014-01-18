@@ -16,12 +16,34 @@ namespace Aura.Channel.World
 	{
 		private Dictionary<int, Region> _regions;
 
+		/// <summary>
+		/// Raised every second in real time.
+		/// </summary>
 		public event TimeEventHandler SecondsTimeTick;
+		/// <summary>
+		/// Raised every minute in real time.
+		/// </summary>
 		public event TimeEventHandler MinutesTimeTick;
+		/// <summary>
+		/// Raised every hour in real time.
+		/// </summary>
 		public event TimeEventHandler HoursTimeTick;
+		/// <summary>
+		/// Raised every 1.5s (1min Erinn time).
+		/// </summary>
 		public event TimeEventHandler ErinnTimeTick;
+		/// <summary>
+		/// Raised every 18min (1/2 day Erinn time).
+		/// </summary>
 		public event TimeEventHandler ErinnDaytimeTick;
+		/// <summary>
+		/// Raised at 00:00am Erinn time.
+		/// </summary>
 		public event TimeEventHandler ErinnMidnightTick;
+		/// <summary>
+		/// Raised every 5 minutes in real time.
+		/// </summary>
+		public event TimeEventHandler MabiTick;
 
 		/// <summary>
 		/// Returns number of regions.
@@ -69,6 +91,7 @@ namespace Aura.Channel.World
 		private Timer _heartbeatTimer;
 		private DateTime _lastHeartbeat;
 		private double _secondsTime, _minutesTime, _hoursTime, _erinnTime;
+		private int _mabiTickCount;
 
 		/// <summary>
 		/// Initializes heartbeat timer.
@@ -93,8 +116,8 @@ namespace Aura.Channel.World
 		/// </remarks>
 		private void Heartbeat(object _)
 		{
-			var now = DateTime.Now;
-			var diff = (now - _lastHeartbeat).TotalMilliseconds;
+			var now = new ErinnTime(DateTime.Now);
+			var diff = (now.DateTime - _lastHeartbeat).TotalMilliseconds;
 
 			if (diff != HeartbeatTime && Math.Abs(HeartbeatTime - diff) > HeartbeatTime && diff < 100000000)
 			{
@@ -105,43 +128,48 @@ namespace Aura.Channel.World
 			if ((_secondsTime += diff) >= Second)
 			{
 				_secondsTime = 0;
-				SecondsTimeTick.Raise(new ErinnTime(now));
+				SecondsTimeTick.Raise(now);
 			}
 
 			// Minutes event
 			if ((_minutesTime += diff) >= Minute)
 			{
-				_minutesTime = (now.Second * Second + now.Millisecond);
-				MinutesTimeTick.Raise(new ErinnTime(now));
+				_minutesTime = (now.DateTime.Second * Second + now.DateTime.Millisecond);
+				MinutesTimeTick.Raise(now);
+
+				// Mabi tick event
+				if (++_mabiTickCount >= 5)
+				{
+					MabiTick.Raise(now);
+					_mabiTickCount = 0;
+				}
 			}
 
 			// Hours event
 			if ((_hoursTime += diff) >= Hour)
 			{
-				_hoursTime = (now.Minute * Minute + now.Second * Second + now.Millisecond);
-				HoursTimeTick.Raise(new ErinnTime(now));
+				_hoursTime = (now.DateTime.Minute * Minute + now.DateTime.Second * Second + now.DateTime.Millisecond);
+				HoursTimeTick.Raise(now);
 			}
 
 			// Erinn time event
 			if ((_erinnTime += diff) >= ErinnMinute)
 			{
 				_erinnTime = 0;
-				ErinnTimeTick.Raise(new ErinnTime(now));
-
-				var et = new ErinnTime(now);
+				ErinnTimeTick.Raise(now);
 
 				// Erinn daytime event
-				if (et.IsDawn || et.IsDusk)
-					ErinnDaytimeTick.Raise(new ErinnTime(now));
+				if (now.IsDawn || now.IsDusk)
+					ErinnDaytimeTick.Raise(now);
 
 				// Erinn midnight event
-				if (et.IsMidnight)
-					ErinnMidnightTick.Raise(new ErinnTime(now));
+				if (now.IsMidnight)
+					ErinnMidnightTick.Raise(now);
 			}
 
 			this.UpdateEntities();
 
-			_lastHeartbeat = now;
+			_lastHeartbeat = now.DateTime;
 		}
 
 		/// <summary>

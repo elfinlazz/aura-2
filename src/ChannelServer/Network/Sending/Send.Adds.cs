@@ -121,14 +121,14 @@ namespace Aura.Channel.Network.Sending
 				packet.PutFloat(creature.WillMod);
 				packet.PutFloat(creature.LuckBaseTotal);
 				packet.PutFloat(creature.LuckMod);
-				packet.PutFloat(0);					 // LifeMaxByFood
-				packet.PutFloat(0);					 // ManaMaxByFood
-				packet.PutFloat(0);					 // StaminaMaxByFood
-				packet.PutFloat(0);					 // StrengthByFood
-				packet.PutFloat(0);					 // DexterityByFood
-				packet.PutFloat(0);					 // IntelligenceByFood
-				packet.PutFloat(0);					 // WillByFood
-				packet.PutFloat(0);					 // LuckByFood
+				packet.PutFloat(creature.LifeFoodMod);
+				packet.PutFloat(creature.ManaFoodMod);
+				packet.PutFloat(creature.StaminaFoodMod);
+				packet.PutFloat(creature.StrFoodMod);
+				packet.PutFloat(creature.DexFoodMod);
+				packet.PutFloat(creature.IntFoodMod);
+				packet.PutFloat(creature.WillFoodMod);
+				packet.PutFloat(creature.LuckFoodMod);
 				packet.PutShort(creature.AbilityPoints);
 				packet.PutShort(0);			         // AttackMinBase
 				packet.PutShort(0);			         // AttackMinMod

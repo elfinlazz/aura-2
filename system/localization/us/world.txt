@@ -19,3 +19,10 @@ insufficient_space		Not enough space.
 mount_sit	You cannot mount while resting.
 
 shutdown	The server will shutdown in {0} seconds, please log out before that time, for your own safety.
+
+weight_plus		You gained some weight.
+weight_minus	You lost some weight.
+upper_plus		Your upper body got bigger.
+upper_minus		Your upper body got slimmer.
+lower_plus		Your legs got bigger.
+lower_minus		Your legs got slimmer.

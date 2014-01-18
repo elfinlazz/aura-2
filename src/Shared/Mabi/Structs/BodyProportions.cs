@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 namespace Aura.Shared.Mabi.Structs
 {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Proportions
+	public struct BodyProportions
 	{
-		float Height;
-		float Weight;
-		float Lower;
-		float Upper;
+		public float Height;
+		public float Weight;
+		public float Upper;
+		public float Lower;
 	}
 }

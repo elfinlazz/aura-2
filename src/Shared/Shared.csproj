@@ -69,7 +69,7 @@
     <Compile Include="Mabi\MabiDictionary.cs" />
     <Compile Include="Mabi\MabiMath.cs" />
     <Compile Include="Mabi\Password.cs" />
-    <Compile Include="Mabi\Structs\CreatureProperties.cs" />
+    <Compile Include="Mabi\Structs\BodyProportions.cs" />
     <Compile Include="Mabi\Structs\Items.cs" />
     <Compile Include="Mabi\Structs\Props.cs" />
     <Compile Include="Mabi\Structs\Skills.cs" />
