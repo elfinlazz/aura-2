@@ -101,6 +101,15 @@ namespace Aura.Channel.Network.Sending
 
 		/// <summary>
 		/// Sends StatUpdatePublic and StatUpdatePrivate to relevant clients,
+		/// with a list of new stat values.
+		/// </summary>
+		public static void StatUpdate(Creature creature, StatUpdateType type, params Stat[] stats)
+		{
+			StatUpdate(creature, type, stats, null, null, null);
+		}
+
+		/// <summary>
+		/// Sends StatUpdatePublic and StatUpdatePrivate to relevant clients,
 		/// with a list of regens to remove.
 		/// </summary>
 		public static void NewRegens(Creature creature, StatUpdateType type, params StatRegen[] regens)

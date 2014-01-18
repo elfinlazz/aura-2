@@ -4,3 +4,4 @@
 
 unimplemented			Unimplemented.
 unimplemented_skill		Partially unimplemented skill.
+unimplemented_item		Unimplemented item.

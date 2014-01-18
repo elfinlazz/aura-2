@@ -16,6 +16,11 @@ namespace Aura.Data.Database
 
 		public ItemType Type { get; internal set; }
 
+		/// <summary>
+		/// Specifies whether an item is consumed upon use.
+		/// </summary>
+		public bool Consumed { get; internal set; }
+
 		public byte Width { get; internal set; }
 		public byte Height { get; internal set; }
 
@@ -67,7 +72,7 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
-		[MinFieldCount(29)]
+		[MinFieldCount(30)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			var info = new ItemData();
@@ -85,6 +90,7 @@ namespace Aura.Data.Database
 
 			info.StackItem = entry.ReadInt();
 
+			info.Consumed = entry.ReadBool();
 			info.Width = entry.ReadByte();
 			info.Height = entry.ReadByte();
 			info.ColorMap1 = entry.ReadByte();

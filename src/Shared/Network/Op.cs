@@ -70,6 +70,7 @@ namespace Aura.Shared.Network
 		public const int ChannelCharacterInfoRequestR = 0x5209;
 		public const int EntityAppears = 0x520C;
 		public const int EntityDisappears = 0x520D;
+		public const int CreatureBodyUpdate = 0x520E;
 		public const int ItemAppears = 0x5211;
 		public const int ItemDisappears = 0x5212;
 		public const int AssignChair = 0x5215;
@@ -119,7 +120,7 @@ namespace Aura.Shared.Network
 		public const int ItemSplit = 0x59E8;
 		public const int ItemSplitR = 0x59E9;
 		public const int ItemAmount = 0x59EA;
-		public const int ItemUse = 0x59EB;
+		public const int UseItem = 0x59EB;
 		public const int UseItemR = 0x59EC;
 
 		// [180300, NA166 (18.09.2013)] 2 new ops

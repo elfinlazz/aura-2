@@ -230,6 +230,11 @@ namespace Aura.Channel.World.Entities
 		public float StaminaMax { get { return this.StaminaMaxBaseTotal + this.StaminaMaxMod; } }
 		public float StaminaHunger { get { return this.StaminaMax - _hunger; } }
 
+		/// <summary>
+		/// Returns multiplicator to be used when regenerating stamina.
+		/// </summary>
+		public float StaminaHungryMultiplicator { get { return (this.Stamina < this.StaminaHunger ? 1f : 0.2f); } }
+
 		// ------------------------------------------------------------------
 
 		public Creature()

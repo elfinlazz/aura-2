@@ -12,18 +12,29 @@ using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
+using System.Text;
+using Aura.Data;
+using System.Text.RegularExpressions;
 
 namespace Aura.Channel.Scripting
 {
 	public class ScriptManager
 	{
+		private const string SystemIndexRoot = "system/scripts/";
+		private const string UserIndexRoot = "user/scripts/";
+		private const string IndexPath = SystemIndexRoot + "scripts.txt";
+
 		private Dictionary<string, Compiler> _compilers;
+
+		private Dictionary<int, ItemScript> _itemScripts;
 
 		public ScriptManager()
 		{
 			_compilers = new Dictionary<string, Compiler>();
 			_compilers.Add("cs", new CSharpCompiler());
 			_compilers.Add("boo", new BooCompiler());
+
+			_itemScripts = new Dictionary<int, ItemScript>();
 		}
 
 		/// <summary>
@@ -33,13 +44,9 @@ namespace Aura.Channel.Scripting
 		{
 			Log.Info("Loading scripts...");
 
-			var indexPath = "system/scripts/scripts.txt";
-			var systemIndexRoot = Path.GetDirectoryName("system/scripts/");
-			var userIndexRoot = Path.GetDirectoryName("user/scripts/");
-
-			if (!File.Exists(indexPath))
+			if (!File.Exists(IndexPath))
 			{
-				Log.Error("Script list not found at '{0}'.", indexPath);
+				Log.Error("Script list not found at '{0}'.", IndexPath);
 				return;
 			}
 
@@ -47,14 +54,14 @@ namespace Aura.Channel.Scripting
 			var toLoad = new OrderedDictionary();
 			try
 			{
-				using (var fr = new FileReader(indexPath))
+				using (var fr = new FileReader(IndexPath))
 				{
 					foreach (var line in fr)
 					{
 						// Get script path for either user or system
-						var scriptPath = Path.Combine(userIndexRoot, line);
+						var scriptPath = Path.Combine(UserIndexRoot, line);
 						if (!File.Exists(scriptPath))
-							scriptPath = Path.Combine(systemIndexRoot, line);
+							scriptPath = Path.Combine(SystemIndexRoot, line);
 						if (!File.Exists(scriptPath))
 						{
 							Log.Warning("Script not found: {0}", line);
@@ -76,8 +83,12 @@ namespace Aura.Channel.Scripting
 			int done = 0, loaded = 0;
 			foreach (string filePath in toLoad.Values)
 			{
-				if (this.LoadScript(filePath))
+				var asm = this.Compile(filePath);
+				if (asm != null)
+				{
+					this.LoadScriptAssembly(asm);
 					loaded++;
+				}
 
 				if (done % 5 == 0)
 					Log.Progress(done + 1, toLoad.Count);
@@ -90,20 +101,114 @@ namespace Aura.Channel.Scripting
 				Log.WriteLine();
 
 			Log.Info("Done loading {0} scripts (of {1}).", loaded, toLoad.Count);
+
+			this.LoadItemScripts();
 		}
 
 		/// <summary>
-		/// Retrieves/creates assembly and loads script classes inside.
-		/// Returns true if successful.
+		/// Generates script for all items and loads it.
+		/// </summary>
+		private void LoadItemScripts()
+		{
+			Log.Info("Loading item scripts...");
+
+			_itemScripts.Clear();
+
+			// Place generated script in the cache folder
+			var tmpPath = this.GetCachePath(Path.Combine(SystemIndexRoot, "items", "inline.generated.cs")).Replace(".compiled", "");
+
+			// We go over all items only once, inline scripts are added
+			// to the generated script if the inline script needs updating.
+			var updateInline =
+				(File.GetLastWriteTime(Path.Combine("system", "db", "items.txt")) >= File.GetLastWriteTime(tmpPath)) ||
+				(File.GetLastWriteTime(Path.Combine("user", "db", "items.txt")) >= File.GetLastWriteTime(tmpPath));
+
+			var sb = new StringBuilder();
+
+			// Default usings
+			sb.AppendLine("// Automatically generated from inline scripts in the item database");
+			sb.AppendLine();
+			sb.AppendLine("using Aura.Channel.World.Entities;");
+			sb.AppendLine("using Aura.Channel.Scripting.Scripts;");
+			sb.AppendLine();
+
+			// Go through all items
+			foreach (var entry in AuraData.ItemDb.Entries.Values)
+			{
+				var empty = (string.IsNullOrWhiteSpace(entry.OnUse) && string.IsNullOrWhiteSpace(entry.OnEquip) && string.IsNullOrWhiteSpace(entry.OnUnequip));
+				var match = Regex.Match(entry.OnUse, @"^\s*use\s*\(\s*""([^"")]+)""\s*\)\s*;?\s*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+				var use = match.Success;
+
+				// Inline script
+				if (!empty && !use)
+				{
+					if (updateInline)
+					{
+						// Add inline scripts to the collection,
+						// wrapped in an ItemScript class.
+						sb.AppendFormat("public class ItemScript{0} : ItemScript {{" + Environment.NewLine, entry.Id);
+						{
+							if (!string.IsNullOrWhiteSpace(entry.OnUse))
+								sb.AppendFormat("	public override void OnUse(Creature cr, Item i)     {{ {0} }}" + Environment.NewLine, entry.OnUse.Trim());
+							if (!string.IsNullOrWhiteSpace(entry.OnEquip))
+								sb.AppendFormat("	public override void OnEquip(Creature cr, Item i)   {{ {0} }}" + Environment.NewLine, entry.OnEquip.Trim());
+							if (!string.IsNullOrWhiteSpace(entry.OnUnequip))
+								sb.AppendFormat("	public override void OnUnequip(Creature cr, Item i) {{ {0} }}" + Environment.NewLine, entry.OnUnequip.Trim());
+						}
+						sb.AppendFormat("}}" + Environment.NewLine + Environment.NewLine);
+					}
+
+					continue;
+				}
+
+				// Not inline or empty
+
+				// Get file name from use command or by id.
+				var scriptFile = (use ? (match.Groups[1].Value) : (entry.Id + ".cs"));
+
+				var scriptPath = Path.Combine(UserIndexRoot, "items", scriptFile);
+				if (!File.Exists(scriptPath))
+					scriptPath = Path.Combine(SystemIndexRoot, "items", scriptFile);
+				if (!File.Exists(scriptPath))
+				{
+					// Only show error if the use was explicit
+					if (use)
+						Log.Error("Item script not found: {0}", "items/" + scriptFile);
+					continue;
+				}
+
+				var asm = this.Compile(scriptPath);
+				if (asm != null)
+					this.LoadItemScriptAssembly(asm, entry.Id);
+
+				Log.Debug(_itemScripts[entry.Id].GetType().Name);
+			}
+
+			// Update inline script
+			if (updateInline)
+			{
+				File.WriteAllText(tmpPath, sb.ToString());
+			}
+
+			// Compile will update assembly if generated script was updated
+			var inlineAsm = this.Compile(tmpPath);
+			if (inlineAsm != null)
+				this.LoadItemScriptAssembly(inlineAsm);
+
+			Log.Info("Done loading item scripts.");
+		}
+
+		/// <summary>
+		///  Compiles script and returns the resulting assembly, or null.
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		private bool LoadScript(string path)
+		private Assembly Compile(string path)
 		{
 			if (!File.Exists(path))
 			{
 				Log.Error("Script '{0}' not found.", path);
-				return false;
+				return null;
 			}
 
 			var outPath = this.GetCachePath(path);
@@ -113,15 +218,15 @@ namespace Aura.Channel.Scripting
 			if (compiler == null)
 			{
 				Log.Error("No compiler found for script '{0}'.", path);
-				return false;
+				return null;
 			}
 
 			try
 			{
 				var scriptAsm = compiler.Compile(path, outPath);
-				this.LoadScriptAssembly(scriptAsm);
+				//this.LoadScriptAssembly(scriptAsm);
 
-				return true;
+				return scriptAsm;
 			}
 			catch (CompilerErrorsException ex)
 			{
@@ -148,15 +253,14 @@ namespace Aura.Channel.Scripting
 						Log.WriteLine(LogLevel.None, "  {2} {0:0000}: {1}", i, line, (err.Line == i ? '*' : ' '));
 					}
 				}
-
-				return false;
 			}
 			catch (Exception ex)
 			{
 				Log.Exception(ex, "LoadScript: Problem while loading script '{0}'", path);
 				//File.Delete(outPath);
-				return false;
 			}
+
+			return null;
 		}
 
 		/// <summary>
@@ -205,6 +309,42 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
+		/// Loads item script classes from assembly.
+		/// </summary>
+		/// <param name="asm"></param>
+		/// <param name="itemId">Only loads first class for itemId, if this is not 0.</param>
+		/// <remarks>
+		/// Item scripts have some special needs, like needing an item id.
+		/// Hard to handle inside the normal loading.
+		/// If itemId is 0 it's retreived from the class name, ItemScript(Id).
+		/// </remarks>
+		private void LoadItemScriptAssembly(Assembly asm, int itemId = 0)
+		{
+			foreach (var type in asm.GetTypes().Where(a => a.IsSubclassOf(typeof(ItemScript)) && !a.IsAbstract && !a.Name.StartsWith("_")))
+			{
+				var itemScript = Activator.CreateInstance(type) as ItemScript;
+
+				// Stop after first type if this loading was for a single item.
+				if (itemId != 0)
+				{
+					_itemScripts[itemId] = itemScript;
+					return;
+				}
+
+				// Parse item id from name
+				if (!Regex.IsMatch(type.Name, "^ItemScript[0-9]+$") || !int.TryParse(type.Name.Substring(10), out itemId))
+				{
+					Log.Error("Unable to parse item id of item script '{0}'.", type.Name);
+					continue;
+				}
+
+				_itemScripts[itemId] = itemScript;
+
+				itemId = 0;
+			}
+		}
+
+		/// <summary>
 		/// Returns path for the compiled version of the script.
 		/// Creates directory structure if it doesn't exist.
 		/// </summary>
@@ -212,12 +352,24 @@ namespace Aura.Channel.Scripting
 		/// <returns></returns>
 		private string GetCachePath(string path)
 		{
-			var result = Path.Combine("cache", path + ".compiled");
+			var result = (!path.StartsWith("cache") ? Path.Combine("cache", path + ".compiled") : path + ".compiled");
 			var dir = Path.GetDirectoryName(result);
 
 			if (!Directory.Exists(dir))
 				Directory.CreateDirectory(dir);
 
+			return result;
+		}
+
+		/// <summary>
+		/// Return the item script by itemId, or null.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
+		public ItemScript GetItemScript(int itemId)
+		{
+			ItemScript result;
+			_itemScripts.TryGetValue(itemId, out result);
 			return result;
 		}
 	}

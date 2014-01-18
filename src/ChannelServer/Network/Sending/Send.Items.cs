@@ -236,5 +236,21 @@ namespace Aura.Channel.Network.Sending
 			creature.Client.Send(packet);
 		}
 
+		/// <summary>
+		/// Sends UseItemR to creature's client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		/// <param name="itemId">Doesn't matter if success is false.</param>
+		public static void UseItemR(Creature creature, bool success, int itemId)
+		{
+			var packet = new Packet(Op.UseItemR, creature.EntityId);
+			packet.PutByte(success);
+			if (success)
+				packet.PutInt(itemId);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

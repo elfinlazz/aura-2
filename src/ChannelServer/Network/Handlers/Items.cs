@@ -279,5 +279,64 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.ItemStateChangeR(creature);
 		}
+
+		/// <summary>
+		/// Sent when using an item.
+		/// </summary>
+		/// <remarks>
+		/// Not all usable items send this packet. The client has some
+		/// items send different packets, like starting hidden skills
+		/// (eg res, hw, dye, etc).
+		/// </remarks>
+		/// <example>
+		/// 0001 [005000CBB535EFC6] Long   : 22518873055424454
+		/// </example>
+		[PacketHandler(Op.UseItem)]
+		public void UseItem(ChannelClient client, Packet packet)
+		{
+			var entityId = packet.GetLong();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			// Check states
+			if (creature.IsDead)
+			{
+				Log.Warning("Player '{0}' tried to use item while being dead.", creature.Name);
+				Send.UseItemR(creature, false, 0);
+				return;
+			}
+
+			// Get item
+			var item = creature.Inventory.GetItem(entityId);
+			if (item == null)
+			{
+				Log.Warning("Player '{0}' tried to use item he doesn't possess.", creature.Name);
+				Send.UseItemR(creature, false, 0);
+				return;
+			}
+
+			// Get script
+			var script = ChannelServer.Instance.ScriptManager.GetItemScript(item.Info.Id);
+			if (script == null)
+			{
+				Log.Unimplemented("Item script for '{0}' not found.", item.Info.Id);
+				Send.UseItemR(creature, false, 0);
+				Send.ServerMessage(creature, Localization.Get("unimplemented_item")); // Unimplemented item.
+				return;
+			}
+
+			// Use item
+			script.OnUse(creature, item);
+			if (item.Data.Consumed)
+				creature.Inventory.Decrement(item);
+
+			// Mandatory stat update
+			Send.StatUpdate(creature, StatUpdateType.Private, Stat.Life, Stat.LifeInjured, Stat.Mana, Stat.Stamina, Stat.Hunger);
+			Send.StatUpdate(creature, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
+
+			Send.UseItemR(creature, true, item.Info.Id);
+		}
 	}
 }

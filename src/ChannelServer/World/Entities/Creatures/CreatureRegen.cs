@@ -135,9 +135,6 @@ namespace Aura.Channel.World.Entities.Creatures
 			if (this.Creature.IsDead)
 				return;
 
-			var staminaMod = (this.Creature.Stamina < this.Creature.StaminaHunger ? 1f : 0.2f);
-			var maxHunger = this.Creature.StaminaMax / 2;
-
 			lock (_regens)
 			{
 				var toRemove = new List<int>();
@@ -154,12 +151,12 @@ namespace Aura.Channel.World.Entities.Creatures
 					{
 						case Stat.Life: this.Creature.Life += regen.Change; break;
 						case Stat.Mana: this.Creature.Mana += regen.Change; break;
-						case Stat.Stamina: this.Creature.Stamina += regen.Change * staminaMod; break;
+						case Stat.Stamina: this.Creature.Stamina += regen.Change * this.Creature.StaminaHungryMultiplicator; break;
 						case Stat.Hunger:
 							// Regen can't lower hunger below a certain amount.
 							this.Creature.Hunger += regen.Change;
-							if (this.Creature.Hunger > maxHunger)
-								this.Creature.Hunger = maxHunger;
+							if (this.Creature.Hunger > this.Creature.StaminaMax / 2)
+								this.Creature.Hunger = this.Creature.StaminaMax / 2;
 							break;
 					}
 				}
