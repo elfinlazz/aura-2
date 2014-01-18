@@ -9,7 +9,6 @@ namespace Aura.Data.Database
 	public class ItemData
 	{
 		public int Id { get; internal set; }
-		public int Version { get; internal set; }
 
 		public string Name { get; internal set; }
 		public string KorName { get; internal set; }
@@ -27,7 +26,6 @@ namespace Aura.Data.Database
 		public byte ColorMap1 { get; internal set; }
 		public byte ColorMap2 { get; internal set; }
 		public byte ColorMap3 { get; internal set; }
-		public byte ColorMode { get; internal set; }
 
 		public StackType StackType { get; internal set; }
 		public ushort StackMax { get; internal set; }
@@ -72,12 +70,11 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
-		[MinFieldCount(30)]
+		[MinFieldCount(29)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			var info = new ItemData();
 			info.Id = entry.ReadInt();
-			info.Version = entry.ReadInt();
 
 			info.Name = entry.ReadString();
 			info.KorName = entry.ReadString();
