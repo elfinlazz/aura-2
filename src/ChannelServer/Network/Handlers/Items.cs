@@ -323,7 +323,7 @@ namespace Aura.Channel.Network.Handlers
 			{
 				Log.Unimplemented("Item script for '{0}' not found.", item.Info.Id);
 				Send.UseItemR(creature, false, 0);
-				Send.ServerMessage(creature, Localization.Get("unimplemented_item")); // Unimplemented item.
+				Send.ServerMessage(creature, Localization.Get("aura.unimplemented_item")); // Unimplemented item.
 				return;
 			}
 
