@@ -102,8 +102,8 @@ namespace Aura.Channel.Util
 			// Handle char commands
 			var sender = creature;
 			var target = creature;
-			var charCommand = message.StartsWith(ChannelServer.Instance.Conf.Commands.Prefix2);
-			if (charCommand)
+			var isCharCommand = message.StartsWith(ChannelServer.Instance.Conf.Commands.Prefix2);
+			if (isCharCommand)
 			{
 				// Get target player
 				if (args.Length < 2 || (target = ChannelServer.Instance.World.GetPlayer(args[1])) == null)
@@ -120,10 +120,16 @@ namespace Aura.Channel.Util
 
 			// Get command
 			var command = this.GetCommand(args[0]);
+			if (command == null)
+			{
+				Send.ServerMessage(creature, "Unknown command '{0}'.", args[0]);
+				return true;
+			}
+
 			var commandConf = ChannelServer.Instance.Conf.Commands.GetAuth(args[0], command.Auth, command.CharAuth);
 
-			// Check command
-			if (command == null || ((!charCommand && client.Account.Authority < commandConf.Auth) || (charCommand && client.Account.Authority < commandConf.CharAuth)))
+			// Check auth
+			if ((!isCharCommand && client.Account.Authority < commandConf.Auth) || (isCharCommand && client.Account.Authority < commandConf.CharAuth))
 			{
 				Send.ServerMessage(creature, "Unknown command '{0}'.", args[0]);
 				return true;
@@ -159,6 +165,8 @@ namespace Aura.Channel.Util
 			//{
 			//    Send.ServerMessage(sender, "Arg{0}: {1}", i, args[i]);
 			//}
+
+			Send.ServerMessage(sender, "test, test");
 
 			return CommandResult.Okay;
 		}
