@@ -35,9 +35,9 @@ item_spawned	Item '{0}' has been spawned.
 item_fail		Failed to spawn item.
 
 // >iteminfo
-ii_none			No items found.
-ii_for			{0}: {1}
-ii_res			Results: {0} (Max. 20 shown)
+ii_none			No items found for '{0}'.
+ii_for			{0}: {1}, Type: {2}
+ii_res			Results: {0} (Max. {1} shown)
 
 // >skillinfo
 si_none			No skills found.

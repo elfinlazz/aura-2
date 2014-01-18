@@ -3,18 +3,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Util.Configuration.Files;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Data;
-using Aura.Shared.Util;
-using Aura.Shared.Util.Commands;
-using Aura.Channel.Util.Configuration.Files;
 using Aura.Data.Database;
-using System.Globalization;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Shared.Util;
+using Aura.Shared.Util.Commands;
 
 namespace Aura.Channel.Util
 {
@@ -27,6 +28,7 @@ namespace Aura.Channel.Util
 
 			// VIPs
 			Add(01, 50, "go", "<location>", HandleGo);
+			Add(01, 50, "iteminfo", "<name>", HandleItemInfo);
 
 			// GMs
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
@@ -39,6 +41,7 @@ namespace Aura.Channel.Util
 
 			// Aliases
 			AddAlias("item", "drop");
+			AddAlias("iteminfo", "ii");
 		}
 
 		// ------------------------------------------------------------------
@@ -448,6 +451,32 @@ namespace Aura.Channel.Util
 			pp.PutString("data/world/uladh_main/" + args[1] + ".xml"); // region_variation_797208
 
 			client.Send(pp);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleItemInfo(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			var search = message.Substring(message.IndexOf(" ")).Trim();
+			var items = AuraData.ItemDb.FindAll(search);
+			if (items.Count == 0)
+			{
+				Send.ServerMessage(sender, Localization.Get("gm.ii_none"), search); // No items found for '{0}'.
+				return CommandResult.Okay;
+			}
+
+			var eItems = items.OrderBy(a => a.Name.LevenshteinDistance(search)).GetEnumerator();
+			var max = 20;
+			for (int i = 0; eItems.MoveNext() && i < max; ++i)
+			{
+				var item = eItems.Current;
+				Send.ServerMessage(sender, Localization.Get("gm.ii_for"), item.Id, item.Name, item.Type); // {0}: {1}, Type: {2}
+			}
+
+			Send.ServerMessage(target, Localization.Get("gm.ii_res"), items.Count, max); // Results: {0} (Max. {1} shown)
 
 			return CommandResult.Okay;
 		}
