@@ -34,7 +34,7 @@ namespace Aura.Shared.Network
 		/// <summary>
 		/// Size added, every time it runs out of space
 		/// </summary>
-		private const int AddSize = 512;
+		private const int AddSize = 1024;
 
 		protected byte[] _buffer;
 		protected int _ptr;
@@ -221,7 +221,7 @@ namespace Aura.Shared.Network
 		protected void EnsureSize(int required)
 		{
 			if (_ptr + required >= _buffer.Length)
-				Array.Resize(ref _buffer, _buffer.Length + AddSize);
+				Array.Resize(ref _buffer, _buffer.Length + Math.Max(AddSize, required * 2));
 		}
 
 		/// <summary>

@@ -73,3 +73,14 @@ public class PropSpawnTest : BaseScript
 }
 
 duplicate TestScript2 : TestScript { SetName("_nao2"); SetLocation(1, 12850, 38019, 0); }
+
+// Tir Chonaill - Eastern Fields
+public class TirEastFieldSpawns : BaseScript
+{
+	public override void Load()
+	{
+		//CreatureSpawn(20001, 15, 1, 4148,17021, 2989,22419, 11485,25677, 16145,21495, 14660,17278);     // Gray Wolves
+		//CreatureSpawn(20003, 5,  1, 8800,16500, 8100,18300, 15300,20400, 13900,17400);                  // White Wolves
+		CreatureSpawn(60003, 40, 1, 4148,17021, 2989,22419, 11485,25677, 16145,21495, 14660,17278);     // Hens
+	}
+}

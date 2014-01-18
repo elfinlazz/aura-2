@@ -8,5 +8,10 @@ namespace Aura.Channel.Scripting.Scripts
 		public virtual void Load()
 		{
 		}
+
+		protected void CreatureSpawn(int raceId, int amount, int regionId, params int[] coordinates)
+		{
+			ChannelServer.Instance.ScriptManager.AddCreatureSpawn(new CreatureSpawn(raceId, amount, regionId, coordinates));
+		}
 	}
 }

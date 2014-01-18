@@ -5,6 +5,7 @@ using System.Threading;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Shared.Util;
+using Aura.Channel.Scripting;
 
 namespace Aura.Channel.World.Entities
 {
@@ -15,6 +16,7 @@ namespace Aura.Channel.World.Entities
 		public override EntityType EntityType { get { return EntityType.NPC; } }
 
 		public NpcScript Script { get; set; }
+		public int SpawnId { get; set; }
 
 		public NPC()
 		{

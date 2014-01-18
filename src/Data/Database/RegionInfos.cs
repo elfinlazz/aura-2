@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Drawing;
 
 namespace Aura.Data.Database
 {
@@ -256,18 +257,6 @@ namespace Aura.Data.Database
 
 				this.Entries.Add(ri.Id, ri);
 			}
-		}
-	}
-
-	public struct Point
-	{
-		public int X;
-		public int Y;
-
-		public Point(int x, int y)
-		{
-			this.X = x;
-			this.Y = y;
 		}
 	}
 }

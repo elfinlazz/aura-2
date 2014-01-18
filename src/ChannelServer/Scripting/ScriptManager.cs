@@ -15,6 +15,7 @@ using Aura.Shared.Util;
 using System.Text;
 using Aura.Data;
 using System.Text.RegularExpressions;
+using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.Scripting
 {
@@ -27,6 +28,7 @@ namespace Aura.Channel.Scripting
 		private Dictionary<string, Compiler> _compilers;
 
 		private Dictionary<int, ItemScript> _itemScripts;
+		private Dictionary<int, CreatureSpawn> _creatureSpawns;
 
 		public ScriptManager()
 		{
@@ -35,6 +37,8 @@ namespace Aura.Channel.Scripting
 			_compilers.Add("boo", new BooCompiler());
 
 			_itemScripts = new Dictionary<int, ItemScript>();
+
+			_creatureSpawns = new Dictionary<int, CreatureSpawn>();
 		}
 
 		/// <summary>
@@ -103,6 +107,8 @@ namespace Aura.Channel.Scripting
 			Log.Info("Done loading {0} scripts (of {1}).", loaded, toLoad.Count);
 
 			this.LoadItemScripts();
+
+			this.LoadSpawns();
 		}
 
 		/// <summary>
@@ -272,39 +278,46 @@ namespace Aura.Channel.Scripting
 		{
 			foreach (var type in asm.GetTypes().Where(a => a.IsSubclassOf(typeof(BaseScript))))
 			{
-				// Ignore abstract class and ones starting with underscore,
-				// those are used for inheritance.
-				if (type.IsAbstract || type.Name.StartsWith("_"))
-					continue;
-
-				var scriptObj = Activator.CreateInstance(type);
-
-				// Try to load as NpcScript
-				var npcScript = scriptObj as NpcScript;
-				if (npcScript != null)
+				try
 				{
-					npcScript.Load();
-					npcScript.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
-					npcScript.NPC.Script = npcScript;
-					npcScript.NPC.LoadDefault();
+					// Ignore abstract class and ones starting with underscore,
+					// those are used for inheritance.
+					if (type.IsAbstract || type.Name.StartsWith("_"))
+						continue;
 
-					if (npcScript.NPC.RegionId > 0)
+					var scriptObj = Activator.CreateInstance(type);
+
+					// Try to load as NpcScript
+					var npcScript = scriptObj as NpcScript;
+					if (npcScript != null)
 					{
-						var region = ChannelServer.Instance.World.GetRegion(npcScript.NPC.RegionId);
-						if (region == null)
+						npcScript.Load();
+						npcScript.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
+						npcScript.NPC.Script = npcScript;
+						npcScript.NPC.LoadDefault();
+
+						if (npcScript.NPC.RegionId > 0)
 						{
-							Log.Error("Failed to spawn '{0}', region '{1}' not found.", type, npcScript.NPC.RegionId);
-							continue;
+							var region = ChannelServer.Instance.World.GetRegion(npcScript.NPC.RegionId);
+							if (region == null)
+							{
+								Log.Error("Failed to spawn '{0}', region '{1}' not found.", type, npcScript.NPC.RegionId);
+								continue;
+							}
+
+							region.AddCreature(npcScript.NPC);
 						}
 
-						region.AddCreature(npcScript.NPC);
+						continue;
 					}
 
-					continue;
+					// Unknown Script, just load it.
+					(scriptObj as BaseScript).Load();
 				}
-
-				// Unknown Script, just load it.
-				(scriptObj as BaseScript).Load();
+				catch (Exception ex)
+				{
+					Log.Exception(ex, "Error while loading script '{0}' ({1}).", type.Name, ex.Message);
+				}
 			}
 		}
 
@@ -371,6 +384,87 @@ namespace Aura.Channel.Scripting
 			ItemScript result;
 			_itemScripts.TryGetValue(itemId, out result);
 			return result;
+		}
+
+		/// <summary>
+		/// Adds spawn.
+		/// </summary>
+		/// <param name="spawn"></param>
+		public void AddCreatureSpawn(CreatureSpawn spawn)
+		{
+			_creatureSpawns[spawn.Id] = spawn;
+		}
+
+		/// <summary>
+		/// Spawns creatures using creature spawn information.
+		/// </summary>
+		public void LoadSpawns()
+		{
+			var spawned = 0;
+
+			foreach (var spawn in _creatureSpawns.Values)
+			{
+				spawned += this.Spawn(spawn);
+				continue;
+			}
+
+			Log.Info("Spawned {0} creatures.", spawned);
+		}
+
+		/// <summary>
+		/// Spawns all creatures for spawn.
+		/// </summary>
+		/// <param name="spawn"></param>
+		/// <returns></returns>
+		public int Spawn(CreatureSpawn spawn, int amount = 0)
+		{
+			var result = 0;
+			if (amount == 0)
+				amount = spawn.Amount;
+
+			for (int i = 0; i < amount; ++i)
+			{
+				var pos = spawn.GetRandomPosition();
+				if (!this.Spawn(spawn.RaceId, spawn.RegionId, pos.X, pos.Y, spawn.Id))
+					return result;
+
+				result++;
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Spawns a creature.
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="spawnId"></param>
+		/// <returns></returns>
+		public bool Spawn(int raceId, int regionId, int x, int y, int spawnId = -1)
+		{
+			var creature = new NPC();
+			creature.Race = raceId;
+			creature.LoadDefault();
+			creature.SpawnId = spawnId;
+			creature.Name = creature.RaceData.Name;
+			creature.Color1 = creature.RaceData.Color1;
+			creature.Color2 = creature.RaceData.Color2;
+			creature.Color3 = creature.RaceData.Color3;
+			creature.Height = creature.RaceData.Size;
+			creature.Life = creature.LifeMaxBase = creature.RaceData.Life;
+			creature.State = (CreatureStates)creature.RaceData.DefaultState;
+			creature.Direction = (byte)RandomProvider.Get().Next(256);
+
+			if (!creature.Warp(regionId, x, y))
+			{
+				Log.Error("Failed to spawn '{0}'s.", raceId);
+				return false;
+			}
+
+			return true;
 		}
 	}
 }
