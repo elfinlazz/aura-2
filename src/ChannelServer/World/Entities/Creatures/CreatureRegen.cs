@@ -2,13 +2,12 @@
 // For more information, see license file in the main folder
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
-using Aura.Shared.Mabi.Const;
-using Aura.Shared.Mabi;
 using Aura.Channel.Network.Sending;
-using Aura.Shared.Util;
+using Aura.Shared.Mabi;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.World.Entities.Creatures
 {

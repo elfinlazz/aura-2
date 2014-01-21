@@ -8,13 +8,11 @@ using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
-	public class CreatureTitles : IEnumerable<KeyValuePair<ushort, TitleState>>
+	public class CreatureTitles
 	{
 		private Creature _creature;
 
 		private Dictionary<ushort, TitleState> _list;
-
-		public int Count { get { return _list.Count; } }
 
 		public ushort SelectedTitle { get; set; }
 		public ushort SelectedOptionTitle { get; set; }
@@ -35,10 +33,13 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public bool Add(ushort titleId, TitleState state)
 		{
-			if (_list.ContainsKey(titleId) && _list[titleId] == state)
-				return false;
+			lock (_list)
+			{
+				if (_list.ContainsKey(titleId) && _list[titleId] == state)
+					return false;
 
-			_list[titleId] = state;
+				_list[titleId] = state;
+			}
 			return true;
 		}
 
@@ -49,7 +50,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public bool Remove(ushort titleId)
 		{
-			return _list.Remove(titleId);
+			lock (_list)
+				return _list.Remove(titleId);
 		}
 
 		/// <summary>
@@ -79,7 +81,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public bool Knows(ushort titleId)
 		{
-			return (_list.ContainsKey(titleId));
+			lock (_list)
+				return (_list.ContainsKey(titleId));
 		}
 
 		/// <summary>
@@ -89,18 +92,18 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public bool Usable(ushort titleId)
 		{
-			return (_list.ContainsKey(titleId) && _list[titleId] == TitleState.Usable);
+			lock (_list)
+				return (_list.ContainsKey(titleId) && _list[titleId] == TitleState.Usable);
 		}
 
-		public IEnumerator<KeyValuePair<ushort, TitleState>> GetEnumerator()
+		/// <summary>
+		/// Returns new list of all titles.
+		/// </summary>
+		/// <returns></returns>
+		public ICollection<KeyValuePair<ushort, TitleState>> GetList()
 		{
-			foreach (var val in _list)
-				yield return val;
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return (IEnumerator)this.GetEnumerator();
+			lock (_list)
+				return _list;
 		}
 	}
 

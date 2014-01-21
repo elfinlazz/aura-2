@@ -32,6 +32,13 @@ namespace Aura.Channel.World
 				foreach (var pocket in _pockets.Values)
 					foreach (var item in pocket.Items.Where(a => a != null))
 						yield return item;
+
+				//var x = (from pocket in _pockets.Values.Where(a => a.Pocket.IsEquip())
+				//         where pocket.Items.Any()
+				//         select pocket into p
+				//         from item in p.Items
+				//         where item != null
+				//         select item).ToArray();
 			}
 		}
 

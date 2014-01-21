@@ -254,8 +254,9 @@ namespace Aura.Channel.Network.Sending
 			if (type == CreaturePacketType.Private)
 			{
 				// List of available titles
-				packet.PutShort((short)character.Titles.Count);
-				foreach (var title in character.Titles)
+				var titles = character.Titles.GetList();
+				packet.PutShort((short)titles.Count);
+				foreach (var title in titles)
 				{
 					packet.PutUShort(title.Key);
 					packet.PutByte((byte)title.Value);
@@ -360,8 +361,9 @@ namespace Aura.Channel.Network.Sending
 			// --------------------------------------------------------------
 			if (type == CreaturePacketType.Private)
 			{
-				packet.PutShort((short)character.Keywords.Count);
-				foreach (var keyword in character.Keywords)
+				var keywords = character.Keywords.GetList();
+				packet.PutShort((short)keywords.Count);
+				foreach (var keyword in keywords)
 					packet.PutUShort(keyword);
 			}
 

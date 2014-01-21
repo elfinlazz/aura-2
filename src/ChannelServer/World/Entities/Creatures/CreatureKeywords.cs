@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System.Collections;
 using System.Collections.Generic;
 using Aura.Channel.Network.Sending;
 using Aura.Data;
@@ -9,18 +8,26 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
-	public class CreatureKeywords : IEnumerable<ushort>
+	public class CreatureKeywords
 	{
 		private Creature _creature;
 
 		private List<ushort> _list;
 
-		public int Count { get { return _list.Count; } }
-
 		public CreatureKeywords(Creature creature)
 		{
 			_creature = creature;
 			_list = new List<ushort>();
+		}
+
+		/// <summary>
+		/// Returns new list of all keywords.
+		/// </summary>
+		/// <returns></returns>
+		public ICollection<ushort> GetList()
+		{
+			lock (_list)
+				return _list.ToArray();
 		}
 
 		/// <summary>
@@ -34,10 +41,13 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public bool Add(ushort keywordId)
 		{
-			if (_list.Contains(keywordId))
-				return false;
+			lock (_list)
+			{
+				if (_list.Contains(keywordId))
+					return false;
 
-			_list.Add(keywordId);
+				_list.Add(keywordId);
+			}
 			return true;
 		}
 
@@ -48,7 +58,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public bool Remove(ushort keywordId)
 		{
-			return _list.Remove(keywordId);
+			lock (_list)
+				return _list.Remove(keywordId);
 		}
 
 		/// <summary>
@@ -94,7 +105,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		private bool Has(ushort keywordId)
 		{
-			return (_list.Contains(keywordId));
+			lock (_list)
+				return (_list.Contains(keywordId));
 		}
 
 		/// <summary>
@@ -112,17 +124,6 @@ namespace Aura.Channel.World.Entities.Creatures
 			}
 
 			return this.Has(data.Id);
-		}
-
-		public IEnumerator<ushort> GetEnumerator()
-		{
-			foreach (var val in _list)
-				yield return val;
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return (IEnumerator)this.GetEnumerator();
 		}
 	}
 }

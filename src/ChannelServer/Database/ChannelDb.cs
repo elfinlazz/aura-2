@@ -443,7 +443,7 @@ namespace Aura.Channel.Database
 					mc.ExecuteNonQuery();
 				}
 
-				foreach (var keywordId in creature.Keywords)
+				foreach (var keywordId in creature.Keywords.GetList())
 				{
 					using (var cmd = new InsertCommand("INSERT INTO `keywords` {0}", conn, transaction))
 					{
@@ -473,7 +473,7 @@ namespace Aura.Channel.Database
 					mc.ExecuteNonQuery();
 				}
 
-				foreach (var title in creature.Titles)
+				foreach (var title in creature.Titles.GetList())
 				{
 					// Dynamic titles shouldn't be saved
 					// TODO: Title db that tells us this?
