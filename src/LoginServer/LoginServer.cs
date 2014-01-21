@@ -101,12 +101,13 @@ namespace Aura.Login
 
 			if (update)
 			{
-				var channel = this.ServerList.GetChannel(client.Account.Name);
+				var channel = (client.Account != null ? this.ServerList.GetChannel(client.Account.Name) : null);
 				if (channel == null)
 				{
-					Log.Warning("Unregistered channel '{0}' disconnected.", client.Account.Name);
+					Log.Warning("Unregistered channel disconnected.");
 					return;
 				}
+				Log.Status("Channel '{0}' disconnected, switched to Maintenance.", client.Account.Name);
 				channel.State = ChannelState.Maintenance;
 
 				Send.ChannelUpdate();

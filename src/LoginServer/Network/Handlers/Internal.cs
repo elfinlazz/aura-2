@@ -72,6 +72,11 @@ namespace Aura.Login.Network.Handlers
 				client.Account.Name = channel.FullName;
 			}
 
+			if (channel.State != state)
+			{
+				Log.Status("Channel '{0}' is now in '{1}' mode.", channel.FullName, state);
+			}
+
 			channel.Host = host;
 			channel.Port = port;
 			channel.Users = users;
