@@ -65,8 +65,7 @@ namespace Aura.Shared.Network
 			PacketHandlerFunc handler;
 			if (!_handlers.TryGetValue(packet.Op, out handler))
 			{
-				Log.Unimplemented("PacketHandlerManager: Handler for '{0:X4}'", packet.Op);
-				Log.Debug(packet);
+				this.UnknownPacket(client, packet);
 				return;
 			}
 
@@ -78,6 +77,12 @@ namespace Aura.Shared.Network
 			{
 				Log.Exception(ex, "There has been a problem while handling '{0:X4}'.", packet.Op);
 			}
+		}
+
+		public virtual void UnknownPacket(TClient client, Packet packet)
+		{
+			Log.Unimplemented("PacketHandlerManager: Handler for '{0:X4}'", packet.Op);
+			Log.Debug(packet);
 		}
 	}
 

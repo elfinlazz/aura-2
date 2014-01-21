@@ -182,5 +182,25 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends AcquireInfo to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Used on level up, for the green stats, floating besides the char.
+		/// type can be any string, that string will be used as the name:
+		/// "type +value"
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="type"></param>
+		/// <param name="value"></param>
+		public static void SimpleAcquireInfo(Creature creature, string type, int value)
+		{
+			var packet = new Packet(Op.AcquireInfo, creature.EntityId);
+			packet.PutString("<xml type='{0}' value='{1}' simple='true' onlyLog='false' />", type, value);
+			packet.PutInt(3000);
+
+			creature.Client.Send(packet);
+		}
 	}
 }
