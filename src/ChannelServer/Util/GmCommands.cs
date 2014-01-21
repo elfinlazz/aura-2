@@ -34,6 +34,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
 			Add(50, 50, "jump", "[x] [y]", HandleWarp);
 			Add(50, 50, "item", "<id|name> [amount|color1 [color2 [color 3]]]", HandleItem);
+			Add(50, 50, "skill", "<id> [rank]", HandleSkill);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -477,6 +478,26 @@ namespace Aura.Channel.Util
 			}
 
 			Send.ServerMessage(target, Localization.Get("gm.ii_res"), items.Count, max); // Results: {0} (Max. {1} shown)
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleSkill(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			int skillId;
+			if (!int.TryParse(args[1], out skillId))
+				return CommandResult.InvalidArgument;
+
+			int rank = 0;
+			if (args.Length > 2 && !int.TryParse(args[2], NumberStyles.HexNumber, null, out rank))
+				return CommandResult.InvalidArgument;
+
+			rank = Math2.MinMax(0, 18, 16 - rank);
+
+			target.Skills.Give((SkillId)skillId, (SkillRank)rank);
 
 			return CommandResult.Okay;
 		}

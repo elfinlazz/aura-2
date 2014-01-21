@@ -8,6 +8,8 @@ using Aura.Data;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Channel.World.Entities.Creatures;
+using Aura.Shared.Mabi.Structs;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -360,19 +362,17 @@ namespace Aura.Channel.Network.Sending
 			{
 				packet.PutShort((short)character.Keywords.Count);
 				foreach (var keyword in character.Keywords)
-				{
 					packet.PutUShort(keyword);
-				}
 			}
 
 			// Skills
 			// --------------------------------------------------------------
 			if (type == CreaturePacketType.Private)
 			{
-				packet.PutShort(0); // --v
-				//packet.PutShort((ushort)creature.Skills.Count);
-				//foreach (var skill in creature.Skills.List.Values)
-				//    packet.PutBin(skill.Info);
+				var skills = creature.Skills.GetList();
+				packet.PutShort((short)skills.Count);
+				foreach (var skill in skills)
+					packet.PutBin(skill.Info);
 				packet.PutInt(0);			     // SkillVarBufferList
 				// loop						         
 				//   packet.PutInt

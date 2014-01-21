@@ -101,6 +101,7 @@
     <Compile Include="Network\Handlers\Misc.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Handlers\NPCs.cs" />
+    <Compile Include="Network\Sending\Send.Skills.cs" />
     <Compile Include="Network\Sending\Send.Items.cs" />
     <Compile Include="Network\Sending\Send.Props.cs" />
     <Compile Include="Network\Sending\Send.Misc.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\Creature.cs" />
     <Compile Include="World\Entities\Creatures\CreatureRegen.cs" />
+    <Compile Include="World\Entities\Creatures\CreatureSkills.cs" />
     <Compile Include="World\Entities\Creatures\CreatureTemp.cs" />
     <Compile Include="World\Entities\Creatures\CreatureTitles.cs" />
     <Compile Include="World\Entities\Creatures\CreatureKeywords.cs" />

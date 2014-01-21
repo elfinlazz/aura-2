@@ -15,6 +15,7 @@ using MySql.Data.MySqlClient;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities.Creatures;
+using Aura.Channel.Skills;
 
 namespace Aura.Channel.Database
 {
@@ -200,6 +201,7 @@ namespace Aura.Channel.Database
 			this.GetCharacterItems(character);
 			this.GetCharacterKeywords(character);
 			this.GetCharacterTitles(character);
+			this.GetCharacterSkills(character);
 
 			return character;
 		}
@@ -320,6 +322,30 @@ namespace Aura.Channel.Database
 		}
 
 		/// <summary>
+		/// Reads skills from database and adds them to character.
+		/// </summary>
+		/// <param name="character"></param>
+		private void GetCharacterSkills(PlayerCreature character)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `skills` WHERE `creatureId` = @creatureId", conn))
+			{
+				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+
+				using (var reader = mc.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						var skill = new Skill((SkillId)reader.GetInt32("skillId"), (SkillRank)reader.GetByte("rank"), character.Race);
+						character.Skills.Add(skill);
+					}
+				}
+			}
+
+			character.Skills.Add(new Skill(SkillId.Gathering, SkillRank.Novice, character.Race));
+		}
+
+		/// <summary>
 		/// Saves account, incl. all character data.
 		/// </summary>
 		/// <param name="account"></param>
@@ -397,8 +423,8 @@ namespace Aura.Channel.Database
 			this.SaveCharacterItems(creature);
 			this.SaveCharacterKeywords(creature);
 			this.SaveCharacterTitles(creature);
+			this.SaveCharacterSkills(creature);
 			//this.SaveCharacterQuests(creature);
-			//this.SaveCharacterSkills(creature);
 			//this.SaveCharacterCooldowns(creature);
 		}
 
@@ -515,6 +541,37 @@ namespace Aura.Channel.Database
 						cmd.Set("attackSpeed", (byte)item.OptionInfo.AttackSpeed);
 						cmd.Set("experience", item.OptionInfo.Experience);
 						cmd.Set("extra", item.Extra.ToString());
+
+						cmd.Execute();
+					}
+				}
+
+				transaction.Commit();
+			}
+		}
+		/// <summary>
+		/// Writes all of creature's skills to the database.
+		/// </summary>
+		/// <param name="creature"></param>
+		private void SaveCharacterSkills(PlayerCreature creature)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var transaction = conn.BeginTransaction())
+			{
+				using (var mc = new MySqlCommand("DELETE FROM `skills` WHERE `creatureId` = @creatureId", conn, transaction))
+				{
+					mc.Parameters.AddWithValue("@creatureId", creature.CreatureId);
+					mc.ExecuteNonQuery();
+				}
+
+				foreach (var skill in creature.Skills.GetList())
+				{
+					using (var cmd = new InsertCommand("INSERT INTO `skills` {0}", conn, transaction))
+					{
+						cmd.Set("skillId", (ushort)skill.Info.Id);
+						cmd.Set("creatureId", creature.CreatureId);
+						cmd.Set("rank", (byte)skill.Info.Rank);
+						cmd.Set("exp", skill.Info.Experience);
 
 						cmd.Execute();
 					}

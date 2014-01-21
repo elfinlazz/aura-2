@@ -11,22 +11,23 @@ namespace Aura.Data.Database
 		public ushort Id { get; internal set; }
 		public string Name { get; internal set; }
 		public ushort MasterTitle { get; internal set; }
+		public byte MaxRank { get; internal set; }
 
-		public List<SkillRankData> RankInfo { get; internal set; }
+		public List<SkillRankData> RankData { get; internal set; }
 
 		public SkillData()
 		{
-			this.RankInfo = new List<SkillRankData>();
+			this.RankData = new List<SkillRankData>();
 		}
 
-		public SkillRankData GetRankInfo(byte level, int race)
+		public SkillRankData GetRankData(byte level, int race)
 		{
 			race = race & ~3;
 
 			SkillRankData info;
-			if ((info = this.RankInfo.FirstOrDefault(a => a.Rank == level && a.Race == race)) == null)
+			if ((info = this.RankData.FirstOrDefault(a => a.Rank == level && a.Race == race)) == null)
 			{
-				if ((info = this.RankInfo.FirstOrDefault(a => a.Rank == level && a.Race == 0)) == null)
+				if ((info = this.RankData.FirstOrDefault(a => a.Rank == level && a.Race == 0)) == null)
 				{
 					return null;
 				}
@@ -40,7 +41,7 @@ namespace Aura.Data.Database
 	/// Indexed by skill id.
 	/// Depends on: SkillRankDb
 	/// </summary>
-	public class SkillDb : DatabaseCSVIndexed<ushort, SkillData>
+	public class SkillDb : DatabaseCSVIndexed<int, SkillData>
 	{
 		public List<SkillData> FindAll(string name)
 		{
@@ -56,7 +57,9 @@ namespace Aura.Data.Database
 			info.Name = entry.ReadString();
 			info.MasterTitle = entry.ReadUShort();
 
-			info.RankInfo.AddRange(AuraData.SkillRankDb.Entries.FindAll(a => a.SkillId == info.Id).OrderBy(a => a.Rank));
+			info.RankData.AddRange(AuraData.SkillRankDb.Entries.FindAll(a => a.SkillId == info.Id).OrderBy(a => a.Rank));
+			if (info.RankData.Count > 0)
+				info.MaxRank = info.RankData.Last().Rank;
 
 			this.Entries[info.Id] = info;
 		}

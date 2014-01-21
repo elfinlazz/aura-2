@@ -6,31 +6,44 @@ using Aura.Shared.Mabi.Const;
 
 namespace Aura.Shared.Mabi.Structs
 {
+	/// <summary>
+	/// Information about a skill and its current rank
+	/// </summary>
+	/// <remarks>
+	/// MaxRank: This probably regulates the Advance button, officials set
+	///   it to the next valid rank (current one if you can't advance yet).
+	/// Experience: This is the progress, in 1/1000. If it reaches 100
+	///   (100000), the advance button appears. It will be enabled if the
+	///   corrosponding Flag is set, though the button works either way.
+	/// ConditionCountX: This is the progress in a specific training method,
+	///   but in reverse. The count is set to the max and decrements afterwards.
+	///   The condition is done once it reaches 0.
+	/// </remarks>
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct SkillInfo
 	{
 		public SkillId Id;
-		public ushort Version;
+		public short Version;
 		public SkillRank Rank;
 		public SkillRank MaxRank;
 		private byte __unknown6;
 		private byte __unknown7;
 		public int Experience;
-		public ushort Count;
-		public ushort Flag;
+		public short Count;
+		public SkillFlags Flag;
 		public long LastPromotionTime;
-		public ushort PromotionCount;
-		private ushort __unknown26;
+		public short PromotionCount;
+		private short __unknown26; // -1
 		public int PromotionExp;
-		public ushort ConditionCount1;
-		public ushort ConditionCount2;
-		public ushort ConditionCount3;
-		public ushort ConditionCount4;
-		public ushort ConditionCount5;
-		public ushort ConditionCount6;
-		public ushort ConditionCount7;
-		public ushort ConditionCount8;
-		public ushort ConditionCount9;
-		private ushort __unknown50;
+		public short ConditionCount1;
+		public short ConditionCount2;
+		public short ConditionCount3;
+		public short ConditionCount4;
+		public short ConditionCount5;
+		public short ConditionCount6;
+		public short ConditionCount7;
+		public short ConditionCount8;
+		public short ConditionCount9;
+		private short __unknown50; // 113
 	}
 }

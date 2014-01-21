@@ -45,6 +45,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureTemp Temp { get; protected set; }
 		public CreatureKeywords Keywords { get; protected set; }
 		public CreatureTitles Titles { get; protected set; }
+		public CreatureSkills Skills { get; protected set; }
 
 		// Look
 		// ------------------------------------------------------------------
@@ -281,6 +282,7 @@ namespace Aura.Channel.World.Entities
 			this.Keywords = new CreatureKeywords(this);
 			this.Inventory = new CreatureInventory(this);
 			this.Regens = new CreatureRegen(this);
+			this.Skills = new CreatureSkills(this);
 		}
 
 		/// <summary>

@@ -10,8 +10,8 @@ namespace Aura.Data.Database
 		public ushort SkillId { get; internal set; }
 		public int Race { get; internal set; }
 		public byte Rank { get; internal set; }
-		public byte Ap { get; internal set; }
-		public float Cp { get; internal set; }
+		public byte AP { get; internal set; }
+		public float CP { get; internal set; }
 		public int Range { get; internal set; }
 
 		public byte Stack { get; internal set; }
@@ -108,8 +108,8 @@ namespace Aura.Data.Database
 			info.SkillId = entry.ReadUShort();
 			info.Race = entry.ReadInt();
 			info.Rank = entry.ReadByte();
-			info.Ap = entry.ReadByte();
-			info.Cp = entry.ReadFloat();
+			info.AP = entry.ReadByte();
+			info.CP = entry.ReadFloat();
 			info.Range = entry.ReadInt();
 			info.Stack = entry.ReadByte();
 			info.StackMax = entry.ReadByte();

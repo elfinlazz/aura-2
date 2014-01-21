@@ -4,15 +4,43 @@
 namespace Aura.Shared.Mabi.Const
 {
 	/// <summary>
+	/// Flags for SkillInfo
+	/// </summary>
+	public enum SkillFlags : ushort
+	{
+		Shown = 0x01,
+		CountType = 0x02,
+		InUse = 0x04,
+		Rankable = 0x08,
+		PassiveApplied = 0x10,
+
+		ShowCondition1 = 0x80,
+		ShowCondition2 = 0x100,
+		ShowCondition3 = 0x200,
+		ShowCondition4 = 0x400,
+		ShowCondition5 = 0x800,
+		ShowCondition6 = 0x1000,
+		ShowCondition7 = 0x2000,
+		ShowCondition8 = 0x4000,
+		ShowCondition9 = 0x8000,
+
+		/// <summary>
+		/// ShowCondition1-9
+		/// </summary>
+		ShowAllConditions = 0xFF80,
+	}
+
+	/// <summary>
 	/// Skill ranks.
 	/// </summary>
-	public enum SkillRank
+	/// <remarks>
+	/// The client calculates the Dan based on the rank id.
+	/// 19 = Dan4, 30 = Dan15, etc.
+	/// </remarks>
+	public enum SkillRank : byte
 	{
 		Novice = 0, RF = 1, RE = 2, RD = 3, RC = 4, RB = 5, RA = 6, R9 = 7,
 		R8 = 8, R7 = 9, R6 = 10, R5 = 11, R4 = 12, R3 = 13, R2 = 14, R1 = 15,
-
-		// The client calculates the Dan based on the rank id.
-		// 19 = Dan4, 30 = Dan15, etc.
 		Dan1 = 16, Dan2 = 17, Dan3 = 18
 	}
 
