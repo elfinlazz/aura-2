@@ -44,51 +44,10 @@ si_none			No skills found.
 si_for			{0}: {1} (Max Rank: {2})
 si_res			Results: {0} (Max. 20 shown)
 
-// >raceinfo
-ri_none			No races found.
-ri_for			{0}: {1}
-ri_no_drop		None.
-ri_for_drop		{0} ({1}%),
-ri_drops		Drops:
-ri_res			Results: {0} (Max. 20 shown)
+// >height, weight, etc.
+body_success	Change successful, new value: {0}
+body_target		Your appearance has been changed by {0}.
 
-// >set_inventory
-si_param		Unknown paramter '{0}'.
-si_param_pocket	Unknown paramter '{0}', please specify a pocket.
-si_pocket		Invalid pocket.
-si_cleared		Cleared pocket '{0}'. (Deleted items: {1})
-
-// >warp
-warp_unknown	Region doesn't exist.
-warp_invalid_id	Invalid region id.
-warp_invalid_x	Invalid X coordinate.
-warp_invalid_y	Invalid Y coordinate.
-warp_target		You've been warped by '{0}'.
-
-// >go
-go_dest			Destinations:
-go_unk			Unknown destination.
-
-// >gesture
-gesture_unk		Unknown gesture.
-
-// >setrace
-setrace			Your race has been changed. You'll be logged out to complete the process.
-
-// >reloadx
-reloadscripts	Reloading NPCs...
-reloaddata		Reloading data...
-reloadconf		Reloading conf...
-reload_done		done.
-
-// >addcard
-addcard_id		Invalid card id.
-addcard_char	Character '{0}' not found.
-addcard_petcard	Unknown pet card ({0}).
-addcard_type	Invalid card type.
-addcard			Card added.
-
-// >shamala
-shamala_race	Race not found.
-shamala_trans	Transform~!
-shamala_end		Transformation ended.
+// >cp
+cp_own			Your combat power: {0}
+cp_target		{0}'s combat power: {1}

@@ -25,10 +25,16 @@ namespace Aura.Channel.Util
 		{
 			// Players
 			Add(00, 50, "where", "", HandleWhere);
+			Add(00, 50, "cp", "", HandleCp);
 
 			// VIPs
 			Add(01, 50, "go", "<location>", HandleGo);
 			Add(01, 50, "iteminfo", "<name>", HandleItemInfo);
+			Add(01, 50, "height", "<height>", HandleBody);
+			Add(01, 50, "weight", "<weight>", HandleBody);
+			Add(01, 50, "upper", "<upper>", HandleBody);
+			Add(01, 50, "lower", "<lower>", HandleBody);
+			Add(01, 50, "haircolor", "<hex color>", HandleHairColor);
 
 			// GMs
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
@@ -498,6 +504,76 @@ namespace Aura.Channel.Util
 			rank = Math2.MinMax(0, 18, 16 - rank);
 
 			target.Skills.Give((SkillId)skillId, (SkillRank)rank);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleBody(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			float val;
+			if (!float.TryParse(message.Substring(message.IndexOf(' ') + 1), NumberStyles.Float, CultureInfo.InvariantCulture, out val))
+				return CommandResult.InvalidArgument;
+
+			switch (args[0])
+			{
+				case "height": target.Height = val; val = target.Height; break;
+				case "weight": target.Weight = val; val = target.Weight; break;
+				case "upper": target.Upper = val; val = target.Upper; break;
+				case "lower": target.Lower = val; val = target.Lower; break;
+			}
+
+			Send.CreatureBodyUpdate(target);
+
+			Send.ServerMessage(sender, Localization.Get("gm.body_success"), val.ToString("0.0", CultureInfo.InvariantCulture)); // Change successful, new value: {0}
+			if (sender != target)
+				Send.ServerMessage(target, Localization.Get("gm.body_target"), sender.Name); // Your appearance has been changed by {0}.
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleCp(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (sender == target)
+				Send.ServerMessage(sender, Localization.Get("gm.cp_own"), target.CombatPower.ToString("0.0", CultureInfo.InvariantCulture)); // Your combat power: {0}
+			else
+				Send.ServerMessage(sender, Localization.Get("gm.cp_target"), target.Name, target.CombatPower); // {0}'s combat power: {1}
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleHairColor(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			uint color;
+			// Hex color
+			if (args[1].StartsWith("0x"))
+			{
+				if (!uint.TryParse(args[1].Replace("0x", ""), NumberStyles.HexNumber, null, out color))
+					return CommandResult.InvalidArgument;
+			}
+			// Mabi color
+			else
+			{
+				if (!uint.TryParse(args[1], out color))
+					return CommandResult.InvalidArgument;
+				color += 0x10000000;
+			}
+
+			var hair = target.Inventory.GetItemAt(Pocket.Hair, 0, 0);
+			if (hair == null)
+				return CommandResult.Fail;
+
+			hair.Info.Color1 = color;
+			Send.EquipmentChanged(target, hair);
+
+			Send.ServerMessage(sender, Localization.Get("gm.body_success"), "0x" + color.ToString("X8")); // Change successful, new value: {0}
+			if (sender != target)
+				Send.ServerMessage(target, Localization.Get("gm.body_target"), sender.Name); // Your appearance has been changed by {0}.
 
 			return CommandResult.Okay;
 		}
