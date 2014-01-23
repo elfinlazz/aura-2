@@ -137,7 +137,7 @@ namespace Aura.Channel.World.Entities
 
 			//this.SetNewEntityId();
 			this.Move(region.Id, x, y);
-			this.DisappearTime = DateTime.Now.AddSeconds((int)Math.Max(60, (this.OptionInfo.Price / 100) * 60));
+			this.DisappearTime = DateTime.Now.AddSeconds(Math.Max(60, (this.OptionInfo.Price / 100) * 60));
 
 			region.AddItem(this);
 		}

@@ -28,6 +28,7 @@ namespace Aura.Channel.Scripting
 		private Dictionary<string, Compiler> _compilers;
 
 		private Dictionary<int, ItemScript> _itemScripts;
+		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<int, CreatureSpawn> _creatureSpawns;
 
 		public ScriptManager()
@@ -37,6 +38,7 @@ namespace Aura.Channel.Scripting
 			_compilers.Add("boo", new BooCompiler());
 
 			_itemScripts = new Dictionary<int, ItemScript>();
+			_aiScripts = new Dictionary<string, Type>();
 
 			_creatureSpawns = new Dictionary<int, CreatureSpawn>();
 		}
@@ -45,6 +47,18 @@ namespace Aura.Channel.Scripting
 		/// Loads all scripts.
 		/// </summary>
 		public void Load()
+		{
+			this.LoadAiScripts();
+			this.LoadItemScripts();
+			this.LoadScripts();
+
+			this.LoadSpawns();
+		}
+
+		/// <summary>
+		/// Loads scripts from list.
+		/// </summary>
+		private void LoadScripts()
 		{
 			Log.Info("Loading scripts...");
 
@@ -105,10 +119,6 @@ namespace Aura.Channel.Scripting
 				Log.WriteLine();
 
 			Log.Info("Done loading {0} scripts (of {1}).", loaded, toLoad.Count);
-
-			this.LoadItemScripts();
-
-			this.LoadSpawns();
 		}
 
 		/// <summary>
@@ -197,11 +207,64 @@ namespace Aura.Channel.Scripting
 			}
 
 			// Compile will update assembly if generated script was updated
+			//foreach (string filePath in )
 			var inlineAsm = this.Compile(tmpPath);
 			if (inlineAsm != null)
 				this.LoadItemScriptAssembly(inlineAsm);
 
 			Log.Info("Done loading item scripts.");
+		}
+
+		/// <summary>
+		/// Loads AI scripts
+		/// </summary>
+		private void LoadAiScripts()
+		{
+			Log.Info("Loading AI scripts...");
+
+			_aiScripts.Clear();
+
+			foreach (var folder in new string[] { Path.Combine(SystemIndexRoot, "ai"), Path.Combine(UserIndexRoot, "ai") })
+			{
+				if (!Directory.Exists(folder))
+					continue;
+
+				foreach (var filePath in Directory.GetFiles(folder))
+				{
+					var fileName = Path.GetFileNameWithoutExtension(filePath);
+
+					var asm = this.Compile(filePath);
+					if (asm != null)
+					{
+						// Get first AiScript class and save the type
+						foreach (var type in asm.GetTypes().Where(a => a.IsSubclassOf(typeof(AiScript))))
+						{
+							_aiScripts[fileName] = type;
+							break;
+						}
+					}
+				}
+			}
+
+			Log.Info("Done loading AI scripts.");
+		}
+
+		/// <summary>
+		/// Returns new AI script by name for creature, or null.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		private AiScript GetAi(string name, Creature creature)
+		{
+			Type type;
+			_aiScripts.TryGetValue(name, out type);
+			if (type == null)
+				return null;
+
+			var script = Activator.CreateInstance(type) as AiScript;
+			script.Creature = creature;
+
+			return script;
 		}
 
 		/// <summary>
@@ -291,6 +354,8 @@ namespace Aura.Channel.Scripting
 					var npcScript = scriptObj as NpcScript;
 					if (npcScript != null)
 					{
+						npcScript.NPC.AI = this.GetAi("normal_npc", npcScript.NPC);
+
 						npcScript.Load();
 						npcScript.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
 						npcScript.NPC.Script = npcScript;
@@ -307,6 +372,8 @@ namespace Aura.Channel.Scripting
 
 							region.AddCreature(npcScript.NPC);
 						}
+
+						//npcScript.NPC.AI.Activate();
 
 						continue;
 					}
@@ -400,6 +467,8 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		public void LoadSpawns()
 		{
+			Log.Info("Spawning creatures...");
+
 			var spawned = 0;
 
 			foreach (var spawn in _creatureSpawns.Values)
@@ -408,7 +477,7 @@ namespace Aura.Channel.Scripting
 				continue;
 			}
 
-			Log.Info("Spawned {0} creatures.", spawned);
+			Log.Info("Done spawning {0} creatures.", spawned);
 		}
 
 		/// <summary>
@@ -457,6 +526,12 @@ namespace Aura.Channel.Scripting
 			creature.Life = creature.LifeMaxBase = creature.RaceData.Life;
 			creature.State = (CreatureStates)creature.RaceData.DefaultState;
 			creature.Direction = (byte)RandomProvider.Get().Next(256);
+
+			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI))
+			{
+				creature.AI = this.GetAi(creature.RaceData.AI, creature);
+				//creature.AI.Activate();
+			}
 
 			if (!creature.Warp(regionId, x, y))
 			{

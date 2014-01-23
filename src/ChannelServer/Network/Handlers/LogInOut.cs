@@ -115,6 +115,9 @@ namespace Aura.Channel.Network.Handlers
 			else
 				Send.WarpRegion(creature);
 
+			var pos = creature.GetPosition();
+			creature.Region.ActivateAis(creature, pos, pos);
+
 			// Automatically done by the world update
 			//Send.EntitiesAppear(client, region.GetEntitiesInRange(creature));
 		}

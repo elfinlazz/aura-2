@@ -62,6 +62,16 @@ namespace Aura.Channel.Scripting.Scripts
 			this.NPC.Direction = direction;
 		}
 
+		/// <summary>
+		/// Adds phrase to AI.
+		/// </summary>
+		/// <param name="phrase"></param>
+		protected void AddPhrase(string phrase)
+		{
+			if (this.NPC.AI != null)
+				this.NPC.AI.Phrases.Add(phrase);
+		}
+
 		// Built-in
 		// ------------------------------------------------------------------
 

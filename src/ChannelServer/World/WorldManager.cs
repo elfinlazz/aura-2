@@ -121,7 +121,7 @@ namespace Aura.Channel.World
 
 			if (diff != HeartbeatTime && Math.Abs(HeartbeatTime - diff) > HeartbeatTime && diff < 100000000)
 			{
-				Log.Error("OMG, the server has an irregular heartbeat! ({0})", diff);
+				Log.Error("OMG, the server has an irregular heartbeat! ({0})", diff.ToInvariant());
 			}
 
 			// Seconds event

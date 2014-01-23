@@ -11,5 +11,5 @@ include "scripts_npcs.txt"
 include "scripts_props.txt"
 include "scripts_quest.txt"
 
-test.boo
+//test.boo
 test.cs
