@@ -4,15 +4,15 @@
 namespace Aura.Shared.Util.Configuration.Files
 {
 	/// <summary>
-	/// Represents internal.conf
+	/// Represents inter.conf
 	/// </summary>
-	public class InternalConfFile : ConfFile
+	public class InterConfFile : ConfFile
 	{
 		public string Password { get; protected set; }
 
 		public void Load()
 		{
-			this.Require("system/conf/internal.conf");
+			this.Require("system/conf/inter.conf");
 
 			this.Password = this.GetString("password", "change_me");
 		}

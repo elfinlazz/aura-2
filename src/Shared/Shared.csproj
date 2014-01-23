@@ -89,7 +89,7 @@
     <Compile Include="Util\Configuration\ConfFile.cs" />
     <Compile Include="Util\Commands\ConsoleCommands.cs" />
     <Compile Include="Util\Configuration\Files\Database.cs" />
-    <Compile Include="Util\Configuration\Files\Internal.cs" />
+    <Compile Include="Util\Configuration\Files\Inter.cs" />
     <Compile Include="Util\Configuration\Files\Localization.cs" />
     <Compile Include="Util\Configuration\Files\Log.cs" />
     <Compile Include="Util\FileReader.cs" />

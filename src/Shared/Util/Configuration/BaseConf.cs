@@ -25,14 +25,14 @@ namespace Aura.Shared.Util.Configuration
 		/// <summary>
 		/// internal.conf
 		/// </summary>
-		public InternalConfFile Internal { get; protected set; }
+		public InterConfFile Internal { get; protected set; }
 
 		public BaseConf()
 		{
 			this.Log = new LogConfFile();
 			this.Database = new DatabaseConfFile();
 			this.Localization = new LocalizationConfFile();
-			this.Internal = new InternalConfFile();
+			this.Internal = new InterConfFile();
 		}
 
 		/// <summary>
@@ -47,7 +47,7 @@ namespace Aura.Shared.Util.Configuration
 			this.Internal.Load();
 
 			if (this.Internal.Password == "change_me")
-				Aura.Shared.Util.Log.Warning("Using the default inter server password is risky, please change it in 'internal.conf'.");
+				Aura.Shared.Util.Log.Warning("Using the default inter server password is risky, please change it in 'inter.conf'.");
 		}
 
 		public abstract void Load();
