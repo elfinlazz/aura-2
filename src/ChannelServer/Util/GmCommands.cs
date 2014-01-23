@@ -557,11 +557,18 @@ namespace Aura.Channel.Util
 					return CommandResult.InvalidArgument;
 			}
 			// Mabi color
+			else if (uint.TryParse(args[1], out color) && color <= 0xFF)
+			{
+				color += 0x10000000;
+			}
 			else
 			{
-				if (!uint.TryParse(args[1], out color))
-					return CommandResult.InvalidArgument;
-				color += 0x10000000;
+				switch (args[1])
+				{
+					case "saiyan": color = 0x60001312; break;
+					default:
+						return CommandResult.InvalidArgument;
+				}
 			}
 
 			var hair = target.Inventory.GetItemAt(Pocket.Hair, 0, 0);

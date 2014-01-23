@@ -32,7 +32,7 @@ namespace Aura.Channel.World
 
 		public Region(int id)
 		{
-			_creaturesRWLS = new ReaderWriterLockSlim();
+			_creaturesRWLS = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 			_propsRWLS = new ReaderWriterLockSlim();
 			_itemsRWLS = new ReaderWriterLockSlim();
 
