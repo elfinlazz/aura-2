@@ -11,13 +11,16 @@ using Aura.Data;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using System.Threading;
 
 namespace Aura.Channel.World
 {
 	public class Region
 	{
 		// TODO: Data?
-		public const int VisibleRange = 5000;
+		public const int VisibleRange = 3000;
+
+		protected ReaderWriterLockSlim _creaturesRWLS, _propsRWLS, _itemsRWLS;
 
 		public int Id { get; protected set; }
 
@@ -29,6 +32,10 @@ namespace Aura.Channel.World
 
 		public Region(int id)
 		{
+			_creaturesRWLS = new ReaderWriterLockSlim();
+			_propsRWLS = new ReaderWriterLockSlim();
+			_itemsRWLS = new ReaderWriterLockSlim();
+
 			this.Id = id;
 
 			_creatures = new Dictionary<long, Creature>();
@@ -77,12 +84,36 @@ namespace Aura.Channel.World
 
 			// Get all expired entities
 			var disappear = new List<Entity>();
-			lock (_creatures)
+
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
 				disappear.AddRange(_creatures.Values.Where(a => a.DisappearTime > DateTime.MinValue && a.DisappearTime < now));
-			lock (_items)
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+
+			_itemsRWLS.EnterReadLock();
+			try
+			{
 				disappear.AddRange(_items.Values.Where(a => a.DisappearTime > DateTime.MinValue && a.DisappearTime < now));
-			lock (_props)
+			}
+			finally
+			{
+				_itemsRWLS.ExitReadLock();
+			}
+
+			_propsRWLS.EnterReadLock();
+			try
+			{
 				disappear.AddRange(_props.Values.Where(a => a.DisappearTime > DateTime.MinValue && a.DisappearTime < now));
+			}
+			finally
+			{
+				_propsRWLS.ExitReadLock();
+			}
 
 			// Remove them from the region
 			foreach (var entity in disappear)
@@ -114,7 +145,8 @@ namespace Aura.Channel.World
 		/// </summary>
 		private void UpdateVisibility()
 		{
-			lock (_creatures)
+			_creaturesRWLS.EnterReadLock();
+			try
 			{
 				foreach (var creature in _creatures.Values)
 				{
@@ -127,6 +159,10 @@ namespace Aura.Channel.World
 					pc.LookAround();
 				}
 			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
 		}
 
 		/// <summary>
@@ -138,12 +174,35 @@ namespace Aura.Channel.World
 			var result = new List<Entity>();
 			var pos = creature.GetPosition();
 
-			lock (_creatures)
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
 				result.AddRange(_creatures.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange) && !a.Has(CreatureConditionA.Invisible)));
-			lock (_props)
-				result.AddRange(_props.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange) && a.ServerSide));
-			lock (_items)
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+
+			_itemsRWLS.EnterReadLock();
+			try
+			{
 				result.AddRange(_items.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange)));
+			}
+			finally
+			{
+				_itemsRWLS.ExitReadLock();
+			}
+
+			_propsRWLS.EnterReadLock();
+			try
+			{
+				result.AddRange(_props.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange) && a.ServerSide));
+			}
+			finally
+			{
+				_propsRWLS.ExitReadLock();
+			}
 
 			return result;
 		}
@@ -156,8 +215,15 @@ namespace Aura.Channel.World
 			if (creature.Region != null)
 				creature.Region.RemoveCreature(creature);
 
-			lock (_creatures)
+			_creaturesRWLS.EnterWriteLock();
+			try
+			{
 				_creatures.Add(creature.EntityId, creature);
+			}
+			finally
+			{
+				_creaturesRWLS.ExitWriteLock();
+			}
 
 			creature.Region = this;
 
@@ -179,8 +245,15 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void RemoveCreature(Creature creature)
 		{
-			lock (_creatures)
+			_creaturesRWLS.EnterWriteLock();
+			try
+			{
 				_creatures.Remove(creature.EntityId);
+			}
+			finally
+			{
+				_creaturesRWLS.ExitWriteLock();
+			}
 
 			Send.EntityDisappears(creature);
 
@@ -199,8 +272,17 @@ namespace Aura.Channel.World
 		public Creature GetCreature(long entityId)
 		{
 			Creature creature;
-			lock (_creatures)
+
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
 				_creatures.TryGetValue(entityId, out creature);
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+
 			return creature;
 		}
 
@@ -219,8 +301,15 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public PlayerCreature GetPlayer(string name)
 		{
-			lock (_creatures)
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
 				return _creatures.Values.FirstOrDefault(a => a is PlayerCreature && a.Name == name) as PlayerCreature;
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
 		}
 
 		/// <summary>
@@ -230,12 +319,15 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public List<Creature> GetPlayersInRange(Position pos, int range = VisibleRange)
 		{
-			var result = new List<Creature>();
-
-			lock (_creatures)
-				result.AddRange(_creatures.Values.Where(a => a is PlayerCreature && a.GetPosition().InRange(pos, range)));
-
-			return result;
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				return _creatures.Values.Where(a => a.Is(EntityType.Character) || a.Is(EntityType.Pet) && a.GetPosition().InRange(pos, range)).ToList();
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
 		}
 
 		/// <summary>
@@ -243,8 +335,15 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddProp(Prop prop)
 		{
-			lock (_props)
+			_propsRWLS.EnterWriteLock();
+			try
+			{
 				_props.Add(prop.EntityId, prop);
+			}
+			finally
+			{
+				_propsRWLS.ExitWriteLock();
+			}
 
 			prop.Region = this;
 
@@ -262,8 +361,15 @@ namespace Aura.Channel.World
 				return;
 			}
 
-			lock (_props)
+			_propsRWLS.EnterWriteLock();
+			try
+			{
 				_props.Remove(prop.EntityId);
+			}
+			finally
+			{
+				_propsRWLS.ExitWriteLock();
+			}
 
 			Send.EntityDisappears(prop);
 
@@ -276,8 +382,17 @@ namespace Aura.Channel.World
 		public Prop GetProp(long entityId)
 		{
 			Prop result;
-			lock (_props)
+
+			_propsRWLS.EnterReadLock();
+			try
+			{
 				_props.TryGetValue(entityId, out result);
+			}
+			finally
+			{
+				_propsRWLS.ExitReadLock();
+			}
+
 			return result;
 		}
 
@@ -286,8 +401,15 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddItem(Item item)
 		{
-			lock (_items)
+			_itemsRWLS.EnterWriteLock();
+			try
+			{
 				_items.Add(item.EntityId, item);
+			}
+			finally
+			{
+				_itemsRWLS.ExitWriteLock();
+			}
 
 			item.Region = this;
 
@@ -299,8 +421,15 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void RemoveItem(Item item)
 		{
-			lock (_items)
+			_itemsRWLS.EnterWriteLock();
+			try
+			{
 				_items.Remove(item.EntityId);
+			}
+			finally
+			{
+				_itemsRWLS.ExitWriteLock();
+			}
 
 			Send.EntityDisappears(item);
 
@@ -313,8 +442,17 @@ namespace Aura.Channel.World
 		public Item GetItem(long entityId)
 		{
 			Item result;
-			lock (_items)
+
+			_itemsRWLS.EnterReadLock();
+			try
+			{
 				_items.TryGetValue(entityId, out result);
+			}
+			finally
+			{
+				_itemsRWLS.ExitReadLock();
+			}
+
 			return result;
 		}
 
@@ -340,15 +478,36 @@ namespace Aura.Channel.World
 
 			var result = new List<Entity>();
 
-			lock (_creatures)
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
 				result.AddRange(_creatures.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range)));
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
 
-			lock (_items)
+			_itemsRWLS.EnterReadLock();
+			try
+			{
 				result.AddRange(_items.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range)));
+			}
+			finally
+			{
+				_itemsRWLS.ExitReadLock();
+			}
 
 			// All props spawned by the server, without range check.
-			lock (_props)
+			_propsRWLS.EnterReadLock();
+			try
+			{
 				result.AddRange(_props.Values.Where(a => a.ServerSide));
+			}
+			finally
+			{
+				_propsRWLS.ExitReadLock();
+			}
 
 			return result;
 		}
@@ -358,25 +517,37 @@ namespace Aura.Channel.World
 		/// </summary>
 		/// <param name="from"></param>
 		/// <param name="to"></param>
-		public void ActivateAis(Position from, Position to)
+		public void ActivateAis(Creature creature, Position from, Position to)
 		{
+			// Bounding rectangle
 			var minX = Math.Min(from.X, to.X) - VisibleRange;
 			var minY = Math.Min(from.Y, to.Y) - VisibleRange;
 			var maxX = Math.Max(from.X, to.X) + VisibleRange;
 			var maxY = Math.Max(from.Y, to.Y) + VisibleRange;
 
-			lock (_creatures)
-			{
-				var npcsInRange = _creatures.Values.Where((creature) =>
-				{
-					if (!creature.Is(EntityType.NPC))
-						return false;
-					var pos = creature.GetPosition();
-					return (pos.X >= minX && pos.X <= maxX && pos.Y >= minY && pos.Y <= maxY);
-				});
+			// Linear movement equation
+			var slope = (to.Y == from.Y ? 0.001 : (to.Y - from.Y) / (to.X - from.X));
+			var b = from.Y - slope * from.X;
 
-				foreach (NPC creature in npcsInRange)
-					creature.AI.Activate();
+			// Activation
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+
+				foreach (NPC npc in _creatures.Values.Where(a => a.Is(EntityType.NPC)))
+				{
+					var pos = npc.GetPosition();
+					if (!(pos.X >= minX && pos.X <= maxX && pos.Y >= minY && pos.Y <= maxY && (Math.Abs(pos.Y - (long)(slope * pos.X + b)) <= VisibleRange)))
+						continue;
+
+					var time = (from.GetDistance(to) / creature.GetSpeed());
+
+					npc.AI.Activate(time);
+				}
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
 			}
 		}
 

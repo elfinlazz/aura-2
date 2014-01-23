@@ -6,23 +6,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Timers;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
 using Aura.Shared.Util;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World;
+using System.Threading;
 
 namespace Aura.Channel.Scripting.Scripts
 {
 	public abstract class AiScript : IDisposable
 	{
-		protected int DefaultHeartbeat = 50; // ms
+		protected int MinHeartbeat = 50; // ms
+		protected int IdleHeartbeat = 250; // ms
+		protected int AggroHeartbeat = 50; // ms
 
 		protected Timer _heartbeatTimer;
+		protected int _heartbeat;
 		protected AiState _state;
 		protected double _timestamp;
+		protected DateTime _lastBeat;
 		protected bool _active;
+		protected DateTime _minRunTime;
 
 		protected Queue<IEnumerable> _actionQueue;
 		protected IEnumerator _curAction;
@@ -39,31 +44,31 @@ namespace Aura.Channel.Scripting.Scripts
 			_actionQueue = new Queue<IEnumerable>();
 			this.Phrases = new List<string>();
 
-			_heartbeatTimer = new Timer();
-			_heartbeatTimer.AutoReset = true;
-			_heartbeatTimer.Interval = DefaultHeartbeat;
-			_heartbeatTimer.Elapsed += this.Heartbeat;
+			_lastBeat = DateTime.MinValue;
+
+			_heartbeat = IdleHeartbeat;
+			_heartbeatTimer = new Timer(this.Heartbeat, null, -1, -1);
 
 			_rnd = new Random(RandomProvider.Get().Next());
 		}
 
 		public void Dispose()
 		{
-			_heartbeatTimer.Stop();
+			_heartbeatTimer.Change(-1, -1);
+			_heartbeatTimer.Dispose();
 			_heartbeatTimer = null;
 		}
 
 		/// <summary>
 		/// Starts AI
 		/// </summary>
-		public void Activate()
+		public void Activate(double minRunTime)
 		{
 			if (!_active && _heartbeatTimer != null)
 			{
 				_active = true;
-				_curAction = null;
-				_actionQueue.Clear();
-				_heartbeatTimer.Start();
+				_minRunTime = DateTime.Now.AddMilliseconds(minRunTime);
+				_heartbeatTimer.Change(_heartbeat, _heartbeat);
 			}
 		}
 
@@ -75,7 +80,9 @@ namespace Aura.Channel.Scripting.Scripts
 			if (_active && _heartbeatTimer != null)
 			{
 				_active = false;
-				_heartbeatTimer.Stop();
+				_curAction = null;
+				_actionQueue.Clear();
+				_heartbeatTimer.Change(-1, -1);
 			}
 		}
 
@@ -85,7 +92,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="interval"></param>
 		public void SetHeartbeat(int interval)
 		{
-			_heartbeatTimer.Interval = Math.Max(50, interval);
+			_heartbeat = Math.Max(MinHeartbeat, interval);
+			_heartbeatTimer.Change(_heartbeat, _heartbeat);
 		}
 
 		/// <summary>
@@ -102,13 +110,17 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		protected void Heartbeat(object sender, EventArgs args)
+		public void Heartbeat(object state)
 		{
-			_timestamp += _heartbeatTimer.Interval;
+			var now = DateTime.Now;
+			_timestamp += (now - _lastBeat).TotalMilliseconds;
+			_lastBeat = now;
+
+			var pos = this.Creature.GetPosition();
 
 			// Stop if no players in range
-			var players = this.Creature.Region.GetPlayersInRange(this.Creature.GetPosition());
-			if (players.Count == 0)
+			var players = this.Creature.Region.GetPlayersInRange(pos);
+			if (players.Count == 0 && now > _minRunTime)
 			{
 				this.Deactivate();
 				return;
@@ -268,8 +280,12 @@ namespace Aura.Channel.Scripting.Scripts
 			var y = pos.Y + distance * Math.Sin(angle);
 			var destination = new Position((int)x, (int)y);
 
+			var time = Math.Ceiling(pos.GetDistance(destination) / this.Creature.GetSpeed());
+			var targetTime = _timestamp + time;
+
 			this.Creature.Move(destination, true);
-			while (this.Creature.GetPosition() != destination)
+			//while (this.Creature.GetPosition() != destination)
+			while (_timestamp < targetTime)
 				yield return true;
 		}
 

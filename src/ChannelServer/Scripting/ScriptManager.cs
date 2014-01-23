@@ -373,7 +373,7 @@ namespace Aura.Channel.Scripting
 							region.AddCreature(npcScript.NPC);
 						}
 
-						npcScript.NPC.AI.Activate();
+						//npcScript.NPC.AI.Activate();
 
 						continue;
 					}
@@ -467,6 +467,8 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		public void LoadSpawns()
 		{
+			Log.Info("Spawning creatures...");
+
 			var spawned = 0;
 
 			foreach (var spawn in _creatureSpawns.Values)
@@ -475,7 +477,7 @@ namespace Aura.Channel.Scripting
 				continue;
 			}
 
-			Log.Info("Spawned {0} creatures.", spawned);
+			Log.Info("Done spawning {0} creatures.", spawned);
 		}
 
 		/// <summary>
@@ -528,7 +530,7 @@ namespace Aura.Channel.Scripting
 			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI))
 			{
 				creature.AI = this.GetAi(creature.RaceData.AI, creature);
-				creature.AI.Activate();
+				//creature.AI.Activate();
 			}
 
 			if (!creature.Warp(regionId, x, y))
