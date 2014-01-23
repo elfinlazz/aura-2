@@ -20,6 +20,8 @@ public class TestScript : NpcScript
 		var item = new Item(50001);
 		item.OptionInfo.DucatPrice = 100;
 		Shop.Add("Etc", item);
+		
+		AddPhrase("hey there");
 	}
 
 	public override IEnumerable Talk(Creature c)
@@ -72,7 +74,7 @@ public class PropSpawnTest : BaseScript
 	}
 }
 
-duplicate TestScript2 : TestScript { SetName("_nao2"); SetLocation(1, 12850, 38019, 0); }
+//duplicate TestScript2 : TestScript { SetName("_nao2"); SetLocation(1, 12850, 38019, 0); }
 
 // Tir Chonaill - Eastern Fields
 public class TirEastFieldSpawns : BaseScript

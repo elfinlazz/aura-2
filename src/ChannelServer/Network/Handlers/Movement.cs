@@ -45,7 +45,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 #endif
 
-			//ChannelServer.Instance.World.ActivateMobs(creature, from, to);
+			creature.Region.ActivateAis(from, to);
 
 			creature.Move(to, (packet.Op == Op.Walk));
 		}

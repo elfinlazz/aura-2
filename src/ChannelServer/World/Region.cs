@@ -219,7 +219,23 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public PlayerCreature GetPlayer(string name)
 		{
-			return _creatures.Values.FirstOrDefault(a => a is PlayerCreature && a.Name == name) as PlayerCreature;
+			lock (_creatures)
+				return _creatures.Values.FirstOrDefault(a => a is PlayerCreature && a.Name == name) as PlayerCreature;
+		}
+
+		/// <summary>
+		/// Returns all player creatures in range.
+		/// </summary>
+		/// <param name="range"></param>
+		/// <returns></returns>
+		public List<Creature> GetPlayersInRange(Position pos, int range = VisibleRange)
+		{
+			var result = new List<Creature>();
+
+			lock (_creatures)
+				result.AddRange(_creatures.Values.Where(a => a is PlayerCreature && a.GetPosition().InRange(pos, range)));
+
+			return result;
 		}
 
 		/// <summary>
@@ -335,6 +351,33 @@ namespace Aura.Channel.World
 				result.AddRange(_props.Values.Where(a => a.ServerSide));
 
 			return result;
+		}
+
+		/// <summary>
+		/// Activates AIs in range of the movement path.
+		/// </summary>
+		/// <param name="from"></param>
+		/// <param name="to"></param>
+		public void ActivateAis(Position from, Position to)
+		{
+			var minX = Math.Min(from.X, to.X) - VisibleRange;
+			var minY = Math.Min(from.Y, to.Y) - VisibleRange;
+			var maxX = Math.Max(from.X, to.X) + VisibleRange;
+			var maxY = Math.Max(from.Y, to.Y) + VisibleRange;
+
+			lock (_creatures)
+			{
+				var npcsInRange = _creatures.Values.Where((creature) =>
+				{
+					if (!creature.Is(EntityType.NPC))
+						return false;
+					var pos = creature.GetPosition();
+					return (pos.X >= minX && pos.X <= maxX && pos.Y >= minY && pos.Y <= maxY);
+				});
+
+				foreach (NPC creature in npcsInRange)
+					creature.AI.Activate();
+			}
 		}
 
 		/// <summary>

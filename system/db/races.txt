@@ -342,4 +342,4 @@
 // Friendly
 // Id  Name  Group  Gender  VehicleType  State  InvW  InvH  AttMin  AttMax  Range  AttSpeed  KnockCount  Crit  SRadius  SAngle  SDamage  Stand  AI  Color1-3  Size  CP  Life  Defense  Protection  Element  Exp  GoldMin  GoldMax  Drops...
 //---------------------------------------------------------------------------
-60003,"Hen","chicken/adult",0,0,0xA0001010,6,10,0,0,150,2,2,0,180,60,0,0x00,"none",0x909070,0x000000,0x000000,1.0715,100.0,50,0,0.0,0,0,0,0
+60003,"Hen","chicken/adult",0,0,0xA0001010,6,10,0,0,150,2,2,0,180,60,0,0x00,"hen",0x909070,0x000000,0x000000,1.0715,100.0,50,0,0.0,0,0,0,0
