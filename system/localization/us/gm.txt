@@ -51,3 +51,7 @@ body_target		Your appearance has been changed by {0}.
 // >cp
 cp_own			Your combat power: {0}
 cp_target		{0}'s combat power: {1}
+
+// >title
+title_success	Added title.
+title_target	{0} enabled a title for you.

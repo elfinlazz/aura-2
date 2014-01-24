@@ -36,6 +36,7 @@ namespace Aura.Data
 		public static StatsLevelUpDb StatsLevelUpDb = new StatsLevelUpDb();
 		//public static TalentExpDb TalentExpDb = new TalentExpDb();
 		//public static TalentRankDb TalentRankDb = new TalentRankDb();
+		public static TitleDb TitleDb = new TitleDb();
 		public static WeatherDb WeatherDb = new WeatherDb();
 	}
 }

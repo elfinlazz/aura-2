@@ -545,7 +545,7 @@ namespace Aura.Channel.World
 
 			if (source.IsEquip() || target.IsEquip())
 			{
-				Send.StatUpdate(_creature, StatUpdateType.Private, Stat.DefenseBaseMod, Stat.ProtectBaseMod);
+				Send.StatUpdate(_creature, StatUpdateType.Private, Stat.DefenseBaseMod, Stat.ProtectionBaseMod);
 			}
 		}
 

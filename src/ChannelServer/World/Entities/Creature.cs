@@ -146,11 +146,11 @@ namespace Aura.Channel.World.Entities
 		public float WillBaseSkill { get; set; }
 		public float LuckBaseSkill { get; set; }
 
-		public float StrMod { get { return this.StatMods.Get(Stat.Str); } }
-		public float DexMod { get { return this.StatMods.Get(Stat.Dex); } }
-		public float IntMod { get { return this.StatMods.Get(Stat.Int); } }
-		public float WillMod { get { return this.StatMods.Get(Stat.Will); } }
-		public float LuckMod { get { return this.StatMods.Get(Stat.Luck); } }
+		public float StrMod { get { return this.StatMods.Get(Stat.StrMod); } }
+		public float DexMod { get { return this.StatMods.Get(Stat.DexMod); } }
+		public float IntMod { get { return this.StatMods.Get(Stat.IntMod); } }
+		public float WillMod { get { return this.StatMods.Get(Stat.WillMod); } }
+		public float LuckMod { get { return this.StatMods.Get(Stat.LuckMod); } }
 
 		public float StrBase { get; set; }
 		public float DexBase { get; set; }
@@ -183,33 +183,39 @@ namespace Aura.Channel.World.Entities
 		public float WillFoodMod { get { return _willFoodMod; } set { _willFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
 		public float LuckFoodMod { get { return _luckFoodMod; } set { _luckFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
 
-		// Defense
+		// Defense/Protection
 		// ------------------------------------------------------------------
 
-		public int ProtectionBase { get; set; }
-		public int ProtectionBaseSkill { get; set; }
-		public float ProtectionMod { get; set; }
-		public float ProtectionPassive
+		public int DefenseBase { get; set; } // Race
+		public int DefenseBaseMod { get { return (int)this.StatMods.Get(Stat.DefenseBaseMod) + this.Inventory.GetEquipmentDefense(); } } // Skills, Titles, etc?
+		public int DefenseMod { get { return (int)this.StatMods.Get(Stat.DefenseMod); } } // eg Reforging? (yellow)
+		public int Defense
 		{
 			get
 			{
-				var result = this.ProtectionBase + this.ProtectionBaseSkill + this.StatMods.Get(Stat.ProtectMod);
-				result += this.Inventory.GetEquipmentProtection();
+				var result = this.DefenseBase + this.DefenseBaseMod + this.DefenseMod;
 
-				return (result / 100);
+				// Str defense is displayed automatically on the client side
+				result += (int)Math.Max(0, (this.Str - 10f) / 10f);
+
+				// TODO: Add from active skills
+
+				return result;
 			}
 		}
-		public int DefenseBase { get; set; }
-		public int DefenseBaseSkill { get; set; }
-		public short DefenseMod { get; set; }
-		public short DefensePassive
+
+		public float ProtectionBase { get; set; }
+		public float ProtectionBaseMod { get { return this.StatMods.Get(Stat.ProtectionBaseMod) + this.Inventory.GetEquipmentProtection(); } }
+		public float ProtectionMod { get { return this.StatMods.Get(Stat.ProtectionMod); } }
+		public float Protection
 		{
 			get
 			{
-				var result = this.DefenseBase + this.DefenseBaseSkill + this.StatMods.Get(Stat.DefenseBaseMod);
-				result += this.Inventory.GetEquipmentDefense();
+				var result = this.ProtectionBase + this.ProtectionBaseMod + this.ProtectionMod;
 
-				return (short)result;
+				// TODO: Add from active skills
+
+				return (result / 100f);
 			}
 		}
 
@@ -217,14 +223,6 @@ namespace Aura.Channel.World.Entities
 
 		// Life
 		// ------------------------------------------------------------------
-
-		public float LifeMaxBaseSkill { get; set; }
-		public float ManaMaxBaseSkill { get; set; }
-		public float StaminaMaxBaseSkill { get; set; }
-
-		public float LifeMaxMod { get { return this.StatMods.Get(Stat.LifeMaxMod); } }
-		public float ManaMaxMod { get { return this.StatMods.Get(Stat.ManaMaxMod); } }
-		public float StaminaMaxMod { get { return this.StatMods.Get(Stat.StaminaMaxMod); } }
 
 		private float _life, _injuries;
 		public float Life
@@ -251,8 +249,10 @@ namespace Aura.Channel.World.Entities
 			set { _injuries = Math2.MinMax(0, this.LifeMax, value); }
 		}
 		public float LifeMaxBase { get; set; }
+		public float LifeMaxBaseSkill { get; set; }
 		public float LifeMaxBaseTotal { get { return this.LifeMaxBase + this.LifeMaxBaseSkill; } }
-		public float LifeMax { get { return this.LifeMaxBaseTotal + this.LifeMaxMod + this.LifeFoodMod; } }
+		public float LifeMaxMod { get { return this.StatMods.Get(Stat.LifeMaxMod); } }
+		public float LifeMax { get { return Math.Max(1, this.LifeMaxBaseTotal + this.LifeMaxMod + this.LifeFoodMod); } }
 		public float LifeInjured { get { return this.LifeMax - _injuries; } }
 
 		// Mana
@@ -265,8 +265,10 @@ namespace Aura.Channel.World.Entities
 			set { _mana = Math2.MinMax(0, this.ManaMax, value); }
 		}
 		public float ManaMaxBase { get; set; }
+		public float ManaMaxBaseSkill { get; set; }
 		public float ManaMaxBaseTotal { get { return this.ManaMaxBase + this.ManaMaxBaseSkill; } }
-		public float ManaMax { get { return ManaMaxBaseTotal + this.ManaMaxMod + this.ManaFoodMod; } }
+		public float ManaMaxMod { get { return this.StatMods.Get(Stat.ManaMaxMod); } }
+		public float ManaMax { get { return Math.Max(1, ManaMaxBaseTotal + this.ManaMaxMod + this.ManaFoodMod); } }
 
 		// Stamina
 		// ------------------------------------------------------------------
@@ -289,8 +291,10 @@ namespace Aura.Channel.World.Entities
 			set { _hunger = Math2.MinMax(0, this.StaminaMax, value); }
 		}
 		public float StaminaMaxBase { get; set; }
+		public float StaminaMaxBaseSkill { get; set; }
 		public float StaminaMaxBaseTotal { get { return this.StaminaMaxBase + this.StaminaMaxBaseSkill; } }
-		public float StaminaMax { get { return this.StaminaMaxBaseTotal + this.StaminaMaxMod + this.StaminaFoodMod; } }
+		public float StaminaMaxMod { get { return this.StatMods.Get(Stat.StaminaMaxMod); } }
+		public float StaminaMax { get { return Math.Max(1, this.StaminaMaxBaseTotal + this.StaminaMaxMod + this.StaminaFoodMod); } }
 		public float StaminaHunger { get { return this.StaminaMax - _hunger; } }
 
 		/// <summary>

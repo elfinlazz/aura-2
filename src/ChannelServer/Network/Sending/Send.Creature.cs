@@ -190,32 +190,33 @@ namespace Aura.Channel.Network.Sending
 
 						case Stat.Life: packet.PutFloat(creature.Life); break;
 						case Stat.LifeMax: packet.PutFloat(creature.LifeMaxBaseTotal); break;
-						//case Stat.LifeMaxMod: packet.PutFloat(creature.StatMods.GetMod(Stat.LifeMaxMod)); break;
+						case Stat.LifeMaxMod: packet.PutFloat(creature.StatMods.Get(Stat.LifeMaxMod)); break;
 						case Stat.LifeInjured: packet.PutFloat(creature.LifeInjured); break;
 						case Stat.Mana: packet.PutFloat(creature.Mana); break;
 						case Stat.ManaMax: packet.PutFloat(creature.ManaMaxBaseTotal); break;
-						//case Stat.ManaMaxMod: packet.PutFloat(creature.StatMods.GetMod(Stat.ManaMaxMod)); break;
+						case Stat.ManaMaxMod: packet.PutFloat(creature.StatMods.Get(Stat.ManaMaxMod)); break;
 						case Stat.Stamina: packet.PutFloat(creature.Stamina); break;
 						case Stat.Hunger: packet.PutFloat(creature.StaminaHunger); break;
 						case Stat.StaminaMax: packet.PutFloat(creature.StaminaMaxBaseTotal); break;
-						//case Stat.StaminaMaxMod: packet.PutFloat(creature.StatMods.GetMod(Stat.StaminaMaxMod)); break;
+						case Stat.StaminaMaxMod: packet.PutFloat(creature.StatMods.Get(Stat.StaminaMaxMod)); break;
 
-						//case Stat.StrMod: packet.PutFloat(creature.StatMods.GetMod(Stat.StrMod)); break;
-						//case Stat.DexMod: packet.PutFloat(creature.StatMods.GetMod(Stat.DexMod)); break;
-						//case Stat.IntMod: packet.PutFloat(creature.StatMods.GetMod(Stat.IntMod)); break;
-						//case Stat.LuckMod: packet.PutFloat(creature.StatMods.GetMod(Stat.LuckMod)); break;
-						//case Stat.WillMod: packet.PutFloat(creature.StatMods.GetMod(Stat.WillMod)); break;
+						case Stat.StrMod: packet.PutFloat(creature.StatMods.Get(Stat.StrMod)); break;
+						case Stat.DexMod: packet.PutFloat(creature.StatMods.Get(Stat.DexMod)); break;
+						case Stat.IntMod: packet.PutFloat(creature.StatMods.Get(Stat.IntMod)); break;
+						case Stat.LuckMod: packet.PutFloat(creature.StatMods.Get(Stat.LuckMod)); break;
+						case Stat.WillMod: packet.PutFloat(creature.StatMods.Get(Stat.WillMod)); break;
 						case Stat.Str: packet.PutFloat(creature.StrBaseTotal); break;
 						case Stat.Int: packet.PutFloat(creature.IntBaseTotal); break;
 						case Stat.Dex: packet.PutFloat(creature.DexBaseTotal); break;
 						case Stat.Will: packet.PutFloat(creature.WillBaseTotal); break;
 						case Stat.Luck: packet.PutFloat(creature.LuckBaseTotal); break;
 
-						case Stat.DefenseBaseMod: packet.PutShort(creature.DefensePassive); break;
-						case Stat.ProtectBaseMod: packet.PutFloat(creature.ProtectionPassive * 100); break;
-
-						//case Stat.DefenseMod: packet.PutShort(creature.StatMods.GetMod(Stat.DefenseMod)); break;
-						//case Stat.ProtectMod: packet.PutFloat(creature.StatMods.GetMod(Stat.ProtectMod)); break;
+						case Stat.DefenseBase: packet.PutShort((short)creature.DefenseBase); break;
+						case Stat.ProtectionBase: packet.PutFloat(creature.ProtectionBase); break;
+						case Stat.DefenseBaseMod: packet.PutShort((short)creature.DefenseBaseMod); break;
+						case Stat.ProtectionBaseMod: packet.PutFloat(creature.ProtectionBaseMod); break;
+						case Stat.DefenseMod: packet.PutShort((short)creature.DefenseMod); break;
+						case Stat.ProtectionMod: packet.PutFloat(creature.ProtectionMod); break;
 
 						// Client might crash with a mismatching value, 
 						// take a chance and put an int by default.

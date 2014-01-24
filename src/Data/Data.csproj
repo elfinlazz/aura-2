@@ -53,6 +53,7 @@
     <Compile Include="Database\Exp.cs" />
     <Compile Include="Database\Items.cs" />
     <Compile Include="Database\Keywords.cs" />
+    <Compile Include="Database\Titles.cs" />
     <Compile Include="Database\Motions.cs" />
     <Compile Include="Database\Pets.cs" />
     <Compile Include="Database\PropDrops.cs" />

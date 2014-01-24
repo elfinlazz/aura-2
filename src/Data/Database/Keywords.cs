@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System.Collections.Generic;
+
 namespace Aura.Data.Database
 {
 	public class KeywordData

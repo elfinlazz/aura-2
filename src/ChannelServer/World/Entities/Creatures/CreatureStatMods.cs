@@ -88,6 +88,24 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
+		/// Removes all stat mods for source and ident.
+		/// </summary>
+		/// <param name="stat"></param>
+		/// <param name="source"></param>
+		/// <param name="ident"></param>
+		public void Remove(StatModSource source, long ident)
+		{
+			lock (_mods)
+			{
+				foreach (var mod in _mods)
+				{
+					mod.Value.RemoveAll(a => a.Source == source && a.Ident == ident);
+					this.UpdateCache(mod.Key);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Returns total stat mod for stat.
 		/// </summary>
 		/// <param name="stat"></param>

@@ -41,6 +41,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "jump", "[x] [y]", HandleWarp);
 			Add(50, 50, "item", "<id|name> [amount|color1 [color2 [color 3]]]", HandleItem);
 			Add(50, 50, "skill", "<id> [rank]", HandleSkill);
+			Add(50, 50, "title", "<id>", HandleTitle);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -581,6 +582,24 @@ namespace Aura.Channel.Util
 			Send.ServerMessage(sender, Localization.Get("gm.body_success"), "0x" + color.ToString("X8")); // Change successful, new value: {0}
 			if (sender != target)
 				Send.ServerMessage(target, Localization.Get("gm.body_target"), sender.Name); // Your appearance has been changed by {0}.
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleTitle(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			ushort titleId;
+			if (!ushort.TryParse(args[1], out titleId))
+				return CommandResult.InvalidArgument;
+
+			target.Titles.Enable(titleId);
+
+			Send.SystemMessage(sender, Localization.Get("gm.title_success")); // Added title.
+			if (sender != target)
+				Send.SystemMessage(target, Localization.Get("gm.title_target"), sender.Name); // {0} enabled a title for you.
 
 			return CommandResult.Okay;
 		}

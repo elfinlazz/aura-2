@@ -139,10 +139,10 @@ namespace Aura.Channel.World.Entities.Creatures
 			}
 			else if (skill.Info.Id == SkillId.Defense)
 			{
-				_creature.DefenseBaseSkill += (int)skill.RankData.Var1;
+				_creature.StatMods.Add(Stat.DefenseBaseMod, skill.RankData.Var1, StatModSource.SkillRank, skill.Info.Id);
 			}
 
-			this.UpdateHighest();
+			this.UpdateHighestSkills();
 		}
 
 		/// <summary>
@@ -176,16 +176,16 @@ namespace Aura.Channel.World.Entities.Creatures
 			}
 			else if (skill.Info.Id == SkillId.Defense)
 			{
-				_creature.DefenseBaseSkill -= (int)skill.RankData.Var1;
+				_creature.StatMods.Remove(Stat.DefenseBaseMod, StatModSource.SkillRank, skill.Info.Id);
 			}
 
-			this.UpdateHighest();
+			this.UpdateHighestSkills();
 		}
 
 		/// <summary>
 		/// Updates highest skill CPs.
 		/// </summary>
-		private void UpdateHighest()
+		private void UpdateHighestSkills()
 		{
 			var highest = 0f;
 			var second = 0f;

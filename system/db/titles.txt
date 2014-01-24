@@ -1,0 +1,702 @@
+// Aura
+// Database file
+// 
+// Structure:
+// Id  Name  Effects...
+//---------------------------------------------------------------------------
+
+// Various
+//---------------------------------------------------------------------------
+1, "none"
+2, "none"
+3, "none"
+4, "none"
+5, "none"
+6, "none"
+7, "none"
+8, "the Crystal Collector", Str:-10, Int:+20, Dex:-10, Will:-10, Luck:+20
+9, "who saw the library ghost", Life:-20, Mana:+20, Int:+10, Will:-10, Luck:-10
+10, "the Horse and Ostrich Rider", Life:-10, Mana:-10, Stamina:-10, Dex:+10, Will:+10, Luck:+10
+11, "the Archaeologist", Life:-20, Mana:-20, Stamina:-20, Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
+12, "the Explorer", Life:+5, Will:+5
+13, "the Child Explorer", Life:+20, Will:+15
+14, "the Friend of Hippos", Life:+30, Mana:-10, Stamina:-10, Str:+20, Int:-5, Dex:-5, Will:-5, Luck:-5
+15, "the Ancient Artifact Appraiser", Str:-5, Int:+15, Dex:-5, Will:-5, Luck:+15
+16, "the Wild Animal Tamer", Life:-5, Mana:-10, Stamina:-10, Dex:+15, Will:+10, Luck:+10
+17, "a friend of Monkeys", Life:-10, Mana:-10, Stamina:+15, Dex:+15, Will:+15
+18, "the Mine Expert", Stamina:+15, Str:-10, Int:-10, Dex:+20, Will:-10, Defense:+2
+19, "the Fishing Legend", Life:-20, Mana:-20, Stamina:-20, Will:+20, Luck:+20, Protection:+3
+20, "the Butterfingers", Dex:-20, Luck:-20, Protection:+5
+21, "the Chief Mate", Life:+10, Mana:-25, Stamina:+10, Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+2
+22, "the Ambidextrous", Stamina:-50, Dex:+20, Luck:+20
+23, "the Lucky", Luck:+20
+24, "the Daring Hot-Air Balloon Pilot", Stamina:-30, Int:+5, Dex:+10, Will:+10, Luck:+5, Protection:+3
+25, "the Christmas Spirit", Luck:+10
+26, "the Beginner Alchemist", Stamina:+20
+27, "none"
+28, "the Elemental Apprentice", Mana:+10
+29, "the Master of Fire"
+30, "the Master of Ice"
+31, "the Master of Lightning"
+32, "the Elemental Master", Mana:+20, Str:-10, Int:+20, Dex:-10, Defense:+3
+33, "the Diligent", Will:+25
+34, "the Lazy", Stamina:+15, Will:-10
+35, "the Super Diligent", Life:-20, Stamina:+50, Str:-20, Will:+20, Luck:+20
+36, "the Aspiring Sailor", Life:-20, Mana:-20, Stamina:-20, Str:+10, Will:+10
+37, "who experienced Death", Life:+5, Stamina:-5, Int:-30, Dex:-30, Defense:+5
+38, "who transcended Death", Life:+6, Stamina:-10, Int:-20, Dex:-20, Defense:+6
+39, "the Reborn", Str:+6, Int:+6, Dex:+6, Will:+6, Luck:+6
+40, "the Sulfer-poisoned Explorer", Life:-20, Mana:-10, Stamina:+20, Will:+20
+41, "none"
+42, "none"
+43, "the Married"
+44, "the Adult", Dex:+3, Will:+15, Luck:-5
+45, "the All-Knowing", Life:-5, Mana:-5, Int:+20, Dex:+20, Will:-30
+46, "the Old", Life:-10, Mana:-10, Str:-5, Int:+35, Dex:+10, Will:-40
+47, "none"
+48, "none"
+49, "none"
+50, "none"
+51, "none"
+52, "the Wise", Str:-15, Int:+20, Dex:+10
+53, "the Strong", Str:+20, Int:-20, Dex:-5
+54, "the Skillful", Int:-5, Dex:+20
+55, "the Experienced", Life:-10, Dex:+10, Will:+10, Defense:-2
+56, "none"
+57, "the Tank", Life:+20, Mana:-20, Int:-20, Dex:-20
+58, "the Luxurious", Life:-5, Mana:-5, Stamina:-5, Will:+10, Luck:+5
+59, "the Hungry", Life:+10, Mana:+10, Stamina:+10, Will:-10, Luck:-10
+60, "the Ice Warrior", Life:+5, Mana:+5, Stamina:+5, Luck:+5
+61, "none"
+62, "즐거운 설날", Luck:+10
+63, "none"
+64, "none"
+65, "Outlaw Hunter", MaxAttack:+3, Speed:+1
+66, "the Wolf Hunter", Will:-10
+67, "the Bear Hunter", Str:+20, Will:-10
+68, "the Explorer of Rano", Mana:+20, Str:-10, Int:+20, Will:-10, Luck:+10
+69, "the Connous Explorer", Mana:+15, Int:+15, Dex:+15, Will:-10, Luck:-10
+70, "the Explorer of Physis", Life:+10, Stamina:+20, Str:+10, Int:-10, Will:-10, Luck:-10
+71, "the Courcle Explorer", Life:+10, Mana:+10, Stamina:+10, Str:-5, Int:-5, Dex:-5, Will:+5, Luck:+5
+72, "the Zardine Explorer", Life:-20, Stamina:-40, Defense:+4, Protection:+2
+73, "the Lightshedder", Life:+15, Mana:-15, Str:+15, Will:+10, Luck:-10
+74, "Shadow Expeditionary Force", Str:+20, Dex:+10, Will:-10, Luck:-10
+75, "who Paddled at the Age of 10", Stamina:+15, Str:+5, Int:-15, Dex:+10, Will:+10, Luck:-15
+76, "who reached level 50 at the age of 10", Stamina:-10, Str:+20, Int:-20, Dex:-20, Will:+10, Luck:+10
+77, "who was Defeated by a Fox at 17", Int:-10, Will:-10, Protection:+3
+78, "who Almost Slew a Bear at age 10", Life:+3, Mana:+3, Str:+3, Int:+3, Dex:+3, Will:+3, Luck:+3
+79, "the Bear Slayer with Bare Hands", Str:+10, Int:-20, Will:+5
+80, "who slew a Bear at age 10", Life:+5, Mana:+5, Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5
+81, "the Bear Slayer with a Single Blow", Life:+5, Str:+30, Int:-20, Luck:-20
+82, "the Golem Slayer with a Single Blow", Life:+10, Mana:+10, Stamina:+10, Str:+30, Dex:-10, Luck:-20
+83, "the Golem Slayer", Life:+5, Mana:-15, Str:+10, Dex:+10
+84, "the Succubus Slayer", Life:-10, Mana:+8, Stamina:-2, Int:+7
+85, "the Ogre Slayer", Life:+15, Mana:-10, Dex:+10
+86, "the One Who Removed Siren's Mask", Life:+10, Dex:+10, Luck:+10, Defense:-5
+87, "who Seduced a Succubus", Mana:+10, Int:+20, Dex:+20, Luck:+20, Defense:-5, Protection:-5
+88, "the Fire Arrow", Mana:-5, Stamina:+5, Str:-5, Int:+5, Dex:+5
+89, "the Gladiator", Stamina:-50, Str:+30, Dex:+10
+90, "the Wyvern Hunter", Life:+10, Mana:+20, Stamina:-10, Str:+20, Dex:+20, Will:-15, Luck:-15
+91, "none"
+92, "none"
+93, "is a friend of Ferghus", Stamina:+10, Str:+10, Will:+30, Luck:-30
+94, "the Epicure", Mana:+15, Int:+15, Will:+15, Luck:+15
+95, "the Conqueror of the Wild", Life:+15, Str:+15, Will:+15, Luck:+15
+96, "the Master Angler", Stamina:+15, Dex:+15, Will:+15, Luck:+15
+97, "none"
+98, "none"
+99, "none"
+100, "none"
+
+// Part-time
+//---------------------------------------------------------------------------
+20000, "the Neighboring Part-Timer", Life:+5, Stamina:+20, Will:+5
+20001, "the Grocery Store Part-Timer", Life:+5, Stamina:+10
+20002, "the Church Volunteer", Stamina:+10
+20003, "the Part-Timer"
+20004, "the Part-Timer"
+20005, "the Healer's House Part-Timer", Stamina:+15
+20006, "the Bank Part-Timer", Stamina:+15
+20007, "the Blacksmith Shop Part-Timer", Life:+10, Will:+10
+20008, "the General Shop Part-Timer", Stamina:+5, Dex:+10
+20009, "the Adventurers Association Part-Timer", Life:+3, Stamina:+12
+20010, "the Clothing Shop Part-Timer", Dex:+12
+20011, "the Bookstore Part-Timer", Int:+8, Will:+5
+20012, "the Weapon Shop Part-Timer", Life:+12, Will:+8
+20013, "the Inn Part-Timer", Life:+5, Stamina:+10
+20014, "the Mine Part-Timer", Stamina:+25, Will:+3
+20015, "the Part-Timer at the Pub"
+20016, "a Part-Timer at the Music Store", Stamina:+25, Int:+3
+20017, "a Part-Timer at the Flower Shop", Stamina:+25, Will:+3
+20018, "a Participant of The Amazing Race of Mabinogi"
+20019, "a Part-Timer at the Library", Int:+5, Dex:+5
+20020, "근면어린이뽑기 경주 참가자"
+20021, "the Civil Militia's Secret Part-Timer", Will:+8
+20022, "the Guards' Secret Part-Timer", Life:+7
+20023, "the Martial Arts Instructor's Secret Part-Timer", Stamina:+8
+20024, "the Magic Instructor's Secret Part-Timer", Luck:+6
+20025, "the Flower Shop's Secret Part-Timer", Dex:+6
+20026, "the Alchemist House Part-Timer", Stamina:+15
+20027, "the Street Artist Part-Timer", Mana:+10
+20028, "the Jousting Arena Part-Timer", Stamina:+20
+20029, "타티스 알바생", Stamina:+20
+20030, "멘텀 알바생", Stamina:+20
+20031, "바스텟 알바생", Stamina:+20
+20032, "데이곤 알바생", Stamina:+20
+20033, "the Pontiff's Court Volunteer", Life:+5, Mana:+10
+20034, "the Lighthouse Handyman", Stamina:+5, Dex:+15
+20035, "the Alchemist Part-Timer", Stamina:+20
+20036, "the Puppet Shop Part-Timer", Stamina:+20
+
+// Achievements
+//---------------------------------------------------------------------------
+10001, "the Beta Tester", Stamina:+10, Luck:+20
+10002, "the Dugald Aisle Seal Breaker", Str:+10, Int:+5, Dex:+10, Will:+40, Crit:+10
+10003, "the Ciar Seal Breaker", MaxAttack:+10
+10004, "the Rabbie Seal Breaker", Life:+20, Mana:+20, Stamina:+20
+10005, "the Math Seal Breaker", Dex:+10, Luck:+10, MinAttack:+5, MaxAttack:+5
+10006, "the Bangor Seal Breaker", Life:+10, Mana:-5, Stamina:+10, Dex:+30, Will:+20
+10007, "the Seal-Breaker of the Other World", Life:+10, Mana:+10, Stamina:+10, Str:-5, Int:-5, Dex:-5, Will:+10
+10008, "the Fiodh Seal Breaker", Life:+30, Str:+20, Dex:-5, Will:+10, Luck:+5
+10009, "the South Emain Macha Seal Breaker", Mana:+25, Str:-5, Int:+15, Dex:+30, Will:+10
+10010, "the Master of Defense", Life:+10, Stamina:+10, Int:-10, Luck:-10, Defense:+5
+10011, "the Master of Smash", Stamina:+20, Str:+20, Dex:-20, Luck:+20, Protection:-10
+10012, "the Master of Counter", Mana:-30, Stamina:+30, Str:-20, Int:+20, Dex:+20
+10013, "the Master of Windmill", Life:-20, Str:-10, Will:+10, Luck:+10, Protection:+3
+10014, "the Master of Arrow Revolver", Life:+20, Str:-10, Dex:+20, Will:+20, Luck:-10, Defense:-5
+10015, "the Master of Lightning Bolt", Life:-10, Mana:+30, Str:+10, Int:+10, Luck:-10
+10016, "the Master of Firebolt", Mana:+30, Str:-10, Int:+10, Dex:+10, Luck:-10
+10017, "the Master of Icebolt", Mana:+20, Str:-20, Int:+15, Dex:+15
+10018, "the Master of Healing", Mana:+30, Stamina:-20, Str:+10, Int:+10, Will:-10
+10019, "the Master of Fireball", Mana:+50, Stamina:-10, Int:+20, Will:+20, Luck:-30
+10020, "the Master of Thunder", Life:-20, Mana:+40, Str:-20, Int:+30, Dex:+20
+10021, "the Master of Combat", Life:+20, Stamina:+20, Str:+10, Int:-10, Luck:-20
+10022, "the Master of Range", Life:+20, Stamina:+30, Str:-20, Dex:+20, Will:-20
+10023, "the Master of Critical Hit", Life:+30, Stamina:+20, Will:+20, Defense:-5, Protection:-5
+10024, "the Master of Magnum Shot", Life:+20, Str:-10, Dex:+20, Will:-10, Luck:+20, Protection:-10
+10025, "the North Emain Macha Seal Breaker", Mana:+30, Str:-10, Int:+20, Dex:+25, Will:+10
+10026, "the Master of Weaving", Stamina:+20, Str:+10, Dex:+20, Will:-20, Luck:-20
+10027, "the Master of Refining", Stamina:+30, Str:+10, Dex:-10, Will:+20, Luck:-20
+10028, "the Master of Herbalism", Str:+20, Dex:-10, Luck:-10, Defense:+2, Protection:+2
+10029, "the Master of Tailoring", Str:-20, Int:-20, Dex:+30, Will:+20
+10030, "the Master Blacksmith", Life:-30, Mana:-30, Dex:+30, Will:+10, Luck:+10
+10031, "the Master of Potion", Mana:+30, Str:-10, Luck:-10, Defense:+3, Protection:+3
+10032, "the Master of Fishing", Life:-20, Stamina:-20, Int:+10, Dex:+20, Luck:+10
+10033, "the Master Instrumentalist", Mana:-20, Stamina:-20, Int:+20, Dex:+10, Will:+20
+10034, "the Master of Enchantment", Life:-10, Mana:+20, Int:+20, Will:-10, Luck:+10
+10035, "the One Who Discovered Karu Forest Ruins", Life:-50, Mana:+20, Stamina:+20, Int:+20, Luck:+20
+10036, "the Explorer of Karu Forest Ruins", Life:+30, Mana:+30, Stamina:+30, Str:-5, Int:-5, Dex:-5, Will:-5, Luck:-5, Defense:+5
+10037, "the Partner of the Male Sword Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10038, "the Partner of the Female Sword Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10039, "the Master of the Male Blunt Weapon Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10040, "the Master of the Female Blunt Weapon Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10041, "the Friend of the Male Bow Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10042, "the Friend of the Female Bow Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10043, "the Relative of the Male Wand Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10044, "the Relative of the Female Wand Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10045, "the One Who Discovered the Maiz Prairie Ruins", Life:-30, Mana:-30, Stamina:-30, Str:+30, Will:+10, Luck:+10
+10046, "the Master of Ice Spear", Life:-20, Mana:+30, Stamina:-20, Int:+20, Luck:+20
+10047, "the One that Connected Rano and Connous", Str:+10, Int:+10, Will:+30, Crit:+5
+10048, "the Master of Final Hit", Life:+20, Mana:-30, Stamina:+20, Str:+15, Dex:+5, Will:+15, Protection:-5
+10049, "the Master of Mirage Missile", Mana:+20, Str:-10, Int:+15, Dex:+15, Will:-10
+10050, "the Discoverer of Longa Desert Ruins", Mana:+10, Stamina:+10, Str:-20, Int:+20, Dex:+20, Will:-5, Luck:-5
+10051, "who Placed in the Cooking Contest", Life:+20, Stamina:+20, Int:+10, Dex:+10, Will:-20, Luck:-10
+10052, "초보자", Life:+5, Stamina:+5, Defense:+2
+10053, "a Descendant of the Elves", Life:+5, Mana:+5, Stamina:+5, Dex:+5
+10054, "a Friend of Elves", Stamina:+15, Int:-10, Dex:+15, Luck:-10
+10055, "a Descendant of the Giants", Life:+5, Stamina:+5, Str:+5, Will:+5
+10056, "a Friend of Giants", Str:+20, Dex:+10, Will:-10, Luck:-10
+10057, "초보자", Life:+10, Stamina:+5, Defense:+2
+10058, "the Master of Production", Life:-10, Dex:+20, Will:-10, Luck:+20
+10059, "is a friend of Trefor", Life:+5, Stamina:+10, Str:+5
+10060, "is a friend of Deian", Life:+5, Stamina:+10, Dex:+5
+10061, "is a friend of Malcolm", Life:+5, Stamina:+10, Int:+5
+10062, "is a friend of Nora", Life:+5, Stamina:+10, Will:+5
+10063, "the Master of Mana Crystallization", Life:-10, Mana:+60, Stamina:-10
+10064, "the Master of Water Cannon", Life:-10, Mana:-10, Stamina:+40
+10065, "the Master of Golems", Life:+50, Str:-30, Int:-30, Dex:-30, Defense:+10
+10066, "the Master of Barrier Spikes", Will:-40, Luck:-20, Protection:+12
+10067, "the Sliab Cuilin Seal Breaker", Life:+30, Str:+25, Dex:-20, Will:+10, Luck:-20, MinAttack:+5
+10068, "the Abb Neagh Seal Breaker", Mana:+35, Int:+30
+10069, "a Friend of Pierrick", Life:+10, Will:+20, Luck:+10
+10070, "the Master of Rain", Life:-20, Stamina:+30, Luck:+20
+10071, "the Master of Frozen Blast", Stamina:+20, Will:+20
+10072, "the Master of Flame Burst", Life:+15, Stamina:+20, Int:+20
+10073, "the Master of Stomp", Stamina:+15, Str:+40, Luck:-30
+10074, "the Master of Metallurgy", Mana:-10, Str:-20, Dex:+10, Luck:+25
+10075, "the Master of Wind Guard", Life:+10, Str:-20, Dex:-20, Defense:+7, Protection:+5
+10076, "the Master of Final Shot", Life:-15, Str:-10, Dex:+30, Will:+15
+10077, "the Tara Seal Breaker", Str:+20, Int:+20, Dex:+20, Will:+20, Luck:+20
+10078, "the Master of Metal Conversion", Str:+10, Dex:+20, Will:-20
+10079, "the Fashionable"
+10080, "the Master of Blaze", Str:+20, Int:+20
+10081, "the Goddess Water Maker", Mana:+15, Int:+15, Dex:+15
+10082, "the Wine Hero", Str:+15, Luck:+15, Defense:+1, Protection:+1
+10083, "네코지마 명예 주민", Life:+30, Stamina:+10, Defense:+5, Protection:+2
+10084, "the Master of Shock", MaxAttack:+15
+10085, "the Master of Alchemy"
+10086, "the Master of Life Drain", Life:+50, Mana:+20
+10087, "대단한 테스터", Mana:-10, Stamina:+10, Will:+10, Luck:+20
+10088, "the Master of Magic", Mana:+20, MagicAttack:+20
+10089, "the Master of Party Healing", Mana:+40, Str:-10, Will:-10
+10091, "the Master of Carpentry", Stamina:-10, Str:+30, Int:-15, Will:-15
+10092, "the Master of Heat Buster", Mana:-20, Stamina:+20, Dex:+20, Will:+20
+10093, "the Chain Cylinder Master", Mana:-20, Stamina:+40
+10094, "the Master of Atlatl", Life:+20, Stamina:+20, Str:+20, Dex:-25
+10095, "the Master of Taunt", Stamina:+30, Int:-20, Dex:-10
+10096, "the Master of Support Shot", Str:-20, Dex:+20, Will:-10
+10097, "the Master of Crash Shot", Mana:+20, Stamina:+20, Str:-25, Dex:+10
+10098, "the Fire Alchemist", Mana:+5, Stamina:+15, Str:-10
+10099, "the Water Alchemist", Mana:+15, Stamina:+10, Int:-10, Dex:-10
+10100, "the Clay Alchemist", Life:+15, Dex:-15
+10101, "the Wind Alchemist", Int:-10, Dex:+10, Will:+15
+10103, "the Master of Transmutation"
+10104, "the Master of Fire", Mana:+5, Stamina:+15, Str:-10
+10105, "the Master of Ice", Mana:+15, Stamina:+10, Str:-15, Int:+10
+10106, "the Master of Lightning", Int:+20, Dex:-15
+10107, "the Master of Bolt Magic", Mana:+15
+10111, "the Master of Enthralling Performance", Stamina:+8, Dex:+12
+10112, "the Master of Swords", Life:+10, Int:-15
+10113, "the Master of Axes", Life:+10, Mana:-15
+10114, "the Master of Blunt Weapons", Life:+10, Mana:-15
+10115, "the Master of Shields", Defense:+10, Protection:+10
+10116, "the Master of Heavy Stander", Mana:-20
+10117, "the Master of Bows", Stamina:+10, Str:-15
+10118, "the Master of Crossbows", Stamina:+10, Str:-15
+10119, "the Master of Fusion Bolt", Life:-10, Mana:+5, Int:+10
+10120, "the Master Berserker", Life:-20, Str:+10, Will:+10
+10121, "the Master of Assault Slash", Str:+10, Int:-15
+10122, "the Master of Hail Storm", Mana:+20, Int:+20, Luck:+15
+10123, "the Master Doppleganger", Life:+10, Stamina:+30, Will:-20
+10124, "강철의 연금술사"
+10125, "화염의 연금술사"
+10127, "오토메일 정비사"
+10128, "주부", Life:-20, Dex:+15, MaxAttack:+15
+10129, "호완의 연금술사", MaxAttack:+12
+10130, "매의 눈", Dex:+30, Crit:+3
+10131, "the Master of Lances", Mana:-15, Int:-10
+10132, "the Master of Lance Counter", Crit:+5
+10133, "the Master of Lance Charge"
+10134, "the Master of Charge", Defense:+3
+10135, "the Master of Ice Shield", Mana:+10, Int:+10, Will:+10
+10136, "the Master of Fire Shield", Mana:+10, Int:+20
+10137, "the Master of Lightning Shield", Int:+10, Will:+20
+10138, "the Master of Natural Shield", Mana:+20, Will:+10
+10139, "the Master of Handicraft", Dex:+8
+10140, "the Master of Animal Taming", Str:+12, Dex:+10
+10141, "the Master of Sand Burst", Life:+10, Stamina:+10
+10142, "the Master of Wind Blast", Stamina:+15
+10143, "the Master of Synthesis", Stamina:+10, Str:-25
+10144, "the Master of Fragmentation", Stamina:+15
+10145, "National Representative", Luck:+15
+10146, "the Aspiring Warrior", Life:+10, Str:+25
+10147, "the Aspiring Archer", Life:+10, Dex:+20
+10148, "the Aspiring Mage", Mana:+20
+10149, "the Aspiring Alchemist", Stamina:+20
+10150, "of the Victorious Expeditionary Force", Str:+10, Int:+20, Dex:+20, Will:+10, Luck:+10, MaxAttack:+10
+10151, "in Wonderland", Dex:+10, Luck:+30, Defense:+3, Protection:+1, Crit:+3
+10152, "the Sharer of Joy", Will:+20, Luck:+10
+10153, "the Lone Wolf", Stamina:+10, Defense:+5
+10154, "the Busy", Stamina:+10, Speed:+1
+10155, "the Sniper", Dex:+50, Crit:+10
+10156, "에린메이트", Str:+15, Int:+15, Will:+15, Luck:+15
+10157, "에린메이트였던", Life:+10, Stamina:+15, Int:+5, Dex:+5
+10158, "판타지 파티 참석자", Luck:+30
+10159, "Someone who celebrated Kristell's Birthday", Will:+30
+10160, "the Celebrator of Eavan's Birth", Int:+10
+10161, "the Millionaire Striver", Stamina:+10, Luck:+25
+10162, "the Master of Gold Strike", Stamina:+10, Luck:+25
+10163, "6주년을 기념하는", Stamina:+10, Dex:+10, Luck:+20
+10164, "기다릴 줄 아는", Luck:+55
+10165, "보이트의 생일을 축하한", Life:+20, Stamina:+20
+10166, "초평화버스터즈", Dex:+12, Luck:-5, MinAttack:+10, MaxAttack:+10
+10167, "유령", Defense:+5, Protection:+5
+10168, "성불한", Mana:+30, MagicAttack:+12
+10169, "Male Cylinder Spirit's Confidant", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10170, "Female Cylinder Spirit's Confidant", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
+10171, "강철의 연금술사"
+10172, "화염의 연금술사"
+10173, "오토메일 정비사"
+10174, "주부", Life:-20, Dex:+15, MaxAttack:+7
+10175, "호완의 연금술사", MaxAttack:+7
+10176, "매의 눈", Dex:+15, Crit:+1
+10178, "안드라스의 생일을 축하한", Str:+15
+10179, "the Aspiring Fighter", Stamina:+10, Str:+10, Will:+20
+10180, "Snowman's Friend", Life:+30, Defense:+3, Protection:+1
+10181, "the Crouching Dragon", Will:+70
+10182, "길모어의 생일을 축하한", Will:+10, Luck:+10
+10184, "Sabina's Valentine", Mana:+30, Int:+30, Protection:+5
+10185, "My Valentine", Will:+30, Luck:+30, MaxAttack:+13
+10190, "The Phoenix's Witness", Life:+50
+10192, "the Silencer"
+10193, "the Aspiring Maestro", Life:+10, Stamina:+10, Str:+20
+10195, "Is Gone with the Wind", Protection:+1, Crit:+2, Speed:+1
+10196, "에린 생활을 즐기는", Luck:+55
+10197, "Is Gone with the Wind", Protection:+1, Crit:+2, Speed:+1
+10198, "the Nutcracker", Life:+20, Luck:+20, Crit:+5
+10199, "the Nutcracker", Life:+20, Crit:+5
+10204, "겨울 여행자", Defense:+5, Protection:+1, Crit:+5
+10205, "세배하는", Luck:+10, Protection:+1, Crit:+2
+10206, "내가 딱히 도와달라는 건 아니야! : 유아형"
+10207, "내가 딱히 도와달라는 건 아니야! : 성장형", Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
+10208, "내가 딱히 도와달라는 건 아니야! : 완성형", Str:+15, Int:+15, Dex:+15, Will:+15, Luck:+15
+10209, "내가 딱히 도와달라는 건 아니야! : 완전체형", Str:+20, Int:+20, Dex:+20, Will:+20, Luck:+20, MagicAttack:+8
+10210, "내가 딱히 도와주겠다는 건 아니야! : 유아형"
+10211, "내가 딱히 도와주겠다는 건 아니야! : 성장형"
+10212, "내가 딱히 도와주겠다는 건 아니야! : 완성형"
+10213, "내가 딱히 도와주겠다는 건 아니야! : 완전체형"
+10214, "에린에서 만나 결혼한", Life:+20, Stamina:+20, Luck:+20
+10215, "Scissor Ruler", Dex:+20
+10216, "Ruler of Rock", Will:+20
+10217, "Paper Ruler", Str:+20
+10218, "Cut Down", Dex:-20
+10219, "Crushed", Will:-20
+10220, "Slashed", Str:-20
+10221, "Rock Paper Scissors Beginner"
+10222, "Rock Paper Scissors Novice", Crit:+1
+10223, "Rock Paper Scissors Expert", Crit:+2
+10224, "Rock Paper Scissors Master", Crit:+3
+10225, "Elemental Wave Master", Life:+30, Mana:+30, Stamina:+30
+10226, "Golden Time Master", Crit:+3
+10227, "Hydra Transmutation Master", Crit:+3
+10228, "Guard Cylinder Master", Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
+10229, "9년간 함께한", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10230, "Unknown", Str:-10, Int:+10, Dex:-10, Will:+10, Luck:+20, Protection:-5
+10231, "새 옷을 입은", Luck:+10, Protection:+1, Crit:+2
+10232, "개근상", Life:+14, Str:+14, Dex:+14
+10304, "출석왕", Stamina:+15, Luck:+15
+10501, "the Aspiring Adventurer", Life:+10, Mana:+10, Stamina:+10, Will:+10
+10502, "the Aspiring Warrior", Life:+10, Str:+25
+10503, "the Aspiring Mage", Mana:+20
+10504, "the Aspiring Archer", Life:+10, Dex:+20
+10505, "the Millionaire Striver", Stamina:+10, Luck:+25
+10506, "the Aspiring Battle Alchemist", Stamina:+20
+10507, "the Aspiring Fighter", Stamina:+10, Str:+10, Will:+20
+10508, "the Aspiring Maestro", Life:+10, Stamina:+10, Str:+20
+10509, "the Aspiring Puppeteer", Stamina:+10, Str:+10, Dex:+10
+10510, "the Aspiring Knight", Life:+20, Str:+20
+10511, "the Aspiring Cleric", Mana:+25, Int:+5
+10512, "the Aspiring Construct Alchemist", Stamina:+20
+10513, "the Aspiring Chef", Stamina:+10, Dex:+20
+10514, "the Aspiring Blacksmith", Stamina:+10, Dex:+20
+10515, "the Aspiring Tailor", Stamina:+10, Dex:+20
+10516, "the Aspiring Apothecary", Mana:+20, Stamina:+25
+10517, "the Aspiring Carpenter", Life:+20, Str:+20
+10518, "Aspiring Marksman", Life:+10
+10519, "Legendary Lumberjack", Life:+20, Stamina:+10, Crit:+5
+10520, "Blood Master", Life:+25, Str:+10, Crit:+5
+10680, "Avid Collector", Dex:+7, Will:+7
+10681, "King Collector", Str:+8, Int:+8, Dex:+8, MaxAttack:+10, Defense:+6, Protection:+6
+10700, "the Master of Battlefield Overture"
+10701, "the Master of Lullaby"
+10702, "the Master of Enduring Melody"
+10703, "the Master of Vivace"
+10704, "the Master of Harvest Song"
+10705, "the Master of March Song"
+10706, "the Master of Dischord"
+10707, "the Maestro"
+10708, "the Encore Master"
+10709, "the Song Master"
+10710, "the Fantastic Chorus Master"
+10711, "음식 마스터"
+10712, "재료 찾기 마스터"
+10713, "페스티벌 푸드 마스터"
+10714, "탐험 마스터"
+10715, "유물 조사 마스터"
+10716, "위기 탈출 마스터"
+10801, "the Shearer of Sheep", Dex:+25, Luck:+20
+10802, "the Master of Mining", Stamina:+25, Str:+25
+10803, "the Gatherer of Eggs", Dex:+35
+10804, "the Mushroom Picker", Stamina:+15, Int:+20
+10805, "the Milking Master", Stamina:+25
+10806, "the Harvester", Dex:+20, Will:+25
+10807, "the Master of Hoeing", Will:+30, Luck:+15
+10808, "the Master of Commerce", Str:-30, Int:-30, Dex:-30, Defense:+15, Protection:+5
+10809, "the Master of Transformation"
+10901, "the Master of Control Marionette", Stamina:+10
+10902, "the Master of Colossus", Life:+10, Protection:+2
+10903, "the Master of Pierrot", Stamina:+15, Crit:+2
+10904, "the Master of Threshold Cutter", Dex:+15
+10905, "the Master of Inciting Incident", Dex:+15
+10906, "the Master of Rising Action", Dex:+15
+10907, "the Master of Crisis", Dex:+15
+10908, "the Master of Climactic Crash", Dex:+15
+10909, "the Master of Invigorating Encore", Will:+15
+10910, "the Master of Wire Pull", Stamina:+10, Str:+10, Dex:+8
+10911, "the Master of Puppet Snare", Str:+8, Dex:+13
+10912, "the Dual Gun Master", Life:+15
+10913, "the Master of Reload", Stamina:+30
+10914, "the Master of Flash Launcher"
+10915, "the Master of Grapple Shot", Defense:+10
+10916, "the Master of Bullet Slide", Speed:+1
+10917, "the Master of Shooting Rush", Mana:+10, Stamina:+10
+10918, "the Master of Bullet Storm", Mana:+20, Stamina:+20
+10919, "the Way of the Gun Master"
+10920, "the Expert Engineer"
+10921, "the Magic Artisan"
+10922, "the Mineral Expert"
+10923, "the Ecologist"
+10924, "Heavy Armor Master", Defense:+10, Protection:+5
+10925, "Light Armor Master", Defense:+6, Protection:+2
+11001, "who Saved the Goddess", Mana:+10, Will:+20, Luck:+20
+11002, "the Savior of Erinn", Life:+10, Mana:+10, Stamina:+10, Int:+15, Dex:+15
+11003, "the Dragon Knight", Life:+30, Mana:+10, Stamina:+10, Defense:+2, Protection:+2
+11004, "the Scoring Master", Stamina:+10, Str:+10, Dex:+10
+11005, "the Defending Master", Int:+15, Dex:+15
+11006, "the Stealing Master", Str:+15, Will:+15
+11008, "the Winner of the Guild Battle", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
+11009, "프리미엄 PC방 사용자", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, MaxAttack:+10
+11010, "the Shadow Hero", Will:+10, Defense:+2, Protection:+2
+11011, "the Summer Reveler", Stamina:+10, Str:+5, Dex:+5
+11012, "The Royal Alchemist"
+11013, "the Family Oriented"
+11014, "the Winner of the Guild Battle", Life:+30, Mana:+30, Stamina:+30, Str:+15, Int:+15, Dex:+15, Will:+15, Luck:+15, Exp:+1
+13000, "the Master of Knuckles", Life:+10
+13001, "the Master of Chain Attack", Stamina:+10, Will:+30
+13002, "the Master of Tumble", Mana:+10, Stamina:+15, Protection:+2
+13003, "the Master of Respite", Life:+20, Stamina:+20
+13004, "the Master of Charging Strike", Str:+15, Will:+15
+13005, "the Master of Focused Fist", Str:+15, Will:+15
+13006, "the Master of Spinning Uppercut", Str:+15, Will:+15
+13007, "the Master of Somersault Kick", Str:+15, Will:+15
+13008, "the Master of Pummel", Str:+15, Will:+15
+13009, "the Master of Drop Kick", Str:+15, Will:+15
+14000, "the Master of Shockwave", Life:+20, Mana:+20, Str:-15, Int:+15, Dex:-10
+14001, "the Master of Counter Punch", Stamina:+30, Str:+20, Will:+20
+14002, "the Master of Spider Trap", Dex:+15, Luck:-10, Crit:+10
+14003, "the Master Berserker", Life:-50, Str:+25, Luck:-20, Crit:+10
+14004, "the Toxicologist", Life:+20, Mana:+20, Stamina:+20
+14005, "Meteor Strike Master", MagicAttack:+50
+14006, "Spellwalk Master"
+14007, "Snap Cast Master"
+14008, "Magic Weapon Master", Dex:-30, MaxAttack:+8, MagicAttack:+25
+30001, "the Tough-looking", MaxAttackRate:+100, MinAttackRate:+100
+30002, "the Very Tough-looking", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100
+30003, "who Looks Dangerous", MinWAttack:-100, MaxWAttack:+100, MaxAttackRate:+100, MinAttackRate:+100
+30004, "who Gambles on a Single Blow", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, CritRate:+100
+30005, "who Has Piercing Eyes", CritRate:+100
+30006, "who Knocked Out a Person at 10", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100
+30007, "the Tank", Defense:+5, LifeRate:+100
+30008, "the Diligent", Defense:+1, LifeRate:+100, StaminaRate:+100
+30009, "the Head Figure", Defense:+3, Protection:+5, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30010, "the Weak", StaminaRate:+100, LifeRate:+100
+30011, "소환된"
+30012, "the Event"
+30013, "the Cursed", MaxAttackRate:+100, MinAttackRate:+100
+30014, "the Resurrected", MaxAttackRate:+100, MinAttackRate:+100
+30015, "the Desiring", MaxAttackRate:+100, MinAttackRate:+100
+30016, "the Lost", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30017, "the Hungry", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30018, "the One with Sharp Teeth", MinWAttack:+20, MaxWAttack:+20, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30019, "the One with Sharp Horn", MinWAttack:+30, MaxWAttack:+30, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30020, "the Angry", MinWAttack:+40, MaxWAttack:+40, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30021, "the Motherless", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30022, "the Curious", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30023, "the Holy", Defense:+10, Protection:+30, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30024, "the Soon to be Extinct", Defense:+20, Protection:+20, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30025, "the Playing Dead", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30026, "the Dubious", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30027, "the Suspicious", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30028, "the Unconfirmed", Protection:+20, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30029, "the One that Awoke", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30030, "the Awakened", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30031, "the Recovered", Protection:+20, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30032, "the Unexpected", MinWAttack:+20, MaxWAttack:+40, Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30033, "the Unknown", Protection:+30, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30034, "the Ferocious", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30035, "the Wary", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30036, "the Sharp Clawed", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30037, "the Agitated", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
+30038, "the Ancient", Defense:+10, Protection:+10, MaxAttackRate:+200, MinAttackRate:+200, LifeRate:+1000, ManaRate:+200, StaminaRate:+200, HeightRate:+200
+30039, "the Rookie"
+30040, "the Trained"
+30041, "the Hardened"
+30042, "the Veteran"
+30043, "the Top Gun"
+30044, "the Intermediate Merc Summoner", Defense:+10, Protection:+5, Crit:+5, MaxAttackRate:+160, MinAttackRate:+160, LifeRate:+160
+30045, "the Advanced Merc Summoner", Defense:+30, Protection:+14, Crit:+10, MaxAttackRate:+270, MinAttackRate:+270, LifeRate:+270
+30046, "the Hard Merc Summoner", Defense:+40, Protection:+19, Crit:+15, MaxAttackRate:+420, MinAttackRate:+420, LifeRate:+420
+30047, "the Elite Merc Summoner", Defense:+60, Protection:+25, Crit:+25, MaxAttackRate:+600, MinAttackRate:+600, LifeRate:+600
+50000, "Erinn Expeditionary Force", Mana:+10, Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10, Defense:+1, Protection:+1
+50012, "the Sommelier", Int:+15, Dex:-7, Defense:-4, Protection:+2
+50013, "the Senior Sommelier", Int:+17, Dex:-9, Defense:-6, Protection:+3
+50014, "the Sommelier Sage", Int:+19, Dex:-11, Defense:-9, Protection:+4
+50015, "the Master Sommelier", Int:+20, Protection:+5
+50016, "the Wine Lover", Int:+10, Dex:-5, Defense:-3, Protection:+1
+50017, "유희킹", Str:+10, Luck:+10
+50018, "the Truth Seeker", Will:+5
+50019, "the Ambiguous", Luck:+5
+50020, "the Liar", Int:+5
+50021, "조금 약해보이는", CP:-250
+60000, "GM", Str:+200, Defense:+10, Protection:+10
+60001, "devCAT"
+60002, "devDOG"
+65535, "Example"
+
+// Transformations
+//---------------------------------------------------------------------------
+11007, "the Giant", Life:+1500, Defense:+20, Protection:+20
+40001, "the Paladin"
+40002, "the White Knight"
+40003, "the Holy Knight"
+40004, "the Champion"
+41001, "the Dark Knight"
+41002, "the Black Knight"
+41003, "the Chaos Knight"
+41004, "the Infra Black"
+42001, "the Falcon"
+42002, "the Falcon Justice"
+42003, "the Falcon Wave"
+42004, "the Falcon Sage"
+43001, "the Savage Beast"
+43002, "the Beast Slugger"
+43003, "the Iron Beast"
+43004, "the Beast Lord"
+
+// Pets
+//---------------------------------------------------------------------------
+50001, "the Attention Hog"
+50002, "the Money in the Bank"
+50003, "the Almost Healer"
+50004, "the Fashionista"
+50005, "the Precious"
+50006, "the Weakling"
+50007, "the Mobile ER"
+50008, "the Designated Healer"
+50009, "the Lucky Charm"
+50010, "the Boss Slayer"
+50011, "the Ghost Hunter"
+
+// Show-off
+//---------------------------------------------------------------------------
+12001, "the Master of Iceball"
+12002, "the Final Heart Master"
+12003, "the Ducky"
+12004, "the Ball Slayer with a Single Blow"
+12005, "the Savor of Erinn"
+12006, "the Elemental Miser"
+12007, "the Impra Black"
+12008, "the Rabbie Seal Faker"
+
+// NPC
+//---------------------------------------------------------------------------
+10183, "the Black Dragon's Honor Guard", Luck:+5
+10186, "Unknown", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
+10187, "Unknown", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
+10188, "Unknown", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
+10189, "Unknown", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
+10191, "the Love Soldier", Will:+7
+10194, "7년간 사랑한", Str:+7, Int:+7, Dex:+7, Will:+7, Luck:+7
+10200, "the Furious"
+10201, "the Lightning Quick"
+10202, "the Steadfast"
+10203, "the Fiery"
+10300, "the Wise"
+10301, "the Mysterious"
+10302, "the Well-Acquainted"
+10303, "the Mystic"
+10400, "the Meticulous"
+10401, "the Celebrity"
+10402, "the Precise"
+10403, "the Top Gun"
+10500, "the Courteous"
+10601, "Fashionogi Leader"
+10602, "Unknown", Str:+8, Int:+8, Dex:+8, Will:+8, Luck:+8
+10603, "Pierrot", Dex:+7
+10604, "Colossus"
+10605, "Huw", Life:+10, Str:+12, Dex:+12
+10606, "항마", Life:+10, Protection:+2
+10607, "Bell Fox", Life:+10
+10608, "Shamala", Stamina:+10
+10609, "the Halloween Haunter", Mana:+15
+10610, "Hatsune Miku"
+10611, "Kagamine Len", Crit:+2
+10612, "Kagamine Rin", Protection:+3
+10613, "Kaito", MagicAttack:+8
+10614, "Millia", Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
+10615, "Homestead", Luck:+10, Speed:+1
+10616, "Merchant Imp", Life:+30, Mana:+20
+10617, "God's Feather"
+10618, "Pan", Defense:+6, Protection:+6
+10619, "Ruwai", Speed:+1
+10620, "Romeo", Crit:+12
+10621, "Hamlet", Life:+10
+10622, "Juliet", Mana:+10
+10623, "Fleta"
+10624, "Shop Brownie", Stamina:+30
+10625, "Tarlach", Life:+10, Mana:+20
+10626, "Claudius", Life:+10, Defense:+6, Protection:+6
+10627, "Castanea", Mana:+20, Stamina:+10
+10628, "Carasek", Life:+30, Defense:+5, Protection:+5
+10629, "Eabha"
+10630, "Ailla", Defense:+6, Protection:+7
+10631, "Hamelin", Life:+30, Mana:+30
+10632, "Yvona"
+10633, "Effie"
+10634, "Kristell", Mana:+40
+10635, "Nessa", Stamina:+30, Defense:+5, Protection:+5
+10636, "Endelyon", Mana:+40, Defense:+6, Protection:+6
+10637, "Alissa", Life:+40
+10638, "Portia", Stamina:+20
+10639, "Edern", Stamina:+60
+10640, "Tupai"
+10641, "Eavan", Stamina:+40, Defense:+6, Protection:+6
+10642, "Aer"
+10643, "Succubus Kristell"
+10644, "Duncan", Defense:+8, Protection:+8, Crit:+3
+10645, "Ferghus", Stamina:+40
+10646, "Andras", Defense:+7, Protection:+7, Crit:+3
+10647, "Mabinogi", Crit:+15
+10648, "Ruairi", MaxAttack:+15, Crit:+10
+10649, "Redire", Defense:+8, Protection:+8, Crit:+5
+10650, "Nuadha", Crit:+30
+10651, "Mari", Crit:+5
+10652, "Dark Lord", Mana:+10, Defense:+9, Protection:+9
+10653, "Dark Ruairi", Life:+10, MaxAttack:+18, Crit:+10
+10654, "Morrighan", Life:+120, Crit:+15
+10655, "Transport Helper Ogre", Stamina:+30, Speed:+1
+10656, "Lileas", Mana:+30
+10657, "Fomor Token", Life:+40, MaxAttack:+10
+10658, "Ibbie", Life:+40, Defense:+6, Protection:+6
+10659, "Shena", Life:+30
+10660, "Adniel", Crit:+10
+10661, "Legatus", Crit:+10
+10662, "Master Tin", MagicAttack:+20
+10663, "Scathach", MagicAttack:+40
+10664, "Cichol", Mana:+120, Crit:+15
+10665, "Nao"
+10666, "Neamhain", Stamina:+120, Crit:+15
+10667, "Pierrick", MagicAttack:+12
+10668, "Rua", MagicAttack:+28, Crit:+10
+10669, "Del", Life:+10, Mana:+10, MaxAttack:+10
+10670, "Lassar", Stamina:+40, MagicAttack:+24
+10671, "Bebhinn", Mana:+30, Defense:+5, Protection:+5
+10672, "Emain Macha Beggar"
+10673, "실장(미적용)"
+10674, "Eirawen", Stamina:+10, Defense:+8, Protection:+8
+10675, "Kusina"
+10676, "the Lucky Snake", Luck:+30
+10677, "Lucky Bunny", Stamina:+25, Int:+5, Luck:+10
+10678, "아라드 전기", Luck:+30
+10679, "MapleStory", Luck:+30
+10682, "8주년을 기념하는", Str:+8, Int:+8, Dex:+8, Will:+8, Luck:+8, Speed:+8
+10683, "판타지스타", MagicDefense:+6, MagicProtection:+6
+10684, "Unknown", Defense:+10, Protection:+10
+10685, "Unknown", Speed:+3
+10686, "Unknown", Defense:+5, Protection:+5
+10687, "Unknown"
+10688, "Unknown"
+10689, "Unknown"
+10690, "Unknown", Str:+10, Speed:+2
+10691, "Unknown"
+10692, "Unknown", Will:+10, Luck:+15
+10693, "Unknown", Mana:+10, MagicAttack:+24
+10694, "Halloween Party", MagicDefense:+6, MagicProtection:+6
+10695, "Santa Claus", Str:+10, MaxAttack:+10, Crit:+5
+10696, "Gift Sack", Dex:+10, MinAttack:+5, MaxAttack:+5, Crit:+5
+10697, "Christmas Tree", Will:+10, MinAttack:+10, Crit:+5
+10698, "Red-Nosed", Int:+10, MagicAttack:+10, Crit:+5
+15000, "겨울 천사", Will:+10, MinAttack:+10, Crit:+5
+15001, "크리스마스에 눈이 내리면", Will:+10, MinAttack:+10, Crit:+5
+15002, "크리스마스에 비나 왔으면", Will:+10, MinAttack:+10, Crit:+5
+15003, "빙판길 조심", Will:+10, MinAttack:+10, Crit:+5

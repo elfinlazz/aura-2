@@ -67,13 +67,9 @@ namespace Aura.Channel.Database
 					{
 						while (reader.Read())
 						{
-							var character = this.GetCharacter<Character>(reader.GetInt64("entityId"), "characters");
+							var character = this.GetCharacter<Character>(account, reader.GetInt64("entityId"), "characters");
 							if (character == null)
 								continue;
-
-							// Add GM titles for the characters of authority 50+ accounts
-							if (account.Authority >= 50) character.Titles.Add(60000, TitleState.Usable); // GM
-							if (account.Authority >= 99) character.Titles.Add(60001, TitleState.Usable); // devCat
 
 							account.Characters.Add(character);
 						}
@@ -90,7 +86,7 @@ namespace Aura.Channel.Database
 					{
 						while (reader.Read())
 						{
-							var character = this.GetCharacter<Pet>(reader.GetInt64("entityId"), "pets");
+							var character = this.GetCharacter<Pet>(account, reader.GetInt64("entityId"), "pets");
 							if (character == null)
 								continue;
 
@@ -109,7 +105,7 @@ namespace Aura.Channel.Database
 					{
 						while (reader.Read())
 						{
-							var character = this.GetCharacter<Pet>(reader.GetInt64("entityId"), "partners");
+							var character = this.GetCharacter<Pet>(account, reader.GetInt64("entityId"), "partners");
 							if (character == null)
 								continue;
 
@@ -128,9 +124,11 @@ namespace Aura.Channel.Database
 		/// <typeparam name="TCreature"></typeparam>
 		/// <param name="entityId"></param>
 		/// <returns></returns>
-		private TCreature GetCharacter<TCreature>(long entityId, string table) where TCreature : PlayerCreature, new()
+		private TCreature GetCharacter<TCreature>(Account account, long entityId, string table) where TCreature : PlayerCreature, new()
 		{
 			var character = new TCreature();
+			ushort title = 0, optionTitle = 0;
+			float lifeDelta = 0, manaDelta = 0, staminaDelta = 0;
 
 			using (var conn = AuraDb.Instance.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `" + table + "` AS c INNER JOIN `creatures` AS cr ON c.creatureId = cr.creatureId WHERE `entityId` = @entityId", conn))
@@ -179,9 +177,10 @@ namespace Aura.Channel.Database
 					character.StaminaMaxBase = reader.GetFloat("staminaMax");
 					character.Injuries = reader.GetFloat("injuries");
 					character.Hunger = reader.GetFloat("hunger");
-					character.Life = character.LifeMax - reader.GetFloat("lifeDelta");
-					character.Mana = character.ManaMax - reader.GetFloat("manaDelta");
-					character.Stamina = character.StaminaMax - reader.GetFloat("staminaDelta");
+
+					lifeDelta = reader.GetFloat("lifeDelta");
+					manaDelta = reader.GetFloat("manaDelta");
+					staminaDelta = reader.GetFloat("staminaDelta");
 
 					character.StrBase = reader.GetFloat("str");
 					character.DexBase = reader.GetFloat("dex");
@@ -193,6 +192,9 @@ namespace Aura.Channel.Database
 					character.DexFoodMod = reader.GetFloat("dexFood");
 					character.WillFoodMod = reader.GetFloat("willFood");
 					character.LuckFoodMod = reader.GetFloat("luckFood");
+
+					title = reader.GetUInt16("title");
+					optionTitle = reader.GetUInt16("optionTitle");
 				}
 
 				character.LoadDefault();
@@ -202,6 +204,23 @@ namespace Aura.Channel.Database
 			this.GetCharacterKeywords(character);
 			this.GetCharacterTitles(character);
 			this.GetCharacterSkills(character);
+
+			// Add GM titles for the characters of authority 50+ accounts
+			if (account != null)
+			{
+				if (account.Authority >= 50) character.Titles.Add(60000, TitleState.Usable); // GM
+				if (account.Authority >= 99) character.Titles.Add(60001, TitleState.Usable); // devCAT
+				if (account.Authority >= 99) character.Titles.Add(60002, TitleState.Usable); // devDOG
+			}
+
+			// Init titles
+			if (title != 0) character.Titles.ChangeTitle(title, false);
+			if (optionTitle != 0) character.Titles.ChangeTitle(optionTitle, true);
+
+			// Calculate stats, not that we have modded the maxes
+			character.Life = (character.LifeMax - lifeDelta);
+			character.Mana = (character.ManaMax - manaDelta);
+			character.Stamina = (character.StaminaMax - staminaDelta);
 
 			return character;
 		}
@@ -416,6 +435,8 @@ namespace Aura.Channel.Database
 				cmd.Set("dexFood", creature.DexFoodMod);
 				cmd.Set("willFood", creature.WillFoodMod);
 				cmd.Set("luckFood", creature.LuckFoodMod);
+				cmd.Set("title", creature.Titles.SelectedTitle);
+				cmd.Set("optionTitle", creature.Titles.SelectedOptionTitle);
 
 				cmd.Execute();
 			}

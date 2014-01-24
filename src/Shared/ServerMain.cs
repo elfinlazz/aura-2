@@ -165,6 +165,11 @@ namespace Aura.Shared.Util
 				{
 					this.LoadDb(AuraData.KeywordDb, "db/keywords.txt", reload);
 				}
+
+				if ((toLoad & DataLoad.Titles) != 0)
+				{
+					this.LoadDb(AuraData.TitleDb, "db/titles.txt", reload);
+				}
 			}
 			catch (FileNotFoundException ex)
 			{
@@ -260,6 +265,7 @@ namespace Aura.Shared.Util
 		Pets = 0x2000,
 		Weather = 0x4000,
 		Keywords = 0x8000,
+		Titles = 0x10000,
 
 		All = 0xFFFFFFFF,
 

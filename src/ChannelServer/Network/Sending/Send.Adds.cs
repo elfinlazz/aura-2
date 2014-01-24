@@ -108,7 +108,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutFloat(0.5f);
 				packet.PutShort(creature.Level);
 				packet.PutInt(creature.LevelTotal);
-				packet.PutShort(0);                  // Max Level
+				packet.PutShort(0);                  // Max Level (reached ever?)
 				packet.PutShort(0);					 // Rebirthes
 				packet.PutShort(0);
 				packet.PutLong(AuraData.ExpDb.CalculateRemaining(creature.Level, creature.Exp) * 1000);
@@ -162,17 +162,16 @@ namespace Aura.Channel.Network.Sending
 				packet.PutShort(15);		         // RangeAttackRateMod
 				packet.PutFloat(0);			         // CriticalBase
 				packet.PutFloat(0);			         // CriticalMod
-				packet.PutFloat(0);			         // ProtectBase
+				packet.PutShort((short)creature.ProtectionBase);
 				packet.PutFloat(creature.ProtectionMod);
-				packet.PutShort(0);			         // DefenseBase
-				packet.PutShort(creature.DefenseMod);
+				packet.PutShort((short)creature.DefenseBase);
+				packet.PutShort((short)creature.DefenseMod);
 				packet.PutShort(0);			         // RateBase
 				packet.PutShort(0);			         // RateMod
 				packet.PutShort(0);			         // Rank1
 				packet.PutShort(0);			         // Rank2
 				// [180300, NA166 (18.09.2013)] New creature info
 				{
-					// From a KR log I had float here, NA has a short... my mistake?
 					packet.PutShort(0);			     // ArmorPierceMod
 				}
 				packet.PutLong(0);			         // Score
@@ -181,8 +180,8 @@ namespace Aura.Channel.Network.Sending
 				packet.PutShort(0);			         // WAttackMinBaseMod
 				packet.PutShort(0);			         // WAttackMaxBaseMod
 				packet.PutFloat(10);		         // CriticalBaseMod
-				packet.PutFloat(creature.ProtectionPassive * 100);
-				packet.PutShort(creature.DefensePassive);
+				packet.PutFloat(creature.ProtectionBaseMod);
+				packet.PutShort((short)creature.DefenseBaseMod);
 				packet.PutShort(30);		         // RateBaseMod
 				packet.PutShort(8);			         // MeleeAttackMinBaseMod
 				packet.PutShort(18);		         // MeleeAttackMaxBaseMod

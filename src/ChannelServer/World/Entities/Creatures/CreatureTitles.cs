@@ -2,9 +2,14 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Aura.Channel.Network.Sending;
+using Aura.Data;
+using Aura.Shared.Util;
+using Aura.Data.Database;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
@@ -14,9 +19,11 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		private Dictionary<ushort, TitleState> _list;
 
+		private TitleData _titleData, _optionTitleData;
+
 		public ushort SelectedTitle { get; set; }
 		public ushort SelectedOptionTitle { get; set; }
-		public DateTime Applied { get; set; }
+		public DateTime Applied { get; private set; }
 
 		public CreatureTitles(Creature creature)
 		{
@@ -90,7 +97,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// </summary>
 		/// <param name="titleId"></param>
 		/// <returns></returns>
-		public bool Usable(ushort titleId)
+		public bool IsUsable(ushort titleId)
 		{
 			lock (_list)
 				return (_list.ContainsKey(titleId) && _list[titleId] == TitleState.Usable);
@@ -103,7 +110,132 @@ namespace Aura.Channel.World.Entities.Creatures
 		public ICollection<KeyValuePair<ushort, TitleState>> GetList()
 		{
 			lock (_list)
-				return _list;
+				return _list.ToArray();
+		}
+
+		/// <summary>
+		/// Returns title or option title.
+		/// </summary>
+		/// <param name="option"></param>
+		/// <returns></returns>
+		private ushort GetTitle(bool option)
+		{
+			return (!option ? this.SelectedTitle : this.SelectedOptionTitle);
+		}
+
+		/// <summary>
+		/// Sets title or option title.
+		/// </summary>
+		/// <param name="titleId"></param>
+		/// <param name="option"></param>
+		private void SetTitle(ushort titleId, bool option)
+		{
+			if (!option)
+			{
+				this.SelectedTitle = titleId;
+				this.Applied = DateTime.Now;
+			}
+			else
+				this.SelectedOptionTitle = titleId;
+		}
+
+		/// <summary>
+		/// Tries to change title, returns false if anything goes wrong.
+		/// </summary>
+		/// <param name="titleId"></param>
+		/// <returns></returns>
+		public bool ChangeTitle(ushort titleId, bool option)
+		{
+			if (titleId == 0 && this.GetTitle(option) == 0)
+				return true;
+
+			if (titleId != 0 && !this.IsUsable(titleId))
+			{
+				this.SetTitle(0, option);
+				Log.Warning("Player '{0}' tried to use disabled title '{1}'.", _creature.Name, titleId);
+				return false;
+			}
+
+			TitleData data = null;
+			if (titleId != 0)
+			{
+				data = AuraData.TitleDb.Find(titleId);
+				if (data == null)
+				{
+					this.SetTitle(0, option);
+					Log.Warning("Player '{0}' tried to use unknown title '{1}'.", _creature.Name, titleId);
+					return false;
+				}
+			}
+
+			this.SwitchStatMods(data, option);
+			this.SetTitle(titleId, option);
+
+			if (_creature.Region != null)
+				Send.TitleUpdate(_creature);
+
+			return true;
+		}
+
+		/// <summary>
+		/// Removes previous stat mods and adds new ones.
+		/// </summary>
+		/// <param name="data"></param>
+		private void SwitchStatMods(TitleData data, bool option)
+		{
+			if ((!option ? _titleData : _optionTitleData) != null)
+				_creature.StatMods.Remove(StatModSource.Title, this.SelectedTitle);
+
+			if (data != null)
+			{
+				foreach (var effect in data.Effects)
+				{
+					switch (effect.Key)
+					{
+						case "Life":
+							_creature.StatMods.Add(Stat.LifeMaxMod, effect.Value, StatModSource.Title, data.Id);
+							_creature.Life = _creature.Life; // "Reset" stat (in case of reducation, stat = max)
+							break;
+						case "Mana":
+							_creature.StatMods.Add(Stat.ManaMaxMod, effect.Value, StatModSource.Title, data.Id);
+							_creature.Mana = _creature.Mana;
+							break;
+						case "Stamina":
+							// Adjust hunger to new max value, so Food stays
+							// at the same percentage.
+							var hungerRate = (100 / _creature.StaminaMax * _creature.Hunger) / 100f;
+
+							_creature.StatMods.Add(Stat.StaminaMaxMod, effect.Value, StatModSource.Title, data.Id);
+							_creature.Stamina = _creature.Stamina;
+							_creature.Hunger = _creature.StaminaMax * hungerRate;
+							break;
+						case "Str": _creature.StatMods.Add(Stat.StrMod, effect.Value, StatModSource.Title, data.Id); break;
+						case "Int": _creature.StatMods.Add(Stat.IntMod, effect.Value, StatModSource.Title, data.Id); break;
+						case "Dex": _creature.StatMods.Add(Stat.DexMod, effect.Value, StatModSource.Title, data.Id); break;
+						case "Will": _creature.StatMods.Add(Stat.WillMod, effect.Value, StatModSource.Title, data.Id); break;
+						case "Luck": _creature.StatMods.Add(Stat.LuckMod, effect.Value, StatModSource.Title, data.Id); break;
+						case "Defense": _creature.StatMods.Add(Stat.DefenseBaseMod, effect.Value, StatModSource.Title, data.Id); break;
+						case "Protection": _creature.StatMods.Add(Stat.ProtectionBaseMod, effect.Value, StatModSource.Title, data.Id); break;
+						default:
+							Log.Warning("SwitchStatMods: Unknown title effect '{0}' in title {1}.", effect.Key, data.Id);
+							break;
+					}
+				}
+			}
+
+			if (_creature.Region != null)
+			{
+				Send.StatUpdate(_creature, StatUpdateType.Private,
+					Stat.LifeMaxMod, Stat.Life, Stat.ManaMaxMod, Stat.Mana, Stat.StaminaMaxMod, Stat.Stamina, Stat.StrMod, Stat.IntMod, Stat.DexMod, Stat.WillMod, Stat.LuckMod,
+					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
+				);
+				Send.StatUpdate(_creature, StatUpdateType.Public, Stat.LifeMax);
+			}
+
+			if (!option)
+				_titleData = data;
+			else
+				_optionTitleData = data;
 		}
 	}
 

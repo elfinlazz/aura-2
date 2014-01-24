@@ -31,27 +31,8 @@ namespace Aura.Channel.Network.Handlers
 			if (creature == null)
 				return;
 
-			var titleSuccess = false;
-			var optionSuccess = false;
-
-			// Make sure the creature has this title
-			if (titleId == 0 || creature.Titles.Usable(titleId))
-			{
-				creature.Titles.SelectedTitle = titleId;
-				titleSuccess = true;
-			}
-
-			if (optionTitleId == 0 || creature.Titles.Usable(optionTitleId))
-			{
-				creature.Titles.SelectedOptionTitle = optionTitleId;
-				optionSuccess = true;
-			}
-
-			if (titleSuccess || optionSuccess)
-			{
-				creature.Titles.Applied = DateTime.Now;
-				Send.TitleUpdate(creature);
-			}
+			var titleSuccess = creature.Titles.ChangeTitle(titleId, false);
+			var optionSuccess = creature.Titles.ChangeTitle(optionTitleId, true);
 
 			Send.ChangeTitleR(creature, titleSuccess, optionSuccess);
 		}
