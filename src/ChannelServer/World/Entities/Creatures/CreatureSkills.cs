@@ -8,6 +8,7 @@ using System.Text;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.Skills;
 using Aura.Channel.Network.Sending;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
@@ -15,6 +16,9 @@ namespace Aura.Channel.World.Entities.Creatures
 	{
 		private Creature _creature;
 		private Dictionary<SkillId, Skill> _skills;
+
+		public float HighestSkillCp { get; private set; }
+		public float SecondHighestSkillCp { get; private set; }
 
 		public CreatureSkills(Creature creature)
 		{
@@ -40,6 +44,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		{
 			lock (_skills)
 				_skills[skill.Info.Id] = skill;
+
+			this.AddBonuses(skill);
 		}
 
 		/// <summary>
@@ -94,10 +100,10 @@ namespace Aura.Channel.World.Entities.Creatures
 				Send.SkillRankUp(_creature, skill);
 				Send.RankUp(_creature, skill.Info.Id);
 
+				this.AddBonuses(skill);
+
 				//EventManager.CreatureEvents.OnCreatureSkillChange(_creature, skill, false);
 			}
-
-			this.AddBonuses(skill);
 
 			Send.StatUpdate(_creature, StatUpdateType.Private, Stat.Str, Stat.Int, Stat.Dex, Stat.Will, Stat.Luck, Stat.Life, Stat.LifeMax, Stat.Mana, Stat.ManaMax, Stat.Stamina, Stat.StaminaMax);
 			Send.StatUpdate(_creature, StatUpdateType.Public, Stat.Life, Stat.LifeMax);
@@ -121,20 +127,22 @@ namespace Aura.Channel.World.Entities.Creatures
 			_creature.StaminaMaxBaseSkill += skill.RankData.StaminaTotal;
 			_creature.Stamina += skill.RankData.StaminaTotal;
 
-			//if (skill.Info.Id == SkillId.MeleeCombatMastery)
-			//{
-			//    _creature.StatMods.Add(Stat.LifeMaxMod, skill.RankData.Var3, StatModSource.SkillRank, skill.Info.Id);
-			//    _creature.Life += skill.RankData.Var3;
-			//}
-			//else if (skill.Info.Id == SkillId.MagicMastery)
-			//{
-			//    _creature.StatMods.Add(Stat.ManaMaxMod, skill.RankData.Var1, StatModSource.SkillRank, skill.Info.Id);
-			//    _creature.Mana += skill.RankData.Var1;
-			//}
-			//else if (skill.Info.Id == SkillId.Defense)
-			//{
-			//    _creature.DefenseBaseSkill += (int)skill.RankData.Var1;
-			//}
+			if (skill.Info.Id == SkillId.MeleeCombatMastery)
+			{
+				_creature.StatMods.Add(Stat.LifeMaxMod, skill.RankData.Var3, StatModSource.SkillRank, skill.Info.Id);
+				_creature.Life += skill.RankData.Var3;
+			}
+			else if (skill.Info.Id == SkillId.MagicMastery)
+			{
+				_creature.StatMods.Add(Stat.ManaMaxMod, skill.RankData.Var1, StatModSource.SkillRank, skill.Info.Id);
+				_creature.Mana += skill.RankData.Var1;
+			}
+			else if (skill.Info.Id == SkillId.Defense)
+			{
+				_creature.DefenseBaseSkill += (int)skill.RankData.Var1;
+			}
+
+			this.UpdateHighest();
 		}
 
 		/// <summary>
@@ -156,20 +164,50 @@ namespace Aura.Channel.World.Entities.Creatures
 			_creature.Stamina -= skill.RankData.StaminaTotal;
 			_creature.StaminaMaxBaseSkill -= skill.RankData.StaminaTotal;
 
-			//if (skill.Info.Id == SkillId.MeleeCombatMastery)
-			//{
-			//    _creature.Life -= skill.RankData.Var3;
-			//    _creature.StatMods.Remove(Stat.LifeMaxMod, StatModSource.SkillRank, skill.Info.Id);
-			//}
-			//else if (skill.Info.Id == SkillId.MagicMastery)
-			//{
-			//    _creature.Mana -= skill.RankData.Var1;
-			//    _creature.StatMods.Remove(Stat.ManaMaxMod, StatModSource.SkillRank, skill.Info.Id);
-			//}
-			//else if (skill.Info.Id == SkillId.Defense)
-			//{
-			//    _creature.DefenseBaseSkill -= (int)skill.RankData.Var1;
-			//}
+			if (skill.Info.Id == SkillId.MeleeCombatMastery)
+			{
+				_creature.Life -= skill.RankData.Var3;
+				_creature.StatMods.Remove(Stat.LifeMaxMod, StatModSource.SkillRank, skill.Info.Id);
+			}
+			else if (skill.Info.Id == SkillId.MagicMastery)
+			{
+				_creature.Mana -= skill.RankData.Var1;
+				_creature.StatMods.Remove(Stat.ManaMaxMod, StatModSource.SkillRank, skill.Info.Id);
+			}
+			else if (skill.Info.Id == SkillId.Defense)
+			{
+				_creature.DefenseBaseSkill -= (int)skill.RankData.Var1;
+			}
+
+			this.UpdateHighest();
+		}
+
+		/// <summary>
+		/// Updates highest skill CPs.
+		/// </summary>
+		private void UpdateHighest()
+		{
+			var highest = 0f;
+			var second = 0f;
+
+			lock (_skills)
+			{
+				foreach (var skill in _skills.Values)
+				{
+					if (skill.RankData.CP > highest)
+					{
+						second = highest;
+						highest = skill.RankData.CP;
+					}
+					else if (skill.RankData.CP > second)
+					{
+						second = skill.RankData.CP;
+					}
+				}
+			}
+
+			this.HighestSkillCp = highest;
+			this.SecondHighestSkillCp = second;
 		}
 	}
 }

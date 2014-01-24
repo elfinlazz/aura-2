@@ -49,6 +49,27 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public bool Save { get; set; }
 
+		public override float CombatPower
+		{
+			get
+			{
+				var cp = 0f;
+
+				cp += this.Skills.HighestSkillCp;
+				cp += this.Skills.SecondHighestSkillCp * 0.5f;
+				cp += this.LifeMaxBase;
+				cp += this.ManaMaxBase * 0.5f;
+				cp += this.StaminaMaxBase * 0.5f;
+				cp += this.StrBase;
+				cp += this.IntBase * 0.2f;
+				cp += this.DexBase * 0.1f;
+				cp += this.WillBase * 0.5f;
+				cp += this.LuckBase * 0.1f;
+
+				return cp;
+			}
+		}
+
 		public PlayerCreature()
 		{
 		}

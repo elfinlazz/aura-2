@@ -46,6 +46,8 @@ namespace Aura.Channel.World.Entities
 		public CreatureKeywords Keywords { get; protected set; }
 		public CreatureTitles Titles { get; protected set; }
 		public CreatureSkills Skills { get; protected set; }
+		public CreatureRegen Regens { get; protected set; }
+		public CreatureStatMods StatMods { get; protected set; }
 
 		// Look
 		// ------------------------------------------------------------------
@@ -138,22 +140,17 @@ namespace Aura.Channel.World.Entities
 
 		public virtual float CombatPower { get { return (this.RaceData != null ? this.RaceData.CombatPower : 1); } }
 
-		public float ProtectionMod { get; set; }
-		public float ProtectionPassive { get; set; }
-		public short DefenseMod { get; set; }
-		public short DefensePassive { get; set; }
-
 		public float StrBaseSkill { get; set; }
 		public float DexBaseSkill { get; set; }
 		public float IntBaseSkill { get; set; }
 		public float WillBaseSkill { get; set; }
 		public float LuckBaseSkill { get; set; }
 
-		public float StrMod { get; set; }
-		public float DexMod { get; set; }
-		public float IntMod { get; set; }
-		public float WillMod { get; set; }
-		public float LuckMod { get; set; }
+		public float StrMod { get { return this.StatMods.Get(Stat.Str); } }
+		public float DexMod { get { return this.StatMods.Get(Stat.Dex); } }
+		public float IntMod { get { return this.StatMods.Get(Stat.Int); } }
+		public float WillMod { get { return this.StatMods.Get(Stat.Will); } }
+		public float LuckMod { get { return this.StatMods.Get(Stat.Luck); } }
 
 		public float StrBase { get; set; }
 		public float DexBase { get; set; }
@@ -171,8 +168,6 @@ namespace Aura.Channel.World.Entities
 		public float Will { get { return this.WillBaseTotal + this.WillMod + this.WillFoodMod; } }
 		public float Luck { get { return this.LuckBaseTotal + this.LuckMod + this.LuckFoodMod; } }
 
-		public CreatureRegen Regens { get; protected set; }
-
 		// Food Mods
 		// ------------------------------------------------------------------
 
@@ -188,6 +183,38 @@ namespace Aura.Channel.World.Entities
 		public float WillFoodMod { get { return _willFoodMod; } set { _willFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
 		public float LuckFoodMod { get { return _luckFoodMod; } set { _luckFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
 
+		// Defense
+		// ------------------------------------------------------------------
+
+		public int ProtectionBase { get; set; }
+		public int ProtectionBaseSkill { get; set; }
+		public float ProtectionMod { get; set; }
+		public float ProtectionPassive
+		{
+			get
+			{
+				var result = this.ProtectionBase + this.ProtectionBaseSkill + this.StatMods.Get(Stat.ProtectMod);
+				result += this.Inventory.GetEquipmentProtection();
+
+				return (result / 100);
+			}
+		}
+		public int DefenseBase { get; set; }
+		public int DefenseBaseSkill { get; set; }
+		public short DefenseMod { get; set; }
+		public short DefensePassive
+		{
+			get
+			{
+				var result = this.DefenseBase + this.DefenseBaseSkill + this.StatMods.Get(Stat.DefenseBaseMod);
+				result += this.Inventory.GetEquipmentDefense();
+
+				return (short)result;
+			}
+		}
+
+		public short ArmorPierce { get { return (short)Math.Max(0, ((this.Dex - 10) / 15)); } }
+
 		// Life
 		// ------------------------------------------------------------------
 
@@ -195,9 +222,9 @@ namespace Aura.Channel.World.Entities
 		public float ManaMaxBaseSkill { get; set; }
 		public float StaminaMaxBaseSkill { get; set; }
 
-		public float LifeMaxMod { get; set; }
-		public float ManaMaxMod { get; set; }
-		public float StaminaMaxMod { get; set; }
+		public float LifeMaxMod { get { return this.StatMods.Get(Stat.LifeMaxMod); } }
+		public float ManaMaxMod { get { return this.StatMods.Get(Stat.ManaMaxMod); } }
+		public float StaminaMaxMod { get { return this.StatMods.Get(Stat.StaminaMaxMod); } }
 
 		private float _life, _injuries;
 		public float Life
@@ -283,6 +310,7 @@ namespace Aura.Channel.World.Entities
 			this.Inventory = new CreatureInventory(this);
 			this.Regens = new CreatureRegen(this);
 			this.Skills = new CreatureSkills(this);
+			this.StatMods = new CreatureStatMods(this);
 		}
 
 		/// <summary>
@@ -303,6 +331,9 @@ namespace Aura.Channel.World.Entities
 
 				Log.Warning("Race '{0}' not found, using human instead.", this.Race);
 			}
+
+			this.DefenseBase = this.RaceData.Defense;
+			this.ProtectionBase = this.RaceData.Protection;
 
 			this.Inventory.AddMainInventory();
 

@@ -527,7 +527,7 @@ namespace Aura.Channel.Util
 
 			Send.CreatureBodyUpdate(target);
 
-			Send.ServerMessage(sender, Localization.Get("gm.body_success"), val.ToString("0.0", CultureInfo.InvariantCulture)); // Change successful, new value: {0}
+			Send.ServerMessage(sender, Localization.Get("gm.body_success"), val.ToInvariant("0.0")); // Change successful, new value: {0}
 			if (sender != target)
 				Send.ServerMessage(target, Localization.Get("gm.body_target"), sender.Name); // Your appearance has been changed by {0}.
 
@@ -537,9 +537,9 @@ namespace Aura.Channel.Util
 		public CommandResult HandleCp(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
 			if (sender == target)
-				Send.ServerMessage(sender, Localization.Get("gm.cp_own"), target.CombatPower.ToString("0.0", CultureInfo.InvariantCulture)); // Your combat power: {0}
+				Send.ServerMessage(sender, Localization.Get("gm.cp_own"), target.CombatPower.ToInvariant("0.0")); // Your combat power: {0}
 			else
-				Send.ServerMessage(sender, Localization.Get("gm.cp_target"), target.Name, target.CombatPower); // {0}'s combat power: {1}
+				Send.ServerMessage(sender, Localization.Get("gm.cp_target"), target.Name, target.CombatPower.ToInvariant("0.0")); // {0}'s combat power: {1}
 
 			return CommandResult.Okay;
 		}

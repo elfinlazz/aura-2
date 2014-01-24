@@ -144,6 +144,7 @@
     <Compile Include="World\Entities\Creature.cs" />
     <Compile Include="World\Entities\Creatures\CreatureRegen.cs" />
     <Compile Include="World\Entities\Creatures\CreatureSkills.cs" />
+    <Compile Include="World\Entities\Creatures\CreatureStatMods.cs" />
     <Compile Include="World\Entities\Creatures\CreatureTemp.cs" />
     <Compile Include="World\Entities\Creatures\CreatureTitles.cs" />
     <Compile Include="World\Entities\Creatures\CreatureKeywords.cs" />

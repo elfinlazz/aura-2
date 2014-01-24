@@ -542,6 +542,11 @@ namespace Aura.Channel.World
 
 			if (target.IsEquip())
 				Send.EquipmentChanged(_creature, item);
+
+			if (source.IsEquip() || target.IsEquip())
+			{
+				Send.StatUpdate(_creature, StatUpdateType.Private, Stat.DefenseBaseMod, Stat.ProtectBaseMod);
+			}
 		}
 
 		/// <summary>
@@ -712,6 +717,36 @@ namespace Aura.Channel.World
 		public bool HasGold(int amount)
 		{
 			return this.Has(GoldItemId, amount);
+		}
+
+		/// <summary>
+		/// Returns defense granted by equipment.
+		/// </summary>
+		/// <returns></returns>
+		public int GetEquipmentDefense()
+		{
+			var result = 0;
+
+			foreach (var pocket in _pockets.Values.Where(a => (a.Pocket >= Pocket.Armor && a.Pocket <= Pocket.Robe) || (a.Pocket >= Pocket.Accessory1 && a.Pocket <= Pocket.Accessory2)))
+				foreach (var item in pocket.Items.Where(a => a != null))
+					result += item.OptionInfo.Defense;
+
+			return result;
+		}
+
+		/// <summary>
+		/// Returns protection granted by equipment.
+		/// </summary>
+		/// <returns></returns>
+		public int GetEquipmentProtection()
+		{
+			var result = 0;
+
+			foreach (var pocket in _pockets.Values.Where(a => (a.Pocket >= Pocket.Armor && a.Pocket <= Pocket.Robe) || (a.Pocket >= Pocket.Accessory1 && a.Pocket <= Pocket.Accessory2)))
+				foreach (var item in pocket.Items.Where(a => a != null))
+					result += item.OptionInfo.Protection;
+
+			return result;
 		}
 	}
 
