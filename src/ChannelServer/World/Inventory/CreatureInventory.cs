@@ -16,6 +16,8 @@ namespace Aura.Channel.World
 	{
 		private const int DefaultWidth = 6;
 		private const int DefaultHeight = 10;
+		private const int MaxWidth = 32;
+		private const int MaxHeight = 32;
 		private const int GoldItemId = 2000;
 		private const int GoldStackMax = 1000;
 
@@ -146,7 +148,18 @@ namespace Aura.Channel.World
 				Log.Warning("Race for creature '{0}' ({1}) not loaded before initializing main inventory.", _creature.Name, _creature.EntityIdHex);
 
 			var width = (_creature.RaceData != null ? _creature.RaceData.InventoryWidth : DefaultWidth);
+			if (width > MaxWidth)
+			{
+				width = MaxWidth;
+				Log.Warning("AddMainInventory: Width exceeds max, using {0} instead.", MaxWidth);
+			}
+
 			var height = (_creature.RaceData != null ? _creature.RaceData.InventoryHeight : DefaultHeight);
+			if (height > MaxHeight)
+			{
+				height = MaxHeight;
+				Log.Warning("AddMainInventory: Height exceeds max, limited to {0}, which will be used.", MaxHeight);
+			}
 
 			this.Add(new InventoryPocketNormal(Pocket.Inventory, width, height));
 			this.Add(new InventoryPocketNormal(Pocket.PersonalInventory, width, height));
