@@ -30,6 +30,7 @@ namespace Aura.Channel.World.Entities
 		public ItemOptionInfo OptionInfo;
 		public ItemData Data { get; protected set; }
 		public MabiDictionary Extra { get; protected set; }
+		public MabiDictionary Extra2 { get; protected set; }
 
 		private bool _firstTimeAppear = true;
 		/// <summary>
@@ -68,6 +69,7 @@ namespace Aura.Channel.World.Entities
 			this.SetNewEntityId();
 			this.Info.Id = itemId;
 			this.Extra = new MabiDictionary();
+			this.Extra2 = new MabiDictionary();
 
 			this.LoadDefault();
 		}
@@ -82,6 +84,7 @@ namespace Aura.Channel.World.Entities
 			this.OptionInfo = baseItem.OptionInfo;
 			this.Data = baseItem.Data;
 			this.Extra = new MabiDictionary(baseItem.Extra.ToString());
+			this.Extra2 = new MabiDictionary(baseItem.Extra2.ToString());
 			this.QuestId = baseItem.QuestId;
 
 			this.SetNewEntityId();

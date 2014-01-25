@@ -65,6 +65,7 @@ namespace Aura.Shared.Network
 		public const int Disappear = 0x4E2A;
 		//public const int GoRebirth = 0x4E32;
 		public const int WarpUnk1 = 0x4E39;
+		public const int PonsUpdate = 0x4E8F; // b:2, i:amount, sent on login
 
 		public const int ChannelCharacterInfoRequest = 0x5208;
 		public const int ChannelCharacterInfoRequestR = 0x5209;
@@ -201,6 +202,8 @@ namespace Aura.Shared.Network
 		public const int NpcShopBuyItemR = 0x7151;
 		public const int NpcShopSellItem = 0x7152;
 		public const int NpcShopSellItemR = 0x7153;
+		public const int ClearNpcShop = 0x7158; // Empties tabs
+		public const int AddToNpcShop = 0x7159; // Adds items while shop is open, works like open
 		public const int OpenNpcShop = 0x715E;
 		public const int OpenMail = 0x7242;
 		public const int CloseMail = 0x7243;

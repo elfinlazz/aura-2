@@ -21,6 +21,13 @@ public class TestScript : NpcScript
 		item.OptionInfo.DucatPrice = 100;
 		Shop.Add("Etc", item);
 		
+		item = new Item(50001);
+		item.Info.Color1 = 0xFF0000;
+		// ducats > stars > gold
+		item.OptionInfo.DucatPrice = 2000;
+		item.OptionInfo.PonsPrice = 2000;
+		Shop.Add("Etc", item);
+		
 		AddPhrase("hey there");
 	}
 

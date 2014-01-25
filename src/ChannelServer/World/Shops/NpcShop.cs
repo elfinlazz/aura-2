@@ -20,6 +20,12 @@ namespace Aura.Channel.World.Shops
 	/// be possible I suppose. AddItem/AddDucatItem?
 	/// 
 	/// Selling items always uses gold (option to sell for ducats?).
+	/// 
+	/// Aside from Ducats and Gold there are two more currencies,
+	/// Stars and Pons. The client will show the buy currency based on
+	/// the values set, Duncan > Stars > Gold.
+	/// Pons overweights everything, but it's displayed alongside
+	/// other prices if they aren't 0.
 	/// </remarks>
 	public class NpcShop
 	{

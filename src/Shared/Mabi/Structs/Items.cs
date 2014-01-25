@@ -83,8 +83,8 @@ namespace Aura.Shared.Mabi.Structs
 		public int StackRemainingTime;
 		public int JoustPointPrice;
 		public int DucatPrice;
-		private int __unknown1;
-		private int __unknown2;
+		public int StarPrice;
+		public int PonsPrice;
 		private int __unknown3;
 	}
 }
