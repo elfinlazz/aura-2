@@ -178,6 +178,8 @@ namespace Aura.Channel.Util
 			//    Send.ServerMessage(sender, "Arg{0}: {1}", i, args[i]);
 			//}
 
+			//Log.Debug(target.Inventory.RemoveGold(10000));
+
 			Send.ServerMessage(sender, "test, test");
 
 			return CommandResult.Okay;

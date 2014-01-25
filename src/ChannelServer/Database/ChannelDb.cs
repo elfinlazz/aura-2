@@ -234,7 +234,7 @@ namespace Aura.Channel.Database
 			var items = this.GetItems(character.CreatureId);
 			foreach (var item in items)
 			{
-				if (!character.Inventory.InitAdd(item, item.Info.Pocket))
+				if (!character.Inventory.InitAdd(item))
 				{
 					Log.Error("GetCharacterItems: Unable to add item '{0}' ({1}) to inventory.", item.Info.Id, item.EntityId);
 				}
