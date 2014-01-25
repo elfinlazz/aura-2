@@ -323,7 +323,7 @@ namespace Aura.Shared.Network
 		public const int ArenaRoundInfo = 0x9667;
 		public const int ArenaRoundInfoCancel = 0x9668;
 
-		public const int StatusEffectUpdate = 0xA028;
+		public const int ConditionUpdate = 0xA028;
 		public const int DyePaletteReq = 0xA418;
 		public const int DyePaletteReqR = 0xA419;
 		public const int DyePickColor = 0xA41A;

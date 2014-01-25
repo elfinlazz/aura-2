@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Shared.Mabi.Const
 {
-	public enum CreatureConditionA : ulong
+	[Flags]
+	public enum ConditionsA : ulong
 	{
 		Poisoned = 0x0000000000000001,
 		Deadly = 0x0000000000000002,
@@ -71,7 +74,8 @@ namespace Aura.Shared.Mabi.Const
 		WeaponAttackBoost = 0x8000000000000000,
 	}
 
-	public enum CreatureConditionB : ulong
+	[Flags]
+	public enum ConditionsB : ulong
 	{
 		Transparent = 0x0000000000000001,
 		CombatExpPlus1_1 = 0x0000000000000002,
@@ -139,7 +143,8 @@ namespace Aura.Shared.Mabi.Const
 		ChatColorChange = 0x8000000000000000,
 	}
 
-	public enum CreatureConditionC : ulong
+	[Flags]
+	public enum ConditionsC : ulong
 	{
 		CombatExpBoost = 0x0000000000000001,
 		DamageCurse = 0x0000000000000002,
@@ -207,7 +212,8 @@ namespace Aura.Shared.Mabi.Const
 		BomberMan = 0x8000000000000000,
 	}
 
-	public enum CreatureConditionD : ulong
+	[Flags]
+	public enum ConditionsD : ulong
 	{
 		MusicOfHaste = 0x0000000000000001,
 		MagicalMusic = 0x0000000000000002,
@@ -270,21 +276,25 @@ namespace Aura.Shared.Mabi.Const
 		DukeTemptation = 0x0800000000000000,
 		EmergencyEscape = 0x1000000000000000,
 		Clocking = 0x2000000000000000,
+		BeginnerPetBonus = 0x4000000000000000,
+		GhostVoice = 0x8000000000000000,
 	}
 
-	public struct CreatureCondition
+	[Flags]
+	public enum ConditionsE : ulong
 	{
-		public CreatureConditionA A;
-		public CreatureConditionB B;
-		public CreatureConditionC C;
-		public CreatureConditionD D;
-
-		public void Clear()
-		{
-			A = 0;
-			B = 0;
-			C = 0;
-			D = 0;
-		}
+		SlientVoice = 0x0000000000000001,
+		BeastCry = 0x0000000000000002,
+		DanceTime = 0x0000000000000004,
+		GhostBerserk = 0x0000000000000008,
+		ProtectofChineseZombie = 0x0000000000000010,
+		HalloweenChannelBuff = 0x0000000000000020,
+		HalloweenWorldQuest = 0x0000000000000040,
+		IriaSkyRacingBoost = 0x0000000000000080,
+		SpeedDown = 0x0000000000000100,
+		Transformation = 0x0000000000000200,
+		Stun = 0x0000000000000400,
+		IriaSkyRacingWindBoost = 0x0000000000000800,
+		FreezeUsableItem = 0x0000000000001000,
 	}
 }

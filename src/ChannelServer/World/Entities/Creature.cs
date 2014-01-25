@@ -35,8 +35,6 @@ namespace Aura.Channel.World.Entities
 		public CreatureStates State { get; set; }
 		public CreatureStatesEx StateEx { get; set; }
 
-		public CreatureCondition Conditions { get; set; }
-
 		public int Race { get; set; }
 		public RaceData RaceData { get; protected set; }
 
@@ -48,6 +46,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureSkills Skills { get; protected set; }
 		public CreatureRegen Regens { get; protected set; }
 		public CreatureStatMods StatMods { get; protected set; }
+		public CreatureConditions Conditions { get; protected set; }
 
 		// Look
 		// ------------------------------------------------------------------
@@ -315,6 +314,7 @@ namespace Aura.Channel.World.Entities
 			this.Regens = new CreatureRegen(this);
 			this.Skills = new CreatureSkills(this);
 			this.StatMods = new CreatureStatMods(this);
+			this.Conditions = new CreatureConditions(this);
 		}
 
 		/// <summary>
@@ -442,7 +442,13 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public float GetSpeed()
 		{
-			return (!this.IsWalking ? this.RaceData.RunningSpeed : this.RaceData.WalkingSpeed);
+			var multiplicator = 1f;
+
+			// Hurry condition
+			var hurry = this.Conditions.GetExtraVal(169);
+			multiplicator += hurry / 100f;
+
+			return (!this.IsWalking ? this.RaceData.RunningSpeed : this.RaceData.WalkingSpeed) * multiplicator;
 		}
 
 		/// <summary>
@@ -476,10 +482,6 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public abstract bool Warp(int regionId, int x, int y);
 
-		public bool Has(CreatureConditionA condition) { return ((this.Conditions.A & condition) != 0); }
-		public bool Has(CreatureConditionB condition) { return ((this.Conditions.B & condition) != 0); }
-		public bool Has(CreatureConditionC condition) { return ((this.Conditions.C & condition) != 0); }
-		public bool Has(CreatureConditionD condition) { return ((this.Conditions.D & condition) != 0); }
 		public bool Has(CreatureStates state) { return ((this.State & state) != 0); }
 
 		/// <summary>

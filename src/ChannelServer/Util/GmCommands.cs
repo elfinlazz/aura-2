@@ -42,6 +42,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "item", "<id|name> [amount|color1 [color2 [color 3]]]", HandleItem);
 			Add(50, 50, "skill", "<id> [rank]", HandleSkill);
 			Add(50, 50, "title", "<id>", HandleTitle);
+			Add(50, 50, "speed", "[increase]", HandleSpeed);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -600,6 +601,27 @@ namespace Aura.Channel.Util
 			Send.SystemMessage(sender, Localization.Get("gm.title_success")); // Added title.
 			if (sender != target)
 				Send.SystemMessage(target, Localization.Get("gm.title_target"), sender.Name); // {0} enabled a title for you.
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleSpeed(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			short speed = 0;
+			if (args.Length > 1 && !short.TryParse(args[1], out speed))
+				return CommandResult.InvalidArgument;
+
+			speed = (short)Math2.MinMax(0, 1000, speed);
+
+			if (speed == 0)
+				target.Conditions.Deactivate(ConditionsC.Hurry);
+			else
+				target.Conditions.Activate(ConditionsC.Hurry, speed);
+
+			Send.SystemMessage(sender, Localization.Get("gm.speed_success"), speed); // Speed changed to +{0}%.
+			if (sender != target)
+				Send.SystemMessage(target, Localization.Get("gm.speed_target"), speed, sender.Name); // Your speed has been changed to +{0}% by {1}.
+
 
 			return CommandResult.Okay;
 		}

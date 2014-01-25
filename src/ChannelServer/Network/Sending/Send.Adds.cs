@@ -412,28 +412,9 @@ namespace Aura.Channel.Network.Sending
 			// --------------------------------------------------------------
 			packet.AddPvPInfo(creature);
 
-			// Statuses
+			// Conditions
 			// --------------------------------------------------------------
-			packet.PutULong((ulong)creature.Conditions.A);
-			packet.PutULong((ulong)creature.Conditions.B);
-			packet.PutULong((ulong)creature.Conditions.C);
-			// [150100] New conditions list
-			{
-				packet.PutULong((ulong)creature.Conditions.D);
-			}
-			// [180300, NA169 (23.10.2013)] New conditions list?
-			{
-				packet.PutULong(0);
-			}
-			packet.PutInt(0);					 // condition event message list
-			// loop
-			//   packet.PutInt
-			//   packet.PutString
-
-			// [180100] Zero Talent
-			{
-				packet.PutLong(0);
-			}
+			packet.AddConditions(creature.Conditions);
 
 			// Guild
 			// --------------------------------------------------------------
@@ -1178,6 +1159,39 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt((int)regen.Stat);
 			packet.PutByte(0); // ?
 			packet.PutFloat(regen.Max);
+
+			return packet;
+		}
+
+		private static Packet AddConditions(this Packet packet, CreatureConditions conditions)
+		{
+			packet.PutULong((ulong)conditions.A);
+			packet.PutULong((ulong)conditions.B);
+			packet.PutULong((ulong)conditions.C);
+			// [150100] New conditions list
+			{
+				packet.PutULong((ulong)conditions.D);
+			}
+			// [180300, NA169 (23.10.2013)] New conditions list?
+			{
+				packet.PutULong((ulong)conditions.E);
+			}
+
+			// List of additional values for the conditions
+			var extra = conditions.GetExtraList();
+			packet.PutInt(extra.Count);
+			foreach (var e in extra)
+			{
+				packet.PutInt(e.Key);
+				packet.PutString(e.Value.ToString());
+			}
+
+			// [180100] ? (old: Zero Talent?)
+			{
+				// This might not be part of the conditions, but we need that
+				// long in both cases (5209 and update).
+				packet.PutLong(0);
+			}
 
 			return packet;
 		}

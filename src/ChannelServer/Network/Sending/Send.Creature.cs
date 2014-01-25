@@ -296,5 +296,17 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Broadcasts ConditionUpdate in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void ConditionUpdate(Creature creature)
+		{
+			var packet = new Packet(Op.ConditionUpdate, creature.EntityId);
+			packet.AddConditions(creature.Conditions);
+
+			creature.Region.Broadcast(packet, creature);
+		}
 	}
 }

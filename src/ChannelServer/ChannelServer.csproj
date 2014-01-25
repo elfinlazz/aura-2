@@ -142,6 +142,7 @@
     <Compile Include="Util\GmCommands.cs" />
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\Creature.cs" />
+    <Compile Include="World\Entities\Creatures\CreatureConditions.cs" />
     <Compile Include="World\Entities\Creatures\CreatureRegen.cs" />
     <Compile Include="World\Entities\Creatures\CreatureSkills.cs" />
     <Compile Include="World\Entities\Creatures\CreatureStatMods.cs" />

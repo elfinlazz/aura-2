@@ -55,3 +55,7 @@ cp_target		{0}'s combat power: {1}
 // >title
 title_success	Added title.
 title_target	{0} enabled a title for you.
+
+// >speed
+speed_success	Speed changed to +{0}%.
+speed_target	Your speed has been changed to +{0}% by {1}.

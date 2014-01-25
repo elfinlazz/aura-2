@@ -36,6 +36,14 @@ namespace Aura.Shared.Mabi
 			_cache = null;
 		}
 
+		public void SetByte(string key, byte val) { this.Set(key, val); }
+		public void SetShort(string key, short val) { this.Set(key, val); }
+		public void SetInt(string key, int val) { this.Set(key, val); }
+		public void SetLong(string key, long val) { this.Set(key, val); }
+		public void SetFloat(string key, float val) { this.Set(key, val); }
+		public void SetString(string key, string val) { this.Set(key, val); }
+		public void SetBool(string key, bool val) { this.Set(key, val); }
+
 		/// <summary>
 		/// Returns the value with the given key, or null it wasn't found.
 		/// </summary>
