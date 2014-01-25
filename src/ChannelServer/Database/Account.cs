@@ -32,9 +32,12 @@ namespace Aura.Channel.Database
 			this.LastLogin = DateTime.Now;
 		}
 
-		public Character GetCharacter(long entityId)
+		public PlayerCreature GetCharacter(long entityId)
 		{
-			return this.Characters.FirstOrDefault(a => a.EntityId == entityId);
+			PlayerCreature result = this.Characters.FirstOrDefault(a => a.EntityId == entityId);
+			if (result == null)
+				result = this.Pets.FirstOrDefault(a => a.EntityId == entityId);
+			return result;
 		}
 	}
 }
