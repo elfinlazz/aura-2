@@ -205,7 +205,7 @@ namespace Aura.Shared.Util
 				// It's okay if user dbs don't exist.
 				if (File.Exists(userPath))
 				{
-					db.Load(path, false);
+					db.Load(userPath, false);
 
 					foreach (var ex in db.Warnings)
 						Log.Warning(ex.ToString());
