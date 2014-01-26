@@ -2,7 +2,7 @@
 // Database file
 // 
 // Structure:
-// Age  Race  Ap  Life  Mana  Stamine  Str  Int  Dex  Will  Luck
+// Age  Race  Ap  Life  Mana  Stamina  Str  Int  Dex  Will  Luck
 //---------------------------------------------------------------------------
 
 // Human
