@@ -105,8 +105,11 @@ namespace Aura.Channel.World.Entities.Creatures
 				//EventManager.CreatureEvents.OnCreatureSkillChange(_creature, skill, false);
 			}
 
-			Send.StatUpdate(_creature, StatUpdateType.Private, Stat.Str, Stat.Int, Stat.Dex, Stat.Will, Stat.Luck, Stat.Life, Stat.LifeMax, Stat.Mana, Stat.ManaMax, Stat.Stamina, Stat.StaminaMax);
-			Send.StatUpdate(_creature, StatUpdateType.Public, Stat.Life, Stat.LifeMax);
+			Send.StatUpdate(_creature, StatUpdateType.Private,
+				Stat.Str, Stat.Int, Stat.Dex, Stat.Will, Stat.Luck,
+				Stat.Life, Stat.LifeMaxMod, Stat.LifeMax, Stat.Mana, Stat.ManaMaxMod, Stat.ManaMax, Stat.Stamina, Stat.StaminaMaxMod, Stat.StaminaMax
+			);
+			Send.StatUpdate(_creature, StatUpdateType.Public, Stat.Life, Stat.LifeMaxMod, Stat.LifeMax);
 		}
 
 		/// <summary>

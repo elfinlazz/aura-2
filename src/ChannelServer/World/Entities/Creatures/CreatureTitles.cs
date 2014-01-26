@@ -229,7 +229,7 @@ namespace Aura.Channel.World.Entities.Creatures
 					Stat.LifeMaxMod, Stat.Life, Stat.ManaMaxMod, Stat.Mana, Stat.StaminaMaxMod, Stat.Stamina, Stat.StrMod, Stat.IntMod, Stat.DexMod, Stat.WillMod, Stat.LuckMod,
 					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
 				);
-				Send.StatUpdate(_creature, StatUpdateType.Public, Stat.LifeMax);
+				Send.StatUpdate(_creature, StatUpdateType.Public, Stat.Life, Stat.LifeMaxMod, Stat.LifeMax);
 			}
 
 			if (!option)
