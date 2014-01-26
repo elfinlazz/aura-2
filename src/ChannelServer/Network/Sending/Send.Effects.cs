@@ -65,5 +65,22 @@ namespace Aura.Channel.Network.Sending
 
 			sender.Region.Broadcast(packet, sendFrom);
 		}
+
+		/// <summary>
+		/// Broadcasts PetAction in range of pet.
+		/// </summary>
+		/// <param name="pet"></param>
+		/// <param name="action"></param>
+		public static void PetActionEffect(Creature pet, PetAction action)
+		{
+			var packet = new Packet(Op.Effect, pet.EntityId);
+			packet.PutInt(E.PetAction);
+			packet.PutLong(pet.Master.EntityId);
+			packet.PutByte((byte)action);
+			packet.PutByte(0);
+
+			pet.Region.Broadcast(packet, pet);
+
+		}
 	}
 }

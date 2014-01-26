@@ -65,6 +65,7 @@
     <Compile Include="Mabi\Const\Locks.cs" />
     <Compile Include="Mabi\Const\MabiId.cs" />
     <Compile Include="Database\AuraDb.cs" />
+    <Compile Include="Mabi\Const\Pets.cs" />
     <Compile Include="Mabi\Const\Skills.cs" />
     <Compile Include="Mabi\Const\Stats.cs" />
     <Compile Include="Mabi\MabiDictionary.cs" />

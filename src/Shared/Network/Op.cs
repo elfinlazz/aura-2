@@ -334,7 +334,7 @@ namespace Aura.Shared.Network
 		public const int DyePickColor = 0xA41A;
 		public const int DyePickColorR = 0xA41B;
 		public const int Transformation = 0xA41C;
-		public const int PetUnknown = 0xA41D;
+		public const int PetAction = 0xA41D;
 		public const int SharpMind = 0xA41E;
 		public const int MoonGateInfoRequest = 0xA428;
 		public const int MoonGateInfoRequestR = 0xA429;

@@ -101,39 +101,31 @@ namespace Aura.Channel.Network.Handlers
 		}
 
 		/// <summary>
-		/// ?
+		/// Sent by pet to perform some action, like admiring the master
+		/// (sitting down with a heart, looking at him), bear dancing, etc.
 		/// </summary>
 		/// <remarks>
-		/// Purpose unknown, sent every 1X~2X secs by the pet,
-		/// first parameter is the character.
-		/// Server doesn't seem to respond directly to it,
-		/// but sometimes it's followed by a "..." chat msg and/or an effect.
-		/// Though the effect doesn't seem to do anything?
+		/// Called "set_emotion" in client side AIs?
+		/// Officials let the pets say "..." sometimes,
+		/// maybe random on action 0?
 		/// </remarks>
 		/// <example>
 		/// 001 [0010000000000002] Long   : 4503599627370498
 		/// 002 [..............01] Byte   : 1
 		/// </example>
-		[PacketHandler(Op.PetUnknown)]
-		public void PetUnknown(ChannelClient client, Packet packet)
+		[PacketHandler(Op.PetAction)]
+		public void PetAction(ChannelClient client, Packet packet)
 		{
 			var entityId = packet.GetLong();
-			var unkByte = packet.GetByte();
+			var action = (PetAction)packet.GetByte();
 
 			var pet = client.GetCreature(packet.Id);
 			if (pet == null)
 				return;
 
-			var rnd = RandomProvider.Get();
-			if (rnd.NextDouble() < 0.1)
-				Send.Chat(pet, "...");
+			//Send.Chat(pet, "...");
 
-			//var pp = new Packet(Op.Effect, pet.EntityId);
-			//pp.PutInt(19);
-			//pp.PutLong(entityId);
-			//pp.PutByte(0);
-			//pp.PutByte(0);
-			//client.Send(pp);
+			Send.PetActionEffect(pet, action);
 		}
 
 		/// <summary>

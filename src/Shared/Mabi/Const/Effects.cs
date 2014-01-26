@@ -56,10 +56,10 @@ namespace Aura.Shared.Mabi.Const
 		public static readonly int StopMusic = 18;
 
 		/// <summary>
-		/// Used with special pets like Ice Dragon on spawn, and when reviving.
-		/// long:creatureId, byte:0, byte:0
+		/// Used for various pet actions, like dancing, admiring, etc.
+		/// long:masterId?, byte:0~?, byte:0
 		/// </summary>
-		public static readonly int SomePetEffect = 19;
+		public static readonly int PetAction = 19;
 
 		/// <summary>
 		/// White flash.
