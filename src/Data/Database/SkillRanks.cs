@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Aura.Data.Database
@@ -60,7 +61,10 @@ namespace Aura.Data.Database
 		public float Var9 { get; internal set; }
 	}
 
-	public class SkillRankDb : DatabaseCSV<SkillRankData>
+	/// <summary>
+	/// Indexed by skill id, race id, and rank.
+	/// </summary>
+	public class SkillRankDb : DatabaseCSVIndexed<int, Dictionary<int, Dictionary<int, SkillRankData>>>
 	{
 		public override int Load(string path, bool clear)
 		{
@@ -71,34 +75,32 @@ namespace Aura.Data.Database
 
 		protected void CalculateTotals()
 		{
-			var skills = this.Entries.Select(c => c.SkillId).Distinct().ToList();
+			//var skills = this.Entries.Select(c => c.SkillId).Distinct().ToList();
 
-			foreach (var skillId in skills)
+			foreach (var skillList in this.Entries.Values)
 			{
-				float lifeT = 0, manaT = 0, staminaT = 0, strT = 0, intT = 0, dexT = 0, willT = 0, luckT = 0;
-
-				for (byte i = 0; i <= 18; i++) // Novice -> D3
+				foreach (var raceList in skillList.Values)
 				{
-					var sInfo = this.Find(skillId, i);
+					float lifeT = 0, manaT = 0, staminaT = 0, strT = 0, intT = 0, dexT = 0, willT = 0, luckT = 0;
 
-					if (sInfo != null)
+					for (byte i = 0; i <= 18; i++) // Novice -> D3
 					{
-						sInfo.DexTotal = (dexT += sInfo.Dex);
-						sInfo.IntTotal = (intT += sInfo.Int);
-						sInfo.LifeTotal = (lifeT += sInfo.Life);
-						sInfo.LuckTotal = (luckT += sInfo.Luck);
-						sInfo.ManaTotal = (manaT += sInfo.Mana);
-						sInfo.StaminaTotal = (staminaT += sInfo.Stamina);
-						sInfo.StrTotal = (strT += sInfo.Str);
-						sInfo.WillTotal = (willT += sInfo.Will);
+						var sInfo = raceList.GetValueOrDefault(i);
+
+						if (sInfo != null)
+						{
+							sInfo.DexTotal = (dexT += sInfo.Dex);
+							sInfo.IntTotal = (intT += sInfo.Int);
+							sInfo.LifeTotal = (lifeT += sInfo.Life);
+							sInfo.LuckTotal = (luckT += sInfo.Luck);
+							sInfo.ManaTotal = (manaT += sInfo.Mana);
+							sInfo.StaminaTotal = (staminaT += sInfo.Stamina);
+							sInfo.StrTotal = (strT += sInfo.Str);
+							sInfo.WillTotal = (willT += sInfo.Will);
+						}
 					}
 				}
 			}
-		}
-
-		public SkillRankData Find(ushort id, byte rank)
-		{
-			return this.Entries.FirstOrDefault(a => a.SkillId == id && a.Rank == rank);
 		}
 
 		[MinFieldCount(36)]
@@ -142,7 +144,12 @@ namespace Aura.Data.Database
 			info.Var8 = entry.ReadFloat();
 			info.Var9 = entry.ReadFloat();
 
-			this.Entries.Add(info);
+			if (!this.Entries.ContainsKey(info.SkillId))
+				this.Entries[info.SkillId] = new Dictionary<int, Dictionary<int, SkillRankData>>();
+			if (!this.Entries[info.SkillId].ContainsKey(info.Race))
+				this.Entries[info.SkillId][info.Race] = new Dictionary<int, SkillRankData>();
+
+			this.Entries[info.SkillId][info.Race][info.Rank] = info;
 		}
 	}
 }

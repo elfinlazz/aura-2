@@ -13,27 +13,32 @@ namespace Aura.Data.Database
 		public ushort MasterTitle { get; internal set; }
 		public byte MaxRank { get; internal set; }
 
-		public List<SkillRankData> RankData { get; internal set; }
+		public Dictionary<int, Dictionary<int, SkillRankData>> RankData { get; internal set; }
 
-		public SkillData()
+		public SkillRankData GetRankData(byte rank, int raceId)
 		{
-			this.RankData = new List<SkillRankData>();
+			raceId = raceId & ~3;
+
+			// Check race specific first, fall back to default (0).
+			var skill = this.RankData.GetValueOrDefault(raceId);
+			if (skill == null)
+				if ((skill = this.RankData.GetValueOrDefault(0)) == null)
+					return null;
+
+			return skill.GetValueOrDefault(rank);
 		}
 
-		public SkillRankData GetRankData(byte level, int race)
+		public SkillRankData GetFirstRankData(int raceId)
 		{
-			race = race & ~3;
+			raceId = raceId & ~3;
 
-			SkillRankData info;
-			if ((info = this.RankData.FirstOrDefault(a => a.Rank == level && a.Race == race)) == null)
-			{
-				if ((info = this.RankData.FirstOrDefault(a => a.Rank == level && a.Race == 0)) == null)
-				{
+			// Check race specific first, fall back to default (0).
+			var skill = this.RankData.GetValueOrDefault(raceId);
+			if (skill == null)
+				if ((skill = this.RankData.GetValueOrDefault(0)) == null)
 					return null;
-				}
-			}
 
-			return info;
+			return skill.Values.First();
 		}
 	}
 
@@ -57,9 +62,12 @@ namespace Aura.Data.Database
 			info.Name = entry.ReadString();
 			info.MasterTitle = entry.ReadUShort();
 
-			info.RankData.AddRange(AuraData.SkillRankDb.Entries.FindAll(a => a.SkillId == info.Id).OrderBy(a => a.Rank));
-			if (info.RankData.Count > 0)
-				info.MaxRank = info.RankData.Last().Rank;
+			info.RankData = AuraData.SkillRankDb.Find(info.Id);
+			if (info.RankData != null && info.RankData.Count > 0)
+			{
+				var rankList = info.RankData.Values.First();
+				info.MaxRank = rankList.Values.Last().Rank;
+			}
 
 			this.Entries[info.Id] = info;
 		}

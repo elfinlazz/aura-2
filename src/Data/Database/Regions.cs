@@ -41,7 +41,6 @@ namespace Aura.Data.Database
 			info.Id = entry.ReadInt();
 			info.Name = entry.ReadString();
 
-			var exists = this.Entries.ContainsKey(info.Name);
 			this.Entries[info.Name] = info;
 		}
 	}

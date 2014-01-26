@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Aura.Data.Database
 {
 	public class StatsBaseData
 	{
+		public ushort Race { get; internal set; }
 		public byte Age { get; internal set; }
-		public short Race { get; internal set; }
 
 		public byte AP { get; internal set; }
 		public byte Life { get; internal set; }
@@ -21,19 +22,24 @@ namespace Aura.Data.Database
 		public byte Luck { get; internal set; }
 	}
 
-	public class StatsBaseDb : DatabaseCSV<StatsBaseData>
+	public class StatsBaseDb : DatabaseCSVIndexed<int, Dictionary<int, StatsBaseData>>
 	{
 		/// <summary>
 		/// Returns the age info (base stats) for the given race
 		/// at the given age, or null.
 		/// </summary>
-		/// <param name="race">0 = Human, 1 = Elf, 2 = Giant</param>
+		/// <param name="raceId">0 = Human, 1 = Elf, 2 = Giant</param>
 		/// <param name="age">10-17</param>
 		/// <returns></returns>
-		public StatsBaseData Find(int race, byte age)
+		public StatsBaseData Find(int raceId, byte age)
 		{
-			race = (race & ~3);
-			return this.Entries.FirstOrDefault(a => a.Race == race && a.Age == age);
+			raceId = (raceId & ~3);
+
+			var race = this.Entries.GetValueOrDefault(raceId);
+			if (race == null)
+				return null;
+
+			return race.GetValueOrDefault(age);
 		}
 
 		[MinFieldCount(11)]
@@ -41,7 +47,7 @@ namespace Aura.Data.Database
 		{
 			var info = new StatsBaseData();
 			info.Age = entry.ReadByte();
-			info.Race = entry.ReadShort();
+			info.Race = entry.ReadUShort();
 			info.AP = entry.ReadByte();
 			info.Life = entry.ReadByte();
 			info.Mana = entry.ReadByte();
@@ -52,7 +58,10 @@ namespace Aura.Data.Database
 			info.Will = entry.ReadByte();
 			info.Luck = entry.ReadByte();
 
-			this.Entries.Add(info);
+			if (!this.Entries.ContainsKey(info.Race))
+				this.Entries[info.Race] = new Dictionary<int, StatsBaseData>();
+
+			this.Entries[info.Race][info.Age] = info;
 		}
 	}
 }

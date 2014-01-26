@@ -16,11 +16,19 @@ namespace Aura.Data.Database
 		public uint Color3 { get; internal set; }
 	}
 
-	public class CharCardSetDb : DatabaseCSV<CharCardSetData>
+	public class CharCardSetDb : DatabaseCSVIndexed<int, Dictionary<int, List<CharCardSetData>>>
 	{
-		public List<CharCardSetData> Find(int setId, int race)
+		public List<CharCardSetData> Find(int setId, int raceId)
 		{
-			return this.Entries.FindAll(a => a.SetId == setId && a.Race == race);
+			var set = this.Entries.GetValueOrDefault(setId);
+			if (set == null)
+				return null;
+
+			var raceSet = set.GetValueOrDefault(raceId);
+			if (raceSet == null)
+				return null;
+
+			return raceSet;
 		}
 
 		[MinFieldCount(7)]
@@ -35,7 +43,12 @@ namespace Aura.Data.Database
 			info.Color2 = entry.ReadUIntHex();
 			info.Color3 = entry.ReadUIntHex();
 
-			this.Entries.Add(info);
+			if (!this.Entries.ContainsKey(info.SetId))
+				this.Entries[info.SetId] = new Dictionary<int, List<CharCardSetData>>();
+			if (!this.Entries[info.SetId].ContainsKey(info.Race))
+				this.Entries[info.SetId][info.Race] = new List<CharCardSetData>();
+
+			this.Entries[info.SetId][info.Race].Add(info);
 		}
 	}
 }

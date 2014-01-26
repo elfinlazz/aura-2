@@ -54,12 +54,10 @@ namespace Aura.Channel.Skills
 
 			if ((this.RankData = skillData.GetRankData((byte)this.Info.Rank, _race)) == null)
 			{
-				if (skillData.RankData.Count == 0)
+				if ((this.RankData = skillData.GetFirstRankData(_race)) == null)
 					throw new Exception("Skill.LoadRankData: No rank data found for '" + this.Info.Id.ToString() + "@" + this.Info.Rank.ToString() + "'.");
 
-				this.RankData = skillData.RankData[0];
-
-				Log.Warning("Skill.LoadRankData: Missing rank data for '{0}', using '{1}' instead.", this.Info.Rank, (SkillRank)this.RankData.Rank);
+				Log.Warning("Skill.LoadRankData: Missing rank data for '{0},{1}', using '{2}' instead.", this.Info.Id, this.Info.Rank, (SkillRank)this.RankData.Rank);
 			}
 
 			this.Info.MaxRank = (SkillRank)skillData.MaxRank;
