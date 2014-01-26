@@ -8,6 +8,7 @@ using System.Text;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Channel.World;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -61,6 +62,45 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(0);
 			packet.PutByte(0);
 			packet.PutByte(1);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts Effect in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="parameters"></param>
+		public static void Effect(Creature creature, int effectId, params object[] parameters)
+		{
+			var packet = new Packet(Op.Effect, creature.EntityId);
+			packet.PutInt(effectId);
+			foreach (var p in parameters)
+			{
+				if (p is byte) packet.PutByte((byte)p);
+				else if (p is short) packet.PutShort((short)p);
+				else if (p is int) packet.PutInt((int)p);
+				else if (p is long) packet.PutLong((long)p);
+				else if (p is float) packet.PutFloat((float)p);
+				else if (p is string) packet.PutString((string)p);
+				else
+					throw new Exception("Unsupported effect parameter: " + p.GetType());
+			}
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Sends Disappear to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Should this be broadcasted? What does it even do? TODO.
+		/// </remarks>
+		/// <param name="creature"></param>
+		public static void Disappear(Creature creature)
+		{
+			var packet = new Packet(Op.Disappear, MabiId.Channel);
+			packet.PutLong(creature.EntityId);
 
 			creature.Client.Send(packet);
 		}

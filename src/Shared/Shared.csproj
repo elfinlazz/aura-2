@@ -60,6 +60,7 @@
     <Compile Include="Database\Commands.cs" />
     <Compile Include="Mabi\Const\Conditions.cs" />
     <Compile Include="Mabi\Const\CreatureStates.cs" />
+    <Compile Include="Mabi\Const\Effects.cs" />
     <Compile Include="Mabi\Const\Items.cs" />
     <Compile Include="Mabi\Const\Locks.cs" />
     <Compile Include="Mabi\Const\MabiId.cs" />

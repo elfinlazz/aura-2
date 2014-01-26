@@ -302,11 +302,11 @@ namespace Aura.Shared.Network
 		public const int ChangeTitleR = 0x8FC6;
 
 		public const int PetRegister = 0x9024;
-		public const int PetUnRegister = 0x9025;
-		public const int PetSummon = 0x902C;
-		public const int PetSummonR = 0x902D;
-		public const int PetUnsummon = 0x9031;
-		public const int PetUnsummonR = 0x9032;
+		public const int PetUnregister = 0x9025;
+		public const int SummonPet = 0x902C;
+		public const int SummonPetR = 0x902D;
+		public const int UnsummonPet = 0x9031;
+		public const int UnsummonPetR = 0x9032;
 		public const int HitProp = 0x9088;
 		public const int HitPropR = 0x9089;
 		public const int HittingProp = 0x908A;
@@ -332,7 +332,7 @@ namespace Aura.Shared.Network
 		public const int DyePickColor = 0xA41A;
 		public const int DyePickColorR = 0xA41B;
 		public const int Transformation = 0xA41C;
-		//public const int Pet??? = 0xA41D;
+		public const int PetUnknown = 0xA41D;
 		public const int SharpMind = 0xA41E;
 		public const int MoonGateInfoRequest = 0xA428;
 		public const int MoonGateInfoRequestR = 0xA429;
@@ -348,6 +348,8 @@ namespace Aura.Shared.Network
 
 		public const int MailsRequest = 0xA897;
 		public const int MailsRequestR = 0xA898;
+		//public const int PetAi? = 0xA8A2;
+		//public const int PetAi?R = 0xA8A3; // response mentions oasis
 		public const int WarpUnk3 = 0xA8AF;
 		public const int UmbrellaJump = 0xA8E0;
 		public const int UmbrellaJumpR = 0xA8E1;

@@ -158,9 +158,10 @@ namespace Aura.Channel.World
 			if (height > MaxHeight)
 			{
 				height = MaxHeight;
-				Log.Warning("AddMainInventory: Height exceeds max, limited to {0}, which will be used.", MaxHeight);
+				Log.Warning("AddMainInventory: Height exceeds max, using {0} instead.", MaxHeight);
 			}
 
+			// TODO: Race check
 			this.Add(new InventoryPocketNormal(Pocket.Inventory, width, height));
 			this.Add(new InventoryPocketNormal(Pocket.PersonalInventory, width, height));
 			this.Add(new InventoryPocketNormal(Pocket.VIPInventory, width, height));

@@ -179,8 +179,6 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(1);
 
 			creature.Region.Broadcast(packet, creature);
-
-			//ChannelServer.Instance.World.CreatureStatsUpdate(creature);
 		}
 
 		/// <summary>
@@ -195,8 +193,6 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(1);
 
 			creature.Region.Broadcast(packet, creature);
-
-			//ChannelServer.Instance.World.CreatureStatsUpdate(creature);
 		}
 
 		/// <summary>

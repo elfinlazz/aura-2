@@ -47,7 +47,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Check character
-			var character = account.GetCharacter(characterId);
+			var character = account.GetCharacterOrPet(characterId);
 			if (character == null)
 			{
 				Log.Warning("ChannelLogin handler: Account ({0}) doesn't contain character ({1}).", accountId, characterId);
@@ -155,6 +155,12 @@ namespace Aura.Channel.Network.Handlers
 			{
 				Send.ChannelCharacterInfoRequestR_Fail(client);
 				return;
+			}
+
+			if (creature.Master != null)
+			{
+				var pos = creature.GetPosition();
+				Send.Effect(creature.Master, Effect.Spawn, creature.RegionId, (float)pos.X, (float)pos.Y, SpawnEffect.Pet);
 			}
 
 			// Infamous 5209, aka char info

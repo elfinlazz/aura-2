@@ -461,13 +461,13 @@ namespace Aura.Channel.Network.Sending
 				//   packet.PutShort
 			}
 
-			// Follower
+			// Following a master
 			// --------------------------------------------------------------
 			if (type == CreaturePacketType.Private)
 			{
-				if (creature.Owner != null)
+				if (creature.Master != null)
 				{
-					packet.PutLong(creature.Owner.EntityId);
+					packet.PutLong(creature.Master.EntityId);
 					packet.PutByte(2);               // Type (1:RPCharacter, 2:Pet, 3:Transport, 4:PartnerVehicle)
 					packet.PutByte(0);				 // SubType
 				}
@@ -495,9 +495,9 @@ namespace Aura.Channel.Network.Sending
 
 			// Pet
 			// --------------------------------------------------------------
-			if (creature.Owner != null)
+			if (creature.Master != null)
 			{
-				packet.PutString(creature.Owner.Name);
+				packet.PutString(creature.Master.Name);
 
 				if (type == CreaturePacketType.Private)
 				{
@@ -509,12 +509,12 @@ namespace Aura.Channel.Network.Sending
 					packet.PutLong(DateTime.Now);		// SummonTime
 					packet.PutByte(0);					// KeepingMode
 					packet.PutLong(0);					// KeepingProp
-					packet.PutLong(creature.Owner.EntityId);
+					packet.PutLong(creature.Master.EntityId);
 					packet.PutByte(0);					// PetSealCount {PSCNT}
 				}
 				else if (type == CreaturePacketType.Public)
 				{
-					packet.PutLong(creature.Owner.EntityId);
+					packet.PutLong(creature.Master.EntityId);
 					packet.PutByte(0);				 // KeepingMode
 					packet.PutLong(0);				 // KeepingProp
 				}

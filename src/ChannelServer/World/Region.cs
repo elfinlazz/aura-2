@@ -259,8 +259,9 @@ namespace Aura.Channel.World
 
 			creature.Region = null;
 
-			lock (_clients)
-				_clients.Remove(creature.Client);
+			if (creature.Client.Controlling == creature)
+				lock (_clients)
+					_clients.Remove(creature.Client);
 
 			if (creature.EntityId < MabiId.Npcs)
 				Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
@@ -526,14 +527,13 @@ namespace Aura.Channel.World
 			var maxY = Math.Max(from.Y, to.Y) + VisibleRange;
 
 			// Linear movement equation
-			var slope = (to.Y == from.Y ? 0.001 : (to.Y - from.Y) / (to.X - from.X));
+			var slope = (to.Y == from.Y ? 0.001 : (to.Y - from.Y) / Math.Max(1, (to.X - from.X)));
 			var b = from.Y - slope * from.X;
 
 			// Activation
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-
 				foreach (NPC npc in _creatures.Values.Where(a => a.Is(EntityType.NPC)))
 				{
 					var pos = npc.GetPosition();

@@ -38,7 +38,8 @@ namespace Aura.Channel.World.Entities
 		public int Race { get; set; }
 		public RaceData RaceData { get; protected set; }
 
-		public Creature Owner { get; set; }
+		public Creature Master { get; set; }
+		public Creature Pet { get; set; }
 
 		public CreatureTemp Temp { get; protected set; }
 		public CreatureKeywords Keywords { get; protected set; }
@@ -47,6 +48,12 @@ namespace Aura.Channel.World.Entities
 		public CreatureRegen Regens { get; protected set; }
 		public CreatureStatMods StatMods { get; protected set; }
 		public CreatureConditions Conditions { get; protected set; }
+
+		public bool IsPlayer { get { return (this.EntityType == EntityType.Character || this.EntityType == EntityType.Pet); } }
+
+		public bool IsHuman { get { return (this.Race == 10001 || this.Race == 10002); } }
+		public bool IsElf { get { return (this.Race == 9001 || this.Race == 9002); } }
+		public bool IsGiant { get { return (this.Race == 8001 || this.Race == 8002); } }
 
 		// Look
 		// ------------------------------------------------------------------
@@ -378,6 +385,23 @@ namespace Aura.Channel.World.Entities
 			var yt = _position.Y + (_movementY * passed);
 
 			return new Position((int)xt, (int)yt);
+		}
+
+		/// <summary>
+		/// Sets region, x, and y, to be near entity.
+		/// Also randomizes direction.
+		/// </summary>
+		/// <param name="entity"></param>
+		/// <param name="range"></param>
+		public void SetLocationNear(Entity entity, int range)
+		{
+			var rnd = RandomProvider.Get();
+			var pos = entity.GetPosition();
+			var target = pos.GetRandomInRange(range, rnd);
+			var dir = (byte)rnd.Next(255);
+
+			this.SetLocation(entity.RegionId, target.X, target.Y);
+			this.Direction = dir;
 		}
 
 		/// <summary>
