@@ -535,7 +535,7 @@ namespace Aura.Channel.Database
 					using (var cmd = new InsertCommand("INSERT INTO `items` {0}", conn, transaction))
 					{
 						cmd.Set("creatureId", creature.CreatureId);
-						if (item.EntityId < MabiId.Items)
+						if (item.EntityId < MabiId.TmpItems)
 							cmd.Set("entityId", item.EntityId);
 						cmd.Set("itemId", item.Info.Id);
 						cmd.Set("pocket", (byte)item.Info.Pocket);
