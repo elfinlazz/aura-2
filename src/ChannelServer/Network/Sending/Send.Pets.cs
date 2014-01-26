@@ -72,5 +72,18 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends TelePetR to pet's client.
+		/// </summary>
+		/// <param name="pet"></param>
+		/// <param name="success"></param>
+		public static void TelePetR(Creature pet, bool success)
+		{
+			var packet = new Packet(Op.TelePetR, pet.EntityId);
+			packet.PutByte(success);
+
+			pet.Client.Send(packet);
+		}
 	}
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities.Creatures;
 using Aura.Shared.Util;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.World.Entities
 {
@@ -94,6 +95,7 @@ namespace Aura.Channel.World.Entities
 			this.LastLocation = new Location(this.RegionId, this.GetPosition());
 			this.SetLocation(regionId, x, y);
 			this.Warping = true;
+			Send.CharacterLock(this, Locks.Default);
 			Send.EnterRegion(this);
 
 			return true;

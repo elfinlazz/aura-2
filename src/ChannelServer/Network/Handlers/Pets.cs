@@ -135,5 +135,41 @@ namespace Aura.Channel.Network.Handlers
 			//pp.PutByte(0);
 			//client.Send(pp);
 		}
+
+		/// <summary>
+		/// Sent by pet if it's far away from the master, to get near him.
+		/// </summary>
+		/// <remarks>
+		/// TODO: Don't forget to make this safe when adding mounts.
+		/// </remarks>
+		/// <example>
+		/// 001 [..............01] Byte   : 1
+		/// 002 [........00000001] Int    : 1
+		/// 003 [........00002CE6] Int    : 11494
+		/// 004 [........0000922F] Int    : 37423
+		/// </example>
+		[PacketHandler(Op.TelePet)]
+		public void TelePet(ChannelClient client, Packet packet)
+		{
+			var unkByte = packet.GetByte();
+			var regionId = packet.GetInt();
+			var x = packet.GetInt();
+			var y = packet.GetInt();
+
+			var pet = client.GetPlayerCreature(packet.Id);
+			if (pet == null || pet.Master == null)
+				return;
+
+			if (pet.Master.RegionId != pet.RegionId)
+			{
+				Log.Warning("Illegal pet teleport by '{0}'.", packet.Id.ToString("X16"));
+				Send.TelePetR(pet, false);
+				return;
+			}
+
+			pet.Warp(pet.RegionId, x, y);
+
+			Send.TelePetR(pet, true);
+		}
 	}
 }

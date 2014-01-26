@@ -307,6 +307,8 @@ namespace Aura.Shared.Network
 		public const int SummonPetR = 0x902D;
 		public const int UnsummonPet = 0x9031;
 		public const int UnsummonPetR = 0x9032;
+		public const int TelePet = 0x9033;
+		public const int TelePetR = 0x9034;
 		public const int HitProp = 0x9088;
 		public const int HitPropR = 0x9089;
 		public const int HittingProp = 0x908A;
