@@ -8,6 +8,7 @@ using System.Text;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Channel.World;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -61,6 +62,21 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(0);
 			packet.PutByte(0);
 			packet.PutByte(1);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends Disappear to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Should this be broadcasted? What does it even do? TODO.
+		/// </remarks>
+		/// <param name="creature"></param>
+		public static void Disappear(Creature creature)
+		{
+			var packet = new Packet(Op.Disappear, MabiId.Channel);
+			packet.PutLong(creature.EntityId);
 
 			creature.Client.Send(packet);
 		}

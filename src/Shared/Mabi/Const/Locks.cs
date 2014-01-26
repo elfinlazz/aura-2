@@ -37,7 +37,7 @@ namespace Aura.Shared.Mabi.Const
 		// ------------------------------------------------------------------
 
 		/// <summary>
-		/// Chat, Moving, [...]
+		/// Chat, Moving, [...] (0xEFFFFFFE)
 		/// </summary>
 		/// <remarks>
 		/// Set on login, warping, etc.

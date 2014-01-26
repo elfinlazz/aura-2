@@ -273,12 +273,8 @@ namespace Aura.Channel.Scripting.Scripts
 
 			var pos = this.Creature.GetPosition();
 			var rnd = RandomProvider.Get();
-			var distance = rnd.Next(minDistance, maxDistance);
 
-			var angle = rnd.NextDouble() * Math.PI * 2;
-			var x = pos.X + distance * Math.Cos(angle);
-			var y = pos.Y + distance * Math.Sin(angle);
-			var destination = new Position((int)x, (int)y);
+			var destination = pos.GetRandomInRange(minDistance, maxDistance, rnd);
 
 			var time = Math.Ceiling(pos.GetDistance(destination) / this.Creature.GetSpeed());
 			var targetTime = _timestamp + time;
