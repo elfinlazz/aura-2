@@ -105,6 +105,7 @@ namespace Aura.Channel.Network.Handlers
 			creature.Save = true;
 
 			var firstSpawn = (creature.Region == null);
+			var pos = creature.GetPosition();
 
 			region.AddCreature(creature);
 
@@ -115,8 +116,10 @@ namespace Aura.Channel.Network.Handlers
 			else
 				Send.WarpRegion(creature);
 
-			var pos = creature.GetPosition();
 			creature.Region.ActivateAis(creature, pos, pos);
+
+			foreach (var c in client.Creatures.Values.Where(a => a.RegionId != creature.RegionId))
+				creature.Pet.Warp(creature.RegionId, pos.X, pos.Y);
 
 			// Automatically done by the world update
 			//Send.EntitiesAppear(client, region.GetEntitiesInRange(creature));
