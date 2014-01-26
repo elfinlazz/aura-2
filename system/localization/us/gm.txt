@@ -40,9 +40,9 @@ ii_for			{0}: {1}, Type: {2}
 ii_res			Results: {0} (Max. {1} shown)
 
 // >skillinfo
-si_none			No skills found.
-si_for			{0}: {1} (Max Rank: {2})
-si_res			Results: {0} (Max. 20 shown)
+si_none			No skills found for '{0}'.
+si_for			{0}: {1}
+si_res			Results: {0} (Max. {1} shown)
 
 // >height, weight, etc.
 body_success	Change successful, new value: {0}
