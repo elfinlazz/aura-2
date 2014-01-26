@@ -92,7 +92,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var pos = pet.StopMove();
 
-			Send.Effect(creature, Effect.Spawn, pet.RegionId, (float)pos.X, (float)pos.Y, SpawnEffect.PetDespawn);
+			Send.SpawnEffect(SpawnEffect.PetDespawn, creature.RegionId, pos.X, pos.Y, creature, pet);
 			if (pet.Region != null)
 				pet.Region.RemoveCreature(pet);
 			Send.PetUnregister(creature, pet);

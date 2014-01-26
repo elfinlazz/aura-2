@@ -133,14 +133,14 @@ namespace Aura.Shared.Mabi.Const
 		public static readonly int CherryBlossoms = 345;
 	}
 
-	public static class SpawnEffect
+	public enum SpawnEffect : byte
 	{
-		public static readonly byte Monster = 0;
-		public static readonly byte Pet = 1;
-		public static readonly byte PetDespawn = 2;
-		public static readonly byte MonsterDespawn = 3;
-		public static readonly byte Golem = 4;
-		public static readonly byte GolemDespawn = 5;
+		Monster = 0,
+		Pet = 1,
+		PetDespawn = 2,
+		MonsterDespawn = 3,
+		Golem = 4,
+		GolemDespawn = 5,
 		//GolemDespawn = 6, // ?
 		//Demi? = 7, // ?
 		//Demi? = 8, // ?

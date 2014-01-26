@@ -103,6 +103,7 @@
     <Compile Include="Network\Handlers\Misc.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Handlers\NPCs.cs" />
+    <Compile Include="Network\Sending\Send.Effects.cs" />
     <Compile Include="Network\Sending\Send.Pets.cs" />
     <Compile Include="Network\Sending\Send.Skills.cs" />
     <Compile Include="Network\Sending\Send.Items.cs" />

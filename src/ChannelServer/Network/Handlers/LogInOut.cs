@@ -160,7 +160,7 @@ namespace Aura.Channel.Network.Handlers
 			if (creature.Master != null)
 			{
 				var pos = creature.GetPosition();
-				Send.Effect(creature.Master, Effect.Spawn, creature.RegionId, (float)pos.X, (float)pos.Y, SpawnEffect.Pet);
+				Send.SpawnEffect(SpawnEffect.Pet, creature.RegionId, pos.X, pos.Y, creature.Master, creature);
 			}
 
 			// Infamous 5209, aka char info
