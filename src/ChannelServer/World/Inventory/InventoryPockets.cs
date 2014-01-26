@@ -136,7 +136,12 @@ namespace Aura.Channel.World
 			if (targetX + newItem.Data.Width > _width || targetY + newItem.Data.Height > _height)
 				return false;
 
-			collidingItem = this.GetCollidingItem(targetX, targetY, newItem);
+			var collidingItems = this.GetCollidingItems(targetX, targetY, newItem);
+			if (collidingItems.Count > 1)
+				return false;
+
+			if (collidingItems.Count > 0)
+				collidingItem = collidingItems[0];
 
 			if (collidingItem != null && ((collidingItem.Data.StackType == StackType.Sac && (collidingItem.Data.StackItem == newItem.Info.Id || collidingItem.Data.StackItem == newItem.Data.StackItem)) || (newItem.Data.StackType == StackType.Stackable && newItem.Info.Id == collidingItem.Info.Id)))
 			{
@@ -195,8 +200,10 @@ namespace Aura.Channel.World
 			}
 		}
 
-		protected Item GetCollidingItem(uint targetX, uint targetY, Item item)
+		protected List<Item> GetCollidingItems(uint targetX, uint targetY, Item item)
 		{
+			var result = new List<Item>();
+
 			for (var x = targetX; x < targetX + item.Data.Width; ++x)
 			{
 				for (var y = targetY; y < targetY + item.Data.Height; ++y)
@@ -205,13 +212,11 @@ namespace Aura.Channel.World
 						continue;
 
 					if (_map[x, y] != null)
-					{
-						return _map[x, y];
-					}
+						result.Add(_map[x, y]);
 				}
 			}
 
-			return null;
+			return result;
 		}
 
 		public override bool Remove(Item item)
@@ -234,7 +239,7 @@ namespace Aura.Channel.World
 					if (_map[x, y] != null)
 						continue;
 
-					if (this.GetCollidingItem(x, y, item) == null)
+					if (this.GetCollidingItems(x, y, item).Count == 0)
 					{
 						item.Move(this.Pocket, x, y);
 						this.AddUnsafe(item);
