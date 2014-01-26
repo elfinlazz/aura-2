@@ -8,6 +8,9 @@
 /user/conf/*.conf
 !/user/conf/database-example.conf
 
+/user/db/*.txt
+!/user/conf/races-example.txt
+
 #################
 ## Visual Studio
 #################

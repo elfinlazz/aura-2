@@ -272,6 +272,69 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Moving item between char and pet, used from handler.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="other"></param>
+		/// <param name="target"></param>
+		/// <param name="targetX"></param>
+		/// <param name="targetY"></param>
+		/// <returns></returns>
+		public bool MovePet(Item item, Creature other, Pocket target, int targetX, int targetY)
+		{
+			if (!this.Has(target) || !other.Inventory.Has(target))
+				return false;
+
+			var source = item.Info.Pocket;
+			var amount = item.Info.Amount;
+			//var newItem = new Item(item);
+
+			Item collidingItem = null;
+			if (!other.Inventory._pockets[target].TryAdd(item, (byte)targetX, (byte)targetY, out collidingItem))
+				return false;
+
+			// If amount differs (item was added to stack)
+			if (collidingItem != null && item.Info.Amount != amount)
+			{
+				Send.ItemAmount(other, collidingItem);
+
+				// Left overs, update
+				if (item.Info.Amount > 0)
+				{
+					Send.ItemAmount(_creature, item);
+				}
+				// All in, remove from cursor.
+				else
+				{
+					_pockets[item.Info.Pocket].Remove(item);
+					Send.ItemRemove(_creature, item);
+				}
+			}
+			else
+			{
+				// Remove the item from the source pocket
+				_pockets[source].Remove(item);
+				Send.ItemRemove(_creature, item, source);
+
+				if (collidingItem != null)
+				{
+					// Remove colliding item
+					Send.ItemRemove(other, collidingItem, target);
+
+					// Toss it in, it should be the cursor.
+					_pockets[source].Add(collidingItem);
+					Send.ItemNew(_creature, collidingItem);
+				}
+
+				Send.ItemNew(other, item);
+
+				Send.ItemMoveInfo(_creature, item, source, collidingItem);
+			}
+
+			return true;
+		}
+
+		/// <summary>
 		/// Tries to put item into the inventory, by filling stacks and adding it.
 		/// If it was completely added to the inventory, it's removed
 		/// from the region the inventory's creature is in.

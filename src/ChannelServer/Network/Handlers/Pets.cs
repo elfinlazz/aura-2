@@ -163,5 +163,107 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.TelePetR(pet, true);
 		}
+
+		/// <summary>
+		/// Sent when moving an item into the pet inventory.
+		/// </summary>
+		/// <example>
+		/// 0001 [0010010000064D26] Long   : 4504699139411238
+		/// 0002 [005000CC171C5B9A] Long   : 22518874697915290
+		/// 0003 [0000000000000000] Long   : 0
+		/// 0004 [........00000002] Int    : 2
+		/// 0005 [........00000003] Int    : 3
+		/// 0006 [........00000003] Int    : 3
+		/// </example>
+		[PacketHandler(Op.PutItemIntoPetInv)]
+		public void PutItemIntoPetInv(ChannelClient client, Packet packet)
+		{
+			var petEntityId = packet.GetLong();
+			var itemEntityId = packet.GetLong();
+			var unkLong = packet.GetLong();
+			var pocket = (Pocket)packet.GetInt();
+			var x = packet.GetInt();
+			var y = packet.GetInt();
+
+			// Get creature
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			// Get pet
+			var pet = client.GetCreature(petEntityId);
+			if (pet == null || pet.Master == null)
+			{
+				Log.Warning("Player '{0}' tried to move item to invalid pet.", creature.Name);
+				Send.PutItemIntoPetInvR(creature, false);
+				return;
+			}
+
+			// Get item
+			var item = creature.Inventory.GetItem(itemEntityId);
+			if (item == null)
+			{
+				Log.Warning("Player '{0}' tried to move invalid item to pet.", creature.Name);
+				Send.PutItemIntoPetInvR(creature, false);
+				return;
+			}
+
+			// Try move
+			if (!creature.Inventory.MovePet(item, pet, pocket, x, y))
+			{
+				Log.Warning("PutItemIntoPetInv: Moving item failed.");
+				Send.PutItemIntoPetInvR(creature, false);
+				return;
+			}
+
+			Send.PutItemIntoPetInvR(creature, true);
+		}
+
+		/// <summary>
+		/// Sent when moving an item into the pet inventory.
+		/// </summary>
+		/// <example>
+		/// 0001 [0010010000064D26] Long   : 4504699139411238
+		/// 0002 [005000CC171C5B9A] Long   : 22518874697915290
+		/// </example>
+		[PacketHandler(Op.TakeItemFromPetInv)]
+		public void TakeItemFromPetInv(ChannelClient client, Packet packet)
+		{
+			var petEntityId = packet.GetLong();
+			var itemEntityId = packet.GetLong();
+
+			// Get creature
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			// Get pet
+			var pet = client.GetCreature(petEntityId);
+			if (pet == null || pet.Master == null)
+			{
+				Log.Warning("Player '{0}' tried to move item from invalid pet.", creature.Name);
+				Send.TakeItemFromPetInvR(creature, false);
+				return;
+			}
+
+			// Get item
+			var item = pet.Inventory.GetItem(itemEntityId);
+			if (item == null)
+			{
+				Log.Warning("Player '{0}' tried to move invalid item from pet.", creature.Name);
+				Send.TakeItemFromPetInvR(creature, false);
+				return;
+			}
+
+			// Try move
+			if (!pet.Inventory.MovePet(item, creature, Pocket.Cursor, 0, 0))
+			{
+				Log.Warning("TakeItemFromPetInv: Moving item failed.");
+				Send.TakeItemFromPetInvR(creature, false);
+				return;
+			}
+
+			Send.TakeItemFromPetInvR(creature, true);
+		}
 	}
 }

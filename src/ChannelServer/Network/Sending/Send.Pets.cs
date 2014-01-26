@@ -85,5 +85,31 @@ namespace Aura.Channel.Network.Sending
 
 			pet.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends PutItemIntoPetInvR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void PutItemIntoPetInvR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.PutItemIntoPetInvR, creature.EntityId);
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends TakeItemFromPetInvR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void TakeItemFromPetInvR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.TakeItemFromPetInvR, creature.EntityId);
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
 	}
 }
