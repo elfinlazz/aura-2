@@ -37,15 +37,21 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
-		/// Add skill silently.
+		/// Add skill silently. Returns false if the skill already exists,
+		/// with a rank that's equal or higher.
 		/// </summary>
 		/// <param name="skill"></param>
-		public void Add(Skill skill)
+		public bool Add(Skill skill)
 		{
+			if (this.Has(skill.Info.Id, skill.Info.Rank))
+				return false;
+
 			lock (_skills)
 				_skills[skill.Info.Id] = skill;
 
 			this.AddBonuses(skill);
+
+			return true;
 		}
 
 		/// <summary>

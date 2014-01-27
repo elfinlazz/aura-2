@@ -108,60 +108,7 @@ namespace Aura.Login.Database
 			// Start keywords
 			var keywords = new List<ushort>() { 1, 2, 3, 37, 38 };
 
-			// Start skills
-			var skills = new List<Skill>();
-			skills.Add(new Skill(SkillId.MeleeCombatMastery, SkillRank.RF));
-			skills.Add(new Skill(SkillId.HiddenEnchant));
-			skills.Add(new Skill(SkillId.HiddenResurrection));
-			skills.Add(new Skill(SkillId.HiddenTownBack));
-			skills.Add(new Skill(SkillId.HiddenGuildStoneSetting));
-			skills.Add(new Skill(SkillId.HiddenBlessing));
-			skills.Add(new Skill(SkillId.CampfireKit));
-			skills.Add(new Skill(SkillId.SkillUntrainKit));
-			skills.Add(new Skill(SkillId.BigBlessingWaterKit));
-			skills.Add(new Skill(SkillId.Dye));
-			skills.Add(new Skill(SkillId.EnchantElementalAllSlot));
-			skills.Add(new Skill(SkillId.HiddenPoison));
-			skills.Add(new Skill(SkillId.HiddenBomb));
-			skills.Add(new Skill(SkillId.FossilRestoration));
-			skills.Add(new Skill(SkillId.SeesawJump));
-			skills.Add(new Skill(SkillId.SeesawCreate));
-			skills.Add(new Skill(SkillId.DragonSupport));
-			skills.Add(new Skill(SkillId.IceMine));
-			skills.Add(new Skill(SkillId.Scan));
-			skills.Add(new Skill(SkillId.UseSupportItem));
-			skills.Add(new Skill(SkillId.TickingQuizBomb));
-			skills.Add(new Skill(SkillId.ItemSeal));
-			skills.Add(new Skill(SkillId.ItemUnseal));
-			skills.Add(new Skill(SkillId.ItemDungeonPass));
-			skills.Add(new Skill(SkillId.UseElathaItem));
-			skills.Add(new Skill(SkillId.UseMorrighansFeather));
-			skills.Add(new Skill(SkillId.PetBuffing));
-			skills.Add(new Skill(SkillId.CherryTreeKit));
-			skills.Add(new Skill(SkillId.ThrowConfetti));
-			skills.Add(new Skill(SkillId.UsePartyPopper));
-			skills.Add(new Skill(SkillId.HammerGame));
-			skills.Add(new Skill(SkillId.SpiritShift));
-			skills.Add(new Skill(SkillId.EmergencyEscapeBomb));
-			skills.Add(new Skill(SkillId.EmergencyIceBomb));
-			skills.Add(new Skill(SkillId.NameColorChange));
-			skills.Add(new Skill(SkillId.HolyFlame));
-			skills.Add(new Skill(SkillId.CreateFaliasPortal));
-			skills.Add(new Skill(SkillId.UseItemChattingColorChange));
-			skills.Add(new Skill(SkillId.InstallPrivateFarmFacility));
-			skills.Add(new Skill(SkillId.ReorientHomesteadbuilding));
-			skills.Add(new Skill(SkillId.GachaponSynthesis));
-			skills.Add(new Skill(SkillId.MakeChocoStatue));
-			skills.Add(new Skill(SkillId.Paint));
-			skills.Add(new Skill(SkillId.MixPaint));
-			skills.Add(new Skill(SkillId.PetSealToItem));
-			skills.Add(new Skill(SkillId.FlownHotAirBalloon));
-			skills.Add(new Skill(SkillId.ItemSeal2));
-			skills.Add(new Skill(SkillId.CureZombie));
-			skills.Add(new Skill(SkillId.ContinentWarp));
-			skills.Add(new Skill(SkillId.AddSeasoning));
-
-			if (!LoginDb.Instance.CreateCharacter(this.Name, character, items, keywords, skills))
+			if (!LoginDb.Instance.CreateCharacter(this.Name, character, items, keywords))
 				return false;
 
 			this.Characters.Add(character);
@@ -177,11 +124,7 @@ namespace Aura.Login.Database
 		/// <returns></returns>
 		public bool CreatePet(Character pet)
 		{
-			// Start skills
-			var skills = new List<Skill>();
-			skills.Add(new Skill(SkillId.MeleeCombatMastery, SkillRank.RF));
-
-			if (!LoginDb.Instance.CreatePet(this.Name, pet, skills))
+			if (!LoginDb.Instance.CreatePet(this.Name, pet))
 				return false;
 
 			this.Pets.Add(pet);
@@ -215,11 +158,7 @@ namespace Aura.Login.Database
 			items.Add(new Item(partner.Face, Pocket.Face, partner.SkinColor, 0, 0));
 			items.Add(new Item(partner.Hair, Pocket.Hair, partner.HairColor + 0x10000000u, 0, 0));
 
-			// Start skills
-			var skills = new List<Skill>();
-			skills.Add(new Skill(SkillId.MeleeCombatMastery, SkillRank.RF));
-
-			if (!LoginDb.Instance.CreatePartner(this.Name, partner, items, skills))
+			if (!LoginDb.Instance.CreatePartner(this.Name, partner, items))
 				return false;
 
 			this.Pets.Add(partner);

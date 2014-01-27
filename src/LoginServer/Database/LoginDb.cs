@@ -345,10 +345,12 @@ namespace Aura.Login.Database
 		/// </summary>
 		/// <param name="accountId"></param>
 		/// <param name="character"></param>
+		/// <param name="items"></param>
+		/// <param name="keywords"></param>
 		/// <returns></returns>
-		public bool CreateCharacter(string accountId, Character character, List<Item> items, List<ushort> keywords, List<Skill> skills)
+		public bool CreateCharacter(string accountId, Character character, List<Item> items, List<ushort> keywords)
 		{
-			return this.Create("characters", accountId, character, items, keywords, skills);
+			return this.Create("characters", accountId, character, items, keywords);
 		}
 
 		/// <summary>
@@ -358,11 +360,10 @@ namespace Aura.Login.Database
 		/// </summary>
 		/// <param name="accountId"></param>
 		/// <param name="pet"></param>
-		/// <param name="skills"></param>
 		/// <returns></returns>
-		public bool CreatePet(string accountId, Character pet, List<Skill> skills)
+		public bool CreatePet(string accountId, Character pet)
 		{
-			return this.Create("pets", accountId, pet, null, null, skills);
+			return this.Create("pets", accountId, pet, null, null);
 		}
 
 		/// <summary>
@@ -372,11 +373,11 @@ namespace Aura.Login.Database
 		/// </summary>
 		/// <param name="accountId"></param>
 		/// <param name="partner"></param>
-		/// <param name="skills"></param>
+		/// <param name="items"></param>
 		/// <returns></returns>
-		public bool CreatePartner(string accountId, Character partner, List<Item> items, List<Skill> skills)
+		public bool CreatePartner(string accountId, Character partner, List<Item> items)
 		{
-			return this.Create("partners", accountId, partner, items, null, skills);
+			return this.Create("partners", accountId, partner, items, null);
 		}
 
 		/// <summary>
@@ -389,9 +390,8 @@ namespace Aura.Login.Database
 		/// <param name="character"></param>
 		/// <param name="items"></param>
 		/// <param name="keywords"></param>
-		/// <param name="skills"></param>
 		/// <returns></returns>
-		private bool Create(string table, string accountId, Character character, List<Item> items, List<ushort> keywords, List<Skill> skills)
+		private bool Create(string table, string accountId, Character character, List<Item> items, List<ushort> keywords)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			using (var transaction = conn.BeginTransaction())
@@ -419,10 +419,6 @@ namespace Aura.Login.Database
 					// Keywords
 					if (keywords != null)
 						this.AddKeywords(character.CreatureId, keywords, conn, transaction);
-
-					// Skills
-					if (skills != null)
-						this.AddSkills(character.CreatureId, skills, conn, transaction);
 
 					transaction.Commit();
 
@@ -537,26 +533,6 @@ namespace Aura.Login.Database
 				{
 					cmd.Set("creatureId", creatureId);
 					cmd.Set("keywordId", keywordId);
-
-					cmd.Execute();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Adds skills for creature.
-		/// </summary>
-		/// <param name="creatureId"></param>
-		/// <param name="skills"></param>
-		private void AddSkills(long creatureId, List<Skill> skills, MySqlConnection conn, MySqlTransaction transaction)
-		{
-			foreach (var skill in skills)
-			{
-				using (var cmd = new InsertCommand("INSERT INTO `skills` {0}", conn, transaction))
-				{
-					cmd.Set("creatureId", creatureId);
-					cmd.Set("skillId", (ushort)skill.Id);
-					cmd.Set("rank", (byte)skill.Rank);
 
 					cmd.Execute();
 				}

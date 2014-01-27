@@ -22,11 +22,12 @@ namespace Aura.Channel.Skills
 
 		public bool IsRankable { get { return this.Info.Experience >= 100000; } }
 
-		public Skill(SkillId id, SkillRank rank, int race)
+		public Skill(SkillId id, SkillRank rank, int race, int exp = 0)
 		{
 			this.Info.Id = id;
 			this.Info.Rank = rank;
 			this.Info.MaxRank = rank;
+			this.Info.Experience = 0;
 			_race = race;
 
 			this.Info.Flag = SkillFlags.ShowAllConditions | SkillFlags.Shown;
