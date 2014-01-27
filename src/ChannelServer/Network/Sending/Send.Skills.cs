@@ -62,8 +62,7 @@ namespace Aura.Channel.Network.Sending
 		/// Broadcasts RankUp in range of creature.
 		/// </summary>
 		/// <remarks>
-		/// I don't remember the exact purpose of the optional skill id,
-		/// possibly needed for something that we don't have atm.
+		/// The second parameter is the rank, but doesn't seem to be necessary.
 		/// </remarks>
 		/// <param name="creature"></param>
 		/// <param name="skillId">Excluded if 0</param>
@@ -72,7 +71,7 @@ namespace Aura.Channel.Network.Sending
 			var packet = new Packet(Op.RankUp, creature.EntityId);
 			if (skillId > 0)
 				packet.PutUShort((ushort)skillId);
-			packet.PutShort(1); // Rank?
+			packet.PutShort(1); // Rank
 
 			creature.Region.Broadcast(packet, creature);
 		}

@@ -94,7 +94,7 @@ namespace Aura.Channel.World.Entities.Creatures
 				this.Add(skill = new Skill(id, rank, _creature.Race));
 
 				Send.SkillInfo(_creature, skill);
-				Send.RankUp(_creature, skill.Info.Id);
+				Send.RankUp(_creature);
 
 				//EventManager.CreatureEvents.OnCreatureSkillChange(_creature, skill, true);
 			}
