@@ -170,9 +170,9 @@ namespace Aura.Shared.Mabi
 				switch (match.Groups[2].Value)
 				{
 					case "1": this.Set(key, Convert.ToByte(val)); break;
-					case "2": this.Set(key, Convert.ToUInt16(val)); break;
-					case "4": this.Set(key, Convert.ToUInt32(val)); break;
-					case "8": this.Set(key, Convert.ToUInt64(val)); break;
+					case "2": this.Set(key, Convert.ToInt16(val)); break;
+					case "4": this.Set(key, Convert.ToInt32(val)); break;
+					case "8": this.Set(key, Convert.ToInt64(val)); break;
 					case "f": this.Set(key, Convert.ToSingle(val, CultureInfo.InvariantCulture)); break;
 					case "s": this.Set(key, val.Replace("%S", ";")); break;
 					case "b": this.Set(key, val == "1"); break;

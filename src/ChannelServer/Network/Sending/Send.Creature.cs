@@ -349,5 +349,24 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Broadcasts AssignSittingProp in range of creature.
+		/// </summary>
+		/// <remarks>
+		/// Moves creature into position, to sit down on the prop.
+		/// Pass 0 for the parameters to undo.
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="propEntityId"></param>
+		/// <param name="unk"></param>
+		public static void AssignSittingProp(Creature creature, long propEntityId, int unk)
+		{
+			var packet = new Packet(Op.AssignSittingProp, creature.EntityId);
+			packet.PutLong(propEntityId);
+			packet.PutInt(unk);
+
+			creature.Region.Broadcast(packet);
+		}
 	}
 }

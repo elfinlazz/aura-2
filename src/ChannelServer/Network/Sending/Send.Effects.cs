@@ -30,6 +30,7 @@ namespace Aura.Channel.Network.Sending
 			foreach (var p in parameters)
 			{
 				if (p is byte) packet.PutByte((byte)p);
+				else if (p is bool) packet.PutByte((bool)p);
 				else if (p is short) packet.PutShort((short)p);
 				else if (p is int) packet.PutInt((int)p);
 				else if (p is long) packet.PutLong((long)p);

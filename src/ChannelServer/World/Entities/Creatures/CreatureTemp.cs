@@ -5,13 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Data.Database;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
 	public class CreatureTemp
 	{
-		public Entity SittingProp;
+		// Sitting
+		public ChairData CurrentChairData;
+		public Prop SittingProp;
 
+		// Food cache
 		public float WeightFoodChange, UpperFoodChange, LowerFoodChange;
 		public float LifeFoodChange, ManaFoodChange, StaminaFoodChange;
 		public float StrFoodChange, IntFoodChange, DexFoodChange, WillFoodChange, LuckFoodChange;

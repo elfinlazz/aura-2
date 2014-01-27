@@ -74,7 +74,7 @@ namespace Aura.Shared.Network
 		public const int CreatureBodyUpdate = 0x520E;
 		public const int ItemAppears = 0x5211;
 		public const int ItemDisappears = 0x5212;
-		public const int AssignChair = 0x5215;
+		public const int AssignSittingProp = 0x5215;
 		public const int Chat = 0x526C;
 		public const int Notice = 0x526D;
 		public const int WarpUnk2 = 0x526E;

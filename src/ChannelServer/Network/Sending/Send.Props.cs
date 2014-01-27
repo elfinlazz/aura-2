@@ -54,5 +54,17 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Broadcasts prop update in its region.
+		/// </summary>
+		/// <param name="prop"></param>
+		public static void PropUpdate(Prop prop)
+		{
+			var packet = new Packet(Op.PropUpdate, prop.EntityId);
+			packet.AddPropUpdateInfo(prop);
+
+			prop.Region.Broadcast(packet);
+		}
 	}
 }
