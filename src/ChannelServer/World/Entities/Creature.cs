@@ -368,6 +368,12 @@ namespace Aura.Channel.World.Entities
 			ChannelServer.Instance.World.MabiTick -= this.OnMabiTick;
 		}
 
+		public void Activate(CreatureStates state) { this.State |= state; }
+		public void Activate(CreatureStatesEx state) { this.StateEx |= state; }
+		public void Deactivate(CreatureStates state) { this.State &= ~state; }
+		public void Deactivate(CreatureStatesEx state) { this.StateEx &= ~state; }
+		public bool Has(CreatureStates state) { return ((this.State & state) != 0); }
+
 		/// <summary>
 		/// Returns current position.
 		/// </summary>
@@ -505,8 +511,6 @@ namespace Aura.Channel.World.Entities
 		/// <param name="y"></param>
 		/// <returns></returns>
 		public abstract bool Warp(int regionId, int x, int y);
-
-		public bool Has(CreatureStates state) { return ((this.State & state) != 0); }
 
 		/// <summary>
 		/// Called every 5 minutes, checks changes through food.

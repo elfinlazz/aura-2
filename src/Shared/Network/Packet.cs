@@ -90,6 +90,16 @@ namespace Aura.Shared.Network
 		}
 
 		/// <summary>
+		/// Returns true if the next element to be read is of type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public bool NextIs(PacketElementType type)
+		{
+			return (this.Peek() == type);
+		}
+
+		/// <summary>
 		/// Returns new empty packet.
 		/// </summary>
 		/// <returns></returns>

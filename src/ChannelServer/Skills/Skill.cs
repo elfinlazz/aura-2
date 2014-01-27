@@ -30,15 +30,19 @@ namespace Aura.Channel.Skills
 			_race = race;
 
 			this.Info.Flag = SkillFlags.ShowAllConditions | SkillFlags.Shown;
-			this.Info.ConditionCount1 = 0;
-			this.Info.ConditionCount2 = 0;
-			this.Info.ConditionCount3 = 0;
-			this.Info.ConditionCount4 = 0;
-			this.Info.ConditionCount5 = 0;
-			this.Info.ConditionCount6 = 0;
-			this.Info.ConditionCount7 = 0;
-			this.Info.ConditionCount8 = 0;
-			this.Info.ConditionCount9 = 0;
+
+			// The conditions are set to the max and are reduced afterwards,
+			// making them "Complete" once they reach 0. Setting all to 1
+			// to prevent "Perfect Training" spam, when adding exp.
+			this.Info.ConditionCount1 = 1;
+			this.Info.ConditionCount2 = 1;
+			this.Info.ConditionCount3 = 1;
+			this.Info.ConditionCount4 = 1;
+			this.Info.ConditionCount5 = 1;
+			this.Info.ConditionCount6 = 1;
+			this.Info.ConditionCount7 = 1;
+			this.Info.ConditionCount8 = 1;
+			this.Info.ConditionCount9 = 1;
 
 			this.LoadRankData();
 		}

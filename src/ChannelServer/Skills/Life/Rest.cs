@@ -9,6 +9,8 @@ using Aura.Channel.Skills.Base;
 using Aura.Shared.Network;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Mabi;
+using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.Skills.Life
 {
@@ -16,16 +18,20 @@ namespace Aura.Channel.Skills.Life
 	/// Handles the Rest skill. Also called when using a chair.
 	/// </summary>
 	[Skill(SkillId.Rest)]
-	public class RestSkillHandler : IStartStopable
+	public class RestSkillHandler : StartStopSkillHandler
 	{
-		public void Start(Creature creature, Skill skill, Packet packet)
+		public override void Start(Creature creature, Skill skill, MabiDictionary dict)
 		{
-			throw new NotImplementedException();
+			creature.Activate(CreatureStates.SitDown);
+			Send.SitDown(creature);
+
+			creature.Skills.GiveExp(skill, 20);
 		}
 
-		public void Stop(Creature creature, Skill skill, Packet packet)
+		public override void Stop(Creature creature, Skill skill, MabiDictionary dict)
 		{
-			throw new NotImplementedException();
+			creature.Deactivate(CreatureStates.SitDown);
+			Send.StandUp(creature);
 		}
 	}
 }

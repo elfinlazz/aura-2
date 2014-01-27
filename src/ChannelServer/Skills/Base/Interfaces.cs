@@ -7,9 +7,16 @@ using Aura.Shared.Network;
 namespace Aura.Channel.Skills.Base
 {
 	/// <summary>
+	/// Skill handler
+	/// </summary>
+	public interface ISkillHandler
+	{
+	}
+
+	/// <summary>
 	/// A skill that is used without preparing it first
 	/// </summary>
-	public interface IStartable
+	public interface IStartable : ISkillHandler
 	{
 		void Start(Creature creature, Skill skill, Packet packet);
 	}
@@ -17,7 +24,7 @@ namespace Aura.Channel.Skills.Base
 	/// <summary>
 	/// Skills using Start use Stop to end them.
 	/// </summary>
-	public interface IStoppable
+	public interface IStoppable : ISkillHandler
 	{
 		void Stop(Creature creature, Skill skill, Packet packet);
 	}
@@ -25,7 +32,7 @@ namespace Aura.Channel.Skills.Base
 	/// <summary>
 	/// Skill sends prepare when starting to cast it.
 	/// </summary>
-	public interface IPreparable
+	public interface IPreparable : ISkillHandler
 	{
 		void Prepare(Creature creature, Skill skill, Packet packet);
 	}
@@ -33,7 +40,7 @@ namespace Aura.Channel.Skills.Base
 	/// <summary>
 	/// Skill sends ready when done casting.
 	/// </summary>
-	public interface IReadyable
+	public interface IReadyable : ISkillHandler
 	{
 		void Ready(Creature creature, Skill skill, Packet packet);
 	}
@@ -41,7 +48,7 @@ namespace Aura.Channel.Skills.Base
 	/// <summary>
 	/// Skill sends use once the player actually uses it.
 	/// </summary>
-	public interface IUseable
+	public interface IUseable : ISkillHandler
 	{
 		void Use(Creature creature, Skill skill, Packet packet);
 	}
@@ -49,7 +56,7 @@ namespace Aura.Channel.Skills.Base
 	/// <summary>
 	/// Skill sends complete after it's done using it.
 	/// </summary>
-	public interface ICompletable
+	public interface ICompletable : ISkillHandler
 	{
 		void Complete(Creature creature, Skill skill, Packet packet);
 	}
@@ -57,7 +64,7 @@ namespace Aura.Channel.Skills.Base
 	/// <summary>
 	/// Skill is !cancel!able.
 	/// </summary>
-	public interface ICancelable
+	public interface ICancelable : ISkillHandler
 	{
 		void Cancel(Creature creature, Skill skill, Packet packet);
 	}
@@ -65,7 +72,7 @@ namespace Aura.Channel.Skills.Base
 	/// <summary>
 	/// Skill using start and stop to activate and deactivate.
 	/// </summary>
-	public interface IStartStopable : IStartable, IStoppable
+	public interface IStartStoppable : IStartable, IStoppable
 	{
 	}
 }

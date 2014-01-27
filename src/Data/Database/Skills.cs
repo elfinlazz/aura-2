@@ -15,7 +15,7 @@ namespace Aura.Data.Database
 
 		public Dictionary<int, Dictionary<int, SkillRankData>> RankData { get; internal set; }
 
-		public SkillRankData GetRankData(byte rank, int raceId)
+		public SkillRankData GetRankData(int rank, int raceId)
 		{
 			raceId = raceId & ~3;
 
