@@ -30,6 +30,19 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends negative SkillRankUp to creature's client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="creature"></param>
+		public static void SkillAdvance_Fail(Creature creature)
+		{
+			var packet = new Packet(Op.SkillRankUp, creature.EntityId);
+			packet.PutByte(false);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends SkillRankUp to creature's client.
 		/// </summary>
 		/// <param name="client"></param>

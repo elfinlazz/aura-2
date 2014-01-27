@@ -167,7 +167,7 @@ namespace Aura.Shared.Network
 		public const int SkillInfo = 0x6979;
 		public const int SkillTrainingUp = 0x697C;
 		public const int SkillAdvance = 0x697E;
-		public const int SkillRankUp = 0x697F;
+		public const int SkillRankUp = 0x697F; // Response to Advance
 		public const int SkillPrepare = 0x6982;
 		public const int SkillReady = 0x6983;
 		public const int SkillUse = 0x6986;

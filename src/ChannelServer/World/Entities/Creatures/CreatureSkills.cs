@@ -113,9 +113,9 @@ namespace Aura.Channel.World.Entities.Creatures
 
 			Send.StatUpdate(_creature, StatUpdateType.Private,
 				Stat.Str, Stat.Int, Stat.Dex, Stat.Will, Stat.Luck,
-				Stat.Life, Stat.LifeMaxMod, Stat.LifeMax, Stat.Mana, Stat.ManaMaxMod, Stat.ManaMax, Stat.Stamina, Stat.StaminaMaxMod, Stat.StaminaMax
+				Stat.Life, Stat.LifeInjured, Stat.LifeMaxMod, Stat.LifeMax, Stat.Mana, Stat.ManaMaxMod, Stat.ManaMax, Stat.Stamina, Stat.Hunger, Stat.StaminaMaxMod, Stat.StaminaMax
 			);
-			Send.StatUpdate(_creature, StatUpdateType.Public, Stat.Life, Stat.LifeMaxMod, Stat.LifeMax);
+			Send.StatUpdate(_creature, StatUpdateType.Public, Stat.Life, Stat.LifeInjured, Stat.LifeMaxMod, Stat.LifeMax);
 		}
 
 		/// <summary>

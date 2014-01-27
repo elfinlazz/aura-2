@@ -20,7 +20,10 @@ namespace Aura.Channel.Skills
 		public SkillInfo Info;
 		public SkillRankData RankData { get; protected set; }
 
-		public bool IsRankable { get { return this.Info.Experience >= 100000; } }
+		/// <summary>
+		/// Returns true if skill has enough experience and is below max rank.
+		/// </summary>
+		public bool IsRankable { get { return (this.Info.Experience >= 100000 && this.Info.Rank < this.Info.MaxRank); } }
 
 		public Skill(SkillId id, SkillRank rank, int race, int exp = 0)
 		{
@@ -66,6 +69,9 @@ namespace Aura.Channel.Skills
 			}
 
 			this.Info.MaxRank = (SkillRank)skillData.MaxRank;
+
+			if (this.IsRankable)
+				this.Info.Flag |= SkillFlags.Rankable;
 		}
 
 		/// <summary>
@@ -76,6 +82,7 @@ namespace Aura.Channel.Skills
 		{
 			this.Info.Rank = rank;
 			this.Info.Experience = 0;
+			this.Info.Flag &= ~SkillFlags.Rankable;
 			this.LoadRankData();
 		}
 	}

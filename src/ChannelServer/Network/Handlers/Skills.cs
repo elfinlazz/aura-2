@@ -16,6 +16,31 @@ namespace Aura.Channel.Network.Handlers
 	public partial class ChannelServerHandlers : PacketHandlerManager<ChannelClient>
 	{
 		/// <summary>
+		/// Sent when increasing skill rank.
+		/// </summary>
+		/// <example>
+		/// 001 [............2714] Short  : 10004
+		/// </example>
+		[PacketHandler(Op.SkillAdvance)]
+		public void SkillAdvance(ChannelClient client, Packet packet)
+		{
+			var skillId = (SkillId)packet.GetUShort();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			var skill = creature.Skills.Get(skillId);
+			if (skill == null || !skill.IsRankable)
+			{
+				Send.SkillAdvance_Fail(creature);
+				return;
+			}
+
+			creature.Skills.Give(skill.Info.Id, skill.Info.Rank + 1);
+		}
+
+		/// <summary>
 		/// Starting/Activating a skill.
 		/// </summary>
 		/// <remarks>
