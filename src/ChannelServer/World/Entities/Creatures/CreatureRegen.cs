@@ -16,8 +16,6 @@ namespace Aura.Channel.World.Entities.Creatures
 	/// </summary>
 	public class CreatureRegen : IDisposable
 	{
-		private StatRegen _nightManaRegen;
-
 		private Dictionary<int, StatRegen> _regens;
 		private Dictionary<string, List<StatRegen>> _regenGroups;
 
@@ -161,12 +159,11 @@ namespace Aura.Channel.World.Entities.Creatures
 		{
 			if (time.IsNight)
 			{
-				_nightManaRegen = this.Add(Stat.Mana, 0.1f, this.Creature.ManaMax);
+				this.Add("NightMana", Stat.Mana, 0.1f, this.Creature.ManaMax);
 			}
-			else if (_nightManaRegen != null)
+			else
 			{
-				this.Remove(_nightManaRegen.Id);
-				_nightManaRegen = null;
+				this.Remove("NightMana");
 			}
 		}
 
