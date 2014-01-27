@@ -175,7 +175,11 @@ namespace Aura.Shared.Network
 		public const int SkillCancel = 0x6989;
 		public const int SkillStart = 0x698A;
 		public const int SkillStop = 0x698B;
-		public const int SkillSilentCancel = 0x698D;
+		public const int SkillPrepareSilentCancel = 0x698C;
+		public const int SkillUseSilentCancel = 0x698D;
+		//public const int ? = 0x698E; // no parameters, found after a Complete/Cancel with one of the special horses
+		public const int SkillStartSilentCancel = 0x698F;
+		public const int SkillStopSilentCancel = 0x6990;
 		public const int SkillStackSet = 0x6991;
 		public const int SkillStackUpdate = 0x6992;
 		public const int UseMotion = 0x6D62;

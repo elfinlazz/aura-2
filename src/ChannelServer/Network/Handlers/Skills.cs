@@ -44,7 +44,7 @@ namespace Aura.Channel.Network.Handlers
 			if (skill == null)
 			{
 				Log.Warning("SkillStart: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
-				Send.SkillStart_Fail(creature, skillId);
+				Send.SkillStartSilentCancel(creature, skillId);
 				return;
 			}
 
@@ -53,7 +53,7 @@ namespace Aura.Channel.Network.Handlers
 			{
 				Log.Unimplemented("Skill handler for '{0}'.", skillId);
 				Send.ServerMessage(creature, "This skill isn't implemented yet.");
-				Send.SkillStart_Fail(creature, skillId);
+				Send.SkillStartSilentCancel(creature, skillId);
 				return;
 			}
 
@@ -65,7 +65,7 @@ namespace Aura.Channel.Network.Handlers
 			{
 				Log.Unimplemented("Skill start method for '{0}'.", skillId);
 				Send.ServerMessage(creature, "This skill isn't implemented completely yet.");
-				Send.SkillStart_Fail(creature, skillId);
+				Send.SkillStartSilentCancel(creature, skillId);
 			}
 		}
 
@@ -98,7 +98,7 @@ namespace Aura.Channel.Network.Handlers
 			if (skill == null)
 			{
 				Log.Warning("SkillStop: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
-				Send.SkillStop_Fail(creature, skillId);
+				Send.SkillStopSilentCancel(creature, skillId);
 				return;
 			}
 
@@ -107,7 +107,7 @@ namespace Aura.Channel.Network.Handlers
 			{
 				Log.Unimplemented("Skill handler for '{0}'.", skillId);
 				Send.ServerMessage(creature, "This skill isn't implemented yet.");
-				Send.SkillStop_Fail(creature, skillId);
+				Send.SkillStopSilentCancel(creature, skillId);
 				return;
 			}
 
@@ -119,7 +119,7 @@ namespace Aura.Channel.Network.Handlers
 			{
 				Log.Unimplemented("Skill stop method for '{0}'.", skillId);
 				Send.ServerMessage(creature, "This skill isn't implemented completely yet.");
-				Send.SkillStop_Fail(creature, skillId);
+				Send.SkillStopSilentCancel(creature, skillId);
 			}
 		}
 	}

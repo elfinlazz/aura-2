@@ -65,30 +65,26 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
-		/// Sends negative SkillStart to creature's client.
+		/// Sends SkillStartSilentCancel to creature's client.
 		/// </summary>
-		/// <remarks>
-		/// This isn't actually a negative response,
-		/// it's just for unstucking the player after a fail.
-		/// </remarks>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
-		public static void SkillStart_Fail(Creature creature, SkillId skillId)
+		public static void SkillStartSilentCancel(Creature creature, SkillId skillId)
 		{
-			var packet = new Packet(Op.SkillStart, creature.EntityId);
+			var packet = new Packet(Op.SkillStartSilentCancel, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
 
 			creature.Client.Send(packet);
 		}
 
 		/// <summary>
-		/// Sends negative SkillStop to creature's client.
+		/// Sends SkillStopSilentCancel to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
-		public static void SkillStop_Fail(Creature creature, SkillId skillId)
+		public static void SkillStopSilentCancel(Creature creature, SkillId skillId)
 		{
-			var packet = new Packet(Op.SkillStop, creature.EntityId);
+			var packet = new Packet(Op.SkillStopSilentCancel, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
 
 			creature.Client.Send(packet);
