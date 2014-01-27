@@ -19,6 +19,7 @@ namespace Aura.Channel.Skills.Base
 	/// Sends back Skill(Start|Stop) with string or byte parameter,
 	/// depending on incoming packet. Always passes a dictionary to the
 	/// next methods, since the byte seems useless =|
+	/// If Start|Stop returns fail a silent cancel will be sent.
 	/// </remarks>
 	public abstract class StartStopSkillHandler : IStartStoppable
 	{
@@ -33,9 +34,11 @@ namespace Aura.Channel.Skills.Base
 			else
 				unkByte = packet.GetByte();
 
-			this.Start(creature, skill, dict);
+			var result = this.Start(creature, skill, dict);
 
-			if (stringParam)
+			if (result == StartStopResult.Fail)
+				Send.SkillStartSilentCancel(creature, skill.Info.Id);
+			else if (stringParam)
 				Send.SkillStart(creature, skill.Info.Id, dict.ToString());
 			else
 				Send.SkillStart(creature, skill.Info.Id, unkByte);
@@ -52,22 +55,26 @@ namespace Aura.Channel.Skills.Base
 			else
 				unkByte = packet.GetByte();
 
-			this.Stop(creature, skill, dict);
+			var result = this.Stop(creature, skill, dict);
 
-			if (stringParam)
+			if (result == StartStopResult.Fail)
+				Send.SkillStopSilentCancel(creature, skill.Info.Id);
+			else if (stringParam)
 				Send.SkillStop(creature, skill.Info.Id, dict.ToString());
 			else
 				Send.SkillStop(creature, skill.Info.Id, unkByte);
 		}
 
-		public virtual void Start(Creature creature, Skill skill, MabiDictionary dict)
+		public virtual StartStopResult Start(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			throw new NotImplementedException();
 		}
 
-		public virtual void Stop(Creature creature, Skill skill, MabiDictionary dict)
+		public virtual StartStopResult Stop(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			throw new NotImplementedException();
 		}
 	}
+
+	public enum StartStopResult { Okay, Fail }
 }

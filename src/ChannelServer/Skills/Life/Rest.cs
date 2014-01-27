@@ -20,18 +20,22 @@ namespace Aura.Channel.Skills.Life
 	[Skill(SkillId.Rest)]
 	public class RestSkillHandler : StartStopSkillHandler
 	{
-		public override void Start(Creature creature, Skill skill, MabiDictionary dict)
+		public override StartStopResult Start(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			creature.Activate(CreatureStates.SitDown);
 			Send.SitDown(creature);
 
 			creature.Skills.GiveExp(skill, 20);
+
+			return StartStopResult.Okay;
 		}
 
-		public override void Stop(Creature creature, Skill skill, MabiDictionary dict)
+		public override StartStopResult Stop(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			creature.Deactivate(CreatureStates.SitDown);
 			Send.StandUp(creature);
+
+			return StartStopResult.Okay;
 		}
 	}
 }
