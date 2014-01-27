@@ -136,7 +136,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			_creature.StaminaMaxBaseSkill += skill.RankData.StaminaTotal;
 			_creature.Stamina += skill.RankData.StaminaTotal;
 
-			if (skill.Info.Id == SkillId.MeleeCombatMastery)
+			if (skill.Info.Id == SkillId.CombatMastery)
 			{
 				_creature.StatMods.Add(Stat.LifeMaxMod, skill.RankData.Var3, StatModSource.SkillRank, skill.Info.Id);
 				_creature.Life += skill.RankData.Var3;
@@ -173,7 +173,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			_creature.Stamina -= skill.RankData.StaminaTotal;
 			_creature.StaminaMaxBaseSkill -= skill.RankData.StaminaTotal;
 
-			if (skill.Info.Id == SkillId.MeleeCombatMastery)
+			if (skill.Info.Id == SkillId.CombatMastery)
 			{
 				_creature.Life -= skill.RankData.Var3;
 				_creature.StatMods.Remove(Stat.LifeMaxMod, StatModSource.SkillRank, skill.Info.Id);

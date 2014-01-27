@@ -368,7 +368,7 @@ namespace Aura.Channel.Database
 			// Combat Mastery, only normal characters get all the
 			// hidden ones for now
 			// TODO: Move to race skill db.
-			character.Skills.Add(new Skill(SkillId.MeleeCombatMastery, SkillRank.RF, character.Race));
+			character.Skills.Add(new Skill(SkillId.CombatMastery, SkillRank.RF, character.Race));
 			if (character.Is(EntityType.Character))
 			{
 				character.Skills.Add(new Skill(SkillId.HiddenEnchant, SkillRank.Novice, character.Race));
