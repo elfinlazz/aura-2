@@ -34,6 +34,12 @@ item_target		Item '{0}' has been spawned by '{1}'.
 item_spawned	Item '{0}' has been spawned.
 item_fail		Failed to spawn item.
 
+// >skill
+skill_nores		Skill '{0}' not found in database.
+skill_norank	Skill '{0}' doesn't have rank '{1}'.
+skill_success	Skill added.
+skill_target	Skill '{0}' added by '{1}'.
+
 // >iteminfo
 ii_none			No items found for '{0}'.
 ii_for			{0}: {1}, Type: {2}

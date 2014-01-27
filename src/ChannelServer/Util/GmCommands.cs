@@ -529,13 +529,31 @@ namespace Aura.Channel.Util
 			if (!int.TryParse(args[1], out skillId))
 				return CommandResult.InvalidArgument;
 
+			var skillData = AuraData.SkillDb.Find(skillId);
+			if (skillData == null)
+			{
+				Send.ServerMessage(sender, Localization.Get("gm.skill_nores"), args[1]); // Skill '{0}' not found in database.
+				return CommandResult.Fail;
+			}
+
 			int rank = 0;
 			if (args.Length > 2 && !int.TryParse(args[2], NumberStyles.HexNumber, null, out rank))
 				return CommandResult.InvalidArgument;
 
+			var rankData = skillData.GetRankData(rank, target.Race);
+			if (rankData == null)
+			{
+				Send.ServerMessage(sender, Localization.Get("gm.skill_norank"), args[1], (SkillRank)rank); // Skill '{0}' doesn't have rank '{1}'.
+				return CommandResult.Fail;
+			}
+
 			rank = Math2.MinMax(0, 18, 16 - rank);
 
 			target.Skills.Give((SkillId)skillId, (SkillRank)rank);
+
+			Send.ServerMessage(sender, Localization.Get("gm.skill_success")); // Skill added.
+			if (target != sender)
+				Send.ServerMessage(sender, Localization.Get("gm.skill_target"), (SkillId)skillId, sender.Name); // Skill '{0}' added by '{1}'.
 
 			return CommandResult.Okay;
 		}
