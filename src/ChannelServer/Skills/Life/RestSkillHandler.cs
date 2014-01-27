@@ -25,6 +25,8 @@ namespace Aura.Channel.Skills.Life
 	{
 		public override StartStopResult Start(Creature creature, Skill skill, MabiDictionary dict)
 		{
+			creature.StopMove();
+
 			var chairItemEntityId = dict.Get<long>("ITEMID");
 
 			if (chairItemEntityId != 0)
