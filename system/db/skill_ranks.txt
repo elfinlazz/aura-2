@@ -1,8 +1,16 @@
 // Aura
 // Database file
 // 
+// LoadTime: Old load time, that is still used by monsters.
+// NewLoadTime: New load time, for the new battle system. Only used by players.
+// CoolDown: Cool down, new stat for the new battle system. Older skills didn't have this.
+// ...Cost: Required initial amount to use the skill.
+// ...Prepare: Amount that's removed while preparing the skill.
+// ...Wait: Amount removed every second while the skill is waiting to be used (eg Counter).
+// ...Active: Amount removed every second while the skill is active (eg Mana Shield).
+// 
 // Structure:
-// SkillId  Race  Rank  AP  CP  Range  Stack  MaxStack  LoadTime  NewLoadTime  CoolDown  StaminaCost  StaminaPrepare  StaminaLoading  StaminaUse  ManaCost  ManaPrepare  ManaLoading  ManaUse  Life  Mana  Stamina  Str  Int  Dex  Will  Luck  Variables...
+// SkillId  Race  Rank  AP  CP  Range  Stack  MaxStack  LoadTime  NewLoadTime  CoolDown  StaminaCost  StaminaPrepare  StaminaWait  StaminaActive  ManaCost  ManaPrepare  ManaWait  ManaActive  Life  Mana  Stamina  Str  Int  Dex  Will  Luck  Variables...
 //---------------------------------------------------------------------------
 
 // Tailoring

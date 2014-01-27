@@ -25,12 +25,12 @@ namespace Aura.Data.Database
 		public float StaminaCost { get; internal set; }
 		public float StaminaPrepare { get; internal set; }
 		public float StaminaWait { get; internal set; }
-		public float StaminaUse { get; internal set; }
+		public float StaminaActive { get; internal set; }
 
 		public float ManaCost { get; internal set; }
 		public float ManaPrepare { get; internal set; }
 		public float ManaWait { get; internal set; }
-		public float ManaUse { get; internal set; }
+		public float ManaActive { get; internal set; }
 
 		public float Life { get; internal set; }
 		public float Mana { get; internal set; }
@@ -121,11 +121,11 @@ namespace Aura.Data.Database
 			info.StaminaCost = entry.ReadFloat();
 			info.StaminaPrepare = entry.ReadFloat();
 			info.StaminaWait = entry.ReadFloat();
-			info.StaminaUse = entry.ReadFloat();
+			info.StaminaActive = entry.ReadFloat();
 			info.ManaCost = entry.ReadFloat();
 			info.ManaPrepare = entry.ReadFloat();
 			info.ManaWait = entry.ReadFloat();
-			info.ManaUse = entry.ReadFloat();
+			info.ManaActive = entry.ReadFloat();
 			info.Life = entry.ReadFloat();
 			info.Mana = entry.ReadFloat();
 			info.Stamina = entry.ReadFloat();
