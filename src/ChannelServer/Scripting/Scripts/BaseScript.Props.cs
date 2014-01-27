@@ -26,7 +26,6 @@ namespace Aura.Channel.Scripting.Scripts
 
 			var prop = new Prop(id, regionId, x, y, direction);
 			prop.Behavior = behavior;
-			prop.ServerSide = true;
 
 			region.AddProp(prop);
 

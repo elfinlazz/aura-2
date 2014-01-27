@@ -1122,7 +1122,7 @@ namespace Aura.Channel.Network.Sending
 
 			// Client side props (A0 range, instead of A1)
 			// look a bit different.
-			if (prop.EntityId >= MabiId.ServerProps)
+			if (prop.ServerSide)
 			{
 				packet.PutString(prop.Name);
 				packet.PutString(prop.Title);
@@ -1131,7 +1131,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutLong(0);
 
 				packet.PutByte(true); // Extra data?
-				packet.PutString(prop.ExtraData);
+				packet.PutString(prop.XML);
 
 				packet.PutInt(0);
 				packet.PutShort(0);
@@ -1142,6 +1142,31 @@ namespace Aura.Channel.Network.Sending
 				packet.PutLong(DateTime.Now);
 				packet.PutByte(false);
 				packet.PutFloat(prop.Info.Direction);
+			}
+
+			return packet;
+		}
+
+		private static Packet AddPropUpdateInfo(this Packet packet, Prop prop)
+		{
+			// Client side props (A0 range, instead of A1)
+			// look a bit different.
+			if (prop.ServerSide)
+			{
+				packet.PutString(prop.State);
+				packet.PutLong(DateTime.Now);
+				packet.PutByte(true);
+				packet.PutString(prop.XML);
+				packet.PutFloat(prop.Info.Direction);
+				packet.PutShort(0);
+			}
+			else
+			{
+				packet.PutString(prop.State);
+				packet.PutLong(DateTime.Now);
+				packet.PutByte(false);
+				packet.PutFloat(prop.Info.Direction);
+				packet.PutShort(0);
 			}
 
 			return packet;

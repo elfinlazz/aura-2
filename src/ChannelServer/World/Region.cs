@@ -359,6 +359,7 @@ namespace Aura.Channel.World
 			if (!prop.ServerSide)
 			{
 				Log.Error("RemoveProp: Client side props can't be removed.");
+				prop.DisappearTime = DateTime.MinValue;
 				return;
 			}
 
@@ -372,7 +373,7 @@ namespace Aura.Channel.World
 				_propsRWLS.ExitWriteLock();
 			}
 
-			Send.EntityDisappears(prop);
+			Send.PropDisappears(prop);
 
 			prop.Region = null;
 		}

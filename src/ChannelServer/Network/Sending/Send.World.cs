@@ -6,6 +6,7 @@ using System.Linq;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -44,6 +45,18 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(0);
 
 			entity.Region.Broadcast(packet, entity, false);
+		}
+
+		/// <summary>
+		/// Broadcasts PropDisappears in prop's region.
+		/// </summary>
+		/// <param name="entity"></param>
+		public static void PropDisappears(Prop prop)
+		{
+			var packet = new Packet(Op.PropDisappears, MabiId.Broadcast);
+			packet.PutLong(prop.EntityId);
+
+			prop.Region.Broadcast(packet, prop, false);
 		}
 
 		/// <summary>

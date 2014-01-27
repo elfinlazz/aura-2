@@ -28,7 +28,10 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// True if this prop was spawned by the server.
 		/// </summary>
-		public bool ServerSide { get; set; }
+		/// <remarks>
+		/// *sigh* Yes, we're checking the id, happy now, devCAT? .__.
+		/// </remarks>
+		public bool ServerSide { get { return (this.EntityId >= MabiId.ServerProps); } }
 
 		/// <summary>
 		/// Called when a player interacts with the prop (touch, attack).
@@ -46,7 +49,7 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// XML with additional options.
 		/// </summary>
-		public string ExtraData { get; set; }
+		public string XML { get; set; }
 
 		public override EntityType EntityType { get { return Entities.EntityType.Prop; } }
 
@@ -74,7 +77,7 @@ namespace Aura.Channel.World.Entities
 
 			this.Name = name;
 			this.Title = title;
-			this.ExtraData = extra;
+			this.XML = extra;
 
 			this.Info.Id = id;
 			this.Info.Region = region;
