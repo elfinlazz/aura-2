@@ -356,6 +356,7 @@ namespace Aura.Channel.Database
 					while (reader.Read())
 					{
 						var skill = new Skill((SkillId)reader.GetInt32("skillId"), (SkillRank)reader.GetByte("rank"), character.Race);
+						skill.Info.Experience = reader.GetInt32("exp");
 						character.Skills.Add(skill);
 					}
 				}
