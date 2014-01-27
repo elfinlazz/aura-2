@@ -27,7 +27,7 @@ namespace Aura.Channel.Skills
 			this.Info.Id = id;
 			this.Info.Rank = rank;
 			this.Info.MaxRank = rank;
-			this.Info.Experience = 0;
+			this.Info.Experience = exp;
 			_race = race;
 
 			this.Info.Flag = SkillFlags.ShowAllConditions | SkillFlags.Shown;
