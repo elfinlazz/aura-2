@@ -131,7 +131,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// </remarks>
 		public void OnSecondsTimeTick(ErinnTime time)
 		{
-			if (this.Creature.IsDead)
+			if (this.Creature.Region == null || this.Creature.IsDead)
 				return;
 
 			lock (_regens)
