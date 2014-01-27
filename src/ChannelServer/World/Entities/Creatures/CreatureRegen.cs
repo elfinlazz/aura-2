@@ -19,12 +19,14 @@ namespace Aura.Channel.World.Entities.Creatures
 		private StatRegen _nightManaRegen;
 
 		private Dictionary<int, StatRegen> _regens;
+		private Dictionary<string, List<StatRegen>> _regenGroups;
 
 		public Creature Creature { get; private set; }
 
 		public CreatureRegen(Creature creature)
 		{
 			_regens = new Dictionary<int, StatRegen>();
+			_regenGroups = new Dictionary<string, List<StatRegen>>();
 			this.Creature = creature;
 
 			ChannelServer.Instance.World.SecondsTimeTick += this.OnSecondsTimeTick;
@@ -65,6 +67,31 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
+		/// Adds regen, sends stat update, saves a reference in the group,
+		/// and returns the new regen object.
+		/// </summary>
+		/// <param name="group"></param>
+		/// <param name="stat"></param>
+		/// <param name="change"></param>
+		/// <param name="max"></param>
+		/// <param name="duration"></param>
+		/// <returns></returns>
+		public StatRegen Add(string group, Stat stat, float change, float max, int duration = -1)
+		{
+			var regen = this.Add(stat, change, max, duration);
+
+			lock (_regenGroups)
+			{
+				if (!_regenGroups.ContainsKey(group))
+					_regenGroups[group] = new List<StatRegen>();
+
+				_regenGroups[group].Add(regen);
+			}
+
+			return regen;
+		}
+
+		/// <summary>
 		/// Removes regen by id, returns false if regen didn't exist.
 		/// Sends stat update if successful.
 		/// </summary>
@@ -73,6 +100,28 @@ namespace Aura.Channel.World.Entities.Creatures
 		public bool Remove(StatRegen regen)
 		{
 			return this.Remove(regen.Id);
+		}
+
+		/// <summary>
+		/// Removes every regen in the group, returns false if the group
+		/// doesn't exist.
+		/// </summary>
+		/// <param name="group"></param>
+		/// <returns></returns>
+		public bool Remove(string group)
+		{
+			lock (_regenGroups)
+			{
+				if (!_regenGroups.ContainsKey(group))
+					return false;
+
+				foreach (var regen in _regenGroups[group])
+					this.Remove(regen);
+
+				_regenGroups.Remove(group);
+			}
+
+			return true;
 		}
 
 		/// <summary>
@@ -138,6 +187,9 @@ namespace Aura.Channel.World.Entities.Creatures
 			{
 				var toRemove = new List<int>();
 
+				if (Creature.IsPlayer)
+					Aura.Shared.Util.Log.Debug("===");
+
 				foreach (var regen in _regens.Values)
 				{
 					if (regen.TimeLeft == 0)
@@ -145,6 +197,9 @@ namespace Aura.Channel.World.Entities.Creatures
 						toRemove.Add(regen.Id);
 						continue;
 					}
+
+					if (Creature.IsPlayer)
+						Aura.Shared.Util.Log.Debug(regen.Stat + " : " + regen.Change);
 
 					switch (regen.Stat)
 					{
@@ -157,6 +212,7 @@ namespace Aura.Channel.World.Entities.Creatures
 							if (this.Creature.Hunger > this.Creature.StaminaMax / 2)
 								this.Creature.Hunger = this.Creature.StaminaMax / 2;
 							break;
+						case Stat.LifeInjured: this.Creature.Injuries -= regen.Change; break;
 					}
 				}
 
