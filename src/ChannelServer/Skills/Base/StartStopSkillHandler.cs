@@ -9,6 +9,8 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Shared.Mabi;
 using Aura.Channel.Network.Sending;
+using Aura.Shared.Util;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Skills.Base
 {
@@ -19,12 +21,30 @@ namespace Aura.Channel.Skills.Base
 	/// Sends back Skill(Start|Stop) with string or byte parameter,
 	/// depending on incoming packet. Always passes a dictionary to the
 	/// next methods, since the byte seems useless =|
+	/// The parameter can also be missing in Stop, example:
+	/// Auto stop of ManaShield on 0 mana.
+	/// 
 	/// If Start|Stop returns fail a silent cancel will be sent.
 	/// </remarks>
 	public abstract class StartStopSkillHandler : IStartStoppable
 	{
 		public void Start(Creature creature, Skill skill, Packet packet)
 		{
+			// Check mana and stamina
+			if (!this.CheckMana(creature, skill))
+			{
+				Send.SystemMessage(creature, Localization.Get("skills.insufficient_mana")); // Insufficient Mana
+				Send.SkillStartSilentCancel(creature, skill.Info.Id);
+				return;
+			}
+			if (!this.CheckStamina(creature, skill))
+			{
+				Send.SystemMessage(creature, Localization.Get("skills.insufficient_stamina")); // Insufficient Stamina
+				Send.SkillStartSilentCancel(creature, skill.Info.Id);
+				return;
+			}
+
+			// Get parameters
 			var stringParam = packet.NextIs(PacketElementType.String);
 			var dict = new MabiDictionary();
 			byte unkByte = 0;
@@ -34,11 +54,22 @@ namespace Aura.Channel.Skills.Base
 			else
 				unkByte = packet.GetByte();
 
+			// Run skill
 			var result = this.Start(creature, skill, dict);
 
 			if (result == StartStopResult.Fail)
+			{
 				Send.SkillStartSilentCancel(creature, skill.Info.Id);
-			else if (stringParam)
+				return;
+			}
+
+			// Use mana/stamina
+			this.UseMana(creature, skill);
+			this.UseStamina(creature, skill);
+
+			Send.StatUpdate(creature, StatUpdateType.Private, Stat.Mana, Stat.Stamina);
+
+			if (stringParam)
 				Send.SkillStart(creature, skill.Info.Id, dict.ToString());
 			else
 				Send.SkillStart(creature, skill.Info.Id, unkByte);
@@ -52,7 +83,7 @@ namespace Aura.Channel.Skills.Base
 
 			if (stringParam)
 				dict.Parse(packet.GetString());
-			else
+			else if (packet.NextIs(PacketElementType.Byte))
 				unkByte = packet.GetByte();
 
 			var result = this.Stop(creature, skill, dict);
@@ -73,6 +104,44 @@ namespace Aura.Channel.Skills.Base
 		public virtual StartStopResult Stop(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Returns true if creature has enough mana to use use skill.
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool CheckMana(Creature creature, Skill skill)
+		{
+			return (creature.Mana >= skill.RankData.ManaCost);
+		}
+
+		/// <summary>
+		/// Reduces mana for one usage of the skill.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		public virtual void UseMana(Creature creature, Skill skill)
+		{
+			creature.Mana -= skill.RankData.ManaCost;
+		}
+
+		/// <summary>
+		/// Returns true if creature has enough stamina to use use skill.
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool CheckStamina(Creature creature, Skill skill)
+		{
+			return (creature.Stamina >= skill.RankData.StaminaCost);
+		}
+
+		/// <summary>
+		/// Reduces stamina for one usage of the skill.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		public virtual void UseStamina(Creature creature, Skill skill)
+		{
+			creature.Stamina -= skill.RankData.StaminaCost;
 		}
 	}
 

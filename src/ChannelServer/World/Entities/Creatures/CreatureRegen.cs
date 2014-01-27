@@ -184,9 +184,6 @@ namespace Aura.Channel.World.Entities.Creatures
 			{
 				var toRemove = new List<int>();
 
-				if (Creature.IsPlayer)
-					Aura.Shared.Util.Log.Debug("===");
-
 				foreach (var regen in _regens.Values)
 				{
 					if (regen.TimeLeft == 0)
@@ -194,9 +191,6 @@ namespace Aura.Channel.World.Entities.Creatures
 						toRemove.Add(regen.Id);
 						continue;
 					}
-
-					if (Creature.IsPlayer)
-						Aura.Shared.Util.Log.Debug(regen.Stat + " : " + regen.Change);
 
 					switch (regen.Stat)
 					{
