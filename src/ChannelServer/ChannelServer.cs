@@ -13,6 +13,7 @@ using Aura.Channel.Util.Configuration;
 using Aura.Channel.World;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.Skills;
 
 namespace Aura.Channel
 {
@@ -50,6 +51,7 @@ namespace Aura.Channel
 		public GmCommandManager CommandProcessor { get; private set; }
 
 		public ScriptManager ScriptManager { get; private set; }
+		public SkillManager SkillManager { get; private set; }
 
 		public WorldManager World { get; private set; }
 
@@ -67,6 +69,7 @@ namespace Aura.Channel
 			this.CommandProcessor = new GmCommandManager();
 
 			this.ScriptManager = new ScriptManager();
+			this.SkillManager = new SkillManager();
 		}
 
 		/// <summary>
@@ -99,6 +102,9 @@ namespace Aura.Channel
 
 			// Scripts
 			this.LoadScripts();
+
+			// Skills
+			this.LoadSkills();
 
 			// Start
 			this.Server.Start(this.Conf.Channel.ChannelPort);
@@ -241,6 +247,11 @@ namespace Aura.Channel
 		private void LoadScripts()
 		{
 			this.ScriptManager.Load();
+		}
+
+		private void LoadSkills()
+		{
+			this.SkillManager.AutoLoad();
 		}
 	}
 }
