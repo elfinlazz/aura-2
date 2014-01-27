@@ -37,10 +37,14 @@
 10041,"Magic Craft",10921
 10042,"Rare Mineralogy",10922
 10043,"Shyllien Ecology",10923
+10044,"Food Mastery",10711
+10045,"Find Material",10712
+10046,"Festival Food",10713
 50005,"Web Spinning",0
 50115,"Wyvern Fire Breath",0
 50160,"Save Location",0
 50161,"Pet Teleport",0
+50168,"PetJumpOnRiding",0
 55001,"Sheep Shearing",10801
 55002,"Mining",10802
 55003,"Egg Gathering",10803
@@ -50,6 +54,9 @@
 55007,"Hoeing",10807
 55100,"Commerce Mastery",10808
 56001,"Transformation Mastery",10809
+57001,"Exploration Mastery",10714
+57002,"Relic Investigation",10715
+57004,"TreasureDungeonExploration",0
 
 // Combat
 //---------------------------------------------------------------------------
@@ -105,6 +112,8 @@
 23013,"Axe Mastery",10113
 23014,"Blunt Mastery",10114
 23016,"Shield Mastery",10115
+23018,"Heavy Armor Mastery",10924
+23019,"Light Armor Mastery",10925
 23021,"Dragon Tail Attack",0
 23022,"Petrifying Roar",0
 23023,"Fire Breath",0
@@ -144,7 +153,6 @@
 23101,"Bran's Shockwave",0
 23103,"Bran's Arm Swing",0
 23106,"Gold Strike",10162
-50062,"Snow Bomb",0
 50104,"Charge",0
 50105,"Playing Dead",0
 50110,"Dragon Meteor",0
@@ -164,6 +172,7 @@
 50135,"Summon",0
 50137,"Boost",0
 50144,"Running Boost",0
+50170,"Hop Spin",0
 50500,"SummonTester",0
 50501,"WhiteDragonFear",0
 50502,"BlackDragonFear",0
@@ -176,7 +185,22 @@
 50509,"TightDefenseBlow",0
 50510,"CastleDefenseBlow",0
 52000,"Merrow Smash",0
+52003,"Abyss Snare",0
+52004,"Abyss Judgment",0
+52005,"Abyss Terror",0
+52006,"Duke's Kiss",0
+52007,"Duke's Rose",0
+52008,"Duke's Mist",0
+52009,"Duke's Temptation",0
+52011,"Spooky Sounds",0
+52012,"Titan Kick",0
+52013,"Titan Bump",0
+52014,"Titan Leap",0
+52500,"Freeze! Stop Right There!",0
+57003,"Emergency Escape",10716
 65002,"Super Windmill (GM Skill)",0
+65004,"Kill All",0
+65005,"Kill Self",0
 
 // Magic
 //---------------------------------------------------------------------------
@@ -199,6 +223,7 @@
 30019,"Bolt Mastery",10107
 30020,"Magic Wand Mastery",10108
 30021,"Magic Staff Mastery",0
+30022,"Magic Weapon Mastery",14008
 30101,"Lightning Bolt",10015
 30102,"Thunder",10020
 30103,"Floating Stone Thunder",0
@@ -207,6 +232,7 @@
 30202,"Fireball",10019
 30203,"Training Fireball",0
 30204,"Floating Stone Fire Ball",0
+30205,"Meteor Strike",14005
 30301,"Icebolt",10017
 30302,"Ice Spear",10046
 30303,"icehug",0
@@ -228,6 +254,8 @@
 30471,"Paper Airplane Bomb",0
 30472,"Invitation of Death",0
 30473,"Flames of Hell",0
+30480,"Spellwalk",14006
+30481,"Snap Cast",14007
 50102,"Swallow",0
 50103,"Bubble Blast",0
 50106,"Master Teleport",0
@@ -252,9 +280,13 @@
 50162,"Restful Wind",0
 50163,"Holy Shower",0
 50164,"Holy Rush",0
-50166,"Pet Summoned Engine Shock",0
+50166,"Burnout",0
+50169,"Hop In",0
+50171,"Hop Shield",0
+50512,"Yui's Defense",0
 52001,"Merrow Rising Dragon",0
 52002,"Merrow Tidal Wave",0
+52015,"Titan Regeneration",0
 
 // Alchemy
 //---------------------------------------------------------------------------
@@ -281,6 +313,10 @@
 35019,"Wind Alchemy",10101
 35020,"AlchemyCylinderMastery",0
 35021,"Transmutation",10103
+35022,"Elemental Wave",10225
+35023,"Golden Time",10226
+35024,"Hydra Transmutation",10227
+35025,"Guard Cylinder Mastery",10228
 35101,"Spirit Cylinder Awakening",0
 50032,"Summon Golem",10065
 50033,"Mana Crystallization Counter-Transmutation",0
@@ -305,12 +341,15 @@
 10006,"Musical Knowledge",0
 30015,"Enthralling Performance",10111
 53001,"Dischord",10706
+53002,"Encore",10708
+53003,"Fantastic Chorus",10710
 53101,"Battlefield Overture",10700
 53102,"Lullaby",10701
 53103,"Vivace",10703
 53104,"Enduring Melody",10702
 53105,"Harvest Song",10704
 53106,"March Song",10705
+53200,"Song",10709
 
 // Puppet
 //---------------------------------------------------------------------------
@@ -408,8 +447,9 @@
 50048,"Cylinder On/Off",0
 50057,"Continent Warp",0
 50058,"Add Seasoning",0
-50065,"Blow Balloon",0
-50066,"Party Motion",0
+50064,"Chorus",0
+50065,"Blow Up Balloon",0
+50066,"Group Motion",0
 50126,"Watering",0
 50127,"Fertilizing",0
 50128,"Bug Catching",0
@@ -417,6 +457,8 @@
 50150,"Scare",0
 50153,"Normal Attack",0
 50165,"Spread Wings",0
+50511,"Yui's Support",0
+52010,"Bolt Out of the Blue",0
 
 // Personas
 //---------------------------------------------------------------------------
@@ -484,13 +526,14 @@
 50050,"Use Morrighan's Feather",0
 50051,"Create Falias Portal",0
 50052,"UseItemChattingColorChange",0
-50053,"Install Private Farm Facility",0
+50053,"Instal Private Farm Facility",0
 50054,"Reorient Homestead building",0
 50055,"Paint",0
 50056,"Mix Paint",0
 50059,"Water Balloon Attack",0
 50060,"Emergency Ice Bomb",0
 50061,"Marionette Hidden Resurrection",0
+50063,"Use Item to Share EXP",0
 50101,"Pet Buffing",0
 50108,"PetSealToItem",0
 50113,"Eat Volcanic Bomb",0
@@ -502,5 +545,10 @@
 50145,"Flown Hot-Air Balloon",0
 50147,"Seal Item",0
 50148,"Cure Zombie",0
+52016,"Beast Roar",0
+52017,"Dance Time",0
+52018,"Cobweb",0
+52019,"Holy Rampage",0
+52020,"Book Shelving",0
 65001,"Pickup Item (GM Skill)",0
 65003,"Block World (GM Skill)",0
