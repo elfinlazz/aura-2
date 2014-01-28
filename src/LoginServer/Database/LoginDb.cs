@@ -3,15 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Aura.Data;
 using Aura.Shared.Database;
-using MySql.Data.MySqlClient;
-using Aura.Shared.Util;
 using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
-using Aura.Data.Database;
-using Aura.Data;
+using Aura.Shared.Util;
+using MySql.Data.MySqlClient;
 
 namespace Aura.Login.Database
 {
@@ -346,11 +343,10 @@ namespace Aura.Login.Database
 		/// <param name="accountId"></param>
 		/// <param name="character"></param>
 		/// <param name="items"></param>
-		/// <param name="keywords"></param>
 		/// <returns></returns>
-		public bool CreateCharacter(string accountId, Character character, List<Item> items, List<ushort> keywords)
+		public bool CreateCharacter(string accountId, Character character, List<Item> items)
 		{
-			return this.Create("characters", accountId, character, items, keywords);
+			return this.Create("characters", accountId, character, items);
 		}
 
 		/// <summary>
@@ -363,7 +359,7 @@ namespace Aura.Login.Database
 		/// <returns></returns>
 		public bool CreatePet(string accountId, Character pet)
 		{
-			return this.Create("pets", accountId, pet, null, null);
+			return this.Create("pets", accountId, pet, null);
 		}
 
 		/// <summary>
@@ -377,7 +373,7 @@ namespace Aura.Login.Database
 		/// <returns></returns>
 		public bool CreatePartner(string accountId, Character partner, List<Item> items)
 		{
-			return this.Create("partners", accountId, partner, items, null);
+			return this.Create("partners", accountId, partner, items);
 		}
 
 		/// <summary>
@@ -389,9 +385,8 @@ namespace Aura.Login.Database
 		/// <param name="accountId"></param>
 		/// <param name="character"></param>
 		/// <param name="items"></param>
-		/// <param name="keywords"></param>
 		/// <returns></returns>
-		private bool Create(string table, string accountId, Character character, List<Item> items, List<ushort> keywords)
+		private bool Create(string table, string accountId, Character character, List<Item> items)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			using (var transaction = conn.BeginTransaction())
@@ -415,10 +410,6 @@ namespace Aura.Login.Database
 					// Items
 					if (items != null)
 						this.AddItems(character.CreatureId, items, conn, transaction);
-
-					// Keywords
-					if (keywords != null)
-						this.AddKeywords(character.CreatureId, keywords, conn, transaction);
 
 					transaction.Commit();
 
@@ -514,25 +505,6 @@ namespace Aura.Login.Database
 					cmd.Set("protection", dataInfo.Protection);
 					cmd.Set("attackSpeed", dataInfo.AttackSpeed);
 					cmd.Set("sellPrice", dataInfo.SellingPrice);
-
-					cmd.Execute();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Adds keywords for creature.
-		/// </summary>
-		/// <param name="creatureId"></param>
-		/// <param name="keywordIds"></param>
-		private void AddKeywords(long creatureId, List<ushort> keywordIds, MySqlConnection conn, MySqlTransaction transaction)
-		{
-			foreach (var keywordId in keywordIds)
-			{
-				using (var cmd = new InsertCommand("INSERT INTO `keywords` {0}", conn, transaction))
-				{
-					cmd.Set("creatureId", creatureId);
-					cmd.Set("keywordId", keywordId);
 
 					cmd.Execute();
 				}

@@ -314,6 +314,21 @@ namespace Aura.Channel.Database
 					}
 				}
 			}
+
+			if (character.Is(EntityType.Character))
+			{
+				// Default
+				character.Keywords.Add("personal_info");
+				character.Keywords.Add("rumor");
+				character.Keywords.Add("about_skill");
+				character.Keywords.Add("about_arbeit");
+				character.Keywords.Add("about_study");
+
+				// Continent Warp
+				character.Keywords.Add("portal_qilla_base_camp");
+				character.Keywords.Add("portal_belfast");
+				character.Keywords.Add("portal_dunbarton");
+			}
 		}
 
 		/// <summary>

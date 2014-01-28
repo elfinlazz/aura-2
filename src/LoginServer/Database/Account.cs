@@ -105,10 +105,7 @@ namespace Aura.Login.Database
 			items.Add(new Item(character.Face, Pocket.Face, character.SkinColor, 0, 0));
 			items.Add(new Item(character.Hair, Pocket.Hair, character.HairColor + 0x10000000u, 0, 0));
 
-			// Start keywords
-			var keywords = new List<ushort>() { 1, 2, 3, 37, 38 };
-
-			if (!LoginDb.Instance.CreateCharacter(this.Name, character, items, keywords))
+			if (!LoginDb.Instance.CreateCharacter(this.Name, character, items))
 				return false;
 
 			this.Characters.Add(character);

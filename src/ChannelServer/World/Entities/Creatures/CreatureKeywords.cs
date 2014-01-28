@@ -52,6 +52,27 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
+		/// Adds keyword.
+		/// </summary>
+		/// <remarks>
+		/// Does not notify client, should be mainly used for loading.
+		/// </remarks>
+		/// <param name="keyword"></param>
+		/// <param name="state"></param>
+		/// <returns></returns>
+		public bool Add(string keyword)
+		{
+			var data = AuraData.KeywordDb.Find(keyword);
+			if (data == null)
+			{
+				Log.Error("Keywords.Add: Unknown keyword '{0}'.", keyword);
+				return false;
+			}
+
+			return this.Add(data.Id);
+		}
+
+		/// <summary>
 		/// Removes keyword.
 		/// </summary>
 		/// <param name="keywordId"></param>
