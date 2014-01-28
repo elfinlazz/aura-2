@@ -12686,7 +12686,6 @@ public class AllDropProps : BaseScript
 		SetPropBehavior(45049310685364293, PropDrop(2));
 		SetPropBehavior(45049310685364296, PropDrop(2));
 		SetPropBehavior(45049310685495303, PropDrop(1));
-		SetPropBehavior(45049310685495377, PropDrop(2));
 		SetPropBehavior(45049310685495380, PropDrop(2));
 		SetPropBehavior(45049310685495382, PropDrop(2));
 		SetPropBehavior(45049310685495392, PropDrop(2));

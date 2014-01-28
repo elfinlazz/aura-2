@@ -37,10 +37,10 @@ namespace Aura.Data.Database
 		public float Y { get; internal set; }
 		public float Direction { get; internal set; }
 		public float Scale { get; internal set; }
-		public List<PropShapeData> Shapes { get; internal set; }
+		public List<ShapeData> Shapes { get; internal set; }
 	}
 
-	public class PropShapeData
+	public class ShapeData
 	{
 		public int X1 { get; internal set; }
 		public int Y1 { get; internal set; }
@@ -55,11 +55,20 @@ namespace Aura.Data.Database
 	public class EventData
 	{
 		public long Id { get; internal set; }
-		public int Type { get; internal set; }
+		public EventType Type { get; internal set; }
 		public float X { get; internal set; }
 		public float Y { get; internal set; }
 		public bool IsAltar { get; internal set; }
 		public List<EventElementData> Elements { get; internal set; }
+		public List<ShapeData> Shapes { get; internal set; }
+	}
+
+	public enum EventType : int
+	{
+		Unk1 = 1,
+		AreaChange = 10, // ? (texts, bgm change)
+		Collision = 14,
+		Unk2 = 2000,     // something about the monsters
 	}
 
 	public class EventElementData
@@ -204,10 +213,10 @@ namespace Aura.Data.Database
 						pi.Scale = br.ReadSingle();
 
 						var cShapes = br.ReadInt32();
-						pi.Shapes = new List<PropShapeData>();
+						pi.Shapes = new List<ShapeData>();
 						for (int k = 0; k < cShapes; ++k)
 						{
-							var si = new PropShapeData();
+							var si = new ShapeData();
 							si.X1 = br.ReadInt32();
 							si.Y1 = br.ReadInt32();
 							si.X2 = br.ReadInt32();
@@ -232,7 +241,7 @@ namespace Aura.Data.Database
 						ei.Id = br.ReadInt64();
 						ei.X = br.ReadSingle();
 						ei.Y = br.ReadSingle();
-						ei.Type = br.ReadInt32();
+						ei.Type = (EventType)br.ReadInt32();
 
 						var cElements = br.ReadInt32();
 						ei.Elements = new List<EventElementData>();
@@ -246,6 +255,23 @@ namespace Aura.Data.Database
 								ei.IsAltar = true;
 
 							ei.Elements.Add(eei);
+						}
+
+						var cShapes = br.ReadInt32();
+						ei.Shapes = new List<ShapeData>();
+						for (int k = 0; k < cShapes; ++k)
+						{
+							var si = new ShapeData();
+							si.X1 = br.ReadInt32();
+							si.Y1 = br.ReadInt32();
+							si.X2 = br.ReadInt32();
+							si.Y2 = br.ReadInt32();
+							si.X3 = br.ReadInt32();
+							si.Y3 = br.ReadInt32();
+							si.X4 = br.ReadInt32();
+							si.Y4 = br.ReadInt32();
+
+							ei.Shapes.Add(si);
 						}
 
 						ai.Events.Add(ei.Id, ei);
