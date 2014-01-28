@@ -5,3 +5,5 @@
 unimplemented			Unimplemented.
 unimplemented_skill		Partially unimplemented skill.
 unimplemented_item		Unimplemented item.
+
+continent_disabled		Continent Warp has been disabled by the Admin.
