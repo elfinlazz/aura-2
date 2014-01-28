@@ -52,8 +52,8 @@ namespace Aura.Shared.Network
 		public const int PetCreationOptionsRequestR = 0x51;
 		public const int PartnerCreationOptionsRequest = 0x55;
 		public const int PartnerCreationOptionsRequestR = 0x56;
-		//public const int ? = 0x5A;  // Sent on login
-		//public const int ?R = 0x5B; // ^ Response, only known parameter: 0 byte.
+		public const int LoginUnk = 0x5A;  // Sent on login
+		public const int LoginUnkR = 0x5B; // ^ Response, only known parameter: 0 byte.
 
 		// Channel Server
 		// ------------------------------------------------------------------

@@ -436,6 +436,19 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
+		/// Sends LoginUnkR to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="unkByte"></param>
+		public static void LoginUnkR(LoginClient client, byte unkByte)
+		{
+			var packet = new Packet(Op.LoginUnkR, MabiId.Login);
+			packet.PutByte(unkByte);
+
+			client.Send(packet);
+		}
+
+		/// <summary>
 		/// Adds server and channel information to packet.
 		/// </summary>
 		/// <param name="packet"></param>
