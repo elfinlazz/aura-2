@@ -167,6 +167,9 @@ namespace Aura.Channel.Network.Handlers
 		/// <summary>
 		/// Sent when moving an item into the pet inventory.
 		/// </summary>
+		/// <remarks>
+		/// We're ignoring the colliding item id the client gives us.
+		/// </remarks>
 		/// <example>
 		/// 0001 [0010010000064D26] Long   : 4504699139411238
 		/// 0002 [005000CC171C5B9A] Long   : 22518874697915290
@@ -180,7 +183,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var petEntityId = packet.GetLong();
 			var itemEntityId = packet.GetLong();
-			var unkLong = packet.GetLong();
+			var collidingItemId = packet.GetLong();
 			var pocket = (Pocket)packet.GetInt();
 			var x = packet.GetInt();
 			var y = packet.GetInt();
@@ -204,6 +207,14 @@ namespace Aura.Channel.Network.Handlers
 			if (item == null)
 			{
 				Log.Warning("Player '{0}' tried to move invalid item to pet.", creature.Name);
+				Send.PutItemIntoPetInvR(creature, false);
+				return;
+			}
+
+			// Check pocket
+			if (pocket != Pocket.Inventory)
+			{
+				Log.Warning("Player '{0}' tried to move item to invalid pocket '{1}'.", creature.Name, pocket);
 				Send.PutItemIntoPetInvR(creature, false);
 				return;
 			}

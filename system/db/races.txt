@@ -2,8 +2,12 @@
 // Database file
 // 
 // Gender: 0 None, 1 Female, 2 Male, 3 Universal
-// State:  0x80000000 Npc, 0x20000000 Good Npc
-// Stand:  0x01 Knock-back-able, 0x02 Knock-down-able
+// 
+// State: Default state (bitmask)
+//     0x20000000 Good Npc
+//     0x80000000 Npc
+// 
+// Stand:  0x01 Knock-back-able, 0x02 Knock-down-able, 0x03 Both
 // 
 // Structure:
 // Id  Name  Group  Gender  VehicleType  State  InvW  InvH  AttMin  AttMax  Range  AttSpeed  KnockCount  Crit  SRadius  SAngle  SDamage  Stand  AI  Color1-3  Size  CP  Life  Defense  Protection  Element  Exp  GoldMin  GoldMax  Drops...
