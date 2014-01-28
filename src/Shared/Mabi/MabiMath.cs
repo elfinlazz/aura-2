@@ -29,7 +29,7 @@ namespace Aura.Shared.Mabi
 		/// <returns></returns>
 		public static byte DirectionToByte(double x, double y)
 		{
-			return (byte)(Math.Floor(Math.Atan2(x, y) / 0.02454369260617026));
+			return (byte)(Math.Floor(Math.Atan2(y, x) / 0.02454369260617026));
 		}
 
 		/// <summary>
