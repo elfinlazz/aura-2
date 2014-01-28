@@ -351,8 +351,8 @@ namespace Aura.Shared.Network
 		public const int MoonGateUseR = 0xA42F;
 		public const int ItemShopInfo = 0xA436;
 		public const int PartyWindowUpdate = 0xA43C;
-		public const int ContinentWarpDateUnk = 0xA43D;
-		public const int ContinentWarpDateUnkR = 0xA43E;
+		public const int ContinentWarpCoolDown = 0xA43D;
+		public const int ContinentWarpCoolDownR = 0xA43E;
 		public const int PartyTypeUpdate = 0xA44B;
 		public const int OpenItemShop = 0xA44D;
 

@@ -116,23 +116,22 @@ namespace Aura.Channel.Network.Handlers
 		/// ?
 		/// </summary>
 		/// <remarks>
-		/// Dummy handler. On login this packet only has a 1 byte,
-		/// on conti warps it has two timestamps, that are *exactly*
-		/// 18 minutes apart from each other. Very likely related to
-		/// Continent Warp.
+		/// Dummy handler. Sent on login and after certain warps.
+		/// Appears to be a request for the cool down
+		/// of the continent warp (see response).
 		/// </remarks>
 		/// <example>
 		/// No parameters.
 		/// </example>
-		[PacketHandler(Op.ContinentWarpDateUnk)]
-		public void ContinentWarpDateUnk(ChannelClient client, Packet packet)
+		[PacketHandler(Op.ContinentWarpCoolDown)]
+		public void ContinentWarpCoolDown(ChannelClient client, Packet packet)
 		{
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null)
 				return;
 
 			// Default answer
-			Send.ContinentWarpDateUnkR(creature);
+			Send.ContinentWarpCoolDownR(creature);
 		}
 	}
 }

@@ -9,6 +9,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Channel.World;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -96,18 +97,30 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
-		/// Sends WarpDateUnkR to creature's client.
+		/// Sends ContinentWarpCoolDownR to creature's client.
 		/// </summary>
+		/// <remarks>
+		/// On login the first parameter always seems to be a 1 byte.
+		/// If it's not, after a continent warp for example, the packet
+		/// has two more date parameters, with times 18 minutes apart
+		/// from each other.
+		/// The first date is the time of the last continent warp reset,
+		/// 00:00 or 12:00. The second date is the time of the next reset.
+		/// Based on those two times the skill icon cool down is displayed.
+		/// </remarks>
 		/// <param name="creature"></param>
-		public static void ContinentWarpDateUnkR(Creature creature)
+		public static void ContinentWarpCoolDownR(Creature creature)
 		{
-			var packet = new Packet(Op.ContinentWarpDateUnkR, creature.EntityId);
+			var packet = new Packet(Op.ContinentWarpCoolDownR, creature.EntityId);
 			packet.PutByte(1);
 
 			// Alternative structure: (Conti and Nao warps)
 			// 001 [..............00]  Byte   : 0
 			// 002 [000039BA86EA43C0]  Long   : 000039BA86EA43C0 // 2012-May-22 15:30:00
 			// 003 [000039BA86FABE80]  Long   : 000039BA86FABE80 // 2012-May-22 15:48:00
+			//packet.PutByte(0);
+			//packet.PutLong(DateTime.Now.AddMinutes(1));
+			//packet.PutLong(DateTime.Now.AddMinutes(5));
 
 			creature.Client.Send(packet);
 		}
