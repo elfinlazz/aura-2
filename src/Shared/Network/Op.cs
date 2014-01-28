@@ -351,6 +351,8 @@ namespace Aura.Shared.Network
 		public const int MoonGateUseR = 0xA42F;
 		public const int ItemShopInfo = 0xA436;
 		public const int PartyWindowUpdate = 0xA43C;
+		public const int ContinentWarpDateUnk = 0xA43D;
+		public const int ContinentWarpDateUnkR = 0xA43E;
 		public const int PartyTypeUpdate = 0xA44B;
 		public const int OpenItemShop = 0xA44D;
 
@@ -375,7 +377,10 @@ namespace Aura.Shared.Network
 		public const int HomesteadInfoRequest = 0xAA54;
 		public const int HomesteadInfoRequestR = 0xAA55;
 
-		// [180300, NA166 (18.09.2013)] 2 new ops somewhere here
+		// [180300, NA166 (18.09.2013)] 2 new ops somewhere here, possibly the two below
+
+		public const int ChannelLoginUnk = 0xAA83;
+		public const int ChannelLoginUnkR = 0xAA84;
 
 		public const int CollectionRequest = 0xAA87;
 		public const int CollectionRequestR = 0xAA88;

@@ -80,5 +80,36 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends ChannelLoginUnkR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void ChannelLoginUnkR(Creature creature)
+		{
+			var packet = new Packet(Op.ChannelLoginUnkR, creature.EntityId);
+			packet.PutByte(1); // success?
+			packet.PutInt(0);
+			packet.PutInt(0);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends WarpDateUnkR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void ContinentWarpDateUnkR(Creature creature)
+		{
+			var packet = new Packet(Op.ContinentWarpDateUnkR, creature.EntityId);
+			packet.PutByte(1);
+
+			// Alternative structure: (Conti and Nao warps)
+			// 001 [..............00]  Byte   : 0
+			// 002 [000039BA86EA43C0]  Long   : 000039BA86EA43C0 // 2012-May-22 15:30:00
+			// 003 [000039BA86FABE80]  Long   : 000039BA86FABE80 // 2012-May-22 15:48:00
+
+			creature.Client.Send(packet);
+		}
 	}
 }

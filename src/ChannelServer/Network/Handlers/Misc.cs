@@ -90,5 +90,49 @@ namespace Aura.Channel.Network.Handlers
 			// Default answer for now
 			Send.HomesteadInfoRequestR(creature);
 		}
+
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Dummy handler. Answer is a 1 byte with 2 0 ints.
+		/// Sent together with Homestead info request on login.
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.ChannelLoginUnk)]
+		public void ChannelLoginUnk(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			// Default answer
+			Send.ChannelLoginUnkR(creature);
+		}
+
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Dummy handler. On login this packet only has a 1 byte,
+		/// on conti warps it has two timestamps, that are *exactly*
+		/// 18 minutes apart from each other. Very likely related to
+		/// Continent Warp.
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.ContinentWarpDateUnk)]
+		public void ContinentWarpDateUnk(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			// Default answer
+			Send.ContinentWarpDateUnkR(creature);
+		}
 	}
 }
