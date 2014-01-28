@@ -9,6 +9,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Channel.Skills;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
+using Aura.Channel.Skills.Base;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
@@ -19,6 +20,8 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		public float HighestSkillCp { get; private set; }
 		public float SecondHighestSkillCp { get; private set; }
+
+		public Skill ActiveSkill { get; set; }
 
 		public CreatureSkills(Creature creature)
 		{
@@ -234,6 +237,44 @@ namespace Aura.Channel.World.Entities.Creatures
 				skill.Info.Flag |= SkillFlags.Rankable;
 
 			Send.SkillTrainingUp(_creature, skill, exp);
+		}
+
+		/// <summary>
+		/// Cancels active skill.
+		/// </summary>
+		/// <remarks>
+		/// SkillCancel is sent in any case, even if something goes wrong,
+		/// like the method not being implemented. Unless no skill is active.
+		/// </remarks>
+		public void CancelActiveSkill()
+		{
+			if (this.ActiveSkill == null)
+			{
+				Log.Warning("Player '{0}' tried to cancel skill, without it being active.", _creature.Name);
+				return;
+			}
+
+			var handler = ChannelServer.Instance.SkillManager.GetHandler<ICancelable>(this.ActiveSkill.Info.Id);
+			if (handler == null)
+			{
+				Log.Unimplemented("CancelActiveSkill: Skill handler or interface for '{0}'.", this.ActiveSkill.Info.Id);
+				goto L_Cancel;
+			}
+
+			try
+			{
+				handler.Cancel(_creature, this.ActiveSkill);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("CancelActiveSkill: Skill cancel method for '{0}'.", this.ActiveSkill.Info.Id);
+				goto L_Cancel;
+			}
+
+		L_Cancel:
+			Send.SkillCancel(_creature);
+
+			this.ActiveSkill = null;
 		}
 	}
 }

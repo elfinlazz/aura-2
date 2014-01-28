@@ -76,7 +76,7 @@ namespace Aura.Channel.Network.Handlers
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<IStartable>(skillId);
 			if (handler == null)
 			{
-				Log.Unimplemented("Skill handler for '{0}'.", skillId);
+				Log.Unimplemented("SkillStart: Skill handler or interface for '{0}'.", skillId);
 				Send.ServerMessage(creature, "This skill isn't implemented yet.");
 				Send.SkillStartSilentCancel(creature, skillId);
 				return;
@@ -88,7 +88,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 			catch (NotImplementedException)
 			{
-				Log.Unimplemented("Skill start method for '{0}'.", skillId);
+				Log.Unimplemented("SkillStart: Skill start method for '{0}'.", skillId);
 				Send.ServerMessage(creature, "This skill isn't implemented completely yet.");
 				Send.SkillStartSilentCancel(creature, skillId);
 			}
@@ -130,7 +130,7 @@ namespace Aura.Channel.Network.Handlers
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<IStoppable>(skillId);
 			if (handler == null)
 			{
-				Log.Unimplemented("Skill handler for '{0}'.", skillId);
+				Log.Unimplemented("SkillStop: Skill handler or interface for '{0}'.", skillId);
 				Send.ServerMessage(creature, "This skill isn't implemented yet.");
 				Send.SkillStopSilentCancel(creature, skillId);
 				return;
@@ -142,10 +142,224 @@ namespace Aura.Channel.Network.Handlers
 			}
 			catch (NotImplementedException)
 			{
-				Log.Unimplemented("Skill stop method for '{0}'.", skillId);
+				Log.Unimplemented("SkillStop: Skill stop method for '{0}'.", skillId);
 				Send.ServerMessage(creature, "This skill isn't implemented completely yet.");
 				Send.SkillStopSilentCancel(creature, skillId);
 			}
+		}
+
+		/// <summary>
+		/// Preparing a skill before it can be used.
+		/// </summary>
+		/// <remarks>
+		/// Preparing a skill is the first step of getting a skill ready
+		/// to be used. The next packet usually is "Ready", once the skill
+		/// is loaded. Some skills skip that step though.
+		/// </remarks>
+		/// <example>
+		/// 0001 [............2714] Short  : 50057
+		/// 0002 [................] String : 
+		/// </example>
+		[PacketHandler(Op.SkillPrepare)]
+		public void SkillPrepare(ChannelClient client, Packet packet)
+		{
+			var skillId = (SkillId)packet.GetUShort();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			var skill = creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("SkillPrepare: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
+				Send.SkillPrepareSilentCancel(creature, skillId);
+				return;
+			}
+
+			var handler = ChannelServer.Instance.SkillManager.GetHandler<IPreparable>(skillId);
+			if (handler == null)
+			{
+				Log.Unimplemented("SkillPrepare: Skill handler or interface for '{0}'.", skillId);
+				Send.ServerMessage(creature, "This skill isn't implemented yet.");
+				Send.SkillPrepareSilentCancel(creature, skillId);
+				return;
+			}
+
+			try
+			{
+				handler.Prepare(creature, skill, packet);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("SkillPrepare: Skill prepare method for '{0}'.", skillId);
+				Send.ServerMessage(creature, "This skill isn't implemented completely yet.");
+				Send.SkillPrepareSilentCancel(creature, skillId);
+			}
+		}
+
+		/// <summary>
+		/// Sent after skill was loaded completely.
+		/// </summary>
+		/// <example>
+		/// 0001 [............2714] Short  : 20002
+		/// 0002 [................] String : 
+		/// </example>
+		[PacketHandler(Op.SkillReady)]
+		public void SkillReady(ChannelClient client, Packet packet)
+		{
+			var skillId = (SkillId)packet.GetUShort();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			var skill = creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("SkillReady: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
+				// Cancel?
+				return;
+			}
+
+			var handler = ChannelServer.Instance.SkillManager.GetHandler<IReadyable>(skillId);
+			if (handler == null)
+			{
+				Log.Unimplemented("SkillReady: Skill handler or interface for '{0}'.", skillId);
+				Send.ServerMessage(creature, "This skill isn't implemented yet.");
+				// Cancel?
+				return;
+			}
+
+			try
+			{
+				handler.Ready(creature, skill, packet);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("SkillReady: Skill ready method for '{0}'.", skillId);
+				Send.ServerMessage(creature, "This skill isn't implemented completely yet.");
+				// Cancel?
+			}
+		}
+
+		/// <summary>
+		/// Using a skill.
+		/// </summary>
+		/// <remarks>
+		/// Sent after Prepare and maybe Ready.
+		/// </remarks>
+		/// <example>
+		/// 0001 [............2714] Short  : 50057
+		/// 0002 [................] String : 
+		/// </example>
+		[PacketHandler(Op.SkillUse)]
+		public void SkillUse(ChannelClient client, Packet packet)
+		{
+			var skillId = (SkillId)packet.GetUShort();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			var skill = creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("SkillUse: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
+				Send.SkillUseSilentCancel(creature);
+				return;
+			}
+
+			var handler = ChannelServer.Instance.SkillManager.GetHandler<IUseable>(skillId);
+			if (handler == null)
+			{
+				Log.Unimplemented("SkillUse: Skill handler or interface for '{0}'.", skillId);
+				Send.ServerMessage(creature, "This skill isn't implemented yet.");
+				Send.SkillUseSilentCancel(creature);
+				return;
+			}
+
+			try
+			{
+				handler.Use(creature, skill, packet);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("SkillUse: Skill use method for '{0}'.", skillId);
+				Send.ServerMessage(creature, "This skill isn't implemented completely yet.");
+				Send.SkillUseSilentCancel(creature);
+			}
+		}
+
+		/// <summary>
+		/// Completing skill usage.
+		/// </summary>
+		/// <remarks>
+		/// Sent after skill was used successfully.
+		/// </remarks>
+		/// <example>
+		/// 0001 [............2714] Short  : 50057
+		/// 0002 [................] String : 
+		/// </example>
+		[PacketHandler(Op.SkillComplete)]
+		public void SkillComplete(ChannelClient client, Packet packet)
+		{
+			var skillId = (SkillId)packet.GetUShort();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			var skill = creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("SkillComplete: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
+				// Cancel?
+				return;
+			}
+
+			var handler = ChannelServer.Instance.SkillManager.GetHandler<ICompletable>(skillId);
+			if (handler == null)
+			{
+				Log.Unimplemented("SkillComplete: Skill handler or interface for '{0}'.", skillId);
+				Send.ServerMessage(creature, "This skill isn't implemented yet.");
+				// Cancel?
+				return;
+			}
+
+			try
+			{
+				handler.Complete(creature, skill, packet);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("SkillComplete: Skill complete method for '{0}'.", skillId);
+				Send.ServerMessage(creature, "This skill isn't implemented completely yet.");
+				// Cancel?
+			}
+		}
+
+		/// <summary>
+		/// Canceling a skill.
+		/// </summary>
+		/// <remarks>
+		/// Only prepareable skills are canceled, startables use Stop.
+		/// </remarks>
+		/// <example>
+		/// 0001 [..............00] Byte   : 0
+		/// 0002 [..............01] Byte   : 1
+		/// </example>
+		[PacketHandler(Op.SkillCancel)]
+		public void SkillCancel(ChannelClient client, Packet packet)
+		{
+			var unkByte1 = packet.GetByte();
+			var unkByte2 = packet.GetByte();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			creature.Skills.CancelActiveSkill();
 		}
 	}
 }

@@ -103,6 +103,31 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends SkillPrepareSilentCancel to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		public static void SkillPrepareSilentCancel(Creature creature, SkillId skillId)
+		{
+			var packet = new Packet(Op.SkillPrepareSilentCancel, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillUseSilentCancel to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		public static void SkillUseSilentCancel(Creature creature)
+		{
+			var packet = new Packet(Op.SkillUseSilentCancel, creature.EntityId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends SkillStart to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
@@ -162,6 +187,42 @@ namespace Aura.Channel.Network.Sending
 			creature.Client.Send(packet);
 		}
 
+		/// <summary>
+		/// Sends SkillReady to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="extra"></param>
+		public static void SkillReady(Creature creature, SkillId skillId, string extra)
+		{
+			var packet = new Packet(Op.SkillReady, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutString(extra);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillUse to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="extra"></param>
+		public static void SkillUse(Creature creature, SkillId skillId, byte unkByte)
+		{
+			var packet = new Packet(Op.SkillUse, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutByte(unkByte);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillTrainingUp to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="exp">Exp gained</param>
 		public static void SkillTrainingUp(Creature creature, Skill skill, float exp)
 		{
 			var packet = new Packet(Op.SkillTrainingUp, creature.EntityId);
@@ -169,6 +230,19 @@ namespace Aura.Channel.Network.Sending
 			packet.PutFloat(exp);
 			packet.PutByte(1);
 			packet.PutString("" /* (Specialized Skill Bonus: x2) */);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillCancel to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void SkillCancel(Creature creature)
+		{
+			var packet = new Packet(Op.SkillCancel, creature.EntityId);
+			packet.PutByte(0);
+			packet.PutByte(1);
 
 			creature.Client.Send(packet);
 		}

@@ -66,7 +66,7 @@ namespace Aura.Channel.Skills.Base
 	/// </summary>
 	public interface ICancelable : ISkillHandler
 	{
-		void Cancel(Creature creature, Skill skill, Packet packet);
+		void Cancel(Creature creature, Skill skill);
 	}
 
 	/// <summary>
