@@ -283,7 +283,6 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.Creature.Region.Collissions.Find(pos, destination, out intersection))
 				destination = pos.GetRelative(intersection, -200);
 
-
 			var time = Math.Ceiling(pos.GetDistance(destination) / this.Creature.GetSpeed());
 			var targetTime = _timestamp + time;
 

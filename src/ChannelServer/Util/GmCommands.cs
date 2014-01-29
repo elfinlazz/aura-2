@@ -44,6 +44,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "skill", "<id> [rank]", HandleSkill);
 			Add(50, 50, "title", "<id>", HandleTitle);
 			Add(50, 50, "speed", "[increase]", HandleSpeed);
+			Add(50, 50, "spawn", "<race> [amount]", HandleSpawn);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -646,9 +647,9 @@ namespace Aura.Channel.Util
 
 			target.Titles.Enable(titleId);
 
-			Send.SystemMessage(sender, Localization.Get("gm.title_success")); // Added title.
+			Send.ServerMessage(sender, Localization.Get("gm.title_success")); // Added title.
 			if (sender != target)
-				Send.SystemMessage(target, Localization.Get("gm.title_target"), sender.Name); // {0} enabled a title for you.
+				Send.ServerMessage(target, Localization.Get("gm.title_target"), sender.Name); // {0} enabled a title for you.
 
 			return CommandResult.Okay;
 		}
@@ -666,10 +667,45 @@ namespace Aura.Channel.Util
 			else
 				target.Conditions.Activate(ConditionsC.Hurry, speed);
 
-			Send.SystemMessage(sender, Localization.Get("gm.speed_success"), speed); // Speed changed to +{0}%.
+			Send.ServerMessage(sender, Localization.Get("gm.speed_success"), speed); // Speed changed to +{0}%.
 			if (sender != target)
-				Send.SystemMessage(target, Localization.Get("gm.speed_target"), speed, sender.Name); // Your speed has been changed to +{0}% by {1}.
+				Send.ServerMessage(target, Localization.Get("gm.speed_target"), speed, sender.Name); // Your speed has been changed to +{0}% by {1}.
 
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleSpawn(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			int raceId;
+			if (!int.TryParse(args[1], out raceId))
+				return CommandResult.InvalidArgument;
+
+			if (!AuraData.RaceDb.Exists(raceId))
+			{
+				Send.ServerMessage(sender, Localization.Get("gm.spawn_race"), raceId); // Race '{0}' doesn't exist.
+				return CommandResult.Fail;
+			}
+
+			int amount = 1;
+			if (args.Length > 2 && !int.TryParse(args[2], out amount))
+				return CommandResult.InvalidArgument;
+
+			var targetPos = target.GetPosition();
+			for (int i = 0; i < amount; ++i)
+			{
+				var x = (int)(targetPos.X + Math.Sin(i) * i * 20);
+				var y = (int)(targetPos.Y + Math.Cos(i) * i * 20);
+
+				ChannelServer.Instance.ScriptManager.Spawn(raceId, sender.RegionId, x, y);
+			}
+
+			Send.ServerMessage(sender, Localization.Get("gm.spawn_success")); // Creatures spawned.
+			if (target != sender)
+				Send.ServerMessage(sender, Localization.Get("gm.spawn_target"), sender.Name); // {0} spawned creatures around you.
 
 			return CommandResult.Okay;
 		}

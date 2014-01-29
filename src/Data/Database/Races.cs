@@ -91,6 +91,11 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower() == name);
 		}
 
+		public bool Exists(int raceId)
+		{
+			return this.Entries.ContainsKey(raceId);
+		}
+
 		[MinFieldCount(24)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
