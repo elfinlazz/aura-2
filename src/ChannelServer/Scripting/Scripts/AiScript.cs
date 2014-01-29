@@ -257,7 +257,9 @@ namespace Aura.Channel.Scripting.Scripts
 			var target = _timestamp + duration;
 
 			while (_timestamp < target)
+			{
 				yield return true;
+			}
 		}
 
 		/// <summary>
@@ -271,10 +273,16 @@ namespace Aura.Channel.Scripting.Scripts
 			if (maxDistance < minDistance)
 				maxDistance = minDistance;
 
-			var pos = this.Creature.GetPosition();
 			var rnd = RandomProvider.Get();
-
+			var pos = this.Creature.GetPosition();
 			var destination = pos.GetRandomInRange(minDistance, maxDistance, rnd);
+
+			// Check for collision, set destination 200 points before the
+			// intersection, to prevent glitching through.
+			Position intersection;
+			if (this.Creature.Region.Collissions.Find(pos, destination, out intersection))
+				destination = pos.GetRelative(intersection, -200);
+
 
 			var time = Math.Ceiling(pos.GetDistance(destination) / this.Creature.GetSpeed());
 			var targetTime = _timestamp + time;

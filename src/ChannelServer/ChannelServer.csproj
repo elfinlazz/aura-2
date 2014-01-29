@@ -146,6 +146,7 @@
     <Compile Include="Util\Configuration\Files\World.cs" />
     <Compile Include="Util\EventHandler.cs" />
     <Compile Include="Util\GmCommands.cs" />
+    <Compile Include="Util\Quadtree.cs" />
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\Creature.cs" />
     <Compile Include="World\Entities\Creatures\CreatureConditions.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="World\Location.cs" />
     <Compile Include="World\Position.cs" />
     <Compile Include="World\Region.cs" />
+    <Compile Include="World\RegionCollision.cs" />
     <Compile Include="World\Shops\NpcShop.cs" />
     <Compile Include="World\WorldManager.cs" />
   </ItemGroup>

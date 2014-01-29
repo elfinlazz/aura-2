@@ -13,6 +13,11 @@ namespace Aura.Channel.World
 		public readonly int X;
 		public readonly int Y;
 
+		/// <summary>
+		/// Returns position with X and Y being 0.
+		/// </summary>
+		public static Position Zero { get { return new Position(0, 0); } }
+
 		public Position(int x, int y)
 		{
 			this.X = x;
@@ -82,6 +87,31 @@ namespace Aura.Channel.World
 			var y = this.Y + distance * Math.Sin(angle);
 
 			return new Position((int)x, (int)y);
+		}
+
+		/// <summary>
+		/// Returns position on the line between position and other.
+		/// </summary>
+		/// <remarks>
+		/// When you knock someone back, he gets pushed in the opposite
+		/// direction. The other position would be the enemy, the distance
+		/// the amount how far to push him away. A negative distance will
+		/// return a position between you two.
+		/// </remarks>
+		public Position GetRelative(Position other, int distance)
+		{
+			if (this == other)
+				return this;
+
+			var deltaX = (double)other.X - this.X;
+			var deltaY = (double)other.Y - this.Y;
+
+			var deltaXY = Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2));
+
+			var newX = other.X + (distance / deltaXY) * (deltaX);
+			var newY = other.Y + (distance / deltaXY) * (deltaY);
+
+			return new Position((int)newX, (int)newY);
 		}
 
 		public static bool operator ==(Position pos1, Position pos2)

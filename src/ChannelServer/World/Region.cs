@@ -12,6 +12,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using System.Threading;
+using Aura.Data.Database;
 
 namespace Aura.Channel.World
 {
@@ -22,13 +23,16 @@ namespace Aura.Channel.World
 
 		protected ReaderWriterLockSlim _creaturesRWLS, _propsRWLS, _itemsRWLS;
 
-		public int Id { get; protected set; }
-
 		protected Dictionary<long, Creature> _creatures;
 		protected Dictionary<long, Prop> _props;
 		protected Dictionary<long, Item> _items;
 
 		protected HashSet<ChannelClient> _clients;
+
+		protected RegionData _regionData;
+
+		public int Id { get; protected set; }
+		public RegionCollision Collissions { get; protected set; }
 
 		public Region(int id)
 		{
@@ -44,6 +48,16 @@ namespace Aura.Channel.World
 
 			_clients = new HashSet<ChannelClient>();
 
+			_regionData = AuraData.RegionInfoDb.Find(this.Id);
+			if (_regionData == null)
+			{
+				Log.Warning("Region: No data found for '{0}'.", this.Id);
+				return;
+			}
+
+			this.Collissions = new RegionCollision(_regionData.X1, _regionData.Y1, _regionData.X2, _regionData.Y2);
+			this.Collissions.Init(_regionData);
+
 			this.LoadClientProps();
 		}
 
@@ -52,11 +66,10 @@ namespace Aura.Channel.World
 		/// </summary>
 		private void LoadClientProps()
 		{
-			var props = AuraData.RegionInfoDb.Find(this.Id);
-			if (props == null || props.Areas == null)
+			if (_regionData == null || _regionData.Areas == null)
 				return;
 
-			foreach (var area in props.Areas.Values)
+			foreach (var area in _regionData.Areas.Values)
 			{
 				foreach (var prop in area.Props.Values)
 				{
