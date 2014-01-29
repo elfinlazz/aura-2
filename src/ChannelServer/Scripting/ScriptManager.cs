@@ -530,7 +530,8 @@ namespace Aura.Channel.Scripting
 			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI))
 			{
 				creature.AI = this.GetAi(creature.RaceData.AI, creature);
-				//creature.AI.Activate();
+				if (creature.AI == null)
+					Log.Warning("Spawn: Missing AI '{0}' for '{1}'.", creature.RaceData.AI, raceId);
 			}
 
 			if (!creature.Warp(regionId, x, y))

@@ -550,6 +550,9 @@ namespace Aura.Channel.World
 			{
 				foreach (NPC npc in _creatures.Values.Where(a => a.Is(EntityType.NPC)))
 				{
+					if (npc.AI == null)
+						continue;
+
 					var pos = npc.GetPosition();
 					if (!(pos.X >= minX && pos.X <= maxX && pos.Y >= minY && pos.Y <= maxY && (Math.Abs(pos.Y - (long)(slope * pos.X + b)) <= VisibleRange)))
 						continue;
