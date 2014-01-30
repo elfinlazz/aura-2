@@ -1,15 +1,14 @@
 // Aura
-// NPC list file
+// Script list file
 //
-// All NPCs listed here will be loaded.
+// All scripts listed here will be loaded.
 //---------------------------------------------------------------------------
 
 divert  "/user/scripts/scripts.txt"
-include "/user/scripts/scripts_custom.txt"
 
+include "scripts_custom.txt"
 include "scripts_npcs.txt"
-include "scripts_props.txt"
-include "scripts_quest.txt"
-
-//test.boo
-test.cs
+include "scripts_others.txt"
+include "scripts_quests.txt"
+include "scripts_regions.txt"
+include "scripts_warps.txt"
