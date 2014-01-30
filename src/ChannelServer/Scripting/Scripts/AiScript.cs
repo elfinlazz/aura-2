@@ -277,16 +277,17 @@ namespace Aura.Channel.Scripting.Scripts
 			var pos = this.Creature.GetPosition();
 			var destination = pos.GetRandomInRange(minDistance, maxDistance, rnd);
 
-			// Check for collision, set destination 200 points before the
-			// intersection, to prevent glitching through.
+			// Check for collision, take a break if there is one.
 			Position intersection;
 			if (this.Creature.Region.Collissions.Find(pos, destination, out intersection))
-				destination = pos.GetRelative(intersection, -200);
+				//destination = pos.GetRelative(intersection, -10);
+				yield break;
 
 			var time = Math.Ceiling(pos.GetDistance(destination) / this.Creature.GetSpeed());
 			var targetTime = _timestamp + time;
 
 			this.Creature.Move(destination, true);
+
 			//while (this.Creature.GetPosition() != destination)
 			while (_timestamp < targetTime)
 				yield return true;

@@ -1,283 +1,203 @@
-﻿using System.Collections.Generic;
+﻿// https://gist.github.com/ismyhc/4747262
+
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Aura.Channel.Util
 {
 	public interface IQuadtreeObject
 	{
-		/// <summary>
-		/// The rectangle that defines the object's boundaries.
-		/// </summary>
 		Rectangle Rect { get; }
 	}
 
-	/// <summary>
-	/// Simple, generic Quadtree.
-	/// <remarks>
-	/// Source: http://bytes.com/topic/c-sharp/insights/880968-generic-quadtree-implementation
-	/// </remarks>
-	/// </summary>
-	/// <typeparam name="TObject"></typeparam>
-	public class Quadtree<TObject> where TObject : IQuadtreeObject
+	public class Quadtree<T> where T : IQuadtreeObject
 	{
-		/// <summary>
-		/// Max amount of objects per node, before it's devided.
-		/// </summary>
-		private const int MaxObjects = 2;
+		private int MaxObjects = 2;
+		private int MaxLevels = 5;
 
-		/// <summary>
-		/// The area of this node.
-		/// </summary>
-		public Rectangle Rect { get; protected set; }
-
-		public Quadtree<TObject> TopLeftChild { get; protected set; }
-		public Quadtree<TObject> TopRightChild { get; protected set; }
-		public Quadtree<TObject> BottomLeftChild { get; protected set; }
-		public Quadtree<TObject> BottomRightChild { get; protected set; }
-
-		/// <summary>
-		/// Objects in *this* node (not the children).
-		/// </summary>
-		public List<TObject> Objects { get; protected set; }
-
-		public Quadtree(Rectangle rect)
-		{
-			this.Rect = rect;
-		}
+		private int _level;
+		private List<T> _objects;
+		private Rectangle _bounds;
+		private Quadtree<T>[] _nodes;
 
 		public Quadtree(int x, int y, int width, int height)
-			: this(new Rectangle(x, y, width, height))
-		{ }
-
-		/// <summary>
-		/// Adds object to node.
-		/// </summary>
-		/// <param name="item"></param>
-		private void Add(TObject item)
+			: this(0, new Rectangle(x, y, width, height))
 		{
-			if (this.Objects == null)
-				this.Objects = new List<TObject>();
-
-			this.Objects.Add(item);
 		}
 
-		/// <summary>
-		/// Removes object from node.
-		/// </summary>
-		/// <param name="item"></param>
-		private void Remove(TObject item)
+		public Quadtree(int level, Rectangle bounds)
 		{
-			if (this.Objects != null && this.Objects.Contains(item))
-				this.Objects.Remove(item);
+			_level = level;
+			_bounds = bounds;
+			_objects = new List<T>();
+			_nodes = new Quadtree<T>[4];
 		}
 
-		/// <summary>
-		/// Divides node and moves children to appropriate ones where applicable.
-		/// </summary>
-		private void Split()
-		{
-			var size = new Point(this.Rect.Width / 2, this.Rect.Height / 2);
-			var mid = new Point(this.Rect.X + size.X, this.Rect.Y + size.Y);
-
-			this.TopLeftChild = new Quadtree<TObject>(new Rectangle(this.Rect.Left, this.Rect.Top, size.X, size.Y));
-			this.TopRightChild = new Quadtree<TObject>(new Rectangle(mid.X, this.Rect.Top, size.X, size.Y));
-			this.BottomLeftChild = new Quadtree<TObject>(new Rectangle(this.Rect.Left, mid.Y, size.X, size.Y));
-			this.BottomRightChild = new Quadtree<TObject>(new Rectangle(mid.X, mid.Y, size.X, size.Y));
-
-			for (int i = 0; i < this.Objects.Count; i++)
-			{
-				var destTree = this.GetDestinationTree(this.Objects[i]);
-
-				if (destTree != this)
-				{
-					destTree.Insert(this.Objects[i]);
-					this.Remove(this.Objects[i]);
-					i--;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Get the child that would contain the object.
-		/// </summary>
-		/// <param name="item"></param>
-		/// <returns></returns>
-		private Quadtree<TObject> GetDestinationTree(TObject item)
-		{
-			var destTree = this;
-
-			if (this.TopLeftChild.Rect.Contains(item.Rect))
-				destTree = this.TopLeftChild;
-			else if (this.TopRightChild.Rect.Contains(item.Rect))
-				destTree = this.TopRightChild;
-			else if (this.BottomLeftChild.Rect.Contains(item.Rect))
-				destTree = this.BottomLeftChild;
-			else if (this.BottomRightChild.Rect.Contains(item.Rect))
-				destTree = this.BottomRightChild;
-
-			return destTree;
-		}
-
-		/// <summary>
-		/// Clears the node and its children of all objects.
-		/// </summary>
 		public void Clear()
 		{
-			if (this.Objects != null)
+			_objects.Clear();
+			for (int i = 0; i < _nodes.Length; i++)
 			{
-				this.Objects.Clear();
-				this.Objects = null;
-			}
-
-			if (this.TopLeftChild != null)
-			{
-				this.TopLeftChild.Clear();
-				this.TopRightChild.Clear();
-				this.BottomLeftChild.Clear();
-				this.BottomRightChild.Clear();
-
-				this.TopLeftChild = null;
-				this.TopRightChild = null;
-				this.BottomLeftChild = null;
-				this.BottomRightChild = null;
-			}
-		}
-
-		/// <summary>
-		/// Returns the amount of all objects in this node and its children.
-		/// </summary>
-		public int ObjectCount()
-		{
-			var count = 0;
-
-			if (this.Objects != null)
-				count += this.Objects.Count;
-
-			if (this.TopLeftChild != null)
-			{
-				count += this.TopLeftChild.ObjectCount();
-				count += this.TopRightChild.ObjectCount();
-				count += this.BottomLeftChild.ObjectCount();
-				count += this.BottomRightChild.ObjectCount();
-			}
-
-			return count;
-		}
-
-		/// <summary>
-		/// Deletes object from node.
-		/// </summary>
-		/// <remarks>
-		/// Children are removed as well, if object count reaches 0.
-		/// </remarks>
-		/// <param name="item"></param>
-		public void Delete(TObject item)
-		{
-			bool objectRemoved = false;
-			if (this.Objects != null && this.Objects.Contains(item))
-			{
-				this.Remove(item);
-				objectRemoved = true;
-			}
-
-			if (this.TopLeftChild != null && !objectRemoved)
-			{
-				this.TopLeftChild.Delete(item);
-				this.TopRightChild.Delete(item);
-				this.BottomLeftChild.Delete(item);
-				this.BottomRightChild.Delete(item);
-			}
-
-			if (this.TopLeftChild != null)
-			{
-				if (this.TopLeftChild.ObjectCount() == 0 && this.TopRightChild.ObjectCount() == 0 && this.BottomLeftChild.ObjectCount() == 0 && this.BottomRightChild.ObjectCount() == 0)
+				if (_nodes[i] != null)
 				{
-					this.TopLeftChild = null;
-					this.TopRightChild = null;
-					this.BottomLeftChild = null;
-					this.BottomRightChild = null;
+					_nodes[i].Clear();
+					_nodes[i] = null;
 				}
 			}
 		}
 
-		/// <summary>
-		/// Inserts item into node.
-		/// </summary>
-		/// <param name="item"></param>
-		public void Insert(TObject item)
+		private void Split()
 		{
-			if (!this.Rect.IntersectsWith(item.Rect))
-				return;
+			int subWidth = (int)(_bounds.Width / 2);
+			int subHeight = (int)(_bounds.Height / 2);
+			int x = (int)_bounds.X;
+			int y = (int)_bounds.Y;
+			_nodes[0] = new Quadtree<T>(_level + 1, new Rectangle(x + subWidth, y, subWidth, subHeight));
+			_nodes[1] = new Quadtree<T>(_level + 1, new Rectangle(x, y, subWidth, subHeight));
+			_nodes[2] = new Quadtree<T>(_level + 1, new Rectangle(x, y + subHeight, subWidth, subHeight));
+			_nodes[3] = new Quadtree<T>(_level + 1, new Rectangle(x + subWidth, y + subHeight, subWidth, subHeight));
+		}
 
-			if (this.Objects == null || (this.TopLeftChild == null && this.Objects.Count + 1 <= MaxObjects))
+		private List<int> GetIndexes(Rectangle rect)
+		{
+			var indexes = new List<int>();
+			double verticalMidpoint = _bounds.X + (_bounds.Width / 2);
+			double horizontalMidpoint = _bounds.Y + (_bounds.Height / 2);
+			bool topQuadrant = rect.Y >= horizontalMidpoint;
+			bool bottomQuadrant = (rect.Y - rect.Height) <= horizontalMidpoint;
+			bool topAndBottomQuadrant = rect.Y + rect.Height + 1 >= horizontalMidpoint && rect.Y + 1 <= horizontalMidpoint;
+			if (topAndBottomQuadrant)
 			{
-				this.Add(item);
+				topQuadrant = false;
+				bottomQuadrant = false;
+			}
+
+			if (rect.X + rect.Width + 1 >= verticalMidpoint && rect.X - 1 <= verticalMidpoint)
+			{
+				if (topQuadrant)
+				{
+					indexes.Add(2);
+					indexes.Add(3);
+				}
+				else if (bottomQuadrant)
+				{
+					indexes.Add(0);
+					indexes.Add(1);
+				}
+				else if (topAndBottomQuadrant)
+				{
+					indexes.Add(0);
+					indexes.Add(1);
+					indexes.Add(2);
+					indexes.Add(3);
+				}
+			}
+			else if (rect.X + 1 >= verticalMidpoint)
+			{
+				if (topQuadrant)
+				{
+					indexes.Add(3);
+				}
+				else if (bottomQuadrant)
+				{
+					indexes.Add(0);
+				}
+				else if (topAndBottomQuadrant)
+				{
+					indexes.Add(3);
+					indexes.Add(0);
+				}
+			}
+			else if (rect.X - rect.Width <= verticalMidpoint)
+			{
+				if (topQuadrant)
+				{
+					indexes.Add(2);
+				}
+				else if (bottomQuadrant)
+				{
+					indexes.Add(1);
+				}
+				else if (topAndBottomQuadrant)
+				{
+					indexes.Add(2);
+					indexes.Add(1);
+				}
 			}
 			else
 			{
-				if (this.TopLeftChild == null)
+				indexes.Add(-1);
+			}
+			return indexes;
+		}
+
+		public void Insert(T obj)
+		{
+			Rectangle pRect = obj.Rect;
+			if (_nodes[0] != null)
+			{
+				var indexes = this.GetIndexes(pRect);
+				for (int ii = 0; ii < indexes.Count; ii++)
+				{
+					int index = indexes[ii];
+					if (index != -1)
+					{
+						_nodes[index].Insert(obj);
+						return;
+					}
+				}
+
+			}
+			_objects.Add(obj);
+			if (_objects.Count > MaxObjects && _level < MaxLevels)
+			{
+				if (_nodes[0] == null)
 					this.Split();
 
-				var destTree = this.GetDestinationTree(item);
-				if (destTree == this)
-					this.Add(item);
-				else
-					destTree.Insert(item);
-			}
-		}
-
-		/// <summary>
-		/// Adds objects that intersect with rect to results.
-		/// </summary>
-		/// <param name="rect"></param>
-		/// <param name="results"></param>
-		public void GetObjects(Rectangle rect, ref List<TObject> results)
-		{
-			if (results != null)
-			{
-				if (rect.Contains(this.Rect))
+				int i = 0;
+				while (i < _objects.Count)
 				{
-					this.GetAllObjects(ref results);
-				}
-				else if (rect.IntersectsWith(this.Rect))
-				{
-					if (this.Objects != null)
+					var sqaureOne = _objects[i];
+					var oRect = sqaureOne.Rect;
+					var indexes = this.GetIndexes(oRect);
+					for (int k = 0; k < indexes.Count; k++)
 					{
-						for (int i = 0; i < this.Objects.Count; i++)
+						int index = indexes[k];
+						if (index != -1)
 						{
-							if (rect.IntersectsWith(this.Objects[i].Rect))
-							{
-								results.Add(this.Objects[i]);
-							}
+							_nodes[index].Insert(sqaureOne);
+							_objects.Remove(sqaureOne);
+						}
+						else
+						{
+							i++;
 						}
 					}
-
-					if (this.TopLeftChild != null)
-					{
-						this.TopLeftChild.GetObjects(rect, ref results);
-						this.TopRightChild.GetObjects(rect, ref results);
-						this.BottomLeftChild.GetObjects(rect, ref results);
-						this.BottomRightChild.GetObjects(rect, ref results);
-					}
 				}
 			}
 		}
 
-		/// <summary>
-		/// Adds all objects of this node and its children to results.
-		/// </summary>
-		/// <param name="results"></param>
-		public void GetAllObjects(ref List<TObject> results)
+		public List<T> Get(Rectangle rect)
 		{
-			if (this.Objects != null)
-				results.AddRange(this.Objects);
+			var result = new List<T>();
+			this.Retrieve(rect, ref result);
+			return result;
+		}
 
-			if (this.TopLeftChild != null)
+		public void Retrieve(Rectangle rect, ref List<T> result)
+		{
+			var indexes = GetIndexes(rect);
+
+			for (int i = 0; i < indexes.Count; i++)
 			{
-				this.TopLeftChild.GetAllObjects(ref results);
-				this.TopRightChild.GetAllObjects(ref results);
-				this.BottomLeftChild.GetAllObjects(ref results);
-				this.BottomRightChild.GetAllObjects(ref results);
+				int index = indexes[i];
+				if (index != -1 && _nodes[0] != null)
+				{
+					_nodes[index].Retrieve(rect, ref result);
+				}
+				result.AddRange(_objects);
 			}
 		}
 	}

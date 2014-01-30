@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using Aura.Channel.Util;
 using Aura.Data.Database;
 
@@ -79,8 +78,7 @@ namespace Aura.Channel.World
 
 			var intersections = new List<Position>();
 
-			var lines = new List<LinePath>();
-			_tree.GetObjects(new LinePath(from, to).Rect, ref lines);
+			var lines = _tree.Get(new LinePath(from, to).Rect);
 
 			foreach (var line in lines)
 			{
@@ -91,6 +89,12 @@ namespace Aura.Channel.World
 
 			if (intersections.Count < 1)
 				return false;
+
+			if (intersections.Count == 1)
+			{
+				intersection = intersections[0];
+				return true;
+			}
 
 			// Select nearest intersection
 			double distance = double.MaxValue;
@@ -157,6 +161,11 @@ namespace Aura.Channel.World
 		public LinePath(Position p1, Position p2)
 			: this(new Point(p1.X, p1.Y), new Point(p2.X, p2.Y))
 		{
+		}
+
+		public override string ToString()
+		{
+			return ("(" + P1.X + "," + P1.Y + " - " + P2.X + "," + P2.Y + ")");
 		}
 	}
 }

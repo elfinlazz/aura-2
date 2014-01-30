@@ -34,16 +34,11 @@ namespace Aura.Channel.Network.Handlers
 			var from = creature.GetPosition();
 			var to = new Position(x, y);
 
-#if false
-			// Old Aura code ahead
-			// Collision
-			MabiVertex intersection;
-			if (ChannelServer.Instance.World.FindCollisionInTree(creature.Region, pos, dest, out intersection))
-			{
-				//Logger.Debug("intersection " + intersection);
-				// TODO: Uhm... do something.
-			}
-#endif
+			//Position intersection;
+			//if (creature.Region.Collissions.Find(from, to, out intersection))
+			//{
+			//    Aura.Shared.Util.Log.Debug("Intersection at '{0}'", intersection);
+			//}
 
 			creature.Region.ActivateAis(creature, from, to);
 
