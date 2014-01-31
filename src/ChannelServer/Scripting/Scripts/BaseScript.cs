@@ -5,6 +5,8 @@ namespace Aura.Channel.Scripting.Scripts
 {
 	public abstract partial class BaseScript
 	{
+		public string ScriptFilePath { get; set; }
+
 		public virtual void Load()
 		{
 		}

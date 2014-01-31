@@ -104,7 +104,7 @@ namespace Aura.Channel.Scripting
 				var asm = this.Compile(filePath);
 				if (asm != null)
 				{
-					this.LoadScriptAssembly(asm);
+					this.LoadScriptAssembly(asm, filePath);
 					loaded++;
 				}
 
@@ -336,8 +336,9 @@ namespace Aura.Channel.Scripting
 		/// Loads script classes inside assembly.
 		/// </summary>
 		/// <param name="asm"></param>
+		/// <param name="filePath">Path of the script, for reference</param>
 		/// <returns></returns>
-		private void LoadScriptAssembly(Assembly asm)
+		private void LoadScriptAssembly(Assembly asm, string filePath)
 		{
 			foreach (var type in asm.GetTypes().Where(a => a.IsSubclassOf(typeof(BaseScript))))
 			{
@@ -354,6 +355,7 @@ namespace Aura.Channel.Scripting
 					var npcScript = scriptObj as NpcScript;
 					if (npcScript != null)
 					{
+						npcScript.ScriptFilePath = filePath;
 						npcScript.NPC.AI = this.GetAi("normal_npc", npcScript.NPC);
 
 						npcScript.Load();

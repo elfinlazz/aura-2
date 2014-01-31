@@ -1,11 +1,15 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Linq;
 using System.Collections;
 using System.Web;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World.Shops;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
+using Aura.Data;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -63,6 +67,99 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Sets NPC's race.
+		/// </summary>
+		/// <param name="raceId"></param>
+		protected void SetRace(int raceId)
+		{
+			this.NPC.Race = raceId;
+		}
+
+		/// <summary>
+		/// Sets NPC's body proportions.
+		/// </summary>
+		/// <param name="height"></param>
+		/// <param name="weight"></param>
+		/// <param name="upper"></param>
+		/// <param name="lower"></param>
+		protected void SetBody(float height = 1, float weight = 1, float upper = 1, float lower = 1)
+		{
+			this.NPC.Height = height;
+			this.NPC.Weight = weight;
+			this.NPC.Upper = upper;
+			this.NPC.Lower = lower;
+		}
+
+		/// <summary>
+		/// Sets NPC's face values.
+		/// </summary>
+		/// <param name="skinColor"></param>
+		/// <param name="eyeType"></param>
+		/// <param name="eyeColor"></param>
+		/// <param name="mouthType"></param>
+		protected void SetFace(byte skinColor = 0, byte eyeType = 0, byte eyeColor = 0, byte mouthType = 0)
+		{
+			this.NPC.SkinColor = skinColor;
+			this.NPC.EyeType = eyeType;
+			this.NPC.EyeColor = eyeColor;
+			this.NPC.MouthType = mouthType;
+		}
+
+		/// <summary>
+		/// Sets NPC's stand style.
+		/// </summary>
+		/// <param name="stand"></param>
+		protected void SetStand(string stand)
+		{
+			this.NPC.StandStyle = stand;
+		}
+
+		/// <summary>
+		/// Adds item to NPC's inventory.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <param name="itemId"></param>
+		/// <param name="color1"></param>
+		/// <param name="color2"></param>
+		/// <param name="color3"></param>
+		/// <param name="state">For robes and helmets</param>
+		protected void EquipItem(Pocket pocket, int itemId, uint color1, uint color2, uint color3, ItemState state = ItemState.Up)
+		{
+			if (!pocket.IsEquip())
+			{
+				Log.Error("Pocket '{0}' is not for equipment ({1})", pocket, this.ScriptFilePath);
+				return;
+			}
+
+			if (!AuraData.ItemDb.Exists(itemId))
+			{
+				Log.Error("Unknown item '{0}' ({1})", itemId, this.ScriptFilePath);
+				return;
+			}
+
+			var item = new Item(itemId);
+			item.Info.Pocket = pocket;
+			item.Info.Color1 = color1;
+			item.Info.Color2 = color2;
+			item.Info.Color3 = color3;
+			item.Info.State = (byte)state;
+
+			this.NPC.Inventory.InitAdd(item);
+		}
+
+		/// <summary>
+		/// Adds item to NPC's inventory.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <param name="itemId"></param>
+		/// <param name="color1"></param>
+		/// <param name="state">For robes and helmets</param>
+		protected void EquipItem(Pocket pocket, int itemId, uint color1, ItemState state = ItemState.Up)
+		{
+			EquipItem(pocket, itemId, color1, 0, 0, state);
+		}
+
+		/// <summary>
 		/// Adds phrase to AI.
 		/// </summary>
 		/// <param name="phrase"></param>
@@ -72,8 +169,62 @@ namespace Aura.Channel.Scripting.Scripts
 				this.NPC.AI.Phrases.Add(phrase);
 		}
 
-		// Built-in
+		// Functions
 		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Sends Msg with Bgm element.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="fileName"></param>
+		protected void Bgm(Creature creature, string fileName)
+		{
+			this.Msg(creature, new DialogBgm(fileName));
+		}
+
+		/// <summary>
+		/// Opens NPC shop for creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		protected void OpenShop(Creature creature)
+		{
+			if (this.Shop == null)
+			{
+				this.Close(creature, "(Missing shop.)");
+				return;
+			}
+
+			Send.OpenNpcShop(creature, this.Shop);
+		}
+
+		protected void Intro(Creature creature, params object[] lines)
+		{
+			this.Msg(creature, Hide.Both, string.Join("<br/>", lines));
+		}
+
+		// Dialog
+		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Sends dialog to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="message"></param>
+		/// <param name="elements"></param>
+		protected void Msg(Creature creature, Hide hide, string message, params DialogElement[] elements)
+		{
+			var mes = new DialogElement();
+
+			if (hide == Hide.Face || hide == Hide.Both)
+				mes.Add(new DialogFace(null));
+			if (hide == Hide.Name || hide == Hide.Both)
+				mes.Add(new DialogTitle(null));
+
+			mes.Add(new DialogText(message));
+			mes.Add(elements);
+
+			this.Msg(creature, mes);
+		}
 
 		/// <summary>
 		/// Sends dialog to creature's client.
@@ -176,21 +327,6 @@ namespace Aura.Channel.Scripting.Scripts
 			Send.NpcTalk(creature, script);
 		}
 
-		/// <summary>
-		/// Opens NPC shop for creature.
-		/// </summary>
-		/// <param name="creature"></param>
-		protected void OpenShop(Creature creature)
-		{
-			if (this.Shop == null)
-			{
-				this.Close(creature, "(Missing shop.)");
-				return;
-			}
-
-			Send.OpenNpcShop(creature, this.Shop);
-		}
-
 		// Dialog factory
 		// ------------------------------------------------------------------
 
@@ -243,5 +379,10 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			return new DialogMovie(file, width, height, loop);
 		}
+
+		// ------------------------------------------------------------------
+
+		protected enum ItemState : byte { Up = 0, Down = 1 }
+		protected enum Hide { Face, Name, Both }
 	}
 }

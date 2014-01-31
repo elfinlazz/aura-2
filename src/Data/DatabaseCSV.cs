@@ -89,6 +89,11 @@ namespace Aura.Data
 			return this.Entries.GetValueOrDefault(key);
 		}
 
+		public bool Exists(TIndex key)
+		{
+			return this.Entries.ContainsKey(key);
+		}
+
 		public override void Clear()
 		{
 			this.Entries.Clear();

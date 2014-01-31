@@ -20,10 +20,6 @@ namespace Aura.Channel.Scripting
 		public NPC Target { get; private set; }
 		public int Id { get; private set; }
 
-		//public Options Options = Options.FaceAndName;
-		//public string DialogFace = null;
-		//public string DialogName = null;
-
 		public IEnumerator State { get; set; }
 		public Response Response { get; set; }
 
@@ -87,7 +83,7 @@ namespace Aura.Channel.Scripting
 	/// Response to a conversation
 	/// </summary>
 	/// <remarks>
-	/// An instance of this class is returned from the NPCs on Select,
+	/// An instance of this class is returned from the NPCs on Select
 	/// to give the client something referenceable to write the response to.
 	/// (Options, Input, etc.)
 	/// </remarks>
