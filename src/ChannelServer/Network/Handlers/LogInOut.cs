@@ -119,7 +119,7 @@ namespace Aura.Channel.Network.Handlers
 			creature.Region.ActivateAis(creature, pos, pos);
 
 			foreach (var c in client.Creatures.Values.Where(a => a.RegionId != creature.RegionId))
-				creature.Pet.Warp(creature.RegionId, pos.X, pos.Y);
+				c.Warp(creature.RegionId, pos.X, pos.Y);
 
 			// Automatically done by the world update
 			//Send.EntitiesAppear(client, region.GetEntitiesInRange(creature));
@@ -168,6 +168,14 @@ namespace Aura.Channel.Network.Handlers
 
 			// Infamous 5209, aka char info
 			Send.ChannelCharacterInfoRequestR(client, creature);
+
+			// Special treatment for pets
+			if (creature.Master != null)
+			{
+				// Send vehicle info to make mounts mountable
+				if (creature.RaceData.VehicleType > 0)
+					Send.VehicleInfo(creature);
+			}
 		}
 
 		/// <summary>
@@ -195,7 +203,6 @@ namespace Aura.Channel.Network.Handlers
 				creature.Dispose();
 
 			client.Creatures.Clear();
-			//client.Character = null;
 			client.Account = null;
 
 			Send.ChannelDisconnectR(client);

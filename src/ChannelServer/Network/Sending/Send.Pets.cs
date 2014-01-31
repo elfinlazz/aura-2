@@ -111,5 +111,31 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends PetMountR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void PetMountR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.PetMountR, creature.EntityId);
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends PetUnmountR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void PetUnmountR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.PetUnmountR, creature.EntityId);
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

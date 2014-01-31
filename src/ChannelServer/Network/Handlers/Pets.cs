@@ -276,5 +276,49 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.TakeItemFromPetInvR(creature, true);
 		}
+
+		/// <summary>
+		/// Sent to hop on a vehicle.
+		/// </summary>
+		/// <example>
+		/// 0001 [0010010000066A4A] Long   : 4504699139418698
+		/// </example>
+		[PacketHandler(Op.PetMount)]
+		public void PetMount(ChannelClient client, Packet packet)
+		{
+			var mountEntityId = packet.GetLong();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			var mount = client.GetCreature(mountEntityId);
+			if (mount == null || mount == creature)
+				return;
+
+			// ...
+
+			Send.ServerMessage(creature, "Mounts aren't implemented yet.");
+			Send.PetMountR(creature, false);
+		}
+
+		/// <summary>
+		/// Sent to get off a vehicle.
+		/// </summary>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.PetUnmount)]
+		public void PetUnmount(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			// ...
+
+			Send.ServerMessage(creature, "Mounts aren't implemented yet.");
+			Send.PetUnmountR(creature, false);
+		}
 	}
 }

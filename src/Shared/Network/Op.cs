@@ -438,7 +438,7 @@ namespace Aura.Shared.Network
 		public const int PetMountR = 0x1FBD1;
 		public const int PetUnmount = 0x1FBD2;
 		public const int PetUnmountR = 0x1FBD3;
-		public const int VehicleBond = 0x1FBD4;
+		public const int VehicleInfo = 0x1FBD4;
 
 		public const int Run = 0x0F213303;
 		public const int Running = 0x0F44BBA3;
