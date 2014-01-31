@@ -306,7 +306,7 @@ namespace Aura.Channel.Scripting
 				foreach (var err in ex.Errors)
 				{
 					// Error msg
-					Log.Error("In {0} on line {1}, column {2}", err.File, err.Line, err.Column);
+					Log.WriteLine((!err.IsWarning ? LogLevel.Error : LogLevel.Warning), "In {0} on line {1}, column {2}", err.File, err.Line, err.Column);
 					Log.WriteLine(LogLevel.None, "          " + err.Message);
 
 					// Display lines around the error

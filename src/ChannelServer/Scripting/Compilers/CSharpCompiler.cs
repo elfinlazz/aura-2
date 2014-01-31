@@ -31,7 +31,7 @@ namespace Aura.Channel.Scripting.Compilers
 
 				foreach (System.CodeDom.Compiler.CompilerError err in errors)
 				{
-					var newEx = new CompilerError(path, err.Line, err.Column, err.ErrorText);
+					var newEx = new CompilerError(path, err.Line, err.Column, err.ErrorText, err.IsWarning);
 					newExs.Errors.Add(newEx);
 				}
 
@@ -69,22 +69,22 @@ namespace Aura.Channel.Scripting.Compilers
 				"$1foreach(var __callResult in $2) yield return __callResult;",
 				RegexOptions.Compiled);
 
-			// Select(<creature>);
+			// Select();
 			// --> yield return null;
 			// Calls Select and yields, ignoring the result.
 			// TODO: Imperfect (;)
 			script = Regex.Replace(script,
-				@"([^=])([\s]+)Select\s*\(\s*([^)]*)\s*\)\s*;",
-				"$1$2Select($3); yield return null;",
+				@"([^=])([\s]+)Select\s*\(\s*\)\s*;",
+				"$1$2Select(); yield return null;",
 				RegexOptions.Compiled);
 
-			// [var] <variable> = Select(<creature>);
+			// [var] <variable> = Select();
 			// --> [var] <variable>Object = new Response(); yield return <variable>Object; [var] <variable> = <variable>Object.Value;
 			// Calls Select and yields. Afterwards the result from the client
 			// is written into the variable.
 			script = Regex.Replace(script,
-				@"([\{\}:;\t ])?(var )?[\t ]*([^\s\)]*)\s*=\s*([^\.]\.)?Select\s*\(\s*([^)]*)\s*\)\s*;",
-				"$1$4Select($5); $2$3Object = new Response(); yield return $3Object; $2$3 = $3Object.Value;",
+				@"([\{\}:;\t ])?(var )?[\t ]*([^\s\)]*)\s*=\s*([^\.]\.)?Select\s*\(\s*\)\s*;",
+				"$1$4Select(); $2$3Object = new Response(); yield return $3Object; $2$3 = $3Object.Value;",
 				RegexOptions.Compiled);
 
 			// duplicate <new_class> : <old_class> { <content_of_load> }

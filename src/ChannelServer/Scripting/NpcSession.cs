@@ -9,6 +9,7 @@ using System.Collections;
 using Aura.Shared.Util;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Scripting.Scripts;
 
 namespace Aura.Channel.Scripting
 {
@@ -20,6 +21,7 @@ namespace Aura.Channel.Scripting
 		public NPC Target { get; private set; }
 		public int Id { get; private set; }
 
+		public NpcScript Script { get; set; }
 		public IEnumerator State { get; set; }
 		public Response Response { get; set; }
 
@@ -35,9 +37,18 @@ namespace Aura.Channel.Scripting
 		/// Starts session
 		/// </summary>
 		/// <param name="target"></param>
-		public void Start(NPC target)
+		public void Start(NPC target, Creature creature)
 		{
 			this.Target = target;
+
+			if (target.AI == null)
+				return;
+
+			var script = Activator.CreateInstance(target.Script.GetType()) as NpcScript;
+			script.NPC = target.Script.NPC;
+			script.Shop = target.Script.Shop;
+			script.Player = creature;
+			this.Script = script;
 		}
 
 		/// <summary>

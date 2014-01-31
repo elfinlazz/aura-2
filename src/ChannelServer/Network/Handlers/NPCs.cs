@@ -44,6 +44,15 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Check script
+			if (target.Script == null)
+			{
+				Send.NpcTalkStartR_Fail(creature);
+
+				Log.Warning("Creature '{0}' tried to talk to NPC '{1}', that doesn't have a script.", creature.Name, npcId);
+				return;
+			}
+
 			// Check distance
 			if (target.GetPosition().GetDistance(creature.GetPosition()) > 1000)
 			{
@@ -56,10 +65,10 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.NpcTalkStartR(creature, npcId);
 
-			client.NpcSession.Start(target);
+			client.NpcSession.Start(target, creature);
 
 			// Get enumerator and start first run.
-			client.NpcSession.State = target.Script.Talk(creature).GetEnumerator();
+			client.NpcSession.State = client.NpcSession.Script.Talk().GetEnumerator();
 			client.NpcSession.Continue();
 		}
 
@@ -132,7 +141,7 @@ namespace Aura.Channel.Network.Handlers
 
 			if (response == "@end")
 			{
-				client.NpcSession.Target.Script.EndConversation(creature);
+				client.NpcSession.Script.EndConversation();
 				return;
 			}
 

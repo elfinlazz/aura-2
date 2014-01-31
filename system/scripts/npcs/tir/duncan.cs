@@ -12,6 +12,7 @@ using System.Text;
 using Aura.Channel.Scripting;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
+using Aura.Channel.World.Shops;
 using Aura.Shared.Mabi.Const;
 
 public class DuncanBaseScript : NpcScript
@@ -41,59 +42,59 @@ public class DuncanBaseScript : NpcScript
 		AddPhrase("Watch your language.");
 	}
 
-	public override IEnumerable Talk(Creature c)
+	public override IEnumerable Talk()
 	{
-		Bgm(c, "NPC_Duncan.mp3");
+		SetBgm("NPC_Duncan.mp3");
 		
-		Intro(c,
+		Intro(
 			"An elderly man gazes softly at the world around him with a calm air of confidence.",
 			"Although his face appears weather-beaten, and his hair and beard are gray, his large beaming eyes make him look youthful somehow.",
 			"As he speaks, his voice resonates with a kind of gentle authority."
 		);
 		
-		//Hook(c, "after_intro");
+		//Hook("after_intro");
 		
-		Msg(c, "Please let me know if you need anything.", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrive Lost Items", "@lostandfound"));
-		var selected = Select(c);
+		Msg("Please let me know if you need anything.", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrive Lost Items", "@lostandfound"));
+		var selected = Select();
 		
 		switch(selected)
 		{
 			case "@talk":
-				Msg(c, "What did you say your name was?<br/>Anyway, welcome.");
+				Msg("What did you say your name was?<br/>Anyway, welcome.");
 				
 				while(true)
 				{
-					Msg(c, Hide.Name, "(Duncan is waiting for me to say something.)");
-					ShowKeywords(c);
-					var keyword = Select(c);
+					Msg(Hide.Name, "(Duncan is waiting for me to say something.)");
+					ShowKeywords();
+					var keyword = Select();
 					
-					//Hook(c, "keywords", keyword);
+					//Hook("keywords", keyword);
 					
 					switch (keyword)
 					{
-						case "personal_info": Msg(c, "I'm the chief of this town..."); break;
-						case "rumor":         Msg(c, "I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?"); break;
-						case "about_skill":   Msg(c, "I don't know of any skills... Why don't you ask Malcom?"); break;
-						case "about_arbeit":  Msg(c, "I don't have any jobs for you, but you can get a part time job in town."); break;
-						case "about_study":   Msg(c, "You can study different magic down at the school!"); break;
-						default:              Msg(c, "I don't know anything about that..."); break;
+						case "personal_info": Msg("I'm the chief of this town..."); break;
+						case "rumor":         Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?"); break;
+						case "about_skill":   Msg("I don't know of any skills... Why don't you ask Malcom?"); break;
+						case "about_arbeit":  Msg("I don't have any jobs for you, but you can get a part time job in town."); break;
+						case "about_study":   Msg("You can study different magic down at the school!"); break;
+						default:              Msg("I don't know anything about that..."); break;
 					}
 				}
 				break;
 				
 			case "@shop":
-				Msg(c, "Choose a quest you would like to do.");
-				OpenShop(c);
+				Msg("Choose a quest you would like to do.");
+				OpenShop();
 				Return();
 				
 			case "@lostandfound":
-				Msg(c, "If you are knocked unconcious in a dungeon or field, any item you've dropped will be lost unless you get resurrected right at the spot.<br/>Lost items can usually be recovered from a Town Office or a Lost-and-Found.");
-				Msg(c, "Unfortunatly, Tir Chonaill does not have a Town Office, so I run the Lost-and-Found myself.<br/>The lost items are recovered with magic,<br/>so unless you've dropped them on purpose, you can recover those items with their blessings intact.<br/>You will, however, need to pay a fee.");
-				Msg(c, "As you can see, I have limited space in my home. So I can only keep 20 items for you.<br/>If there are more than 20 lost items, I'll have to throw out the oldest items to make room.<br/>I strongly suggest you retrieve any lost items you don't want to lose as soon as possible.");
+				Msg("If you are knocked unconcious in a dungeon or field, any item you've dropped will be lost unless you get resurrected right at the spot.<br/>Lost items can usually be recovered from a Town Office or a Lost-and-Found.");
+				Msg("Unfortunatly, Tir Chonaill does not have a Town Office, so I run the Lost-and-Found myself.<br/>The lost items are recovered with magic,<br/>so unless you've dropped them on purpose, you can recover those items with their blessings intact.<br/>You will, however, need to pay a fee.");
+				Msg("As you can see, I have limited space in my home. So I can only keep 20 items for you.<br/>If there are more than 20 lost items, I'll have to throw out the oldest items to make room.<br/>I strongly suggest you retrieve any lost items you don't want to lose as soon as possible.");
 				Return();
 			
 			default:
-				Msg(c, "...");
+				Msg("...");
 				Return();
 		}
 	}

@@ -23,13 +23,15 @@ namespace Aura.Channel.Scripting.Compilers
 		public string File { get; protected set; }
 		public int Line { get; protected set; }
 		public int Column { get; protected set; }
+		public bool IsWarning { get; protected set; }
 
-		public CompilerError(string file, int line, int column, string message)
+		public CompilerError(string file, int line, int column, string message, bool isWarning)
 			: base(message)
 		{
 			this.File = file;
 			this.Line = line;
 			this.Column = column;
+			this.IsWarning = isWarning;
 		}
 	}
 }

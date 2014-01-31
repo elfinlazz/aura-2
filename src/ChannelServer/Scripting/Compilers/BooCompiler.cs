@@ -36,7 +36,7 @@ namespace Aura.Channel.Scripting.Compilers
 
 					foreach (var err in errors)
 					{
-						var newEx = new CompilerError(path, err.LexicalInfo.Line, err.LexicalInfo.Column, err.Message);
+						var newEx = new CompilerError(path, err.LexicalInfo.Line, err.LexicalInfo.Column, err.Message, false);
 						newExs.Errors.Add(newEx);
 					}
 

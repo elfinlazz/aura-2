@@ -1,22 +1,35 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System.Linq;
+using System;
 using System.Collections;
+using System.Linq;
 using System.Web;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World.Shops;
+using Aura.Data;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
-using Aura.Data;
 
 namespace Aura.Channel.Scripting.Scripts
 {
 	public abstract class NpcScript : BaseScript
 	{
-		public NPC NPC { get; protected set; }
-		public NpcShop Shop { get; protected set; }
+		public NPC NPC { get; set; }
+		public NpcShop Shop { get; set; }
+
+		private Creature _player;
+		public Creature Player
+		{
+			get
+			{
+				if (_player == null)
+					throw new Exception("NpcScript: Missing player in " + this.ScriptFilePath);
+				return _player;
+			}
+			set { _player = value; }
+		}
 
 		public NpcScript()
 		{
@@ -30,15 +43,15 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <returns></returns>
-		public virtual IEnumerable Talk(Creature creature)
+		public virtual IEnumerable Talk()
 		{
-			Msg(creature, "...");
+			Msg("...");
 			yield break;
 		}
 
-		public virtual void EndConversation(Creature creature)
+		public virtual void EndConversation()
 		{
-			Close(creature, "(You ended your conversation with <npcname/>.)");
+			Close("(You ended your conversation with <npcname/>.)");
 		}
 
 		// Setup
@@ -177,29 +190,29 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="fileName"></param>
-		protected void Bgm(Creature creature, string fileName)
+		protected void Bgm(string fileName)
 		{
-			this.Msg(creature, new DialogBgm(fileName));
+			this.Msg(new DialogBgm(fileName));
 		}
 
 		/// <summary>
 		/// Opens NPC shop for creature.
 		/// </summary>
 		/// <param name="creature"></param>
-		protected void OpenShop(Creature creature)
+		protected void OpenShop()
 		{
 			if (this.Shop == null)
 			{
-				this.Close(creature, "(Missing shop.)");
+				this.Close("(Missing shop.)");
 				return;
 			}
 
-			Send.OpenNpcShop(creature, this.Shop);
+			Send.OpenNpcShop(this.Player, this.Shop);
 		}
 
-		protected void Intro(Creature creature, params object[] lines)
+		protected void Intro(params object[] lines)
 		{
-			this.Msg(creature, Hide.Both, string.Join("<br/>", lines));
+			this.Msg(Hide.Both, string.Join("<br/>", lines));
 		}
 
 		// Dialog
@@ -211,7 +224,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
-		protected void Msg(Creature creature, Hide hide, string message, params DialogElement[] elements)
+		protected void Msg(Hide hide, string message, params DialogElement[] elements)
 		{
 			var mes = new DialogElement();
 
@@ -223,7 +236,7 @@ namespace Aura.Channel.Scripting.Scripts
 			mes.Add(new DialogText(message));
 			mes.Add(elements);
 
-			this.Msg(creature, mes);
+			this.Msg(mes);
 		}
 
 		/// <summary>
@@ -232,13 +245,13 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
-		protected void Msg(Creature creature, string message, params DialogElement[] elements)
+		protected void Msg(string message, params DialogElement[] elements)
 		{
 			var mes = new DialogElement();
 			mes.Add(new DialogText(message));
 			mes.Add(elements);
 
-			this.Msg(creature, mes);
+			this.Msg(mes);
 		}
 
 		/// <summary>
@@ -246,7 +259,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="elements"></param>
-		protected void Msg(Creature creature, params DialogElement[] elements)
+		protected void Msg(params DialogElement[] elements)
 		{
 			var xml = string.Format(
 				"<call convention='thiscall' syncmode='non-sync'>" +
@@ -259,9 +272,9 @@ namespace Aura.Channel.Scripting.Scripts
 							"</arguments>" +
 						"</function>" +
 				"</call>",
-			creature.EntityId, HttpUtility.HtmlEncode(new DialogElement(elements).ToString()));
+			this.Player.EntityId, HttpUtility.HtmlEncode(new DialogElement(elements).ToString()));
 
-			Send.NpcTalk(creature, xml);
+			Send.NpcTalk(this.Player, xml);
 		}
 
 		/// <summary>
@@ -269,10 +282,10 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="message">Dialog closes immediately if null.</param>
-		protected void Close(Creature creature, string message = null)
+		protected void Close(string message = null)
 		{
-			Send.NpcTalkEndR(creature, this.NPC.EntityId, message);
-			creature.Client.NpcSession.Clear();
+			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
+			this.Player.Client.NpcSession.Clear();
 		}
 
 		/// <summary>
@@ -285,7 +298,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// (End Conversation) is gonna come in as a select.
 		/// </remarks>
 		/// <param name="creature"></param>
-		public string Select(Creature creature)
+		public string Select()
 		{
 			var script = string.Format(
 				"<call convention='thiscall' syncmode='sync' session='{1}'>" +
@@ -295,9 +308,9 @@ namespace Aura.Channel.Scripting.Scripts
 						"<arguments><argument type='string'>&#60;keyword&#62;&#60;gift&#62;</argument></arguments>" +
 					"</function>" +
 				"</call>"
-			, creature.EntityId, creature.Client.NpcSession.Id);
+			, this.Player.EntityId, this.Player.Client.NpcSession.Id);
 
-			Send.NpcTalk(creature, script);
+			Send.NpcTalk(this.Player, script);
 
 			return "Foo!";
 		}
@@ -310,7 +323,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// so you can actually select a keyword.
 		/// </remarks>
 		/// <param name="creature"></param>
-		protected void ShowKeywords(Creature creature)
+		protected void ShowKeywords()
 		{
 			var script = string.Format(
 				"<call convention='thiscall' syncmode='non-sync'>" +
@@ -322,9 +335,9 @@ namespace Aura.Channel.Scripting.Scripts
 						"</arguments>" +
 					"</function>" +
 				"</call>"
-			, creature.EntityId);
+			, this.Player.EntityId);
 
-			Send.NpcTalk(creature, script);
+			Send.NpcTalk(this.Player, script);
 		}
 
 		// Dialog factory
@@ -335,7 +348,7 @@ namespace Aura.Channel.Scripting.Scripts
 			return new DialogButton(text, keyword, onFrame);
 		}
 
-		protected DialogBgm Bgm(string file)
+		protected DialogBgm SetBgm(string file)
 		{
 			return new DialogBgm(file);
 		}
