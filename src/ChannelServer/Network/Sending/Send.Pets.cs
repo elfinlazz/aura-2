@@ -137,5 +137,19 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends GetPetAiR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="ai">Negative answer if null</param>
+		public static void GetPetAiR(Creature creature, string ai)
+		{
+			var packet = new Packet(Op.GetPetAiR, creature.EntityId);
+			packet.PutByte(ai != null);
+			packet.PutString(ai);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

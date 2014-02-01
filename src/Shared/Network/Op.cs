@@ -360,8 +360,9 @@ namespace Aura.Shared.Network
 
 		public const int MailsRequest = 0xA897;
 		public const int MailsRequestR = 0xA898;
-		//public const int PetAi? = 0xA8A2;
-		//public const int PetAi?R = 0xA8A3; // response mentions oasis
+		public const int SetPetAi = 0xA8A1;
+		public const int GetPetAi = 0xA8A2;
+		public const int GetPetAiR = 0xA8A3;
 		public const int WarpUnk3 = 0xA8AF;
 		public const int UmbrellaJump = 0xA8E0;
 		public const int UmbrellaJumpR = 0xA8E1;

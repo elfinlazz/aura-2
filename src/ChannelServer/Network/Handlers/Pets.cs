@@ -320,5 +320,46 @@ namespace Aura.Channel.Network.Handlers
 			Send.ServerMessage(creature, "Mounts aren't implemented yet.");
 			Send.PetUnmountR(creature, false);
 		}
+
+		/// <summary>
+		/// Sent when changing the AI.
+		/// </summary>
+		/// <remarks>
+		/// There's no response to this packet.
+		/// 
+		/// The default AI files can be found in data/db/ in the client.
+		/// </remarks>
+		/// <example>
+		/// 0001 [................] String : OasisRuleSupport.xml
+		/// </example>
+		[PacketHandler(Op.SetPetAi)]
+		public void SetPetAi(ChannelClient client, Packet packet)
+		{
+			var pet = client.GetCreature(packet.Id);
+			if (pet == null)
+				return;
+
+			// ...
+
+			//Log.Debug(packet);
+		}
+
+		/// <summary>
+		/// Sent on summon to get the set AI.
+		/// </summary>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.GetPetAi)]
+		public void GetPetAi(ChannelClient client, Packet packet)
+		{
+			var pet = client.GetCreature(packet.Id);
+			if (pet == null)
+				return;
+
+			// ...
+
+			Send.GetPetAiR(pet, "OasisRuleSubmission.xml");
+		}
 	}
 }
