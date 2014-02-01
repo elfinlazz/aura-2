@@ -285,6 +285,8 @@ namespace Aura.Channel.Database
 						item.OptionInfo.EffectiveRange = reader.GetInt16("range");
 						item.OptionInfo.AttackSpeed = (AttackSpeed)reader.GetByte("attackSpeed");
 						item.OptionInfo.Experience = reader.GetInt16("experience");
+						item.MetaData1.Parse(reader.GetString("meta1"));
+						item.MetaData2.Parse(reader.GetString("meta2"));
 
 						result.Add(item);
 					}
@@ -636,7 +638,8 @@ namespace Aura.Channel.Database
 						cmd.Set("range", item.OptionInfo.EffectiveRange);
 						cmd.Set("attackSpeed", (byte)item.OptionInfo.AttackSpeed);
 						cmd.Set("experience", item.OptionInfo.Experience);
-						cmd.Set("extra", item.Extra.ToString());
+						cmd.Set("meta1", item.MetaData1.ToString());
+						cmd.Set("meta2", item.MetaData2.ToString());
 
 						cmd.Execute();
 					}
