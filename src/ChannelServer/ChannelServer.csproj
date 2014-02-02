@@ -109,7 +109,7 @@
     <Compile Include="Network\Sending\Send.Items.cs" />
     <Compile Include="Network\Sending\Send.Props.cs" />
     <Compile Include="Network\Sending\Send.Misc.cs" />
-    <Compile Include="Network\Sending\Send.Battle.cs" />
+    <Compile Include="Network\Sending\Send.Combat.cs" />
     <Compile Include="Network\Sending\Send.Creature.cs" />
     <Compile Include="Network\Sending\Send.NPCs.cs" />
     <Compile Include="Network\Sending\Send.Character.cs" />
@@ -136,6 +136,8 @@
     <Compile Include="Skills\Actions\ContinentWarpSkillHandler.cs" />
     <Compile Include="Skills\Base\Interfaces.cs" />
     <Compile Include="Skills\Base\StartStopSkillHandler.cs" />
+    <Compile Include="Skills\CombatAction.cs" />
+    <Compile Include="Skills\Combat\CombatMastery.cs" />
     <Compile Include="Skills\Life\RestSkillHandler.cs" />
     <Compile Include="Skills\Magic\ManaShieldSkillHandler.cs" />
     <Compile Include="Skills\Skill.cs" />

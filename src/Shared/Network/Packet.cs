@@ -79,6 +79,25 @@ namespace Aura.Shared.Network
 		}
 
 		/// <summary>
+		/// Resets packet to zero while setting a new op and id,
+		/// without allocating a new buffer.
+		/// </summary>
+		/// <param name="op"></param>
+		/// <param name="id"></param>
+		public void Clear(int op, long id)
+		{
+			this.Op = op;
+			this.Id = id;
+
+			Array.Clear(_buffer, 0, _buffer.Length);
+			_ptr = 0;
+			_built = false;
+			_bodyStart = 0;
+			_elements = 0;
+			_bodyLen = 0;
+		}
+
+		/// <summary>
 		/// Returns the next element's type.
 		/// </summary>
 		/// <returns></returns>
@@ -221,6 +240,13 @@ namespace Aura.Shared.Network
 			Marshal.FreeHGlobal(ptr);
 
 			return this.PutBin(arr);
+		}
+
+		/// <summary>Writes packet as bin and the length of it as int to buffer.</summary>
+		public Packet PutBin(Packet packet)
+		{
+			var val = packet.Build(false);
+			return this.PutInt(val.Length).PutBin(val);
 		}
 
 		/// <summary>

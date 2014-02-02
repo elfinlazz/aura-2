@@ -38,8 +38,11 @@ namespace Aura.Shared.Mabi
 
 		public void SetByte(string key, byte val) { this.Set(key, val); }
 		public void SetShort(string key, short val) { this.Set(key, val); }
+		public void SetUShort(string key, ushort val) { this.Set(key, (short)val); }
 		public void SetInt(string key, int val) { this.Set(key, val); }
+		public void SetUInt(string key, uint val) { this.Set(key, (int)val); }
 		public void SetLong(string key, long val) { this.Set(key, val); }
+		public void SetULong(string key, ulong val) { this.Set(key, (long)val); }
 		public void SetFloat(string key, float val) { this.Set(key, val); }
 		public void SetString(string key, string val) { this.Set(key, val); }
 		public void SetBool(string key, bool val) { this.Set(key, val); }
@@ -62,7 +65,7 @@ namespace Aura.Shared.Mabi
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		public T Get<T>(string key)
+		private T Get<T>(string key)
 		{
 			object result;
 			_values.TryGetValue(key, out result);
@@ -70,6 +73,17 @@ namespace Aura.Shared.Mabi
 				return (T)result;
 			return default(T);
 		}
+
+		public byte GetByte(string key) { return this.Get<byte>(key); }
+		public short GetShort(string key) { return this.Get<short>(key); }
+		public ushort GetUShort(string key) { return (ushort)this.Get<short>(key); }
+		public int GetInt(string key) { return this.Get<int>(key); }
+		public uint GetUInt(string key) { return (uint)this.Get<int>(key); }
+		public long GetLong(string key) { return this.Get<long>(key); }
+		public ulong GetULong(string key) { return (ulong)this.Get<long>(key); }
+		public float GetFLoat(string key) { return this.Get<float>(key); }
+		public string GetString(string key) { return this.Get<string>(key); }
+		public bool GetBool(string key) { return this.Get<bool>(key); }
 
 		/// <summary>
 		/// Removes the value with the given key.

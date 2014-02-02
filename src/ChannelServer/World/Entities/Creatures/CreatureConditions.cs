@@ -131,7 +131,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			{
 				if (!_extra.ContainsKey(id))
 					return 0;
-				return _extra[id].Get<short>("VAL");
+				return _extra[id].GetShort("VAL");
 			}
 		}
 

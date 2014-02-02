@@ -27,7 +27,7 @@ namespace Aura.Channel.Skills.Life
 		{
 			creature.StopMove();
 
-			var chairItemEntityId = dict.Get<long>("ITEMID");
+			var chairItemEntityId = dict.GetLong("ITEMID");
 
 			if (chairItemEntityId != 0)
 				this.SetUpChair(creature, chairItemEntityId);
