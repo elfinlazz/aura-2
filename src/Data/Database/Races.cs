@@ -128,7 +128,7 @@ namespace Aura.Data.Database
 			info.Size = entry.ReadFloat();
 			info.CombatPower = entry.ReadFloat();
 			info.Life = entry.ReadFloat();
-			info.Defense = entry.ReadIntHex();
+			info.Defense = entry.ReadInt();
 			info.Protection = (int)entry.ReadFloat();
 			info.Element = (Element)entry.ReadByte();
 			info.Exp = entry.ReadInt();

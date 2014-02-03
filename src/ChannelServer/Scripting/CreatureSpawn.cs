@@ -35,10 +35,13 @@ namespace Aura.Channel.Scripting
 			{
 				_points[j] = new Point(coordinates[i], coordinates[i + 1]);
 				if (coordinates[i] < _minX) _minX = coordinates[i];
-				else if (coordinates[i] > _maxX) _maxX = coordinates[i];
+				if (coordinates[i] > _maxX) _maxX = coordinates[i];
 				if (coordinates[i + 1] < _minY) _minY = coordinates[i + 1];
-				else if (coordinates[i + 1] > _maxY) _maxY = coordinates[i + 1];
+				if (coordinates[i + 1] > _maxY) _maxY = coordinates[i + 1];
 			}
+
+			if (_minX > _maxX)
+				Log.Debug(_minY + " - " + _maxY);
 		}
 
 		/// <summary>
