@@ -356,7 +356,7 @@ namespace Aura.Channel.Scripting
 					if (npcScript != null)
 					{
 						npcScript.ScriptFilePath = filePath;
-						npcScript.NPC.AI = this.GetAi("normal_npc", npcScript.NPC);
+						npcScript.NPC.AI = this.GetAi("npc_normal", npcScript.NPC);
 
 						npcScript.Load();
 						npcScript.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
@@ -529,7 +529,7 @@ namespace Aura.Channel.Scripting
 			creature.State = (CreatureStates)creature.RaceData.DefaultState;
 			creature.Direction = (byte)RandomProvider.Get().Next(256);
 
-			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI))
+			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI) && creature.RaceData.AI != "none")
 			{
 				creature.AI = this.GetAi(creature.RaceData.AI, creature);
 				if (creature.AI == null)
