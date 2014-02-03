@@ -56,13 +56,22 @@ namespace Aura.Shared.Mabi.Const
 		KnockBack = 0x400,
 		KnockDown = 0x800,
 		FinishingHit = 0x1000,
-		// ??? = 0x100000 // logged using mana shield
+
+		/// <summary>
+		/// For blue numbers
+		/// </summary>
+		/// <remarks>
+		/// Damage has to be 0 for this to work, otherweise the client
+		/// displays that value instead, a little delayed.
+		/// </remarks>
+		ManaShield = 0x100000,
+
 		// ??? = 0x4000000 // logged on a counter hit / using mana shield
 
 		/// <summary>
-		/// Finished | KnockDownFinish | FinishingHit
+		/// Finished | KnockDownFinish | FinishingHit = 0x1110
 		/// </summary>
-		FinishingKnockDown = 0x1110,
+		FinishingKnockDown = Finished | KnockDownFinish | FinishingHit,
 	}
 
 	// Most likely flags

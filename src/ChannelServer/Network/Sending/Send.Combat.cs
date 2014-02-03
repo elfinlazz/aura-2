@@ -104,8 +104,8 @@ namespace Aura.Channel.Network.Sending
 
 					actionPacket.PutUInt((uint)tAction.Options);
 					actionPacket.PutFloat(tAction.Damage);
-					actionPacket.PutFloat(tAction.ManaDamage);
-					actionPacket.PutInt(0);
+					actionPacket.PutFloat(0); // Related to mana damage?
+					actionPacket.PutInt((int)tAction.ManaDamage);
 
 					actionPacket.PutFloat(attackerPos.X - pos.X);
 					actionPacket.PutFloat(attackerPos.Y - pos.Y);
