@@ -130,7 +130,7 @@ namespace Aura.Channel.World.Entities
 		// ------------------------------------------------------------------
 
 		public BattleStance BattleStance { get; set; }
-		public byte WeaponSet { get; set; }
+		public Creature Target { get; set; }
 
 		public bool IsDead { get { return this.Has(CreatureStates.Dead); } }
 

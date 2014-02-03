@@ -230,10 +230,10 @@ namespace Aura.Shared.Network
 		public const int UnreadMailCount = 0x7255;
 		public const int StatUpdatePrivate = 0x7530;
 		public const int StatUpdatePublic = 0x7532;
-		public const int CombatTargetSet = 0x791A;
+		public const int CombatTargetUpdate = 0x791A;
 		public const int CombatSetAim = 0x791D;
 		public const int CombatSetAimR = 0x791E;
-		public const int CombatSetTarget = 0x7920;
+		public const int SetCombatTarget = 0x7920;
 		public const int CombatSetFinisher = 0x7921;
 		public const int CombatSetFinisher2 = 0x7922;
 		public const int CombatAction = 0x7924;
@@ -372,9 +372,13 @@ namespace Aura.Shared.Network
 		public const int EnableRoyalAlchemist = 0xA9A3;
 		public const int SosButtonRequest = 0xA9A9;
 		public const int SosButtonRequestR = 0xA9AA;
-		public const int SubsribeStun = 0xAA1C; // ?
-		public const int StunMeter = 0xAA1D;
-		//public const int StunMeter? = 0xAA1E;
+
+		// [150000~180000] Something was added? Next two ops changed.
+
+		public const int SubsribeStunMeter = 0xAA1D;
+		public const int StunMeterTotal = 0xAA1E;
+		public const int StunMeterUpdate = 0xAA1F;
+
 		public const int HomesteadInfoRequest = 0xAA54;
 		public const int HomesteadInfoRequestR = 0xAA55;
 

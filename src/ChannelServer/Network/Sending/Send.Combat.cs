@@ -125,5 +125,38 @@ namespace Aura.Channel.Network.Sending
 
 			pack.Attacker.Region.Broadcast(packet, pack.Attacker);
 		}
+
+		/// <summary>
+		/// Broadcasts SetCombatTarget in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="targetEntityId"></param>
+		public static void SetCombatTarget(Creature creature, long targetEntityId, TargetMode mode)
+		{
+			var packet = new Packet(Op.SetCombatTarget, creature.EntityId);
+			packet.PutLong(targetEntityId);
+			packet.PutByte((byte)mode);
+			packet.PutString("");
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Sends CombatAttackR to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Sending 1 as first parameter, even for failing, because 0 causes
+		/// the client to spam attack packets.
+		/// </remarks>
+		/// <param name="creature"></param>
+		public static void CombatAttackR(Creature creature)
+		{
+			var packet = new Packet(Op.CombatAttackR, creature.EntityId);
+			packet.PutByte(true);
+
+			creature.Client.Send(packet);
+		}
 	}
+
+	public enum TargetMode : byte { Normal = 0, Notice = 1, Aggro = 2 }
 }

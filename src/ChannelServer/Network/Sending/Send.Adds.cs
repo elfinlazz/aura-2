@@ -82,7 +82,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(pos.Y);
 			packet.PutByte(creature.Direction);
 			packet.PutInt((int)creature.BattleStance);
-			packet.PutByte((byte)creature.WeaponSet);
+			packet.PutByte((byte)creature.Inventory.WeaponSet);
 			packet.PutUInt(creature.Color1);
 			packet.PutUInt(creature.Color2);
 			packet.PutUInt(creature.Color3);

@@ -91,7 +91,7 @@
     <Compile Include="Network\ChannelClient.cs" />
     <Compile Include="ChannelServer.cs" />
     <Compile Include="Network\Handlers\Base.cs" />
-    <Compile Include="Network\Handlers\Battle.cs" />
+    <Compile Include="Network\Handlers\Combat.cs" />
     <Compile Include="Network\Handlers\Chat.cs" />
     <Compile Include="Network\Handlers\Internal.cs" />
     <Compile Include="Network\Handlers\Character.cs" />
