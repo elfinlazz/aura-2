@@ -230,7 +230,7 @@ namespace Aura.Shared.Network
 		public const int UnreadMailCount = 0x7255;
 		public const int StatUpdatePrivate = 0x7530;
 		public const int StatUpdatePublic = 0x7532;
-		public const int CombatTargetUpdate = 0x791A;
+		public const int CombatTargetUpdate = 0x791A; // ?
 		public const int CombatSetAim = 0x791D;
 		public const int CombatSetAimR = 0x791E;
 		public const int SetCombatTarget = 0x7920;

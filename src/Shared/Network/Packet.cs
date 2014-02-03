@@ -463,7 +463,8 @@ namespace Aura.Shared.Network
 			Buffer.BlockCopy(_buffer, 0, result, ptr, _bodyLen);
 
 			// Append dummy space for checksum... not really needed, is it?
-			length += 4;
+			if (includeProtocolHeader)
+				length += 4;
 
 			// Protocol header
 			if (includeProtocolHeader)

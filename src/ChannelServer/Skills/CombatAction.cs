@@ -9,6 +9,7 @@ using System.Threading;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
+using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.Skills
 {
@@ -24,7 +25,7 @@ namespace Aura.Channel.Skills
 	/// </remarks>
 	public class CombatActionPack
 	{
-		private static int _actionId = 1;
+		private static int _actionId = 0;
 
 		public Creature Attacker { get; set; }
 		public int CombatActionId { get; set; }
@@ -33,13 +34,14 @@ namespace Aura.Channel.Skills
 		public byte HitsMax { get; set; }
 		public SkillId SkillId { get; set; }
 
-		public List<CombatAction> Actions = new List<CombatAction>();
+		public List<CombatAction> Actions { get; protected set; }
 
 		private CombatActionPack()
 		{
 			this.CombatActionId = Interlocked.Increment(ref _actionId);
 			this.Hit = 1;
 			this.HitsMax = 1;
+			this.Actions = new List<CombatAction>();
 		}
 
 		public CombatActionPack(Creature attacker, SkillId skillId)
@@ -49,28 +51,50 @@ namespace Aura.Channel.Skills
 			this.SkillId = skillId;
 		}
 
+		/// <summary>
+		/// Adds combat actions.
+		/// </summary>
+		/// <param name="actions"></param>
 		public void Add(params CombatAction[] actions)
 		{
 			this.Actions.AddRange(actions);
 		}
 
-		//public MabiPacket GetPacket()
-		//{
-		//    var p = new MabiPacket(Op.CombatActionBundle, Id.Broadcast);
-		//    p.PutInt(this.CombatActionId);
-		//    p.PutInt(this.PrevCombatActionId);
-		//    p.PutByte(this.Hit);
-		//    p.PutByte(this.HitsMax);
-		//    p.PutByte(0);
+		/// <summary>
+		/// Handles actions and broadcasts action pack.
+		/// </summary>
+		public void Handle()
+		{
+			foreach (var action in this.Actions)
+			{
+				// Switch to battle stance
+				//if (tAction.Creature.BattleState == 0)
+				//{
+				//    tAction.Creature.BattleState = 1;
+				//    Send.ChangesStance(tAction.Creature, 0);
+				//}
 
-		//    p.PutSInt(this.Actions.Count);
-		//    foreach (var action in this.Actions)
-		//    {
-		//        p.PutIntBin(action.GetPacket(this.CombatActionId).Build(false));
-		//    }
+				// Cancel defense if applicable
+				if (action.Is(CombatActionType.Defended))
+					action.Creature.Skills.CancelActiveSkill();
 
-		//    return p;
-		//}
+				//if (action.Creature.IsDead)
+				//{
+				//    // Exp, Drops, etc.
+				//    WorldManager.Instance.HandleCreatureKill(action.Creature, cap.Attacker, action.OldPosition, action.SkillId);
+				//}
+			}
+
+			// Start combat action
+			Send.CombatAction(this);
+
+			// Skill used
+			if (this.SkillId != SkillId.CombatMastery)
+				Send.CombatUsedSkill(this.Attacker, this.SkillId);
+
+			// End combat action
+			Send.CombatActionEnd(this.Attacker, this.CombatActionId);
+		}
 	}
 
 	public abstract class CombatAction
@@ -117,23 +141,6 @@ namespace Aura.Channel.Skills
 		{
 			return (this.Type == type);
 		}
-
-		/// <summary>
-		/// Returns a packet with the base information for every action
-		/// </summary>
-		/// <param name="actionId"></param>
-		/// <returns></returns>
-		//public virtual MabiPacket GetPacket(uint actionId)
-		//{
-		//    var result = new MabiPacket(Op.CombatAction, this.Creature.Id);
-		//    result.PutInt(actionId);
-		//    result.PutLong(this.Creature.Id);
-		//    result.PutByte((byte)this.Type);
-		//    result.PutShort(this.StunTime);
-		//    result.PutShort((ushort)this.SkillId);
-		//    result.PutShort(0);
-		//    return result;
-		//}
 	}
 
 	/// <summary>
@@ -184,22 +191,6 @@ namespace Aura.Channel.Skills
 		{
 			return ((this.Options & option) != 0);
 		}
-
-		//public override MabiPacket GetPacket(uint actionId)
-		//{
-		//    var pos = this.Creature.GetPosition();
-
-		//    var result = base.GetPacket(actionId);
-		//    result.PutLong(this.TargetId);
-		//    result.PutInt((uint)this.Options);
-		//    result.PutByte(0);
-		//    result.PutByte((byte)(!this.Has(AttackerOptions.KnockBackHit2) ? 2 : 1));
-		//    result.PutInts(pos.X, pos.Y);
-		//    if (this.PropId != 0)
-		//        result.PutLong(this.PropId);
-
-		//    return result;
-		//}
 	}
 
 	/// <summary>
@@ -261,43 +252,6 @@ namespace Aura.Channel.Skills
 		{
 			return ((this.Options & option) != 0);
 		}
-
-		//public override MabiPacket GetPacket(uint actionId)
-		//{
-		//    var result = base.GetPacket(actionId);
-
-		//    if (this.Is(CombatActionType.None))
-		//        return result;
-
-		//    var pos = this.Creature.GetPosition();
-		//    var enemyPos = this.Attacker.GetPosition();
-
-		//    if (this.Is(CombatActionType.Defended) || this.Is(CombatActionType.CounteredHit))
-		//    {
-		//        result.PutLong(this.Attacker.Id);
-		//        result.PutInt(0);
-		//        result.PutByte(0);
-		//        result.PutByte(1);
-		//        result.PutInt(pos.X);
-		//        result.PutInt(pos.Y);
-		//    }
-
-		//    result.PutInt((uint)this.Options);
-		//    result.PutFloat(this.Damage);
-		//    result.PutFloat(this.ManaDamage);
-		//    result.PutInt(0);
-
-		//    result.PutFloat((float)enemyPos.X - pos.X);
-		//    result.PutFloat((float)enemyPos.Y - pos.Y);
-		//    if (this.IsKnock)
-		//        result.PutFloats(pos.X, pos.Y);
-
-		//    result.PutByte(0); // PDef
-		//    result.PutInt(this.Delay);
-		//    result.PutLong(this.Attacker.Id);
-
-		//    return result;
-		//}
 	}
 
 	public enum CombatActionCategory { Attack, Target }

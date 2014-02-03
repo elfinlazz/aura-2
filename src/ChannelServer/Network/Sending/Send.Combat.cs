@@ -80,7 +80,7 @@ namespace Aura.Channel.Network.Sending
 					actionPacket.PutLong(aAction.TargetId);
 					actionPacket.PutUInt((uint)aAction.Options);
 					actionPacket.PutByte(0);
-					actionPacket.PutByte((byte)(!aAction.Has(AttackerOptions.KnockBackHit2) ? 2 : 1));
+					actionPacket.PutByte(1); //(byte)(!aAction.Has(AttackerOptions.KnockBackHit2) ? 2 : 1));
 					actionPacket.PutInt(pos.X);
 					actionPacket.PutInt(pos.Y);
 					if (aAction.PropId != 0)
@@ -115,7 +115,7 @@ namespace Aura.Channel.Network.Sending
 						actionPacket.PutFloat(pos.Y);
 					}
 
-					actionPacket.PutByte(0); // PDef
+					actionPacket.PutByte(0); // PDef? Seen as 0x20 in a normal attack (G18)
 					actionPacket.PutInt(tAction.Delay);
 					actionPacket.PutLong(tAction.Attacker.EntityId);
 				}
@@ -124,6 +124,19 @@ namespace Aura.Channel.Network.Sending
 			}
 
 			pack.Attacker.Region.Broadcast(packet, pack.Attacker);
+		}
+
+		/// <summary>
+		/// Broadcasts CombatActionEnd in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		public static void CombatActionEnd(Creature creature, int combatActionId)
+		{
+			var packet = new Packet(Op.CombatActionEnd, MabiId.Broadcast);
+			packet.PutInt(combatActionId);
+
+			creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
@@ -142,17 +155,26 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends CombatTargetUpdate to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="targetEntityId"></param>
+		public static void CombatTargetUpdate(Creature creature, long targetEntityId)
+		{
+			var packet = new Packet(Op.CombatTargetUpdate, creature.EntityId);
+			packet.PutLong(targetEntityId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends CombatAttackR to creature's client.
 		/// </summary>
-		/// <remarks>
-		/// Sending 1 as first parameter, even for failing, because 0 causes
-		/// the client to spam attack packets.
-		/// </remarks>
 		/// <param name="creature"></param>
-		public static void CombatAttackR(Creature creature)
+		public static void CombatAttackR(Creature creature, bool success)
 		{
 			var packet = new Packet(Op.CombatAttackR, creature.EntityId);
-			packet.PutByte(true);
+			packet.PutByte(success);
 
 			creature.Client.Send(packet);
 		}
@@ -181,6 +203,19 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(targetPos.X);
 			packet.PutInt(targetPos.Y);
 			packet.PutString("");
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends CombatUsedSkill to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		public static void CombatUsedSkill(Creature creature, SkillId skillId)
+		{
+			var packet = new Packet(Op.CombatUsedSkill, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
 
 			creature.Client.Send(packet);
 		}

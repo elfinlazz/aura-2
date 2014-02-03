@@ -88,6 +88,10 @@ namespace Aura.Channel.Network.Handlers
 			creature.Target = target;
 
 			Send.SetCombatTarget(creature, targetEntityId, mode);
+
+			// Purpose unknown, without this the client doesn't seem to
+			// accept the stun time, you can spam attacks.
+			Send.CombatTargetUpdate(creature, targetEntityId);
 		}
 
 		/// <summary>
@@ -137,10 +141,10 @@ namespace Aura.Channel.Network.Handlers
 			{
 				var result = handler.Use(creature, skill, targetEntityId);
 				if (result == CombatSkillResult.OutOfRange)
-				{
 					Send.CombatAttackR(creature, target);
-					return;
-				}
+				else
+					Send.CombatAttackR(creature, true);
+				return;
 			}
 			catch (NotImplementedException)
 			{
@@ -149,7 +153,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 		L_End:
-			Send.CombatAttackR(creature);
+			Send.CombatAttackR(creature, false);
 		}
 
 		/// <summary>
