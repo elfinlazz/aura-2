@@ -496,7 +496,7 @@ namespace Aura.Channel.Scripting
 			for (int i = 0; i < amount; ++i)
 			{
 				var pos = spawn.GetRandomPosition();
-				if (!this.Spawn(spawn.RaceId, spawn.RegionId, pos.X, pos.Y, spawn.Id))
+				if (this.Spawn(spawn.RaceId, spawn.RegionId, pos.X, pos.Y, spawn.Id) == null)
 					return result;
 
 				result++;
@@ -514,7 +514,7 @@ namespace Aura.Channel.Scripting
 		/// <param name="y"></param>
 		/// <param name="spawnId"></param>
 		/// <returns></returns>
-		public bool Spawn(int raceId, int regionId, int x, int y, int spawnId = -1)
+		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId = -1)
 		{
 			var creature = new NPC();
 			creature.Race = raceId;
@@ -539,10 +539,10 @@ namespace Aura.Channel.Scripting
 			if (!creature.Warp(regionId, x, y))
 			{
 				Log.Error("Failed to spawn '{0}'s.", raceId);
-				return false;
+				return null;
 			}
 
-			return true;
+			return creature;
 		}
 	}
 }

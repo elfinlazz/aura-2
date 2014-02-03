@@ -700,12 +700,13 @@ namespace Aura.Channel.Util
 				var x = (int)(targetPos.X + Math.Sin(i) * i * 20);
 				var y = (int)(targetPos.Y + Math.Cos(i) * i * 20);
 
-				ChannelServer.Instance.ScriptManager.Spawn(raceId, sender.RegionId, x, y);
+				var creature = ChannelServer.Instance.ScriptManager.Spawn(raceId, target.RegionId, x, y);
+				Send.SpawnEffect(SpawnEffect.Monster, target.RegionId, x, y, target, creature);
 			}
 
 			Send.ServerMessage(sender, Localization.Get("gm.spawn_success")); // Creatures spawned.
 			if (target != sender)
-				Send.ServerMessage(sender, Localization.Get("gm.spawn_target"), sender.Name); // {0} spawned creatures around you.
+				Send.ServerMessage(target, Localization.Get("gm.spawn_target"), sender.Name); // {0} spawned creatures around you.
 
 			return CommandResult.Okay;
 		}
