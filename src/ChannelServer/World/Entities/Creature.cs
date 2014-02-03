@@ -126,13 +126,42 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public bool Warping { get; set; }
 
-		// Battle
+		// Combat
 		// ------------------------------------------------------------------
 
 		public BattleStance BattleStance { get; set; }
 		public Creature Target { get; set; }
 
+		private int _stun;
+		private DateTime _stunChange;
+		/// <summary>
+		/// Amount of ms before creature can do something again.
+		/// </summary>
+		/// <remarks>
+		/// Max stun animation duration for monster seems to be about 3s.
+		/// </remarks>
+		public int Stun
+		{
+			get
+			{
+				if (_stun <= 0)
+					return 0;
+
+				var diff = (DateTime.Now - _stunChange).TotalMilliseconds;
+				if (diff < _stun)
+					return (int)(_stun - diff);
+
+				return (_stun = 0);
+			}
+			set
+			{
+				_stun = Math2.MinMax(0, short.MaxValue, value);
+				_stunChange = DateTime.Now;
+			}
+		}
+
 		public bool IsDead { get { return this.Has(CreatureStates.Dead); } }
+		public bool IsStunned { get { return (this.Stun > 0); } }
 
 		// Stats
 		// ------------------------------------------------------------------

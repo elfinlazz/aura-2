@@ -126,6 +126,14 @@ namespace Aura.Channel.Scripting.Scripts
 				return;
 			}
 
+			// Stop and clear queue if stunned
+			if (this.Creature.IsStunned)
+			{
+				if (_actionQueue.Count > 0)
+					_actionQueue.Clear();
+				return;
+			}
+
 			// Run existing actions
 			if (CheckQueue())
 				return;
