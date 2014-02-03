@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Aura.Channel.Skills.Base;
 using Aura.Shared.Mabi.Const;
+using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.Skills.Combat
 {
@@ -20,8 +21,11 @@ namespace Aura.Channel.Skills.Combat
 	/// which leads us here as well.
 	/// </remarks>
 	[Skill(SkillId.CombatMastery)]
-	public class CombatMastery : ISkillHandler
+	public class CombatMastery : ICombatSkill
 	{
-
+		public CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

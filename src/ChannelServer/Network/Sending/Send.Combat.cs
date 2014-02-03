@@ -156,6 +156,34 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends CombatAttackR to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Contains creature's and target's position, sent for out of range,
+		/// so the client knows it has to adjust the creature's position.
+		/// </remarks>
+		/// <param name="creature"></param>
+		public static void CombatAttackR(Creature creature, Creature target)
+		{
+			var creaturePos = creature.GetPosition();
+			var targetPos = target.GetPosition();
+
+			var packet = new Packet(Op.CombatAttackR, creature.EntityId);
+			packet.PutByte(100);
+			packet.PutLong(target.EntityId);
+			packet.PutByte(0);
+			packet.PutByte(0);
+			packet.PutInt(creaturePos.X);
+			packet.PutInt(creaturePos.Y);
+			packet.PutByte(0);
+			packet.PutInt(targetPos.X);
+			packet.PutInt(targetPos.Y);
+			packet.PutString("");
+
+			creature.Client.Send(packet);
+		}
 	}
 
 	public enum TargetMode : byte { Normal = 0, Notice = 1, Aggro = 2 }

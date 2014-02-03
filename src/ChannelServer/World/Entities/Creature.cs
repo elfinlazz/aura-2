@@ -624,5 +624,15 @@ namespace Aura.Channel.World.Entities
 			if (sb.Length > 0)
 				Send.Notice(this, sb.ToString());
 		}
+
+		/// <summary>
+		/// Returns true if creature is able to attack this creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <returns></returns>
+		public virtual bool IsAttackableBy(Creature creature)
+		{
+			return true;
+		}
 	}
 }

@@ -10,6 +10,8 @@ using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.World.Entities;
+using Aura.Channel.Skills.Base;
+using Aura.Channel.Skills;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -91,6 +93,10 @@ namespace Aura.Channel.Network.Handlers
 		/// <summary>
 		/// Sent for Combat Mastery and many other skills.
 		/// </summary>
+		/// <remarks>
+		/// The packet doesn't specify the skill to use,
+		/// we use the currently loaded one.
+		/// </remarks>
 		/// <example>
 		/// 0001 [0010F00000005B3B] Long   : 4767482418060091
 		/// 0002 [................] String : 
@@ -105,9 +111,44 @@ namespace Aura.Channel.Network.Handlers
 			if (creature == null)
 				return;
 
-			// ...
-			//Log.Info("*attack*");
+			// Check target
+			var target = creature.Region.GetCreature(targetEntityId);
+			if (target == null || !target.IsAttackableBy(creature))
+				goto L_End;
 
+			// Get skill
+			var skill = creature.Skills.ActiveSkill;
+			if (skill == null && (skill = creature.Skills.Get(SkillId.CombatMastery)) == null)
+			{
+				Log.Warning("CombatAttack: Creature '{0}' doesn't have Combat Mastery.", creature.Name);
+				goto L_End;
+			}
+
+			// Get handler
+			var handler = ChannelServer.Instance.SkillManager.GetHandler<ICombatSkill>(skill.Info.Id);
+			if (handler == null)
+			{
+				Log.Unimplemented("CombatAttack: Skill handler or interface for '{0}'.", skill.Info.Id);
+				Send.ServerMessage(creature, "This combat skill isn't implemented yet.");
+				goto L_End;
+			}
+
+			try
+			{
+				var result = handler.Use(creature, skill, targetEntityId);
+				if (result == CombatSkillResult.OutOfRange)
+				{
+					Send.CombatAttackR(creature, target);
+					return;
+				}
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("CombatAttack: Skill use method for '{0}'.", skill.Info.Id);
+				Send.ServerMessage(creature, "This combat skill isn't implemented completely yet.");
+			}
+
+		L_End:
 			Send.CombatAttackR(creature);
 		}
 

@@ -54,5 +54,15 @@ namespace Aura.Channel.World.Entities
 
 			return true;
 		}
+
+		public override bool IsAttackableBy(Creature other)
+		{
+			// Players can only attack bad NPCs.
+			if (other.IsPlayer)
+				return !this.Has(CreatureStates.GoodNpc);
+
+			// NPCs can attack whoever hey want.
+			return true;
+		}
 	}
 }
