@@ -413,6 +413,7 @@ namespace Aura.Channel.World
 				return false;
 
 			_pockets[item.Info.Pocket].AddUnsafe(item);
+			this.UpdateEquipReferences(item.Info.Pocket);
 			return true;
 		}
 
