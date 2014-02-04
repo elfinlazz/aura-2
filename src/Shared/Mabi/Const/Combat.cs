@@ -46,15 +46,65 @@ namespace Aura.Shared.Mabi.Const
 	public enum TargetOptions : uint
 	{
 		None = 0x00,
+
+		/// <summary>
+		/// Displays crit effect
+		/// </summary>
 		Critical = 0x01,
+
+		/// <summary>
+		/// Displays "Clean Hit"
+		/// </summary>
 		CleanHit = 0x04,
-		OneShotFinish = 0x08,
+
+		/// <summary>
+		/// Displays "First Hit"
+		/// </summary>
+		FirstHit = 0x08,
+
+		/// <summary>
+		/// Displays "Finish"
+		/// </summary>
+		/// <remarks>
+		/// This alone removes any delays between dmg and animation.
+		/// </remarks>
+		/// 
 		Finished = 0x10,
+
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Some have it, some don't.
+		/// </remarks>
 		Result = 0x20,
+
+		/// <summary>
+		/// Knocks target down
+		/// </summary>
 		KnockDownFinish = 0x100,
-		Smash = 0x200, // Seems be used with Smash sometimes?
+
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Used by Smash sometimes, looks like a knock down.
+		/// </remarks>
+		Smash = 0x200,
+
+		/// <summary>
+		/// Sliding back animation
+		/// </summary>
 		KnockBack = 0x400,
+
+		/// <summary>
+		/// Just another knock down
+		/// </summary>
 		KnockDown = 0x800,
+
+		/// <summary>
+		/// Displays "Last Blow"
+		/// </summary>
 		FinishingHit = 0x1000,
 
 		/// <summary>
@@ -71,6 +121,9 @@ namespace Aura.Shared.Mabi.Const
 		/// <summary>
 		/// Finished | KnockDownFinish | FinishingHit = 0x1110
 		/// </summary>
+		/// <remarks>
+		/// Always active when creature dies.
+		/// </remarks>
 		FinishingKnockDown = Finished | KnockDownFinish | FinishingHit,
 	}
 

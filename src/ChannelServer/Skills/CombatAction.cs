@@ -191,6 +191,15 @@ namespace Aura.Channel.Skills
 		{
 			return ((this.Options & option) != 0);
 		}
+
+		/// <summary>
+		/// Enables option(s)
+		/// </summary>
+		/// <param name="option"></param>
+		public void Set(AttackerOptions option)
+		{
+			this.Options |= option;
+		}
 	}
 
 	/// <summary>
@@ -251,6 +260,15 @@ namespace Aura.Channel.Skills
 		public bool Has(TargetOptions option)
 		{
 			return ((this.Options & option) != 0);
+		}
+
+		/// <summary>
+		/// Enables option(s)
+		/// </summary>
+		/// <param name="option"></param>
+		public void Set(TargetOptions option)
+		{
+			this.Options |= option;
 		}
 	}
 
