@@ -20,6 +20,9 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public abstract class Creature : Entity, IDisposable
 	{
+		public const float HandBalance = 0.3f;
+		public const float MaxKnockBack = 120;
+
 		private const float MinWeight = 0.7f, MaxWeight = 1.5f;
 		private const float MaxFoodStatBonus = 100;
 
@@ -138,7 +141,7 @@ namespace Aura.Channel.World.Entities
 		/// Amount of ms before creature can do something again.
 		/// </summary>
 		/// <remarks>
-		/// Max stun animation duration for monster seems to be about 3s.
+		/// Max stun animation duration for monsters seems to be about 3s.
 		/// </remarks>
 		public int Stun
 		{
@@ -157,6 +160,37 @@ namespace Aura.Channel.World.Entities
 			{
 				_stun = Math2.MinMax(0, short.MaxValue, value);
 				_stunChange = DateTime.Now;
+			}
+		}
+
+		private float _knockBack;
+		private DateTime _knockBackChange;
+		/// <summary>
+		/// "Force" applied to the creature.
+		/// </summary>
+		/// <remarks>
+		/// The more you hit a creature with heavy weapons,
+		/// the higher this value. If it goes above 100 the creature
+		/// is knocked back/down.
+		/// This is also used for the knock down gauge.
+		/// </remarks>
+		public float KnockBack
+		{
+			get
+			{
+				if (_knockBack <= 0)
+					return 0;
+
+				var result = _knockBack - ((DateTime.Now - _knockBackChange).TotalMilliseconds / 60f);
+				if (result <= 0)
+					result = _knockBack = 0;
+
+				return (float)result;
+			}
+			set
+			{
+				_knockBack = Math.Min(MaxKnockBack, value);
+				_knockBackChange = DateTime.Now;
 			}
 		}
 
@@ -662,6 +696,116 @@ namespace Aura.Channel.World.Entities
 		public virtual bool IsAttackableBy(Creature creature)
 		{
 			return true;
+		}
+
+		/// <summary>
+		/// Returns the max distance the creature can have to attack.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public int AttackRangeFor(Creature target)
+		{
+			//return (((this.RaceData.AttackRange + target.RaceData.AttackRange) / 2) + 5);
+			return (target.RaceData.AttackRange + 50);
+		}
+
+		/// <summary>
+		/// Calculates random damage using the given item.
+		/// </summary>
+		/// <param name="weapon">null for hands</param>
+		/// <param name="balance">NaN for individual balance calculation</param>
+		/// <returns></returns>
+		public float GetRndDamage(Item weapon, float balance = float.NaN)
+		{
+			float min = 0, max = 0;
+
+			if (float.IsNaN(balance))
+				balance = this.GetRndBalance(weapon);
+
+			if (weapon != null)
+			{
+				min += weapon.OptionInfo.AttackMin;
+				max += weapon.OptionInfo.AttackMax;
+			}
+			else
+			{
+				min = this.RaceData.AttackMin;
+				max = this.RaceData.AttackMax;
+			}
+
+			min += this.Str / 3.0f;
+			max += this.Str / 2.5f;
+
+			if (min > max)
+				min = max;
+
+			return (min + ((max - min) * balance));
+		}
+
+		/// <summary>
+		/// Calculates the damage of left-and-right slots together
+		/// </summary>
+		/// <returns></returns>
+		public float GetRndTotalDamage()
+		{
+			var balance = this.GetRndAverageBalance();
+
+			var dmg = this.GetRndDamage(this.RightHand, balance);
+			if (this.LeftHand != null)
+				dmg += this.GetRndDamage(this.LeftHand, balance);
+
+			return dmg;
+		}
+
+		/// <summary>
+		/// Calculates random balance using the given base balance (eg 0.3 for hands).
+		/// </summary>
+		/// <param name="baseBalance"></param>
+		/// <returns></returns>
+		protected float GetRndBalance(float baseBalance)
+		{
+			var rnd = RandomProvider.Get();
+			var balance = baseBalance;
+
+			// Dex
+			balance += (Math.Max(0, this.Dex - 10) / 4) / 100f;
+
+			// Randomization, balance+-(100-balance), eg 80 = 60~100
+			var diff = 1.0f - balance;
+			balance += ((diff - (diff * 2 * (float)rnd.NextDouble())) * (float)rnd.NextDouble());
+			balance = (float)Math.Max(0f, Math.Round(balance, 2));
+
+			return balance;
+		}
+
+		/// <summary>
+		/// Returns randomized average balance, taking both weapons into consideration.
+		/// </summary>
+		/// <returns></returns>
+		public float GetRndAverageBalance()
+		{
+			var baseBalance = HandBalance;
+			if (this.RightHand != null)
+			{
+				baseBalance = this.RightHand.Balance;
+				if (this.LeftHand != null)
+				{
+					baseBalance += this.LeftHand.Balance;
+					baseBalance /= 2f; // average
+				}
+			}
+
+			return this.GetRndBalance(baseBalance);
+		}
+
+		/// <summary>
+		/// Calculates random balance for the given weapon.
+		/// </summary>
+		/// <param name="weapon">null for hands</param>
+		/// <returns></returns>
+		public float GetRndBalance(Item weapon)
+		{
+			return this.GetRndBalance(weapon != null ? weapon.Balance : 0.3f);
 		}
 	}
 }
