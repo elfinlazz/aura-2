@@ -67,6 +67,11 @@ namespace Aura.Channel.Skills
 		{
 			foreach (var action in this.Actions)
 			{
+				action.Creature.Stun = action.StunTime;
+
+				Send.StatUpdate(action.Creature, StatUpdateType.Private, Stat.Life, Stat.LifeInjured);
+				Send.StatUpdate(action.Creature, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
+
 				// Switch to battle stance
 				//if (tAction.Creature.BattleState == 0)
 				//{
@@ -120,7 +125,7 @@ namespace Aura.Channel.Skills
 		/// <summary>
 		/// Position before the knock back.
 		/// </summary>
-		public Position OldPosition { get; set; }
+		//public Position OldPosition { get; set; }
 
 		/// <summary>
 		/// Returns true if action is a knock back/down.

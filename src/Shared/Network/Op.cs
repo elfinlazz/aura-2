@@ -234,8 +234,8 @@ namespace Aura.Shared.Network
 		public const int CombatSetAim = 0x791D;
 		public const int CombatSetAimR = 0x791E;
 		public const int SetCombatTarget = 0x7920;
-		public const int CombatSetFinisher = 0x7921;
-		public const int CombatSetFinisher2 = 0x7922;
+		public const int SetFinisher = 0x7921;
+		public const int SetFinisher2 = 0x7922;
 		public const int CombatAction = 0x7924;
 		public const int CombatActionEnd = 0x7925;
 		public const int CombatActionPack = 0x7926;

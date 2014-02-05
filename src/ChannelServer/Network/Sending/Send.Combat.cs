@@ -219,6 +219,51 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Broadcasts SetFinisher in range of creature.
+		/// </summary>
+		/// <remarks>
+		/// Displays flashing "Finish" if player is finisher.
+		/// 
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="finisherEntityId"></param>
+		public static void SetFinisher(Creature creature, long finisherEntityId)
+		{
+			var packet = new Packet(Op.SetFinisher, creature.EntityId);
+			packet.PutLong(finisherEntityId);
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Broadcasts SetFinisher2 in range of creature.
+		/// </summary>
+		/// <remarks>
+		/// Purpose unknown, sent shortly after SetFinisher.
+		/// </remarks>
+		/// <param name="creature"></param>
+		public static void SetFinisher2(Creature creature)
+		{
+			var packet = new Packet(Op.SetFinisher2, creature.EntityId);
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Broadcasts IsNowDead in range of creature.
+		/// </summary>
+		/// <remarks>
+		/// Creature isn't targetable anymore after this.
+		/// </remarks>
+		/// <param name="creature"></param>
+		public static void IsNowDead(Creature creature)
+		{
+			var packet = new Packet(Op.IsNowDead, creature.EntityId);
+
+			creature.Region.Broadcast(packet, creature);
+		}
 	}
 
 	public enum TargetMode : byte { Normal = 0, Notice = 1, Aggro = 2 }

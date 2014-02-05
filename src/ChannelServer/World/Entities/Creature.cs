@@ -436,6 +436,7 @@ namespace Aura.Channel.World.Entities
 		public void Deactivate(CreatureStates state) { this.State &= ~state; }
 		public void Deactivate(CreatureStatesEx state) { this.StateEx &= ~state; }
 		public bool Has(CreatureStates state) { return ((this.State & state) != 0); }
+		public bool Is(RaceStands stand) { return ((this.RaceData.Stand & stand) != 0); }
 
 		/// <summary>
 		/// Returns current position.
@@ -695,6 +696,9 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public virtual bool IsAttackableBy(Creature creature)
 		{
+			if (this.IsDead)
+				return false;
+
 			return true;
 		}
 
@@ -806,6 +810,37 @@ namespace Aura.Channel.World.Entities
 		public float GetRndBalance(Item weapon)
 		{
 			return this.GetRndBalance(weapon != null ? weapon.Balance : 0.3f);
+		}
+
+		/// <summary>
+		/// Applies damage to Life, kills creature if necessary.
+		/// </summary>
+		/// <param name="damage"></param>
+		/// <param name="from"></param>
+		public void TakeDamage(float damage, Creature from)
+		{
+			var lifeBefore = this.Life;
+			var hadHalf = (this.Life >= this.LifeMax / 2);
+
+			this.Life -= damage;
+
+			if (this.Life < 0 && !(this.IsPlayer && hadHalf))
+				this.Kill(from);
+		}
+
+		//protected abstract bool ShouldSurvive(float damage);
+
+		public virtual void Kill(Creature killer)
+		{
+			//Log.Debug(this.Name + " was killed by " + killer.Name);
+
+			this.Conditions.Deactivate(ConditionsA.Deadly);
+			this.Activate(CreatureStates.Dead);
+
+			//Send.SetFinisher(this, killer.EntityId);
+			//Send.SetFinisher2(this);
+			Send.IsNowDead(this);
+			Send.SetFinisher(this, 0);
 		}
 	}
 }

@@ -112,6 +112,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="args"></param>
 		public void Heartbeat(object state)
 		{
+			if (this.Creature.IsDead)
+				return;
+
 			var now = DateTime.Now;
 			_timestamp += (now - _lastBeat).TotalMilliseconds;
 			_lastBeat = now;
