@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using Aura.Channel.Util;
 using Aura.Data.Database;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World
 {
@@ -16,7 +17,7 @@ namespace Aura.Channel.World
 
 		public RegionCollision(int x, int y, int width, int height)
 		{
-			_tree = new Quadtree<LinePath>(x, y, width, height);
+			_tree = new Quadtree<LinePath>(new Size(1000, 1000), 2);
 		}
 
 		/// <summary>
@@ -78,7 +79,7 @@ namespace Aura.Channel.World
 
 			var intersections = new List<Position>();
 
-			var lines = _tree.Get(new LinePath(from, to).Rect);
+			var lines = _tree.Query(new LinePath(from, to).Rect);
 
 			foreach (var line in lines)
 			{
@@ -100,7 +101,11 @@ namespace Aura.Channel.World
 			double distance = double.MaxValue;
 			foreach (var inter in intersections)
 			{
-				var interDist = Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2);
+				//Aura.Shared.Util.Log.Debug("intersection: " + inter);
+				//var region = ChannelServer.Instance.World.GetRegion(1);
+				//region.AddProp(new Aura.Channel.World.Entities.Prop(229, 1, inter.X, inter.Y, 0));
+
+				var interDist = Math.Pow(x1 - inter.X, 2) + Math.Pow(y1 - inter.Y, 2);
 				if (interDist < distance)
 				{
 					intersection = inter;
@@ -140,11 +145,11 @@ namespace Aura.Channel.World
 	/// <summary>
 	/// Holding two points, making up a path.
 	/// </summary>
-	public class LinePath : IQuadtreeObject
+	public class LinePath : IQuadObject
 	{
 		public Point P1 { get; private set; }
 		public Point P2 { get; private set; }
-		public Rectangle Rect { get; private set; }
+		public RectangleF Rect { get; private set; }
 
 		public LinePath(Point p1, Point p2)
 		{
