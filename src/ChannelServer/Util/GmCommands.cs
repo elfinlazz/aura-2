@@ -16,6 +16,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
+using Aura.Channel.Skills;
 
 namespace Aura.Channel.Util
 {
@@ -36,6 +37,7 @@ namespace Aura.Channel.Util
 			Add(01, 50, "upper", "<upper>", HandleBody);
 			Add(01, 50, "lower", "<lower>", HandleBody);
 			Add(01, 50, "haircolor", "<hex color>", HandleHairColor);
+			Add(01, 50, "die", "", HandleDie);
 
 			// GMs
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
@@ -707,6 +709,16 @@ namespace Aura.Channel.Util
 			Send.ServerMessage(sender, Localization.Get("gm.spawn_success")); // Creatures spawned.
 			if (target != sender)
 				Send.ServerMessage(target, Localization.Get("gm.spawn_target"), sender.Name); // {0} spawned creatures around you.
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleDie(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			target.Kill(sender);
+
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("gm.die_killer"), sender.Name); // You've been killed by {0}.
 
 			return CommandResult.Okay;
 		}

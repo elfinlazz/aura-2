@@ -70,3 +70,6 @@ spawn_target	{0} spawned creatures around you.
 // >speed
 speed_success	Speed changed to +{0}%.
 speed_target	Your speed has been changed to +{0}% by {1}.
+
+// >die
+die_killer		You've been killed by {0}.
