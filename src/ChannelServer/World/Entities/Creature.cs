@@ -718,7 +718,7 @@ namespace Aura.Channel.World.Entities
 			var attackerRange = this.RaceData.AttackRange;
 			var targetRange = target.RaceData.AttackRange;
 
-			var result = 156;
+			var result = 156; // Default found in the client (for reference)
 
 			if ((attackerRange < 300 && targetRange < 300) || (attackerRange >= 300 && attackerRange > targetRange))
 				result = ((attackerRange + targetRange) / 2);

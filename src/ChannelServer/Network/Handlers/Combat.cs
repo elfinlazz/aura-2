@@ -163,7 +163,7 @@ namespace Aura.Channel.Network.Handlers
 		/// The client sends this when initially attacking a creature.
 		/// It's answered with op+1, probably the full stun at the time.
 		/// Afterwards you get op+2, with relative values, most likely
-		/// and update.
+		/// an update.
 		/// Sent again with id 0 when the target dies.
 		/// </remarks>
 		/// <example>

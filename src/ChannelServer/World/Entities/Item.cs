@@ -61,6 +61,14 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns ".OptionInfo.Balance / 100".
+		/// </summary>
+		public float Balance
+		{
+			get { return this.OptionInfo.Balance / 100f; }
+		}
+
+		/// <summary>
 		/// New item based on item id.
 		/// </summary>
 		/// <param name="itemId"></param>

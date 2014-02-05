@@ -20,6 +20,9 @@ namespace Aura.Shared.Mabi.Const
 		/// <summary>
 		/// Difference between KBH 1 and 2 unknown. (0x04)
 		/// </summary>
+		/// <remarks>
+		/// Required for knock back hit animation.
+		/// </remarks>
 		KnockBackHit2 = 0x04,
 
 		/// <summary>
@@ -28,8 +31,12 @@ namespace Aura.Shared.Mabi.Const
 		UseEffect = 0x08,
 
 		/// <summary>
-		/// Req for some skills, didn't show for fireball or thunder (0x20)
+		/// Req for some skills (0x20)
 		/// </summary>
+		/// <remarks>
+		/// Didn't show for fireball or thunder.
+		/// Seems to be required for proper knock back.
+		/// </remarks>
 		Result = 0x20,
 
 		/// <summary>
@@ -177,4 +184,10 @@ namespace Aura.Shared.Mabi.Const
 
 		//DefendedHit = 0x73, // ?
 	}
+
+	public enum CombatStunAttacker { VeryFast = 450, Fast = 520, Normal = 600, Slow = 800, VerySlow = 1000 }
+	public enum CombatStunTarget { VeryFast = 1200, Fast = 1700, Normal = 2000, Slow = 2800, VerySlow = 3000 }
+
+	public enum CombatKnockbackStunAttacker { VeryFast = 1200, Fast = 2500, Normal = 2500, Slow = 2500, VerySlow = 2500 }
+	public enum CombatKnockbackStunTarget { VeryFast = 1500, Fast = 2000, Normal = 2000, Slow = 2800, VerySlow = 3000 }
 }
