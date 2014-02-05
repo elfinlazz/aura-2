@@ -483,7 +483,24 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
-		/// Spawns all creatures for spawn.
+		/// Spawns all creatures for spawn, or amount.
+		/// </summary>
+		/// <param name="spawnId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public int Spawn(int spawnId, int amount = 0)
+		{
+			if (!_creatureSpawns.ContainsKey(spawnId))
+			{
+				Log.Warning("ScriptManager.Spawn: Failed, missing spawn '{0}'.", spawnId);
+				return 0;
+			}
+
+			return this.Spawn(_creatureSpawns[spawnId], amount);
+		}
+
+		/// <summary>
+		/// Spawns all creatures for spawn, or amount.
 		/// </summary>
 		/// <param name="spawn"></param>
 		/// <returns></returns>

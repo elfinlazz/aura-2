@@ -136,11 +136,9 @@ namespace Aura.Channel.World
 					this.RemoveCreature(entity as Creature);
 
 					// Respawn
-					//var npc = entity as NPC;
-					//if (npc != null && npc.SpawnId > 0)
-					//{
-					//    ScriptManager.Instance.Spawn(npc.SpawnId, 1);
-					//}
+					var npc = entity as NPC;
+					if (npc != null && npc.SpawnId > 0)
+						ChannelServer.Instance.ScriptManager.Spawn(npc.SpawnId, 1);
 				}
 				else if (entity.Is(DataType.Item))
 				{
