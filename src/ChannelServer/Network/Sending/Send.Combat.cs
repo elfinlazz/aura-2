@@ -80,7 +80,7 @@ namespace Aura.Channel.Network.Sending
 					actionPacket.PutLong(aAction.TargetId);
 					actionPacket.PutUInt((uint)aAction.Options);
 					actionPacket.PutByte(0);
-					actionPacket.PutByte(1); //(byte)(!aAction.Has(AttackerOptions.KnockBackHit2) ? 2 : 1));
+					actionPacket.PutByte((byte)(!aAction.Has(AttackerOptions.KnockBackHit2) ? 2 : 1)); // ?
 					actionPacket.PutInt(pos.X);
 					actionPacket.PutInt(pos.Y);
 					if (aAction.PropId != 0)

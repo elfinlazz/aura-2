@@ -705,12 +705,30 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Returns the max distance the creature can have to attack.
 		/// </summary>
+		/// <remarks>
+		/// http://dev.mabinoger.com/forum/index.php/topic/767-attack-range/
+		/// 
+		/// This might not be the 100% accurate formula, but it should be
+		/// good enough to work with for now.
+		/// </remarks>
 		/// <param name="target"></param>
 		/// <returns></returns>
 		public int AttackRangeFor(Creature target)
 		{
-			//return (((this.RaceData.AttackRange + target.RaceData.AttackRange) / 2) + 5);
-			return (target.RaceData.AttackRange + 50);
+			var attackerRange = this.RaceData.AttackRange;
+			var targetRange = target.RaceData.AttackRange;
+
+			var result = 156;
+
+			if ((attackerRange < 300 && targetRange < 300) || (attackerRange >= 300 && attackerRange > targetRange))
+				result = ((attackerRange + targetRange) / 2);
+			else
+				result = targetRange;
+
+			// Buffer
+			result += 25;
+
+			return result;
 		}
 
 		/// <summary>
