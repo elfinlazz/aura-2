@@ -57,9 +57,9 @@ namespace Aura.Channel.Skills.Combat
 				cap.Add(aAction, tAction);
 
 				cap.Hit = i;
-				cap.HitsMax = maxHits;
-				cap.PrevCombatActionId = prevId;
-				prevId = cap.CombatActionId;
+				cap.MaxHits = maxHits;
+				cap.PrevId = prevId;
+				prevId = cap.Id;
 
 				aAction.Set(AttackerOptions.Result);
 				if (dualWield)
@@ -93,11 +93,11 @@ namespace Aura.Channel.Skills.Combat
 
 					aAction.Set(AttackerOptions.KnockBackHit2);
 
-					cap.HitsMax = cap.Hit;
+					cap.MaxHits = cap.Hit;
 				}
 
-				aAction.StunTime = this.GetAttackerStun(weapon, tAction.IsKnockBack);
-				tAction.StunTime = this.GetTargetStun(weapon, tAction.IsKnockBack);
+				aAction.Stun = this.GetAttackerStun(weapon, tAction.IsKnockBack);
+				tAction.Stun = this.GetTargetStun(weapon, tAction.IsKnockBack);
 
 				cap.Handle();
 

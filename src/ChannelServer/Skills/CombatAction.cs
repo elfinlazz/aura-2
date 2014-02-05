@@ -27,20 +27,46 @@ namespace Aura.Channel.Skills
 	{
 		private static int _actionId = 0;
 
-		public Creature Attacker { get; set; }
-		public int CombatActionId { get; set; }
-		public int PrevCombatActionId { get; set; }
+		/// <summary>
+		/// Id of this action pack.
+		/// </summary>
+		public int Id { get; protected set; }
+
+		/// <summary>
+		/// Id of previous pack, in multi pack situations (dual wield).
+		/// </summary>
+		public int PrevId { get; set; }
+
+		/// <summary>
+		/// Hit x of MaxHits.
+		/// </summary>
 		public byte Hit { get; set; }
-		public byte HitsMax { get; set; }
+
+		/// <summary>
+		/// 1 or 2 (normal vs dual wield)
+		/// </summary>
+		public byte MaxHits { get; set; }
+
+		/// <summary>
+		/// Attacking creature.
+		/// </summary>
+		public Creature Attacker { get; set; }
+
+		/// <summary>
+		/// Skill used by the attacker.
+		/// </summary>
 		public SkillId SkillId { get; set; }
 
+		/// <summary>
+		/// Attacker and Target actions.
+		/// </summary>
 		public List<CombatAction> Actions { get; protected set; }
 
 		private CombatActionPack()
 		{
-			this.CombatActionId = Interlocked.Increment(ref _actionId);
+			this.Id = Interlocked.Increment(ref _actionId);
 			this.Hit = 1;
-			this.HitsMax = 1;
+			this.MaxHits = 1;
 			this.Actions = new List<CombatAction>();
 		}
 
@@ -67,27 +93,14 @@ namespace Aura.Channel.Skills
 		{
 			foreach (var action in this.Actions)
 			{
-				action.Creature.Stun = action.StunTime;
+				action.Creature.Stun = action.Stun;
 
 				Send.StatUpdate(action.Creature, StatUpdateType.Private, Stat.Life, Stat.LifeInjured);
 				Send.StatUpdate(action.Creature, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
 
-				// Switch to battle stance
-				//if (tAction.Creature.BattleState == 0)
-				//{
-				//    tAction.Creature.BattleState = 1;
-				//    Send.ChangesStance(tAction.Creature, 0);
-				//}
-
 				// Cancel defense if applicable
 				if (action.Is(CombatActionType.Defended))
 					action.Creature.Skills.CancelActiveSkill();
-
-				//if (action.Creature.IsDead)
-				//{
-				//    // Exp, Drops, etc.
-				//    WorldManager.Instance.HandleCreatureKill(action.Creature, cap.Attacker, action.OldPosition, action.SkillId);
-				//}
 			}
 
 			// Start combat action
@@ -98,7 +111,7 @@ namespace Aura.Channel.Skills
 				Send.CombatUsedSkill(this.Attacker, this.SkillId);
 
 			// End combat action
-			Send.CombatActionEnd(this.Attacker, this.CombatActionId);
+			Send.CombatActionEnd(this.Attacker, this.Id);
 		}
 	}
 
@@ -115,17 +128,12 @@ namespace Aura.Channel.Skills
 		/// <summary>
 		/// Time before creature can move again.
 		/// </summary>
-		public short StunTime { get; set; }
+		public short Stun { get; set; }
 
 		/// <summary>
 		/// Used skill
 		/// </summary>
 		public SkillId SkillId { get; set; }
-
-		/// <summary>
-		/// Position before the knock back.
-		/// </summary>
-		//public Position OldPosition { get; set; }
 
 		/// <summary>
 		/// Returns true if action is a knock back/down.

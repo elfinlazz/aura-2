@@ -48,10 +48,10 @@ namespace Aura.Channel.Network.Sending
 			var attackerPos = pack.Attacker.GetPosition();
 
 			var packet = new Packet(Op.CombatActionPack, MabiId.Broadcast);
-			packet.PutInt(pack.CombatActionId);
-			packet.PutInt(pack.PrevCombatActionId);
+			packet.PutInt(pack.Id);
+			packet.PutInt(pack.PrevId);
 			packet.PutByte(pack.Hit);
-			packet.PutByte(pack.HitsMax);
+			packet.PutByte(pack.MaxHits);
 			packet.PutByte(0);
 
 			// Actions
@@ -65,10 +65,10 @@ namespace Aura.Channel.Network.Sending
 					actionPacket = new Packet(Op.CombatAction, action.Creature.EntityId);
 				else
 					actionPacket.Clear(Op.CombatAction, action.Creature.EntityId);
-				actionPacket.PutInt(pack.CombatActionId);
+				actionPacket.PutInt(pack.Id);
 				actionPacket.PutLong(action.Creature.EntityId);
 				actionPacket.PutByte((byte)action.Type);
-				actionPacket.PutShort(action.StunTime);
+				actionPacket.PutShort(action.Stun);
 				actionPacket.PutUShort((ushort)action.SkillId);
 				actionPacket.PutShort(0);
 
