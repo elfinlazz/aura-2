@@ -37,4 +37,10 @@ public class FoxAi : AiScript
 		
 		Do(Wait(3000, 6000));
 	}
+	
+	protected override IEnumerable Aggro()
+	{
+		Do(Say("attack"));
+		Do(Wait(3000, 6000));
+	}
 }

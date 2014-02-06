@@ -13,6 +13,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Channel.World;
 using System.Threading;
 using Aura.Shared.Network;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -116,6 +117,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="args"></param>
 		private void Heartbeat(object state)
 		{
+			if (this.Creature == null || this.Creature.Region == null)
+				return;
+
 			if (_inside)
 				Log.Warning("AI crash in '{0}', report or check your custom actions for infinite loops.", this.GetType().Name);
 
@@ -150,8 +154,9 @@ namespace Aura.Channel.Scripting.Scripts
 				var prevAction = _curAction;
 				if (_curAction == null || !_curAction.MoveNext())
 				{
-					// The action could be changed on the last iteration,
-					// if it did we don't want to go to the default right away.
+					// If action is switched on the last iteration we end up
+					// here, with a new action, which would be overwritten
+					// with a default right away without this check.
 					if (_curAction == prevAction)
 					{
 						switch (_state)
@@ -245,7 +250,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 
 				// Switch to aggro from alert after the delay
-				if (_aggroType > AggroType.Careful && _state == AiState.Alert && DateTime.Now >= _alertTime + _aggroDelay)
+				if ((_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready)) && _state == AiState.Alert && DateTime.Now >= _alertTime + _aggroDelay)
 				{
 					this.Clear();
 
@@ -537,8 +542,9 @@ namespace Aura.Channel.Scripting.Scripts
 
 			do
 			{
-				// Yield at least once, even if it took 0 time, to prevent
-				// infinite loops in other actions.
+				// Yield at least once, even if it took 0 time,
+				// to avoid unexpected problems, like infinite outer loops,
+				// because an action expected the walk to yield at least once.
 				yield return true;
 			}
 			while (_timestamp < walkTime);
@@ -602,6 +608,27 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		protected enum AiState { Idle, Aware, Alert, Aggro }
-		protected enum AggroType { Neutral, Careful, Aggressive }
+		protected enum AggroType
+		{
+			/// <summary>
+			/// Stays in Idle unless provoked
+			/// </summary>
+			Neutral,
+
+			/// <summary>
+			/// Goes into alert, but doesn't attack unprovoked.
+			/// </summary>
+			Careful,
+
+			/// <summary>
+			/// Goes into alert and attacks if target is in battle mode.
+			/// </summary>
+			CarefulAggressive,
+
+			/// <summary>
+			/// Goes straight into alert and aggro.
+			/// </summary>
+			Aggressive,
+		}
 	}
 }
