@@ -202,5 +202,51 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends DeadMenuR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="options">Negative answer if null</param>
+		public static void DeadMenuR(Creature creature, object options)
+		{
+			var packet = new Packet(Op.DeadMenuR, creature.EntityId);
+			packet.PutByte(true);
+			packet.PutString("town;here;naocoupon;stay");
+			packet.PutInt(8);
+			packet.PutInt(0);
+
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends negative Revived to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void Revive_Fail(Creature creature)
+		{
+			var packet = new Packet(Op.Revived, creature.EntityId);
+			packet.PutByte(false);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends Revived to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void Revived(Creature creature)
+		{
+			var pos = creature.GetPosition();
+
+			var packet = new Packet(Op.Revived, creature.EntityId);
+			packet.PutByte(true);
+			packet.PutInt(creature.RegionId);
+			packet.PutInt(pos.X);
+			packet.PutInt(pos.Y);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

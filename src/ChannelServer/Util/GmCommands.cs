@@ -717,6 +717,8 @@ namespace Aura.Channel.Util
 		{
 			target.Kill(sender);
 
+			//Send.PlayDead(target);
+
 			if (target != sender)
 				Send.ServerMessage(target, Localization.Get("gm.die_killer"), sender.Name); // You've been killed by {0}.
 

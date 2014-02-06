@@ -124,5 +124,65 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Broadcasts PlayDead in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void PlayDead(Creature creature)
+		{
+			var pos = creature.GetPosition();
+
+			var packet = new Packet(Op.PlayDead, creature.EntityId);
+			packet.PutByte(true); // ?
+			packet.PutFloat(pos.X);
+			packet.PutFloat(pos.Y);
+			packet.PutInt(5000);
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Sends BackFromTheDead1 to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Removes black bars and unlocks player.
+		/// </remarks>
+		/// <param name="creature"></param>
+		public static void BackFromTheDead1(Creature creature)
+		{
+			var packet = new Packet(Op.BackFromTheDead1, creature.EntityId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends BackFromTheDead2 to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Makes creature stand up.
+		/// </remarks>
+		/// <param name="creature"></param>
+		public static void BackFromTheDead2(Creature creature)
+		{
+			var packet = new Packet(Op.BackFromTheDead2, creature.EntityId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends DeadFeather to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void DeadFeather(Creature creature)
+		{
+			var packet = new Packet(Op.DeadFeather, creature.EntityId);
+			packet.PutShort(1);
+			packet.PutInt(0);
+			packet.PutByte(0);
+
+
+			creature.Client.Send(packet);
+		}
 	}
 }
