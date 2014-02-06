@@ -32,6 +32,14 @@ namespace Aura.Channel.World.Entities
 			this.Life = this.LifeMaxBase = 1000000;
 		}
 
+		public override void Dispose()
+		{
+			base.Dispose();
+
+			if (this.AI != null)
+				this.AI.Dispose();
+		}
+
 		/// <summary>
 		/// Moves NPC to target location and adds it to the region.
 		/// Returns false if region doesn't exist.

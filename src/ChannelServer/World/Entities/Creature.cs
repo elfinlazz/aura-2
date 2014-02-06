@@ -430,7 +430,7 @@ namespace Aura.Channel.World.Entities
 		/// Called when creature is removed from the server.
 		/// (Killed NPC, disconnect, etc)
 		/// </summary>
-		public void Dispose()
+		public virtual void Dispose()
 		{
 			this.Regens.Dispose();
 			ChannelServer.Instance.World.MabiTick -= this.OnMabiTick;
