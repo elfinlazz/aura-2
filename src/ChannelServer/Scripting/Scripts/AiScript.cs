@@ -22,26 +22,38 @@ namespace Aura.Channel.Scripting.Scripts
 		protected int IdleHeartbeat = 250; // ms
 		protected int AggroHeartbeat = 50; // ms
 
+		// Maintenance
 		protected Timer _heartbeatTimer;
 		protected int _heartbeat;
-		protected AiState _state;
 		protected double _timestamp;
 		protected DateTime _lastBeat;
 		protected bool _active;
 		protected DateTime _minRunTime;
 
+		protected Random _rnd;
+		protected AiState _state;
+		protected IEnumerator _curAction;
+		protected Creature _newAttackable;
+
+		// Settings
 		protected int _aggroRadius, _aggroMaxRadius;
 		protected TimeSpan _alertDelay, _aggroDelay;
 		protected DateTime _awareTime, _alertTime;
-		protected Creature _newAttackable;
+		protected AggroType _aggroType;
 
-		protected IEnumerator _curAction;
-
-		protected Random _rnd;
-
+		/// <summary>
+		/// Creature controlled by AI.
+		/// </summary>
 		public Creature Creature { get; set; }
+
+		/// <summary>
+		/// List of random phrases
+		/// </summary>
 		public List<string> Phrases { get; protected set; }
 
+		/// <summary>
+		/// Returns whether the AI is currently active.
+		/// </summary>
 		public bool Active { get { return _active; } }
 
 		public AiScript()
@@ -49,7 +61,6 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Phrases = new List<string>();
 
 			_lastBeat = DateTime.MinValue;
-
 			_heartbeat = IdleHeartbeat;
 			_heartbeatTimer = new Timer(this.Heartbeat, null, -1, -1);
 
@@ -60,6 +71,8 @@ namespace Aura.Channel.Scripting.Scripts
 			_aggroMaxRadius = 3000;
 			_alertDelay = TimeSpan.FromMilliseconds(2000);
 			_aggroDelay = TimeSpan.FromMilliseconds(2000);
+
+			_aggroType = AggroType.Neutral;
 		}
 
 		public void Dispose()
@@ -102,48 +115,55 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="args"></param>
 		private void Heartbeat(object state)
 		{
-			if (this.Creature.IsDead)
-				return;
-
-			var now = this.UpdateTimestamp();
-			var pos = this.Creature.GetPosition();
-
-			// Stop if no players in range
-			var players = this.Creature.Region.GetPlayersInRange(pos);
-			if (players.Count == 0 && now > _minRunTime)
+			try
 			{
-				this.Deactivate();
-				this.Reset();
-				return;
-			}
+				if (this.Creature.IsDead)
+					return;
 
-			this.SelectState();
+				var now = this.UpdateTimestamp();
+				var pos = this.Creature.GetPosition();
 
-			// Stop and clear queue if stunned
-			if (this.Creature.IsStunned)
-			{
-				this.Clear();
-				return;
-			}
-
-			// Select and run state
-			var prevAction = _curAction;
-			if (_curAction == null || !_curAction.MoveNext())
-			{
-				// The action could be changed on the last iteration,
-				// if it did we don't want to go to the default right away.
-				if (_curAction == prevAction)
+				// Stop if no players in range
+				var players = this.Creature.Region.GetPlayersInRange(pos);
+				if (players.Count == 0 && now > _minRunTime)
 				{
-					switch (_state)
-					{
-						default:
-						case AiState.Idle: this.SwitchAction(Idle); break;
-						case AiState.Alert: this.SwitchAction(Alert); break;
-						case AiState.Aggro: this.SwitchAction(Aggro); break;
-					}
-
-					_curAction.MoveNext();
+					this.Deactivate();
+					this.Reset();
+					return;
 				}
+
+				this.SelectState();
+
+				// Stop and clear queue if stunned
+				if (this.Creature.IsStunned)
+				{
+					this.Clear();
+					return;
+				}
+
+				// Select and run state
+				var prevAction = _curAction;
+				if (_curAction == null || !_curAction.MoveNext())
+				{
+					// The action could be changed on the last iteration,
+					// if it did we don't want to go to the default right away.
+					if (_curAction == prevAction)
+					{
+						switch (_state)
+						{
+							default:
+							case AiState.Idle: this.SwitchAction(Idle); break;
+							case AiState.Alert: this.SwitchAction(Alert); break;
+							case AiState.Aggro: this.SwitchAction(Aggro); break;
+						}
+
+						_curAction.MoveNext();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Log.Exception(ex, "Exception in {0}", this.GetType().Name);
 			}
 		}
 
@@ -173,8 +193,15 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		private void SelectState()
 		{
+			if (_aggroType == AggroType.Neutral)
+			{
+				_state = AiState.Idle;
+				return;
+			}
+
 			if (this.Creature.Target == null)
 			{
+				// Try to find a target
 				this.Creature.Target = this.SelectTarget(this.Creature.Region.GetCreaturesInRange(this.Creature, _aggroRadius));
 				if (this.Creature.Target != null)
 				{
@@ -184,6 +211,7 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 			else
 			{
+				// Untarget on death, out of range, or disconnect
 				if (this.Creature.Target.IsDead || !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) || this.Creature.Target.Client.State == ClientState.Dead)
 				{
 					this.Reset();
@@ -193,6 +221,7 @@ namespace Aura.Channel.Scripting.Scripts
 					return;
 				}
 
+				// Switch to alert from aware after the delay
 				if (_state == AiState.Aware && DateTime.Now >= _awareTime + _alertDelay)
 				{
 					this.Clear();
@@ -205,7 +234,9 @@ namespace Aura.Channel.Scripting.Scripts
 					return;
 				}
 
-				if (_state == AiState.Alert && DateTime.Now >= _alertTime + _aggroDelay)
+
+				// Switch to aggro from alert after the delay
+				if (_aggroType > AggroType.Careful && _state == AiState.Alert && DateTime.Now >= _alertTime + _aggroDelay)
 				{
 					this.Clear();
 
@@ -228,6 +259,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (creatures == null || creatures.Count == 0)
 				return null;
 
+			// Random targetable creature
 			var potentialTargets = creatures.Where(a => this.Creature.CanTarget(a)).ToList();
 			if (potentialTargets.Count == 0)
 				return null;
@@ -296,6 +328,15 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void SetAggroRadius(int radius)
 		{
 			_aggroRadius = radius;
+		}
+
+		/// <summary>
+		/// Milliseconds before creature attacks.
+		/// </summary>
+		/// <param name="time"></param>
+		protected void SetAggroType(AggroType type)
+		{
+			_aggroType = type;
 		}
 
 		/// <summary>
@@ -370,8 +411,10 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected IEnumerable SayRandomPhrase()
 		{
-			if (this.Phrases.Count != 0)
+			if (this.Phrases.Count > 0)
 				Send.Chat(this.Creature, this.Phrases[this.Random(this.Phrases.Count)]);
+			else
+				Send.Chat(this.Creature, "...");
 			yield break;
 		}
 
@@ -433,14 +476,14 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Creature walks to destination.
+		/// Creature runs to destination.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <returns></returns>
-		protected IEnumerable WalkTo(int x, int y)
+		protected IEnumerable RunTo(Position destination)
 		{
-			return this.WalkTo(new Position(x, y));
+			return this.MoveTo(destination, false);
 		}
 
 		/// <summary>
@@ -451,6 +494,17 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected IEnumerable WalkTo(Position destination)
 		{
+			return this.MoveTo(destination, true);
+		}
+
+		/// <summary>
+		/// Creature moves to destination.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		protected IEnumerable MoveTo(Position destination, bool walk)
+		{
 			var pos = this.Creature.GetPosition();
 
 			// Check for collision
@@ -458,7 +512,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.Creature.Region.Collissions.Find(pos, destination, out intersection))
 				destination = pos.GetRelative(intersection, -10);
 
-			this.Creature.Move(destination, true);
+			this.Creature.Move(destination, walk);
 
 			var time = this.Creature.MoveDuration * 1000;
 			var walkTime = _timestamp + time;
@@ -493,7 +547,7 @@ namespace Aura.Channel.Scripting.Scripts
 				var x = targetPos.X + (Math.Cos(angle) * radius);
 				var y = targetPos.Y + (Math.Sin(angle) * radius);
 
-				foreach (var action in this.WalkTo((int)x, (int)y))
+				foreach (var action in this.WalkTo(new Position((int)x, (int)y)))
 					yield return action;
 			}
 		}
@@ -501,5 +555,6 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		protected enum AiState { Idle, Aware, Alert, Aggro }
+		protected enum AggroType { Neutral, Careful, Aggressive }
 	}
 }

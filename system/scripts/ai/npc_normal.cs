@@ -20,7 +20,7 @@ public class NormalNpcAi : AiScript
 
 	protected override IEnumerable Idle()
 	{
-		Call(SayRandomPhrase());
-		Call(Wait(20000, 50000));
+		Do(SayRandomPhrase());
+		Do(Wait(20000, 50000));
 	}
 }
