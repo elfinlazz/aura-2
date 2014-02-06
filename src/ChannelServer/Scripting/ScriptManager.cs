@@ -531,7 +531,7 @@ namespace Aura.Channel.Scripting
 		/// <param name="y"></param>
 		/// <param name="spawnId"></param>
 		/// <returns></returns>
-		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId = -1)
+		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId = -1, bool active = false)
 		{
 			var creature = new NPC();
 			creature.Race = raceId;
@@ -558,6 +558,9 @@ namespace Aura.Channel.Scripting
 				Log.Error("Failed to spawn '{0}'s.", raceId);
 				return null;
 			}
+
+			if (creature.AI != null && active)
+				creature.AI.Activate(0);
 
 			return creature;
 		}

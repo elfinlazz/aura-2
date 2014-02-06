@@ -702,7 +702,7 @@ namespace Aura.Channel.Util
 				var x = (int)(targetPos.X + Math.Sin(i) * i * 20);
 				var y = (int)(targetPos.Y + Math.Cos(i) * i * 20);
 
-				var creature = ChannelServer.Instance.ScriptManager.Spawn(raceId, target.RegionId, x, y);
+				var creature = ChannelServer.Instance.ScriptManager.Spawn(raceId, target.RegionId, x, y, -1, true);
 				Send.SpawnEffect(SpawnEffect.Monster, target.RegionId, x, y, target, creature);
 			}
 
