@@ -116,5 +116,13 @@ namespace Aura.Channel.World.Entities
 
 			_visibleEntities = currentlyVisible;
 		}
+
+		public override bool CanTarget(Creature creature)
+		{
+			if (!base.CanTarget(creature))
+				return false;
+
+			return (!creature.IsPlayer && !creature.Has(CreatureStates.GoodNpc));
+		}
 	}
 }

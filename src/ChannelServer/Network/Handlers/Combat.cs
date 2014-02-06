@@ -117,7 +117,7 @@ namespace Aura.Channel.Network.Handlers
 
 			// Check target
 			var target = creature.Region.GetCreature(targetEntityId);
-			if (target == null || !target.IsAttackableBy(creature))
+			if (target == null || !creature.CanTarget(target))
 				goto L_End;
 
 			// Get skill

@@ -694,9 +694,9 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <returns></returns>
-		public virtual bool IsAttackableBy(Creature creature)
+		public virtual bool CanTarget(Creature creature)
 		{
-			if (this.IsDead)
+			if (this.IsDead || creature.IsDead)
 				return false;
 
 			return true;
@@ -852,7 +852,8 @@ namespace Aura.Channel.World.Entities
 		{
 			//Log.Debug(this.Name + " was killed by " + killer.Name);
 
-			this.Conditions.Deactivate(ConditionsA.Deadly);
+			if (this.Conditions.Has(ConditionsA.Deadly))
+				this.Conditions.Deactivate(ConditionsA.Deadly);
 			this.Activate(CreatureStates.Dead);
 
 			//Send.SetFinisher(this, killer.EntityId);

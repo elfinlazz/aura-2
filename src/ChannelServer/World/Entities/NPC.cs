@@ -56,17 +56,12 @@ namespace Aura.Channel.World.Entities
 			return true;
 		}
 
-		public override bool IsAttackableBy(Creature other)
+		public override bool CanTarget(Creature creature)
 		{
-			if (!base.IsAttackableBy(other))
+			if (!base.CanTarget(creature))
 				return false;
 
-			// Players can only attack bad NPCs.
-			if (other.IsPlayer)
-				return !this.Has(CreatureStates.GoodNpc);
-
-			// NPCs can attack whoever hey want.
-			return true;
+			return (creature.IsPlayer && !this.Has(CreatureStates.GoodNpc));
 		}
 
 		public override void Kill(Creature killer)
