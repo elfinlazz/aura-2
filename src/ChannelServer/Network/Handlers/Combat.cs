@@ -40,7 +40,6 @@ namespace Aura.Channel.Network.Handlers
 
 			// Change stance
 			creature.BattleStance = stance;
-			Send.ChangeStance(creature);
 
 			// Response (unlocks the char)
 			Send.ChangeStanceRequestR(creature);

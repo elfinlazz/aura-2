@@ -133,7 +133,11 @@ namespace Aura.Channel.World.Entities
 		// Combat
 		// ------------------------------------------------------------------
 
-		public BattleStance BattleStance { get; set; }
+		protected BattleStance _battleStance;
+		/// <summary>
+		/// Changes stance and broadcasts update.
+		/// </summary>
+		public BattleStance BattleStance { get { return _battleStance; } set { _battleStance = value; Send.ChangeStance(this); } }
 		public Creature Target { get; set; }
 
 		private int _stun;
