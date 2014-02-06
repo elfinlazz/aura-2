@@ -29,6 +29,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected DateTime _lastBeat;
 		protected bool _active;
 		protected DateTime _minRunTime;
+		private bool _inside = false;
 
 		protected Random _rnd;
 		protected AiState _state;
@@ -115,11 +116,12 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="args"></param>
 		private void Heartbeat(object state)
 		{
+			if (_inside)
+				Log.Warning("AI crash in '{0}', report or check your custom actions for infinite loops.", this.GetType().Name);
+
+			_inside = true;
 			try
 			{
-				if (this.Creature.IsDead)
-					return;
-
 				var now = this.UpdateTimestamp();
 				var pos = this.Creature.GetPosition();
 
@@ -132,9 +134,12 @@ namespace Aura.Channel.Scripting.Scripts
 					return;
 				}
 
+				if (this.Creature.IsDead)
+					return;
+
 				this.SelectState();
 
-				// Stop and clear queue if stunned
+				// Stop and clear if stunned
 				if (this.Creature.IsStunned)
 				{
 					this.Clear();
@@ -164,6 +169,10 @@ namespace Aura.Channel.Scripting.Scripts
 			catch (Exception ex)
 			{
 				Log.Exception(ex, "Exception in {0}", this.GetType().Name);
+			}
+			finally
+			{
+				_inside = false;
 			}
 		}
 
@@ -348,6 +357,15 @@ namespace Aura.Channel.Scripting.Scripts
 			_curAction = action().GetEnumerator();
 		}
 
+		/// <summary>
+		/// Creates enumerator and runs it once.
+		/// </summary>
+		/// <param name="action"></param>
+		protected void ExecuteOnce(IEnumerable action)
+		{
+			action.GetEnumerator().MoveNext();
+		}
+
 		// ------------------------------------------------------------------
 
 		/// <summary>
@@ -517,8 +535,13 @@ namespace Aura.Channel.Scripting.Scripts
 			var time = this.Creature.MoveDuration * 1000;
 			var walkTime = _timestamp + time;
 
-			while (_timestamp < walkTime)
+			do
+			{
+				// Yield at least once, even if it took 0 time, to prevent
+				// infinite loops in other actions.
 				yield return true;
+			}
+			while (_timestamp < walkTime);
 		}
 
 		/// <summary>
@@ -528,15 +551,17 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="timeMin"></param>
 		/// <param name="timeMax"></param>
 		/// <returns></returns>
-		protected IEnumerable Circle(int radius, int timeMin, int timeMax = 0)
+		protected IEnumerable Circle(int radius, int timeMin = 2000, int timeMax = 5000)
 		{
+			if (timeMin < 500)
+				timeMin = 500;
 			if (timeMax < timeMin)
 				timeMax = timeMin;
 
-			var time = this.Random(timeMin, timeMax + 1);
+			var time = (timeMin == timeMax ? timeMin : this.Random(timeMin, timeMax + 1));
 			var until = _timestamp + time;
 
-			for (int i = 0; _timestamp < until; ++i)
+			for (int i = 0; _timestamp < until || i == 0; ++i)
 			{
 				var targetPos = this.Creature.Target.GetPosition();
 				var pos = this.Creature.GetPosition();
@@ -549,6 +574,28 @@ namespace Aura.Channel.Scripting.Scripts
 
 				foreach (var action in this.WalkTo(new Position((int)x, (int)y)))
 					yield return action;
+			}
+		}
+
+		/// <summary>
+		/// Creature follows its target.
+		/// </summary>
+		/// <param name="maxDistance"></param>
+		/// <returns></returns>
+		protected IEnumerable Follow(int maxDistance)
+		{
+			while (true)
+			{
+				var pos = this.Creature.GetPosition();
+				var targetPos = this.Creature.Target.GetPosition();
+
+				if (!pos.InRange(targetPos, maxDistance))
+				{
+					// Walk up to distance-50 (a buffer so it really walks into range)
+					this.ExecuteOnce(this.WalkTo(pos.GetRelative(targetPos, -maxDistance + 50)));
+				}
+
+				yield return true;
 			}
 		}
 

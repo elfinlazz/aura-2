@@ -33,9 +33,7 @@ public class FoxAi : AiScript
 	protected override IEnumerable Alert()
 	{
 		if(Random() < 50)
-		{
 			Do(Circle(400, 2000, 8000));
-		}
 		
 		Do(Wait(3000, 6000));
 	}
