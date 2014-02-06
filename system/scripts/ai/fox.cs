@@ -11,15 +11,15 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
 using Aura.Shared.Util;
 
-public class HenAi : AiScript
+public class FoxAi : AiScript
 {
-	protected override void Idle()
+	protected override IEnumerable Idle()
 	{
 		if (Random() < 50)
 		{
-			Wander();
+			Call(Wander());
 		}
 		
-		Wait(5000, 10000);
+		Call(Wait(5000, 10000));
 	}
 }

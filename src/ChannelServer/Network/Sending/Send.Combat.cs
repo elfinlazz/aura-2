@@ -266,5 +266,5 @@ namespace Aura.Channel.Network.Sending
 		}
 	}
 
-	public enum TargetMode : byte { Normal = 0, Notice = 1, Aggro = 2 }
+	public enum TargetMode : byte { Normal = 0, Alert = 1, Aggro = 2 }
 }

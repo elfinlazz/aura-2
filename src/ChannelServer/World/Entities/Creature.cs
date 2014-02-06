@@ -113,6 +113,7 @@ namespace Aura.Channel.World.Entities
 		public byte Direction { get; set; }
 		public bool IsMoving { get { return (_position != _destination); } }
 		public bool IsWalking { get; protected set; }
+		public double MoveDuration { get { return _moveDuration; } }
 
 		/// <summary>
 		/// Location if the creature before the warp.

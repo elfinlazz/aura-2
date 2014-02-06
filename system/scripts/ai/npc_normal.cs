@@ -15,12 +15,12 @@ public class NormalNpcAi : AiScript
 {
 	public NormalNpcAi()
 	{
-		SetHeartbeat(5000);
+		SetHeartbeat(500);
 	}
 
-	protected override void Idle()
+	protected override IEnumerable Idle()
 	{
-		SayRandomPhrase();
-		Wait(20000, 50000);
+		Call(SayRandomPhrase());
+		Call(Wait(20000, 50000));
 	}
 }

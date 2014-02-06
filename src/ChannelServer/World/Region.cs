@@ -334,7 +334,25 @@ namespace Aura.Channel.World
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-				return _creatures.Values.Where(a => a.Is(EntityType.Character) || a.Is(EntityType.Pet) && a.GetPosition().InRange(pos, range)).ToList();
+				return _creatures.Values.Where(a => a.IsPlayer && a.GetPosition().InRange(pos, range)).ToList();
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
+		/// Returns all player creatures in range of entity, without itself.
+		/// </summary>
+		/// <param name="range"></param>
+		/// <returns></returns>
+		public List<Creature> GetCreaturesInRange(Entity entity, int range = VisibleRange)
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				return _creatures.Values.Where(a => a != entity && a.GetPosition().InRange(entity.GetPosition(), range)).ToList();
 			}
 			finally
 			{

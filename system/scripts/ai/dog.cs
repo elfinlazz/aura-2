@@ -13,13 +13,13 @@ using Aura.Shared.Util;
 
 public class HenAi : AiScript
 {
-	protected override void Idle()
+	protected override IEnumerable Idle()
 	{
 		if (Random() < 50)
 		{
-			Wander();
+			Call(Wander());
 		}
 		
-		Wait(5000, 10000);
+		Call(Wait(5000, 10000));
 	}
 }

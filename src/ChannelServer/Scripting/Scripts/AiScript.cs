@@ -12,6 +12,7 @@ using Aura.Shared.Util;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World;
 using System.Threading;
+using Aura.Shared.Network;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -29,7 +30,11 @@ namespace Aura.Channel.Scripting.Scripts
 		protected bool _active;
 		protected DateTime _minRunTime;
 
-		protected Queue<IEnumerable> _actionQueue;
+		protected int _aggroRadius, _aggroMaxRadius;
+		protected TimeSpan _alertDelay, _aggroDelay;
+		protected DateTime _awareTime, _alertTime;
+		protected Creature _newAttackable;
+
 		protected IEnumerator _curAction;
 
 		protected Random _rnd;
@@ -41,7 +46,6 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public AiScript()
 		{
-			_actionQueue = new Queue<IEnumerable>();
 			this.Phrases = new List<string>();
 
 			_lastBeat = DateTime.MinValue;
@@ -50,6 +54,12 @@ namespace Aura.Channel.Scripting.Scripts
 			_heartbeatTimer = new Timer(this.Heartbeat, null, -1, -1);
 
 			_rnd = new Random(RandomProvider.Get().Next());
+
+			_state = AiState.Idle;
+			_aggroRadius = 1000;
+			_aggroMaxRadius = 3000;
+			_alertDelay = TimeSpan.FromMilliseconds(2000);
+			_aggroDelay = TimeSpan.FromMilliseconds(2000);
 		}
 
 		public void Dispose()
@@ -81,28 +91,8 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				_active = false;
 				_curAction = null;
-				_actionQueue.Clear();
 				_heartbeatTimer.Change(-1, -1);
 			}
-		}
-
-		/// <summary>
-		/// Changes the hearbeat interval.
-		/// </summary>
-		/// <param name="interval"></param>
-		public void SetHeartbeat(int interval)
-		{
-			_heartbeat = Math.Max(MinHeartbeat, interval);
-			_heartbeatTimer.Change(_heartbeat, _heartbeat);
-		}
-
-		/// <summary>
-		/// Adds action to queue.
-		/// </summary>
-		/// <param name="aiAction"></param>
-		protected void Add(IEnumerable aiAction)
-		{
-			_actionQueue.Enqueue(aiAction);
 		}
 
 		/// <summary>
@@ -110,15 +100,12 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		public void Heartbeat(object state)
+		private void Heartbeat(object state)
 		{
 			if (this.Creature.IsDead)
 				return;
 
-			var now = DateTime.Now;
-			_timestamp += (now - _lastBeat).TotalMilliseconds;
-			_lastBeat = now;
-
+			var now = this.UpdateTimestamp();
 			var pos = this.Creature.GetPosition();
 
 			// Stop if no players in range
@@ -126,83 +113,218 @@ namespace Aura.Channel.Scripting.Scripts
 			if (players.Count == 0 && now > _minRunTime)
 			{
 				this.Deactivate();
+				this.Reset();
 				return;
 			}
+
+			this.SelectState();
 
 			// Stop and clear queue if stunned
 			if (this.Creature.IsStunned)
 			{
-				if (_actionQueue.Count > 0)
-					_actionQueue.Clear();
+				this.Clear();
 				return;
 			}
 
-			// Run existing actions
-			if (CheckQueue())
-				return;
-
-			_state = AiState.Idle;
-
-			// Run stat method
-			switch (_state)
+			// Select and run state
+			var prevAction = _curAction;
+			if (_curAction == null || !_curAction.MoveNext())
 			{
-				case AiState.Idle: Idle(); break;
-				case AiState.Aggro: Aggro(); break;
-			}
+				// The action could be changed on the last iteration,
+				// if it did we don't want to go to the default right away.
+				if (_curAction == prevAction)
+				{
+					switch (_state)
+					{
+						default:
+						case AiState.Idle: this.SwitchAction(Idle); break;
+						case AiState.Alert: this.SwitchAction(Alert); break;
+						case AiState.Aggro: this.SwitchAction(Aggro); break;
+					}
 
-			// Run new actions, added in state methods
-			CheckQueue();
+					_curAction.MoveNext();
+				}
+			}
 		}
 
 		/// <summary>
-		/// Gets actions from the queue and runs them.
-		/// Returns true as long as it got some action ôo
+		/// Updates timestamp and returns DateTime.Now.
 		/// </summary>
 		/// <returns></returns>
-		protected bool CheckQueue()
+		private DateTime UpdateTimestamp()
 		{
-			do
-			{
-				if (_curAction == null && _actionQueue.Count > 0)
-				{
-					_curAction = _actionQueue.Dequeue().GetEnumerator();
-				}
+			var now = DateTime.Now;
+			_timestamp += (now - _lastBeat).TotalMilliseconds;
+			return (_lastBeat = now);
+		}
 
-				if (_curAction != null)
+		/// <summary>
+		/// Clears action, target, and stats state to Idle.
+		/// </summary>
+		private void Reset()
+		{
+			this.Clear();
+			this.Creature.Target = null;
+			_state = AiState.Idle;
+		}
+
+		/// <summary>
+		/// Changes state based on (potential) targets.
+		/// </summary>
+		private void SelectState()
+		{
+			if (this.Creature.Target == null)
+			{
+				this.Creature.Target = this.SelectTarget(this.Creature.Region.GetCreaturesInRange(this.Creature, _aggroRadius));
+				if (this.Creature.Target != null)
 				{
-					if (!_curAction.MoveNext())
-						_curAction = null;
-					return true;
+					_state = AiState.Aware;
+					_awareTime = DateTime.Now;
 				}
 			}
-			while (_actionQueue.Count > 0);
+			else
+			{
+				if (this.Creature.Target.IsDead || !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) || this.Creature.Target.Client.State == ClientState.Dead)
+				{
+					this.Reset();
 
-			return false;
+					Send.SetCombatTarget(this.Creature, 0, 0);
+
+					return;
+				}
+
+				if (_state == AiState.Aware && DateTime.Now >= _awareTime + _alertDelay)
+				{
+					this.Clear();
+
+					_state = AiState.Alert;
+					_alertTime = DateTime.Now;
+
+					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
+
+					return;
+				}
+
+				if (_state == AiState.Alert && DateTime.Now >= _alertTime + _aggroDelay)
+				{
+					this.Clear();
+
+					_state = AiState.Aggro;
+
+					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
+
+					return;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns a valid target or null.
+		/// </summary>
+		/// <param name="creatures"></param>
+		/// <returns></returns>
+		private Creature SelectTarget(ICollection<Creature> creatures)
+		{
+			if (creatures == null || creatures.Count == 0)
+				return null;
+
+			var potentialTargets = creatures.Where(a => this.Creature.CanTarget(a)).ToList();
+			if (potentialTargets.Count == 0)
+				return null;
+
+			return potentialTargets[Random(potentialTargets.Count)];
 		}
 
 		/// <summary>
 		/// Idle state
 		/// </summary>
-		protected virtual void Idle()
+		protected virtual IEnumerable Idle()
 		{
+			yield break;
+		}
+
+		/// <summary>
+		/// Aware state
+		/// </summary>
+		protected virtual IEnumerable Alert()
+		{
+			yield break;
 		}
 
 		/// <summary>
 		/// Aggro state
 		/// </summary>
-		protected virtual void Aggro()
+		protected virtual IEnumerable Aggro()
 		{
+			yield break;
 		}
 
 		// ------------------------------------------------------------------
 
 		/// <summary>
-		/// Returns random number between 0 and 99.
+		/// Changes the hearbeat interval.
+		/// </summary>
+		/// <param name="interval"></param>
+		protected void SetHeartbeat(int interval)
+		{
+			_heartbeat = Math.Max(MinHeartbeat, interval);
+			_heartbeatTimer.Change(_heartbeat, _heartbeat);
+		}
+
+		/// <summary>
+		/// Milliseconds before creature notices.
+		/// </summary>
+		/// <param name="time"></param>
+		protected void SetAlertDelay(int time)
+		{
+			_alertDelay = TimeSpan.FromMilliseconds(time);
+		}
+
+		/// <summary>
+		/// Milliseconds before creature attacks.
+		/// </summary>
+		/// <param name="time"></param>
+		protected void SetAggroDelay(int time)
+		{
+			_aggroDelay = TimeSpan.FromMilliseconds(time);
+		}
+
+		/// <summary>
+		/// Milliseconds before creature attacks.
+		/// </summary>
+		/// <param name="time"></param>
+		protected void SetAggroRadius(int radius)
+		{
+			_aggroRadius = radius;
+		}
+
+		/// <summary>
+		/// Clears AI and sets new current action.
+		/// </summary>
+		/// <param name="action"></param>
+		protected void SwitchAction(Func<IEnumerable> action)
+		{
+			_curAction = action().GetEnumerator();
+		}
+
+		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Cleares action queue.
+		/// </summary>
+		protected void Clear()
+		{
+			_curAction = null;
+		}
+
+		/// <summary>
+		/// Returns random number between 0.0 and 100.0.
 		/// </summary>
 		/// <returns></returns>
-		protected int Random()
+		protected double Random()
 		{
-			return Random(0, 100);
+			lock (_rnd)
+				return (100 * _rnd.NextDouble());
 		}
 
 		/// <summary>
@@ -236,7 +358,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		protected IEnumerable ActionSay(string msg)
+		protected IEnumerable Say(string msg)
 		{
 			Send.Chat(this.Creature, msg);
 			yield break;
@@ -246,7 +368,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Makes creature say a random phrase in public chat.
 		/// </summary>
 		/// <returns></returns>
-		protected IEnumerable ActionSayRandomPhrase()
+		protected IEnumerable SayRandomPhrase()
 		{
 			if (this.Phrases.Count != 0)
 				Send.Chat(this.Creature, this.Phrases[this.Random(this.Phrases.Count)]);
@@ -259,7 +381,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="min"></param>
 		/// <param name="max"></param>
 		/// <returns></returns>
-		protected IEnumerable ActionWait(int min, int max = 0)
+		protected IEnumerable Wait(int min, int max = 0)
 		{
 			if (max < min)
 				max = min;
@@ -279,7 +401,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="minDistance"></param>
 		/// <param name="maxDistance"></param>
 		/// <returns></returns>
-		protected IEnumerable ActionWander(int minDistance = 100, int maxDistance = 600)
+		protected IEnumerable Wander(int minDistance = 100, int maxDistance = 600)
 		{
 			if (maxDistance < minDistance)
 				maxDistance = minDistance;
@@ -288,20 +410,8 @@ namespace Aura.Channel.Scripting.Scripts
 			var pos = this.Creature.GetPosition();
 			var destination = pos.GetRandomInRange(minDistance, maxDistance, rnd);
 
-			// Check for collision, take a break if there is one.
-			Position intersection;
-			if (this.Creature.Region.Collissions.Find(pos, destination, out intersection))
-				//destination = pos.GetRelative(intersection, -10);
-				yield break;
-
-			var time = Math.Ceiling(pos.GetDistance(destination) / this.Creature.GetSpeed());
-			var targetTime = _timestamp + time;
-
-			this.Creature.Move(destination, true);
-
-			//while (this.Creature.GetPosition() != destination)
-			while (_timestamp < targetTime)
-				yield return true;
+			foreach (var action in this.WalkTo(destination))
+				yield return action;
 		}
 
 		/// <summary>
@@ -310,7 +420,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="timeout"></param>
 		/// <param name="action"></param>
 		/// <returns></returns>
-		protected IEnumerable ActionTimeout(double timeout, IEnumerable action)
+		protected IEnumerable Timeout(double timeout, IEnumerable action)
 		{
 			timeout += _timestamp;
 
@@ -322,17 +432,74 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 		}
 
-		// Action shortcuts
+		/// <summary>
+		/// Creature walks to destination.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		protected IEnumerable WalkTo(int x, int y)
+		{
+			return this.WalkTo(new Position(x, y));
+		}
+
+		/// <summary>
+		/// Creature walks to destination.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		protected IEnumerable WalkTo(Position destination)
+		{
+			var pos = this.Creature.GetPosition();
+
+			// Check for collision
+			Position intersection;
+			if (this.Creature.Region.Collissions.Find(pos, destination, out intersection))
+				destination = pos.GetRelative(intersection, -10);
+
+			this.Creature.Move(destination, true);
+
+			var time = this.Creature.MoveDuration * 1000;
+			var walkTime = _timestamp + time;
+
+			while (_timestamp < walkTime)
+				yield return true;
+		}
+
+		/// <summary>
+		/// Creature circles around target.
+		/// </summary>
+		/// <param name="distance"></param>
+		/// <param name="timeMin"></param>
+		/// <param name="timeMax"></param>
+		/// <returns></returns>
+		protected IEnumerable Circle(int radius, int timeMin, int timeMax = 0)
+		{
+			if (timeMax < timeMin)
+				timeMax = timeMin;
+
+			var time = this.Random(timeMin, timeMax + 1);
+			var until = _timestamp + time;
+
+			for (int i = 0; _timestamp < until; ++i)
+			{
+				var targetPos = this.Creature.Target.GetPosition();
+				var pos = this.Creature.GetPosition();
+
+				var deltaX = pos.X - targetPos.X;
+				var deltaY = pos.Y - targetPos.Y;
+				var angle = Math.Atan2(deltaY, deltaX) + (Math.PI / 8 * 2);
+				var x = targetPos.X + (Math.Cos(angle) * radius);
+				var y = targetPos.Y + (Math.Sin(angle) * radius);
+
+				foreach (var action in this.WalkTo((int)x, (int)y))
+					yield return action;
+			}
+		}
+
 		// ------------------------------------------------------------------
 
-		protected void Say(string msg) { Add(ActionSay(msg)); }
-		protected void SayRandomPhrase() { Add(ActionSayRandomPhrase()); }
-		protected void Wait(int min, int max = 0) { Add(ActionWait(min, max)); }
-		protected void Wander(int minDistance = 100, int maxDistance = 600) { Add(ActionWander(minDistance, maxDistance)); }
-		protected void Timeout(double timeout, IEnumerable action) { Add(ActionTimeout(timeout, action)); }
-
-		// ------------------------------------------------------------------
-
-		protected enum AiState { Idle, Aggro }
+		protected enum AiState { Idle, Aware, Alert, Aggro }
 	}
 }

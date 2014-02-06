@@ -60,13 +60,13 @@ namespace Aura.Channel.Scripting.Compilers
 				"$1yield break;",
 				RegexOptions.Compiled);
 
-			// Call(<method_call>);
+			// Do|Call(<method_call>);
 			// --> foreach(var __callResult in <method_call>) yield return __callResult;
 			// Loops through Enumerator returned by the method called and passes
 			// the results to the main Enumerator.
 			script = Regex.Replace(script,
-				@"([\{\}:;\t ])?Call\s*\(([^;]*)\)\s*;",
-				"$1foreach(var __callResult in $2) yield return __callResult;",
+				@"([\{\}:;\t ])?(Call|Do)\s*\(([^;]*)\)\s*;",
+				"$1foreach(var __callResult in $3) yield return __callResult;",
 				RegexOptions.Compiled);
 
 			// Select();
