@@ -29,7 +29,7 @@ namespace Aura.Channel.World.Entities
 			this.Race = 190140; // Wood dummy
 			this.Height = this.Weight = this.Upper = this.Lower = 1;
 			this.RegionId = 0;
-			this.Life = this.LifeMaxBase = 1000000;
+			this.Life = this.LifeMaxBase = 1000;
 		}
 
 		public override void Dispose()

@@ -50,6 +50,8 @@ namespace Aura.Channel.Util
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
+			Add(99, 99, "reloaddata", "", HandleReloadData);
+			Add(99, 99, "reloadscripts", "", HandleReloadScripts);
 			Add(99, 99, "test", "", HandleTest);
 
 			// Aliases
@@ -721,6 +723,24 @@ namespace Aura.Channel.Util
 
 			if (target != sender)
 				Send.ServerMessage(target, Localization.Get("gm.die_killer"), sender.Name); // You've been killed by {0}.
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleReloadData(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			Send.ServerMessage(sender, Localization.Get("gm.reload_wait"));
+			ChannelServer.Instance.LoadData(DataLoad.ChannelServer, true);
+			Send.ServerMessage(sender, Localization.Get("gm.reload_done"));
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleReloadScripts(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			Send.ServerMessage(sender, Localization.Get("gm.reload_wait"));
+			ChannelServer.Instance.ScriptManager.Reload();
+			Send.ServerMessage(sender, Localization.Get("gm.reload_done"));
 
 			return CommandResult.Okay;
 		}

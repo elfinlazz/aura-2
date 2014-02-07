@@ -73,3 +73,7 @@ speed_target	Your speed has been changed to +{0}% by {1}.
 
 // >die
 die_killer		You've been killed by {0}.
+
+// >reloadX
+reload_wait		Reloading, this might take a moment.
+reload_done		Reload complete.

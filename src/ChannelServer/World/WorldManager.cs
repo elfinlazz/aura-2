@@ -271,5 +271,16 @@ namespace Aura.Channel.World
 
 			return null;
 		}
+
+		/// <summary>
+		/// Removes all NPCs, props, etc from all regions.
+		/// </summary>
+		public void RemoveScriptedEntities()
+		{
+			foreach (var region in _regions.Values)
+			{
+				region.RemoveScriptedEntities();
+			}
+		}
 	}
 }

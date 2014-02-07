@@ -56,6 +56,16 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
+		/// Removes all NPCs, props, etc and loads them again.
+		/// </summary>
+		public void Reload()
+		{
+			ChannelServer.Instance.World.RemoveScriptedEntities();
+
+			this.Load();
+		}
+
+		/// <summary>
 		/// Loads scripts from list.
 		/// </summary>
 		private void LoadScripts()

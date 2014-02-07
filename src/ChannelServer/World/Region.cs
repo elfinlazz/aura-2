@@ -546,6 +546,28 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Removes all scripted entites from this region.
+		/// </summary>
+		public void RemoveScriptedEntities()
+		{
+			// Get NPCs
+			var npcs = new List<Creature>();
+			_creaturesRWLS.EnterReadLock();
+			try { npcs.AddRange(_creatures.Values.Where(a => a is NPC)); }
+			finally { _creaturesRWLS.ExitReadLock(); }
+
+			// Get server side props
+			var props = new List<Prop>();
+			_propsRWLS.EnterReadLock();
+			try { props.AddRange(_props.Values.Where(a => a.ServerSide)); }
+			finally { _propsRWLS.ExitReadLock(); }
+
+			// Remove all
+			foreach (var npc in npcs) this.RemoveCreature(npc);
+			foreach (var prop in props) this.RemoveProp(prop);
+		}
+
+		/// <summary>
 		/// Activates AIs in range of the movement path.
 		/// </summary>
 		/// <param name="from"></param>
