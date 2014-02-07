@@ -55,11 +55,16 @@ namespace Aura.Channel.World.Entities
 
 		public ScriptVariables Vars { get; protected set; }
 
-		public bool IsPlayer { get { return (this.EntityType == EntityType.Character || this.EntityType == EntityType.Pet); } }
+		public bool IsPlayer { get { return (this.IsCharacter || this.IsPet); } }
+		public bool IsCharacter { get { return (this.EntityType == EntityType.Character); } }
+		public bool IsPet { get { return (this.EntityType == EntityType.Pet); } }
 
 		public bool IsHuman { get { return (this.Race == 10001 || this.Race == 10002); } }
 		public bool IsElf { get { return (this.Race == 9001 || this.Race == 9002); } }
 		public bool IsGiant { get { return (this.Race == 8001 || this.Race == 8002); } }
+
+		public bool IsMale { get { return (this.RaceData != null && this.RaceData.Gender == Gender.Male); } }
+		public bool IsFemale { get { return (this.RaceData != null && this.RaceData.Gender == Gender.Female); } }
 
 		// Look
 		// ------------------------------------------------------------------

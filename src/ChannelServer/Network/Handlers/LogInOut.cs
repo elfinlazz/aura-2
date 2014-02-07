@@ -8,6 +8,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.World;
 using Aura.Shared.Mabi.Const;
+using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -64,14 +65,30 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.ChannelLoginR(client, character.EntityId);
 
-			// Fallback for invalid region ids, like 0, dynamics, and dungeons.
-			if (character.RegionId == 0 || Math2.Between(character.RegionId, 35000, 40000) || Math2.Between(character.RegionId, 10000, 11000))
-				character.SetLocation(1, 12800, 38100);
+			// Log into world
+			if (character.Has(CreatureStates.EverEnteredWorld))
+			{
+				// Fallback for invalid region ids, like 0, dynamics, and dungeons.
+				if (character.RegionId == 0 || Math2.Between(character.RegionId, 35000, 40000) || Math2.Between(character.RegionId, 10000, 11000))
+					character.SetLocation(1, 12800, 38100);
 
-			Send.CharacterLock(character, Locks.Default);
-			Send.EnterRegion(character);
+				Send.CharacterLock(character, Locks.Default);
+				Send.EnterRegion(character);
+				character.Warping = true;
+			}
+			// Special login to Soul Stream for new chars
+			else
+			{
+				var npcEntityId = (character.IsCharacter ? MabiId.Nao : MabiId.Tin);
+				var npc = ChannelServer.Instance.World.GetCreature(npcEntityId);
+				if (npc == null)
+					Log.Warning("ChannelLogin: Intro NPC not found ({0}).", npcEntityId.ToString("X16"));
 
-			character.Warping = true;
+				character.Temp.InSoulStream = true;
+				character.Activate(CreatureStates.EverEnteredWorld);
+
+				Send.SpecialLogin(character, 1000, 3200, 3200, npcEntityId);
+			}
 		}
 
 		/// <summary>
@@ -206,6 +223,28 @@ namespace Aura.Channel.Network.Handlers
 			client.Account = null;
 
 			Send.ChannelDisconnectR(client);
+		}
+
+		/// <summary>
+		/// Sent after ending the conversation with Nao.
+		/// </summary>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.LeaveSoulStream)]
+		public void HandleLeaveSoulStream(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetPlayerCreature(packet.Id);
+			if (creature == null || !creature.Temp.InSoulStream)
+				return;
+
+			creature.Temp.InSoulStream = false;
+
+			Send.LeaveSoulStreamR(creature);
+
+			Send.CharacterLock(creature, Locks.Default);
+			Send.EnterRegion(creature);
+			creature.Warping = true;
 		}
 	}
 }

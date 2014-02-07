@@ -173,6 +173,7 @@ namespace Aura.Channel.Database
 					character.Exp = reader.GetInt64("exp");
 					character.AbilityPoints = reader.GetInt16("ap");
 					character.Age = reader.GetInt16("age");
+					character.State = (CreatureStates)reader.GetUInt32("state");
 
 					character.LifeFoodMod = reader.GetFloat("lifeFood");
 					character.ManaFoodMod = reader.GetFloat("manaFood");
@@ -523,6 +524,7 @@ namespace Aura.Channel.Database
 				cmd.Set("luckFood", creature.LuckFoodMod);
 				cmd.Set("title", creature.Titles.SelectedTitle);
 				cmd.Set("optionTitle", creature.Titles.SelectedOptionTitle);
+				cmd.Set("state", (uint)creature.State);
 
 				cmd.Execute();
 			}

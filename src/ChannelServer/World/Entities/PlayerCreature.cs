@@ -18,8 +18,6 @@ namespace Aura.Channel.World.Entities
 	{
 		private List<Entity> _visibleEntities = new List<Entity>();
 
-		public override EntityType EntityType { get { return EntityType.Character; } }
-
 		/// <summary>
 		/// Creature id, for creature database.
 		/// </summary>

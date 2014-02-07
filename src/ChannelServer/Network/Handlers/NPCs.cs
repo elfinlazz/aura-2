@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Data;
+using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -27,20 +28,38 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.NpcTalkStart)]
 		public void NpcTalkStart(ChannelClient client, Packet packet)
 		{
-			var npcId = packet.GetLong();
+			var npcEntityId = packet.GetLong();
 
 			// Check creature
 			var creature = client.GetCreature(packet.Id);
-			if (creature == null || creature.Region == null)
+			if (creature == null)
 				return;
 
 			// Check NPC
-			var target = creature.Region.GetNpc(npcId);
+			var target = ChannelServer.Instance.World.GetNpc(npcEntityId);
 			if (target == null)
 			{
 				Send.NpcTalkStartR_Fail(creature);
 
-				Log.Warning("Creature '{0}' tried to talk to non-existing NPC '{1}'.", creature.Name, npcId);
+				Log.Warning("Creature '{0}' tried to talk to non-existing NPC '{1}'.", creature.Name, npcEntityId.ToString("X16"));
+				return;
+			}
+
+			// Special NPCs
+			var bypassDistanceCheck = false;
+			var disallow = false;
+			if (npcEntityId == MabiId.Nao || npcEntityId == MabiId.Tin)
+			{
+				bypassDistanceCheck = creature.Temp.InSoulStream;
+				disallow = !creature.Temp.InSoulStream;
+			}
+
+			// Some special NPCs require special permission.
+			if (disallow)
+			{
+				Send.NpcTalkStartR_Fail(creature);
+
+				Log.Warning("NpcTalkStart: Creature '{0}' tried to talk to NPC '{1}' without permission.", creature.Name, target.Name);
 				return;
 			}
 
@@ -49,21 +68,21 @@ namespace Aura.Channel.Network.Handlers
 			{
 				Send.NpcTalkStartR_Fail(creature);
 
-				Log.Warning("Creature '{0}' tried to talk to NPC '{1}', that doesn't have a script.", creature.Name, npcId);
+				Log.Warning("NpcTalkStart: Creature '{0}' tried to talk to NPC '{1}', that doesn't have a script.", creature.Name, target.Name);
 				return;
 			}
 
 			// Check distance
-			if (target.GetPosition().GetDistance(creature.GetPosition()) > 1000)
+			if (!bypassDistanceCheck && (creature.RegionId != target.RegionId || target.GetPosition().GetDistance(creature.GetPosition()) > 1000))
 			{
 				Send.MsgBox(creature, Localization.Get("world.too_far")); // You're too far away.
 				Send.NpcTalkStartR_Fail(creature);
 
-				Log.Warning("Creature '{0}' tried to talk to NPC '{1}' out of range.", creature.Name, npcId);
+				Log.Warning("NpcTalkStart: Creature '{0}' tried to talk to NPC '{1}' out of range.", creature.Name, target.Name);
 				return;
 			}
 
-			Send.NpcTalkStartR(creature, npcId);
+			Send.NpcTalkStartR(creature, npcEntityId);
 
 			client.NpcSession.Start(target, creature);
 
@@ -87,7 +106,7 @@ namespace Aura.Channel.Network.Handlers
 
 			// Check creature
 			var creature = client.GetCreature(packet.Id);
-			if (creature == null || creature.Region == null)
+			if (creature == null)
 				return;
 
 			// Check session

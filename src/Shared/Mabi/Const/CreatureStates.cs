@@ -10,7 +10,7 @@ namespace Aura.Shared.Mabi.Const
 		SitDown = 0x00000004,
 		Spawned = 0x00000008,
 		EverEnteredWorld = 0x00000010,
-		NorespawnPenalty = 0x00000020,
+		NoRespawnPenalty = 0x00000020,
 		InventoryViewDisabled = 0x00000080,
 		PetFinishMode = 0x00000100,
 		FreeRebirth = 0x00000200,

@@ -273,6 +273,40 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns creature from any region by id, or null.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public Creature GetCreature(long entityId)
+		{
+			foreach (var region in _regions.Values)
+			{
+				var creature = region.GetCreature(entityId);
+				if (creature != null)
+					return creature;
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Returns NPC from any region by id, or null.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public NPC GetNpc(long entityId)
+		{
+			foreach (var region in _regions.Values)
+			{
+				var creature = region.GetNpc(entityId);
+				if (creature != null)
+					return creature;
+			}
+
+			return null;
+		}
+
+		/// <summary>
 		/// Removes all NPCs, props, etc from all regions.
 		/// </summary>
 		public void RemoveScriptedEntities()

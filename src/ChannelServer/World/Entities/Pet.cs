@@ -5,5 +5,6 @@ namespace Aura.Channel.World.Entities
 {
 	public class Pet : PlayerCreature
 	{
+		public override EntityType EntityType { get { return EntityType.Pet; } }
 	}
 }

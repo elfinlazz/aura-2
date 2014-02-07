@@ -439,8 +439,6 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			if (this.Phrases.Count > 0)
 				Send.Chat(this.Creature, this.Phrases[this.Random(this.Phrases.Count)]);
-			else
-				Send.Chat(this.Creature, "...");
 			yield break;
 		}
 

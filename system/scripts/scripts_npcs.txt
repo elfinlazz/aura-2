@@ -4,6 +4,9 @@
 // All scripts listed here will be loaded.
 //---------------------------------------------------------------------------
 
+npcs/nao.cs
+npcs/tin.cs
+
 npcs/tir/duncan.cs
 
 include "/user/scripts/scripts_npcs.txt"

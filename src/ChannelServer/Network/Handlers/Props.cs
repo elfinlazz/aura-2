@@ -83,7 +83,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 			else
 			{
-				if (creature.GetPosition().InRange(prop.GetPosition(), 400))
+				if (creature.GetPosition().InRange(prop.GetPosition(), 1500))
 				{
 					if (prop.Behavior != null)
 					{

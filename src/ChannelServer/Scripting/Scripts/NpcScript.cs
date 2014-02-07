@@ -167,7 +167,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="itemId"></param>
 		/// <param name="color1"></param>
 		/// <param name="state">For robes and helmets</param>
-		protected void EquipItem(Pocket pocket, int itemId, uint color1, ItemState state = ItemState.Up)
+		protected void EquipItem(Pocket pocket, int itemId, uint color1 = 0x808080, ItemState state = ItemState.Up)
 		{
 			EquipItem(pocket, itemId, color1, 0, 0, state);
 		}
@@ -180,6 +180,11 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			if (this.NPC.AI != null)
 				this.NPC.AI.Phrases.Add(phrase);
+		}
+
+		protected void SetId(long entityId)
+		{
+			this.NPC.EntityId = entityId;
 		}
 
 		// Functions
@@ -222,6 +227,17 @@ namespace Aura.Channel.Scripting.Scripts
 
 			this.Msg(Hide.Both, string.Join("<br/>", lines));
 			this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] = true;
+		}
+
+		/// <summary>
+		/// Adds item(s) to player's inventory.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		protected bool GiveItem(int itemId, int amount = 1)
+		{
+			return Player.Inventory.Add(itemId, amount);
 		}
 
 		// Dialog

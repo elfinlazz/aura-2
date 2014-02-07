@@ -4,6 +4,7 @@
 using System;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -37,6 +38,45 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(0);
 
 			client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SpecialLogin to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// One of those packets with a success parameter,
+		/// that don't actually support failing.
+		/// Sends character to a special, client-side-instanced region,
+		/// where he is to meet the given NPC. EnterRegion isn't needed
+		/// for this.
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="npcEntityId"></param>
+		public static void SpecialLogin(Creature creature, int regionId, int x, int y, long npcEntityId)
+		{
+			var packet = new Packet(Op.SpecialLogin, MabiId.Channel);
+			packet.PutByte(true);
+			packet.PutInt(regionId);
+			packet.PutInt(x);
+			packet.PutInt(y);
+			packet.PutLong(npcEntityId);
+			packet.AddCreatureInfo(creature, CreaturePacketType.Private);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends LeaveSoulStreamR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void LeaveSoulStreamR(Creature creature)
+		{
+			var packet = new Packet(Op.LeaveSoulStreamR, MabiId.Channel);
+
+			creature.Client.Send(packet);
 		}
 	}
 }
