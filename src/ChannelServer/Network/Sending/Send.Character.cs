@@ -207,15 +207,14 @@ namespace Aura.Channel.Network.Sending
 		/// Sends DeadMenuR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="options">Negative answer if null</param>
-		public static void DeadMenuR(Creature creature, object options)
+		/// <param name="menu">Negative answer if null</param>
+		public static void DeadMenuR(Creature creature, CreatureDeadMenu menu)
 		{
 			var packet = new Packet(Op.DeadMenuR, creature.EntityId);
 			packet.PutByte(true);
-			packet.PutString("town;here;naocoupon;stay");
-			packet.PutInt(8);
-			packet.PutInt(0);
-
+			packet.PutString(menu.ToString());
+			packet.PutInt(0); // Beginner Nao Stone count
+			packet.PutInt(0); // Nao Stone Count
 
 			creature.Client.Send(packet);
 		}

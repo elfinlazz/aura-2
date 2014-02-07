@@ -61,6 +61,7 @@
     <Compile Include="Mabi\Const\Combat.cs" />
     <Compile Include="Mabi\Const\Conditions.cs" />
     <Compile Include="Mabi\Const\CreatureStates.cs" />
+    <Compile Include="Mabi\Const\ReviveOptions.cs" />
     <Compile Include="Mabi\Const\Effects.cs" />
     <Compile Include="Mabi\Const\Items.cs" />
     <Compile Include="Mabi\Const\Locks.cs" />

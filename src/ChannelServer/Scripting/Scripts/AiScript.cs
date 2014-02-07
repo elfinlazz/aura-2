@@ -69,7 +69,7 @@ namespace Aura.Channel.Scripting.Scripts
 			_rnd = new Random(RandomProvider.Get().Next());
 
 			_state = AiState.Idle;
-			_aggroRadius = 1000;
+			_aggroRadius = 500;
 			_aggroMaxRadius = 3000;
 			_alertDelay = TimeSpan.FromMilliseconds(8000);
 			_aggroDelay = TimeSpan.FromMilliseconds(4000);

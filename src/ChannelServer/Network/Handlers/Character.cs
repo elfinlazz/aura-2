@@ -9,6 +9,7 @@ using Aura.Shared.Network;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
 using Aura.Shared.Mabi.Const;
+using Aura.Channel.World.Entities.Creatures;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -61,19 +62,26 @@ namespace Aura.Channel.Network.Handlers
 
 			// ...
 
-			Send.DeadMenuR(creature, "foo");
+			var menu = new CreatureDeadMenu();
+			menu.Add(ReviveOptions.HereNoPenalty);
+
+			Send.DeadMenuR(creature, menu);
 		}
 
 		/// <summary>
 		/// Revive request (from dead menu).
 		/// </summary>
 		/// <example>
+		/// Town
 		/// 001 [........00000001] Int    : 1
+		/// 
+		/// ArenaWaitingRoom
+		/// 001 [........00000001] Int    : 21
 		/// </example>
 		[PacketHandler(Op.Revive)]
 		public void Revive(ChannelClient client, Packet packet)
 		{
-			var option = packet.GetInt();
+			var option = (ReviveOptions)(1 << (packet.GetInt() - 1));
 
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
