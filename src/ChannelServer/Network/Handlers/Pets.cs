@@ -335,13 +335,13 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.SetPetAi)]
 		public void SetPetAi(ChannelClient client, Packet packet)
 		{
+			var ai = packet.GetString();
+
 			var pet = client.GetCreature(packet.Id);
 			if (pet == null)
 				return;
 
-			// ...
-
-			//Log.Debug(packet);
+			pet.Vars.Perm.PetAI = ai;
 		}
 
 		/// <summary>
@@ -357,9 +357,8 @@ namespace Aura.Channel.Network.Handlers
 			if (pet == null)
 				return;
 
-			// ...
-
-			Send.GetPetAiR(pet, "OasisRuleSubmission.xml");
+			// Send back AI, default to OasisRulePassive on null.
+			Send.GetPetAiR(pet, pet.Vars.Perm.PetAI ?? "OasisRulePassive.xml");
 		}
 	}
 }
