@@ -276,7 +276,7 @@ namespace Aura.Channel.Util
 			}
 
 			int regionId = -1, x = -1, y = -1;
-			var destination = message.Substring(args[0].Length + 1).Trim();
+			var destination = args[1].ToLower();
 
 			if (destination.StartsWith("tir")) { regionId = 1; x = 12801; y = 38397; }
 			else if (destination.StartsWith("dugald")) { regionId = 16; x = 23017; y = 61244; }
@@ -399,7 +399,9 @@ namespace Aura.Channel.Util
 					{
 						switch (sColor)
 						{
+							case "0":
 							case "black": color = 0x00000000; break;
+							case "f":
 							case "white": color = 0xFFFFFFFF; break;
 							default:
 								Send.ServerMessage(sender, Localization.Get("gm.item_color"), sColor); // Unknown color '{0}'.
@@ -569,7 +571,7 @@ namespace Aura.Channel.Util
 				return CommandResult.InvalidArgument;
 
 			float val;
-			if (!float.TryParse(message.Substring(message.IndexOf(' ') + 1), NumberStyles.Float, CultureInfo.InvariantCulture, out val))
+			if (!float.TryParse(args[1], NumberStyles.Float, CultureInfo.InvariantCulture, out val))
 				return CommandResult.InvalidArgument;
 
 			switch (args[0])
@@ -738,9 +740,9 @@ namespace Aura.Channel.Util
 
 		public CommandResult HandleReloadScripts(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
-			Send.ServerMessage(sender, Localization.Get("gm.reload_wait"));
+			Send.ServerMessage(sender, Localization.Get("gm.reload_wait")); // Reloading, this might take a moment.
 			ChannelServer.Instance.ScriptManager.Reload();
-			Send.ServerMessage(sender, Localization.Get("gm.reload_done"));
+			Send.ServerMessage(sender, Localization.Get("gm.reload_done")); // Reload complete.
 
 			return CommandResult.Okay;
 		}

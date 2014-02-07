@@ -48,7 +48,7 @@ namespace Aura.Shared.Util.Commands
 		protected string[] ParseLine(string line)
 		{
 			// Find args, matching words and multiple words in quotation.
-			var matches = Regex.Matches(line, @"(""[a-z0-9_\- ]+""|[a-z0-9_\-]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+			var matches = Regex.Matches(line, @"(""[a-z0-9_\-\.,\+' ]+""|[a-z0-9_\-\.,\+']+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 			// Convert matches
 			var args = new string[matches.Count];
