@@ -89,7 +89,7 @@ namespace Aura.Shared.Network
 		public const int PropUpdate = 0x52D2; // Doors, MGs?
 		public const int EntitiesAppear = 0x5334;
 		public const int EntitiesDisappear = 0x5335;
-		public const int BackFromTheDead1 = 0x53FD;
+		public const int RemoveDeathScreen = 0x53FD;
 		public const int IsNowDead = 0x53FC;
 		public const int Revive = 0x53FE;
 		public const int Revived = 0x53FF;
@@ -195,7 +195,7 @@ namespace Aura.Shared.Network
 		public const int ChangeStanceRequestR = 0x6E29;
 		public const int ChangeStance = 0x6E2A;
 
-		public const int BackFromTheDead2 = 0x701D;
+		public const int RiseFromTheDead = 0x701D;
 		public const int CharacterLock = 0x701E;
 		public const int CharacterUnlock = 0x701F;
 		public const int PlayDead = 0x7021;

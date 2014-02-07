@@ -96,10 +96,10 @@ namespace Aura.Channel.Network.Handlers
 
 			creature.Deactivate(CreatureStates.Dead);
 
-			Send.BackFromTheDead1(creature);
+			Send.RemoveDeathScreen(creature);
 			Send.StatUpdate(creature, StatUpdateType.Private, Stat.Life, Stat.LifeInjured, Stat.LifeMax, Stat.LifeMaxMod);
 			Send.StatUpdate(creature, StatUpdateType.Public, Stat.Life, Stat.LifeInjured, Stat.LifeMax, Stat.LifeMaxMod);
-			Send.BackFromTheDead2(creature);
+			Send.RiseFromTheDead(creature);
 			//Send.DeadFeather(creature);
 			Send.Revived(creature);
 		}
