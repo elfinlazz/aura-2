@@ -7,15 +7,16 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using Aura.Channel.Database;
 using Aura.Channel.Scripting.Compilers;
 using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.World;
+using Aura.Channel.World.Entities;
+using Aura.Data;
+using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
-using System.Text;
-using Aura.Data;
-using System.Text.RegularExpressions;
-using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.Scripting
 {
@@ -31,6 +32,8 @@ namespace Aura.Channel.Scripting
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<int, CreatureSpawn> _creatureSpawns;
 
+		public ScriptVariables GlobalVars { get; protected set; }
+
 		public ScriptManager()
 		{
 			_compilers = new Dictionary<string, Compiler>();
@@ -41,6 +44,14 @@ namespace Aura.Channel.Scripting
 			_aiScripts = new Dictionary<string, Type>();
 
 			_creatureSpawns = new Dictionary<int, CreatureSpawn>();
+
+			this.GlobalVars = new ScriptVariables();
+		}
+
+		public void Init()
+		{
+			this.GlobalVars.Perm = ChannelDb.Instance.LoadVars("Aura System", 0);
+			ChannelServer.Instance.World.MabiTick += OnMabiTick;
 		}
 
 		/// <summary>
@@ -573,6 +584,16 @@ namespace Aura.Channel.Scripting
 				creature.AI.Activate(0);
 
 			return creature;
+		}
+
+		/// <summary>
+		/// 5 min tick, global var saving.
+		/// </summary>
+		/// <param name="time"></param>
+		public void OnMabiTick(ErinnTime time)
+		{
+			ChannelDb.Instance.SaveVars("Aura System", 0, this.GlobalVars.Perm);
+			Log.Info("Saved global script variables.");
 		}
 	}
 }

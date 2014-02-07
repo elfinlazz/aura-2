@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Aura.Channel.World.Entities;
+using Aura.Channel.Scripting;
 
 namespace Aura.Channel.Database
 {
@@ -24,10 +25,13 @@ namespace Aura.Channel.Database
 		public List<Character> Characters { get; set; }
 		public List<Pet> Pets { get; set; }
 
+		public ScriptVariables Vars { get; protected set; }
+
 		public Account()
 		{
 			this.Characters = new List<Character>();
 			this.Pets = new List<Pet>();
+			this.Vars = new ScriptVariables();
 
 			this.LastLogin = DateTime.Now;
 		}

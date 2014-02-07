@@ -16,6 +16,9 @@ using Aura.Channel.World.Entities;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities.Creatures;
 using Aura.Channel.Skills;
+using Aura.Channel.Scripting;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Aura.Channel.Database
 {
@@ -56,6 +59,8 @@ namespace Aura.Channel.Database
 						account.Authority = reader.GetByte("authority");
 					}
 				}
+
+				account.Vars.Perm = this.LoadVars(account.Id, 0);
 
 				// Characters
 				// ----------------------------------------------------------
@@ -221,6 +226,8 @@ namespace Aura.Channel.Database
 			character.Life = (character.LifeMax - lifeDelta);
 			character.Mana = (character.ManaMax - manaDelta);
 			character.Stamina = (character.StaminaMax - staminaDelta);
+
+			character.Vars.Perm = this.LoadVars(account.Id, character.CreatureId);
 
 			return character;
 		}
@@ -459,18 +466,20 @@ namespace Aura.Channel.Database
 				cmd.Execute();
 			}
 
+			this.SaveVars(account.Id, 0, account.Vars.Perm);
+
 			// Save characters
 			foreach (var character in account.Characters.Where(a => a.Save))
-				this.SaveCharacter(character);
+				this.SaveCharacter(character, account);
 			foreach (var pet in account.Pets.Where(a => a.Save))
-				this.SaveCharacter(pet);
+				this.SaveCharacter(pet, account);
 		}
 
 		/// <summary>
 		/// Saves creature and all its data.
 		/// </summary>
 		/// <param name="creature"></param>
-		public void SaveCharacter(PlayerCreature creature)
+		public void SaveCharacter(PlayerCreature creature, Account account)
 		{
 			using (var conn = AuraDb.Instance.Connection)
 			using (var cmd = new UpdateCommand("UPDATE `creatures` SET {0} WHERE `creatureId` = @creatureId", conn))
@@ -524,6 +533,8 @@ namespace Aura.Channel.Database
 			this.SaveCharacterSkills(creature);
 			//this.SaveCharacterQuests(creature);
 			//this.SaveCharacterCooldowns(creature);
+
+			this.SaveVars(account.Id, creature.CreatureId, creature.Vars.Perm);
 		}
 
 		/// <summary>
@@ -671,6 +682,152 @@ namespace Aura.Channel.Database
 						cmd.Set("creatureId", creature.CreatureId);
 						cmd.Set("rank", (byte)skill.Info.Rank);
 						cmd.Set("exp", skill.Info.Experience);
+
+						cmd.Execute();
+					}
+				}
+
+				transaction.Commit();
+			}
+		}
+
+		/// <summary>
+		/// Returns manager with all variables for the account (if creature
+		/// id is 0) or creature.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="creatureId">Use 0 to only get all account variables.</param>
+		/// <returns></returns>
+		public VariableManager LoadVars(string accountId, long creatureId)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM vars WHERE accountId = @accountId AND creatureId = @creatureId", conn))
+			{
+				mc.Parameters.AddWithValue("@accountId", accountId);
+				mc.Parameters.AddWithValue("@creatureId", creatureId);
+
+				var vars = new VariableManager();
+
+				using (var reader = mc.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						var name = reader.GetString("name");
+						var type = reader.GetString("type");
+						var val = reader.GetStringSafe("value");
+
+						if (val == null)
+							continue;
+
+						switch (type)
+						{
+							case "1u": vars[name] = byte.Parse(val); break;
+							case "2u": vars[name] = ushort.Parse(val); break;
+							case "4u": vars[name] = uint.Parse(val); break;
+							case "8u": vars[name] = ulong.Parse(val); break;
+							case "1": vars[name] = sbyte.Parse(val); break;
+							case "2": vars[name] = short.Parse(val); break;
+							case "4": vars[name] = int.Parse(val); break;
+							case "8": vars[name] = long.Parse(val); break;
+							case "f": vars[name] = float.Parse(val); break;
+							case "d": vars[name] = double.Parse(val); break;
+							case "b": vars[name] = bool.Parse(val); break;
+							case "s": vars[name] = val; break;
+							case "o":
+								var buffer = Convert.FromBase64String(val);
+								var bf = new BinaryFormatter();
+								using (var ms = new MemoryStream(buffer))
+								{
+									vars[name] = bf.Deserialize(ms);
+								}
+
+								break;
+							default:
+								Log.Warning("LoadVars: Unknown variable type '{0}'.", type);
+								continue;
+						}
+					}
+				}
+
+				return vars;
+			}
+		}
+
+		/// <summary>
+		/// Saves all variables in manager.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="creatureId">Use 0 to save as account variables.</param>
+		/// <param name="vars"></param>
+		public void SaveVars(string accountId, long creatureId, VariableManager vars)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var transaction = conn.BeginTransaction())
+			{
+				using (var deleteMc = new MySqlCommand("DELETE FROM vars WHERE accountId = @accountId AND creatureId = @creatureId", conn, transaction))
+				{
+					deleteMc.Parameters.AddWithValue("@accountId", accountId);
+					deleteMc.Parameters.AddWithValue("@creatureId", creatureId);
+					deleteMc.ExecuteNonQuery();
+				}
+
+				var bf = new BinaryFormatter();
+
+				foreach (var var in vars.GetList())
+				{
+					if (var.Value == null)
+						continue;
+
+					// Get type
+					string type;
+					if (var.Value is byte) type = "1u";
+					else if (var.Value is ushort) type = "2u";
+					else if (var.Value is uint) type = "4u";
+					else if (var.Value is ulong) type = "8u";
+					else if (var.Value is sbyte) type = "1";
+					else if (var.Value is short) type = "2";
+					else if (var.Value is int) type = "4";
+					else if (var.Value is long) type = "8";
+					else if (var.Value is float) type = "f";
+					else if (var.Value is double) type = "d";
+					else if (var.Value is bool) type = "b";
+					else if (var.Value is string) type = "s";
+					else type = "o";
+
+					// Get value
+					var val = string.Empty;
+					if (type != "o")
+					{
+						val = var.Value.ToString();
+					}
+					else
+					{
+						// Objects are serialized to a Base64 string,
+						// because we're storing as string for easier
+						// inter-language access.
+						using (var ms = new MemoryStream())
+						{
+							bf.Serialize(ms, var.Value);
+							val = Convert.ToBase64String(ms.ToArray());
+						}
+					}
+
+					// Make sure value isn't too big for the mediumtext field
+					// (unlikely as it may be).
+					if (val.Length > ushort.MaxValue)
+					{
+						Log.Warning("SaveVars: Skipping variable '{0}', it's too big.", var.Key);
+						continue;
+					}
+
+					// Save
+					using (var cmd = new InsertCommand("INSERT INTO `vars` {0}", conn, transaction))
+					{
+						cmd.Set("accountId", accountId);
+						cmd.Set("creatureId", creatureId);
+						cmd.Set("name", var.Key);
+						cmd.Set("type", type);
+						cmd.Set("value", val);
 
 						cmd.Execute();
 					}

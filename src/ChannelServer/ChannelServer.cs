@@ -247,6 +247,7 @@ namespace Aura.Channel
 		private void LoadScripts()
 		{
 			this.ScriptManager.Load();
+			this.ScriptManager.Init();
 		}
 
 		private void LoadSkills()

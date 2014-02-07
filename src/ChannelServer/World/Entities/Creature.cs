@@ -12,6 +12,7 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Mabi.Structs;
 using Aura.Shared.Util;
+using Aura.Channel.Scripting;
 
 namespace Aura.Channel.World.Entities
 {
@@ -51,6 +52,8 @@ namespace Aura.Channel.World.Entities
 		public CreatureRegen Regens { get; protected set; }
 		public CreatureStatMods StatMods { get; protected set; }
 		public CreatureConditions Conditions { get; protected set; }
+
+		public ScriptVariables Vars { get; protected set; }
 
 		public bool IsPlayer { get { return (this.EntityType == EntityType.Character || this.EntityType == EntityType.Pet); } }
 
@@ -390,6 +393,8 @@ namespace Aura.Channel.World.Entities
 			this.Skills = new CreatureSkills(this);
 			this.StatMods = new CreatureStatMods(this);
 			this.Conditions = new CreatureConditions(this);
+
+			this.Vars = new ScriptVariables();
 		}
 
 		/// <summary>

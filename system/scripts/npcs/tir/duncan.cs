@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.CSharp;
 using Aura.Channel.Scripting;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;

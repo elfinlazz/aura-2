@@ -210,9 +210,18 @@ namespace Aura.Channel.Scripting.Scripts
 			Send.OpenNpcShop(this.Player, this.Shop);
 		}
 
+		/// <summary>
+		/// Joins lines and sends them as Msg,
+		/// but only once per creature and NPC.
+		/// </summary>
+		/// <param name="lines"></param>
 		protected void Intro(params object[] lines)
 		{
+			if (this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] != null)
+				return;
+
 			this.Msg(Hide.Both, string.Join("<br/>", lines));
+			this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] = true;
 		}
 
 		// Dialog

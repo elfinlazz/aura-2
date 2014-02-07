@@ -133,6 +133,7 @@
     <Compile Include="Scripting\Compilers\CompilerErrors.cs" />
     <Compile Include="Scripting\Compilers\CSharpCompiler.cs" />
     <Compile Include="Scripting\ScriptManager.cs" />
+    <Compile Include="Scripting\ScriptVariables.cs" />
     <Compile Include="Skills\Actions\ContinentWarpSkillHandler.cs" />
     <Compile Include="Skills\Base\CombatSkillHandler.cs" />
     <Compile Include="Skills\Base\Interfaces.cs" />

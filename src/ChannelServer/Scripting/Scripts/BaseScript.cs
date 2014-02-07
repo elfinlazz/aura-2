@@ -7,6 +7,8 @@ namespace Aura.Channel.Scripting.Scripts
 	{
 		public string ScriptFilePath { get; set; }
 
+		protected ScriptVariables GlobalVars { get { return ChannelServer.Instance.ScriptManager.GlobalVars; } }
+
 		public virtual void Load()
 		{
 		}
