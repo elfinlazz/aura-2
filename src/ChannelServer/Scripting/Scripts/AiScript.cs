@@ -71,8 +71,8 @@ namespace Aura.Channel.Scripting.Scripts
 			_state = AiState.Idle;
 			_aggroRadius = 1000;
 			_aggroMaxRadius = 3000;
-			_alertDelay = TimeSpan.FromMilliseconds(2000);
-			_aggroDelay = TimeSpan.FromMilliseconds(2000);
+			_alertDelay = TimeSpan.FromMilliseconds(8000);
+			_aggroDelay = TimeSpan.FromMilliseconds(4000);
 
 			_aggroType = AggroType.Neutral;
 		}
@@ -121,7 +121,7 @@ namespace Aura.Channel.Scripting.Scripts
 				return;
 
 			if (_inside)
-				Log.Warning("AI crash in '{0}', report or check your custom actions for infinite loops.", this.GetType().Name);
+				Log.Warning("AI crash in '{0}'.", this.GetType().Name);
 
 			_inside = true;
 			try
@@ -230,6 +230,8 @@ namespace Aura.Channel.Scripting.Scripts
 				{
 					this.Reset();
 
+					this.Creature.BattleStance = BattleStance.Idle;
+
 					Send.SetCombatTarget(this.Creature, 0, 0);
 
 					return;
@@ -242,6 +244,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 					_state = AiState.Alert;
 					_alertTime = DateTime.Now;
+					this.Creature.BattleStance = BattleStance.Ready;
 
 					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
 
@@ -557,7 +560,19 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="timeMin"></param>
 		/// <param name="timeMax"></param>
 		/// <returns></returns>
-		protected IEnumerable Circle(int radius, int timeMin = 2000, int timeMax = 5000)
+		protected IEnumerable Circle(int radius, int timeMin = 1000, int timeMax = 5000)
+		{
+			return this.Circle(radius, timeMin, timeMax, this.Random() < 50);
+		}
+
+		/// <summary>
+		/// Creature circles around target.
+		/// </summary>
+		/// <param name="distance"></param>
+		/// <param name="timeMin"></param>
+		/// <param name="timeMax"></param>
+		/// <returns></returns>
+		protected IEnumerable Circle(int radius, int timeMin, int timeMax, bool clockwise)
 		{
 			if (timeMin < 500)
 				timeMin = 500;
@@ -574,7 +589,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 				var deltaX = pos.X - targetPos.X;
 				var deltaY = pos.Y - targetPos.Y;
-				var angle = Math.Atan2(deltaY, deltaX) + (Math.PI / 8 * 2);
+				var angle = Math.Atan2(deltaY, deltaX) + (Math.PI / 8 * 2) * (clockwise ? -1 : 1);
 				var x = targetPos.X + (Math.Cos(angle) * radius);
 				var y = targetPos.Y + (Math.Sin(angle) * radius);
 
