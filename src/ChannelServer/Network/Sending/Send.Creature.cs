@@ -110,6 +110,29 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends a public and private stat update for various default values,
+		/// like Life, Mana, Str, Dex, etc.
+		/// </summary>
+		public static void StatUpdateDefault(Creature creature)
+		{
+			// Private
+			StatUpdate(creature, StatUpdateType.Private,
+				Stat.Life, Stat.LifeInjured, Stat.LifeMax, Stat.LifeMaxMod,
+				Stat.Stamina, Stat.Hunger, Stat.StaminaMax, Stat.StaminaMaxMod,
+				Stat.Mana, Stat.ManaMax, Stat.ManaMaxMod,
+				Stat.Str, Stat.Dex, Stat.Int, Stat.Luck, Stat.Will,
+				Stat.StrMod, Stat.DexMod, Stat.IntMod, Stat.LuckMod, Stat.WillMod,
+				Stat.DefenseBaseMod, Stat.DefenseMod, Stat.ProtectionBaseMod, Stat.ProtectionMod,
+				Stat.Level, Stat.Experience, Stat.AbilityPoints, Stat.CombatPower
+			);
+
+			// Public
+			StatUpdate(creature, StatUpdateType.Public,
+				Stat.Life, Stat.LifeInjured, Stat.LifeMax, Stat.LifeMaxMod
+			);
+		}
+
+		/// <summary>
 		/// Sends StatUpdatePublic and StatUpdatePrivate to relevant clients,
 		/// with a list of regens to remove.
 		/// </summary>
@@ -367,6 +390,18 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(unk);
 
 			creature.Region.Broadcast(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts LevelUp in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void LevelUp(Creature creature)
+		{
+			var packet = new Packet(Op.LevelUp, creature.EntityId);
+			packet.PutShort(creature.Level);
+
+			creature.Region.Broadcast(packet, creature);
 		}
 	}
 }

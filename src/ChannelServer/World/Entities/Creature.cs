@@ -863,6 +863,10 @@ namespace Aura.Channel.World.Entities
 
 		//protected abstract bool ShouldSurvive(float damage);
 
+		/// <summary>
+		/// Kills creature.
+		/// </summary>
+		/// <param name="killer"></param>
 		public virtual void Kill(Creature killer)
 		{
 			//Log.Debug(this.Name + " was killed by " + killer.Name);
@@ -875,6 +879,92 @@ namespace Aura.Channel.World.Entities
 			//Send.SetFinisher2(this);
 			Send.IsNowDead(this);
 			Send.SetFinisher(this, 0);
+
+			//EventManager.CreatureEvents.OnCreatureKilled(creature, killer);
+			//if (killer is MabiPC)
+			//    EventManager.PlayerEvents.OnKilledByPlayer(creature, killer);
+		}
+
+		/// <summary>
+		/// Increases exp and levels up creature if appropriate.
+		/// </summary>
+		/// <param name="val"></param>
+		public void GiveExp(long val)
+		{
+			this.Exp += val;
+
+			var levelStats = AuraData.StatsLevelUpDb.Find(this.Race, this.Age);
+			if (levelStats == null)
+				Log.Unimplemented("Level up stats missing for race '{0}'.", this.Race);
+
+			var prevLevel = this.Level;
+			float ap = this.AbilityPoints;
+			float life = this.LifeMaxBase;
+			float mana = this.ManaMaxBase;
+			float stamina = this.StaminaMaxBase;
+			float str = this.StrBase;
+			float int_ = this.IntBase;
+			float dex = this.DexBase;
+			float will = this.WillBase;
+			float luck = this.LuckBase;
+
+			while (this.Level < AuraData.ExpDb.MaxLevel && this.Exp >= AuraData.ExpDb.GetTotalForNextLevel(this.Level))
+			{
+				this.Level++;
+
+				if (levelStats == null)
+					continue;
+
+				this.AbilityPoints += levelStats.AP;
+				this.LifeMaxBase += levelStats.Life;
+				this.ManaMaxBase += levelStats.Mana;
+				this.StaminaMaxBase += levelStats.Stamina;
+				this.StrBase += levelStats.Str;
+				this.IntBase += levelStats.Int;
+				this.DexBase += levelStats.Dex;
+				this.WillBase += levelStats.Will;
+				this.LuckBase += levelStats.Luck;
+			}
+
+			if (prevLevel < this.Level)
+			{
+				this.FullHeal();
+
+				Send.StatUpdateDefault(this);
+				Send.LevelUp(this);
+
+				// Only send aquire if stat crosses the X.0 border.
+				// Eg, 50.9 -> 50.1
+				float diff = 0;
+				if ((diff = (this.AbilityPoints - (int)ap)) >= 1) Send.SimpleAcquireInfo(this, "ap", diff);
+				if ((diff = (this.LifeMaxBase - (int)life)) >= 1) Send.SimpleAcquireInfo(this, "life", diff);
+				if ((diff = (this.ManaMaxBase - (int)mana)) >= 1) Send.SimpleAcquireInfo(this, "mana", diff);
+				if ((diff = (this.StaminaMaxBase - (int)stamina)) >= 1) Send.SimpleAcquireInfo(this, "stamina", diff);
+				if ((diff = (this.StrBase - (int)str)) >= 1) Send.SimpleAcquireInfo(this, "str", diff);
+				if ((diff = (this.IntBase - (int)int_)) >= 1) Send.SimpleAcquireInfo(this, "int", diff);
+				if ((diff = (this.DexBase - (int)dex)) >= 1) Send.SimpleAcquireInfo(this, "dex", diff);
+				if ((diff = (this.WillBase - (int)will)) >= 1) Send.SimpleAcquireInfo(this, "will", diff);
+				if ((diff = (this.LuckBase - (int)luck)) >= 1) Send.SimpleAcquireInfo(this, "luck", diff);
+
+				//EventManager.CreatureEvents.OnCreatureLevelsUp(this);
+			}
+			else
+				Send.StatUpdate(this, StatUpdateType.Private, Stat.Experience);
+		}
+
+		/// <summary>
+		/// Heals all life, mana, stamina, hunger, and wounds.
+		/// </summary>
+		public void FullHeal()
+		{
+			this.Injuries = 0;
+			this.Hunger = 0;
+			this.Life = this.LifeMax;
+			this.Mana = this.ManaMax;
+			this.Stamina = this.StaminaMax;
+
+			Send.StatUpdate(this, StatUpdateType.Private, Stat.Life, Stat.LifeInjured, Stat.Stamina, Stat.Hunger, Stat.Mana);
+			Send.StatUpdate(this, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
 		}
 	}
 }

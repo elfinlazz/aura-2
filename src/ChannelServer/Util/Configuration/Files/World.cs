@@ -7,6 +7,9 @@ namespace Aura.Channel.Util.Configuration.Files
 {
 	public class WorldConfFile : ConfFile
 	{
+		public float ExpRate { get; protected set; }
+		public float QuestExpRate { get; protected set; }
+
 		public float DropRate { get; protected set; }
 		public float GoldDropRate { get; protected set; }
 		public float PropDropRate { get; protected set; }
@@ -16,6 +19,9 @@ namespace Aura.Channel.Util.Configuration.Files
 		public void Load()
 		{
 			this.Require("system/conf/world.conf");
+
+			this.ExpRate = this.GetFloat("exp_rate", 100) / 100.0f;
+			this.QuestExpRate = this.GetFloat("quest_exp_rate", 100) / 100.0f;
 
 			this.DropRate = this.GetFloat("drop_rate", 100) / 100.0f;
 			this.GoldDropRate = this.GetFloat("gold_drop_rate", 30) / 100.0f;

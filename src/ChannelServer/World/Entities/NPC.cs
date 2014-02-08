@@ -7,6 +7,7 @@ using Aura.Channel.Scripting.Scripts;
 using Aura.Shared.Util;
 using Aura.Channel.Scripting;
 using System;
+using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.World.Entities
 {
@@ -118,6 +119,15 @@ namespace Aura.Channel.World.Entities
 					this.Region.AddItem(item);
 				}
 			}
+
+			if (killer == null)
+				return;
+
+			// Exp
+			var exp = (long)(this.RaceData.Exp * ChannelServer.Instance.Conf.World.ExpRate);
+			killer.GiveExp(exp);
+
+			Send.CombatMessage(killer, "+{0} EXP", exp);
 		}
 	}
 }

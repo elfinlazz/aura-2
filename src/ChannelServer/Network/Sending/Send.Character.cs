@@ -7,6 +7,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.World.Entities.Creatures;
+using System.Globalization;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -194,10 +195,10 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="creature"></param>
 		/// <param name="type"></param>
 		/// <param name="value"></param>
-		public static void SimpleAcquireInfo(Creature creature, string type, int value)
+		public static void SimpleAcquireInfo(Creature creature, string type, float value)
 		{
 			var packet = new Packet(Op.AcquireInfo, creature.EntityId);
-			packet.PutString("<xml type='{0}' value='{1}' simple='true' onlyLog='false' />", type, value);
+			packet.PutString("<xml type='{0}' value='{1}' simple='true' onlyLog='false' />", type, Math.Round(value));
 			packet.PutInt(3000);
 
 			creature.Client.Send(packet);

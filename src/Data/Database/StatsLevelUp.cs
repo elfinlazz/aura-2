@@ -32,7 +32,7 @@ namespace Aura.Data.Database
 		/// <param name="race"></param>
 		/// <param name="age"></param>
 		/// <returns></returns>
-		public StatsLevelUpData Find(int raceId, byte age)
+		public StatsLevelUpData Find(int raceId, int age)
 		{
 			raceId = (raceId & ~3);
 
