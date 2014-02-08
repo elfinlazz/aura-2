@@ -176,7 +176,7 @@ namespace Aura.Login.Network.Handlers
 			// Check bans
 			if (account.BannedExpiration > DateTime.Now)
 			{
-				Send.LoginR_Msg(client, Localization.Get("login.banned"), account.BannedExpiration, account.BannedReason); // You've been banned, till {0}.\r\nReason: {1}
+				Send.LoginR_Msg(client, Localization.Get("login.banned"), account.BannedExpiration, account.BannedReason); // You've been banned till {0}.\r\nReason: {1}
 				return;
 			}
 

@@ -9,6 +9,8 @@ using Aura.Data;
 using Aura.Shared.Mabi;
 using Aura.Shared.Util;
 using Aura.Channel.Util;
+using Aura.Channel.Network.Sending;
+using Aura.Shared.Network;
 
 namespace Aura.Channel.World
 {
@@ -160,7 +162,10 @@ namespace Aura.Channel.World
 
 				// Erinn daytime event
 				if (now.IsDawn || now.IsDusk)
+				{
 					ErinnDaytimeTick.Raise(now);
+					this.OnErinnDaytimeTick(now);
+				}
 
 				// Erinn midnight event
 				if (now.IsMidnight)
@@ -182,6 +187,18 @@ namespace Aura.Channel.World
 				foreach (var region in _regions.Values)
 					region.UpdateEntities();
 			}
+		}
+
+		/// <summary>
+		/// Broadcasts Eweca notice, called at 6:00 and 18:00.
+		/// </summary>
+		/// <param name="now"></param>
+		private void OnErinnDaytimeTick(ErinnTime now)
+		{
+			var notice = now.IsNight
+				? Localization.Get("world.eweca_night") // Eweca is rising.\nMana is starting to fill the air all around.
+				: Localization.Get("world.eweca_day");  // Eweca has disappeared.\nThe surrounding Mana is starting to fade away.
+			Send.Notice(NoticeType.MiddleTop, notice);
 		}
 
 		// ------------------------------------------------------------------
@@ -312,9 +329,17 @@ namespace Aura.Channel.World
 		public void RemoveScriptedEntities()
 		{
 			foreach (var region in _regions.Values)
-			{
 				region.RemoveScriptedEntities();
-			}
+		}
+
+		/// <summary>
+		/// Broadcasts packet in all regions.
+		/// </summary>
+		/// <param name="packet"></param>
+		public void Broadcast(Packet packet)
+		{
+			foreach (var region in _regions.Values)
+				region.Broadcast(packet);
 		}
 	}
 }

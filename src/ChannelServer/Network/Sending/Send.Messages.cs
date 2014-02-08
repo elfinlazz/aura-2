@@ -8,6 +8,7 @@ using System.Text;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -167,7 +168,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="type"></param>
-		/// <param name="duration"></param>
+		/// <param name="duration">Ignored if 0</param>
 		/// <param name="format"></param>
 		/// <param name="args"></param>
 		public static void Notice(Creature creature, NoticeType type, int duration, string format, params object[] args)
@@ -179,6 +180,35 @@ namespace Aura.Channel.Network.Sending
 				packet.PutInt(duration);
 
 			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts Notice to every player in any region.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public static void Notice(NoticeType type, string format, params object[] args)
+		{
+			Notice(type, 0, format, args);
+		}
+
+		/// <summary>
+		/// Broadcasts Notice to every player in any region.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="duration">Ignored if 0</param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public static void Notice(NoticeType type, int duration, string format, params object[] args)
+		{
+			var packet = new Packet(Op.Notice, MabiId.Broadcast);
+			packet.PutByte((byte)type);
+			packet.PutString(string.Format(format, args));
+			if (duration > 0)
+				packet.PutInt(duration);
+
+			ChannelServer.Instance.World.Broadcast(packet);
 		}
 	}
 	public enum MsgBoxTitle { Notice, Info, Warning, Confirm }
