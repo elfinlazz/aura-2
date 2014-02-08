@@ -2,6 +2,5 @@
 // Localization file
 // --------------------------------------------------------------------------
 
-new_hash_error	You're client is using a password encryption that Aura doesn't recognize ({0}).\nPlease report this, and try to login using "new//".
-second_error	Second passwords aren't supported yet.
-banned			You've been banned, till {0}.\r\nReason: {1}
+new_hash	Please don't use your official login information.
+banned		You've been banned till {0}.\r\nReason: {1}

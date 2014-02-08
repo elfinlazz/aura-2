@@ -2,6 +2,8 @@
 // Localization file
 // --------------------------------------------------------------------------
 
+no_ap	 You don't have enough AP.
+
 insufficient_mana		Insufficient Mana
 insufficient_stamina	Insufficient Stamina
 invalid_target			Invalid target

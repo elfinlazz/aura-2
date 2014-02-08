@@ -128,7 +128,7 @@ namespace Aura.Channel.Util
 				// Get target player
 				if (args.Length < 2 || (target = ChannelServer.Instance.World.GetPlayer(args[1])) == null)
 				{
-					Send.ServerMessage(creature, "Target not found.");
+					Send.ServerMessage(creature, Localization.Get("gm.target_not_found")); // Target not found.
 					return true;
 				}
 
@@ -142,7 +142,7 @@ namespace Aura.Channel.Util
 			var command = this.GetCommand(args[0]);
 			if (command == null)
 			{
-				Send.ServerMessage(creature, "Unknown command '{0}'.", args[0]);
+				Send.ServerMessage(creature, Localization.Get("gm.unknown"), args[0]); // Unknown command '{0}'.
 				return true;
 			}
 
@@ -151,7 +151,7 @@ namespace Aura.Channel.Util
 			// Check auth
 			if ((!isCharCommand && client.Account.Authority < commandConf.Auth) || (isCharCommand && client.Account.Authority < commandConf.CharAuth))
 			{
-				Send.ServerMessage(creature, "Unknown command '{0}'.", args[0]);
+				Send.ServerMessage(creature, Localization.Get("gm.unknown"), args[0]); // Unknown command '{0}'.
 				return true;
 			}
 
@@ -161,9 +161,9 @@ namespace Aura.Channel.Util
 			// Handle result
 			if (result == CommandResult.InvalidArgument)
 			{
-				Send.ServerMessage(creature, "Usage: {0} {1}", command.Name, command.Usage);
+				Send.ServerMessage(creature, Localization.Get("gm.usage"), command.Name, command.Usage); // Usage: {0} {1}
 				if (command.CharAuth <= client.Account.Authority)
-					Send.ServerMessage(creature, "Usage: {0} <target> {1}", command.Name, command.Usage);
+					Send.ServerMessage(creature, Localization.Get("gm.usage_target"), command.Name, command.Usage); // Usage: {0} <target> {1}
 
 				return true;
 			}
@@ -344,7 +344,7 @@ namespace Aura.Channel.Util
 					if (all.Count > 1 && score != 0)
 					{
 						var perc = 100 - (100f / itemData.Name.Length * score);
-						Send.ServerMessage(sender, Localization.Get("gm.item_mures"), args[1], itemData.Name, perc.ToString("0.0", CultureInfo.InvariantCulture)); // No exact match found for '{0}', using best result, '{1}' ({2}%).
+						Send.ServerMessage(sender, Localization.Get("gm.item_multiple"), args[1], itemData.Name, perc.ToString("0.0", CultureInfo.InvariantCulture)); // No exact match found for '{0}', using best result, '{1}' ({2}%).
 					}
 				}
 			}
@@ -356,7 +356,7 @@ namespace Aura.Channel.Util
 			// Check item data
 			if (itemData == null)
 			{
-				Send.ServerMessage(sender, Localization.Get("gm.item_nores"), args[1]); // Item '{0}' not found in database.
+				Send.ServerMessage(sender, Localization.Get("gm.item_none"), args[1]); // Item '{0}' not found in database.
 				return CommandResult.Fail;
 			}
 
@@ -494,10 +494,10 @@ namespace Aura.Channel.Util
 			for (int i = 0; eItems.MoveNext() && i < max; ++i)
 			{
 				var item = eItems.Current;
-				Send.ServerMessage(target, Localization.Get("gm.ii_for"), item.Id, item.Name, item.Type); // {0}: {1}, Type: {2}
+				Send.ServerMessage(target, Localization.Get("gm.ii_result"), item.Id, item.Name, item.Type); // {0}: {1}, Type: {2}
 			}
 
-			Send.ServerMessage(target, Localization.Get("gm.ii_res"), items.Count, max); // Results: {0} (Max. {1} shown)
+			Send.ServerMessage(target, Localization.Get("gm.ii_result_count"), items.Count, max); // Results: {0} (Max. {1} shown)
 
 			return CommandResult.Okay;
 		}
@@ -520,10 +520,10 @@ namespace Aura.Channel.Util
 			for (int i = 0; eItems.MoveNext() && i < max; ++i)
 			{
 				var item = eItems.Current;
-				Send.ServerMessage(target, Localization.Get("gm.si_for"), item.Id, item.Name); // {0}: {1}
+				Send.ServerMessage(target, Localization.Get("gm.si_result"), item.Id, item.Name); // {0}: {1}
 			}
 
-			Send.ServerMessage(target, Localization.Get("gm.si_res"), items.Count, max); // Results: {0} (Max. {1} shown)
+			Send.ServerMessage(target, Localization.Get("gm.si_result_count"), items.Count, max); // Results: {0} (Max. {1} shown)
 
 			return CommandResult.Okay;
 		}
@@ -540,7 +540,7 @@ namespace Aura.Channel.Util
 			var skillData = AuraData.SkillDb.Find(skillId);
 			if (skillData == null)
 			{
-				Send.ServerMessage(sender, Localization.Get("gm.skill_nores"), args[1]); // Skill '{0}' not found in database.
+				Send.ServerMessage(sender, Localization.Get("gm.skill_not_found"), args[1]); // Skill '{0}' not found in database.
 				return CommandResult.Fail;
 			}
 
@@ -551,7 +551,7 @@ namespace Aura.Channel.Util
 			var rankData = skillData.GetRankData(rank, target.Race);
 			if (rankData == null)
 			{
-				Send.ServerMessage(sender, Localization.Get("gm.skill_norank"), args[1], (SkillRank)rank); // Skill '{0}' doesn't have rank '{1}'.
+				Send.ServerMessage(sender, Localization.Get("gm.skill_no_rank"), args[1], (SkillRank)rank); // Skill '{0}' doesn't have rank '{1}'.
 				return CommandResult.Fail;
 			}
 
@@ -732,9 +732,9 @@ namespace Aura.Channel.Util
 
 		public CommandResult HandleReloadData(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
-			Send.ServerMessage(sender, Localization.Get("gm.reload_wait"));
+			Send.ServerMessage(sender, Localization.Get("gm.reload_wait")); // Reloading, this might take a moment.
 			ChannelServer.Instance.LoadData(DataLoad.ChannelServer, true);
-			Send.ServerMessage(sender, Localization.Get("gm.reload_done"));
+			Send.ServerMessage(sender, Localization.Get("gm.reload_done")); // Reload complete.
 
 			return CommandResult.Okay;
 		}

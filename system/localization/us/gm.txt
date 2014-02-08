@@ -2,9 +2,10 @@
 // Localization file
 // --------------------------------------------------------------------------
 
-usage			Usage: {0} {1}
-error			Error while executing command.
-unknown			Unknown command.
+usage				Usage: {0} {1}
+usage_target		Usage: {0} <target> {1}
+unknown				Unknown command '{0}'.
+target_not_found	Target not found.
 
 // >gmcp
 gmcp_auth		You're not authorized to use the GMCP.
@@ -18,15 +19,9 @@ gmcp_disabled	The GMCP is currently disabled, or not available.
 where_you		You're here: {0} @ {1}, {2}
 where_target	{3} is here: {0} @ {1}, {2}
 
-// >who
-who				Players online:
-who_region		Players online in region {0}:
-who_r			{0} - Region: {1}, X: {2}, Y: {3}
-who_none		None.
-
 // >item/drop
-item_nores		Item '{0}' not found in database.
-item_mures		No exact match found for '{0}', using best result, '{1}' ({2}%).
+item_none		Item '{0}' not found in database.
+item_multiple	No exact match found for '{0}', using best result, '{1}' ({2}%).
 item_amount		Invalid amount.
 item_hex		Invalid hex color '{0}'.
 item_color		Unknown color '{0}'.
@@ -35,20 +30,20 @@ item_spawned	Item '{0}' has been spawned.
 item_fail		Failed to spawn item.
 
 // >skill
-skill_nores		Skill '{0}' not found in database.
-skill_norank	Skill '{0}' doesn't have rank '{1}'.
+skill_not_found	Skill '{0}' not found in database.
+skill_no_rank	Skill '{0}' doesn't have rank '{1}'.
 skill_success	Skill added.
 skill_target	Skill '{0}' added by '{1}'.
 
 // >iteminfo
 ii_none			No items found for '{0}'.
-ii_for			{0}: {1}, Type: {2}
-ii_res			Results: {0} (Max. {1} shown)
+ii_result		{0}: {1}, Type: {2}
+ii_result_count	Results: {0} (Max. {1} shown)
 
 // >skillinfo
 si_none			No skills found for '{0}'.
-si_for			{0}: {1}
-si_res			Results: {0} (Max. {1} shown)
+si_result		{0}: {1}
+si_result_count	Results: {0} (Max. {1} shown)
 
 // >height, weight, etc.
 body_success	Change successful, new value: {0}

@@ -5,20 +5,11 @@
 eweca_night	Eweca is rising.\nMana is starting to fill the air all around.
 eweca_day	Eweca has disappeared.\nThe surrounding Mana is starting to fade away.
 
-whisper_no_target	The target character does not exist.
-
-mail_invalid	Invaild recipient
-mail_item		You can't send an item you don't have!
-
 shop_gold	Insufficient amount of gold.
 
 too_far		You're too far away.
 
 insufficient_space		Not enough space.
-
-mount_sit	You cannot mount while resting.
-
-shutdown	The server will shutdown in {0} seconds, please log out before that time, for your own safety.
 
 weight_plus		You gained some weight.
 weight_minus	You lost some weight.

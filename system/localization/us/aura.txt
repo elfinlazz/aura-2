@@ -3,7 +3,8 @@
 // --------------------------------------------------------------------------
 
 unimplemented			Unimplemented.
-unimplemented_skill		Partially unimplemented skill.
+unimplemented_skill		This skill isn't implemented yet.
+unimplemented_skill2	This skill isn't implemented completely yet.
 unimplemented_item		Unimplemented item.
 
-continent_disabled		Continent Warp has been disabled by the Admin.
+continent_disabled		Continent Warp has been disabled by the admin.
