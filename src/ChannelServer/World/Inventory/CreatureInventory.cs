@@ -81,6 +81,12 @@ namespace Aura.Channel.World
 			{
 				_weaponSet = value;
 				this.UpdateEquipReferences(Pocket.RightHand1, Pocket.LeftHand1, Pocket.Magazine1);
+				Send.StatUpdate(_creature, StatUpdateType.Private,
+					Stat.AttackMinBaseMod, Stat.AttackMaxBaseMod,
+					Stat.WAttackMinBaseMod, Stat.WAttackMaxBaseMod,
+					Stat.BalanceBaseMod, Stat.CriticalBaseMod,
+					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
+				);
 			}
 		}
 
@@ -578,9 +584,10 @@ namespace Aura.Channel.World
 				{
 					if (pocket.Remove(item))
 					{
+						Send.ItemRemove(_creature, item);
+
 						this.UpdateInventory(item, item.Info.Pocket, Pocket.None);
 
-						Send.ItemRemove(_creature, item);
 						return true;
 					}
 				}
@@ -839,7 +846,12 @@ namespace Aura.Channel.World
 			// Send stat update when moving equipment
 			if (source.IsEquip() || target.IsEquip())
 			{
-				Send.StatUpdate(_creature, StatUpdateType.Private, Stat.DefenseBaseMod, Stat.ProtectionBaseMod);
+				Send.StatUpdate(_creature, StatUpdateType.Private,
+					Stat.AttackMinBaseMod, Stat.AttackMaxBaseMod,
+					Stat.WAttackMinBaseMod, Stat.WAttackMaxBaseMod,
+					Stat.BalanceBaseMod, Stat.CriticalBaseMod,
+					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
+				);
 			}
 		}
 

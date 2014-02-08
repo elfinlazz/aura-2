@@ -69,6 +69,14 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns ".OptionInfo.Critical / 100".
+		/// </summary>
+		public float Critical
+		{
+			get { return this.OptionInfo.Critical / 100f; }
+		}
+
+		/// <summary>
 		/// New item based on item id.
 		/// </summary>
 		/// <param name="itemId"></param>

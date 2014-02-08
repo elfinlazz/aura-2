@@ -187,7 +187,6 @@ namespace Aura.Channel.Network.Sending
 		public static void StatUpdate(Creature creature, StatUpdateType type, ICollection<Stat> stats, ICollection<StatRegen> regens, ICollection<StatRegen> regensRemove, ICollection<StatRegen> regensUpdate)
 		{
 			var packet = new Packet(type == StatUpdateType.Public ? Op.StatUpdatePublic : Op.StatUpdatePrivate, creature.EntityId);
-
 			packet.PutByte((byte)type);
 
 			// Stats
@@ -241,9 +240,20 @@ namespace Aura.Channel.Network.Sending
 						case Stat.DefenseMod: packet.PutShort((short)creature.DefenseMod); break;
 						case Stat.ProtectionMod: packet.PutFloat(creature.ProtectionMod); break;
 
+						case Stat.BalanceBaseMod: packet.PutShort((short)(creature.BalanceBase * 100)); break;
+						case Stat.CriticalBaseMod: packet.PutFloat(creature.CriticalBase * 100); break;
+
+						case Stat.AttackMinBaseMod: packet.PutShort((short)creature.AttackMinBase); break;
+						case Stat.AttackMaxBaseMod: packet.PutShort((short)creature.AttackMaxBase); break;
+						case Stat.WAttackMinBaseMod: packet.PutShort((short)creature.WAttackMinBase); break;
+						case Stat.WAttackMaxBaseMod: packet.PutShort((short)creature.WAttackMaxBase); break;
+
 						// Client might crash with a mismatching value, 
 						// take a chance and put an int by default.
-						default: packet.PutInt(1); break;
+						default:
+							Log.Warning("StatUpdate: Unknown stat '{0}'.", stat);
+							packet.PutInt(0);
+							break;
 					}
 				}
 			}

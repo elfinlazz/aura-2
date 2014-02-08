@@ -6,19 +6,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Aura.Channel.World.Entities;
-using Aura.Shared.Mabi;
-using Aura.Shared.Util;
+using System.Threading;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World;
-using System.Threading;
-using Aura.Shared.Network;
+using Aura.Channel.World.Entities;
+using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Network;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
 {
 	public abstract class AiScript : IDisposable
 	{
+		// Official heartbeat while following a target seems
+		// to be about 100-200ms?
+
 		protected int MinHeartbeat = 50; // ms
 		protected int IdleHeartbeat = 250; // ms
 		protected int AggroHeartbeat = 50; // ms

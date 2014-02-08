@@ -153,7 +153,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutShort(0);			         // LeftRateMod
 				packet.PutShort(0);			         // RightRateMod
 				packet.PutFloat(0);			         // MagicDefenseMod
-				// [180300, NA166 (18.09.2013)] New creature info
+				// [180300, NA166 (18.09.2013)] Magic Protection
 				{
 					packet.PutFloat(0);			     // MagicProtectMod
 				}
@@ -170,28 +170,32 @@ namespace Aura.Channel.Network.Sending
 				packet.PutShort(0);			         // RateMod
 				packet.PutShort(0);			         // Rank1
 				packet.PutShort(0);			         // Rank2
-				// [180300, NA166 (18.09.2013)] New creature info
+				// [180300, NA166 (18.09.2013)] Armor Pierce
 				{
 					packet.PutShort(0);			     // ArmorPierceMod
 				}
 				packet.PutLong(0);			         // Score
-				packet.PutShort(0);			         // AttackMinBaseMod
-				packet.PutShort(8);			         // AttackMaxBaseMod
-				packet.PutShort(0);			         // WAttackMinBaseMod
-				packet.PutShort(0);			         // WAttackMaxBaseMod
-				packet.PutFloat(10);		         // CriticalBaseMod
+				packet.PutShort((short)creature.AttackMinBase);
+				packet.PutShort((short)creature.AttackMaxBase);
+				packet.PutShort((short)creature.WAttackMinBase);
+				packet.PutShort((short)creature.WAttackMaxBase);
+				packet.PutFloat(creature.CriticalBase * 100);
 				packet.PutFloat(creature.ProtectionBaseMod);
 				packet.PutShort((short)creature.DefenseBaseMod);
-				packet.PutShort(30);		         // RateBaseMod
-				packet.PutShort(8);			         // MeleeAttackMinBaseMod
-				packet.PutShort(18);		         // MeleeAttackMaxBaseMod
-				packet.PutShort(0);			         // MeleeWAttackMinBaseMod
-				packet.PutShort(0);			         // MeleeWAttackMaxBaseMod
-				packet.PutShort(10);		         // RangeAttackMinBaseMod
-				packet.PutShort(25);		         // RangeAttackMaxBaseMod
-				packet.PutShort(0);			         // RangeWAttackMinBaseMod
-				packet.PutShort(0);			         // RangeWAttackMaxBaseMod
-				// [180100] New poison info?
+				packet.PutShort((short)(creature.BalanceBase * 100));
+
+				// Weird. If those aren't 3 and 4 the client displays
+				// incorrect values for Damage.
+				packet.PutShort(3);                  // MeleeAttackMinBaseMod (8)
+				packet.PutShort(4);                  // MeleeAttackMaxBaseMod (18)
+
+				packet.PutShort(0);                  // MeleeWAttackMinBaseMod
+				packet.PutShort(0);                  // MeleeWAttackMaxBaseMod
+				packet.PutShort(0);                  // RangeAttackMinBaseMod (10)
+				packet.PutShort(0);                  // RangeAttackMaxBaseMod (25)
+				packet.PutShort(0);                  // RangeWAttackMinBaseMod
+				packet.PutShort(0);                  // RangeWAttackMaxBaseMod
+				// [180100] Guns
 				{
 					packet.PutShort(0);			     // DualgunAttackMinBaseMod
 					packet.PutShort(0);			     // DualgunAttackMaxBaseMod

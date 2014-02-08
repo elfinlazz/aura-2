@@ -22,6 +22,9 @@ namespace Aura.Channel.World.Entities
 	public abstract class Creature : Entity, IDisposable
 	{
 		public const float HandBalance = 0.3f;
+		public const float HandCritical = 0.1f;
+		public const int HandAttackMin = 0;
+		public const int HandAttackMax = 8;
 		public const float MaxKnockBack = 120;
 
 		private const float MinWeight = 0.7f, MaxWeight = 1.5f;
@@ -251,6 +254,128 @@ namespace Aura.Channel.World.Entities
 		public float Int { get { return this.IntBaseTotal + this.IntMod + this.IntFoodMod; } }
 		public float Will { get { return this.WillBaseTotal + this.WillMod + this.WillFoodMod; } }
 		public float Luck { get { return this.LuckBaseTotal + this.LuckMod + this.LuckFoodMod; } }
+
+		// TODO: Make equipment actually modify mods?
+
+		public float BalanceBase
+		{
+			get
+			{
+				var result = HandBalance;
+
+				if (this.RightHand != null)
+				{
+					result = this.RightHand.Balance;
+					if (this.LeftHand != null)
+					{
+						result += this.LeftHand.Balance;
+						result /= 2f; // average
+					}
+				}
+
+				return result;
+			}
+		}
+
+		public float CriticalBase
+		{
+			get
+			{
+				var result = HandCritical;
+
+				if (this.RightHand != null)
+				{
+					result = this.RightHand.Critical;
+					if (this.LeftHand != null)
+					{
+						result += this.LeftHand.Critical;
+						result /= 2f; // average
+					}
+				}
+
+				return result;
+			}
+		}
+
+		public int AttackMinBase
+		{
+			get
+			{
+				var result = HandAttackMin;
+
+				if (this.RightHand != null)
+				{
+					result = this.RightHand.OptionInfo.AttackMin;
+					if (this.LeftHand != null)
+					{
+						result += this.LeftHand.OptionInfo.AttackMin;
+						result /= 2; // average
+					}
+				}
+
+				return result;
+			}
+		}
+
+		public int AttackMaxBase
+		{
+			get
+			{
+				var result = HandAttackMax;
+
+				if (this.RightHand != null)
+				{
+					result = this.RightHand.OptionInfo.AttackMax;
+					if (this.LeftHand != null)
+					{
+						result += this.LeftHand.OptionInfo.AttackMax;
+						result /= 2; // average
+					}
+				}
+
+				return result;
+			}
+		}
+
+		public int WAttackMinBase
+		{
+			get
+			{
+				var result = 0;
+
+				if (this.RightHand != null)
+				{
+					result = this.RightHand.OptionInfo.WAttackMin;
+					if (this.LeftHand != null)
+					{
+						result += this.LeftHand.OptionInfo.WAttackMin;
+						result /= 2; // average
+					}
+				}
+
+				return result;
+			}
+		}
+
+		public int WAttackMaxBase
+		{
+			get
+			{
+				var result = 0;
+
+				if (this.RightHand != null)
+				{
+					result = this.RightHand.OptionInfo.WAttackMax;
+					if (this.LeftHand != null)
+					{
+						result += this.LeftHand.OptionInfo.WAttackMax;
+						result /= 2; // average
+					}
+				}
+
+				return result;
+			}
+		}
 
 		// Food Mods
 		// ------------------------------------------------------------------
@@ -772,8 +897,8 @@ namespace Aura.Channel.World.Entities
 				max = this.RaceData.AttackMax;
 			}
 
-			min += this.Str / 3.0f;
-			max += this.Str / 2.5f;
+			min += (Math.Max(0, this.Str - 10) / 3.0f);
+			max += (Math.Max(0, this.Str - 10) / 2.5f);
 
 			if (min > max)
 				min = max;
@@ -823,18 +948,7 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public float GetRndAverageBalance()
 		{
-			var baseBalance = HandBalance;
-			if (this.RightHand != null)
-			{
-				baseBalance = this.RightHand.Balance;
-				if (this.LeftHand != null)
-				{
-					baseBalance += this.LeftHand.Balance;
-					baseBalance /= 2f; // average
-				}
-			}
-
-			return this.GetRndBalance(baseBalance);
+			return this.GetRndBalance(this.BalanceBase);
 		}
 
 		/// <summary>
@@ -844,7 +958,7 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public float GetRndBalance(Item weapon)
 		{
-			return this.GetRndBalance(weapon != null ? weapon.Balance : 0.3f);
+			return this.GetRndBalance(weapon != null ? weapon.Balance : HandBalance);
 		}
 
 		/// <summary>
