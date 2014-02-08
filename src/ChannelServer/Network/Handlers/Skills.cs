@@ -37,6 +37,16 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			if (creature.AbilityPoints < skill.RankData.AP)
+			{
+				Send.MsgBox(creature, "You don't have enough AP.");
+				Send.SkillAdvance_Fail(creature);
+				return;
+			}
+
+			creature.AbilityPoints -= skill.RankData.AP;
+			Send.StatUpdate(creature, StatUpdateType.Private, Stat.AbilityPoints);
+
 			creature.Skills.Give(skill.Info.Id, skill.Info.Rank + 1);
 		}
 
