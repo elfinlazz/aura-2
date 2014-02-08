@@ -47,6 +47,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "title", "<id>", HandleTitle);
 			Add(50, 50, "speed", "[increase]", HandleSpeed);
 			Add(50, 50, "spawn", "<race> [amount]", HandleSpawn);
+			Add(50, 50, "ap", "<amount>", HandleAp);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -743,6 +744,21 @@ namespace Aura.Channel.Util
 			Send.ServerMessage(sender, Localization.Get("gm.reload_wait")); // Reloading, this might take a moment.
 			ChannelServer.Instance.ScriptManager.Reload();
 			Send.ServerMessage(sender, Localization.Get("gm.reload_done")); // Reload complete.
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleAp(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			short amount;
+			if (!short.TryParse(args[1], out amount))
+				return CommandResult.InvalidArgument;
+
+			target.AbilityPoints += amount;
+			Send.StatUpdate(target, StatUpdateType.Private, Stat.AbilityPoints);
 
 			return CommandResult.Okay;
 		}

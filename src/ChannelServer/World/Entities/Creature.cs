@@ -218,7 +218,9 @@ namespace Aura.Channel.World.Entities
 		public long Exp { get; set; }
 
 		public short Age { get; set; }
-		public short AbilityPoints { get; set; }
+
+		private short _ap;
+		public short AbilityPoints { get { return _ap; } set { _ap = Math.Max((short)0, value); } }
 
 		public virtual float CombatPower { get { return (this.RaceData != null ? this.RaceData.CombatPower : 1); } }
 
