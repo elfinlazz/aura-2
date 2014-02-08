@@ -580,10 +580,6 @@ namespace Aura.Channel.World
 			var maxX = Math.Max(from.X, to.X) + VisibleRange;
 			var maxY = Math.Max(from.Y, to.Y) + VisibleRange;
 
-			// Linear movement equation
-			var slope = (to.Y == from.Y ? 0.001 : (to.Y - from.Y) / Math.Max(1, (to.X - from.X)));
-			var b = from.Y - slope * from.X;
-
 			// Activation
 			_creaturesRWLS.EnterReadLock();
 			try
@@ -594,10 +590,10 @@ namespace Aura.Channel.World
 						continue;
 
 					var pos = npc.GetPosition();
-					if (!(pos.X >= minX && pos.X <= maxX && pos.Y >= minY && pos.Y <= maxY && (Math.Abs(pos.Y - (long)(slope * pos.X + b)) <= VisibleRange)))
+					if (!(pos.X >= minX && pos.X <= maxX && pos.Y >= minY && pos.Y <= maxY))
 						continue;
 
-					var time = (from.GetDistance(to) / creature.GetSpeed());
+					var time = (from.GetDistance(to) / creature.GetSpeed()) * 1000;
 
 					npc.AI.Activate(time);
 				}

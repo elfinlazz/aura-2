@@ -548,7 +548,7 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Returns current movement speed.
+		/// Returns current movement speed (x/s).
 		/// </summary>
 		/// <returns></returns>
 		public float GetSpeed()
