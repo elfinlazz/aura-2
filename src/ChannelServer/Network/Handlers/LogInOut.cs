@@ -104,6 +104,7 @@ namespace Aura.Channel.Network.Handlers
 			if (creature == null)
 				return;
 
+			// Check permission
 			if (!creature.Warping)
 			{
 				Log.Warning("Unauthorized warp attemp from '{0}'.", creature.Name);
@@ -112,6 +113,7 @@ namespace Aura.Channel.Network.Handlers
 
 			creature.Warping = false;
 
+			// Get region
 			var region = ChannelServer.Instance.World.GetRegion(creature.RegionId);
 			if (region == null)
 			{
@@ -119,22 +121,28 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Characters that spawned at least once need to be saved.
 			creature.Save = true;
 
+			// Add to region
 			var firstSpawn = (creature.Region == null);
-			var pos = creature.GetPosition();
-
+			if (!firstSpawn)
+				ChannelServer.Instance.Events.OnPlayerLeavesRegion(creature);
 			region.AddCreature(creature);
+			ChannelServer.Instance.Events.OnPlayerEntersRegion(creature);
 
+			// Unlock and warp
 			Send.CharacterUnlock(creature, Locks.Default);
-
 			if (firstSpawn)
 				Send.EnterRegionRequestR(creature);
 			else
 				Send.WarpRegion(creature);
 
+			// Activate AIs around spawn
+			var pos = creature.GetPosition();
 			creature.Region.ActivateAis(creature, pos, pos);
 
+			// Warp pets and other creatures as well
 			foreach (var c in client.Creatures.Values.Where(a => a.RegionId != creature.RegionId))
 				c.Warp(creature.RegionId, pos.X, pos.Y);
 
@@ -208,6 +216,8 @@ namespace Aura.Channel.Network.Handlers
 		public void HandleDisconnect(ChannelClient client, Packet packet)
 		{
 			var unk1 = packet.GetByte(); // 1 | 2 (maybe login vs exit?)
+
+			ChannelServer.Instance.Events.OnPlayerDisconnect(client.Controlling);
 
 			Log.Info("'{0}' is closing the connection. Saving...", client.Account.Id);
 

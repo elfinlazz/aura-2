@@ -17,6 +17,7 @@ using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World.Shops;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
 
 public class DuncanBaseScript : NpcScript
 {

@@ -62,6 +62,24 @@ namespace Aura.Channel.World
 		/// </summary>
 		public event Action<Creature> PlayerLoggedIn;
 		public void OnPlayerLoggedIn(Creature creature) { PlayerLoggedIn.Raise(creature); }
+
+		/// <summary>
+		/// Raised when a player disconnects from server.
+		/// </summary>
+		public event Action<Creature> PlayerDisconnect;
+		public void OnPlayerDisconnect(Creature creature) { PlayerDisconnect.Raise(creature); }
+
+		/// <summary>
+		/// Raised when player enters a region.
+		/// </summary>
+		public event Action<Creature> PlayerEntersRegion;
+		public void OnPlayerEntersRegion(Creature creature) { PlayerEntersRegion.Raise(creature); }
+
+		/// <summary>
+		/// Raised when player leaves a region.
+		/// </summary>
+		public event Action<Creature> PlayerLeavesRegion;
+		public void OnPlayerLeavesRegion(Creature creature) { PlayerLeavesRegion.Raise(creature); }
 	}
 
 	public static class EventHandlerExtensions
