@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.CSharp;
+using Aura.Channel;
+using Aura.Channel.Network.Sending;
+using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
@@ -42,7 +45,7 @@ public class DuncanBaseScript : NpcScript
 		AddPhrase("The graveyard has been left unattended far too long.");
 		AddPhrase("Watch your language.");
 	}
-
+	
 	public override IEnumerable Talk()
 	{
 		SetBgm("NPC_Duncan.mp3");

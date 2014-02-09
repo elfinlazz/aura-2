@@ -75,6 +75,11 @@ namespace Aura.Channel.Network.Handlers
 		/// <summary>
 		/// Sent on login to get homestead information.
 		/// </summary>
+		/// <remarks>
+		/// Only called once, a few seconds after the player logged in.
+		/// This makes it a good place for OnPlayerLoggedIn,
+		/// at that point it's safe to do anything.
+		/// </remarks>
 		/// <example>
 		/// 001 [..............00] Byte   : 0
 		/// </example>
@@ -89,6 +94,8 @@ namespace Aura.Channel.Network.Handlers
 
 			// Default answer for now
 			Send.HomesteadInfoRequestR(creature);
+
+			ChannelServer.Instance.Events.OnPlayerLoggedIn(creature);
 		}
 
 		/// <summary>

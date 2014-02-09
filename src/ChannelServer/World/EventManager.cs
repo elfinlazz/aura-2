@@ -57,10 +57,15 @@ namespace Aura.Channel.World
 
 		// ------------------------------------------------------------------
 
-		// ...
+		/// <summary>
+		/// Raised a few seconds after player logged in.
+		/// </summary>
+		public event CreatureEventHandler PlayerLoggedIn;
+		public void OnPlayerLoggedIn(Creature creature) { PlayerLoggedIn.Raise(creature); }
 	}
 
 	public delegate void TimeEventHandler(ErinnTime time);
+	public delegate void CreatureEventHandler(Creature creature);
 
 	public static class EventHandlerExtensions
 	{
@@ -77,6 +82,15 @@ namespace Aura.Channel.World
 		/// Raises event with thread and null-ref safety.
 		/// </summary>
 		public static void Raise(this TimeEventHandler handler, ErinnTime args)
+		{
+			if (handler != null)
+				handler(args);
+		}
+
+		/// <summary>
+		/// Raises event with thread and null-ref safety.
+		/// </summary>
+		public static void Raise(this CreatureEventHandler handler, Creature args)
 		{
 			if (handler != null)
 				handler(args);
