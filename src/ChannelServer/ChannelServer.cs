@@ -52,6 +52,7 @@ namespace Aura.Channel
 
 		public ScriptManager ScriptManager { get; private set; }
 		public SkillManager SkillManager { get; private set; }
+		public EventManager Events { get; private set; }
 
 		public WorldManager World { get; private set; }
 
@@ -225,7 +226,7 @@ namespace Aura.Channel
 
 		private void StartStatusUpdateTimer()
 		{
-			this.World.MinutesTimeTick += (_) =>
+			this.Events.MinutesTimeTick += (_) =>
 			{
 				if (this.LoginServer == null || this.LoginServer.State != ClientState.LoggedIn)
 					return;

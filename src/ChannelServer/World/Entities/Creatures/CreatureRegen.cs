@@ -27,14 +27,14 @@ namespace Aura.Channel.World.Entities.Creatures
 			_regenGroups = new Dictionary<string, List<StatRegen>>();
 			this.Creature = creature;
 
-			ChannelServer.Instance.World.SecondsTimeTick += this.OnSecondsTimeTick;
-			ChannelServer.Instance.World.ErinnDaytimeTick += this.OnErinnDaytimeTick;
+			ChannelServer.Instance.Events.SecondsTimeTick += this.OnSecondsTimeTick;
+			ChannelServer.Instance.Events.ErinnDaytimeTick += this.OnErinnDaytimeTick;
 		}
 
 		public void Dispose()
 		{
-			ChannelServer.Instance.World.SecondsTimeTick -= this.OnSecondsTimeTick;
-			ChannelServer.Instance.World.ErinnDaytimeTick -= this.OnErinnDaytimeTick;
+			ChannelServer.Instance.Events.SecondsTimeTick -= this.OnSecondsTimeTick;
+			ChannelServer.Instance.Events.ErinnDaytimeTick -= this.OnErinnDaytimeTick;
 		}
 
 		/// <summary>

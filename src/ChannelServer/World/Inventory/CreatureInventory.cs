@@ -12,6 +12,12 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.World
 {
+	/// <summary>
+	/// Inventory for players
+	/// </summary>
+	/// <remarks>
+	/// TODO: I'm dirty and unsafe, clean me up.
+	/// </remarks>
 	public class CreatureInventory
 	{
 		private const int DefaultWidth = 6;

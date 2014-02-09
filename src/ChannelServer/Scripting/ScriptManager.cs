@@ -17,6 +17,7 @@ using Aura.Data;
 using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Scripting
 {
@@ -51,7 +52,7 @@ namespace Aura.Channel.Scripting
 		public void Init()
 		{
 			this.GlobalVars.Perm = ChannelDb.Instance.LoadVars("Aura System", 0);
-			ChannelServer.Instance.World.MabiTick += OnMabiTick;
+			ChannelServer.Instance.Events.MabiTick += OnMabiTick;
 		}
 
 		/// <summary>

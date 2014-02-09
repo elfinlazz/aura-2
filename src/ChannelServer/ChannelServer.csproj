@@ -149,7 +149,6 @@
     <Compile Include="Util\Configuration\Files\Channel.cs" />
     <Compile Include="Util\Configuration\Files\Commands.cs" />
     <Compile Include="Util\Configuration\Files\World.cs" />
-    <Compile Include="Util\EventHandler.cs" />
     <Compile Include="Util\GmCommands.cs" />
     <Compile Include="Util\Quadtree.cs" />
     <Compile Include="World\Entities\Character.cs" />
@@ -168,6 +167,7 @@
     <Compile Include="World\Entities\Pet.cs" />
     <Compile Include="World\Entities\PlayerCreature.cs" />
     <Compile Include="World\Entities\Prop.cs" />
+    <Compile Include="World\EventManager.cs" />
     <Compile Include="World\Inventory\CreatureInventory.cs" />
     <Compile Include="World\Inventory\InventoryPockets.cs" />
     <Compile Include="World\Location.cs" />

@@ -69,8 +69,6 @@ namespace Aura.Channel.Skills.Actions
 		{
 			var destination = (Continent)packet.GetByte();
 
-			// TODO: The destination is probably dependent on the keywords?
-
 			int regionId, x, y;
 			switch (destination)
 			{

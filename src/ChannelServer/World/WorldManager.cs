@@ -19,35 +19,6 @@ namespace Aura.Channel.World
 		private Dictionary<int, Region> _regions;
 
 		/// <summary>
-		/// Raised every second in real time.
-		/// </summary>
-		public event TimeEventHandler SecondsTimeTick;
-		/// <summary>
-		/// Raised every minute in real time.
-		/// </summary>
-		public event TimeEventHandler MinutesTimeTick;
-		/// <summary>
-		/// Raised every hour in real time.
-		/// </summary>
-		public event TimeEventHandler HoursTimeTick;
-		/// <summary>
-		/// Raised every 1.5s (1min Erinn time).
-		/// </summary>
-		public event TimeEventHandler ErinnTimeTick;
-		/// <summary>
-		/// Raised every 18min (1/2 day Erinn time).
-		/// </summary>
-		public event TimeEventHandler ErinnDaytimeTick;
-		/// <summary>
-		/// Raised at 00:00am Erinn time.
-		/// </summary>
-		public event TimeEventHandler ErinnMidnightTick;
-		/// <summary>
-		/// Raised every 5 minutes in real time.
-		/// </summary>
-		public event TimeEventHandler MabiTick;
-
-		/// <summary>
 		/// Returns number of regions.
 		/// </summary>
 		public int Count { get { return _regions.Count; } }
@@ -123,26 +94,26 @@ namespace Aura.Channel.World
 
 			if (diff != HeartbeatTime && Math.Abs(HeartbeatTime - diff) > HeartbeatTime && diff < 100000000)
 			{
-				Log.Error("OMG, the server has an irregular heartbeat! ({0})", diff.ToInvariant());
+				Log.Warning("OMG, the server has an irregular heartbeat! ({0})", diff.ToInvariant());
 			}
 
 			// Seconds event
 			if ((_secondsTime += diff) >= Second)
 			{
 				_secondsTime = 0;
-				SecondsTimeTick.Raise(now);
+				ChannelServer.Instance.Events.OnSecondsTimeTick(now);
 			}
 
 			// Minutes event
 			if ((_minutesTime += diff) >= Minute)
 			{
 				_minutesTime = (now.DateTime.Second * Second + now.DateTime.Millisecond);
-				MinutesTimeTick.Raise(now);
+				ChannelServer.Instance.Events.OnMinutesTimeTick(now);
 
 				// Mabi tick event
 				if (++_mabiTickCount >= 5)
 				{
-					MabiTick.Raise(now);
+					ChannelServer.Instance.Events.OnMabiTick(now);
 					_mabiTickCount = 0;
 				}
 			}
@@ -151,25 +122,27 @@ namespace Aura.Channel.World
 			if ((_hoursTime += diff) >= Hour)
 			{
 				_hoursTime = (now.DateTime.Minute * Minute + now.DateTime.Second * Second + now.DateTime.Millisecond);
-				HoursTimeTick.Raise(now);
+				ChannelServer.Instance.Events.OnHoursTimeTick(now);
 			}
 
 			// Erinn time event
 			if ((_erinnTime += diff) >= ErinnMinute)
 			{
 				_erinnTime = 0;
-				ErinnTimeTick.Raise(now);
+				ChannelServer.Instance.Events.OnErinnTimeTick(now);
+
+				// TODO: Dawn/Dusk/Midnight wouldn't be called if the server had a 500+ ms hickup.
 
 				// Erinn daytime event
 				if (now.IsDawn || now.IsDusk)
 				{
-					ErinnDaytimeTick.Raise(now);
+					ChannelServer.Instance.Events.OnErinnDaytimeTick(now);
 					this.OnErinnDaytimeTick(now);
 				}
 
 				// Erinn midnight event
 				if (now.IsMidnight)
-					ErinnMidnightTick.Raise(now);
+					ChannelServer.Instance.Events.OnErinnMidnightTick(now);
 			}
 
 			this.UpdateEntities();

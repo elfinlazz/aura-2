@@ -560,7 +560,7 @@ namespace Aura.Channel.World.Entities
 			this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
 			this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
 
-			ChannelServer.Instance.World.MabiTick += this.OnMabiTick;
+			ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
 		}
 
 		/// <summary>
@@ -570,7 +570,7 @@ namespace Aura.Channel.World.Entities
 		public virtual void Dispose()
 		{
 			this.Regens.Dispose();
-			ChannelServer.Instance.World.MabiTick -= this.OnMabiTick;
+			ChannelServer.Instance.Events.MabiTick -= this.OnMabiTick;
 		}
 
 		public void Activate(CreatureStates state) { this.State |= state; }
