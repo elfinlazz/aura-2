@@ -12,7 +12,6 @@ using System.Text;
 using Microsoft.CSharp;
 using Aura.Channel;
 using Aura.Channel.Network.Sending;
-using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;

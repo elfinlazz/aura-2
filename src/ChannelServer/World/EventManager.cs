@@ -16,43 +16,43 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Raised every second in real time.
 		/// </summary>
-		public event TimeEventHandler SecondsTimeTick;
+		public event Action<ErinnTime> SecondsTimeTick;
 		public void OnSecondsTimeTick(ErinnTime now) { SecondsTimeTick.Raise(now); }
 
 		/// <summary>
 		/// Raised every minute in real time.
 		/// </summary>
-		public event TimeEventHandler MinutesTimeTick;
+		public event Action<ErinnTime> MinutesTimeTick;
 		public void OnMinutesTimeTick(ErinnTime now) { MinutesTimeTick.Raise(now); }
 
 		/// <summary>
 		/// Raised every hour in real time.
 		/// </summary>
-		public event TimeEventHandler HoursTimeTick;
+		public event Action<ErinnTime> HoursTimeTick;
 		public void OnHoursTimeTick(ErinnTime now) { HoursTimeTick.Raise(now); }
 
 		/// <summary>
 		/// Raised every 1.5s (1min Erinn time).
 		/// </summary>
-		public event TimeEventHandler ErinnTimeTick;
+		public event Action<ErinnTime> ErinnTimeTick;
 		public void OnErinnTimeTick(ErinnTime now) { ErinnTimeTick.Raise(now); }
 
 		/// <summary>
 		/// Raised every 18min (1/2 day Erinn time).
 		/// </summary>
-		public event TimeEventHandler ErinnDaytimeTick;
+		public event Action<ErinnTime> ErinnDaytimeTick;
 		public void OnErinnDaytimeTick(ErinnTime now) { ErinnDaytimeTick.Raise(now); }
 
 		/// <summary>
 		/// Raised at 00:00am Erinn time.
 		/// </summary>
-		public event TimeEventHandler ErinnMidnightTick;
+		public event Action<ErinnTime> ErinnMidnightTick;
 		public void OnErinnMidnightTick(ErinnTime now) { ErinnMidnightTick.Raise(now); }
 
 		/// <summary>
 		/// Raised every 5 minutes in real time.
 		/// </summary>
-		public event TimeEventHandler MabiTick;
+		public event Action<ErinnTime> MabiTick;
 		public void OnMabiTick(ErinnTime now) { MabiTick.Raise(now); }
 
 		// ------------------------------------------------------------------
@@ -60,12 +60,9 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Raised a few seconds after player logged in.
 		/// </summary>
-		public event CreatureEventHandler PlayerLoggedIn;
+		public event Action<Creature> PlayerLoggedIn;
 		public void OnPlayerLoggedIn(Creature creature) { PlayerLoggedIn.Raise(creature); }
 	}
-
-	public delegate void TimeEventHandler(ErinnTime time);
-	public delegate void CreatureEventHandler(Creature creature);
 
 	public static class EventHandlerExtensions
 	{
@@ -81,16 +78,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Raises event with thread and null-ref safety.
 		/// </summary>
-		public static void Raise(this TimeEventHandler handler, ErinnTime args)
-		{
-			if (handler != null)
-				handler(args);
-		}
-
-		/// <summary>
-		/// Raises event with thread and null-ref safety.
-		/// </summary>
-		public static void Raise(this CreatureEventHandler handler, Creature args)
+		public static void Raise<T>(this Action<T> handler, T args)
 		{
 			if (handler != null)
 				handler(args);
