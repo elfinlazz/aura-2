@@ -71,6 +71,7 @@ namespace Aura.Channel
 
 			this.ScriptManager = new ScriptManager();
 			this.SkillManager = new SkillManager();
+			this.Events = new EventManager();
 		}
 
 		/// <summary>
