@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Connous.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class ConnousRegionScript : BaseScript
 {
 	public override void Load()

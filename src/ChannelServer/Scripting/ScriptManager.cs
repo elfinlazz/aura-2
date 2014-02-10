@@ -339,7 +339,7 @@ namespace Aura.Channel.Scripting
 						// (Does ReadAllLines trim the input?)
 						string line = "";
 						if (i <= lines.Length)
-							line = lines[i - 1];
+							line = lines[Math.Max(0, i - 1)];
 
 						Log.WriteLine(LogLevel.None, "  {2} {0:0000}: {1}", i, line, (err.Line == i ? '*' : ' '));
 					}

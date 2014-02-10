@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Bangor.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class BangorRegionScript : BaseScript
 {
 	public override void Load()

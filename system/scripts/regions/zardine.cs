@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Zardine.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class ZardineRegionScript : BaseScript
 {
 	public override void Load()

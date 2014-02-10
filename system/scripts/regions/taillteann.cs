@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Taillteann.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class TaillteannRegionScript : BaseScript
 {
 	public override void Load()

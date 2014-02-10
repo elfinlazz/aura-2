@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Rano.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class RanoRegionScript : BaseScript
 {
 	public override void Load()

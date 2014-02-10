@@ -4,21 +4,6 @@
 // Good ol' Duncan
 //---------------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.CSharp;
-using Aura.Channel;
-using Aura.Channel.Network.Sending;
-using Aura.Channel.Scripting;
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.World.Entities;
-using Aura.Channel.World.Shops;
-using Aura.Shared.Mabi.Const;
-using Aura.Shared.Util;
-
 public class DuncanBaseScript : NpcScript
 {
 	public override void Load()

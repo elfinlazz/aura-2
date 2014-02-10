@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Dunbarton.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class DunbartonRegionScript : BaseScript
 {
 	public override void Load()

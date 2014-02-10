@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Tara.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class TaraRegionScript : BaseScript
 {
 	public override void Load()

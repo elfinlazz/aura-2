@@ -7,6 +7,7 @@ using System.Reflection;
 using Aura.Shared.Util;
 using CSScriptLibrary;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace Aura.Channel.Scripting.Compilers
 {
@@ -52,6 +53,27 @@ namespace Aura.Channel.Scripting.Compilers
 
 		public string PreCompile(string script)
 		{
+			// Default usings
+			var defaultUsings = new StringBuilder();
+			defaultUsings.Append("using System;");
+			defaultUsings.Append("using System.Collections.Generic;");
+			defaultUsings.Append("using System.Collections;");
+			defaultUsings.Append("using System.Linq;");
+			defaultUsings.Append("using System.Text;");
+			defaultUsings.Append("using System.Timers;");
+			defaultUsings.Append("using Microsoft.CSharp;");
+			defaultUsings.Append("using Aura.Channel.Network.Sending;");
+			defaultUsings.Append("using Aura.Channel.Scripting.Scripts;");
+			defaultUsings.Append("using Aura.Channel.Scripting;");
+			defaultUsings.Append("using Aura.Channel.World.Entities;");
+			defaultUsings.Append("using Aura.Channel.World.Shops;");
+			defaultUsings.Append("using Aura.Channel.World;");
+			defaultUsings.Append("using Aura.Channel;");
+			defaultUsings.Append("using Aura.Shared.Mabi.Const;");
+			defaultUsings.Append("using Aura.Shared.Mabi;");
+			defaultUsings.Append("using Aura.Shared.Util;");
+			script = defaultUsings + script;
+
 			// Return();
 			// --> yield break;
 			// Stops Enumerator and the conversation.

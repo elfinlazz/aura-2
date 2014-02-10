@@ -4,9 +4,6 @@
 // Region you are warped to after talking to Nao/Tin.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class TirBeginnerRegionScript : BaseScript
 {
 	public override void Load()

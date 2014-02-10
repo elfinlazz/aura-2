@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Courcle.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class CourcleRegionScript : BaseScript
 {
 	public override void Load()

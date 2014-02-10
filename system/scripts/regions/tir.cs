@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Tir.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class TirRegionScript : BaseScript
 {
 	public override void Load()

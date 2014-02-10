@@ -6,9 +6,6 @@
 // To be organized.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class VariousRegionScript : BaseScript
 {
 	public override void Load()

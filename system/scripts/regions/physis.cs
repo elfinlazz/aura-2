@@ -4,9 +4,6 @@
 // Warp, prop, and spawn definitions for Physis.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Network.Sending;
-
 public class PhysisRegionScript : BaseScript
 {
 	public override void Load()
