@@ -95,7 +95,7 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.ItemDropR(creature, true);
 
-			ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item);
+			ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item.Info.Id, item.Info.Amount);
 		}
 
 		/// <summary>
@@ -158,7 +158,7 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.ItemDestroyR(creature, true);
 
-			ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item);
+			ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item.Info.Id, item.Info.Amount);
 		}
 
 		/// <summary>
@@ -333,7 +333,7 @@ namespace Aura.Channel.Network.Handlers
 			if (item.Data.Consumed)
 			{
 				creature.Inventory.Decrement(item);
-				ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item);
+				ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item.Info.Id, item.Info.Amount);
 			}
 
 			// Mandatory stat update

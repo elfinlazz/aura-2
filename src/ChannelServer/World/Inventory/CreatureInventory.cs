@@ -355,6 +355,8 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public bool PickUp(Item item)
 		{
+			var originalAmount = item.Info.Amount;
+
 			// Try stacks/sacs first
 			if (item.Data.StackType == StackType.Stackable)
 			{
@@ -369,6 +371,8 @@ namespace Aura.Channel.World
 				// Making a copy of the item, and generating a new temp id,
 				// ensures that we can still remove the item from the ground
 				// after moving it (region, x, y) to the pocket.
+				// (TODO: Remove takes an id parameter, this can be solved
+				//   properly, see pet invs.)
 				// We also need the new id to prevent conflicts in the db
 				// (SVN r67).
 
@@ -383,14 +387,18 @@ namespace Aura.Channel.World
 				item.Info.Amount -= newStackItem.Info.Amount;
 			}
 
-			// Remove from map if item is in inv 100%
-			if (item.Info.Amount == 0)
+			if (item.Info.Amount != originalAmount)
 			{
-				_creature.Region.RemoveItem(item);
-				return true;
+				ChannelServer.Instance.Events.OnPlayerReceivesItem(_creature, item.Info.Id, (originalAmount - item.Info.Amount));
 			}
 
-			return false;
+			// Fail if not everything could be picked up.
+			if (item.Info.Amount > 0)
+				return false;
+
+			// Remove from map if item is in inv 100%
+			_creature.Region.RemoveItem(item);
+			return true;
 		}
 
 		// Adding

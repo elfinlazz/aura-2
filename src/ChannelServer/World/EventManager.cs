@@ -85,8 +85,14 @@ namespace Aura.Channel.World
 		/// Raised when player drops, destroys, sells,
 		/// uses (decrements), etcs an item.
 		/// </summary>
-		public event Action<Creature, Item> PlayerRemovesItem;
-		public void OnPlayerRemovesItem(Creature creature, Item item) { PlayerRemovesItem.Raise(creature, item); }
+		public event Action<Creature, int, int> PlayerRemovesItem;
+		public void OnPlayerRemovesItem(Creature creature, int itemId, int amount) { PlayerRemovesItem.Raise(creature, itemId, amount); }
+
+		/// <summary>
+		/// Raised when player receives an item in any way.
+		/// </summary>
+		public event Action<Creature, int, int> PlayerReceivesItem;
+		public void OnPlayerReceivesItem(Creature creature, int itemId, int amount) { PlayerReceivesItem.Raise(creature, itemId, amount); }
 	}
 
 	public static class EventHandlerExtensions
@@ -116,6 +122,15 @@ namespace Aura.Channel.World
 		{
 			if (handler != null)
 				handler(args1, args2);
+		}
+
+		/// <summary>
+		/// Raises event with thread and null-ref safety.
+		/// </summary>
+		public static void Raise<T1, T2, T3>(this Action<T1, T2, T3> handler, T1 args1, T2 args2, T3 args3)
+		{
+			if (handler != null)
+				handler(args1, args2, args3);
 		}
 	}
 }
