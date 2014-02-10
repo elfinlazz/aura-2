@@ -366,16 +366,17 @@ namespace Aura.Channel.Scripting
 				try
 				{
 					// Ignore abstract class and ones starting with underscore,
-					// those are used for inheritance.
+					// which are used for inheritance.
 					if (type.IsAbstract || type.Name.StartsWith("_"))
 						continue;
 
-					var scriptObj = Activator.CreateInstance(type);
+					var baseScript = Activator.CreateInstance(type) as BaseScript;
 
 					// Try to load as NpcScript
-					var npcScript = scriptObj as NpcScript;
-					if (npcScript != null)
+					if (baseScript is NpcScript)
 					{
+						var npcScript = baseScript as NpcScript;
+
 						npcScript.ScriptFilePath = filePath;
 						npcScript.NPC.AI = this.GetAi("npc_normal", npcScript.NPC);
 
@@ -395,14 +396,14 @@ namespace Aura.Channel.Scripting
 
 							region.AddCreature(npcScript.NPC);
 						}
-
-						//npcScript.NPC.AI.Activate();
-
-						continue;
+					}
+					else
+					{
+						// General Script, just load it.
+						baseScript.Load();
 					}
 
-					// Unknown Script, just load it.
-					(scriptObj as BaseScript).Load();
+					baseScript.AutoLoadEvents();
 				}
 				catch (Exception ex)
 				{

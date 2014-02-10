@@ -563,7 +563,7 @@ namespace Aura.Channel.World
 			finally { _propsRWLS.ExitReadLock(); }
 
 			// Remove all
-			foreach (var npc in npcs) this.RemoveCreature(npc);
+			foreach (var npc in npcs) { this.RemoveCreature(npc); npc.Dispose(); }
 			foreach (var prop in props) this.RemoveProp(prop);
 		}
 
