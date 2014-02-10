@@ -80,6 +80,13 @@ namespace Aura.Channel.World
 		/// </summary>
 		public event Action<Creature> PlayerLeavesRegion;
 		public void OnPlayerLeavesRegion(Creature creature) { PlayerLeavesRegion.Raise(creature); }
+
+		/// <summary>
+		/// Raised when player drops, destroys, sells,
+		/// uses (decrements), etcs an item.
+		/// </summary>
+		public event Action<Creature, Item> PlayerRemovesItem;
+		public void OnPlayerRemovesItem(Creature creature, Item item) { PlayerRemovesItem.Raise(creature, item); }
 	}
 
 	public static class EventHandlerExtensions
@@ -100,6 +107,15 @@ namespace Aura.Channel.World
 		{
 			if (handler != null)
 				handler(args);
+		}
+
+		/// <summary>
+		/// Raises event with thread and null-ref safety.
+		/// </summary>
+		public static void Raise<T1, T2>(this Action<T1, T2> handler, T1 args1, T2 args2)
+		{
+			if (handler != null)
+				handler(args1, args2);
 		}
 	}
 }

@@ -337,6 +337,8 @@ namespace Aura.Channel.Network.Handlers
 			// TODO: What if there's no space for the gold? Space check?
 			creature.Inventory.AddGold(sellingPrice);
 
+			ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item);
+
 		L_End:
 			Send.NpcShopSellItemR(creature);
 		}
