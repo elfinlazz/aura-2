@@ -329,17 +329,16 @@ namespace Aura.Channel.Scripting
 				{
 					// Error msg
 					Log.WriteLine((!err.IsWarning ? LogLevel.Error : LogLevel.Warning), "In {0} on line {1}, column {2}", err.File, err.Line, err.Column);
-					Log.WriteLine(LogLevel.None, "          " + err.Message);
+					Log.WriteLine(LogLevel.None, "          {0}", err.Message);
 
 					// Display lines around the error
-					int startIdx = Math.Max(1, Math.Min(lines.Length, err.Line));
-					for (int i = startIdx - 1; i < startIdx + 2; ++i)
+					int startLine = Math.Max(1, err.Line - 1);
+					int endLine = Math.Min(lines.Length, startLine + 2);
+					for (int i = startLine; i <= endLine; ++i)
 					{
 						// Make sure we don't get out of range.
-						// (Does ReadAllLines trim the input?)
-						string line = "";
-						if (i <= lines.Length)
-							line = lines[Math.Max(0, i - 1)];
+						// (ReadAllLines "trims" the input)
+						var line = (i <= lines.Length) ? lines[i - 1] : "";
 
 						Log.WriteLine(LogLevel.None, "  {2} {0:0000}: {1}", i, line, (err.Line == i ? '*' : ' '));
 					}
