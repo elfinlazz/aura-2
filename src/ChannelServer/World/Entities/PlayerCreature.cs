@@ -122,5 +122,17 @@ namespace Aura.Channel.World.Entities
 
 			return (!creature.IsPlayer && !creature.Has(CreatureStates.GoodNpc));
 		}
+
+		/// <summary>
+		/// Players survive when they had more than half of their life left.
+		/// </summary>
+		/// <param name="damage"></param>
+		/// <param name="from"></param>
+		/// <param name="lifeBefore"></param>
+		/// <returns></returns>
+		protected override bool ShouldSurvive(float damage, Creature from, float lifeBefore)
+		{
+			return (lifeBefore >= this.LifeMax / 2);
+		}
 	}
 }

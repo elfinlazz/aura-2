@@ -969,15 +969,21 @@ namespace Aura.Channel.World.Entities
 		public void TakeDamage(float damage, Creature from)
 		{
 			var lifeBefore = this.Life;
-			var hadHalf = (this.Life >= this.LifeMax / 2);
 
 			this.Life -= damage;
 
-			if (this.Life < 0 && !(this.IsPlayer && hadHalf))
+			if (this.Life < 0 && !this.ShouldSurvive(damage, from, lifeBefore))
 				this.Kill(from);
 		}
 
-		//protected abstract bool ShouldSurvive(float damage);
+		/// <summary>
+		/// Returns true if creature should go into deadly by the attack.
+		/// </summary>
+		/// <param name="damage"></param>
+		/// <param name="from"></param>
+		/// <param name="lifeBefore"></param>
+		/// <returns></returns>
+		protected abstract bool ShouldSurvive(float damage, Creature from, float lifeBefore);
 
 		/// <summary>
 		/// Kills creature.

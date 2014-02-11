@@ -132,5 +132,24 @@ namespace Aura.Channel.World.Entities
 
 			Send.CombatMessage(killer, "+{0} EXP", exp);
 		}
+
+		/// <summary>
+		/// NPCs may survive randomly.
+		/// </summary>
+		/// <remarks>
+		/// http://wiki.mabinogiworld.com/view/Stats#Life
+		/// More Will supposedly increases the chance. Unknown if this
+		/// applies to players as well. Before certain Gs, NPCs weren't
+		/// able to survive attacks under any circumstances.
+		/// </remarks>
+		/// <param name="damage"></param>
+		/// <param name="from"></param>
+		/// <param name="lifeBefore"></param>
+		/// <returns></returns>
+		protected override bool ShouldSurvive(float damage, Creature from, float lifeBefore)
+		{
+			// Actual formula unknown.
+			return ((this.Will * 10) + RandomProvider.Get().Next(1001)) > 999;
+		}
 	}
 }
