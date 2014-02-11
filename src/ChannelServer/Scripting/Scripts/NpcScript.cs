@@ -25,7 +25,7 @@ namespace Aura.Channel.Scripting.Scripts
 			get
 			{
 				if (_player == null)
-					throw new Exception("NpcScript: Missing player in " + this.ScriptFilePath);
+					throw new Exception("NpcScript: Missing player in " + this.GetType().Name);
 				return _player;
 			}
 			set { _player = value; }
@@ -49,6 +49,9 @@ namespace Aura.Channel.Scripting.Scripts
 			yield break;
 		}
 
+		/// <summary>
+		/// Sends Close, with the standard ending phrase.
+		/// </summary>
 		public virtual void EndConversation()
 		{
 			Close("(You ended your conversation with <npcname/>.)");

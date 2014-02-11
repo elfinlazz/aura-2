@@ -996,9 +996,9 @@ namespace Aura.Channel.World.Entities
 			Send.IsNowDead(this);
 			Send.SetFinisher(this, 0);
 
-			//EventManager.CreatureEvents.OnCreatureKilled(creature, killer);
-			//if (killer is MabiPC)
-			//    EventManager.PlayerEvents.OnKilledByPlayer(creature, killer);
+			ChannelServer.Instance.Events.OnCreatureKilled(this, killer);
+			if (killer != null && killer.IsPlayer)
+				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer);
 		}
 
 		/// <summary>
