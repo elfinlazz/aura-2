@@ -5827,9 +5827,9 @@
 60052,"Item Illusion T46","Item Illusion T46",14,1,300,,no,2,2,15,1,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 60053,"Bait","Bait",14,1,1,,no,2,2,57,57,57,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 60054,"Wood Board","Wood Plate",14,1,5,,no,1,1,13,13,13,1200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-60059,"Courcle Taming Bait","Bait Can",14,1,10,,no,1,1,15,0,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-60060,"Ruwai Taming Bait","Bait Can",14,1,10,,no,1,1,15,0,0,600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-60061,"Tupai Taming Bait","Bait Can",14,1,10,,no,1,1,15,0,0,900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+60059,"Courcle Taming Bait","Bait Can",14,1,100,,no,1,1,15,0,0,4000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+60060,"Ruwai Taming Bait","Bait Can",14,1,100,,no,1,1,15,0,0,6000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+60061,"Tupai Taming Bait","Bait Can",14,1,100,,no,1,1,15,0,0,9000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 60062,"Fishing Contest Bait Tin","Bait Can For Fishing Competition",14,1,300,,no,2,2,16,0,0,1200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 60063,"Gourmet Bait Feeder","Bait Can For Fishing Promotion",14,1,300,,no,2,2,26,0,0,1200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 60064,"Large Catch Bait Feeder","Bait Can For Fishing Promotion",14,1,300,,no,2,2,27,0,0,1200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -7641,36 +7641,36 @@
 50824,"Macerated Soymilk","Macerated Soymilk",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{}
 50825,"Meat Broth","Meat Broth",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{}
 50826,"Steamed Cabbage&Bean","Steamed Cabbage&Bean",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{}
-51001,"HP 10 Potion","Life 10 Potion",501,1,10,,yes,1,1,21,22,13,500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); Poison(cr, 0.3); },{},{}
-51002,"HP 30 Potion","Life 30 Potion",501,1,10,,yes,1,1,21,22,13,1400,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 30, 0, 0); Poison(cr, 0.3); },{},{}
-51003,"HP 50 Potion","Life 50 Potion",501,1,10,,yes,1,1,21,22,13,2200,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 50, 0, 0); Poison(cr, 0.2); },{},{}
-51004,"HP 100 Potion","Life 100 Potion",501,1,10,,yes,1,1,21,22,13,4000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 100, 0, 0); Poison(cr, 0.2); },{},{}
-51005,"HP 300 Potion","Life 300 Potion",501,1,10,,yes,1,1,21,22,22,11000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 300, 0, 0); Poison(cr, 0.2); },{},{}
-51006,"MP 10 Potion","Mana 10 Potion",501,1,10,,yes,1,1,20,22,13,150,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 10, 0); Poison(cr, 0.2); },{},{}
-51007,"MP 30 Potion","Mana 30 Potion",501,1,10,,yes,1,1,20,22,13,450,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 30, 0); Poison(cr, 0.2); },{},{}
-51008,"MP 50 Potion","Mana 50 Potion",501,1,10,,yes,1,1,20,22,13,750,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 50, 0); Poison(cr, 0.1); },{},{}
-51009,"MP 100 Potion","Mana 100 Potion",501,1,10,,yes,1,1,20,22,13,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 100, 0); Poison(cr, 0.1); },{},{}
-51010,"MP 300 Potion","Mana 300 Potion",501,1,10,,yes,1,1,20,22,22,4500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 300, 0); Poison(cr, 0.1); },{},{}
-51011,"Stamina 10 Potion","Stamina 10 Potion",501,1,10,,yes,1,1,32,22,13,500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 10); Poison(cr, 0.2); },{},{}
-51012,"Stamina 30 Potion","Stamina 30 Potion",501,1,10,,yes,1,1,32,22,13,1400,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 30); Poison(cr, 0.2); },{},{}
-51013,"Stamina 50 Potion","Stamina 50 Potion",501,1,10,,yes,1,1,32,22,13,2200,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 50); Poison(cr, 0.1); },{},{}
-51014,"Stamina 100 Potion","Stamina 100 Potion",501,1,10,,yes,1,1,32,22,13,4000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 100); Poison(cr, 0.1); },{},{}
-51015,"Stamina 300 Potion","Stamina 300 Potion",501,1,10,,yes,1,1,32,22,22,11000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 300); Poison(cr, 0.1); },{},{}
-51016,"Wound Remedy 10 Potion","Wound Recovery 10 Potion",501,1,10,,yes,1,1,25,22,13,5000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 10); Poison(cr, 0.5); },{},{}
-51017,"Wound Remedy 30 Potion","Wound Recovery 30 Potion",501,1,10,,yes,1,1,25,22,13,15000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 30); Poison(cr, 0.5); },{},{}
-51018,"Wound Remedy 50 Potion","Wound Recovery 50 Potion",501,1,10,,yes,1,1,25,22,13,25000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 50); Poison(cr, 0.5); },{},{}
-51019,"Wound Remedy 100 Potion","Wound Recovery 100 Potion",501,1,10,,yes,1,1,25,22,13,50000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 100); Poison(cr, 0.5); },{},{}
-51020,"Wound Remedy 300 Potion","Wound Recovery 300 Potion",501,1,10,,yes,1,1,25,22,13,150000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 300); Poison(cr, 0.5); },{},{}
-51021,"HP && MP 10 Potion","Life and Mana 10 Potion",501,1,10,,yes,1,1,30,22,13,250,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 10, 0); Poison(cr, 0.3); },{},{}
-51022,"HP && MP 30 Potion","Life and Mana 30 Potion",501,1,10,,yes,1,1,30,22,13,750,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 30, 30, 0); Poison(cr, 0.3); },{},{}
-51023,"HP && MP 50 Potion","Life and Mana 50 Potion",501,1,10,,yes,1,1,30,22,13,1250,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 50, 50, 0); Poison(cr, 0.3); },{},{}
-51024,"HP && MP 100 Potion","Life and Mana 100 Potion",501,1,10,,yes,1,1,30,22,13,2500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 100, 100, 0); Poison(cr, 0.3); },{},{}
-51025,"HP && MP 300 Potion","Life and Mana 300 Potion",501,1,10,,yes,1,1,30,22,13,7500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 300, 300, 0); Poison(cr, 0.3); },{},{}
-51026,"HP && Stamina 10 Potion","Life and Stamina 10 Potion",501,1,10,,yes,1,1,29,22,13,200,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 10); Poison(cr, 0.3); },{},{}
-51027,"HP && Stamina 30 Potion","Life and Stamina 30 Potion",501,1,10,,yes,1,1,29,22,22,600,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 30, 0, 30); Poison(cr, 0.3); },{},{}
-51028,"HP && Stamina 50 Potion","Life and Stamina 50 Potion",501,1,10,,yes,1,1,29,22,22,1000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 50, 0, 50); Poison(cr, 0.3); },{},{}
-51029,"HP && Stamina 100 Potion","Life and Stamina 100 Potion",501,1,10,,yes,1,1,29,22,22,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 100, 0, 100); Poison(cr, 0.3); },{},{}
-51030,"HP && Stamina 300 Potion","Life and Stamina 300 Potion",501,1,10,,yes,1,1,29,22,13,6000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 300, 0, 300); Poison(cr, 0.3); },{},{}
+51001,"HP 10 Potion","Life 10 Potion",501,1,20,,yes,1,1,21,22,13,1000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); Poison(cr, 0.3); },{},{}
+51002,"HP 30 Potion","Life 30 Potion",501,1,20,,yes,1,1,21,22,13,2800,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 30, 0, 0); Poison(cr, 0.3); },{},{}
+51003,"HP 50 Potion","Life 50 Potion",501,1,20,,yes,1,1,21,22,13,4400,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 50, 0, 0); Poison(cr, 0.2); },{},{}
+51004,"HP 100 Potion","Life 100 Potion",501,1,20,,yes,1,1,21,22,13,8000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 100, 0, 0); Poison(cr, 0.2); },{},{}
+51005,"HP 300 Potion","Life 300 Potion",501,1,20,,yes,1,1,21,22,22,22000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 300, 0, 0); Poison(cr, 0.2); },{},{}
+51006,"MP 10 Potion","Mana 10 Potion",501,1,20,,yes,1,1,20,22,13,300,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 10, 0); Poison(cr, 0.2); },{},{}
+51007,"MP 30 Potion","Mana 30 Potion",501,1,20,,yes,1,1,20,22,13,900,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 30, 0); Poison(cr, 0.2); },{},{}
+51008,"MP 50 Potion","Mana 50 Potion",501,1,20,,yes,1,1,20,22,13,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 50, 0); Poison(cr, 0.1); },{},{}
+51009,"MP 100 Potion","Mana 100 Potion",501,1,20,,yes,1,1,20,22,13,3000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 100, 0); Poison(cr, 0.1); },{},{}
+51010,"MP 300 Potion","Mana 300 Potion",501,1,20,,yes,1,1,20,22,22,9000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 300, 0); Poison(cr, 0.1); },{},{}
+51011,"Stamina 10 Potion","Stamina 10 Potion",501,1,20,,yes,1,1,32,22,13,1000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 10); Poison(cr, 0.2); },{},{}
+51012,"Stamina 30 Potion","Stamina 30 Potion",501,1,20,,yes,1,1,32,22,13,2800,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 30); Poison(cr, 0.2); },{},{}
+51013,"Stamina 50 Potion","Stamina 50 Potion",501,1,20,,yes,1,1,32,22,13,4400,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 50); Poison(cr, 0.1); },{},{}
+51014,"Stamina 100 Potion","Stamina 100 Potion",501,1,20,,yes,1,1,32,22,13,8000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 100); Poison(cr, 0.1); },{},{}
+51015,"Stamina 300 Potion","Stamina 300 Potion",501,1,20,,yes,1,1,32,22,22,22000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 300); Poison(cr, 0.1); },{},{}
+51016,"Wound Remedy 10 Potion","Wound Recovery 10 Potion",501,1,20,,yes,1,1,25,22,13,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 10); Poison(cr, 0.5); },{},{}
+51017,"Wound Remedy 30 Potion","Wound Recovery 30 Potion",501,1,20,,yes,1,1,25,22,13,30000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 30); Poison(cr, 0.5); },{},{}
+51018,"Wound Remedy 50 Potion","Wound Recovery 50 Potion",501,1,20,,yes,1,1,25,22,13,50000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 50); Poison(cr, 0.5); },{},{}
+51019,"Wound Remedy 100 Potion","Wound Recovery 100 Potion",501,1,20,,yes,1,1,25,22,13,100000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 100); Poison(cr, 0.5); },{},{}
+51020,"Wound Remedy 300 Potion","Wound Recovery 300 Potion",501,1,20,,yes,1,1,25,22,13,300000,0,0,0,0,0,0,0,0,0,0,0,0,{ Treat(cr, 300); Poison(cr, 0.5); },{},{}
+51021,"HP && MP 10 Potion","Life and Mana 10 Potion",501,1,20,,yes,1,1,30,22,13,500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 10, 0); Poison(cr, 0.3); },{},{}
+51022,"HP && MP 30 Potion","Life and Mana 30 Potion",501,1,20,,yes,1,1,30,22,13,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 30, 30, 0); Poison(cr, 0.3); },{},{}
+51023,"HP && MP 50 Potion","Life and Mana 50 Potion",501,1,20,,yes,1,1,30,22,13,2500,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 50, 50, 0); Poison(cr, 0.3); },{},{}
+51024,"HP && MP 100 Potion","Life and Mana 100 Potion",501,1,20,,yes,1,1,30,22,13,5000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 100, 100, 0); Poison(cr, 0.3); },{},{}
+51025,"HP && MP 300 Potion","Life and Mana 300 Potion",501,1,20,,yes,1,1,30,22,13,15000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 300, 300, 0); Poison(cr, 0.3); },{},{}
+51026,"HP && Stamina 10 Potion","Life and Stamina 10 Potion",501,1,20,,yes,1,1,29,22,13,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 10); Poison(cr, 0.3); },{},{}
+51027,"HP && Stamina 30 Potion","Life and Stamina 30 Potion",501,1,20,,yes,1,1,29,22,22,1200,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 30, 0, 30); Poison(cr, 0.3); },{},{}
+51028,"HP && Stamina 50 Potion","Life and Stamina 50 Potion",501,1,20,,yes,1,1,29,22,22,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 50, 0, 50); Poison(cr, 0.3); },{},{}
+51029,"HP && Stamina 100 Potion","Life and Stamina 100 Potion",501,1,20,,yes,1,1,29,22,22,4000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 100, 0, 100); Poison(cr, 0.3); },{},{}
+51030,"HP && Stamina 300 Potion","Life and Stamina 300 Potion",501,1,20,,yes,1,1,29,22,13,12000,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 300, 0, 300); Poison(cr, 0.3); },{},{}
 51031,"Full Recovery Potion","Full Recovery Potion",501,1,5,,yes,1,2,12,30,13,0,0,0,0,0,0,0,0,0,0,0,0,0,{ HealFull(cr); Poison(cr, 1.0); },{},{}
 51032,"Full Recovery Potion","Full Recovery Potion",501,1,5,,yes,1,2,12,30,13,0,0,0,0,0,0,0,0,0,0,0,0,0,{ HealFull(cr); Poison(cr, 1.0); },{},{}
 51034,"Antidote Potion","Antidote Potion",501,1,5,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -8117,8 +8117,8 @@
 85815,"Double Training EXP Potion - Music Skill","Double Training EXP Potion - Music Skill",501,1,100,,yes,1,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 85816,"Double Training EXP Potion - Marionette Skill","Double Training EXP Potion - Marionette Skill",501,1,100,,yes,1,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 85824,"Movement Speed 40% Increase Potion (15 secs) (Event)","Ground Speed Up Potion",501,1,20,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-90100,"HP 10 Potion","Life 10 Potion",501,1,10,,yes,1,1,21,22,13,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); Poison(cr, 0.3); },{},{}
-90101,"Stamina 10 Potion","Stamina 10 Potion",501,1,10,,yes,1,1,32,22,13,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 10); Poison(cr, 0.2); },{},{}
+90100,"HP 10 Potion","Life 10 Potion",501,1,20,,yes,1,1,21,22,13,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); Poison(cr, 0.3); },{},{}
+90101,"Stamina 10 Potion","Stamina 10 Potion",501,1,20,,yes,1,1,32,22,13,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 10); Poison(cr, 0.2); },{},{}
 90102,"Berry","Berry",501,0,1,,yes,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{}
 91000,"Tendering Potion","Combat Power Weakness Potion",501,0,1,,yes,1,2,25,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91001,"HP Buff Potion","Life Boost Potion",501,1,10,,yes,1,2,12,21,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
@@ -8245,20 +8245,20 @@
 91912,"Fishing Train Potion","Fishing Train Potion",501,0,1,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91923,"Refine Train Potion","Refine Train Potion",501,0,1,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92000,"HP 10 Potion for Premium PC Cafe","Life 10 Potion",501,1,20,,yes,1,1,21,22,13,700,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); Poison(cr, 0.3); },{},{}
-92001,"HP 30 Potion for Premium PC Cafe","Life 30 Potion",501,1,10,,yes,1,1,21,22,13,980,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); Poison(cr, 0.3); },{},{}
-92002,"HP 50 Potion for Premium PC Cafe","Life 50 Potion",501,1,10,,yes,1,1,21,22,13,1540,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 50, 0, 0); Poison(cr, 0.2); },{},{}
-92003,"HP 100 Potion for Premium PC Cafe","Life 100 Potion",501,1,10,,yes,1,1,21,22,13,2800,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 100, 0, 0); Poison(cr, 0.2); },{},{}
-92004,"HP 300 Potion for Premium PC Cafe","Life 300 Potion",501,1,10,,yes,1,1,21,22,22,7700,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 300, 0, 0); Poison(cr, 0.2); },{},{}
-92005,"MP 10 Potion for Premium PC Cafe","Mana 10 Potion",501,1,10,,yes,1,1,20,22,13,105,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 10, 0); Poison(cr, 0.2); },{},{}
-92006,"MP 30 Potion for Premium PC Cafe","Mana 30 Potion",501,1,10,,yes,1,1,20,22,13,315,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 30, 0); Poison(cr, 0.2); },{},{}
-92007,"MP 50 Potion for Premium PC Cafe","Mana 50 Potion",501,1,10,,yes,1,1,20,22,13,525,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 50, 0); Poison(cr, 0.1); },{},{}
-92008,"MP 100 Potion for Premium PC Cafe","Mana 100 Potion",501,1,10,,yes,1,1,20,22,13,1050,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 100, 0); Poison(cr, 0.1); },{},{}
-92009,"MP 300 Potion for Premium PC Cafe","Mana 300 Potion",501,1,10,,yes,1,1,20,22,22,3150,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 300, 0); Poison(cr, 0.1); },{},{}
-92010,"Stamina 10 Potion for Premium PC Cafe","Stamina 10 Potion",501,1,10,,yes,1,1,32,22,13,350,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 10); Poison(cr, 0.2); },{},{}
-92011,"Stamina 30 Potion for Premium PC Cafe","Stamina 30 Potion",501,1,10,,yes,1,1,32,22,13,980,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 30); Poison(cr, 0.2); },{},{}
-92012,"Stamina 50 Potion for Premium PC Cafe","Stamina 50 Potion",501,1,10,,yes,1,1,32,22,13,1540,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 50); Poison(cr, 0.1); },{},{}
-92013,"Stamina 100 Potion for Premium PC Cafe","Stamina 100 Potion",501,1,10,,yes,1,1,32,22,13,2800,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 100); Poison(cr, 0.1); },{},{}
-92014,"Stamina 300 Potion for Premium PC Cafe","Stamina 300 Potion",501,1,10,,yes,1,1,32,22,22,7700,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 300); Poison(cr, 0.1); },{},{}
+92001,"HP 30 Potion for Premium PC Cafe","Life 30 Potion",501,1,20,,yes,1,1,21,22,13,1960,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 30, 0, 0); Poison(cr, 0.3); },{},{}
+92002,"HP 50 Potion for Premium PC Cafe","Life 50 Potion",501,1,20,,yes,1,1,21,22,13,3080,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 50, 0, 0); Poison(cr, 0.2); },{},{}
+92003,"HP 100 Potion for Premium PC Cafe","Life 100 Potion",501,1,20,,yes,1,1,21,22,13,5600,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 100, 0, 0); Poison(cr, 0.2); },{},{}
+92004,"HP 300 Potion for Premium PC Cafe","Life 300 Potion",501,1,20,,yes,1,1,21,22,22,15400,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 300, 0, 0); Poison(cr, 0.2); },{},{}
+92005,"MP 10 Potion for Premium PC Cafe","Mana 10 Potion",501,1,20,,yes,1,1,20,22,13,210,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 10, 0); Poison(cr, 0.2); },{},{}
+92006,"MP 30 Potion for Premium PC Cafe","Mana 30 Potion",501,1,20,,yes,1,1,20,22,13,630,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 30, 0); Poison(cr, 0.2); },{},{}
+92007,"MP 50 Potion for Premium PC Cafe","Mana 50 Potion",501,1,20,,yes,1,1,20,22,13,1050,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 50, 0); Poison(cr, 0.1); },{},{}
+92008,"MP 100 Potion for Premium PC Cafe","Mana 100 Potion",501,1,20,,yes,1,1,20,22,13,2100,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 100, 0); Poison(cr, 0.1); },{},{}
+92009,"MP 300 Potion for Premium PC Cafe","Mana 300 Potion",501,1,20,,yes,1,1,20,22,22,6300,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 300, 0); Poison(cr, 0.1); },{},{}
+92010,"Stamina 10 Potion for Premium PC Cafe","Stamina 10 Potion",501,1,20,,yes,1,1,32,22,13,700,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 10); Poison(cr, 0.2); },{},{}
+92011,"Stamina 30 Potion for Premium PC Cafe","Stamina 30 Potion",501,1,20,,yes,1,1,32,22,13,1960,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 30); Poison(cr, 0.2); },{},{}
+92012,"Stamina 50 Potion for Premium PC Cafe","Stamina 50 Potion",501,1,20,,yes,1,1,32,22,13,3080,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 50); Poison(cr, 0.1); },{},{}
+92013,"Stamina 100 Potion for Premium PC Cafe","Stamina 100 Potion",501,1,20,,yes,1,1,32,22,13,5600,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 100); Poison(cr, 0.1); },{},{}
+92014,"Stamina 300 Potion for Premium PC Cafe","Stamina 300 Potion",501,1,20,,yes,1,1,32,22,22,15400,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 300); Poison(cr, 0.1); },{},{}
 93000,"Eau De Cologne Lavender","Eau De Cologne Lavender",501,1,10,,yes,1,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); },{},{}
 93001,"Eau De Toilette Lavender","Eau De Toilette Lavender",501,1,10,,yes,1,2,12,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); },{},{}
 93002,"Eau De Perfume Lavender","Eau De Perfume Lavender",501,1,10,,yes,1,2,12,0,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); },{},{}
@@ -10480,27 +10480,27 @@
 64608,"Belvast Seal","Belfast Seal of Owen",1001,1,100,,no,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 64609,"Broken Belvast Seal","Broken Belfast Seal of Owen",1001,1,1000,,no,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65001,"Ice Mine","Ice Mine",1001,1,10,,yes,2,1,12,73,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65002,"Fire Crystal","Crystal of Fire",1001,1,50,,no,1,1,47,66,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65003,"Water Crystal","Crystal of Water",1001,1,50,,no,1,1,20,27,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65004,"Wind Crystal","Crystal of Wind",1001,1,50,,no,1,1,31,73,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65005,"Clay Crystal","Crystal of Earth",1001,1,50,,no,1,1,52,68,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65006,"Fireball Crystal","Crystal of Fire Ball",1001,1,50,,yes,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65007,"Ice Spear Crystal","Crystal of Ice Spear",1001,1,50,,yes,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65008,"Thunder Crystal","Crystal of Thunder",1001,1,50,,yes,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65009,"Life Drain Crystal","Crystal of Life Drain",1001,1,10,,yes,1,1,19,29,0,3000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65010,"Barrier Spikes Crystal","Crystal of Barrier",1001,1,10,,yes,1,1,52,12,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65002,"Fire Crystal (100)","Crystal of Fire",1001,1,100,,no,1,1,47,66,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65003,"Water Crystal (100)","Crystal of Water",1001,1,100,,no,1,1,20,27,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65004,"Wind Crystal (100)","Crystal of Wind",1001,1,100,,no,1,1,31,73,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65005,"Clay Crystal (100)","Crystal of Earth",1001,1,100,,no,1,1,52,68,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65006,"Fireball Crystal","Crystal of Fire Ball",1001,1,100,,yes,1,1,12,12,12,2000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65007,"Ice Spear Crystal","Crystal of Ice Spear",1001,1,100,,yes,1,1,12,12,12,2000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65008,"Thunder Crystal","Crystal of Thunder",1001,1,100,,yes,1,1,12,12,12,2000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65009,"Life Drain Crystal","Crystal of Life Drain",1001,1,100,,yes,1,1,19,29,0,30000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65010,"Barrier Spikes Crystal","Crystal of Barrier",1001,1,100,,yes,1,1,52,12,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65011,"Crystal of Water Cannon","Crystal of Water Cannon",1001,1,50,,no,1,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65012,"(Temp)","temp",1001,1,50,,no,1,1,12,12,12,540,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65013,"Stone Golem Crystal","Crystal of Rock Golem",1001,1,5,,yes,1,1,52,31,12,1510,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65014,"Forest Golem Crystal","Crystal of Forest Golem",1001,1,5,,yes,1,1,52,19,12,3780,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65015,"Sulfur Golem Crystal","Crystal of Sulfur Golem",1001,1,5,,yes,1,1,52,53,12,5900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65016,"Snow Golem Crystal","Crystal of White Golem",1001,1,10,,yes,1,1,52,34,12,13700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65013,"Stone Golem Crystal","Crystal of Rock Golem",1001,1,50,,yes,1,1,52,31,12,15100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65014,"Forest Golem Crystal","Crystal of Forest Golem",1001,1,50,,yes,1,1,52,19,12,37800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65015,"Sulfur Golem Crystal","Crystal of Sulfur Golem",1001,1,50,,yes,1,1,52,53,12,59000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65016,"Snow Golem Crystal","Crystal of White Golem",1001,1,50,,yes,1,1,52,34,12,68500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65017,"Low-Grade Cuilin Stone","Low Grade Cuilin Stone",1001,1,10,,no,1,1,12,12,12,780,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65018,"Common Cuilin Stone","Common Cuilin Stone",1001,1,10,,no,1,1,12,12,12,1150,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65019,"Fine Cuilin Stone","High Grade Cuilin Stone",1001,1,10,,no,1,1,12,12,12,1400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65020,"Finest Cuilin Stone","Highest Grade Cuilin Stone",1001,1,10,,no,1,1,12,12,12,2000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65021,"Hollow Crystal for Life Drain","Empty Crystal of Life Drain",1001,1,50,,no,1,1,12,12,12,1500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65022,"Barrier Spikes Crystal Supply","Crystal of Barrier",1001,1,10,,yes,1,1,52,12,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65022,"Barrier Spikes Crystal Supply","Crystal of Barrier",1001,1,100,,yes,1,1,52,12,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65023,"Ice Mine","Ice Mine",1001,1,10,,yes,2,1,12,73,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65028,"Mystic Pearl","The Strange Pearl",1001,1,10,,no,1,1,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65029,"Arat Crystal","Crystal of Arat",1001,1,50,,no,1,1,12,12,12,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -10516,11 +10516,11 @@
 65042,"[Bi] memo","[Bi] memo",1001,0,1,,no,1,1,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65043,"[No] memo","[No] memo",1001,0,1,,no,1,1,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65044,"[Gi] memo","[Gi] memo",1001,0,1,,no,1,1,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65045,"Cloud Crystal","Crystal of Cloud",1001,1,10,,yes,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65046,"Blizzard Crystal","Crystal of Snowstorm",1001,1,50,,yes,1,1,12,12,12,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65045,"Cloud Crystal","Crystal of Cloud",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65046,"Blizzard Crystal","Crystal of Snowstorm",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65047,"Dark Life Drain Crystal","Dark Crystal of Life Drain",1001,1,10,,no,1,1,83,29,0,3000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65048,"Magic Golem Crystal","Crystal of Magic Golem",1001,1,5,,yes,1,1,29,40,12,15000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-65049,"Shock Crystal","Crystal of Spark",1001,1,30,,yes,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65048,"Magic Golem Crystal","Crystal of Magic Golem",1001,1,50,,yes,1,1,29,40,12,150000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+65049,"Shock Crystal","Crystal of Spark",1001,1,100,,yes,1,1,12,12,12,3300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65050,"Shadow Realm Royal Library Key","Key for Library",1001,0,1,,no,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65051,"Falias Fragment","Fragment of Falias",1001,0,1,,no,2,1,12,12,12,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 65053,"Fire Crystal","Crystal of Fire",1001,1,300,,no,1,1,47,66,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
