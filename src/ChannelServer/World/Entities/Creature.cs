@@ -1004,7 +1004,7 @@ namespace Aura.Channel.World.Entities
 
 			ChannelServer.Instance.Events.OnCreatureKilled(this, killer);
 			if (killer != null && killer.IsPlayer)
-				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer);
+				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer as PlayerCreature);
 		}
 
 		/// <summary>

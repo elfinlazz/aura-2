@@ -70,7 +70,7 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 			var unk = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
+			var creature = client.GetPlayerCreature(packet.Id);
 			if (creature == null || creature.Region == null)
 				return;
 
@@ -138,7 +138,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var itemId = packet.GetLong();
 
-			var creature = client.GetCreature(packet.Id);
+			var creature = client.GetPlayerCreature(packet.Id);
 			if (creature == null)
 				return;
 
@@ -297,7 +297,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var entityId = packet.GetLong();
 
-			var creature = client.GetCreature(packet.Id);
+			var creature = client.GetPlayerCreature(packet.Id);
 			if (creature == null)
 				return;
 

@@ -205,6 +205,63 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends AcquireInfo to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		public static void AcquireItemInfo(Creature creature, int itemId, int amount)
+		{
+			var packet = new Packet(Op.AcquireInfo, creature.EntityId);
+			packet.PutString("<xml type='item' classid='{0}' value='{1}'/>", itemId, amount);
+			packet.PutInt(3000);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends AcquireInfo to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="itemEntityId"></param>
+		public static void AcquireItemInfo(Creature creature, long itemEntityId)
+		{
+			var packet = new Packet(Op.AcquireInfo, creature.EntityId);
+			packet.PutString("<xml type='item' objectid='{0}'/>", itemEntityId);
+			packet.PutInt(3000);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends AcquireInfo to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="itemEntityId"></param>
+		public static void AcquireExpInfo(Creature creature, int amount)
+		{
+			var packet = new Packet(Op.AcquireInfo, creature.EntityId);
+			packet.PutString("<xml type='exp' value='{0}'/>", amount);
+			packet.PutInt(3000);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends AcquireInfo to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="itemEntityId"></param>
+		public static void AcquireGoldInfo(Creature creature, int amount)
+		{
+			var packet = new Packet(Op.AcquireInfo, creature.EntityId);
+			packet.PutString("<xml type='gold' value='{0}'/>", amount);
+			packet.PutInt(3000);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends DeadMenuR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>

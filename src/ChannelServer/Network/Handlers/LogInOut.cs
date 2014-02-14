@@ -217,7 +217,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var unk1 = packet.GetByte(); // 1 | 2 (maybe login vs exit?)
 
-			ChannelServer.Instance.Events.OnPlayerDisconnect(client.Controlling);
+			ChannelServer.Instance.Events.OnPlayerDisconnect(client.Controlling as PlayerCreature);
 
 			Log.Info("'{0}' is closing the connection. Saving...", client.Account.Id);
 

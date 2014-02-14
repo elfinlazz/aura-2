@@ -88,7 +88,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var unkByte = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
+			var creature = client.GetPlayerCreature(packet.Id);
 			if (creature == null)
 				return;
 

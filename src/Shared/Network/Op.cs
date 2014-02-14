@@ -244,7 +244,7 @@ namespace Aura.Shared.Network
 		public const int CombatAttackR = 0x7D01;
 
 		public const int EventInform = 0x88B8;
-		public const int QuestNew = 0x8CA0;
+		public const int NewQuest = 0x8CA0;
 		public const int QuestClear = 0x8CA1;
 		public const int QuestUpdate = 0x8CA2;
 		public const int QuestComplete = 0x8CA3;

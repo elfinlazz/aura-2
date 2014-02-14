@@ -18,6 +18,7 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using Aura.Channel.World;
+using Aura.Channel.World.Quests;
 
 namespace Aura.Channel.Scripting
 {
@@ -31,6 +32,8 @@ namespace Aura.Channel.Scripting
 
 		private Dictionary<int, ItemScript> _itemScripts;
 		private Dictionary<string, Type> _aiScripts;
+		private Dictionary<int, QuestScript> _questScripts;
+
 		private Dictionary<int, CreatureSpawn> _creatureSpawns;
 
 		public ScriptVariables GlobalVars { get; protected set; }
@@ -43,6 +46,7 @@ namespace Aura.Channel.Scripting
 
 			_itemScripts = new Dictionary<int, ItemScript>();
 			_aiScripts = new Dictionary<string, Type>();
+			_questScripts = new Dictionary<int, QuestScript>();
 
 			_creatureSpawns = new Dictionary<int, CreatureSpawn>();
 
@@ -83,6 +87,9 @@ namespace Aura.Channel.Scripting
 		private void LoadScripts()
 		{
 			Log.Info("Loading scripts...");
+
+			_creatureSpawns.Clear();
+			_questScripts.Clear();
 
 			if (!File.Exists(IndexPath))
 			{
@@ -371,13 +378,13 @@ namespace Aura.Channel.Scripting
 						continue;
 
 					var baseScript = Activator.CreateInstance(type) as BaseScript;
+					baseScript.ScriptFilePath = filePath;
 
 					// Try to load as NpcScript
 					if (baseScript is NpcScript)
 					{
 						var npcScript = baseScript as NpcScript;
 
-						npcScript.ScriptFilePath = filePath;
 						npcScript.NPC.AI = this.GetAi("npc_normal", npcScript.NPC);
 
 						npcScript.Load();
@@ -396,6 +403,28 @@ namespace Aura.Channel.Scripting
 
 							region.AddCreature(npcScript.NPC);
 						}
+					}
+					// Try to load as QuestScript
+					else if (baseScript is QuestScript)
+					{
+						var questScript = baseScript as QuestScript;
+						questScript.Load();
+
+						if (questScript.Id == 0 || _questScripts.ContainsKey(questScript.Id))
+						{
+							Log.Error("{1}.Load: Invalid id or already in use ({0}).", questScript.Id, type.Name);
+							continue;
+						}
+
+						if (questScript.Objectives.Count == 0)
+						{
+							Log.Error("{1}.Load: Quest '{0}' doesn't have any objectives.", questScript.Id, type.Name);
+							continue;
+						}
+
+						questScript.Init();
+
+						_questScripts[questScript.Id] = questScript;
 					}
 					else
 					{
@@ -595,6 +624,18 @@ namespace Aura.Channel.Scripting
 		{
 			ChannelDb.Instance.SaveVars("Aura System", 0, this.GlobalVars.Perm);
 			Log.Info("Saved global script variables.");
+		}
+
+		/// <summary>
+		/// Returs quest data or null.
+		/// </summary>
+		/// <param name="questId"></param>
+		/// <returns></returns>
+		public QuestScript GetQuestScript(int questId)
+		{
+			QuestScript script;
+			_questScripts.TryGetValue(questId, out script);
+			return script;
 		}
 	}
 }
