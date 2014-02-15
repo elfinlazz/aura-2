@@ -41,7 +41,7 @@ public class DuncanBaseScript : NpcScript
 			"As he speaks, his voice resonates with a kind of gentle authority."
 		);
 		
-		//Hook("after_intro");
+		Call(Hook("after_intro"));
 		
 		Msg("Please let me know if you need anything.", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrive Lost Items", "@lostandfound"));
 		var selected = Select();
@@ -57,7 +57,7 @@ public class DuncanBaseScript : NpcScript
 					ShowKeywords();
 					var keyword = Select();
 					
-					//Hook("keywords", keyword);
+					Call(Hook("before_keywords", keyword));
 					
 					switch (keyword)
 					{
@@ -69,7 +69,6 @@ public class DuncanBaseScript : NpcScript
 						default:              Msg("I don't know anything about that..."); break;
 					}
 				}
-				break;
 				
 			case "@shop":
 				Msg("Choose a quest you would like to do.");

@@ -19,6 +19,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using Aura.Channel.World;
 using Aura.Channel.World.Quests;
+using System.Collections;
 
 namespace Aura.Channel.Scripting
 {
@@ -34,6 +35,8 @@ namespace Aura.Channel.Scripting
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<int, QuestScript> _questScripts;
 
+		private Dictionary<string, Dictionary<string, List<ScriptHook>>> _hooks;
+
 		private Dictionary<int, CreatureSpawn> _creatureSpawns;
 
 		public ScriptVariables GlobalVars { get; protected set; }
@@ -47,6 +50,8 @@ namespace Aura.Channel.Scripting
 			_itemScripts = new Dictionary<int, ItemScript>();
 			_aiScripts = new Dictionary<string, Type>();
 			_questScripts = new Dictionary<int, QuestScript>();
+
+			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
 
 			_creatureSpawns = new Dictionary<int, CreatureSpawn>();
 
@@ -90,6 +95,7 @@ namespace Aura.Channel.Scripting
 
 			_creatureSpawns.Clear();
 			_questScripts.Clear();
+			_hooks.Clear();
 
 			if (!File.Exists(IndexPath))
 			{
@@ -637,5 +643,45 @@ namespace Aura.Channel.Scripting
 			_questScripts.TryGetValue(questId, out script);
 			return script;
 		}
+
+		/// <summary>
+		/// Calls delegates for npc and hook.
+		/// </summary>
+		/// <param name="npcName"></param>
+		/// <param name="hook"></param>
+		/// <returns></returns>
+		public IEnumerable<ScriptHook> GetHooks(string npcName, string hook)
+		{
+			Dictionary<string, List<ScriptHook>> hooks;
+			_hooks.TryGetValue(npcName, out hooks);
+			if (hooks == null)
+				return Enumerable.Empty<ScriptHook>();
+
+			List<ScriptHook> calls;
+			hooks.TryGetValue(hook, out calls);
+			if (calls == null)
+				return Enumerable.Empty<ScriptHook>();
+
+			return calls;
+		}
+
+		/// <summary>
+		/// Registers hook delegate.
+		/// </summary>
+		/// <param name="npcName"></param>
+		/// <param name="hook"></param>
+		/// <param name="func"></param>
+		public void AddHook(string npcName, string hook, ScriptHook func)
+		{
+			if (!_hooks.ContainsKey(npcName))
+				_hooks[npcName] = new Dictionary<string, List<ScriptHook>>();
+
+			if (!_hooks[npcName].ContainsKey(hook))
+				_hooks[npcName][hook] = new List<ScriptHook>();
+
+			_hooks[npcName][hook].Add(func);
+		}
 	}
+
+	public delegate IEnumerable ScriptHook(NpcScript npc, params object[] args);
 }

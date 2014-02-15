@@ -243,6 +243,29 @@ namespace Aura.Channel.Scripting.Scripts
 			return Player.Inventory.Add(itemId, amount);
 		}
 
+		/// <summary>
+		/// Execute Hook! Harhar.
+		/// </summary>
+		/// <remarks>
+		/// Runs all hook funcs, one by one.
+		/// </remarks>
+		/// <param name="hookName"></param>
+		/// <returns></returns>
+		protected IEnumerable Hook(string hookName, params object[] args)
+		{
+			foreach (var hook in ChannelServer.Instance.ScriptManager.GetHooks(this.NPC.Name, hookName))
+			{
+				foreach (var call in hook(this, args))
+				{
+					var result = call as string;
+					if (result != null && result == "break_hook")
+						yield break;
+
+					yield return call;
+				}
+			}
+		}
+
 		// Dialog
 		// ------------------------------------------------------------------
 
@@ -252,7 +275,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
-		protected void Msg(Hide hide, string message, params DialogElement[] elements)
+		public void Msg(Hide hide, string message, params DialogElement[] elements)
 		{
 			var mes = new DialogElement();
 
@@ -273,7 +296,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
-		protected void Msg(string message, params DialogElement[] elements)
+		public void Msg(string message, params DialogElement[] elements)
 		{
 			var mes = new DialogElement();
 			mes.Add(new DialogText(message));
@@ -287,7 +310,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="elements"></param>
-		protected void Msg(params DialogElement[] elements)
+		public void Msg(params DialogElement[] elements)
 		{
 			var xml = string.Format(
 				"<call convention='thiscall' syncmode='non-sync'>" +
@@ -310,7 +333,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="message">Dialog closes immediately if null.</param>
-		protected void Close(string message = null)
+		public void Close(string message = null)
 		{
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
 			this.Player.Client.NpcSession.Clear();
@@ -371,52 +394,52 @@ namespace Aura.Channel.Scripting.Scripts
 		// Dialog factory
 		// ------------------------------------------------------------------
 
-		protected DialogButton Button(string text, string keyword = null, string onFrame = null)
+		public DialogButton Button(string text, string keyword = null, string onFrame = null)
 		{
 			return new DialogButton(text, keyword, onFrame);
 		}
 
-		protected DialogBgm SetBgm(string file)
+		public DialogBgm SetBgm(string file)
 		{
 			return new DialogBgm(file);
 		}
 
-		protected DialogImage Image(string name, bool localize = false, int width = 0, int height = 0)
+		public DialogImage Image(string name, bool localize = false, int width = 0, int height = 0)
 		{
 			return new DialogImage(name, localize, width, height);
 		}
 
-		protected DialogList List(string text, int height, string cancelKeyword, params DialogButton[] elements)
+		public DialogList List(string text, int height, string cancelKeyword, params DialogButton[] elements)
 		{
 			return new DialogList(text, height, cancelKeyword, elements);
 		}
 
-		protected DialogList List(string text, params DialogButton[] elements)
+		public DialogList List(string text, params DialogButton[] elements)
 		{
 			return this.List(text, (int)elements.Length, elements);
 		}
 
-		protected DialogList List(string text, int height, params DialogButton[] elements)
+		public DialogList List(string text, int height, params DialogButton[] elements)
 		{
 			return this.List(text, height, "@end", elements);
 		}
 
-		protected DialogInput Input(string title = "Input", string text = "", byte maxLength = 20, bool cancelable = true)
+		public DialogInput Input(string title = "Input", string text = "", byte maxLength = 20, bool cancelable = true)
 		{
 			return new DialogInput(title, text, maxLength, cancelable);
 		}
 
-		protected DialogAutoContinue AutoContinue(int duration)
+		public DialogAutoContinue AutoContinue(int duration)
 		{
 			return new DialogAutoContinue(duration);
 		}
 
-		protected DialogFace Face(string expression)
+		public DialogFace Face(string expression)
 		{
 			return new DialogFace(expression);
 		}
 
-		protected DialogMovie Movie(string file, int width, int height, bool loop = true)
+		public DialogMovie Movie(string file, int width, int height, bool loop = true)
 		{
 			return new DialogMovie(file, width, height, loop);
 		}
@@ -424,6 +447,7 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		protected enum ItemState : byte { Up = 0, Down = 1 }
-		protected enum Hide { Face, Name, Both }
 	}
+
+	public enum Hide { Face, Name, Both }
 }
