@@ -55,6 +55,9 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Broadcasts QuestOwlNew in range of creature.
 		/// </summary>
+		/// <remarks>
+		/// Effect of an owl delivering the new quest.
+		/// </remarks>
 		/// <param name="creature"></param>
 		/// <param name="questId"></param>
 		public static void QuestOwlNew(Creature creature, long questId)
@@ -68,6 +71,9 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Broadcasts QuestOwlComplete in range of creature.
 		/// </summary>
+		/// <remarks>
+		/// Effect of an owl delivering the rewards.
+		/// </remarks>
 		/// <param name="creature"></param>
 		/// <param name="questId"></param>
 		public static void QuestOwlComplete(Creature creature, long questId)
@@ -81,12 +87,41 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Sends QuestClear to creature's client.
 		/// </summary>
+		/// <remarks>
+		/// Removes quest from quest log.
+		/// </remarks>
 		/// <param name="creature"></param>
 		/// <param name="questId"></param>
 		public static void QuestClear(Creature creature, long questId)
 		{
 			var packet = new Packet(Op.QuestClear, creature.EntityId);
 			packet.PutLong(questId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends CompleteQuestR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void CompleteQuestR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.CompleteQuestR, creature.EntityId);
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends CompleteQuestR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void GiveUpQuestR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.GiveUpQuestR, creature.EntityId);
+			packet.PutByte(success);
 
 			creature.Client.Send(packet);
 		}

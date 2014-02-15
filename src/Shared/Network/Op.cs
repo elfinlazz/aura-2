@@ -247,10 +247,10 @@ namespace Aura.Shared.Network
 		public const int NewQuest = 0x8CA0;
 		public const int QuestClear = 0x8CA1;
 		public const int QuestUpdate = 0x8CA2;
-		public const int QuestComplete = 0x8CA3;
-		public const int QuestCompleteR = 0x8CA4;
-		public const int QuestGiveUp = 0x8CA5;
-		public const int QuestGiveUpR = 0x8CA6;
+		public const int CompleteQuest = 0x8CA3;
+		public const int CompleteQuestR = 0x8CA4;
+		public const int GiveUpQuest = 0x8CA5;
+		public const int GiveUpQuestR = 0x8CA6;
 		public const int QuestStartPTJ = 0x8D68; // ?
 		public const int QuestEndPTJ = 0x8D69; // ?
 		public const int QuestUpdatePTJ = 0x8D6A;

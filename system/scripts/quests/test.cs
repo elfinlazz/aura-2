@@ -14,24 +14,30 @@ public class TestQuestScript : QuestScript
 		AddReward(Gold(1000));
 		
 		AddHook("_duncan", "after_intro", TalkDuncan);
-		AddHook("_duncan", "before_keywords", TalkDuncan2);
+		AddHook("_duncan", "after_intro", TalkDuncan2);
 	}
 	
 	public IEnumerable TalkDuncan(NpcScript npc, params object[] args)
 	{
-		npc.Msg("test");
-		npc.Msg("Right?", npc.Button("Yes"));
-		npc.Select();
-		Return();
+		if(npc.QuestActive(this.Id, "talk_duncan"))
+		{
+			npc.Msg("test");
+			npc.Msg("Right?", npc.Button("Yes"));
+			npc.Select();
+			npc.FinishQuest(this.Id, "talk_duncan");
+			Return("break_hook");
+		}
+		else if(npc.QuestActive(this.Id, "talk_duncan2"))
+		{
+			npc.Msg("Well done!");
+			npc.FinishQuest(this.Id, "talk_duncan2");
+			Return("break_hook");
+		}
 	}
 	
 	public IEnumerable TalkDuncan2(NpcScript npc, params object[] args)
 	{
-		var keyword = args[0] as string;
-		if(keyword == "breast")
-		{
-			npc.Msg("*giggle*");
-			Return("end");
-		}
+		npc.Msg("*giggle*");
+		Return();
 	}
 }

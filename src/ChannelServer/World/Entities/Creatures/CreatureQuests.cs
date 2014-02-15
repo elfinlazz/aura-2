@@ -152,6 +152,16 @@ namespace Aura.Channel.World.Entities.Creatures
 			var quest = this.Get(questId);
 			if (quest == null) return false;
 
+			return this.Complete(quest);
+		}
+
+		/// <summary>
+		/// Completes and removes quest, if it exists.
+		/// </summary>
+		/// <param name="questId"></param>
+		/// <param name="rewards">Shall rewards be given?</param>
+		public bool Complete(Quest quest)
+		{
 			return this.Complete(quest, true);
 		}
 
