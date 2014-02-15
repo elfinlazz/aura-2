@@ -82,6 +82,14 @@ namespace Aura.Channel.Scripting.Compilers
 				"$1yield break;",
 				RegexOptions.Compiled);
 
+			// Return(<something>);
+			// --> yield return <something>;
+			// Stops Enumerator and the conversation.
+			script = Regex.Replace(script,
+				@"([\{\}:;\t ])?Return\s*\(([^;]+)\)\s*;",
+				"$1yield return $2;",
+				RegexOptions.Compiled);
+
 			// Do|Call(<method_call>);
 			// --> foreach(var __callResult in <method_call>) yield return __callResult;
 			// Loops through Enumerator returned by the method called and passes
@@ -96,8 +104,8 @@ namespace Aura.Channel.Scripting.Compilers
 			// Calls Select and yields, ignoring the result.
 			// TODO: Imperfect (;)
 			script = Regex.Replace(script,
-				@"([^=])([\s]+)Select\s*\(\s*\)\s*;",
-				"$1$2Select(); yield return null;",
+				@"([^=])(\s+)(\b[^\.]+\.)?Select\s*\(\s*\)\s*;",
+				"$1$2$3Select(); yield return null;",
 				RegexOptions.Compiled);
 
 			// [var] <variable> = Select();

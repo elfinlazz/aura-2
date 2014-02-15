@@ -94,6 +94,11 @@ namespace Aura.Channel.Network.Handlers
 		/// <summary>
 		/// Sent when "End Conversation" button is clicked.
 		/// </summary>
+		/// <remarks>
+		/// Not every "End Conversation" button is the same. Some send this,
+		/// others, like the one you get while the keywords are open,
+		/// send an "@end" response to Select instead.
+		/// </remarks>
 		/// <example>
 		/// 001 [0010F00000000003] Long   : 4767482418036739
 		/// 002 [..............01] Byte   : 1
