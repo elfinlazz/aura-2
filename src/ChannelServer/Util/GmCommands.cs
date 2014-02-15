@@ -53,6 +53,7 @@ namespace Aura.Channel.Util
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
 			Add(99, 99, "reloaddata", "", HandleReloadData);
 			Add(99, 99, "reloadscripts", "", HandleReloadScripts);
+			Add(99, 99, "closenpc", "", HandleCloseNpc);
 			Add(99, 99, "test", "", HandleTest);
 
 			// Aliases
@@ -759,6 +760,16 @@ namespace Aura.Channel.Util
 
 			target.AbilityPoints += amount;
 			Send.StatUpdate(target, StatUpdateType.Private, Stat.AbilityPoints);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleCloseNpc(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (!client.NpcSession.IsValid())
+				return CommandResult.Fail;
+
+			client.NpcSession.Script.Close("Ended by closenpc command.");
 
 			return CommandResult.Okay;
 		}
