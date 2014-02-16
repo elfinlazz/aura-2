@@ -92,23 +92,28 @@ namespace Aura.Channel.World.Quests
 		/// <summary>
 		/// Holds quest item, after it was generated.
 		/// </summary>
-		public Item QuestItem { get; protected set; }
+		public Item QuestItem { get; set; }
 
-		public Quest(int questId)
+		public Quest(int questId, long uniqueId, QuestState state)
 		{
 			this.Id = questId;
-			this.UniqueId = Interlocked.Increment(ref _questId);
+			this.UniqueId = uniqueId;
+			this.State = state;
 
 			this.Data = ChannelServer.Instance.ScriptManager.GetQuestScript(this.Id);
 			if (this.Data == null)
 				throw new Exception("Quest '" + questId.ToString() + "' does not exist.");
 
-			this.GenerateQuestItem();
-
 			_progresses = new OrderedDictionary<string, QuestObjectiveProgress>();
 			foreach (var objective in this.Data.Objectives)
 				_progresses[objective.Key] = new QuestObjectiveProgress(objective.Key);
 			_progresses[0].Unlocked = true;
+		}
+
+		public Quest(int questId)
+			: this(questId, Interlocked.Increment(ref _questId), QuestState.InProgress)
+		{
+			this.GenerateQuestItem();
 		}
 
 		/// <summary>
@@ -126,10 +131,13 @@ namespace Aura.Channel.World.Quests
 		/// <summary>
 		/// Returns list of all objective progresses.
 		/// </summary>
+		/// <remarks>
+		/// Values in our generic OrderedDictioanry aleady creates a copy.
+		/// </remarks>
 		/// <returns></returns>
 		public ICollection<QuestObjectiveProgress> GetList()
 		{
-			return _progresses.Values.ToArray();
+			return _progresses.Values;
 		}
 
 		/// <summary>
@@ -180,7 +188,7 @@ namespace Aura.Channel.World.Quests
 		private Item GenerateQuestItem(int itemId = 70024)
 		{
 			this.QuestItem = new Item(itemId);
-			this.QuestItem.EntityId = (this.UniqueId - MabiId.QuestItemOffset);
+			this.QuestItem.EntityId = this.ItemEntityId;
 			this.QuestItem.QuestId = this.UniqueId;
 			this.QuestItem.MetaData1.Parse(this.Data.MetaData.ToString());
 
@@ -201,5 +209,8 @@ namespace Aura.Channel.World.Quests
 		}
 	}
 
-	public enum QuestState : byte { InProgress, Complete }
+	/// <summary>
+	/// State of a quest
+	/// </summary>
+	public enum QuestState { InProgress, Complete }
 }

@@ -3,8 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using Aura.Channel.Scripting;
+using Aura.Channel.Skills;
+using Aura.Channel.World;
+using Aura.Channel.World.Entities;
+using Aura.Channel.World.Entities.Creatures;
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared.Database;
@@ -12,13 +19,7 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
-using Aura.Channel.World.Entities;
-using Aura.Channel.World;
-using Aura.Channel.World.Entities.Creatures;
-using Aura.Channel.Skills;
-using Aura.Channel.Scripting;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
+using Aura.Channel.World.Quests;
 
 namespace Aura.Channel.Database
 {
@@ -206,10 +207,12 @@ namespace Aura.Channel.Database
 				character.LoadDefault();
 			}
 
+			// Load items before quests, so we can check for the quest item
 			this.GetCharacterItems(character);
 			this.GetCharacterKeywords(character);
 			this.GetCharacterTitles(character);
 			this.GetCharacterSkills(character);
+			this.GetCharacterQuests(character);
 
 			// Add GM titles for the characters of authority 50+ accounts
 			if (account != null)
@@ -295,6 +298,7 @@ namespace Aura.Channel.Database
 						item.OptionInfo.Experience = reader.GetInt16("experience");
 						item.MetaData1.Parse(reader.GetStringSafe("meta1"));
 						item.MetaData2.Parse(reader.GetStringSafe("meta2"));
+						item.QuestId = reader.GetInt64("questIdUnique");
 
 						result.Add(item);
 					}
@@ -450,6 +454,146 @@ namespace Aura.Channel.Database
 		}
 
 		/// <summary>
+		/// Reads all quests of character from db.
+		/// </summary>
+		/// <param name="character"></param>
+		public void GetCharacterQuests(PlayerCreature character)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			{
+				using (var mc = new MySqlCommand("SELECT * FROM `quests` WHERE `creatureId` = @creatureId", conn))
+				{
+					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+
+					using (var reader = mc.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							var uniqueId = reader.GetInt64("questIdUnique");
+							var id = reader.GetInt32("questId");
+							var state = (QuestState)reader.GetInt32("state");
+
+							var quest = new Quest(id, uniqueId, state);
+
+							// Don't add quest if quest item is missing
+							if (quest.State == QuestState.InProgress)
+							{
+								quest.QuestItem = character.Inventory.GetItem(quest.ItemEntityId);
+								if (quest.QuestItem == null)
+								{
+									Log.Error("Db.GetCharacterQuests: Unable to find quest item for '{0}'.", quest.Id);
+									continue;
+								}
+							}
+
+							character.Quests.Add(quest);
+						}
+					}
+				}
+				using (var mc = new MySqlCommand("SELECT * FROM `quest_progress` WHERE `creatureId` = @creatureId", conn))
+				{
+					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+
+					using (var reader = mc.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							var uniqueId = reader.GetInt64("questIdUnique");
+							var objective = reader.GetStringSafe("objective");
+
+							var quest = character.Quests.Get(uniqueId);
+							if (quest == null)
+							{
+								Log.Error("Db.GetCharacterQuests: Unable to find quest for objective '{0}'.", objective);
+								continue;
+							}
+
+							var progress = quest.GetProgress(objective);
+							if (progress == null)
+							{
+								Log.Error("Db.GetCharacterQuests: Unable to find objective '{0}' quest '{1}'.", objective, quest.Id);
+								continue;
+							}
+
+							progress.Count = reader.GetInt32("count");
+							progress.Done = reader.GetBoolean("done");
+							progress.Unlocked = reader.GetBoolean("unlocked");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Saves all quests of character.
+		/// </summary>
+		/// <param name="character"></param>
+		public void SaveQuests(PlayerCreature character)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var transaction = conn.BeginTransaction())
+			{
+				// Delete quests
+				using (var mc = new MySqlCommand("DELETE FROM `quests` WHERE `creatureId` = @creatureId", conn, transaction))
+				{
+					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+					mc.ExecuteNonQuery();
+				}
+
+				// Delete progress
+				using (var mc = new MySqlCommand("DELETE FROM `quest_progress` WHERE `creatureId` = @creatureId", conn, transaction))
+				{
+					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+					mc.ExecuteNonQuery();
+				}
+
+				// Add quests and progress
+				foreach (var quest in character.Quests.GetList())
+				{
+					if (quest.State == QuestState.InProgress && !character.Inventory.Has(quest.QuestItem))
+					{
+						Log.Warning("Db.SaveQuests: Missing '{0}'s quest item for '{1}'.", character.Name, quest.Id);
+						continue;
+					}
+
+					using (var cmd = new InsertCommand("INSERT INTO `quests` {0}", conn, transaction))
+					{
+						if (quest.UniqueId < MabiId.QuestsTmp)
+							cmd.Set("questIdUnique", quest.UniqueId);
+						cmd.Set("creatureId", character.CreatureId);
+						cmd.Set("questId", quest.Id);
+						cmd.Set("state", (int)quest.State);
+						cmd.Execute();
+
+						// Update quest and item id if they were tmp
+						if (quest.UniqueId >= MabiId.QuestsTmp)
+						{
+							quest.UniqueId = cmd.LastId;
+							quest.QuestItem.EntityId = quest.ItemEntityId;
+							quest.QuestItem.QuestId = quest.UniqueId;
+						}
+					}
+
+					foreach (var objective in quest.GetList())
+					{
+						using (var cmd = new InsertCommand("INSERT INTO `quest_progress` {0}", conn, transaction))
+						{
+							cmd.Set("creatureId", character.CreatureId);
+							cmd.Set("questIdUnique", quest.UniqueId);
+							cmd.Set("objective", objective.Ident);
+							cmd.Set("count", objective.Count);
+							cmd.Set("done", objective.Done);
+							cmd.Set("unlocked", objective.Unlocked);
+							cmd.Execute();
+						}
+					}
+				}
+
+				transaction.Commit();
+			}
+		}
+
+		/// <summary>
 		/// Saves account, incl. all character data.
 		/// </summary>
 		/// <param name="account"></param>
@@ -529,11 +673,13 @@ namespace Aura.Channel.Database
 				cmd.Execute();
 			}
 
+			// Save quests before items, because quest item ids depend on
+			// the quest id.
+			this.SaveQuests(creature);
 			this.SaveCharacterItems(creature);
 			this.SaveCharacterKeywords(creature);
 			this.SaveCharacterTitles(creature);
 			this.SaveCharacterSkills(creature);
-			//this.SaveCharacterQuests(creature);
 			//this.SaveCharacterCooldowns(creature);
 
 			this.SaveVars(account.Id, creature.CreatureId, creature.Vars.Perm);
@@ -625,7 +771,7 @@ namespace Aura.Channel.Database
 					using (var cmd = new InsertCommand("INSERT INTO `items` {0}", conn, transaction))
 					{
 						cmd.Set("creatureId", creature.CreatureId);
-						if (item.EntityId < MabiId.TmpItems)
+						if (item.EntityId < MabiId.TmpItems || item.EntityId >= MabiId.QuestItems)
 							cmd.Set("entityId", item.EntityId);
 						cmd.Set("itemId", item.Info.Id);
 						cmd.Set("pocket", (byte)item.Info.Pocket);
@@ -653,6 +799,7 @@ namespace Aura.Channel.Database
 						cmd.Set("experience", item.OptionInfo.Experience);
 						cmd.Set("meta1", item.MetaData1.ToString());
 						cmd.Set("meta2", item.MetaData2.ToString());
+						cmd.Set("questIdUnique", item.QuestId);
 
 						cmd.Execute();
 					}

@@ -81,6 +81,15 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
+		/// Returns new list of quests.
+		/// </summary>
+		/// <returns></returns>
+		public ICollection<Quest> GetList()
+		{
+			return _quests.Values.ToArray();
+		}
+
+		/// <summary>
 		/// Returns new list of incomplete quests.
 		/// </summary>
 		/// <returns></returns>
@@ -162,7 +171,10 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <param name="rewards">Shall rewards be given?</param>
 		public bool Complete(Quest quest)
 		{
-			return this.Complete(quest, true);
+			var success = this.Complete(quest, true);
+			if (success)
+				quest.State = QuestState.Complete;
+			return success;
 		}
 
 		/// <summary>
