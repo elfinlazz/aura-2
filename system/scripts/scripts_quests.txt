@@ -4,6 +4,7 @@
 // All scripts listed here will be loaded.
 //---------------------------------------------------------------------------
 
-quests/test.cs
+quests/beginner_uladh/1_naos_letter.cs
+quests/beginner_uladh/2_rescue_resident.cs
 
 include "/user/scripts/scripts_quests.txt"

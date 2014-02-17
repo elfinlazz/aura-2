@@ -173,7 +173,7 @@ namespace Aura.Channel.Network.Handlers
 			if (response.StartsWith("@input"))
 				response = response.Substring(7).Trim();
 
-			client.NpcSession.SetResponse(match.Groups["result"].Value);
+			client.NpcSession.SetResponse(response);
 			client.NpcSession.Continue();
 		}
 

@@ -56,6 +56,7 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		public void Clear()
 		{
+			this.Script = null;
 			this.Target = null;
 			this.State = null;
 			this.Response = null;
@@ -100,7 +101,7 @@ namespace Aura.Channel.Scripting
 			}
 			catch (Exception ex)
 			{
-				Log.Exception(ex, "Exception while talking to '{0}' ({1})", this.Script.GetType().Name, ex.Message);
+				Log.Exception(ex, "Exception while talking to NPC ({0})", ex.Message);
 			}
 		}
 	}
