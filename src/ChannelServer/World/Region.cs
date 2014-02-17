@@ -210,7 +210,10 @@ namespace Aura.Channel.World
 			_propsRWLS.EnterReadLock();
 			try
 			{
-				result.AddRange(_props.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange) && a.ServerSide));
+				// Send all props of a region, so they're visible from afar.
+				// While client props are visible as well they don't have to
+				// be sent, the client already has them.
+				result.AddRange(_props.Values.Where(a => a.ServerSide));
 			}
 			finally
 			{
