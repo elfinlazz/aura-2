@@ -439,6 +439,7 @@ namespace Aura.Login.Database
 			{
 				cmd.Set("server", creature.Server);
 				cmd.Set("name", creature.Name);
+				cmd.Set("age", creature.Age);
 				cmd.Set("race", creature.Race);
 				cmd.Set("skinColor", creature.SkinColor);
 				cmd.Set("eyeType", creature.EyeType);
