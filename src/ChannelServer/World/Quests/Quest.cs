@@ -153,6 +153,8 @@ namespace Aura.Channel.World.Quests
 			{
 				_progresses[i].Done = true;
 				_progresses[i].Unlocked = false;
+				if (_progresses[i].Count < this.Data.Objectives[objective].Amount)
+					_progresses[i].Count = this.Data.Objectives[objective].Amount;
 
 				if (_progresses[i].Ident != objective)
 					continue;
@@ -176,6 +178,7 @@ namespace Aura.Channel.World.Quests
 			{
 				_progresses[i].Done = false;
 				_progresses[i].Unlocked = (_progresses[i].Ident == objective);
+				_progresses[i].Count = 0;
 
 				if (_progresses[i].Unlocked)
 					break;

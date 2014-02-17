@@ -143,7 +143,6 @@ namespace Aura.Channel.World.Entities.Creatures
 			if (progress == null)
 				throw new Exception("Quest.Finish: No progress found for objective '" + objective + "'.");
 
-			progress.Count = quest.Data.Objectives[objective].Amount;
 			quest.SetDone(objective);
 
 			Send.QuestUpdate(_creature, quest);
@@ -155,7 +154,6 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Completes and removes quest, if it exists.
 		/// </summary>
 		/// <param name="questId"></param>
-		/// <param name="rewards">Shall rewards be given?</param>
 		public bool Complete(int questId)
 		{
 			var quest = this.Get(questId);
@@ -168,7 +166,6 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Completes and removes quest, if it exists.
 		/// </summary>
 		/// <param name="questId"></param>
-		/// <param name="rewards">Shall rewards be given?</param>
 		public bool Complete(Quest quest)
 		{
 			var success = this.Complete(quest, true);

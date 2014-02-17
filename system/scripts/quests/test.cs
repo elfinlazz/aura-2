@@ -8,7 +8,8 @@ public class TestQuestScript : QuestScript
 		SetDescription("Do the test");
 		SetReceive(Receive.Auto);
 		
-		AddObjective("talk_duncan", "Talk to Duncan", 1, 12000, 38000, Talk("duncan"));
+		AddObjective("talk_duncan1", "Talk to Duncan", 1, 12000, 38000, Talk("duncan"));
+		AddObjective("collect", "Find it", 1, 12000, 38000, Collect(50003, 3));
 		AddObjective("talk_duncan2", "Talk to Duncan", 1, 12000, 38000, Talk("duncan"));
 		
 		AddReward(Gold(1000));
@@ -19,12 +20,10 @@ public class TestQuestScript : QuestScript
 	
 	public IEnumerable TalkDuncan(NpcScript npc, params object[] args)
 	{
-		if(npc.QuestActive(this.Id, "talk_duncan"))
+		if(npc.QuestActive(this.Id, "talk_duncan1"))
 		{
-			npc.Msg("test");
-			npc.Msg("Right?", npc.Button("Yes"));
-			npc.Select();
-			npc.FinishQuest(this.Id, "talk_duncan");
+			npc.Msg("Get me some apples.");
+			npc.FinishQuest(this.Id, "talk_duncan1");
 			Return("break_hook");
 		}
 		else if(npc.QuestActive(this.Id, "talk_duncan2"))

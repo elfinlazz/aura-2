@@ -511,7 +511,7 @@ namespace Aura.Channel.Database
 							var progress = quest.GetProgress(objective);
 							if (progress == null)
 							{
-								Log.Error("Db.GetCharacterQuests: Unable to find objective '{0}' quest '{1}'.", objective, quest.Id);
+								Log.Error("Db.GetCharacterQuests: Unable to find objective '{0}' for quest '{1}'.", objective, quest.Id);
 								continue;
 							}
 
