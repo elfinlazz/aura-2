@@ -87,11 +87,13 @@ namespace Aura.Channel.Scripting
 		{
 			try
 			{
-				if (this.State.MoveNext())
+				if (this.State.MoveNext() && this.State != null)
 				{
 					var result = this.State.Current as string;
 					if (result != null && result == "end")
+					{
 						this.Script.EndConversation();
+					}
 					else
 						this.Response = this.State.Current as Response;
 				}
