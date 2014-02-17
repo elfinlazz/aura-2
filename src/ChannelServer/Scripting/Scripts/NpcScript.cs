@@ -125,9 +125,11 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Sets NPC's stand style.
 		/// </summary>
 		/// <param name="stand"></param>
-		protected void SetStand(string stand)
+		/// <param name="talkStand"></param>
+		protected void SetStand(string stand, string talkStand = null)
 		{
 			this.NPC.StandStyle = stand;
+			this.NPC.StandStyleTalking = talkStand;
 		}
 
 		/// <summary>
@@ -139,7 +141,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="color2"></param>
 		/// <param name="color3"></param>
 		/// <param name="state">For robes and helmets</param>
-		protected void EquipItem(Pocket pocket, int itemId, uint color1, uint color2, uint color3, ItemState state = ItemState.Up)
+		protected void EquipItem(Pocket pocket, int itemId, uint color1 = 0, uint color2 = 0, uint color3 = 0, ItemState state = ItemState.Up)
 		{
 			if (!pocket.IsEquip())
 			{
@@ -161,18 +163,6 @@ namespace Aura.Channel.Scripting.Scripts
 			item.Info.State = (byte)state;
 
 			this.NPC.Inventory.InitAdd(item);
-		}
-
-		/// <summary>
-		/// Adds item to NPC's inventory.
-		/// </summary>
-		/// <param name="pocket"></param>
-		/// <param name="itemId"></param>
-		/// <param name="color1"></param>
-		/// <param name="state">For robes and helmets</param>
-		protected void EquipItem(Pocket pocket, int itemId, uint color1 = 0x808080, ItemState state = ItemState.Up)
-		{
-			EquipItem(pocket, itemId, color1, 0, 0, state);
 		}
 
 		/// <summary>
@@ -314,6 +304,16 @@ namespace Aura.Channel.Scripting.Scripts
 		public void StartQuest(int questId)
 		{
 			(this.Player as PlayerCreature).Quests.Start(questId);
+		}
+
+		/// <summary>
+		/// Displays notice.
+		/// </summary>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public void Notice(string format, params object[] args)
+		{
+			Send.Notice(this.Player, format, args);
 		}
 
 		// Dialog

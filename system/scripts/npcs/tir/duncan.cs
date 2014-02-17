@@ -12,7 +12,7 @@ public class DuncanBaseScript : NpcScript
 		SetRace(10002);
 		SetBody(height: 1.3f);
 		SetFace(skinColor: 20, eyeType: 17);
-		SetStand("human/male/anim/male_natural_stand_npc_duncan_new");
+		SetStand("human/male/anim/male_natural_stand_npc_duncan_new", "male_natural_stand_npc_Duncan_talk");
 		SetLocation(1, 15409, 38310, 122);
 
 		EquipItem(Pocket.Face, 4950, 0x93005C);
