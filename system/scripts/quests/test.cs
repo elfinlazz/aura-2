@@ -9,7 +9,7 @@ public class TestQuestScript : QuestScript
 		SetReceive(Receive.Auto);
 		
 		AddObjective("talk_duncan1", "Talk to Duncan", 1, 12000, 38000, Talk("duncan"));
-		AddObjective("collect", "Find it", 1, 12000, 38000, Collect(50003, 3));
+		AddObjective("kill", "Kill Brown Foxes", 1, 12000, 38000, Kill(3, "/brownfox/"));
 		AddObjective("talk_duncan2", "Talk to Duncan", 1, 12000, 38000, Talk("duncan"));
 		
 		AddReward(Gold(1000));

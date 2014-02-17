@@ -237,9 +237,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (progress == null) return;
 
 			var objective = this.Objectives[progress.Ident] as QuestObjectiveKill;
-			if (objective == null || objective.Type != ObjectiveType.Kill) return;
-
-			// Check monster
+			if (objective == null || objective.Type != ObjectiveType.Kill || !objective.Check(creature)) return;
 
 			if (progress.Count >= objective.Amount) return;
 

@@ -4,6 +4,7 @@
 using Aura.Data;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Mabi;
+using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.World.Quests
 {
@@ -43,17 +44,31 @@ namespace Aura.Channel.World.Quests
 	{
 		public override ObjectiveType Type { get { return ObjectiveType.Kill; } }
 
-		public int Amount { get; set; }
-		public string RaceType { get; set; }
+		public string[] RaceTypes { get; set; }
 
-		public QuestObjectiveKill(int amount, string raceType)
+		public QuestObjectiveKill(int amount, params string[] raceTypes)
 			: base(amount)
 		{
-			this.RaceType = raceType;
+			this.RaceTypes = raceTypes;
 
-			this.MetaData.SetString("TGTSID", raceType);
+			this.MetaData.SetString("TGTSID", string.Join("|", raceTypes));
 			this.MetaData.SetInt("TARGETCOUNT", amount);
 			this.MetaData.SetShort("TGTCLS", 0);
+		}
+
+		/// <summary>
+		/// Returns true if creature matches one of the race types.
+		/// </summary>
+		/// <param name="killedCreature"></param>
+		/// <returns></returns>
+		public bool Check(Creature killedCreature)
+		{
+			foreach (var type in this.RaceTypes)
+			{
+				if (killedCreature.RaceData.HasTag(type))
+					return true;
+			}
+			return false;
 		}
 	}
 
