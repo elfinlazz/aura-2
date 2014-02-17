@@ -29,6 +29,7 @@ namespace Aura.Channel.Network.Handlers
 			var prop = creature.Region.GetProp(entityId);
 			if (prop == null)
 			{
+				Log.Warning("HitProp: Player '{0}' tried to hit unknown prop '{1}'.", creature.Name, entityId.ToString("X16"));
 				Send.ServerMessage(creature, "Unknown target.");
 			}
 			else
@@ -43,13 +44,13 @@ namespace Aura.Channel.Network.Handlers
 					}
 					else
 					{
-						Log.Unimplemented("No prop behavior for '{0}'.", prop.EntityIdHex);
+						Log.Unimplemented("HitProp: No prop behavior for '{0}'.", prop.EntityIdHex);
 					}
 				}
 				else
 				{
 					Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("world.too_far")); // You're too far away.
-					Log.Warning("Player '{0}' tried to hit prop out of range.", creature.Name);
+					Log.Warning("HitProp: Player '{0}' tried to hit prop out of range.", creature.Name);
 				}
 			}
 
@@ -79,6 +80,7 @@ namespace Aura.Channel.Network.Handlers
 			var prop = creature.Region.GetProp(entityId);
 			if (prop == null)
 			{
+				Log.Warning("TouchProp: Player '{0}' tried to touch unknown prop '{1}'.", creature.Name, entityId.ToString("X16"));
 				Send.ServerMessage(creature, "Unknown target.");
 			}
 			else
@@ -91,13 +93,13 @@ namespace Aura.Channel.Network.Handlers
 					}
 					else
 					{
-						Log.Unimplemented("No prop behavior for '{0}'.", prop.EntityIdHex);
+						Log.Unimplemented("TouchProp: No prop behavior for '{0}'.", prop.EntityIdHex);
 					}
 				}
 				else
 				{
 					Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("world.too_far")); // You're too far away.
-					Log.Warning("Player '{0}' tried to touch prop out of range.", creature.Name);
+					Log.Warning("TouchProp: Player '{0}' tried to touch prop out of range.", creature.Name);
 				}
 			}
 
