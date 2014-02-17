@@ -13,6 +13,7 @@ namespace Aura.Data.Database
 		public int Id { get; internal set; }
 		public string Name { get; internal set; }
 		public string Group { get; internal set; }
+		public string Tags { get; internal set; }
 		public Gender Gender { get; internal set; }
 
 		public int DefaultState { get; internal set; }
@@ -65,6 +66,35 @@ namespace Aura.Data.Database
 		{
 			return (this.Stand & stand) != 0;
 		}
+
+		/// <summary>
+		/// Return true if tags contain input.
+		/// </summary>
+		/// <remarks>
+		/// Use asterisks (*) as place-holders.
+		/// </remarks>
+		/// <example>
+		/// Tags: /animal/beast/blackleopard/goodnpc_no_attack_pc/activate_signal/revivebyrp/heal/pc/neutral/unable_tame/unable_bubble/unable_unsummon/no_finish/
+		/// 
+		/// Input: */*
+		/// Result: True
+		/// 
+		/// Input: */blackleopard/*
+		/// Result: True
+		/// 
+		/// Input: */animal/*
+		/// Result: True
+		/// 
+		/// Input: */bear/*
+		/// Result: False
+		/// </example>
+		/// <param name="tag"></param>
+		/// <returns></returns>
+		public bool HasTag(string tag)
+		{
+			tag = tag.Replace("*", ".*");
+			return Regex.IsMatch(this.Tags, tag, RegexOptions.Compiled);
+		}
 	}
 
 	public class DropInfo
@@ -91,18 +121,14 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower() == name);
 		}
 
-		public bool Exists(int raceId)
-		{
-			return this.Entries.ContainsKey(raceId);
-		}
-
-		[MinFieldCount(24)]
+		[MinFieldCount(32)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			var info = new RaceData();
 			info.Id = entry.ReadInt();
 			info.Name = entry.ReadString();
 			info.Group = entry.ReadString();
+			info.Tags = entry.ReadString();
 			info.Gender = (Gender)entry.ReadByte();
 			info.VehicleType = entry.ReadInt();
 			info.DefaultState = entry.ReadIntHex();
