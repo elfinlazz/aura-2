@@ -17,5 +17,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		public float StrFoodChange, IntFoodChange, DexFoodChange, WillFoodChange, LuckFoodChange;
 
 		public bool InSoulStream;
+
+		public Cutscene CurrentCutscene;
 	}
 }

@@ -42,11 +42,11 @@ public class BeginnerUladh1QuestScript : QuestScript
 			npc.Select();
 			npc.Close();
 
-			//var scene = new MabiCutscene(c.Character, "tuto_smash");
-			//scene.AddActor("me", c.Character);
-			//scene.AddActor("#trefor", n.NPC);
-			//scene.AddActor("#brownfox", c.Character);
-			//scene.Play(c);
+			var scene = new Cutscene("tuto_smash", npc.Player);
+			scene.AddActor("me", npc.Player);
+			scene.AddActor("#trefor", npc.NPC);
+			scene.AddActor("#brownfox", 50001);
+			scene.Play();
 			
 			Return("end");
 		}

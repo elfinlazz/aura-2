@@ -420,8 +420,8 @@ namespace Aura.Shared.Network
 		public const int LeaveSoulStream = 0x15F93;
 		public const int LeaveSoulStreamR = 0x15F94;
 
-		public const int CutsceneFinished = 0x186A0;
-		public const int CutsceneStart = 0x186A6;
+		public const int FinishedCutscene = 0x186A0;
+		public const int PlayCutscene = 0x186A6;
 		public const int CutsceneEnd = 0x186A7;
 		//public const int ? = 0x186A8;
 
