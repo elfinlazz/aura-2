@@ -1256,7 +1256,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutLong(quest.UniqueId);
 			packet.PutByte(0);
 
-			packet.PutLong(quest.ItemEntityId);
+			packet.PutLong(quest.QuestItem.EntityId);
 
 			packet.PutByte(2); // 0 = blue icon, 2 = normal, 4 = exploration, 7 = shadow (changes structure slightly)
 			// Client values that might make sense:

@@ -298,7 +298,6 @@ namespace Aura.Channel.Database
 						item.OptionInfo.Experience = reader.GetInt16("experience");
 						item.MetaData1.Parse(reader.GetStringSafe("meta1"));
 						item.MetaData2.Parse(reader.GetStringSafe("meta2"));
-						item.QuestId = reader.GetInt64("questIdUnique");
 
 						result.Add(item);
 					}
@@ -472,18 +471,21 @@ namespace Aura.Channel.Database
 							var uniqueId = reader.GetInt64("questIdUnique");
 							var id = reader.GetInt32("questId");
 							var state = (QuestState)reader.GetInt32("state");
+							var itemEntityId = reader.GetInt64("itemEntityId");
 
 							var quest = new Quest(id, uniqueId, state);
 
-							// Don't add quest if quest item is missing
 							if (quest.State == QuestState.InProgress)
 							{
-								quest.QuestItem = character.Inventory.GetItem(quest.ItemEntityId);
+								// Don't add quest if quest item is missing
+								quest.QuestItem = character.Inventory.GetItem(itemEntityId);
 								if (quest.QuestItem == null)
 								{
 									Log.Error("Db.GetCharacterQuests: Unable to find quest item for '{0}'.", quest.Id);
 									continue;
 								}
+
+								quest.QuestItem.QuestId = quest.UniqueId;
 							}
 
 							character.Quests.Add(quest);
@@ -563,15 +565,12 @@ namespace Aura.Channel.Database
 						cmd.Set("creatureId", character.CreatureId);
 						cmd.Set("questId", quest.Id);
 						cmd.Set("state", (int)quest.State);
+						cmd.Set("itemEntityId", (quest.State == QuestState.InProgress ? quest.QuestItem.EntityId : 0));
+
 						cmd.Execute();
 
-						// Update quest and item id if they were tmp
 						if (quest.UniqueId >= MabiId.QuestsTmp)
-						{
 							quest.UniqueId = cmd.LastId;
-							quest.QuestItem.EntityId = quest.ItemEntityId;
-							quest.QuestItem.QuestId = quest.UniqueId;
-						}
 					}
 
 					foreach (var objective in quest.GetList())
@@ -673,10 +672,8 @@ namespace Aura.Channel.Database
 				cmd.Execute();
 			}
 
-			// Save quests before items, because quest item ids depend on
-			// the quest id.
-			this.SaveQuests(creature);
 			this.SaveCharacterItems(creature);
+			this.SaveQuests(creature);
 			this.SaveCharacterKeywords(creature);
 			this.SaveCharacterTitles(creature);
 			this.SaveCharacterSkills(creature);
@@ -771,7 +768,7 @@ namespace Aura.Channel.Database
 					using (var cmd = new InsertCommand("INSERT INTO `items` {0}", conn, transaction))
 					{
 						cmd.Set("creatureId", creature.CreatureId);
-						if (item.EntityId < MabiId.TmpItems || item.EntityId >= MabiId.QuestItems)
+						if (item.EntityId < MabiId.TmpItems)
 							cmd.Set("entityId", item.EntityId);
 						cmd.Set("itemId", item.Info.Id);
 						cmd.Set("pocket", (byte)item.Info.Pocket);
@@ -799,9 +796,11 @@ namespace Aura.Channel.Database
 						cmd.Set("experience", item.OptionInfo.Experience);
 						cmd.Set("meta1", item.MetaData1.ToString());
 						cmd.Set("meta2", item.MetaData2.ToString());
-						cmd.Set("questIdUnique", item.QuestId);
 
 						cmd.Execute();
+
+						if (item.EntityId >= MabiId.TmpItems)
+							item.EntityId = cmd.LastId;
 					}
 				}
 
@@ -983,6 +982,21 @@ namespace Aura.Channel.Database
 				}
 
 				transaction.Commit();
+			}
+		}
+
+		/// <summary>
+		/// Returns true if items with temp ids are found in the db.
+		/// </summary>
+		/// <returns></returns>
+		public bool TmpItemsExist()
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT itemId FROM `items` WHERE `entityId` >= @entityId", conn))
+			{
+				mc.Parameters.AddWithValue("@entityId", MabiId.TmpItems);
+				using (var reader = mc.ExecuteReader())
+					return reader.HasRows;
 			}
 		}
 	}

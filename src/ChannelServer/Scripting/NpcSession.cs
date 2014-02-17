@@ -85,13 +85,20 @@ namespace Aura.Channel.Scripting
 
 		public void Continue()
 		{
-			if (this.State.MoveNext())
+			try
 			{
-				var result = this.State.Current as string;
-				if (result != null && result == "end")
-					this.Script.EndConversation();
-				else
-					this.Response = this.State.Current as Response;
+				if (this.State.MoveNext())
+				{
+					var result = this.State.Current as string;
+					if (result != null && result == "end")
+						this.Script.EndConversation();
+					else
+						this.Response = this.State.Current as Response;
+				}
+			}
+			catch (Exception ex)
+			{
+				Log.Exception(ex, "Exception on talking to '{0}' ({1})", this.Script.GetType().Name, ex.Message);
 			}
 		}
 	}

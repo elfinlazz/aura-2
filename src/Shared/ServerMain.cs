@@ -55,7 +55,7 @@ namespace Aura.Shared.Util
 		/// Tries to initialize database, with the information from conf,
 		/// exits on error.
 		/// </summary>
-		public void InitDatabase(BaseConf conf)
+		public virtual void InitDatabase(BaseConf conf)
 		{
 			Log.Info("Initializing database...");
 

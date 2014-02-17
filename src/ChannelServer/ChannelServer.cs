@@ -14,6 +14,8 @@ using Aura.Channel.World;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.Skills;
+using Aura.Shared.Util.Configuration;
+using Aura.Channel.Database;
 
 namespace Aura.Channel
 {
@@ -255,6 +257,19 @@ namespace Aura.Channel
 		private void LoadSkills()
 		{
 			this.SkillManager.AutoLoad();
+		}
+
+		public override void InitDatabase(BaseConf conf)
+		{
+			base.InitDatabase(conf);
+
+			// If items end up with temp ids in the db we'd get entity ids
+			// that exist twice, when creating new temps later on.
+			if (ChannelDb.Instance.TmpItemsExist())
+			{
+				Log.Warning("InitDatabase: Found items with temp entity ids.");
+				// TODO: clean up dbs
+			}
 		}
 	}
 }

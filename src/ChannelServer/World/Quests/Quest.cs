@@ -41,11 +41,6 @@ namespace Aura.Channel.World.Quests
 		public QuestScript Data { get; protected set; }
 
 		/// <summary>
-		/// Id of the quests scroll.
-		/// </summary>
-		public long ItemEntityId { get { return this.UniqueId - MabiId.QuestItemOffset; } }
-
-		/// <summary>
 		/// Returns true if all objectives are done.
 		/// </summary>
 		public bool IsDone
@@ -186,12 +181,18 @@ namespace Aura.Channel.World.Quests
 		}
 
 		/// <summary>
-		/// Generates, caches, and returns new quest scroll.
+		/// Generates, caches, and returns new quest item.
 		/// </summary>
+		/// <remarks>
+		/// Officialy quest item ids are always
+		/// unique quest id - offset, that doesn't work
+		/// with our auto-incrementing table though,
+		/// so we use normal ids. Seems to work fine.
+		/// </remarks>
 		private Item GenerateQuestItem(int itemId = 70024)
 		{
 			this.QuestItem = new Item(itemId);
-			this.QuestItem.EntityId = this.ItemEntityId;
+			//this.QuestItem.EntityId = (this.UniqueId - MabiId.QuestItemOffset);
 			this.QuestItem.QuestId = this.UniqueId;
 			this.QuestItem.MetaData1.Parse(this.Data.MetaData.ToString());
 
