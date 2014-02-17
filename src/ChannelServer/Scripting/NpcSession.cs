@@ -98,7 +98,7 @@ namespace Aura.Channel.Scripting
 			}
 			catch (Exception ex)
 			{
-				Log.Exception(ex, "Exception on talking to '{0}' ({1})", this.Script.GetType().Name, ex.Message);
+				Log.Exception(ex, "Exception while talking to '{0}' ({1})", this.Script.GetType().Name, ex.Message);
 			}
 		}
 	}

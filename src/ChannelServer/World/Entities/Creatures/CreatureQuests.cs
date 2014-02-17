@@ -170,7 +170,11 @@ namespace Aura.Channel.World.Entities.Creatures
 		{
 			var success = this.Complete(quest, true);
 			if (success)
+			{
 				quest.State = QuestState.Complete;
+
+				ChannelServer.Instance.Events.OnPlayerCompletesQuest(_creature, quest.Id);
+			}
 			return success;
 		}
 
@@ -215,8 +219,6 @@ namespace Aura.Channel.World.Entities.Creatures
 						Log.Unimplemented("Quest.Complete: Reward '{0}'.", reward.Type);
 					}
 				}
-
-				// Check follow ups...
 			}
 
 			_creature.Inventory.Remove(quest.QuestItem);

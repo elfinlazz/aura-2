@@ -52,6 +52,7 @@ namespace Aura.Channel.Scripting.Scripts
 			ChannelServer.Instance.Events.CreatureKilledByPlayer -= this.OnCreatureKilledByPlayer;
 			ChannelServer.Instance.Events.PlayerReceivesItem -= this.OnPlayerReceivesOrRemovesItem;
 			ChannelServer.Instance.Events.PlayerRemovesItem -= this.OnPlayerReceivesOrRemovesItem;
+			ChannelServer.Instance.Events.PlayerCompletesQuest -= this.OnPlayerCompletesQuest;
 		}
 
 		// Setup
@@ -100,6 +101,12 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void AddPrerequisite(QuestPrerequisite prerequisite)
 		{
 			this.Prerequisites.Add(prerequisite);
+
+			if (prerequisite is QuestPrerequisiteQuestCompleted)
+			{
+				ChannelServer.Instance.Events.PlayerCompletesQuest -= this.OnPlayerCompletesQuest;
+				ChannelServer.Instance.Events.PlayerCompletesQuest += this.OnPlayerCompletesQuest;
+			}
 		}
 
 		/// <summary>
@@ -185,7 +192,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public void Init()
 		{
-			if (this.ReceiveMethod == Receive.Auto)
+			if (this.ReceiveMethod == Receive.Automatically)
 				ChannelServer.Instance.Events.PlayerLoggedIn += this.OnPlayerLoggedIn;
 
 			this.MetaData.SetString("QSTTIP", "N_{0}|D_{1}|A_|R_{2}|T_0", this.Name, this.Description, string.Join(", ", this.Rewards));
@@ -207,7 +214,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		private bool CheckPrerequisites(PlayerCreature character)
 		{
-			if (this.ReceiveMethod != Receive.Auto || character.Quests.Has(this.Id))
+			if (this.ReceiveMethod != Receive.Automatically || character.Quests.Has(this.Id))
 				return false;
 
 			foreach (var prerequisite in this.Prerequisites)
@@ -279,11 +286,21 @@ namespace Aura.Channel.Scripting.Scripts
 
 			Send.QuestUpdate(character, quest);
 		}
+
+		/// <summary>
+		/// Checks prerequisites.
+		/// </summary>
+		/// <param name="character"></param>
+		/// <param name="questId"></param>
+		private void OnPlayerCompletesQuest(PlayerCreature character, int questId)
+		{
+			this.CheckPrerequisites(character);
+		}
 	}
 
 	public enum Receive
 	{
 		Manually,
-		Auto,
+		Automatically,
 	}
 }

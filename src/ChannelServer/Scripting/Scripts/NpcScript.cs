@@ -238,7 +238,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="itemId"></param>
 		/// <param name="amount"></param>
 		/// <returns></returns>
-		protected bool GiveItem(int itemId, int amount = 1)
+		public bool GiveItem(int itemId, int amount = 1)
 		{
 			return Player.Inventory.Add(itemId, amount);
 		}
@@ -307,6 +307,15 @@ namespace Aura.Channel.Scripting.Scripts
 			return current.Ident;
 		}
 
+		/// <summary>
+		/// (Re)Starts quest.
+		/// </summary>
+		/// <param name="questId"></param>
+		public void StartQuest(int questId)
+		{
+			(this.Player as PlayerCreature).Quests.Start(questId);
+		}
+
 		// Dialog
 		// ------------------------------------------------------------------
 
@@ -321,7 +330,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var mes = new DialogElement();
 
 			if (hide == Hide.Face || hide == Hide.Both)
-				mes.Add(new DialogFace(null));
+				mes.Add(new DialogFaceExpression(null));
 			if (hide == Hide.Name || hide == Hide.Both)
 				mes.Add(new DialogTitle(null));
 
@@ -435,55 +444,29 @@ namespace Aura.Channel.Scripting.Scripts
 		// Dialog factory
 		// ------------------------------------------------------------------
 
-		public DialogButton Button(string text, string keyword = null, string onFrame = null)
-		{
-			return new DialogButton(text, keyword, onFrame);
-		}
+		public DialogButton Button(string text, string keyword = null, string onFrame = null) { return new DialogButton(text, keyword, onFrame); }
 
-		public DialogBgm SetBgm(string file)
-		{
-			return new DialogBgm(file);
-		}
+		public DialogBgm SetBgm(string file) { return new DialogBgm(file); }
 
-		public DialogImage Image(string name, bool localize = false, int width = 0, int height = 0)
-		{
-			return new DialogImage(name, localize, width, height);
-		}
+		public DialogImage Image(string name) { return new DialogImage(name, false, 0, 0); }
+		public DialogImage Image(string name, int width, int height) { return new DialogImage(name, false, width, height); }
+		public DialogImage Image(string name, bool localize, int width, int height) { return new DialogImage(name, localize, width, height); }
 
-		public DialogList List(string text, int height, string cancelKeyword, params DialogButton[] elements)
-		{
-			return new DialogList(text, height, cancelKeyword, elements);
-		}
+		public DialogList List(string text, int height, string cancelKeyword, params DialogButton[] elements) { return new DialogList(text, height, cancelKeyword, elements); }
+		public DialogList List(string text, params DialogButton[] elements) { return this.List(text, (int)elements.Length, elements); }
+		public DialogList List(string text, int height, params DialogButton[] elements) { return this.List(text, height, "@end", elements); }
 
-		public DialogList List(string text, params DialogButton[] elements)
-		{
-			return this.List(text, (int)elements.Length, elements);
-		}
+		public DialogInput Input(string title = "Input", string text = "", byte maxLength = 20, bool cancelable = true) { return new DialogInput(title, text, maxLength, cancelable); }
 
-		public DialogList List(string text, int height, params DialogButton[] elements)
-		{
-			return this.List(text, height, "@end", elements);
-		}
+		public DialogAutoContinue AutoContinue(int duration) { return new DialogAutoContinue(duration); }
 
-		public DialogInput Input(string title = "Input", string text = "", byte maxLength = 20, bool cancelable = true)
-		{
-			return new DialogInput(title, text, maxLength, cancelable);
-		}
+		public DialogFaceExpression Expression(string expression) { return new DialogFaceExpression(expression); }
 
-		public DialogAutoContinue AutoContinue(int duration)
-		{
-			return new DialogAutoContinue(duration);
-		}
+		public DialogMovie Movie(string file, int width, int height, bool loop = true) { return new DialogMovie(file, width, height, loop); }
 
-		public DialogFace Face(string expression)
-		{
-			return new DialogFace(expression);
-		}
+		public DialogText Text(string format, params object[] args) { return new DialogText(format, args); }
 
-		public DialogMovie Movie(string file, int width, int height, bool loop = true)
-		{
-			return new DialogMovie(file, width, height, loop);
-		}
+		public DialogHotkey Hotkey(string text) { return new DialogHotkey(text); }
 
 		// ------------------------------------------------------------------
 

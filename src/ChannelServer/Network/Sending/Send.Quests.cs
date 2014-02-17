@@ -65,7 +65,9 @@ namespace Aura.Channel.Network.Sending
 			var packet = new Packet(Op.QuestOwlNew, creature.EntityId);
 			packet.PutLong(questId);
 
-			creature.Region.Broadcast(packet, creature);
+			// Creature don't have a region in Soul Stream.
+			if (creature.Region != null)
+				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>

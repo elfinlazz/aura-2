@@ -311,11 +311,11 @@ namespace Aura.Channel.Scripting.Scripts
 	/// Changes the facial expression of the portrait.
 	/// (Defined client sided in the db/npc/npcportrait_ani_* files.)
 	/// </summary>
-	public class DialogFace : DialogElement
+	public class DialogFaceExpression : DialogElement
 	{
 		public string Expression { get; set; }
 
-		public DialogFace(string expression)
+		public DialogFaceExpression(string expression)
 		{
 			this.Expression = expression;
 		}

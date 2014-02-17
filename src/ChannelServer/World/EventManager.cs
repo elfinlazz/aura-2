@@ -94,6 +94,12 @@ namespace Aura.Channel.World
 		public event Action<PlayerCreature, int, int> PlayerReceivesItem;
 		public void OnPlayerReceivesItem(PlayerCreature creature, int itemId, int amount) { PlayerReceivesItem.Raise(creature, itemId, amount); }
 
+		/// <summary>
+		/// Raised when player completes a quest.
+		/// </summary>
+		public event Action<PlayerCreature, int> PlayerCompletesQuest;
+		public void OnPlayerCompletesQuest(PlayerCreature creature, int questId) { PlayerCompletesQuest.Raise(creature, questId); }
+
 		// ------------------------------------------------------------------
 
 		/// <summary>
