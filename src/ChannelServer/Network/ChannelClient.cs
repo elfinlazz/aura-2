@@ -40,13 +40,19 @@ namespace Aura.Channel.Network
 			return this.GetCreature(id) as PlayerCreature;
 		}
 
-		protected override void CleanUp()
+		public override void CleanUp()
 		{
+			if (this.Account != null)
+				ChannelDb.Instance.SaveAccount(this.Account);
+
 			foreach (var creature in this.Creatures.Values.Where(a => a.Region != null))
 				creature.Region.RemoveCreature(creature);
 
 			foreach (var creature in this.Creatures.Values)
 				creature.Dispose();
+
+			this.Creatures.Clear();
+			this.Account = null;
 		}
 	}
 
@@ -65,7 +71,7 @@ namespace Aura.Channel.Network
 		public override void Kill()
 		{ }
 
-		protected override void CleanUp()
+		public override void CleanUp()
 		{ }
 	}
 }

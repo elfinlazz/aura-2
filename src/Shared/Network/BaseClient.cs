@@ -117,7 +117,7 @@ namespace Aura.Shared.Network
 		/// <summary>
 		/// Takes care of client's remains (saving chars, etc)
 		/// </summary>
-		protected virtual void CleanUp()
+		public virtual void CleanUp()
 		{
 
 		}
