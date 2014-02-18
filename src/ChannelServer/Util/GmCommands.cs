@@ -48,6 +48,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "speed", "[increase]", HandleSpeed);
 			Add(50, 50, "spawn", "<race> [amount]", HandleSpawn);
 			Add(50, 50, "ap", "<amount>", HandleAp);
+			Add(50, 50, "gmcp", "", HandleGmcp);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -769,6 +770,19 @@ namespace Aura.Channel.Util
 				return CommandResult.Fail;
 
 			client.NpcSession.Script.Close("Ended by closenpc command.");
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleGmcp(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
+			{
+				Send.ServerMessage(sender, Localization.Get("gm.gmcp_auth")); // You're not authorized to use the GMCP.
+				return CommandResult.Fail;
+			}
+
+			Send.GmcpOpen(sender);
 
 			return CommandResult.Okay;
 		}

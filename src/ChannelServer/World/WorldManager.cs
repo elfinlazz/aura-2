@@ -280,6 +280,23 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns creature from any region by name, or null.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public Creature GetCreature(string name)
+		{
+			foreach (var region in _regions.Values)
+			{
+				var creature = region.GetCreature(name);
+				if (creature != null)
+					return creature;
+			}
+
+			return null;
+		}
+
+		/// <summary>
 		/// Returns NPC from any region by id, or null.
 		/// </summary>
 		/// <param name="entityId"></param>
@@ -294,6 +311,20 @@ namespace Aura.Channel.World
 			}
 
 			return null;
+		}
+
+		/// <summary>
+		/// Returns collection of all good, normal NPCs.
+		/// </summary>
+		/// <returns></returns>
+		public ICollection<Creature> GetAllGoodNpcs()
+		{
+			var result = new List<Creature>();
+
+			foreach (var region in _regions.Values)
+				region.GetAllGoodNpcs(ref result);
+
+			return result;
 		}
 
 		/// <summary>

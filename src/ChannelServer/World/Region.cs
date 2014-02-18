@@ -284,7 +284,7 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
-		/// Returns creature with entityId, or null, if it doesn't exist.
+		/// Returns creature by entityId, or null, if it doesn't exist.
 		/// </summary>
 		public Creature GetCreature(long entityId)
 		{
@@ -304,7 +304,23 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
-		/// Returns NPC with entityId, or null, if no NPC with that id exists.
+		/// Returns creature by name, or null, if it doesn't exist.
+		/// </summary>
+		public Creature GetCreature(string name)
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				return _creatures.Values.FirstOrDefault(a => a.Name == name);
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
+		/// Returns NPC by entityId, or null, if no NPC with that id exists.
 		/// </summary>
 		public NPC GetNpc(long entityId)
 		{
@@ -600,6 +616,24 @@ namespace Aura.Channel.World
 
 					npc.AI.Activate(time);
 				}
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
+		/// Adds all good NPCs of region to list.
+		/// </summary>
+		/// <param name="list"></param>
+		public void GetAllGoodNpcs(ref List<Creature> list)
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				foreach (NPC npc in _creatures.Values.Where(a => a.Is(EntityType.NPC) && a.Has(CreatureStates.GoodNpc)))
+					list.Add(npc);
 			}
 			finally
 			{

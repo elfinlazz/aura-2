@@ -427,18 +427,19 @@ namespace Aura.Shared.Network
 
 		public const int Weather = 0x1ADB0;
 
-		public const int GMCPOpen = 0x1D589;
-		public const int GMCPClose = 0x1D58A;
-		public const int GMCPSummon = 0x1D58B;
-		public const int GMCPMoveToChar = 0x1D58C;
-		public const int GMCPMove = 0x1D58D;
-		public const int GMCPRevive = 0x1D58E;
-		public const int GMCPInvisibility = 0x1D58F;
-		public const int GMCPInvisibilityR = 0x1D590;
-		public const int GMCPSearch = 0x1D595;
-		public const int GMCPExpel = 0x1D596;
-		public const int GMCPBan = 0x1D597;
-		public const int GMCPNPCList = 0x1D59F;
+		public const int GmcpOpen = 0x1D589;
+		public const int GmcpClose = 0x1D58A;
+		public const int GmcpSummon = 0x1D58B;
+		public const int GmcpMoveToChar = 0x1D58C;
+		public const int GmcpWarp = 0x1D58D;
+		public const int GmcpRevive = 0x1D58E;
+		public const int GmcpInvisibility = 0x1D58F;
+		public const int GmcpInvisibilityR = 0x1D590;
+		public const int GmcpSearch = 0x1D595;
+		public const int GmcpExpel = 0x1D596;
+		public const int GmcpBan = 0x1D597;
+		public const int GmcpNpcList = 0x1D59F;
+		public const int GmcpNpcListR = 0x1D5A0;
 
 		public const int PetMount = 0x1FBD0;
 		public const int PetMountR = 0x1FBD1;

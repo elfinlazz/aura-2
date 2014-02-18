@@ -16,6 +16,8 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public bool EnableContinentWarp { get; protected set; }
 
+		public int GmcpMinAuth { get; protected set; }
+
 		public void Load()
 		{
 			this.Require("system/conf/world.conf");
@@ -28,6 +30,8 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.PropDropRate = this.GetFloat("prop_drop_rate", 30) / 100.0f;
 
 			this.EnableContinentWarp = this.GetBool("enable_continent_warp", true);
+
+			this.GmcpMinAuth = this.GetInt("gmcp_min_auth", 50);
 		}
 	}
 }
