@@ -19,7 +19,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="character"></param>
 		/// <param name="quest"></param>
-		public static void NewQuest(PlayerCreature character, Quest quest)
+		public static void NewQuest(Creature character, Quest quest)
 		{
 			var packet = new Packet(Op.NewQuest, character.EntityId);
 			packet.AddQuest(quest);

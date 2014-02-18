@@ -13,7 +13,7 @@ namespace Aura.Channel.World.Quests
 	{
 		public abstract RewardType Type { get; }
 
-		public abstract void Reward(PlayerCreature creature, Quest quest);
+		public abstract void Reward(Creature creature, Quest quest);
 
 		public override abstract string ToString();
 	}
@@ -42,7 +42,7 @@ namespace Aura.Channel.World.Quests
 			return string.Format("{0} {1}", this.Amount, data.Name);
 		}
 
-		public override void Reward(PlayerCreature creature, Quest quest)
+		public override void Reward(Creature creature, Quest quest)
 		{
 			creature.Inventory.Add(this.ItemId, this.Amount);
 			Send.AcquireItemInfo(creature, this.ItemId, this.Amount);
@@ -73,7 +73,7 @@ namespace Aura.Channel.World.Quests
 			return string.Format("[Skill] {0}", data.Name);
 		}
 
-		public override void Reward(PlayerCreature creature, Quest quest)
+		public override void Reward(Creature creature, Quest quest)
 		{
 			// Only give skill if char doesn't have it or rank is lower.
 			if (creature.Skills.Has(this.SkillId, this.Rank))
@@ -100,7 +100,7 @@ namespace Aura.Channel.World.Quests
 			return string.Format("{0}G", this.Amount);
 		}
 
-		public override void Reward(PlayerCreature creature, Quest quest)
+		public override void Reward(Creature creature, Quest quest)
 		{
 			creature.Inventory.AddGold(this.Amount);
 			Send.AcquireGoldInfo(creature, this.Amount);
@@ -126,7 +126,7 @@ namespace Aura.Channel.World.Quests
 			return string.Format("{0} Experience Point", this.Amount);
 		}
 
-		public override void Reward(PlayerCreature creature, Quest quest)
+		public override void Reward(Creature creature, Quest quest)
 		{
 			creature.GiveExp(this.Amount);
 			Send.AcquireExpInfo(creature, this.Amount);
@@ -152,7 +152,7 @@ namespace Aura.Channel.World.Quests
 			return string.Format("Exploration EXP {0}", this.Amount);
 		}
 
-		public override void Reward(PlayerCreature creature, Quest quest)
+		public override void Reward(Creature creature, Quest quest)
 		{
 			throw new NotImplementedException();
 		}
@@ -177,7 +177,7 @@ namespace Aura.Channel.World.Quests
 			return string.Format("{0} Ability Point", this.Amount);
 		}
 
-		public override void Reward(PlayerCreature creature, Quest quest)
+		public override void Reward(Creature creature, Quest quest)
 		{
 			throw new NotImplementedException();
 			//creature.AbilityPoints += this.Amount;

@@ -60,45 +60,45 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Raised a few seconds after player logged in.
 		/// </summary>
-		public event Action<PlayerCreature> PlayerLoggedIn;
-		public void OnPlayerLoggedIn(PlayerCreature creature) { PlayerLoggedIn.Raise(creature); }
+		public event Action<Creature> PlayerLoggedIn;
+		public void OnPlayerLoggedIn(Creature creature) { PlayerLoggedIn.Raise(creature); }
 
 		/// <summary>
 		/// Raised when a player disconnects from server.
 		/// </summary>
-		public event Action<PlayerCreature> PlayerDisconnect;
-		public void OnPlayerDisconnect(PlayerCreature creature) { PlayerDisconnect.Raise(creature); }
+		public event Action<Creature> PlayerDisconnect;
+		public void OnPlayerDisconnect(Creature creature) { PlayerDisconnect.Raise(creature); }
 
 		/// <summary>
 		/// Raised when player enters a region.
 		/// </summary>
-		public event Action<PlayerCreature> PlayerEntersRegion;
-		public void OnPlayerEntersRegion(PlayerCreature creature) { PlayerEntersRegion.Raise(creature); }
+		public event Action<Creature> PlayerEntersRegion;
+		public void OnPlayerEntersRegion(Creature creature) { PlayerEntersRegion.Raise(creature); }
 
 		/// <summary>
 		/// Raised when player leaves a region.
 		/// </summary>
-		public event Action<PlayerCreature> PlayerLeavesRegion;
-		public void OnPlayerLeavesRegion(PlayerCreature creature) { PlayerLeavesRegion.Raise(creature); }
+		public event Action<Creature> PlayerLeavesRegion;
+		public void OnPlayerLeavesRegion(Creature creature) { PlayerLeavesRegion.Raise(creature); }
 
 		/// <summary>
 		/// Raised when player drops, destroys, sells,
 		/// uses (decrements), etcs an item.
 		/// </summary>
-		public event Action<PlayerCreature, int, int> PlayerRemovesItem;
-		public void OnPlayerRemovesItem(PlayerCreature creature, int itemId, int amount) { PlayerRemovesItem.Raise(creature, itemId, amount); }
+		public event Action<Creature, int, int> PlayerRemovesItem;
+		public void OnPlayerRemovesItem(Creature creature, int itemId, int amount) { PlayerRemovesItem.Raise(creature, itemId, amount); }
 
 		/// <summary>
 		/// Raised when player receives an item in any way.
 		/// </summary>
-		public event Action<PlayerCreature, int, int> PlayerReceivesItem;
-		public void OnPlayerReceivesItem(PlayerCreature creature, int itemId, int amount) { PlayerReceivesItem.Raise(creature, itemId, amount); }
+		public event Action<Creature, int, int> PlayerReceivesItem;
+		public void OnPlayerReceivesItem(Creature creature, int itemId, int amount) { PlayerReceivesItem.Raise(creature, itemId, amount); }
 
 		/// <summary>
 		/// Raised when player completes a quest.
 		/// </summary>
-		public event Action<PlayerCreature, int> PlayerCompletesQuest;
-		public void OnPlayerCompletesQuest(PlayerCreature creature, int questId) { PlayerCompletesQuest.Raise(creature, questId); }
+		public event Action<Creature, int> PlayerCompletesQuest;
+		public void OnPlayerCompletesQuest(Creature creature, int questId) { PlayerCompletesQuest.Raise(creature, questId); }
 
 		// ------------------------------------------------------------------
 
@@ -111,8 +111,8 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Raised when a creature is killed by something.
 		/// </summary>
-		public event Action<Creature, PlayerCreature> CreatureKilledByPlayer;
-		public void OnCreatureKilledByPlayer(Creature creature, PlayerCreature killer) { CreatureKilledByPlayer.Raise(creature, killer); }
+		public event Action<Creature, Creature> CreatureKilledByPlayer;
+		public void OnCreatureKilledByPlayer(Creature creature, Creature killer) { CreatureKilledByPlayer.Raise(creature, killer); }
 	}
 
 	public static class EventHandlerExtensions

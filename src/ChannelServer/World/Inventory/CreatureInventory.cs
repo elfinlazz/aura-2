@@ -390,7 +390,7 @@ namespace Aura.Channel.World
 
 			if (item.Info.Amount != originalAmount && _creature.IsPlayer)
 			{
-				ChannelServer.Instance.Events.OnPlayerReceivesItem(_creature as PlayerCreature, item.Info.Id, (originalAmount - item.Info.Amount));
+				ChannelServer.Instance.Events.OnPlayerReceivesItem(_creature, item.Info.Id, (originalAmount - item.Info.Amount));
 			}
 
 			// Fail if not everything could be picked up.

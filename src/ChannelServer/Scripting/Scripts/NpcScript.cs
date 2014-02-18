@@ -264,7 +264,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public bool QuestActive(int questId, string objective = null)
 		{
-			return (this.Player as PlayerCreature).Quests.IsActive(questId, objective);
+			return this.Player.Quests.IsActive(questId, objective);
 		}
 
 		/// <summary>
@@ -275,7 +275,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public bool FinishQuest(int questId, string objective)
 		{
-			return (this.Player as PlayerCreature).Quests.Finish(questId, objective);
+			return this.Player.Quests.Finish(questId, objective);
 		}
 
 		/// <summary>
@@ -286,7 +286,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public string QuestObjective(int questId)
 		{
-			var quest = (this.Player as PlayerCreature).Quests.Get(questId);
+			var quest = this.Player.Quests.Get(questId);
 			if (quest == null)
 				throw new Exception("NPC.GetQuestObjective: Player doesn't have quest '" + questId.ToString() + "'.");
 
@@ -303,7 +303,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="questId"></param>
 		public void StartQuest(int questId)
 		{
-			(this.Player as PlayerCreature).Quests.Start(questId);
+			this.Player.Quests.Start(questId);
 		}
 
 		/// <summary>

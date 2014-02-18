@@ -14,11 +14,11 @@ namespace Aura.Channel.World.Entities.Creatures
 {
 	public class CreatureQuests
 	{
-		private PlayerCreature _creature;
+		private Creature _creature;
 
 		private Dictionary<int, Quest> _quests;
 
-		public CreatureQuests(PlayerCreature creature)
+		public CreatureQuests(Creature creature)
 		{
 			_creature = creature;
 			_quests = new Dictionary<int, Quest>();

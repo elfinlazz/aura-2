@@ -202,7 +202,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Checks and starts auto quests.
 		/// </summary>
 		/// <param name="character"></param>
-		private void OnPlayerLoggedIn(PlayerCreature character)
+		private void OnPlayerLoggedIn(Creature character)
 		{
 			this.CheckPrerequisites(character);
 		}
@@ -212,7 +212,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="character"></param>
 		/// <returns></returns>
-		private bool CheckPrerequisites(PlayerCreature character)
+		private bool CheckPrerequisites(Creature character)
 		{
 			if (this.ReceiveMethod != Receive.Automatically || character.Quests.Has(this.Id))
 				return false;
@@ -232,12 +232,12 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Updates kill objectives.
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="character"></param>
-		private void OnCreatureKilledByPlayer(Creature creature, PlayerCreature character)
+		/// <param name="killer"></param>
+		private void OnCreatureKilledByPlayer(Creature creature, Creature killer)
 		{
-			if (creature == null || character == null) return;
+			if (creature == null || killer == null) return;
 
-			var quest = character.Quests.Get(this.Id);
+			var quest = killer.Quests.Get(this.Id);
 			if (quest == null) return;
 
 			var progress = quest.CurrentObjective;
@@ -253,7 +253,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (progress.Count >= objective.Amount)
 				quest.SetDone(progress.Ident);
 
-			Send.QuestUpdate(character, quest);
+			Send.QuestUpdate(killer, quest);
 		}
 
 		/// <summary>
@@ -262,7 +262,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creatue"></param>
 		/// <param name="itemId"></param>
 		/// <param name="amount"></param>
-		private void OnPlayerReceivesOrRemovesItem(PlayerCreature character, int itemId, int amount)
+		private void OnPlayerReceivesOrRemovesItem(Creature character, int itemId, int amount)
 		{
 			if (character == null) return;
 
@@ -292,7 +292,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="character"></param>
 		/// <param name="questId"></param>
-		private void OnPlayerCompletesQuest(PlayerCreature character, int questId)
+		private void OnPlayerCompletesQuest(Creature character, int questId)
 		{
 			this.CheckPrerequisites(character);
 		}

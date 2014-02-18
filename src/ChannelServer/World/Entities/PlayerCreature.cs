@@ -48,8 +48,6 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public bool Save { get; set; }
 
-		public CreatureQuests Quests { get; protected set; }
-
 		public override float CombatPower
 		{
 			get

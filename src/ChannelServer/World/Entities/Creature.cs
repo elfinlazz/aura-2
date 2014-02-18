@@ -55,6 +55,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureRegen Regens { get; protected set; }
 		public CreatureStatMods StatMods { get; protected set; }
 		public CreatureConditions Conditions { get; protected set; }
+		public CreatureQuests Quests { get; protected set; }
 
 		public ScriptVariables Vars { get; protected set; }
 
@@ -1008,7 +1009,7 @@ namespace Aura.Channel.World.Entities
 
 			ChannelServer.Instance.Events.OnCreatureKilled(this, killer);
 			if (killer != null && killer.IsPlayer)
-				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer as PlayerCreature);
+				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer);
 		}
 
 		/// <summary>

@@ -7,7 +7,7 @@ namespace Aura.Channel.World.Quests
 {
 	public abstract class QuestPrerequisite
 	{
-		public abstract bool Met(PlayerCreature character);
+		public abstract bool Met(Creature character);
 	}
 
 	/// <summary>
@@ -22,7 +22,7 @@ namespace Aura.Channel.World.Quests
 			this.Id = id;
 		}
 
-		public override bool Met(PlayerCreature character)
+		public override bool Met(Creature character)
 		{
 			return character.Quests.IsComplete(this.Id);
 		}
@@ -40,7 +40,7 @@ namespace Aura.Channel.World.Quests
 			this.Level = level;
 		}
 
-		public override bool Met(PlayerCreature character)
+		public override bool Met(Creature character)
 		{
 			return (character.Level >= this.Level);
 		}
@@ -58,7 +58,7 @@ namespace Aura.Channel.World.Quests
 			this.Prerequisites = prerequisites;
 		}
 
-		public override bool Met(PlayerCreature character)
+		public override bool Met(Creature character)
 		{
 			if (this.Prerequisites.Length == 0)
 				return true;
@@ -85,7 +85,7 @@ namespace Aura.Channel.World.Quests
 			this.Prerequisites = prerequisites;
 		}
 
-		public override bool Met(PlayerCreature character)
+		public override bool Met(Creature character)
 		{
 			if (this.Prerequisites.Length == 0)
 				return true;
