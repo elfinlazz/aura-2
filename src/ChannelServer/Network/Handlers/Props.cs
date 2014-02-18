@@ -34,7 +34,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 			else
 			{
-				if (creature.GetPosition().InRange(prop.GetPosition(), 400))
+				if (creature.GetPosition().InRange(prop.GetPosition(), 1500))
 				{
 					Send.HittingProp(creature, prop.EntityId);
 
