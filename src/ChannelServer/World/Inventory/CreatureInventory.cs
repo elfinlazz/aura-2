@@ -125,8 +125,9 @@ namespace Aura.Channel.World
 
 			_pockets = new Dictionary<Pocket, InventoryPocket>();
 
-			// Cursor, Temp
+			// Cursor, Temp, Quests
 			this.Add(new InventoryPocketStack(Pocket.Temporary));
+			this.Add(new InventoryPocketStack(Pocket.Quests));
 			this.Add(new InventoryPocketSingle(Pocket.Cursor));
 
 			// Equipment
@@ -387,7 +388,7 @@ namespace Aura.Channel.World
 				item.Info.Amount -= newStackItem.Info.Amount;
 			}
 
-			if (item.Info.Amount != originalAmount)
+			if (item.Info.Amount != originalAmount && _creature.IsPlayer)
 			{
 				ChannelServer.Instance.Events.OnPlayerReceivesItem(_creature, item.Info.Id, (originalAmount - item.Info.Amount));
 			}

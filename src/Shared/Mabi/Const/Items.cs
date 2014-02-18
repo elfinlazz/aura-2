@@ -39,7 +39,7 @@ namespace Aura.Shared.Mabi.Const
 
 		Trade = 19,
 		Temporary = 20,
-		Quest = 23,
+		Quests = 23,
 		Trash = 24,
 		BattleReward = 28,
 		EnchantReward = 29,

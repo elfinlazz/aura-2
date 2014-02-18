@@ -12,7 +12,7 @@ public class DuncanBaseScript : NpcScript
 		SetRace(10002);
 		SetBody(height: 1.3f);
 		SetFace(skinColor: 20, eyeType: 17);
-		SetStand("human/male/anim/male_natural_stand_npc_duncan_new");
+		SetStand("human/male/anim/male_natural_stand_npc_duncan_new", "male_natural_stand_npc_Duncan_talk");
 		SetLocation(1, 15409, 38310, 122);
 
 		EquipItem(Pocket.Face, 4950, 0x93005C);
@@ -41,7 +41,7 @@ public class DuncanBaseScript : NpcScript
 			"As he speaks, his voice resonates with a kind of gentle authority."
 		);
 		
-		//Hook("after_intro");
+		Call(Hook("after_intro"));
 		
 		Msg("Please let me know if you need anything.", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrive Lost Items", "@lostandfound"));
 		var selected = Select();
@@ -57,7 +57,7 @@ public class DuncanBaseScript : NpcScript
 					ShowKeywords();
 					var keyword = Select();
 					
-					//Hook("keywords", keyword);
+					Call(Hook("before_keywords", keyword));
 					
 					switch (keyword)
 					{
@@ -69,7 +69,6 @@ public class DuncanBaseScript : NpcScript
 						default:              Msg("I don't know anything about that..."); break;
 					}
 				}
-				break;
 				
 			case "@shop":
 				Msg("Choose a quest you would like to do.");

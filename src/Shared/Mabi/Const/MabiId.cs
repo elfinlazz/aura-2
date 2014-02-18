@@ -25,6 +25,7 @@ namespace Aura.Shared.Mabi.Const
 		public const long Guilds = 0x0300000000500000;
 
 		public const long Items = 0x0050000000000001;
+		public const long QuestItems = 0x005000F000000001;
 		public const long TmpItems = 0x0050F00000000001;
 
 		// 00XX<short:region><short:area><short:id>

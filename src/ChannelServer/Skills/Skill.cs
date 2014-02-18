@@ -18,6 +18,7 @@ namespace Aura.Channel.Skills
 		private int _race;
 
 		public SkillInfo Info;
+		public SkillData SkillData { get; protected set; }
 		public SkillRankData RankData { get; protected set; }
 
 		/// <summary>
@@ -56,19 +57,19 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public void LoadRankData()
 		{
-			var skillData = AuraData.SkillDb.Find((int)this.Info.Id);
-			if (skillData == null)
+			this.SkillData = AuraData.SkillDb.Find((int)this.Info.Id);
+			if (this.SkillData == null)
 				throw new Exception("Skill.LoadRankData: Skill data not found for '" + this.Info.Id.ToString() + "'.");
 
-			if ((this.RankData = skillData.GetRankData((byte)this.Info.Rank, _race)) == null)
+			if ((this.RankData = this.SkillData.GetRankData((byte)this.Info.Rank, _race)) == null)
 			{
-				if ((this.RankData = skillData.GetFirstRankData(_race)) == null)
+				if ((this.RankData = this.SkillData.GetFirstRankData(_race)) == null)
 					throw new Exception("Skill.LoadRankData: No rank data found for '" + this.Info.Id.ToString() + "@" + this.Info.Rank.ToString() + "'.");
 
 				Log.Warning("Skill.LoadRankData: Missing rank data for '{0},{1}', using '{2}' instead.", this.Info.Id, this.Info.Rank, (SkillRank)this.RankData.Rank);
 			}
 
-			this.Info.MaxRank = (SkillRank)skillData.MaxRank;
+			this.Info.MaxRank = (SkillRank)this.SkillData.MaxRank;
 
 			if (this.IsRankable)
 				this.Info.Flag |= SkillFlags.Rankable;

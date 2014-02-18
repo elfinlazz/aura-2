@@ -183,5 +183,49 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Sends PlayCutscene to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="cutscene"></param>
+		public static void PlayCutscene(Creature creature, Cutscene cutscene)
+		{
+			var packet = new Packet(Op.PlayCutscene, MabiId.Channel);
+			packet.PutLong(creature.EntityId);
+			packet.PutLong(cutscene.Leader.EntityId);
+			packet.PutString(cutscene.Name);
+
+			packet.PutInt(cutscene.Actors.Count);
+			foreach (var actor in cutscene.Actors)
+			{
+				var subPacket = Packet.Empty();
+				subPacket.AddCreatureInfo(actor.Value, CreaturePacketType.Public);
+				var bArr = subPacket.Build(false);
+
+				packet.PutString(actor.Key);
+				packet.PutShort((short)bArr.Length);
+				packet.PutBin(bArr);
+			}
+
+			packet.PutInt(1); // count?
+			packet.PutLong(creature.EntityId);
+
+			// TODO: Send to whole party?
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends CutsceneEnd to cutscene's leader.
+		/// </summary>
+		/// <param name="cutscene"></param>
+		public static void CutsceneEnd(Cutscene cutscene)
+		{
+			var packet = new Packet(Op.CutsceneEnd, MabiId.Channel);
+			packet.PutLong(cutscene.Leader.EntityId);
+
+			// TODO: Send to whole party?
+			cutscene.Leader.Client.Send(packet);
+		}
 	}
 }

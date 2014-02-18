@@ -27,27 +27,31 @@ namespace Aura.Channel.Network.Handlers
 			var skillId = (SkillId)packet.GetUShort();
 
 			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			if (creature == null) return;
 
 			var skill = creature.Skills.Get(skillId);
-			if (skill == null || !skill.IsRankable)
+			if (skill == null || !skill.IsRankable) goto L_Fail;
+
+			var nextRank = skill.SkillData.GetRankData((int)skill.Info.Rank + 1, creature.Race);
+			if (nextRank == null)
 			{
-				Send.SkillAdvance_Fail(creature);
-				return;
+				Log.Warning("Player '{0}' tried to advance skill '{1}' to unknown rank '{2}'.", creature.EntityIdHex, skill.Info.Id, skill.Info.Rank + 1);
+				goto L_Fail;
 			}
 
-			if (creature.AbilityPoints < skill.RankData.AP)
+			if (creature.AbilityPoints < nextRank.AP)
 			{
 				Send.MsgBox(creature, Localization.Get("skills.no_ap")); // You don't have enough AP.
-				Send.SkillAdvance_Fail(creature);
-				return;
+				goto L_Fail;
 			}
 
-			creature.AbilityPoints -= skill.RankData.AP;
-			Send.StatUpdate(creature, StatUpdateType.Private, Stat.AbilityPoints);
-
+			creature.GiveAp(-nextRank.AP);
 			creature.Skills.Give(skill.Info.Id, skill.Info.Rank + 1);
+
+			return;
+
+		L_Fail:
+			Send.SkillAdvance_Fail(creature);
 		}
 
 		/// <summary>
@@ -56,7 +60,7 @@ namespace Aura.Channel.Network.Handlers
 		/// <remarks>
 		/// The second paramter seems to always be a string if the
 		/// main player uses the skill. When pets use it you get a byte.
-		/// The string is a MabiDictionary, with optional extra information,
+		/// The string is a MabiDictionary with optional extra information,
 		/// like chair ids for Rest.
 		/// </remarks>
 		/// <example>

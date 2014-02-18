@@ -94,6 +94,11 @@ namespace Aura.Channel.Network.Handlers
 		/// <summary>
 		/// Sent when "End Conversation" button is clicked.
 		/// </summary>
+		/// <remarks>
+		/// Not every "End Conversation" button is the same. Some send this,
+		/// others, like the one you get while the keywords are open,
+		/// send an "@end" response to Select instead.
+		/// </remarks>
 		/// <example>
 		/// 001 [0010F00000000003] Long   : 4767482418036739
 		/// 002 [..............01] Byte   : 1
@@ -168,7 +173,7 @@ namespace Aura.Channel.Network.Handlers
 			if (response.StartsWith("@input"))
 				response = response.Substring(7).Trim();
 
-			client.NpcSession.SetResponse(match.Groups["result"].Value);
+			client.NpcSession.SetResponse(response);
 			client.NpcSession.Continue();
 		}
 
@@ -289,7 +294,7 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 			var unk = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
+			var creature = client.GetPlayerCreature(packet.Id);
 			if (creature == null)
 				return;
 

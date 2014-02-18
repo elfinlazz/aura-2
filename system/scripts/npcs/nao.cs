@@ -80,7 +80,7 @@ public class NaoScript : NpcScript
 		GiveItem(50004, 1); // Bread
 		GiveItem(85539, 3); // Nao's Soul Stone for Beginners
 		
-		//StartQuest(200501); // Nao's Letter of Introduction
+		StartQuest(1000001); // Nao's Letter of Introduction
 		
 		Close();
 	}

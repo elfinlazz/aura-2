@@ -55,6 +55,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureRegen Regens { get; protected set; }
 		public CreatureStatMods StatMods { get; protected set; }
 		public CreatureConditions Conditions { get; protected set; }
+		public CreatureQuests Quests { get; protected set; }
 
 		public ScriptVariables Vars { get; protected set; }
 
@@ -532,7 +533,8 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Loads race and handles some basic stuff, like adding regens.
 		/// </summary>
-		public void LoadDefault()
+		/// <param name="fullyFunctional">Fully functional creatures have an inv, regens, etc.</param>
+		public void LoadDefault(bool fullyFunctional = true)
 		{
 			if (this.Race == 0)
 				throw new Exception("Set race before calling LoadDefault.");
@@ -548,19 +550,22 @@ namespace Aura.Channel.World.Entities
 				Log.Warning("Race '{0}' not found, using human instead.", this.Race);
 			}
 
-			this.DefenseBase = this.RaceData.Defense;
-			this.ProtectionBase = this.RaceData.Protection;
+			if (fullyFunctional)
+			{
+				this.DefenseBase = this.RaceData.Defense;
+				this.ProtectionBase = this.RaceData.Protection;
 
-			this.Inventory.AddMainInventory();
+				this.Inventory.AddMainInventory();
 
-			// The wiki says it's 0.125 life, but the packets have 0.12.
-			this.Regens.Add(Stat.Life, 0.12f, this.LifeMax);
-			this.Regens.Add(Stat.Mana, 0.05f, this.ManaMax);
-			this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
-			this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
-			this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
+				// The wiki says it's 0.125 life, but the packets have 0.12.
+				this.Regens.Add(Stat.Life, 0.12f, this.LifeMax);
+				this.Regens.Add(Stat.Mana, 0.05f, this.ManaMax);
+				this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
+				this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
+				this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
 
-			ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
+				ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
+			}
 		}
 
 		/// <summary>
@@ -1087,6 +1092,16 @@ namespace Aura.Channel.World.Entities
 
 			Send.StatUpdate(this, StatUpdateType.Private, Stat.Life, Stat.LifeInjured, Stat.Stamina, Stat.Hunger, Stat.Mana);
 			Send.StatUpdate(this, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
+		}
+
+		/// <summary>
+		/// Increases AP and updates client.
+		/// </summary>
+		/// <param name="amount"></param>
+		public void GiveAp(int amount)
+		{
+			this.AbilityPoints += (short)Math2.MinMax(short.MinValue, short.MaxValue, amount);
+			Send.StatUpdate(this, StatUpdateType.Private, Stat.AbilityPoints);
 		}
 	}
 }

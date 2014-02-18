@@ -56,6 +56,7 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		public void Clear()
 		{
+			this.Script = null;
 			this.Target = null;
 			this.State = null;
 			this.Response = null;
@@ -85,8 +86,23 @@ namespace Aura.Channel.Scripting
 
 		public void Continue()
 		{
-			if (this.State.MoveNext())
-				this.Response = this.State.Current as Response;
+			try
+			{
+				if (this.State.MoveNext() && this.State != null)
+				{
+					var result = this.State.Current as string;
+					if (result != null && result == "end")
+					{
+						this.Script.EndConversation();
+					}
+					else
+						this.Response = this.State.Current as Response;
+				}
+			}
+			catch (Exception ex)
+			{
+				Log.Exception(ex, "Exception while talking to NPC ({0})", ex.Message);
+			}
 		}
 	}
 

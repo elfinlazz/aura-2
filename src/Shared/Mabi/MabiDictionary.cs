@@ -45,6 +45,7 @@ namespace Aura.Shared.Mabi
 		public void SetULong(string key, ulong val) { this.Set(key, (long)val); }
 		public void SetFloat(string key, float val) { this.Set(key, val); }
 		public void SetString(string key, string val) { this.Set(key, val); }
+		public void SetString(string key, string format, params object[] args) { this.Set(key, string.Format(format, args)); }
 		public void SetBool(string key, bool val) { this.Set(key, val); }
 
 		/// <summary>

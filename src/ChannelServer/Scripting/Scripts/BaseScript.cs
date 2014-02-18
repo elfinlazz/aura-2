@@ -3,6 +3,7 @@
 
 using System;
 using Aura.Shared.Util;
+using System.Collections;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -126,6 +127,17 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			var rnd = RandomProvider.Get();
 			return rnd.Next(min, max);
+		}
+
+		/// <summary>
+		/// Adds hook for NPC.
+		/// </summary>
+		/// <param name="npcName"></param>
+		/// <param name="hookName"></param>
+		/// <param name="func"></param>
+		protected void AddHook(string npcName, string hookName, ScriptHook func)
+		{
+			ChannelServer.Instance.ScriptManager.AddHook(npcName, hookName, func);
 		}
 	}
 

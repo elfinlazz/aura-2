@@ -88,7 +88,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var unkByte = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
+			var creature = client.GetPlayerCreature(packet.Id);
 			if (creature == null)
 				return;
 
@@ -139,6 +139,27 @@ namespace Aura.Channel.Network.Handlers
 
 			// Default answer
 			Send.ContinentWarpCoolDownR(creature);
+		}
+
+		/// <summary>
+		/// Sent when the cutscene is over.
+		/// </summary>
+		/// <example>
+		/// 001 [........000186A4] Int    : 100004
+		/// </example>
+		[PacketHandler(Op.FinishedCutscene)]
+		public void FinishedCutscene(ChannelClient client, Packet packet)
+		{
+			var unkInt = packet.GetInt();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null) return;
+
+			if (creature.Temp.CurrentCutscene == null || creature.Temp.CurrentCutscene.Leader != creature)
+				return;
+
+			Send.CutsceneEnd(creature.Temp.CurrentCutscene);
+			Send.CharacterUnlock(creature, Locks.Default);
 		}
 	}
 }

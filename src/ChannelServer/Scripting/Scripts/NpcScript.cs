@@ -125,9 +125,11 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Sets NPC's stand style.
 		/// </summary>
 		/// <param name="stand"></param>
-		protected void SetStand(string stand)
+		/// <param name="talkStand"></param>
+		protected void SetStand(string stand, string talkStand = null)
 		{
 			this.NPC.StandStyle = stand;
+			this.NPC.StandStyleTalking = talkStand;
 		}
 
 		/// <summary>
@@ -139,7 +141,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="color2"></param>
 		/// <param name="color3"></param>
 		/// <param name="state">For robes and helmets</param>
-		protected void EquipItem(Pocket pocket, int itemId, uint color1, uint color2, uint color3, ItemState state = ItemState.Up)
+		protected void EquipItem(Pocket pocket, int itemId, uint color1 = 0, uint color2 = 0, uint color3 = 0, ItemState state = ItemState.Up)
 		{
 			if (!pocket.IsEquip())
 			{
@@ -161,18 +163,6 @@ namespace Aura.Channel.Scripting.Scripts
 			item.Info.State = (byte)state;
 
 			this.NPC.Inventory.InitAdd(item);
-		}
-
-		/// <summary>
-		/// Adds item to NPC's inventory.
-		/// </summary>
-		/// <param name="pocket"></param>
-		/// <param name="itemId"></param>
-		/// <param name="color1"></param>
-		/// <param name="state">For robes and helmets</param>
-		protected void EquipItem(Pocket pocket, int itemId, uint color1 = 0x808080, ItemState state = ItemState.Up)
-		{
-			EquipItem(pocket, itemId, color1, 0, 0, state);
 		}
 
 		/// <summary>
@@ -238,9 +228,92 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="itemId"></param>
 		/// <param name="amount"></param>
 		/// <returns></returns>
-		protected bool GiveItem(int itemId, int amount = 1)
+		public bool GiveItem(int itemId, int amount = 1)
 		{
 			return Player.Inventory.Add(itemId, amount);
+		}
+
+		/// <summary>
+		/// Execute Hook! Harhar.
+		/// </summary>
+		/// <remarks>
+		/// Runs all hook funcs, one by one.
+		/// </remarks>
+		/// <param name="hookName"></param>
+		/// <returns></returns>
+		protected IEnumerable Hook(string hookName, params object[] args)
+		{
+			foreach (var hook in ChannelServer.Instance.ScriptManager.GetHooks(this.NPC.Name, hookName))
+			{
+				foreach (var call in hook(this, args))
+				{
+					var result = call as string;
+					if (result != null && result == "break_hook")
+						yield break;
+
+					yield return call;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns true if quest is in progress.
+		/// </summary>
+		/// <param name="questId"></param>
+		/// <param name="objective"></param>
+		/// <returns></returns>
+		public bool QuestActive(int questId, string objective = null)
+		{
+			return this.Player.Quests.IsActive(questId, objective);
+		}
+
+		/// <summary>
+		/// Finishes objective in quest.
+		/// </summary>
+		/// <param name="questId"></param>
+		/// <param name="objective"></param>
+		/// <returns></returns>
+		public bool FinishQuest(int questId, string objective)
+		{
+			return this.Player.Quests.Finish(questId, objective);
+		}
+
+		/// <summary>
+		/// Returns current quest objective.
+		/// </summary>
+		/// <param name="questId"></param>
+		/// <param name="objective"></param>
+		/// <returns></returns>
+		public string QuestObjective(int questId)
+		{
+			var quest = this.Player.Quests.Get(questId);
+			if (quest == null)
+				throw new Exception("NPC.GetQuestObjective: Player doesn't have quest '" + questId.ToString() + "'.");
+
+			var current = quest.CurrentObjective;
+			if (current == null)
+				return null;
+
+			return current.Ident;
+		}
+
+		/// <summary>
+		/// (Re)Starts quest.
+		/// </summary>
+		/// <param name="questId"></param>
+		public void StartQuest(int questId)
+		{
+			this.Player.Quests.Start(questId);
+		}
+
+		/// <summary>
+		/// Displays notice.
+		/// </summary>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public void Notice(string format, params object[] args)
+		{
+			Send.Notice(this.Player, format, args);
 		}
 
 		// Dialog
@@ -252,12 +325,12 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
-		protected void Msg(Hide hide, string message, params DialogElement[] elements)
+		public void Msg(Hide hide, string message, params DialogElement[] elements)
 		{
 			var mes = new DialogElement();
 
 			if (hide == Hide.Face || hide == Hide.Both)
-				mes.Add(new DialogFace(null));
+				mes.Add(new DialogFaceExpression(null));
 			if (hide == Hide.Name || hide == Hide.Both)
 				mes.Add(new DialogTitle(null));
 
@@ -273,7 +346,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
-		protected void Msg(string message, params DialogElement[] elements)
+		public void Msg(string message, params DialogElement[] elements)
 		{
 			var mes = new DialogElement();
 			mes.Add(new DialogText(message));
@@ -287,7 +360,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="elements"></param>
-		protected void Msg(params DialogElement[] elements)
+		public void Msg(params DialogElement[] elements)
 		{
 			var xml = string.Format(
 				"<call convention='thiscall' syncmode='non-sync'>" +
@@ -310,7 +383,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="message">Dialog closes immediately if null.</param>
-		protected void Close(string message = null)
+		public void Close(string message = null)
 		{
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
 			this.Player.Client.NpcSession.Clear();
@@ -371,59 +444,34 @@ namespace Aura.Channel.Scripting.Scripts
 		// Dialog factory
 		// ------------------------------------------------------------------
 
-		protected DialogButton Button(string text, string keyword = null, string onFrame = null)
-		{
-			return new DialogButton(text, keyword, onFrame);
-		}
+		public DialogButton Button(string text, string keyword = null, string onFrame = null) { return new DialogButton(text, keyword, onFrame); }
 
-		protected DialogBgm SetBgm(string file)
-		{
-			return new DialogBgm(file);
-		}
+		public DialogBgm SetBgm(string file) { return new DialogBgm(file); }
 
-		protected DialogImage Image(string name, bool localize = false, int width = 0, int height = 0)
-		{
-			return new DialogImage(name, localize, width, height);
-		}
+		public DialogImage Image(string name) { return new DialogImage(name, false, 0, 0); }
+		public DialogImage Image(string name, int width, int height) { return new DialogImage(name, false, width, height); }
+		public DialogImage Image(string name, bool localize, int width, int height) { return new DialogImage(name, localize, width, height); }
 
-		protected DialogList List(string text, int height, string cancelKeyword, params DialogButton[] elements)
-		{
-			return new DialogList(text, height, cancelKeyword, elements);
-		}
+		public DialogList List(string text, int height, string cancelKeyword, params DialogButton[] elements) { return new DialogList(text, height, cancelKeyword, elements); }
+		public DialogList List(string text, params DialogButton[] elements) { return this.List(text, (int)elements.Length, elements); }
+		public DialogList List(string text, int height, params DialogButton[] elements) { return this.List(text, height, "@end", elements); }
 
-		protected DialogList List(string text, params DialogButton[] elements)
-		{
-			return this.List(text, (int)elements.Length, elements);
-		}
+		public DialogInput Input(string title = "Input", string text = "", byte maxLength = 20, bool cancelable = true) { return new DialogInput(title, text, maxLength, cancelable); }
 
-		protected DialogList List(string text, int height, params DialogButton[] elements)
-		{
-			return this.List(text, height, "@end", elements);
-		}
+		public DialogAutoContinue AutoContinue(int duration) { return new DialogAutoContinue(duration); }
 
-		protected DialogInput Input(string title = "Input", string text = "", byte maxLength = 20, bool cancelable = true)
-		{
-			return new DialogInput(title, text, maxLength, cancelable);
-		}
+		public DialogFaceExpression Expression(string expression) { return new DialogFaceExpression(expression); }
 
-		protected DialogAutoContinue AutoContinue(int duration)
-		{
-			return new DialogAutoContinue(duration);
-		}
+		public DialogMovie Movie(string file, int width, int height, bool loop = true) { return new DialogMovie(file, width, height, loop); }
 
-		protected DialogFace Face(string expression)
-		{
-			return new DialogFace(expression);
-		}
+		public DialogText Text(string format, params object[] args) { return new DialogText(format, args); }
 
-		protected DialogMovie Movie(string file, int width, int height, bool loop = true)
-		{
-			return new DialogMovie(file, width, height, loop);
-		}
+		public DialogHotkey Hotkey(string text) { return new DialogHotkey(text); }
 
 		// ------------------------------------------------------------------
 
 		protected enum ItemState : byte { Up = 0, Down = 1 }
-		protected enum Hide { Face, Name, Both }
 	}
+
+	public enum Hide { Face, Name, Both }
 }

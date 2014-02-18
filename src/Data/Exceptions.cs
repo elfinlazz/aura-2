@@ -28,8 +28,8 @@ namespace Aura.Data
 
 	public class FieldCountException : DatabaseWarningException
 	{
-		public FieldCountException(int expectedAmount)
-			: base("Expected at least {0} fields.", expectedAmount)
+		public FieldCountException(int expectedAmount, int amount)
+			: base("Expected at least {0} fields, found {1}.", expectedAmount, amount)
 		{ }
 	}
 }

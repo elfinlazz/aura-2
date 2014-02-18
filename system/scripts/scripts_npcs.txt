@@ -8,5 +8,6 @@ npcs/nao.cs
 npcs/tin.cs
 
 npcs/tir/duncan.cs
+npcs/tir/trefor.cs
 
 include "/user/scripts/scripts_npcs.txt"

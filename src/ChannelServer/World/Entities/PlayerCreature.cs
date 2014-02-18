@@ -71,6 +71,7 @@ namespace Aura.Channel.World.Entities
 
 		public PlayerCreature()
 		{
+			this.Quests = new CreatureQuests(this);
 		}
 
 		/// <summary>

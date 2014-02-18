@@ -98,11 +98,13 @@
     <Compile Include="Network\Handlers\Items.cs" />
     <Compile Include="Network\Handlers\Pets.cs" />
     <Compile Include="Network\Handlers\Props.cs" />
+    <Compile Include="Network\Handlers\Quests.cs" />
     <Compile Include="Network\Handlers\Skills.cs" />
     <Compile Include="Network\Handlers\LogInOut.cs" />
     <Compile Include="Network\Handlers\Misc.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Handlers\NPCs.cs" />
+    <Compile Include="Network\Sending\Send.Quests.cs" />
     <Compile Include="Network\Sending\Send.Effects.cs" />
     <Compile Include="Network\Sending\Send.Pets.cs" />
     <Compile Include="Network\Sending\Send.Skills.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="Scripting\Compilers\CompilerErrors.cs" />
     <Compile Include="Scripting\Compilers\CSharpCompiler.cs" />
     <Compile Include="Scripting\ScriptManager.cs" />
+    <Compile Include="Scripting\Scripts\QuestScript.cs" />
     <Compile Include="Scripting\ScriptVariables.cs" />
     <Compile Include="Skills\Actions\ContinentWarpSkillHandler.cs" />
     <Compile Include="Skills\Base\CombatSkillHandler.cs" />
@@ -151,9 +154,11 @@
     <Compile Include="Util\Configuration\Files\World.cs" />
     <Compile Include="Util\GmCommands.cs" />
     <Compile Include="Util\Quadtree.cs" />
+    <Compile Include="World\Cutscene.cs" />
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\Creature.cs" />
     <Compile Include="World\Entities\Creatures\CreatureConditions.cs" />
+    <Compile Include="World\Entities\Creatures\CreatureQuests.cs" />
     <Compile Include="World\Entities\Creatures\CreatureRegen.cs" />
     <Compile Include="World\Entities\Creatures\CreatureSkills.cs" />
     <Compile Include="World\Entities\Creatures\CreatureStatMods.cs" />
@@ -172,6 +177,10 @@
     <Compile Include="World\Inventory\InventoryPockets.cs" />
     <Compile Include="World\Location.cs" />
     <Compile Include="World\Position.cs" />
+    <Compile Include="World\Quests\Objectives.cs" />
+    <Compile Include="World\Quests\Prerequisites.cs" />
+    <Compile Include="World\Quests\Quest.cs" />
+    <Compile Include="World\Quests\Rewards.cs" />
     <Compile Include="World\Region.cs" />
     <Compile Include="World\RegionCollision.cs" />
     <Compile Include="World\Shops\NpcShop.cs" />

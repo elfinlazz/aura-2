@@ -244,13 +244,13 @@ namespace Aura.Shared.Network
 		public const int CombatAttackR = 0x7D01;
 
 		public const int EventInform = 0x88B8;
-		public const int QuestNew = 0x8CA0;
+		public const int NewQuest = 0x8CA0;
 		public const int QuestClear = 0x8CA1;
 		public const int QuestUpdate = 0x8CA2;
-		public const int QuestComplete = 0x8CA3;
-		public const int QuestCompleteR = 0x8CA4;
-		public const int QuestGiveUp = 0x8CA5;
-		public const int QuestGiveUpR = 0x8CA6;
+		public const int CompleteQuest = 0x8CA3;
+		public const int CompleteQuestR = 0x8CA4;
+		public const int GiveUpQuest = 0x8CA5;
+		public const int GiveUpQuestR = 0x8CA6;
 		public const int QuestStartPTJ = 0x8D68; // ?
 		public const int QuestEndPTJ = 0x8D69; // ?
 		public const int QuestUpdatePTJ = 0x8D6A;
@@ -420,8 +420,8 @@ namespace Aura.Shared.Network
 		public const int LeaveSoulStream = 0x15F93;
 		public const int LeaveSoulStreamR = 0x15F94;
 
-		public const int CutsceneFinished = 0x186A0;
-		public const int CutsceneStart = 0x186A6;
+		public const int FinishedCutscene = 0x186A0;
+		public const int PlayCutscene = 0x186A6;
 		public const int CutsceneEnd = 0x186A7;
 		//public const int ? = 0x186A8;
 

@@ -32,14 +32,14 @@ namespace Aura.Data
 					try
 					{
 						if (entry.Count < min)
-							throw new FieldCountException(min);
+							throw new FieldCountException(min, entry.Count);
 
 						this.ReadEntry(entry);
 					}
 					catch (DatabaseWarningException ex)
 					{
 						ex.Line = entry.Line;
-						ex.Source = Path.GetFileName(path);
+						ex.Source = path.Replace("\\", "/");
 						this.Warnings.Add(ex);
 						continue;
 					}
