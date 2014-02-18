@@ -9,6 +9,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -209,6 +210,36 @@ namespace Aura.Channel.Network.Sending
 				packet.PutInt(duration);
 
 			ChannelServer.Instance.World.Broadcast(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts Notice in region.
+		/// </summary>
+		/// <param name="region"></param>
+		/// <param name="type"></param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public static void Notice(Region region, string format, params object[] args)
+		{
+			Notice(region, NoticeType.Middle, 0, format, args);
+		}
+
+		/// <summary>
+		/// Broadcasts Notice in region.
+		/// </summary>
+		/// <param name="region"></param>
+		/// <param name="type"></param>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
+		public static void Notice(Region region, NoticeType type, int duration, string format, params object[] args)
+		{
+			var packet = new Packet(Op.Notice, MabiId.Broadcast);
+			packet.PutByte((byte)type);
+			packet.PutString(string.Format(format, args));
+			if (duration > 0)
+				packet.PutInt(duration);
+
+			region.Broadcast(packet);
 		}
 	}
 	public enum MsgBoxTitle { Notice, Info, Warning, Confirm }

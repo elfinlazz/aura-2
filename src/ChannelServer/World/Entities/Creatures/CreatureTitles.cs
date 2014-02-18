@@ -32,6 +32,11 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
+		/// Returns amount of known titles.
+		/// </summary>
+		public int Count { get { lock (_list) return _list.Count; } }
+
+		/// <summary>
 		/// Adds title, returns true if title was added or state
 		/// was changed.
 		/// </summary>

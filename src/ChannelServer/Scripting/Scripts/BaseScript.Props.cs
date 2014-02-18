@@ -20,11 +20,30 @@ namespace Aura.Channel.Scripting.Scripts
 			var region = ChannelServer.Instance.World.GetRegion(regionId);
 			if (region == null)
 			{
-				Log.Error("SpawnProp: Region '{0}' doesn't exist.", regionId);
+				Log.Error("{1}.SpawnProp: Region '{0}' doesn't exist.", regionId, this.GetType().Name);
 				return null;
 			}
 
 			var prop = new Prop(id, regionId, x, y, direction);
+			prop.Behavior = behavior;
+
+			region.AddProp(prop);
+
+			return prop;
+		}
+
+		/// <summary>
+		/// Spawns prop
+		/// </summary>
+		protected Prop SpawnProp(Prop prop, PropFunc behavior = null)
+		{
+			var region = ChannelServer.Instance.World.GetRegion(prop.RegionId);
+			if (region == null)
+			{
+				Log.Error("{1}.SpawnProp: Region '{0}' doesn't exist.", prop.RegionId, this.GetType().Name);
+				return null;
+			}
+
 			prop.Behavior = behavior;
 
 			region.AddProp(prop);
@@ -40,7 +59,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var prop = ChannelServer.Instance.World.GetProp(entityId);
 			if (prop == null)
 			{
-				Log.Error("SetPropBehavior: Prop '{0}' doesn't exist.", entityId.ToString("X16"));
+				Log.Error("{1}.SetPropBehavior: Prop '{0}' doesn't exist.", entityId.ToString("X16"), this.GetType().Name);
 				return null;
 			}
 
@@ -62,7 +81,7 @@ namespace Aura.Channel.Scripting.Scripts
 				var dropInfo = AuraData.PropDropDb.Find(dropType);
 				if (dropInfo == null)
 				{
-					Log.Warning("PropDrop Behavior: Unknown prop drop type '{0}'.", dropType);
+					Log.Warning("{1}.PropDrop Behavior: Unknown prop drop type '{0}'.", dropType, this.GetType().Name);
 					return;
 				}
 

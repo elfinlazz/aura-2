@@ -276,5 +276,32 @@ namespace Aura.Channel.World.Entities.Creatures
 
 			this.ActiveSkill = null;
 		}
+
+		/// <summary>
+		/// Sums the ranks of the given skills.
+		/// </summary>
+		/// <param name="skillIds"></param>
+		public int CountRanks(params SkillId[] skillIds)
+		{
+			var found = 0;
+			var result = 0;
+
+			lock (_skills)
+			{
+				foreach (var skill in _skills.Values)
+				{
+					if (skillIds.Length > 0 && !skillIds.Contains(skill.Info.Id))
+						continue;
+
+					found++;
+					result += (int)skill.Info.Rank;
+
+					if (skillIds.Length > 0 && found >= skillIds.Length)
+						break;
+				}
+			}
+
+			return result;
+		}
 	}
 }
