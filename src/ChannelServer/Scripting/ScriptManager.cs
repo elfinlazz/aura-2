@@ -91,7 +91,7 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		private void LoadScripts()
 		{
-			Log.Info("Loading scripts...");
+			Log.Info("Loading scripts, this might take a few minutes...");
 
 			_creatureSpawns.Clear();
 			_questScripts.Clear();

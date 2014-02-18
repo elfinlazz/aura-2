@@ -70,6 +70,8 @@ namespace Aura.Channel.World.Entities
 		public bool IsMale { get { return (this.RaceData != null && this.RaceData.Gender == Gender.Male); } }
 		public bool IsFemale { get { return (this.RaceData != null && this.RaceData.Gender == Gender.Female); } }
 
+		public override int RegionId { get; set; }
+
 		// Look
 		// ------------------------------------------------------------------
 
@@ -1102,6 +1104,27 @@ namespace Aura.Channel.World.Entities
 		{
 			this.AbilityPoints += (short)Math2.MinMax(short.MinValue, short.MaxValue, amount);
 			Send.StatUpdate(this, StatUpdateType.Private, Stat.AbilityPoints);
+		}
+
+		/// <summary>
+		/// Revives creature
+		/// </summary>
+		public void Revive()
+		{
+			if (!this.IsDead)
+				return;
+
+			if (this.Life <= 1)
+				this.Life = 1;
+
+			this.Deactivate(CreatureStates.Dead);
+
+			Send.RemoveDeathScreen(this);
+			Send.StatUpdate(this, StatUpdateType.Private, Stat.Life, Stat.LifeInjured, Stat.LifeMax, Stat.LifeMaxMod);
+			Send.StatUpdate(this, StatUpdateType.Public, Stat.Life, Stat.LifeInjured, Stat.LifeMax, Stat.LifeMaxMod);
+			Send.RiseFromTheDead(this);
+			//Send.DeadFeather(creature);
+			Send.Revived(this);
 		}
 	}
 }

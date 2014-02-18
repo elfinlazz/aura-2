@@ -13,7 +13,7 @@ namespace Aura.Channel.World.Entities
 		public long EntityId { get; set; }
 		public string EntityIdHex { get { return this.EntityId.ToString("X16"); } }
 
-		public virtual int RegionId { get; set; }
+		public abstract int RegionId { get; set; }
 		public Region Region { get; set; }
 
 		public abstract EntityType EntityType { get; }

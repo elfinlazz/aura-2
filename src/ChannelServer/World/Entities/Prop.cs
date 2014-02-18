@@ -53,9 +53,10 @@ namespace Aura.Channel.World.Entities
 
 		public override EntityType EntityType { get { return Entities.EntityType.Prop; } }
 
-		public override Position GetPosition()
+		public override int RegionId
 		{
-			return new Position((int)this.Info.X, (int)this.Info.Y);
+			get { return this.Info.Region; }
+			set { this.Info.Region = value; }
 		}
 
 		public Prop(int id, int region, int x, int y, float direction, float scale = 1f, float altitude = 0)
@@ -95,6 +96,11 @@ namespace Aura.Channel.World.Entities
 			this.Info.Color7 =
 			this.Info.Color8 =
 			this.Info.Color9 = 0xFF808080;
+		}
+
+		public override Position GetPosition()
+		{
+			return new Position((int)this.Info.X, (int)this.Info.Y);
 		}
 
 		public override string ToString()
