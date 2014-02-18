@@ -758,8 +758,7 @@ namespace Aura.Channel.Util
 			if (!short.TryParse(args[1], out amount))
 				return CommandResult.InvalidArgument;
 
-			target.AbilityPoints += amount;
-			Send.StatUpdate(target, StatUpdateType.Private, Stat.AbilityPoints);
+			target.GiveAp(amount);
 
 			return CommandResult.Okay;
 		}

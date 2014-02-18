@@ -1093,5 +1093,15 @@ namespace Aura.Channel.World.Entities
 			Send.StatUpdate(this, StatUpdateType.Private, Stat.Life, Stat.LifeInjured, Stat.Stamina, Stat.Hunger, Stat.Mana);
 			Send.StatUpdate(this, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
 		}
+
+		/// <summary>
+		/// Increases AP and updates client.
+		/// </summary>
+		/// <param name="amount"></param>
+		public void GiveAp(int amount)
+		{
+			this.AbilityPoints += (short)Math2.MinMax(short.MinValue, short.MaxValue, amount);
+			Send.StatUpdate(this, StatUpdateType.Private, Stat.AbilityPoints);
+		}
 	}
 }
