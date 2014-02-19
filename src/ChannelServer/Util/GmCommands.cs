@@ -547,8 +547,11 @@ namespace Aura.Channel.Util
 			}
 
 			int rank = 0;
-			if (args.Length > 2 && !int.TryParse(args[2], NumberStyles.HexNumber, null, out rank))
+			if (args.Length > 2 && args[2] != "novice" && !int.TryParse(args[2], NumberStyles.HexNumber, null, out rank))
 				return CommandResult.InvalidArgument;
+
+			if (rank > 0)
+				rank = Math2.MinMax(0, 18, 16 - rank);
 
 			var rankData = skillData.GetRankData(rank, target.Race);
 			if (rankData == null)
@@ -556,8 +559,6 @@ namespace Aura.Channel.Util
 				Send.ServerMessage(sender, Localization.Get("gm.skill_no_rank"), args[1], (SkillRank)rank); // Skill '{0}' doesn't have rank '{1}'.
 				return CommandResult.Fail;
 			}
-
-			rank = Math2.MinMax(0, 18, 16 - rank);
 
 			target.Skills.Give((SkillId)skillId, (SkillRank)rank);
 

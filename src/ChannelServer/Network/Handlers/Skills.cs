@@ -91,7 +91,7 @@ namespace Aura.Channel.Network.Handlers
 			if (handler == null)
 			{
 				Log.Unimplemented("SkillStart: Skill handler or interface for '{0}'.", skillId);
-				Send.ServerMessage(creature, Localization.Get("skills.unimplemented_skill")); // This skill isn't implemented yet.
+				Send.ServerMessage(creature, Localization.Get("aura.unimplemented_skill")); // This skill isn't implemented yet.
 				Send.SkillStartSilentCancel(creature, skillId);
 				return;
 			}
@@ -145,7 +145,7 @@ namespace Aura.Channel.Network.Handlers
 			if (handler == null)
 			{
 				Log.Unimplemented("SkillStop: Skill handler or interface for '{0}'.", skillId);
-				Send.ServerMessage(creature, Localization.Get("skills.unimplemented_skill")); // This skill isn't implemented yet.
+				Send.ServerMessage(creature, Localization.Get("aura.unimplemented_skill")); // This skill isn't implemented yet.
 				Send.SkillStopSilentCancel(creature, skillId);
 				return;
 			}
@@ -195,7 +195,7 @@ namespace Aura.Channel.Network.Handlers
 			if (handler == null)
 			{
 				Log.Unimplemented("SkillPrepare: Skill handler or interface for '{0}'.", skillId);
-				Send.ServerMessage(creature, Localization.Get("skills.unimplemented_skill")); // This skill isn't implemented yet.
+				Send.ServerMessage(creature, Localization.Get("aura.unimplemented_skill")); // This skill isn't implemented yet.
 				Send.SkillPrepareSilentCancel(creature, skillId);
 				return;
 			}
@@ -240,7 +240,7 @@ namespace Aura.Channel.Network.Handlers
 			if (handler == null)
 			{
 				Log.Unimplemented("SkillReady: Skill handler or interface for '{0}'.", skillId);
-				Send.ServerMessage(creature, Localization.Get("skills.unimplemented_skill")); // This skill isn't implemented yet.
+				Send.ServerMessage(creature, Localization.Get("aura.unimplemented_skill")); // This skill isn't implemented yet.
 				// Cancel?
 				return;
 			}
@@ -288,7 +288,7 @@ namespace Aura.Channel.Network.Handlers
 			if (handler == null)
 			{
 				Log.Unimplemented("SkillUse: Skill handler or interface for '{0}'.", skillId);
-				Send.ServerMessage(creature, Localization.Get("skills.unimplemented_skill")); // This skill isn't implemented yet.
+				Send.ServerMessage(creature, Localization.Get("aura.unimplemented_skill")); // This skill isn't implemented yet.
 				Send.SkillUseSilentCancel(creature);
 				return;
 			}
@@ -336,7 +336,7 @@ namespace Aura.Channel.Network.Handlers
 			if (handler == null)
 			{
 				Log.Unimplemented("SkillComplete: Skill handler or interface for '{0}'.", skillId);
-				Send.ServerMessage(creature, Localization.Get("skills.unimplemented_skill")); // This skill isn't implemented yet.
+				Send.ServerMessage(creature, Localization.Get("aura.unimplemented_skill")); // This skill isn't implemented yet.
 				// Cancel?
 				return;
 			}
