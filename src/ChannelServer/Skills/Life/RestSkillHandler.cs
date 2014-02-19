@@ -39,7 +39,10 @@ namespace Aura.Channel.Skills.Life
 			creature.Regens.Add("Rest", Stat.Stamina, (0.4f * ((skill.RankData.Var2 - 100) / 100)), creature.StaminaMax);
 			creature.Regens.Add("Rest", Stat.LifeInjured, skill.RankData.Var3, creature.LifeMax);
 
-			creature.Skills.GiveExp(skill, 20);
+			if (skill.Info.Rank == SkillRank.Novice)
+				creature.Skills.GiveExp(skill, 100);
+			else
+				creature.Skills.GiveExp(skill, 20);
 
 			return StartStopResult.Okay;
 		}
