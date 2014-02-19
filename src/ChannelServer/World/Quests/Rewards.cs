@@ -103,7 +103,7 @@ namespace Aura.Channel.World.Quests
 		public override void Reward(Creature creature, Quest quest)
 		{
 			creature.Inventory.AddGold(this.Amount);
-			Send.AcquireGoldInfo(creature, this.Amount);
+			Send.AcquireInfo(creature, "gold", this.Amount);
 		}
 	}
 
@@ -129,7 +129,7 @@ namespace Aura.Channel.World.Quests
 		public override void Reward(Creature creature, Quest quest)
 		{
 			creature.GiveExp(this.Amount);
-			Send.AcquireExpInfo(creature, this.Amount);
+			Send.AcquireInfo(creature, "exp", this.Amount);
 		}
 	}
 
@@ -179,10 +179,8 @@ namespace Aura.Channel.World.Quests
 
 		public override void Reward(Creature creature, Quest quest)
 		{
-			throw new NotImplementedException();
-			//creature.AbilityPoints += this.Amount;
-			//Send.StatUpdate(creature, StatUpdateType.Private, Stat.AbilityPoints);
-			//Send.AcquireExpInfo(creature, this.Amount);
+			creature.GiveAp(this.Amount);
+			Send.AcquireInfo(creature, "ap", this.Amount);
 		}
 	}
 }
