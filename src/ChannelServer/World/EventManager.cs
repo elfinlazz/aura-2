@@ -100,6 +100,12 @@ namespace Aura.Channel.World
 		public event Action<Creature, int> PlayerCompletesQuest;
 		public void OnPlayerCompletesQuest(Creature creature, int questId) { PlayerCompletesQuest.Raise(creature, questId); }
 
+		/// <summary>
+		/// Raised when skill rank changes.
+		/// </summary>
+		public event Action<Creature, Skill> SkillRankChanged;
+		public void OnSkillRankChanged(Creature creature, Skill skill) { SkillRankChanged.Raise(creature, skill); }
+
 		// ------------------------------------------------------------------
 
 		/// <summary>

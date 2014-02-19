@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.World.Entities;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.World.Quests
 {
@@ -43,6 +44,26 @@ namespace Aura.Channel.World.Quests
 		public override bool Met(Creature character)
 		{
 			return (character.Level >= this.Level);
+		}
+	}
+
+	/// <summary>
+	/// Skill prerequisite, met if character doesn't have the skill or rank yet.
+	/// </summary>
+	public class QuestPrerequisiteNotSkill : QuestPrerequisite
+	{
+		public SkillId Id { get; protected set; }
+		public SkillRank Rank { get; protected set; }
+
+		public QuestPrerequisiteNotSkill(SkillId skillId, SkillRank rank = SkillRank.Novice)
+		{
+			this.Id = skillId;
+			this.Rank = rank;
+		}
+
+		public override bool Met(Creature character)
+		{
+			return !character.Skills.Has(this.Id, this.Rank);
 		}
 	}
 

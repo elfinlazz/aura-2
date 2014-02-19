@@ -13,6 +13,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
 using Aura.Channel.Network.Sending;
 using System.Threading;
+using Aura.Channel.Skills;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -53,6 +54,7 @@ namespace Aura.Channel.Scripting.Scripts
 			ChannelServer.Instance.Events.PlayerReceivesItem -= this.OnPlayerReceivesOrRemovesItem;
 			ChannelServer.Instance.Events.PlayerRemovesItem -= this.OnPlayerReceivesOrRemovesItem;
 			ChannelServer.Instance.Events.PlayerCompletesQuest -= this.OnPlayerCompletesQuest;
+			ChannelServer.Instance.Events.SkillRankChanged -= this.OnSkillRankChanged;
 		}
 
 		// Setup
@@ -146,6 +148,12 @@ namespace Aura.Channel.Scripting.Scripts
 				ChannelServer.Instance.Events.PlayerRemovesItem += this.OnPlayerReceivesOrRemovesItem;
 			}
 
+			if (objective.Type == ObjectiveType.ReachRank)
+			{
+				ChannelServer.Instance.Events.SkillRankChanged -= this.OnSkillRankChanged;
+				ChannelServer.Instance.Events.SkillRankChanged += this.OnSkillRankChanged;
+			}
+
 			this.Objectives.Add(ident, objective);
 		}
 
@@ -164,6 +172,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		protected QuestPrerequisite Completed(int questId) { return new QuestPrerequisiteQuestCompleted(questId); }
 		protected QuestPrerequisite ReachedLevel(int level) { return new QuestPrerequisiteReachedLevel(level); }
+		protected QuestPrerequisite NotSkill(SkillId skillId, SkillRank rank = SkillRank.Novice) { return new QuestPrerequisiteNotSkill(skillId, rank); }
 		protected QuestPrerequisite And(params QuestPrerequisite[] prerequisites) { return new QuestPrerequisiteAnd(prerequisites); }
 		protected QuestPrerequisite Or(params QuestPrerequisite[] prerequisites) { return new QuestPrerequisiteOr(prerequisites); }
 
@@ -173,11 +182,12 @@ namespace Aura.Channel.Scripting.Scripts
 		protected QuestObjective Kill(int amount, string raceType) { return new QuestObjectiveKill(amount, raceType); }
 		protected QuestObjective Collect(int itemId, int amount) { return new QuestObjectiveCollect(itemId, amount); }
 		protected QuestObjective Talk(string npcName) { return new QuestObjectiveTalk(npcName); }
+		protected QuestObjective ReachRank(SkillId skillId, SkillRank rank) { return new QuestObjectiveReachRank(skillId, rank); }
 
 		// Reward Factory
 		// ------------------------------------------------------------------
 
-		protected QuestReward Item(int itemId, int amount) { return new QuestRewardItem(itemId, amount); }
+		protected QuestReward Item(int itemId, int amount = 1) { return new QuestRewardItem(itemId, amount); }
 		protected QuestReward Skill(SkillId skillId, SkillRank rank) { return new QuestRewardSkill(skillId, rank); }
 		protected QuestReward Gold(int amount) { return new QuestRewardGold(amount); }
 		protected QuestReward Exp(int amount) { return new QuestRewardExp(amount); }
@@ -285,6 +295,31 @@ namespace Aura.Channel.Scripting.Scripts
 				quest.SetUndone(progress.Ident);
 
 			Send.QuestUpdate(character, quest);
+		}
+
+		/// <summary>
+		/// Updates reach rank objectives.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="killer"></param>
+		private void OnSkillRankChanged(Creature creature, Skill skill)
+		{
+			if (creature == null || skill == null) return;
+
+			var quest = creature.Quests.Get(this.Id);
+			if (quest == null) return;
+
+			var progress = quest.CurrentObjective;
+			if (progress == null) return;
+
+			var objective = this.Objectives[progress.Ident] as QuestObjectiveReachRank;
+			if (objective == null || objective.Type != ObjectiveType.ReachRank) return;
+
+			if (skill.Info.Id != objective.Id || skill.Info.Rank < objective.Rank) return;
+
+			quest.SetDone(progress.Ident);
+
+			Send.QuestUpdate(creature, quest);
 		}
 
 		/// <summary>

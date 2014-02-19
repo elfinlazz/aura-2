@@ -110,8 +110,6 @@ namespace Aura.Channel.World.Entities.Creatures
 
 				Send.SkillInfo(_creature, skill);
 				Send.RankUp(_creature);
-
-				//EventManager.CreatureEvents.OnCreatureSkillChange(_creature, skill, true);
 			}
 			else
 			{
@@ -122,9 +120,9 @@ namespace Aura.Channel.World.Entities.Creatures
 				Send.RankUp(_creature, skill.Info.Id);
 
 				this.AddBonuses(skill);
-
-				//EventManager.CreatureEvents.OnCreatureSkillChange(_creature, skill, false);
 			}
+
+			ChannelServer.Instance.Events.OnSkillRankChanged(_creature, skill);
 
 			Send.StatUpdate(_creature, StatUpdateType.Private,
 				Stat.Str, Stat.Int, Stat.Dex, Stat.Will, Stat.Luck,
