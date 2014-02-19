@@ -8,7 +8,7 @@
 // simply talking to Trefor again.
 //---------------------------------------------------------------------------
 
-public class BeginnerUladh1QuestScript : QuestScript
+public class BeginnerUladh2QuestScript : QuestScript
 {
 	public override void Load()
 	{
