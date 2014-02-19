@@ -84,6 +84,18 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
+		/// Returns true if rank of skill is equal.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="rank"></param>
+		/// <returns></returns>
+		public bool Is(SkillId id, SkillRank rank)
+		{
+			var skill = this.Get(id);
+			return (skill != null && skill.Info.Rank == rank);
+		}
+
+		/// <summary>
 		/// Adds skill at rank, or updates it.
 		/// Sends appropriate packets.
 		/// </summary>
@@ -220,6 +232,19 @@ namespace Aura.Channel.World.Entities.Creatures
 
 			this.HighestSkillCp = highest;
 			this.SecondHighestSkillCp = second;
+		}
+
+		/// <summary>
+		/// Adds exp to skill.
+		/// </summary>
+		/// <param name="skill"></param>
+		/// <param name="exp"></param>
+		public void GiveExp(SkillId skillId, int exp)
+		{
+			var skill = this.Get(skillId);
+			if (skill == null) return;
+
+			this.GiveExp(skill, exp);
 		}
 
 		/// <summary>

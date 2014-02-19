@@ -66,12 +66,8 @@ public class TreforBaseScript : NpcScript
 					
 					switch (keyword)
 					{
-						//case "personal_info": Msg("I'm the chief of this town..."); break;
-						//case "rumor":         Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?"); break;
-						//case "about_skill":   Msg("I don't know of any skills... Why don't you ask Malcom?"); break;
-						//case "about_arbeit":  Msg("I don't have any jobs for you, but you can get a part time job in town."); break;
-						//case "about_study":   Msg("You can study different magic down at the school!"); break;
-						default:              Msg("Oh, is that so?"); break;
+						case "about_skill": Msg("I've been observing your combat style for some time now.<br/>If you want to be a warrior, you shouldn't limit yourself to just melee attacks.<p/>I'm sure Ranald at the School can teach you some things about ranged attacks<br/>which will allow you to attack monsters from a distance."); break;
+						default:            Msg("Oh, is that so?"); break;
 					}
 				}
 				

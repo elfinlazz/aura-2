@@ -26,7 +26,8 @@ public class NaoScript : NpcScript
 			"With her pale skin and her distinctively sublime silhouette, she seems like she belongs in another world."
 		);
 		
-		Msg("Hello, there... You are <username/>, right?<br/>I have been waiting for you.<br/>It's good to see a " + (Player.IsMale ? "gentleman" : "lady") + " like you here.<p/>My name is Nao. <br/>It is my duty to lead pure souls like yours to Erinn.");
+		Msg("Hello, there... You are <username/>, right?<br/>I have been waiting for you.<br/>It's good to see a " + (Player.IsMale ? "gentleman" : "lady") + " like you here.");
+		Msg("My name is Nao. <br/>It is my duty to lead pure souls like yours to Erinn.");
 		Msg("<username/>, we have some time before I guide you to Erinn.<br/>Do you have any questions for me?", Button("No"), Button("Yes"));
 		var r = Select();
 

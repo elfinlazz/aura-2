@@ -3,6 +3,9 @@
 //--- Description -----------------------------------------------------------
 // Second quest in the Uladh beginner quest series, started automatically
 // after talking to Duncan.
+//--- Notes -----------------------------------------------------------------
+// Since we don't have dungeons yet the clear Alby objective can be done by
+// simply talking to Trefor again.
 //---------------------------------------------------------------------------
 
 public class BeginnerUladh1QuestScript : QuestScript
@@ -34,6 +37,8 @@ public class BeginnerUladh1QuestScript : QuestScript
 		{
 			npc.FinishQuest(this.Id, "talk_trefor");
 			
+			npc.Player.Skills.Give(SkillId.Smash, SkillRank.Novice);
+			
 			npc.Msg("Welcome, I am Trefor, the guard.<br/>Someone from the town went into Alby Dungeon a while ago, but hasn't returned yet.<br/>I wish I could go there myself, but I can't leave my post. I'd really appreciate it if you can go and look for in Alby Dungeon.");
 			npc.Msg("Since the dungeon is a dangerous place to be in, I'll teach you a skill that will help you in an emergency situation.<br/>It's called the Smash skill. If you use it, you can knock down a monster with a single blow!<br/>It is also highly effective when you sneak up on a target and deliver the blow without warning.");
 			npc.Msg("Against monsters that are using the Defense skill,<br/>Smash will be the only way to penetrate that skill and deliver a killer blow.");
@@ -48,7 +53,7 @@ public class BeginnerUladh1QuestScript : QuestScript
 			scene.AddActor("#brownfox", 50001);
 			scene.Play();
 			
-			Return("end");
+			Return();
 		}
 		else if(npc.QuestActive(this.Id, "talk_trefor2"))
 		{
@@ -58,6 +63,17 @@ public class BeginnerUladh1QuestScript : QuestScript
 			npc.Msg("Follow the road up and turn right and you'll find the Alby Dungeon.<br/>You can enter the dungeon by dropping this item on the altar.<br/>If you either lose it or fail to rescue her, come back to me so I can give you another one. Please be careful.", npc.Image("dungeonpass", 128, 128));
 			
 			npc.GiveItem(63140, 1);
+			
+			Return("break_hook");
+		}
+		else if(npc.QuestActive(this.Id, "clear_alby"))
+		{
+			npc.FinishQuest(this.Id, "clear_alby");
+			
+			npc.Msg("You did it! Good job.<br/>Good thing I asked for your help.<br/>For your great work, I will now teach you how to properly use the Smash skill.<br/>If you open your Skill window and press the 'LEARN' button, you will be able to use a more powerful Smash skill.<br/>I can always use some help here, so drop by often, okay?");
+			
+			if(npc.Player.Skills.Is(SkillId.Smash, SkillRank.Novice))
+				npc.Player.Skills.GiveExp(SkillId.Smash, 100000);
 			
 			Return("break_hook");
 		}
