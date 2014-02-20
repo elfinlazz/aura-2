@@ -124,7 +124,7 @@ namespace Aura.Channel.Scripting.Scripts
 				return;
 
 			if (_inside)
-				Log.Warning("AI crash in '{0}'.", this.GetType().Name);
+				Log.Debug("AI crash in '{0}'.", this.GetType().Name);
 
 			_inside = true;
 			try
