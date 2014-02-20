@@ -14,6 +14,7 @@ using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Data;
 using Aura.Channel.World.Entities;
+using Aura.Channel.Scripting.Scripts;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -85,10 +86,6 @@ namespace Aura.Channel.Network.Handlers
 			Send.NpcTalkStartR(creature, npcEntityId);
 
 			client.NpcSession.Start(target, creature);
-
-			// Get enumerator and start first run.
-			client.NpcSession.State = client.NpcSession.Script.Talk().GetEnumerator();
-			client.NpcSession.Continue();
 		}
 
 		/// <summary>
@@ -165,7 +162,15 @@ namespace Aura.Channel.Network.Handlers
 
 			if (response == "@end")
 			{
-				client.NpcSession.Script.EndConversation();
+				try
+				{
+					client.NpcSession.Script.EndConversation();
+				}
+				catch (OperationCanceledException)
+				{
+					//Log.Debug("Received @end");
+				}
+				client.NpcSession.Clear();
 				return;
 			}
 
@@ -173,8 +178,13 @@ namespace Aura.Channel.Network.Handlers
 			if (response.StartsWith("@input"))
 				response = response.Substring(7).Trim();
 
-			client.NpcSession.SetResponse(response);
-			client.NpcSession.Continue();
+			// TODO: Do another keyword check, in case modders bypass the
+			//   actual check below.
+
+			if (client.NpcSession.Script.ConversationState != ConversationState.Select)
+				Log.Debug("Received Select without being in Select mode ({0}).", client.NpcSession.Script.GetType().Name);
+
+			client.NpcSession.Script.Resume(response);
 		}
 
 		/// <summary>

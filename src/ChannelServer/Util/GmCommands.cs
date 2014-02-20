@@ -770,7 +770,7 @@ namespace Aura.Channel.Util
 			if (!client.NpcSession.IsValid())
 				return CommandResult.Fail;
 
-			client.NpcSession.Script.Close("Ended by closenpc command.");
+			Send.NpcTalkEndR(client.NpcSession.Script.Player, client.NpcSession.Script.NPC.EntityId, "Ended by closenpc command.");
 
 			return CommandResult.Okay;
 		}

@@ -16,7 +16,7 @@ public class NaoScript : NpcScript
 		SetLocation(22, 6013, 5712);
 	}
 
-	public override IEnumerable Talk()
+	protected override async Task Talk()
 	{
 		SetBgm("Nao_talk.mp3");
 		
@@ -29,10 +29,9 @@ public class NaoScript : NpcScript
 		Msg("Hello, there... You are <username/>, right?<br/>I have been waiting for you.<br/>It's good to see a " + (Player.IsMale ? "gentleman" : "lady") + " like you here.");
 		Msg("My name is Nao. <br/>It is my duty to lead pure souls like yours to Erinn.");
 		Msg("<username/>, we have some time before I guide you to Erinn.<br/>Do you have any questions for me?", Button("No"), Button("Yes"));
-		var r = Select();
-
+		
 		// Information about Mabi
-		if (r == "@yes")
+		if (await Select() == "@yes")
 		{
 		L_Info:
 			Msg(RandomPhrase(),
@@ -45,8 +44,7 @@ public class NaoScript : NpcScript
 				)
 			);
 
-			var info = Select();
-			switch (info)
+			switch (await Select())
 			{
 				case "@mabinogi":
 					Msg("Mabinogi can be defined as the songs of bards, although in some cases, the bards themselves are referred to as Mabinogi.<br/>To the residents at Erinn, music is a big part of their lives and nothing brings joy to them quite like music and Mabinogi.<br/>Once you get there, I highly recommend joining them in composing songs and playing musical instruments.");
@@ -71,7 +69,7 @@ public class NaoScript : NpcScript
 		Msg("When you arrive in Erinn, please go see Chief Duncan<br/>and show him my letter of introduction.<br/>I'm sure he will be a great help to you.");
 		Msg(Hide.Both, "(Received Bread, Traveler's Guide, and Soul Stones from Nao.)", Image("Novice_item_g9Korea"));
 		Msg("I wish you the best of luck in Erinn.<br/>See you around.", Button("End Conversation"));
-		Select();
+		await Select();
 
 		// Move to Uladh Beginner Area
 		Player.SetLocation(125, 21489, 76421);

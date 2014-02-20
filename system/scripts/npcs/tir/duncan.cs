@@ -31,7 +31,7 @@ public class DuncanBaseScript : NpcScript
 		AddPhrase("Watch your language.");
 	}
 	
-	public override IEnumerable Talk()
+	protected override async Task Talk()
 	{
 		SetBgm("NPC_Duncan.mp3");
 		
@@ -41,49 +41,42 @@ public class DuncanBaseScript : NpcScript
 			"As he speaks, his voice resonates with a kind of gentle authority."
 		);
 		
-		Call(Hook("after_intro"));
-		
 		Msg("Please let me know if you need anything.", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrive Lost Items", "@lostandfound"));
-		var selected = Select();
 		
-		switch(selected)
+		switch(await Select())
 		{
 			case "@talk":
 				Msg("What did you say your name was?<br/>Anyway, welcome.");
-				
-				while(true)
-				{
-					Msg(Hide.Name, "(Duncan is waiting for me to say something.)");
-					ShowKeywords();
-					var keyword = Select();
-					
-					Call(Hook("before_keywords", keyword));
-					
-					switch (keyword)
-					{
-						case "personal_info": Msg("I'm the chief of this town..."); break;
-						case "rumor":         Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?"); break;
-						case "about_skill":   Msg("I don't know of any skills... Why don't you ask Malcom?"); break;
-						case "about_arbeit":  Msg("I don't have any jobs for you, but you can get a part time job in town."); break;
-						case "about_study":   Msg("You can study different magic down at the school!"); break;
-						default:              Msg("I don't know anything about that..."); break;
-					}
-				}
+				await StartConversation();
+				return;
 				
 			case "@shop":
 				Msg("Choose a quest you would like to do.");
 				OpenShop();
-				Return();
+				return;
 				
 			case "@lostandfound":
 				Msg("If you are knocked unconcious in a dungeon or field, any item you've dropped will be lost unless you get resurrected right at the spot.<br/>Lost items can usually be recovered from a Town Office or a Lost-and-Found.");
 				Msg("Unfortunatly, Tir Chonaill does not have a Town Office, so I run the Lost-and-Found myself.<br/>The lost items are recovered with magic,<br/>so unless you've dropped them on purpose, you can recover those items with their blessings intact.<br/>You will, however, need to pay a fee.");
 				Msg("As you can see, I have limited space in my home. So I can only keep 20 items for you.<br/>If there are more than 20 lost items, I'll have to throw out the oldest items to make room.<br/>I strongly suggest you retrieve any lost items you don't want to lose as soon as possible.");
-				Return();
+				return;
 			
 			default:
 				Msg("...");
-				Return();
+				return;
+		}
+	}
+	
+	protected override async Task Keywords(string keyword)
+	{
+		switch (keyword)
+		{
+			case "personal_info": Msg("I'm the chief of this town..."); break;
+			case "rumor":         Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?"); break;
+			case "about_skill":   Msg("I don't know of any skills... Why don't you ask Malcom?"); break;
+			case "about_arbeit":  Msg("I don't have any jobs for you, but you can get a part time job in town."); break;
+			case "about_study":   Msg("You can study different magic down at the school!"); break;
+			default:              Msg("I don't know anything about that..."); break;
 		}
 	}
 }

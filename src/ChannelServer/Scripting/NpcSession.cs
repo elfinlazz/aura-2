@@ -22,7 +22,6 @@ namespace Aura.Channel.Scripting
 		public int Id { get; private set; }
 
 		public NpcScript Script { get; set; }
-		public IEnumerator State { get; set; }
 		public Response Response { get; set; }
 
 		public NpcSession()
@@ -49,16 +48,18 @@ namespace Aura.Channel.Scripting
 			script.Shop = target.Script.Shop;
 			script.Player = creature;
 			this.Script = script;
+
+			this.Script.TalkAsync();
 		}
 
 		/// <summary>
-		/// Resets session.
+		/// Cancels script and resets session.
 		/// </summary>
 		public void Clear()
 		{
+			this.Script.Cancel();
 			this.Script = null;
 			this.Target = null;
-			this.State = null;
 			this.Response = null;
 		}
 
@@ -75,34 +76,7 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		public bool IsValid()
 		{
-			return (this.Target != null && this.State != null);
-		}
-
-		public void SetResponse(string response)
-		{
-			if (this.Response != null)
-				this.Response.Value = response;
-		}
-
-		public void Continue()
-		{
-			try
-			{
-				if (this.State.MoveNext() && this.State != null)
-				{
-					var result = this.State.Current as string;
-					if (result != null && result == "end")
-					{
-						this.Script.EndConversation();
-					}
-					else
-						this.Response = this.State.Current as Response;
-				}
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex, "Exception while talking to NPC ({0})", ex.Message);
-			}
+			return (this.Target != null && this.Script != null);
 		}
 	}
 

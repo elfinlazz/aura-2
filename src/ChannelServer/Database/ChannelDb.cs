@@ -473,6 +473,9 @@ namespace Aura.Channel.Database
 							var state = (QuestState)reader.GetInt32("state");
 							var itemEntityId = reader.GetInt64("itemEntityId");
 
+							// TODO: Check if quests exist?
+							//  (Creating it will throw otherwise.)
+
 							var quest = new Quest(id, uniqueId, state);
 
 							if (quest.State == QuestState.InProgress)

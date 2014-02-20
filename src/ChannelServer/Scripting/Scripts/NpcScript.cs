@@ -4,6 +4,8 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
@@ -16,6 +18,12 @@ namespace Aura.Channel.Scripting.Scripts
 {
 	public abstract class NpcScript : BaseScript
 	{
+		private string _response;
+		private SemaphoreSlim _resumeSignal;
+		private CancellationTokenSource _cancellation;
+
+		public ConversationState ConversationState { get; private set; }
+
 		public NPC NPC { get; set; }
 		public NpcShop Shop { get; set; }
 
@@ -34,19 +42,35 @@ namespace Aura.Channel.Scripting.Scripts
 		public NpcScript()
 		{
 			this.NPC = new NPC();
+			_resumeSignal = new SemaphoreSlim(0);
+			_cancellation = new CancellationTokenSource();
 		}
 
 		// ------------------------------------------------------------------
 
 		/// <summary>
+		/// Called from packet handler when a player starts the conversation.
+		/// </summary>
+		public virtual async void TalkAsync()
+		{
+			this.ConversationState = ConversationState.Ongoing;
+			try
+			{
+				await this.Talk();
+			}
+			catch (OperationCanceledException ex)
+			{
+				//Log.Debug(ex.Message);
+			}
+			this.ConversationState = ConversationState.Ended;
+		}
+
+		/// <summary>
 		/// Called when a player starts the conversation.
 		/// </summary>
-		/// <param name="creature"></param>
-		/// <returns></returns>
-		public virtual IEnumerable Talk()
+		protected virtual async Task Talk()
 		{
-			Msg("...");
-			yield break;
+			await Task.Yield();
 		}
 
 		/// <summary>
@@ -54,7 +78,66 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public virtual void EndConversation()
 		{
-			Close("(You ended your conversation with <npcname/>.)");
+			Close("<npcportrait name='NONE' /><title name='NONE' />(You ended your conversation with <npcname/>.)");
+		}
+
+		/// <summary>
+		/// Sets response and returns from Select.
+		/// </summary>
+		/// <param name="response"></param>
+		public void Resume(string response)
+		{
+			_response = response;
+			_resumeSignal.Release();
+		}
+
+		/// <summary>
+		/// Cancels conversation.
+		/// </summary>
+		public void Cancel()
+		{
+			_cancellation.Cancel();
+		}
+
+		/// <summary>
+		/// Conversation (keywords) loop with initial mood message.
+		/// </summary>
+		/// <returns></returns>
+		protected virtual async Task StartConversation()
+		{
+			this.Msg(Hide.Name, "(<npcname/> is waiting for me to say something.)");
+			await Conversation();
+		}
+
+		/// <summary>
+		/// Conversation (keywords) loop.
+		/// </summary>
+		/// <returns></returns>
+		protected virtual async Task Conversation()
+		{
+			while (true)
+			{
+				this.ShowKeywords();
+				var keyword = await Select();
+
+				//Call(Hook("before_keywords", keyword));
+
+				// update intimicy, based on mood? ...
+
+				await this.Keywords(keyword);
+
+				// mood message if it changed ...
+			}
+		}
+
+		/// <summary>
+		/// Called from conversation, keyword handling.
+		/// </summary>
+		/// <param name="keyword"></param>
+		/// <returns></returns>
+		protected virtual async Task Keywords(string keyword)
+		{
+			await Task.Yield();
 		}
 
 		// Setup
@@ -188,7 +271,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="fileName"></param>
-		protected void Bgm(string fileName)
+		protected void SetBgm(string fileName)
 		{
 			this.Msg(new DialogBgm(fileName));
 		}
@@ -215,11 +298,13 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="lines"></param>
 		protected void Intro(params object[] lines)
 		{
-			if (this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] != null)
-				return;
+			if (this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] == null)
+			{
+				this.Msg(Hide.Both, string.Join("<br/>", lines));
+				this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] = true;
+			}
 
-			this.Msg(Hide.Both, string.Join("<br/>", lines));
-			this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] = true;
+			//Call(Hook("after_intro"));
 		}
 
 		/// <summary>
@@ -383,10 +468,10 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="message">Dialog closes immediately if null.</param>
-		public void Close(string message = null)
+		protected void Close(string message = null)
 		{
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
-			this.Player.Client.NpcSession.Clear();
+			throw new OperationCanceledException("NPC closed by script");
 		}
 
 		/// <summary>
@@ -398,8 +483,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// If there actually is nothing to select, the last auto button
 		/// (End Conversation) is gonna come in as a select.
 		/// </remarks>
-		/// <param name="creature"></param>
-		public string Select()
+		public async Task<string> Select()
 		{
 			var script = string.Format(
 				"<call convention='thiscall' syncmode='sync' session='{1}'>" +
@@ -413,7 +497,10 @@ namespace Aura.Channel.Scripting.Scripts
 
 			Send.NpcTalk(this.Player, script);
 
-			return "Foo!";
+			this.ConversationState = ConversationState.Select;
+			await _resumeSignal.WaitAsync(_cancellation.Token);
+			this.ConversationState = ConversationState.Ongoing;
+			return _response;
 		}
 
 		/// <summary>
@@ -446,7 +533,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public DialogButton Button(string text, string keyword = null, string onFrame = null) { return new DialogButton(text, keyword, onFrame); }
 
-		public DialogBgm SetBgm(string file) { return new DialogBgm(file); }
+		public DialogBgm Bgm(string file) { return new DialogBgm(file); }
 
 		public DialogImage Image(string name) { return new DialogImage(name, false, 0, 0); }
 		public DialogImage Image(string name, int width, int height) { return new DialogImage(name, false, width, height); }
@@ -474,4 +561,5 @@ namespace Aura.Channel.Scripting.Scripts
 	}
 
 	public enum Hide { Face, Name, Both }
+	public enum ConversationState { Ongoing, Select, Ended }
 }

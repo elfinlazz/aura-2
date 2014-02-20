@@ -60,6 +60,7 @@ namespace Aura.Channel.Scripting.Compilers
 			defaultUsings.Append("using System.Collections;");
 			defaultUsings.Append("using System.Linq;");
 			defaultUsings.Append("using System.Text;");
+			defaultUsings.Append("using System.Threading.Tasks;");
 			defaultUsings.Append("using System.Timers;");
 			defaultUsings.Append("using Microsoft.CSharp;");
 			defaultUsings.Append("using Aura.Channel.Network.Sending;");
@@ -82,14 +83,6 @@ namespace Aura.Channel.Scripting.Compilers
 				"$1yield break;",
 				RegexOptions.Compiled);
 
-			// Return(<something>);
-			// --> yield return <something>;
-			// Stops Enumerator and the conversation.
-			script = Regex.Replace(script,
-				@"([\{\}:;\t ])?Return\s*\(([^;]+)\)\s*;",
-				"$1yield return $2;",
-				RegexOptions.Compiled);
-
 			// Do|Call(<method_call>);
 			// --> foreach(var __callResult in <method_call>) yield return __callResult;
 			// Loops through Enumerator returned by the method called and passes
@@ -97,23 +90,6 @@ namespace Aura.Channel.Scripting.Compilers
 			script = Regex.Replace(script,
 				@"([\{\}:;\t ])?(Call|Do)\s*\(([^;]*)\)\s*;",
 				"$1foreach(var __callResult in $3) yield return __callResult;",
-				RegexOptions.Compiled);
-
-			// Select();
-			// --> yield return null;
-			// Calls Select and yields, ignoring the result.
-			script = Regex.Replace(script,
-				@"([^=\s]\s+)(\b\w+\.)?Select\s*\(\s*\)\s*;",
-				"$1$2Select(); yield return null;",
-				RegexOptions.Compiled);
-
-			// [var] <variable> = Select();
-			// --> [var] <variable>Object = new Response(); yield return <variable>Object; [var] <variable> = <variable>Object.Value;
-			// Calls Select and yields. Afterwards the result from the client
-			// is written into the variable.
-			script = Regex.Replace(script,
-				@"(\bvar )?(\b\w+)\s*=\s*(\b\w+\.)?Select\s*\(\s*\)\s*;",
-				"$3Select(); $1$2Object = new Response(); yield return $2Object; $1$2 = $2Object.Value;",
 				RegexOptions.Compiled);
 
 			// duplicate <new_class> : <old_class> { <content_of_load> }

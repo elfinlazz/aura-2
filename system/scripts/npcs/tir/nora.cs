@@ -30,7 +30,7 @@ public class NoraBaseScript : NpcScript
 		AddPhrase("Wow! Look at that owl! Beautiful!");
 	}
 	
-	public override IEnumerable Talk()
+	protected override async Task Talk()
 	{
 		SetBgm("NPC_Nora.mp3");
 	
@@ -41,43 +41,36 @@ public class NoraBaseScript : NpcScript
 			"Her hands are always busy, as she engages in some chore or another, though she often looks into the distance as if deep in thought."
 		);
 		
-		Call(Hook("after_intro"));
-		
 		Msg("How can I help you?", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Repair Item", "@repair"));
-		var selected = Select();
 		
-		switch(selected)
+		switch(await Select())
 		{
 			case "@talk":
 				Msg("Welcome!");
-				
-				while(true)
-				{
-					Msg(Hide.Name, "(Nora is looking in my direction.)");
-					ShowKeywords();
-					var keyword = Select();
-					
-					Call(Hook("before_keywords", keyword));
-					
-					switch (keyword)
-					{
-						default: Msg("Can we change the subject?"); break;
-					}
-				}
+				await StartConversation();
+				return;
 				
 			case "@shop":
 				Msg("Are you looking for a Tailoring Kit and materials?<br/>If so, you've come to the right place.");
 				OpenShop();
-				Return();
+				return;
 				
 			case "@repair":
 				Msg("Do you want to repair your clothes?<br/>Well I can't say I'm perfect at it,<br/>but I'll do my best.<br/>Just in case, when in doubt, you can always go to a professional tailor.");
 				Msg("(Unimplemented)");
-				Return();
+				return;
 
 			default:
 				Msg("...");
-				Return();
+				return;
+		}
+	}
+	
+	protected override async Task Keywords(string keyword)
+	{
+		switch (keyword)
+		{
+			default: Msg("Can we change the subject?"); break;
 		}
 	}
 }

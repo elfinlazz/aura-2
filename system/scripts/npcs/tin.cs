@@ -24,7 +24,7 @@ public class TinScript : NpcScript
 		EquipItem(Pocket.Head, 18518, 0xA58E74, 0xFFFFFF, 0xFFFFFF);
 	}
 
-	public override IEnumerable Talk()
+	protected override async Task Talk()
 	{
 		Msg("Hey, who are you?");
 		Msg("You don't look like you're from this world. Am I right?<br/>Did you make your way down here from Soul Stream?<br/>Ahhh, so Nao sent you here!");
@@ -33,8 +33,6 @@ public class TinScript : NpcScript
 		//Msg("The weapon I gave you is a Spirit Weapon.<br/>If you hold it in your hand, you can talk to the spirit in the sword.<br/>I'm lending it to make your stay here much easier,<br/>so use it wisely.");
 		//Msg("You're wondering how to give it back to me, aren't you?<br/>Don't worry. When the right time comes, it will leave you of its own accord.");
 		//Msg("Oh my! I almost forgot.<br/>I just gave you the Spirit Weapon and almost forgot to introduce you to the spirit. <p/>The spirit's name is Eiry.<br/> If you want to talk to her, simply click on the wing-shaped button on the bottom right side of your screen.");
-
-		Return();
 	}
 }
 
@@ -43,20 +41,19 @@ public class TinSoulStreamScript : NpcScript
 	public override void Load()
 	{
 		SetId(MabiId.Tin);
-		SetName("_tin");
+		SetName("_tin_soul_stream");
 		SetRace(10002);
 		SetLocation(22, 6313, 5712);
 	}
 
-	public override IEnumerable Talk()
+	protected override async Task Talk()
 	{
 		Msg("Hi. <username/>.<br/>Nice to meet you..");
 		Msg("I wish you the best of luck with all that you do here in Erinn...<br/>See ya.", Button("End Conversation"));
-		Select();
+		await Select();
 		
 		Player.SetLocation(1, 15250, 38467);
 		
 		Close();
-		Return();
 	}
 }

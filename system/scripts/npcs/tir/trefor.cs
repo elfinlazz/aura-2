@@ -37,7 +37,7 @@ public class TreforBaseScript : NpcScript
 		AddPhrase("This helmet's really making me sweat");
 	}
 	
-	public override IEnumerable Talk()
+	protected override async Task Talk()
 	{
 		Intro(
 			"Quite a specimen of physical fitness appears before you wearing well-polished armor that fits closely the contours of his body.",
@@ -46,50 +46,43 @@ public class TreforBaseScript : NpcScript
 			"occasionally catching the light between the slits on his helmet. His tightly pursed lips seem to belie his desire to not shot any emotion."
 		);
 		
-		Call(Hook("after_intro"));
-		
 		Msg("How can I help you?", Button("Start Conversation", "@talk"), Button("Shop"), Button("Upgrade Item", "@upgrade"), Button("Get Alby Beginner Dungeon Pass", "@pass"));
-		var selected = Select();
 		
-		switch(selected)
+		switch(await Select())
 		{
 			case "@talk":
 				Msg("Hmm? Are you a new traveler?");
-				
-				while(true)
-				{
-					Msg(Hide.Name, "(Trefor is waiting for me to say something.)");
-					ShowKeywords();
-					var keyword = Select();
-					
-					Call(Hook("before_keywords", keyword));
-					
-					switch (keyword)
-					{
-						case "about_skill": Msg("I've been observing your combat style for some time now.<br/>If you want to be a warrior, you shouldn't limit yourself to just melee attacks.<p/>I'm sure Ranald at the School can teach you some things about ranged attacks<br/>which will allow you to attack monsters from a distance."); break;
-						default:            Msg("Oh, is that so?"); break;
-					}
-				}
+				await StartConversation();
+				return;
 				
 			case "@shop":
 				Msg("Do you need a Quest Scroll?");
 				OpenShop();
-				Return();
+				return;
 				
 			case "@upgrade":
 				Msg("Do you want to modify an item?<br/>You don't need to go too far; I'll do it for you. Select an item that you'd like me to modify.<br/>I'm sure you know that the number of times it can be modified, as well as the types of modifications available depend on the item, right?");
 				Msg("(Unimplemented)");
-				Return();
+				return;
 
 			case "@pass":
 				GiveItem(63140);
 				Notice("Recieved Alby Beginner Dungeon Pass from Trefor");
 				Msg("Do you need an Alby Beginner Dungeon Pass?<br/>No problem. Here you go.<br/>Drop by anytime when you need more.<br/>I'm a generous man, ha ha.");
-				Return();
+				return;
 			
 			default:
 				Msg("...");
-				Return();
+				return;
+		}
+	}
+	
+	protected override async Task Keywords(string keyword)
+	{
+		switch (keyword)
+		{
+			case "about_skill": Msg("I've been observing your combat style for some time now.<br/>If you want to be a warrior, you shouldn't limit yourself to just melee attacks.<p/>I'm sure Ranald at the School can teach you some things about ranged attacks<br/>which will allow you to attack monsters from a distance."); break;
+			default:            Msg("Oh, is that so?"); break;
 		}
 	}
 }
