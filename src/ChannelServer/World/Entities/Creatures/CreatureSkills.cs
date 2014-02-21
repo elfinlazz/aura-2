@@ -250,12 +250,12 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// </summary>
 		/// <param name="skill"></param>
 		/// <param name="exp"></param>
-		public void GiveExp(Skill skill, int exp)
+		public void GiveExp(Skill skill, float exp)
 		{
 			if (skill.Info.Experience >= 100000)
 				return;
 
-			skill.Info.Experience = Math2.MinMax(0, 100000, skill.Info.Experience + exp * 1000);
+			skill.Info.Experience = (int)Math2.MinMax(0, 100000, skill.Info.Experience + exp * 1000);
 			if (skill.IsRankable)
 				skill.Info.Flag |= SkillFlags.Rankable;
 

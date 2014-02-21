@@ -73,7 +73,7 @@ public class BeginnerUladh2QuestScript : QuestScript
 			npc.Msg("You did it! Good job.<br/>Good thing I asked for your help.<br/>For your great work, I will now teach you how to properly use the Smash skill.<br/>If you open your Skill window and press the 'LEARN' button, you will be able to use a more powerful Smash skill.<br/>I can always use some help here, so drop by often, okay?");
 			
 			if(npc.Player.Skills.Is(SkillId.Smash, SkillRank.Novice))
-				npc.Player.Skills.GiveExp(SkillId.Smash, 100000);
+				npc.Player.Skills.GiveExp(SkillId.Smash, 100);
 			
 			return HookResult.Break;
 		}
