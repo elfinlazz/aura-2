@@ -5,7 +5,7 @@
 // Region between Tir and Dunbarton.
 //---------------------------------------------------------------------------
 
-public class DugaldRegionScript : BaseScript
+public class DugaldRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{

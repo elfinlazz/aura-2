@@ -4,15 +4,15 @@
 // Region you are warped to after talking to Nao/Tin.
 //---------------------------------------------------------------------------
 
-public class TirBeginnerRegionScript : BaseScript
+public class TirBeginnerRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{
 		// Tir
-		//SetPropBehavior(0x00A0007D00060018, PropWarp(1, 15250, 38467));
+		SetPropBehavior(0x00A0007D00060018, PropWarp(1, 15250, 38467));
 		
-		// Tir
-		SetPropBehavior(0x00A0007D00060274, PropWarp(125,27753,72762, 1,15388,38706));
+		// Tir (Old id?)
+		//SetPropBehavior(0x00A0007D00060274, PropWarp(125,27753,72762, 1,15388,38706));
 
 		// Gargoyles
 		SetPropBehavior(0x00A0007D0001003A, PropWarp(125,19971,69993, 125,17186,69763));

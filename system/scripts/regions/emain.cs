@@ -4,12 +4,12 @@
 // Warp and spawn definitions for Emain.
 //---------------------------------------------------------------------------
 
-public class EmainRegionScript : BaseScript
+public class EmainRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{
 		// Sen Mag
-		SetPropBehavior(0x00B00034000500C3, PropWarp(52,61831,7523, 53,65425,107675));
+		//SetPropBehavior(0x00B00034000500C3, PropWarp(52,61831,7523, 53,65425,107675));
 		SetPropBehavior(0x00A0003500020003, PropWarp(53,65425,107675, 52,60692,7282));
 
 		// Coill

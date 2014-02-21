@@ -4,7 +4,7 @@
 // Warp and spawn definitions for Ceo.
 //---------------------------------------------------------------------------
 
-public class CeoRegionScript : BaseScript
+public class CeoRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{

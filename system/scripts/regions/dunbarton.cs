@@ -4,7 +4,7 @@
 // Warp and spawn definitions for Dunbarton.
 //---------------------------------------------------------------------------
 
-public class DunbartonRegionScript : BaseScript
+public class DunbartonRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{
@@ -41,12 +41,12 @@ public class DunbartonRegionScript : BaseScript
 		SetPropBehavior(0x00A0004700000003, PropWarp(71,10330,7921, 18,2180,1843));
 		
 		// Dunbarton School Altar - Dunbarton School Library
-		SetPropBehavior(0x00B0004700000007, PropWarp(71,10319,11170, 72,10184,7420));
+		//SetPropBehavior(0x00B0004700000007, PropWarp(71,10319,11170, 72,10184,7420));
 		SetPropBehavior(0x00A0004800000002, PropWarp(72,10177,7324, 71,10325,11022));
 
 		// Dunbarton School Library Night - Dunbarton School Altar
 		SetPropBehavior(0x00A0004C00000002, PropWarp(76,10166,7328, 71,10325,11022));
-		SetPropBehavior(0x00B0004700000007, PropWarp(71,10319,11170, 72,10184,7420));
+		//SetPropBehavior(0x00B0004700000007, PropWarp(71,10319,11170, 72,10184,7420));
 
 		// Math
 		SetPropBehavior(0x00A0000E00090011, PropWarp(14,58396,59080, 25,3233,2484));

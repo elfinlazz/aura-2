@@ -5,7 +5,7 @@
 // Region between Emain and Gairech.
 //---------------------------------------------------------------------------
 
-public class SenMagRegionScript : BaseScript
+public class SenMagRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{
@@ -15,7 +15,7 @@ public class SenMagRegionScript : BaseScript
 
 		// Sen Mag Residential
 		SetPropBehavior(0x00A00035000500CB, PropWarp(53,103137,78391, 202,54574,57302));
-		SetPropBehavior(0x00B000CA00030157, PropWarp(202,54835,57658, 53,103137,78391));
+		//SetPropBehavior(0x00B000CA00030157, PropWarp(202,54835,57658, 53,103137,78391));
 	}
 	
 	public override void LoadSpawns()

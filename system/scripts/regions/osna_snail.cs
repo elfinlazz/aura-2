@@ -5,7 +5,7 @@
 // Region between Emain and Dunbarton.
 //---------------------------------------------------------------------------
 
-public class OsnaSnailRegionScript : BaseScript
+public class OsnaSnailRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{

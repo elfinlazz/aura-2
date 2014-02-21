@@ -4,7 +4,7 @@
 // Warp and spawn definitions for Bangor.
 //---------------------------------------------------------------------------
 
-public class BangorRegionScript : BaseScript
+public class BangorRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{

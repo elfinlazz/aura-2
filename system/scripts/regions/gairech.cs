@@ -5,7 +5,7 @@
 // Region between Dunbarton and Bangor.
 //---------------------------------------------------------------------------
 
-public class GairechRegionScript : BaseScript
+public class GairechRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{
@@ -18,7 +18,7 @@ public class GairechRegionScript : BaseScript
 		SetPropBehavior(0x00A0003100000003, PropWarp(49,3454,4430, 30,10707,82575));
 
 		// Gairech - Sen Mag
-		SetPropBehavior(0x00B0001E000500E7, PropWarp(30,8230,72405, 53,139366,121883));
+		//SetPropBehavior(0x00B0001E000500E7, PropWarp(30,8230,72405, 53,139366,121883));
 		SetPropBehavior(0x00A0003500030005, PropWarp(53,139366,121883, 30,9462,72387));
 	}
 	

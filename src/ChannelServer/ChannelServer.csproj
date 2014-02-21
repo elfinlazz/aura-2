@@ -140,6 +140,7 @@
     <Compile Include="Scripting\Compilers\CSharpCompiler.cs" />
     <Compile Include="Scripting\ScriptManager.cs" />
     <Compile Include="Scripting\Scripts\QuestScript.cs" />
+    <Compile Include="Scripting\Scripts\RegionScript.cs" />
     <Compile Include="Scripting\ScriptVariables.cs" />
     <Compile Include="Skills\Actions\ContinentWarpSkillHandler.cs" />
     <Compile Include="Skills\Base\CombatSkillHandler.cs" />

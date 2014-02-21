@@ -4,7 +4,7 @@
 // Warp and spawn definitions for Tir.
 //---------------------------------------------------------------------------
 
-public class TirRegionScript : BaseScript
+public class TirRegionScript : RegionScript
 {
 	public override void LoadWarps()
 	{
@@ -44,14 +44,6 @@ public class TirRegionScript : BaseScript
 		SetPropBehavior(0x00A0000100030067, PropWarp(1,4916,15545, 16,28545,96881));
 		SetPropBehavior(0x00A0001000020028, PropWarp(16,28517,98372, 1,5067,17156));
 
-		// Sidhe
-		SetPropBehavior(0x00A0000100080067, PropWarp(1,1516,59999, 47,9985,6522));
-		SetPropBehavior(0x00A0002F000100C9, PropWarp(47,10007,5680, 1,1748,59187));
-		
-		// Sidhe North - Sidhe South
-		SetPropBehavior(0x00A0002F000100C1, PropWarp(47,9593,19201, 48,12514,7711));
-		SetPropBehavior(0x00A00030000100FD, PropWarp(48,12802,6898, 47,9558,18288));
-		
 		// Ciar
 		SetPropBehavior(0x00A0000100050009, PropWarp(1,27690,30381, 11,3886,3297));
 		SetPropBehavior(0x00A0000B00010002, PropWarp(11,4433,3194, 1,28761,30725));
