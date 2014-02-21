@@ -425,6 +425,17 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
+		public void Msg(string message, params DialogElement[] elements)
+		{
+			this.Msg(Hide.None, message, elements);
+		}
+
+		/// <summary>
+		/// Sends dialog to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="message"></param>
+		/// <param name="elements"></param>
 		public void Msg(Hide hide, string message, params DialogElement[] elements)
 		{
 			var mes = new DialogElement();
@@ -434,21 +445,6 @@ namespace Aura.Channel.Scripting.Scripts
 			if (hide == Hide.Name || hide == Hide.Both)
 				mes.Add(new DialogTitle(null));
 
-			mes.Add(new DialogText(message));
-			mes.Add(elements);
-
-			this.Msg(mes);
-		}
-
-		/// <summary>
-		/// Sends dialog to creature's client.
-		/// </summary>
-		/// <param name="creature"></param>
-		/// <param name="message"></param>
-		/// <param name="elements"></param>
-		public void Msg(string message, params DialogElement[] elements)
-		{
-			var mes = new DialogElement();
 			mes.Add(new DialogText(message));
 			mes.Add(elements);
 
@@ -587,7 +583,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected enum ItemState : byte { Up = 0, Down = 1 }
 	}
 
-	public enum Hide { Face, Name, Both }
+	public enum Hide { None, Face, Name, Both }
 	public enum ConversationState { Ongoing, Select, Ended }
 	public enum HookResult { Continue, Break, End }
 }
