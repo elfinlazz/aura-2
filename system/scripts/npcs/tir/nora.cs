@@ -70,7 +70,11 @@ public class NoraBaseScript : NpcScript
 	{
 		switch (keyword)
 		{
-			default: Msg("Can we change the subject?"); break;
+			case "personal_info": Msg("My name is Nora. Please don't forget it."); break;
+			case "rumor":         Msg("The Square is right up the little hill next to us.<br/>It's worth a visit if you have some time."); break;
+			case "about_skill":   Msg("Are you making good use of the Rest skill?<br/>Here's a tip. Only for you, <username/>.<br/>If you continue to rank up your Rest skill,<br/>your HP will increase steadily."); break;
+			case "about_arbeit":  Msg("Are you interested in the Inn business?<br/>If so, why don't you ask Uncle Piaras?<br/>He is in the Inn."); break;
+			default:              RndMsg("Can we change the subject?", "I don't... I don't know."); break;
 		}
 	}
 }

@@ -318,8 +318,8 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			if (this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] == null)
 			{
-				// Why an explicit button? Dunno. Ask devCAT, I'm just
-				// imitating them :) [exec]
+				// Explicit button and Select, so we don't get into the hooks
+				// (that might do more than sending msgs) without clicking.
 				this.Msg(Hide.Both, string.Join("<br/>", lines), this.Button("Continue"));
 				await Select();
 				this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] = true;
@@ -453,6 +453,18 @@ namespace Aura.Channel.Scripting.Scripts
 			mes.Add(elements);
 
 			this.Msg(mes);
+		}
+
+		/// <summary>
+		/// Sends one of the passed messenges.
+		/// </summary>
+		/// <param name="msgs"></param>
+		public void RndMsg(params string[] msgs)
+		{
+			if (msgs == null || msgs.Length == 0)
+				return;
+
+			this.Msg(msgs[Random(msgs.Length)]);
 		}
 
 		/// <summary>
