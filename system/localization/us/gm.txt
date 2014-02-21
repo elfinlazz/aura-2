@@ -16,8 +16,8 @@ gmcp_banned		'{0}' has been banned till '{1}'.
 gmcp_disabled	The GMCP is currently disabled, or not available.
 
 // >where
-where_you		You're here: {0} @ {1}, {2}
-where_target	{3} is here: {0} @ {1}, {2}
+where_you		You're here: {0} @ {1}, {2}, Area: {5}, Dir: {4}
+where_target	{3} is here: {0} @ {1}, {2}, Area: {5}, Dir: {4}
 
 // >item/drop
 item_none		Item '{0}' not found in database.

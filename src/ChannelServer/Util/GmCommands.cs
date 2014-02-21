@@ -198,9 +198,9 @@ namespace Aura.Channel.Util
 		public CommandResult HandleWhere(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
 			var pos = target.GetPosition();
-			var msg = Localization.Get(sender == target ? "gm.where_you" : "gm.where_target"); // (You're|{3} is) here: {0} @ {1}, {2}
+			var msg = Localization.Get(sender == target ? "gm.where_you" : "gm.where_target"); // (You're|{3} is) here: {0} @ {1}, {2}, Area: {5}, Dir: {4}
 
-			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name);
+			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name, target.Direction, AuraData.RegionInfoDb.GetAreaId(target.RegionId, pos.X, pos.Y));
 
 			return CommandResult.Okay;
 		}

@@ -211,6 +211,8 @@ public class AbbSealStoneScript : _SealStoneScript
 
 	public override bool Check(Creature creature, Prop prop)
 	{
+		return false;
+	
 		// Wand
 		if (creature.RightHand != null && creature.RightHand.Info.Id >= 40038 && creature.RightHand.Info.Id <= 40041)
 			return true;
@@ -238,6 +240,8 @@ public class SliabSealStoneScript : _SealStoneScript
 
 	public override bool Check(Creature creature, Prop prop)
 	{
+		return false;
+	
 		return (creature.LeftHand != null && creature.LeftHand.Info.Id == 1028); // Tracy's Secret
 	}
 
@@ -261,6 +265,8 @@ public class TaraSealStoneScript : _SealStoneScript
 
 	public override bool Check(Creature creature, Prop prop)
 	{
+		return false;
+	
 		// Have alchemist clothes, shoes, a Cylinder, and Beginner Alchemist title equipped ?
 
 		if (creature.Titles.SelectedTitle != 26)
