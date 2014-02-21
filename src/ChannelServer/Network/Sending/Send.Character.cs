@@ -42,7 +42,7 @@ namespace Aura.Channel.Network.Sending
 		/// <remarks>
 		/// ...
 		/// </remarks>
-		public static void EnterRegion(PlayerCreature creature)
+		public static void EnterRegion(Creature creature)
 		{
 			var pos = creature.GetPosition();
 
@@ -64,7 +64,7 @@ namespace Aura.Channel.Network.Sending
 		/// </remarks>
 		/// <param name="client"></param>
 		/// <param name="creature">Negative response if null</param>
-		public static void EnterRegionRequestR(PlayerCreature creature)
+		public static void EnterRegionRequestR(Creature creature)
 		{
 			var packet = new Packet(Op.EnterRegionRequestR, MabiId.Channel);
 			packet.PutByte(creature != null);
@@ -92,7 +92,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="client"></param>
 		/// <param name="creature">Negative response if null</param>
-		public static void ChannelCharacterInfoRequestR(ChannelClient client, PlayerCreature creature)
+		public static void ChannelCharacterInfoRequestR(ChannelClient client, Creature creature)
 		{
 			var packet = new Packet(Op.ChannelCharacterInfoRequestR, MabiId.Channel);
 			packet.PutByte(creature != null);
@@ -112,7 +112,7 @@ namespace Aura.Channel.Network.Sending
 		/// Makes client load the region and move the creature there.
 		/// Uses current position of creature, move beforehand.
 		/// </remarks>
-		public static void WarpRegion(PlayerCreature creature)
+		public static void WarpRegion(Creature creature)
 		{
 			var pos = creature.GetPosition();
 

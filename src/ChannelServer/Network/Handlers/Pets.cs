@@ -148,7 +148,7 @@ namespace Aura.Channel.Network.Handlers
 			var x = packet.GetInt();
 			var y = packet.GetInt();
 
-			var pet = client.GetPlayerCreature(packet.Id);
+			var pet = client.GetCreature(packet.Id);
 			if (pet == null || pet.Master == null)
 				return;
 

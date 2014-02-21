@@ -18,8 +18,15 @@ namespace Aura.Channel.Network
 		/// Main creature this client controls.
 		/// </summary>
 		public Creature Controlling { get; set; }
+
+		/// <summary>
+		/// List of creatures the client is controlling.
+		/// </summary>
 		public Dictionary<long, Creature> Creatures { get; protected set; }
 
+		/// <summary>
+		/// Information about a current NPC dialog.
+		/// </summary>
 		public NpcSession NpcSession { get; set; }
 
 		public ChannelClient()
@@ -28,6 +35,11 @@ namespace Aura.Channel.Network
 			this.NpcSession = new NpcSession();
 		}
 
+		/// <summary>
+		/// Returns creature by entity id or null.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public Creature GetCreature(long id)
 		{
 			Creature creature;
@@ -35,18 +47,20 @@ namespace Aura.Channel.Network
 			return creature;
 		}
 
-		public PlayerCreature GetPlayerCreature(long id)
-		{
-			return this.GetCreature(id) as PlayerCreature;
-		}
-
+		/// <summary>
+		/// Saves characters, despawns and disposes them, etc.
+		/// </summary>
 		public override void CleanUp()
 		{
 			if (this.Account != null)
 				ChannelDb.Instance.SaveAccount(this.Account);
 
 			foreach (var creature in this.Creatures.Values.Where(a => a.Region != null))
+			{
+				if (creature.Client.NpcSession.Script != null)
+					creature.Client.NpcSession.Clear();
 				creature.Region.RemoveCreature(creature);
+			}
 
 			foreach (var creature in this.Creatures.Values)
 				creature.Dispose();

@@ -100,7 +100,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.EnterRegionRequest)]
 		public void EnterRegionRequest(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetPlayerCreature(packet.Id);
+			var creature = client.GetCreature(packet.Id);
 			if (creature == null)
 				return;
 
@@ -122,7 +122,8 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Characters that spawned at least once need to be saved.
-			creature.Save = true;
+			if (creature is PlayerCreature)
+				(creature as PlayerCreature).Save = true;
 
 			// Add to region
 			var firstSpawn = (creature.Region == null);
@@ -178,7 +179,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.ChannelCharacterInfoRequest)]
 		public void ChannelCharacterInfoRequest(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetPlayerCreature(packet.Id);
+			var creature = client.GetCreature(packet.Id);
 			if (creature == null)
 			{
 				Send.ChannelCharacterInfoRequestR_Fail(client);
@@ -235,7 +236,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.LeaveSoulStream)]
 		public void HandleLeaveSoulStream(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetPlayerCreature(packet.Id);
+			var creature = client.GetCreature(packet.Id);
 			if (creature == null || !creature.Temp.InSoulStream)
 				return;
 

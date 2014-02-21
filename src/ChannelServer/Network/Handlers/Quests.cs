@@ -23,7 +23,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var uniqueQuestId = packet.GetLong();
 
-			var creature = client.GetPlayerCreature(packet.Id);
+			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
 
 			var quest = creature.Quests.Get(uniqueQuestId);
@@ -49,7 +49,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var uniqueQuestId = packet.GetLong();
 
-			var creature = client.GetPlayerCreature(packet.Id);
+			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
 
 			var quest = creature.Quests.Get(uniqueQuestId);
