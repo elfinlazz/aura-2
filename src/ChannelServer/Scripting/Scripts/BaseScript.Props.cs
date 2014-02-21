@@ -73,36 +73,12 @@ namespace Aura.Channel.Scripting.Scripts
 
 		protected PropFunc PropDrop(int dropType)
 		{
-			return (creature, prop) =>
-			{
-				if (RandomProvider.Get().NextDouble() > ChannelServer.Instance.Conf.World.PropDropRate)
-					return;
-
-				var dropInfo = AuraData.PropDropDb.Find(dropType);
-				if (dropInfo == null)
-				{
-					Log.Warning("{1}.PropDrop Behavior: Unknown prop drop type '{0}'.", dropType, this.GetType().Name);
-					return;
-				}
-
-				var rnd = RandomProvider.Get();
-
-				// Get random item from potential drops
-				var dropItemInfo = dropInfo.GetRndItem(rnd);
-				var rndAmount = (dropItemInfo.Amount > 1 ? (ushort)rnd.Next(1, dropItemInfo.Amount) : (ushort)1);
-
-				var item = new Item(dropItemInfo.ItemClass);
-				item.Info.Amount = rndAmount;
-				item.Drop(prop.Region, creature.GetPosition());
-			};
+			return Prop.GetDropBehavior(dropType);
 		}
 
 		protected PropFunc PropWarp(int region, int x, int y)
 		{
-			return (creature, prop) =>
-			{
-				creature.Warp(region, x, y);
-			};
+			return Prop.GetWarpBehavior(region, x, y);
 		}
 	}
 }

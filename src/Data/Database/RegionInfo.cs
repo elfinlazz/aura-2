@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace Aura.Data.Database
 {
@@ -38,6 +39,27 @@ namespace Aura.Data.Database
 		public float Direction { get; internal set; }
 		public float Scale { get; internal set; }
 		public List<ShapeData> Shapes { get; internal set; }
+		public List<RegionElementData> Parameters { get; internal set; }
+
+		/// <summary>
+		/// Returns drop type, if one exists, or -1.
+		/// </summary>
+		/// <returns></returns>
+		public int GetDropType()
+		{
+			foreach (var param in this.Parameters)
+			{
+				// TODO: Event or SignalType can probably be checked as
+				//   well for finding drop props.
+				var match = Regex.Match(param.XML, @"<xml droptype=""(?<type>[0-9]+)""/>", RegexOptions.Compiled);
+				if (!match.Success)
+					continue;
+
+				return int.Parse(match.Groups["type"].Value);
+			}
+
+			return -1;
+		}
 	}
 
 	public class ShapeData
@@ -59,8 +81,8 @@ namespace Aura.Data.Database
 		public float X { get; internal set; }
 		public float Y { get; internal set; }
 		public bool IsAltar { get; internal set; }
-		public List<EventElementData> Elements { get; internal set; }
 		public List<ShapeData> Shapes { get; internal set; }
+		public List<RegionElementData> Parameters { get; internal set; }
 	}
 
 	public enum EventType : int
@@ -71,10 +93,12 @@ namespace Aura.Data.Database
 		Unk2 = 2000,     // something about the monsters
 	}
 
-	public class EventElementData
+	public class RegionElementData
 	{
-		public int Type { get; internal set; }
-		public int Unk { get; internal set; }
+		public int EventType { get; internal set; }
+		public int SignalType { get; internal set; }
+		public string Name { get; internal set; }
+		public string XML { get; internal set; }
 	}
 
 	public class RegionInfoDb : DatabaseDatIndexed<int, RegionData>
@@ -229,6 +253,19 @@ namespace Aura.Data.Database
 							pi.Shapes.Add(si);
 						}
 
+						var cElements = br.ReadInt32();
+						pi.Parameters = new List<RegionElementData>();
+						for (int k = 0; k < cElements; ++k)
+						{
+							var red = new RegionElementData();
+							red.EventType = br.ReadInt32();
+							red.SignalType = br.ReadInt32();
+							red.Name = br.ReadString();
+							red.XML = br.ReadString();
+
+							pi.Parameters.Add(red);
+						}
+
 						ai.Props.Add(pi.EntityId, pi);
 						this.PropEntries.Add(pi.EntityId, pi);
 					}
@@ -242,20 +279,6 @@ namespace Aura.Data.Database
 						ei.X = br.ReadSingle();
 						ei.Y = br.ReadSingle();
 						ei.Type = (EventType)br.ReadInt32();
-
-						var cElements = br.ReadInt32();
-						ei.Elements = new List<EventElementData>();
-						for (int k = 0; k < cElements; ++k)
-						{
-							var eei = new EventElementData();
-							eei.Type = br.ReadInt32();
-							eei.Unk = br.ReadInt32();
-
-							if (!ei.IsAltar && eei.Type == 2110 && eei.Unk == 103)
-								ei.IsAltar = true;
-
-							ei.Elements.Add(eei);
-						}
 
 						var cShapes = br.ReadInt32();
 						ei.Shapes = new List<ShapeData>();
@@ -272,6 +295,22 @@ namespace Aura.Data.Database
 							si.Y4 = br.ReadInt32();
 
 							ei.Shapes.Add(si);
+						}
+
+						var cElements = br.ReadInt32();
+						ei.Parameters = new List<RegionElementData>();
+						for (int k = 0; k < cElements; ++k)
+						{
+							var red = new RegionElementData();
+							red.EventType = br.ReadInt32();
+							red.SignalType = br.ReadInt32();
+							red.Name = br.ReadString();
+							red.XML = br.ReadString();
+
+							if (!ei.IsAltar && red.EventType == 2110 && red.SignalType == 103)
+								ei.IsAltar = true;
+
+							ei.Parameters.Add(red);
 						}
 
 						ai.Events.Add(ei.Id, ei);

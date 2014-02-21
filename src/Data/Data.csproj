@@ -59,7 +59,7 @@
     <Compile Include="Database\PropDrops.cs" />
     <Compile Include="Database\Races.cs" />
     <Compile Include="Database\RaceSkills.cs" />
-    <Compile Include="Database\RegionInfos.cs" />
+    <Compile Include="Database\RegionInfo.cs" />
     <Compile Include="Database\Regions.cs" />
     <Compile Include="Database\Shamala.cs" />
     <Compile Include="Database\SkillRanks.cs" />

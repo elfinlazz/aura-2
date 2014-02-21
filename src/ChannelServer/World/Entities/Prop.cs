@@ -10,6 +10,7 @@ using Aura.Shared.Mabi.Const;
 using System.Threading;
 using Aura.Data;
 using Aura.Channel.Network;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Entities
 {
@@ -106,6 +107,52 @@ namespace Aura.Channel.World.Entities
 		public override string ToString()
 		{
 			return string.Format("Prop: 0x{0}, Region: {1}, X: {2}, Y: {3}", this.EntityIdHex, this.Info.Region, this.Info.X, this.Info.Y);
+		}
+
+		/// <summary>
+		/// Returns prop behavior for dropping.
+		/// </summary>
+		/// <param name="dropType"></param>
+		/// <returns></returns>
+		public static PropFunc GetDropBehavior(int dropType)
+		{
+			return (creature, prop) =>
+			{
+				if (RandomProvider.Get().NextDouble() > ChannelServer.Instance.Conf.World.PropDropRate)
+					return;
+
+				var dropInfo = AuraData.PropDropDb.Find(dropType);
+				if (dropInfo == null)
+				{
+					Log.Warning("GetDropBehavior: Unknown prop drop type '{0}'.", dropType);
+					return;
+				}
+
+				var rnd = RandomProvider.Get();
+
+				// Get random item from potential drops
+				var dropItemInfo = dropInfo.GetRndItem(rnd);
+				var rndAmount = (dropItemInfo.Amount > 1 ? (ushort)rnd.Next(1, dropItemInfo.Amount) : (ushort)1);
+
+				var item = new Item(dropItemInfo.ItemClass);
+				item.Info.Amount = rndAmount;
+				item.Drop(prop.Region, creature.GetPosition());
+			};
+		}
+
+		/// <summary>
+		/// Returns prop behavior for warping.
+		/// </summary>
+		/// <param name="region"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public static PropFunc GetWarpBehavior(int region, int x, int y)
+		{
+			return (creature, prop) =>
+			{
+				creature.Warp(region, x, y);
+			};
 		}
 	}
 
