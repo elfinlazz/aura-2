@@ -163,7 +163,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutShort(15);		         // RangeAttackRateMod
 				packet.PutFloat(0);			         // CriticalBase
 				packet.PutFloat(0);			         // CriticalMod
-				packet.PutShort((short)creature.ProtectionBase);
+				packet.PutFloat((short)creature.ProtectionBase);
 				packet.PutFloat(creature.ProtectionMod);
 				packet.PutShort((short)creature.DefenseBase);
 				packet.PutShort((short)creature.DefenseMod);
@@ -835,6 +835,15 @@ namespace Aura.Channel.Network.Sending
 				packet.PutInt(0);
 				packet.PutLong(0);
 				packet.PutInt(0);
+			}
+
+			// [180X00, NA181? (12.02.2014)] ?
+			// Without this the "me" creature in the Smash cutscene had a
+			// red aura.
+			// --------------------------------------------------------------
+			if (type == CreaturePacketType.Public)
+			{
+				packet.PutByte(0);
 			}
 
 			// Character
