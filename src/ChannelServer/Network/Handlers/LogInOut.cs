@@ -214,7 +214,7 @@ namespace Aura.Channel.Network.Handlers
 		/// ...
 		/// </example>
 		[PacketHandler(Op.DisconnectRequest)]
-		public void HandleDisconnect(ChannelClient client, Packet packet)
+		public void DisconnectRequest(ChannelClient client, Packet packet)
 		{
 			var unk1 = packet.GetByte(); // 1 | 2 (maybe login vs exit?)
 
@@ -228,13 +228,27 @@ namespace Aura.Channel.Network.Handlers
 		}
 
 		/// <summary>
+		/// Sent when entering the Soul Stream.
+		/// </summary>
+		/// <remarks>
+		/// Purpose unknown, no answer sent in logs.
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.EnterSoulStream)]
+		public void EnterSoulStream(ChannelClient client, Packet packet)
+		{
+		}
+
+		/// <summary>
 		/// Sent after ending the conversation with Nao.
 		/// </summary>
 		/// <example>
 		/// No parameters.
 		/// </example>
 		[PacketHandler(Op.LeaveSoulStream)]
-		public void HandleLeaveSoulStream(ChannelClient client, Packet packet)
+		public void LeaveSoulStream(ChannelClient client, Packet packet)
 		{
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null || !creature.Temp.InSoulStream)
