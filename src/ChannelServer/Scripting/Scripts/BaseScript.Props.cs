@@ -71,11 +71,41 @@ namespace Aura.Channel.Scripting.Scripts
 		// Behaviors
 		// ------------------------------------------------------------------
 
+		/// <summary>
+		/// Returns a drop behavior.
+		/// </summary>
+		/// <param name="dropType"></param>
+		/// <returns></returns>
 		protected PropFunc PropDrop(int dropType)
 		{
 			return Prop.GetDropBehavior(dropType);
 		}
 
+		/// <summary>
+		/// Returns a warp behavior.
+		/// </summary>
+		/// <remarks>
+		/// The source location is ignored, it's only there for clarity.
+		/// </remarks>
+		/// <param name="sourceRegion"></param>
+		/// <param name="sourceX"></param>
+		/// <param name="sourceY"></param>
+		/// <param name="region"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		protected PropFunc PropWarp(int sourceRegion, int sourceX, int sourceY, int region, int x, int y)
+		{
+			return this.PropWarp(region, x, y);
+		}
+
+		/// <summary>
+		/// Returns a warp behavior.
+		/// </summary>
+		/// <param name="region"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		protected PropFunc PropWarp(int region, int x, int y)
 		{
 			return Prop.GetWarpBehavior(region, x, y);

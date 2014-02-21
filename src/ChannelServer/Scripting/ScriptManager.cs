@@ -433,6 +433,14 @@ namespace Aura.Channel.Scripting
 
 						_questScripts[questScript.Id] = questScript;
 					}
+					// Try to load as RegionScript
+					else if (baseScript is RegionScript)
+					{
+						var regionScript = baseScript as RegionScript;
+						regionScript.Load();
+						regionScript.LoadWarps();
+						regionScript.LoadSpawns();
+					}
 					else
 					{
 						// General Script, just load it.

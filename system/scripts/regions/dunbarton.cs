@@ -1,450 +1,80 @@
 //--- Aura Script -----------------------------------------------------------
-// Dunbarton
+// Dunbarton (16)
 //--- Description -----------------------------------------------------------
-// Warp, prop, and spawn definitions for Dunbarton.
+// Warp and spawn definitions for Dunbarton.
 //---------------------------------------------------------------------------
 
 public class DunbartonRegionScript : BaseScript
 {
-	public override void Load()
+	public override void LoadWarps()
 	{
-		LoadWarps();
-		LoadPropDrops();
-	}
-	
-	public void LoadWarps()
-	{
-		// Dugald Aisle
-		SetPropBehavior(45036056403443728, PropWarp(16, 19876, 6724));
-		SetPropBehavior(45036064993640466, PropWarp(14, 44782, 70919));
-		
+		// Dugald
+		SetPropBehavior(0x00A0000E00030010, PropWarp(14,44774,72731, 16,19876,6724));
+		SetPropBehavior(0x00A0001000070012, PropWarp(16,19802,3900, 14,44782,70919));
+
 		// Clothing Shop
-		SetPropBehavior(45036056403902982, PropWarp(17, 1427, 1365));
-		SetPropBehavior(45036069288214530, PropWarp(14, 35263, 38723));
-		
+		SetPropBehavior(0x00A0000E000A0206, PropWarp(14,35110,38777, 17,1427,1365));
+		SetPropBehavior(0x00A0001100010002, PropWarp(17,1600,1377, 14,35263,38723));
+
 		// Healer
-		SetPropBehavior(45036056403902721, PropWarp(19, 1120, 1048));
-		SetPropBehavior(45036077878149122, PropWarp(14, 43761, 33283));
-		
+		SetPropBehavior(0x00A0000E000A0101, PropWarp(14,43531,33092, 19,1120,1048));
+		SetPropBehavior(0x00A0001300010002, PropWarp(19,1328,1310, 14,43761,33283));
+
 		// Bank
-		SetPropBehavior(45036056403902584, PropWarp(20, 1590, 847));
-		SetPropBehavior(45036082173116418, PropWarp(14, 36037, 37442));
-		
+		SetPropBehavior(0x00A0000E000A0078, PropWarp(14,35735,37455, 20,1590,847));
+		SetPropBehavior(0x00A0001400010002, PropWarp(20,1754,843, 14,36037,37442));
+
 		// Church
-		SetPropBehavior(45036056403902586, PropWarp(21, 2171, 914));
-		SetPropBehavior(45036086468083714, PropWarp(14, 34593, 43030));
-		
-		// Cobh
-		SetPropBehavior(45036056404033595, PropWarp(23, 19208, 44092));
-		SetPropBehavior(45036095058083956, PropWarp(14, 63366, 38735));
-		
-		// Rabbie
-		SetPropBehavior(45036056404361237, PropWarp(24, 3202, 2541));
-		SetPropBehavior(45036099352985602, PropWarp(14, 16801, 59368));
-		
-		// Math
-		SetPropBehavior(45036056403836945, PropWarp(25, 3233, 2484));
-		SetPropBehavior(45036103647952898, PropWarp(14, 58399, 58590));
-		
+		SetPropBehavior(0x00A0000E000A007A, PropWarp(14,34394,43229, 21,2171,914));
+		SetPropBehavior(0x00A0001500010002, PropWarp(21,2369,701, 14,34593,43030));
+
 		// Gairech
-		SetPropBehavior(45036056403574804, PropWarp(30, 31718, 98421));
-		SetPropBehavior(45036125122920464, PropWarp(14, 58539, 2418));
-		
-		// Osna Snail
-		SetPropBehavior(45036056403640335, PropWarp(70, 44316, 19980));
-		SetPropBehavior(45036296921481217, PropWarp(14, 18169, 33718));
+		SetPropBehavior(0x00A0000E00050014, PropWarp(14,58489,1403, 30,31718,98421));
+		SetPropBehavior(0x00A0001E00030010, PropWarp(30,31372,100353, 14,58539,2418));
+
+		// School
+		SetPropBehavior(0x00A0000E000A01DB, PropWarp(14,45565,40000, 71,9111,9613));
+		SetPropBehavior(0x00A0004700000001, PropWarp(71,8934,9610, 14,44615,39995));
 		
 		// School
-		SetPropBehavior(45036056403902939, PropWarp(71, 9111, 9613));
-		SetPropBehavior(45036301216382977, PropWarp(14, 44615, 39995));
+		SetPropBehavior(0x00A0001200010001, PropWarp(18,2213,2015, 71,10337,8150));
+		SetPropBehavior(0x00A0004700000003, PropWarp(71,10330,7921, 18,2180,1843));
 		
-		// Abb Neagh
-		SetPropBehavior(45036056404361321, PropWarp(302, 138733, 71025));
-		SetPropBehavior(45037293355270380, PropWarp(14, 15042, 56766));
+		// Dunbarton School Altar - Dunbarton School Library
+		SetPropBehavior(0x00B0004700000007, PropWarp(71,10319,11170, 72,10184,7420));
+		SetPropBehavior(0x00A0004800000002, PropWarp(72,10177,7324, 71,10325,11022));
+
+		// Dunbarton School Library Night - Dunbarton School Altar
+		SetPropBehavior(0x00A0004C00000002, PropWarp(76,10166,7328, 71,10325,11022));
+		SetPropBehavior(0x00B0004700000007, PropWarp(71,10319,11170, 72,10184,7420));
+
+		// Math
+		SetPropBehavior(0x00A0000E00090011, PropWarp(14,58396,59080, 25,3233,2484));
+		SetPropBehavior(0x00A0001900010002, PropWarp(25,3201,1992, 14,58399,58590));
+
+		// Rabbie
+		SetPropBehavior(0x00A0000E00110015, PropWarp(14,16807,59871, 24,3202,2541));
+		SetPropBehavior(0x00A0001800010002, PropWarp(24,3200,1998, 14,16801,59368));
+		
+		// Rabbie Battle Arena - Rabbie Battle Arena Lobby
+		SetPropBehavior(0x00A000610000000E, PropWarp(97,3432,7384, 98,1981,4260));
+		SetPropBehavior(0x00A0006200010002, PropWarp(98,2000,2000, 24,3200,2833));
+
+		// Rabbie Battle Arena - Rabbie Battle Arena Lobby
+		SetPropBehavior(0x00A000610000000F, PropWarp(97,6956,7378, 98,1981,4260));
+
+		// Rabbie Battle Arena - Rabbie Battle Arena Lobby
+		SetPropBehavior(0x00A0006100000010, PropWarp(97,6969,3837, 98,1981,4260));
+
+		// Rabbie Battle Arena - Rabbie Battle Arena Lobby
+		SetPropBehavior(0x00A0006100000011, PropWarp(97,3429,3835, 98,1981,4260));
+		
+		// Rabbie Battle Arena Waiting - Rabbie Battle Arena Lobby
+		SetPropBehavior(0x00A0006300000002, PropWarp(99,2504,2800, 98,1981,4260));
 	}
 	
-	public void LoadPropDrops()
+	public override void LoadSpawns()
 	{
-		SetPropBehavior(45036056403312642, PropDrop(2));
-		SetPropBehavior(45036056403312645, PropDrop(54));
-		SetPropBehavior(45036056403312646, PropDrop(2));
-		SetPropBehavior(45036056403312647, PropDrop(2));
-		SetPropBehavior(45036056403312649, PropDrop(2));
-		SetPropBehavior(45036056403312651, PropDrop(2));
-		SetPropBehavior(45036056403312652, PropDrop(54));
-		SetPropBehavior(45036056403312654, PropDrop(54));
-		SetPropBehavior(45036056403312656, PropDrop(2));
-		SetPropBehavior(45036056403378177, PropDrop(2));
-		SetPropBehavior(45036056403378181, PropDrop(2));
-		SetPropBehavior(45036056403378186, PropDrop(2));
-		SetPropBehavior(45036056403378187, PropDrop(2));
-		SetPropBehavior(45036056403378191, PropDrop(2));
-		SetPropBehavior(45036056403378196, PropDrop(2));
-		SetPropBehavior(45036056403378197, PropDrop(2));
-		SetPropBehavior(45036056403378208, PropDrop(2));
-		SetPropBehavior(45036056403378210, PropDrop(54));
-		SetPropBehavior(45036056403443715, PropDrop(2));
-		SetPropBehavior(45036056403443725, PropDrop(2));
-		SetPropBehavior(45036056403443726, PropDrop(2));
-		SetPropBehavior(45036056403443730, PropDrop(2));
-		SetPropBehavior(45036056403443732, PropDrop(2));
-		SetPropBehavior(45036056403443736, PropDrop(2));
-		SetPropBehavior(45036056403443738, PropDrop(2));
-		SetPropBehavior(45036056403443740, PropDrop(2));
-		SetPropBehavior(45036056403443741, PropDrop(2));
-		SetPropBehavior(45036056403443742, PropDrop(2));
-		SetPropBehavior(45036056403443746, PropDrop(2));
-		SetPropBehavior(45036056403443747, PropDrop(2));
-		SetPropBehavior(45036056403443750, PropDrop(2));
-		SetPropBehavior(45036056403443753, PropDrop(1));
-		SetPropBehavior(45036056403443754, PropDrop(1));
-		SetPropBehavior(45036056403443756, PropDrop(1));
-		SetPropBehavior(45036056403443757, PropDrop(1));
-		SetPropBehavior(45036056403443760, PropDrop(1));
-		SetPropBehavior(45036056403574789, PropDrop(1));
-		SetPropBehavior(45036056403574792, PropDrop(2));
-		SetPropBehavior(45036056403574793, PropDrop(54));
-		SetPropBehavior(45036056403574796, PropDrop(1));
-		SetPropBehavior(45036056403574799, PropDrop(2));
-		SetPropBehavior(45036056403574802, PropDrop(54));
-		SetPropBehavior(45036056403574809, PropDrop(2));
-		SetPropBehavior(45036056403574818, PropDrop(54));
-		SetPropBehavior(45036056403574826, PropDrop(2));
-		SetPropBehavior(45036056403640324, PropDrop(2));
-		SetPropBehavior(45036056403640326, PropDrop(2));
-		SetPropBehavior(45036056403640333, PropDrop(2));
-		SetPropBehavior(45036056403640334, PropDrop(2));
-		SetPropBehavior(45036056403640337, PropDrop(1));
-		SetPropBehavior(45036056403640338, PropDrop(1));
-		SetPropBehavior(45036056403640340, PropDrop(1));
-		SetPropBehavior(45036056403640341, PropDrop(1));
-		SetPropBehavior(45036056403705859, PropDrop(52));
-		SetPropBehavior(45036056403705869, PropDrop(1));
-		SetPropBehavior(45036056403705870, PropDrop(2));
-		SetPropBehavior(45036056403705872, PropDrop(2));
-		SetPropBehavior(45036056403705876, PropDrop(2));
-		SetPropBehavior(45036056403705877, PropDrop(1));
-		SetPropBehavior(45036056403705879, PropDrop(2));
-		SetPropBehavior(45036056403705880, PropDrop(2));
-		SetPropBehavior(45036056403705892, PropDrop(52));
-		SetPropBehavior(45036056403705907, PropDrop(2));
-		SetPropBehavior(45036056403705908, PropDrop(1));
-		SetPropBehavior(45036056403705909, PropDrop(2));
-		SetPropBehavior(45036056403705910, PropDrop(2));
-		SetPropBehavior(45036056403705914, PropDrop(52));
-		SetPropBehavior(45036056403705919, PropDrop(2));
-		SetPropBehavior(45036056403705932, PropDrop(1));
-		SetPropBehavior(45036056403705933, PropDrop(2));
-		SetPropBehavior(45036056403705934, PropDrop(2));
-		SetPropBehavior(45036056403771395, PropDrop(2));
-		SetPropBehavior(45036056403771400, PropDrop(2));
-		SetPropBehavior(45036056403771413, PropDrop(2));
-		SetPropBehavior(45036056403771414, PropDrop(2));
-		SetPropBehavior(45036056403771419, PropDrop(2));
-		SetPropBehavior(45036056403771421, PropDrop(2));
-		SetPropBehavior(45036056403836936, PropDrop(2));
-		SetPropBehavior(45036056403836937, PropDrop(2));
-		SetPropBehavior(45036056403836940, PropDrop(2));
-		SetPropBehavior(45036056403836941, PropDrop(1));
-		SetPropBehavior(45036056403836943, PropDrop(2));
-		SetPropBehavior(45036056403836948, PropDrop(2));
-		SetPropBehavior(45036056403836949, PropDrop(2));
-		SetPropBehavior(45036056403836951, PropDrop(2));
-		SetPropBehavior(45036056403836955, PropDrop(2));
-		SetPropBehavior(45036056403836962, PropDrop(2));
-		SetPropBehavior(45036056403836969, PropDrop(54));
-		SetPropBehavior(45036056403836972, PropDrop(2));
-		SetPropBehavior(45036056403836976, PropDrop(1));
-		SetPropBehavior(45036056403836978, PropDrop(2));
-		SetPropBehavior(45036056403836983, PropDrop(2));
-		SetPropBehavior(45036056403902465, PropDrop(2));
-		SetPropBehavior(45036056403902466, PropDrop(2));
-		SetPropBehavior(45036056403902475, PropDrop(2));
-		SetPropBehavior(45036056403902477, PropDrop(1));
-		SetPropBehavior(45036056403902478, PropDrop(2));
-		SetPropBehavior(45036056403902481, PropDrop(1));
-		SetPropBehavior(45036056403902482, PropDrop(2));
-		SetPropBehavior(45036056403902491, PropDrop(2));
-		SetPropBehavior(45036056403902494, PropDrop(2));
-		SetPropBehavior(45036056403902496, PropDrop(52));
-		SetPropBehavior(45036056403902504, PropDrop(1));
-		SetPropBehavior(45036056403902510, PropDrop(1));
-		SetPropBehavior(45036056403902512, PropDrop(1));
-		SetPropBehavior(45036056403902516, PropDrop(52));
-		SetPropBehavior(45036056403902517, PropDrop(1));
-		SetPropBehavior(45036056403902518, PropDrop(2));
-		SetPropBehavior(45036056403902522, PropDrop(1));
-		SetPropBehavior(45036056403902525, PropDrop(1));
-		SetPropBehavior(45036056403902529, PropDrop(1));
-		SetPropBehavior(45036056403902536, PropDrop(2));
-		SetPropBehavior(45036056403902540, PropDrop(2));
-		SetPropBehavior(45036056403902543, PropDrop(1));
-		SetPropBehavior(45036056403902546, PropDrop(1));
-		SetPropBehavior(45036056403902549, PropDrop(1));
-		SetPropBehavior(45036056403902553, PropDrop(52));
-		SetPropBehavior(45036056403902557, PropDrop(1));
-		SetPropBehavior(45036056403902560, PropDrop(1));
-		SetPropBehavior(45036056403902568, PropDrop(1));
-		SetPropBehavior(45036056403902575, PropDrop(52));
-		SetPropBehavior(45036056403902580, PropDrop(2));
-		SetPropBehavior(45036056403902583, PropDrop(1));
-		SetPropBehavior(45036056403902589, PropDrop(1));
-		SetPropBehavior(45036056403902590, PropDrop(1));
-		SetPropBehavior(45036056403902594, PropDrop(2));
-		SetPropBehavior(45036056403902595, PropDrop(52));
-		SetPropBehavior(45036056403902600, PropDrop(2));
-		SetPropBehavior(45036056403902601, PropDrop(2));
-		SetPropBehavior(45036056403902603, PropDrop(1));
-		SetPropBehavior(45036056403902607, PropDrop(52));
-		SetPropBehavior(45036056403902614, PropDrop(2));
-		SetPropBehavior(45036056403902615, PropDrop(52));
-		SetPropBehavior(45036056403902617, PropDrop(2));
-		SetPropBehavior(45036056403902624, PropDrop(2));
-		SetPropBehavior(45036056403902625, PropDrop(1));
-		SetPropBehavior(45036056403902630, PropDrop(2));
-		SetPropBehavior(45036056403902631, PropDrop(1));
-		SetPropBehavior(45036056403902633, PropDrop(52));
-		SetPropBehavior(45036056403902640, PropDrop(1));
-		SetPropBehavior(45036056403902641, PropDrop(1));
-		SetPropBehavior(45036056403902642, PropDrop(2));
-		SetPropBehavior(45036056403902646, PropDrop(52));
-		SetPropBehavior(45036056403902647, PropDrop(2));
-		SetPropBehavior(45036056403902653, PropDrop(52));
-		SetPropBehavior(45036056403902654, PropDrop(2));
-		SetPropBehavior(45036056403902656, PropDrop(2));
-		SetPropBehavior(45036056403902658, PropDrop(1));
-		SetPropBehavior(45036056403902661, PropDrop(2));
-		SetPropBehavior(45036056403902662, PropDrop(1));
-		SetPropBehavior(45036056403902663, PropDrop(1));
-		SetPropBehavior(45036056403902665, PropDrop(1));
-		SetPropBehavior(45036056403902674, PropDrop(1));
-		SetPropBehavior(45036056403902687, PropDrop(1));
-		SetPropBehavior(45036056403902690, PropDrop(52));
-		SetPropBehavior(45036056403902701, PropDrop(1));
-		SetPropBehavior(45036056403902702, PropDrop(52));
-		SetPropBehavior(45036056403902703, PropDrop(1));
-		SetPropBehavior(45036056403902705, PropDrop(2));
-		SetPropBehavior(45036056403902708, PropDrop(1));
-		SetPropBehavior(45036056403902715, PropDrop(2));
-		SetPropBehavior(45036056403902717, PropDrop(2));
-		SetPropBehavior(45036056403902720, PropDrop(1));
-		SetPropBehavior(45036056403902723, PropDrop(1));
-		SetPropBehavior(45036056403902725, PropDrop(1));
-		SetPropBehavior(45036056403902726, PropDrop(2));
-		SetPropBehavior(45036056403902727, PropDrop(52));
-		SetPropBehavior(45036056403902728, PropDrop(1));
-		SetPropBehavior(45036056403902734, PropDrop(52));
-		SetPropBehavior(45036056403902735, PropDrop(2));
-		SetPropBehavior(45036056403902742, PropDrop(1));
-		SetPropBehavior(45036056403902744, PropDrop(1));
-		SetPropBehavior(45036056403902762, PropDrop(1));
-		SetPropBehavior(45036056403902766, PropDrop(2));
-		SetPropBehavior(45036056403902778, PropDrop(2));
-		SetPropBehavior(45036056403902783, PropDrop(2));
-		SetPropBehavior(45036056403902785, PropDrop(52));
-		SetPropBehavior(45036056403902788, PropDrop(52));
-		SetPropBehavior(45036056403902793, PropDrop(1));
-		SetPropBehavior(45036056403902799, PropDrop(2));
-		SetPropBehavior(45036056403902806, PropDrop(2));
-		SetPropBehavior(45036056403902813, PropDrop(1));
-		SetPropBehavior(45036056403902816, PropDrop(1));
-		SetPropBehavior(45036056403902826, PropDrop(1));
-		SetPropBehavior(45036056403902835, PropDrop(2));
-		SetPropBehavior(45036056403902837, PropDrop(2));
-		SetPropBehavior(45036056403902850, PropDrop(1));
-		SetPropBehavior(45036056403902857, PropDrop(2));
-		SetPropBehavior(45036056403902867, PropDrop(2));
-		SetPropBehavior(45036056403902871, PropDrop(1));
-		SetPropBehavior(45036056403902875, PropDrop(1));
-		SetPropBehavior(45036056403902876, PropDrop(1));
-		SetPropBehavior(45036056403902880, PropDrop(2));
-		SetPropBehavior(45036056403902890, PropDrop(52));
-		SetPropBehavior(45036056403902892, PropDrop(1));
-		SetPropBehavior(45036056403902894, PropDrop(2));
-		SetPropBehavior(45036056403902895, PropDrop(52));
-		SetPropBehavior(45036056403902904, PropDrop(1));
-		SetPropBehavior(45036056403902914, PropDrop(1));
-		SetPropBehavior(45036056403902915, PropDrop(2));
-		SetPropBehavior(45036056403902917, PropDrop(2));
-		SetPropBehavior(45036056403902920, PropDrop(1));
-		SetPropBehavior(45036056403902921, PropDrop(1));
-		SetPropBehavior(45036056403902922, PropDrop(2));
-		SetPropBehavior(45036056403902925, PropDrop(1));
-		SetPropBehavior(45036056403902926, PropDrop(1));
-		SetPropBehavior(45036056403902927, PropDrop(2));
-		SetPropBehavior(45036056403902928, PropDrop(1));
-		SetPropBehavior(45036056403902929, PropDrop(2));
-		SetPropBehavior(45036056403902935, PropDrop(2));
-		SetPropBehavior(45036056403902937, PropDrop(2));
-		SetPropBehavior(45036056403902941, PropDrop(1));
-		SetPropBehavior(45036056403902949, PropDrop(2));
-		SetPropBehavior(45036056403902955, PropDrop(2));
-		SetPropBehavior(45036056403902957, PropDrop(1));
-		SetPropBehavior(45036056403902958, PropDrop(52));
-		SetPropBehavior(45036056403902963, PropDrop(1));
-		SetPropBehavior(45036056403902969, PropDrop(2));
-		SetPropBehavior(45036056403902975, PropDrop(2));
-		SetPropBehavior(45036056403902976, PropDrop(2));
-		SetPropBehavior(45036056403902981, PropDrop(2));
-		SetPropBehavior(45036056403902987, PropDrop(2));
-		SetPropBehavior(45036056403902988, PropDrop(1));
-		SetPropBehavior(45036056403902997, PropDrop(2));
-		SetPropBehavior(45036056403903004, PropDrop(1));
-		SetPropBehavior(45036056403903005, PropDrop(2));
-		SetPropBehavior(45036056403903006, PropDrop(1));
-		SetPropBehavior(45036056403903012, PropDrop(1));
-		SetPropBehavior(45036056403903016, PropDrop(2));
-		SetPropBehavior(45036056403903020, PropDrop(2));
-		SetPropBehavior(45036056403903022, PropDrop(2));
-		SetPropBehavior(45036056403903025, PropDrop(1));
-		SetPropBehavior(45036056403903026, PropDrop(1));
-		SetPropBehavior(45036056403903035, PropDrop(1));
-		SetPropBehavior(45036056403903036, PropDrop(1));
-		SetPropBehavior(45036056403903040, PropDrop(1));
-		SetPropBehavior(45036056403903045, PropDrop(1));
-		SetPropBehavior(45036056403903049, PropDrop(1));
-		SetPropBehavior(45036056403903057, PropDrop(2));
-		SetPropBehavior(45036056403903060, PropDrop(2));
-		SetPropBehavior(45036056403903063, PropDrop(1));
-		SetPropBehavior(45036056403903066, PropDrop(1));
-		SetPropBehavior(45036056403903068, PropDrop(1));
-		SetPropBehavior(45036056403903072, PropDrop(1));
-		SetPropBehavior(45036056403903074, PropDrop(2));
-		SetPropBehavior(45036056403903086, PropDrop(1));
-		SetPropBehavior(45036056403903089, PropDrop(2));
-		SetPropBehavior(45036056403903094, PropDrop(1));
-		SetPropBehavior(45036056403903095, PropDrop(2));
-		SetPropBehavior(45036056403903105, PropDrop(1));
-		SetPropBehavior(45036056403903111, PropDrop(52));
-		SetPropBehavior(45036056403903112, PropDrop(2));
-		SetPropBehavior(45036056403903117, PropDrop(1));
-		SetPropBehavior(45036056403903123, PropDrop(1));
-		SetPropBehavior(45036056403903135, PropDrop(1));
-		SetPropBehavior(45036056403903136, PropDrop(1));
-		SetPropBehavior(45036056403903141, PropDrop(2));
-		SetPropBehavior(45036056403903143, PropDrop(2));
-		SetPropBehavior(45036056403903144, PropDrop(1));
-		SetPropBehavior(45036056403903160, PropDrop(1));
-		SetPropBehavior(45036056403903162, PropDrop(1));
-		SetPropBehavior(45036056403903240, PropDrop(1));
-		SetPropBehavior(45036056403903269, PropDrop(1));
-		SetPropBehavior(45036056403903303, PropDrop(1));
-		SetPropBehavior(45036056403903306, PropDrop(1));
-		SetPropBehavior(45036056403903348, PropDrop(1));
-		SetPropBehavior(45036056403903380, PropDrop(1));
-		SetPropBehavior(45036056403903381, PropDrop(1));
-		SetPropBehavior(45036056403903469, PropDrop(2));
-		SetPropBehavior(45036056403903471, PropDrop(1));
-		SetPropBehavior(45036056403968003, PropDrop(2));
-		SetPropBehavior(45036056403968005, PropDrop(2));
-		SetPropBehavior(45036056403968008, PropDrop(2));
-		SetPropBehavior(45036056403968009, PropDrop(2));
-		SetPropBehavior(45036056403968014, PropDrop(54));
-		SetPropBehavior(45036056403968015, PropDrop(1));
-		SetPropBehavior(45036056403968018, PropDrop(2));
-		SetPropBehavior(45036056403968020, PropDrop(54));
-		SetPropBehavior(45036056403968023, PropDrop(54));
-		SetPropBehavior(45036056403968025, PropDrop(2));
-		SetPropBehavior(45036056404033549, PropDrop(54));
-		SetPropBehavior(45036056404033553, PropDrop(2));
-		SetPropBehavior(45036056404033556, PropDrop(54));
-		SetPropBehavior(45036056404033574, PropDrop(1));
-		SetPropBehavior(45036056404033576, PropDrop(52));
-		SetPropBehavior(45036056404033589, PropDrop(2));
-		SetPropBehavior(45036056404033591, PropDrop(2));
-		SetPropBehavior(45036056404033596, PropDrop(2));
-		SetPropBehavior(45036056404033599, PropDrop(1));
-		SetPropBehavior(45036056404033602, PropDrop(1));
-		SetPropBehavior(45036056404033603, PropDrop(1));
-		SetPropBehavior(45036056404033604, PropDrop(1));
-		SetPropBehavior(45036056404033605, PropDrop(1));
-		SetPropBehavior(45036056404099075, PropDrop(2));
-		SetPropBehavior(45036056404099079, PropDrop(2));
-		SetPropBehavior(45036056404099081, PropDrop(2));
-		SetPropBehavior(45036056404099085, PropDrop(2));
-		SetPropBehavior(45036056404099092, PropDrop(54));
-		SetPropBehavior(45036056404099097, PropDrop(54));
-		SetPropBehavior(45036056404099102, PropDrop(2));
-		SetPropBehavior(45036056404164610, PropDrop(2));
-		SetPropBehavior(45036056404164617, PropDrop(2));
-		SetPropBehavior(45036056404164622, PropDrop(2));
-		SetPropBehavior(45036056404164623, PropDrop(2));
-		SetPropBehavior(45036056404164626, PropDrop(2));
-		SetPropBehavior(45036056404164632, PropDrop(54));
-		SetPropBehavior(45036056404164634, PropDrop(2));
-		SetPropBehavior(45036056404164635, PropDrop(2));
-		SetPropBehavior(45036056404164640, PropDrop(2));
-		SetPropBehavior(45036056404164647, PropDrop(54));
-		SetPropBehavior(45036056404164648, PropDrop(2));
-		SetPropBehavior(45036056404164650, PropDrop(52));
-		SetPropBehavior(45036056404164651, PropDrop(2));
-		SetPropBehavior(45036056404164653, PropDrop(54));
-		SetPropBehavior(45036056404295682, PropDrop(2));
-		SetPropBehavior(45036056404295683, PropDrop(2));
-		SetPropBehavior(45036056404295684, PropDrop(2));
-		SetPropBehavior(45036056404295685, PropDrop(2));
-		SetPropBehavior(45036056404295686, PropDrop(2));
-		SetPropBehavior(45036056404295687, PropDrop(1));
-		SetPropBehavior(45036056404295693, PropDrop(2));
-		SetPropBehavior(45036056404295696, PropDrop(2));
-		SetPropBehavior(45036056404295700, PropDrop(2));
-		SetPropBehavior(45036056404295702, PropDrop(2));
-		SetPropBehavior(45036056404295704, PropDrop(2));
-		SetPropBehavior(45036056404295705, PropDrop(2));
-		SetPropBehavior(45036056404295706, PropDrop(2));
-		SetPropBehavior(45036056404295713, PropDrop(2));
-		SetPropBehavior(45036056404295714, PropDrop(2));
-		SetPropBehavior(45036056404295715, PropDrop(2));
-		SetPropBehavior(45036056404295718, PropDrop(2));
-		SetPropBehavior(45036056404295720, PropDrop(2));
-		SetPropBehavior(45036056404295725, PropDrop(2));
-		SetPropBehavior(45036056404295727, PropDrop(2));
-		SetPropBehavior(45036056404295729, PropDrop(1));
-		SetPropBehavior(45036056404295730, PropDrop(2));
-		SetPropBehavior(45036056404295732, PropDrop(2));
-		SetPropBehavior(45036056404295734, PropDrop(2));
-		SetPropBehavior(45036056404295736, PropDrop(1));
-		SetPropBehavior(45036056404295737, PropDrop(2));
-		SetPropBehavior(45036056404295738, PropDrop(2));
-		SetPropBehavior(45036056404295741, PropDrop(2));
-		SetPropBehavior(45036056404295745, PropDrop(2));
-		SetPropBehavior(45036056404295746, PropDrop(2));
-		SetPropBehavior(45036056404295749, PropDrop(2));
-		SetPropBehavior(45036056404295752, PropDrop(2));
-		SetPropBehavior(45036056404295753, PropDrop(2));
-		SetPropBehavior(45036056404295754, PropDrop(2));
-		SetPropBehavior(45036056404295757, PropDrop(54));
-		SetPropBehavior(45036056404295759, PropDrop(2));
-		SetPropBehavior(45036056404361220, PropDrop(1));
-		SetPropBehavior(45036056404361223, PropDrop(2));
-		SetPropBehavior(45036056404361227, PropDrop(1));
-		SetPropBehavior(45036056404361248, PropDrop(2));
-		SetPropBehavior(45036056404361249, PropDrop(2));
-		SetPropBehavior(45036056404361259, PropDrop(2));
-		SetPropBehavior(45036056404361262, PropDrop(2));
-		SetPropBehavior(45036056404361266, PropDrop(2));
-		SetPropBehavior(45036056404361267, PropDrop(1));
-		SetPropBehavior(45036056404361275, PropDrop(2));
-		SetPropBehavior(45036056404361276, PropDrop(1));
-		SetPropBehavior(45036056404361277, PropDrop(2));
-		SetPropBehavior(45036056404361278, PropDrop(2));
-		SetPropBehavior(45036056404361279, PropDrop(2));
-		SetPropBehavior(45036056404361280, PropDrop(2));
-		SetPropBehavior(45036056404361281, PropDrop(2));
-		SetPropBehavior(45036056404361287, PropDrop(1));
-		SetPropBehavior(45036056404361329, PropDrop(2));
-		SetPropBehavior(45036056404361331, PropDrop(2));
-		SetPropBehavior(45036056404361335, PropDrop(2));
-		SetPropBehavior(45036056404361342, PropDrop(2));
-		SetPropBehavior(45036056404361345, PropDrop(2));
-		SetPropBehavior(45036056404361347, PropDrop(2));
-		SetPropBehavior(45036056404361348, PropDrop(2));
-		SetPropBehavior(45036056404361349, PropDrop(2));
-		SetPropBehavior(45036056404361355, PropDrop(2));
-		SetPropBehavior(45036056404361356, PropDrop(2));
-		SetPropBehavior(45036056404426763, PropDrop(2));
-		SetPropBehavior(45036056404426764, PropDrop(2));
-		SetPropBehavior(45036056404426765, PropDrop(2));
-		SetPropBehavior(45036056404426766, PropDrop(2));
+		// ...
 	}
 }

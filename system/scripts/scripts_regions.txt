@@ -6,15 +6,13 @@
 
 regions/tir_beginner.cs
 regions/tir.cs
+regions/dugald.cs
 regions/dunbarton.cs
+regions/gairech.cs
 regions/bangor.cs
-regions/taillteann.cs
-regions/tara.cs
-regions/rano.cs
-regions/connous.cs
-regions/physis.cs
-regions/zardine.cs
-regions/courcle.cs
-regions/various.cs
+regions/sen_mag.cs
+regions/osna_snail.cs
+regions/emain.cs
+regions/ceo.cs
 
 include "/user/scripts/scripts_regions.txt"
