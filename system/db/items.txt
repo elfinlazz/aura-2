@@ -280,8 +280,8 @@
 14052,"Exquisite Arashi Armor (F)","ARASHI's Exquisite Armor For Women",0,0,1,,no,2,3,5,2,5,39000,15000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
 14053,"Exquisite Arashi Armor (Giant M)","ARASHI's Exquisite Armor For Giant Men",0,0,1,,no,2,3,5,2,5,39000,18000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
 14054,"Exquisite Arashi Armor (Giant F)","ARASHI's Exquisite Armor For Giant Women",0,0,1,,no,2,3,5,2,5,39000,18000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
-14055,"Neko Armor","Neko Armor",0,0,1,,no,2,4,5,2,2,372400,18000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
-14056,"Neko Armor For Giant","Neko Armor For Giant",0,0,1,,no,2,4,5,62,62,372400,18000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
+14055,"Cat Armor","Neko Armor",0,0,1,,no,2,4,5,2,2,372400,18000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
+14056,"Cat Armor (For Giants)","Neko Armor For Giant",0,0,1,,no,2,4,5,62,62,372400,18000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
 14057,"Lupa's Elegant Lamellar Armor (M)","Lupa's Elegant Lamellar Armor for Men",0,0,1,,no,2,3,2,2,5,34500,16000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
 14058,"Lupa's Elegant Lamellar Armor (F)","Lupa's Elegant Lamellar Armor for Women",0,0,1,,no,2,3,2,2,5,35500,16000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
 14059,"Marksman Leather Armor (M)","Marksman's Leather Armor for Men",0,0,1,,no,2,4,2,2,2,56000,18000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -1102,6 +1102,14 @@
 15777,"Christmas Elf Outfit (F)","Christmas elf Suit for Women",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
 15778,"Old Saint Nick Outfit (M)","Snowball Santa Clothes for Men",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
 15779,"Old Saint Nick Outfit (F)","Snowball Santa Clothes for Women",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
+15780,"Lunar Dragon Armor (M)","Oriental Dragon Armor for Men",0,0,1,,no,2,4,1,5,5,37000,20000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
+15781,"Lunar Dragon Armor (F)","Oriental Dragon Armor for Women",0,0,1,,no,2,3,5,1,5,37000,20000,4,1,0,0,0,0,0,0,0,0,0,{},{},{}
+15784,"Lord Waffle Cone Suit","Chocolate Waffle Suit",0,0,1,,no,2,3,1,1,1,30000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
+15785,"Lady Waffle Cone Dress","Chocolate Waffle Dress",0,0,1,,no,2,3,1,1,1,30000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
+15786,"Skating Outfit (M)","Skating Costume for Men",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
+15787,"Figure Skating Outfit (F)","Figure Skating Costume for Women",0,0,1,,no,2,3,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
+15788,"Snowboard Outfit (M)","Snow Board Costume for Men",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
+15789,"Snowboard Outfit (F)","Snow Board Costume for Women",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
 15800,"clanraccoon banya wear","clanraccoon banya wear",0,0,1,,no,2,4,1,1,2,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
 15801,"Raccoon Family Basic Outfit","Racoon Clan Basic Clothes",0,0,1,,no,2,4,1,1,0,60000,17000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
 15802,"clanraccoon budamaster wear","clanraccoon budamaster wear",0,0,1,,no,2,4,5,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -2215,7 +2223,7 @@
 18585,"Fashion Goggles","Fashion Goggles",1,0,1,,no,2,2,2,2,0,13400,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 18586,"Exquisite Arashi Helm","ARASHI's Exquisite Helm",1,0,1,,no,2,2,5,12,12,16000,5000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 18587,"Matsuri Hairband","Matsuri Hairband",1,0,1,,no,2,1,1,12,12,16000,12000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-18588,"Neko Helm","Neko Helm",1,0,1,,no,2,2,5,5,0,157000,20000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+18588,"Cat Helm","Neko Helm",1,0,1,,no,2,2,5,5,0,157000,20000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 18589,"Hecate' Hat","Hecate' Hat",1,0,1,,no,2,2,1,1,0,16000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 18590,"Dantalion's Glasses","Dantalion's Glasses",1,0,1,,no,2,2,1,1,0,15400,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 18591,"Persona","Persona",1,0,1,,no,2,2,65,0,0,16500,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -2356,6 +2364,14 @@
 18828,"Christmas Tree Hat","Christmas Tree Hat",1,0,1,,no,2,2,12,0,0,12000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 18829,"Royal Prince Circlet","Royal Prince Helmet",1,0,1,,no,2,2,5,1,5,50000,14000,2,1,0,0,0,0,0,0,0,0,0,{},{},{}
 18830,"Royal Princess Circlet","Royal Princess Helmet",1,0,1,,no,2,1,5,5,0,50000,14000,2,1,0,0,0,0,0,0,0,0,0,{},{},{}
+18831,"Lunar Dragon Helmet (M)","Oriental Dragon Helmet for Men",1,0,1,,no,2,2,5,1,1,15000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+18832,"Lunar Dragon Helmet (F)","Oriental Dragon Helmet for Women",1,0,1,,no,2,2,5,1,1,15000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+18833,"Lord Waffle Cone Hat","Chocolate Waffle Cap",1,0,1,,no,2,2,1,1,1,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+18834,"Lady Waffle Cone Bow","Chocolate Waffle Headdress",1,0,1,,no,2,2,1,1,0,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+18835,"Skate Helmet (M)","Skating Helmet for Men",1,0,1,,no,2,2,1,1,1,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+18836,"Figure Skating Wig (F)","Figure Skating Wig for Women",1,0,1,,no,2,2,1,1,0,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+18837,"Snowboard Beanie (M)","Snow Board Cap for Men",1,0,1,,no,2,2,1,1,0,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+18838,"Snowboard Beanie (F)","Snow Board Cap for Women",1,0,1,,no,2,2,1,1,0,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 18900,"Broken Horn Hunter Helmet","Broken Horn Hunter Helmet",1,0,1,,no,2,2,5,0,0,50000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 18901,"Broken Horn Monk Cap","Broken Horn Monk Cap",1,0,1,,no,2,2,62,62,0,40000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 18902,"clancow bone helmet","clancow bone helmet",1,0,1,,no,2,2,1,1,0,7777,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -2764,6 +2780,8 @@
 16195,"Kirito Glove","Kirito Glove",2,0,1,,no,1,1,1,0,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 16196,"Asuna Glove","Asuna Glove",2,0,1,,no,1,1,1,0,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 16198,"Christmas Elf Gloves","Christmas elf Gloves",2,0,1,,no,1,1,1,0,0,10000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+16199,"Lord Waffle Cone Bracelet","Chocolate Waffle Bracelet",2,0,1,,no,1,1,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+16200,"Lady Waffle Cone Heart Ring","Chocolate Waffle Ring",2,0,1,,no,1,1,1,0,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 16500,"Ulna Protector Gloves","Ulna Protecter Glove",2,0,1,,no,2,2,2,2,0,18300,10000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 16501,"Leather Protector","Leather Protecter",2,0,1,,no,2,2,5,2,0,18000,10000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 16502,"Plate Gauntlet","Plate Gauntlet",2,0,1,,no,2,2,5,0,0,30000,20000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -2813,8 +2831,8 @@
 16546,"Exquisite Arashi Gauntlet (F)","ARASHI's Exquisite Gauntlet For Women",2,0,1,,no,2,2,5,12,12,13200,12000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 16547,"Exquisite Arashi Gauntlet (Giant M)","ARASHI's Exquisite Gauntlet For Giant Men",2,0,1,,no,2,2,5,12,12,13200,12000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 16548,"Exquisite Arashi Gauntlet (Giant F)","ARASHI's Exquisite Gauntlet For Giant Women",2,0,1,,no,2,2,5,12,12,13200,12000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
-16549,"Neko Gauntlet","Neko Gauntlet",2,0,1,,no,2,2,5,0,0,57000,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
-16550,"Neko Gauntlet","Neko Gauntlet",2,0,1,,no,2,3,5,0,0,57000,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+16549,"Cat Gauntlets","Neko Gauntlet",2,0,1,,no,2,2,5,0,0,57000,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+16550,"Cat Gauntlets (For Giants)","Neko Gauntlet",2,0,1,,no,2,3,5,0,0,57000,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 16551,"Claus Knight Gauntlet","klaus knight Gauntlet",2,0,1,,no,2,2,5,12,12,7777,15000,2,1,0,0,0,0,0,0,0,0,0,{},{},{}
 16552,"Giant Half Guard Leather Gauntlets (M)","Izurietta's Half Guard Leather Gauntlet for Giant Men",2,0,1,,no,2,3,62,62,0,14200,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 16553,"Giant Half Guard Leather Gauntlets (F)","Izurietta's Half Guard Leather Gauntlet for Giant Women",2,0,1,,no,2,3,65,65,0,14200,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -2910,6 +2928,10 @@
 16643,"Vampire Hunter Gloves (M)","Vampire Hunter Glove for Men",2,0,1,,no,2,2,1,1,0,13000,14000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 16644,"Vampire Hunter Gloves (F)","Vampire Hunter Glove for Women",2,0,1,,no,2,2,1,1,0,13000,14000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 16645,"The Human Spider Gloves","spidirtyman Glove",2,0,1,,no,2,2,1,0,0,13000,14000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+16646,"Lunar Dragon Gauntlets (M)","Oriental Dragon Gauntlet for Men",2,0,1,,no,2,2,5,5,0,13200,14000,2,1,0,0,0,0,0,0,0,0,0,{},{},{}
+16647,"Lunar Dragon Gauntlets (F)","Oriental Dragon Gauntlet for Women",2,0,1,,no,2,2,5,5,0,13200,14000,2,1,0,0,0,0,0,0,0,0,0,{},{},{}
+16648,"Snowboard Gloves (M)","Snow Board Glove for Men",2,0,1,,no,2,2,1,1,1,13200,14000,2,1,0,0,0,0,0,0,0,0,0,{},{},{}
+16649,"Snowboard Gloves (F)","Snow Board Glove for Women",2,0,1,,no,2,2,1,1,1,13200,14000,2,1,0,0,0,0,0,0,0,0,0,{},{},{}
 16800,"clanraccoon banya glove","clanraccoon banya glove",2,0,1,,no,2,2,1,5,0,47000,30000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 16801,"Raccoon Family Basic Bracelet","Racoon Clan Basic Bracelet",2,0,1,,no,1,1,1,0,0,47000,11000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 16802,"clanraccoon budamaster glove","clanraccoon budamaster glove",2,0,1,,no,2,2,1,0,0,47000,30000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -3036,7 +3058,7 @@
 
 // Shoes
 //---------------------------------------------------------------------------
-17000,"Women's Flats","chinashoes",3,0,1,,no,2,3,2,0,12,4200,9000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+17000,"Women's Flats","chinashoes",3,0,1,,no,2,2,2,0,12,4200,9000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 17001,"Ladies Leather Boots","Brassard shoes",3,0,1,,no,2,3,2,0,12,4300,12000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 17002,"Swordswoman Shoes","Swordwoman's Shoes",3,0,1,,no,2,2,2,0,12,4500,16000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 17003,"Leather Shoes","Leather Shoes",3,0,1,,no,2,2,2,0,12,4100,7000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -3399,6 +3421,14 @@
 17367,"Christmas Elf Shoes (F)","Christmas elf Shoes for Women",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 17368,"Old Saint Nick Boots (M)","Snowball Santa Shoes for Men",3,0,1,,no,2,3,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 17369,"Old Saint Nick Boots (F)","Snowball Santa Shoes for Women",3,0,1,,no,2,3,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+17370,"Lunar Dragon Boots (M)","Oriental Dragon Boots for Men",3,0,1,,no,2,3,5,1,1,18000,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+17371,"Lunar Dragon Boots (F)","Oriental Dragon Boots for Women",3,0,1,,no,2,3,5,1,1,18000,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+17372,"Lord Waffle Cone Shoes","Chocolate Waffle Shoes for Men",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+17373,"Lady Waffle Cone Ribbon Shoes","Chocolate Waffle Shoes For Women",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+17374,"Ice Skates (M)","Skating Boots for Men",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+17375,"Figure Skates (F)","Figure Skating Boots For Women",3,0,1,,no,2,2,1,1,1,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+17376,"Snowboard Boots (M)","Snow Board Boots for Men",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
+17377,"Snowboard Boots (F)","Snow Board Boots for Women",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{}
 17500,"High Polean Plate Boots","High Polean Plate Boots",3,0,1,,no,2,3,2,5,0,19000,20000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 17501,"Solleret Shoes","Solleret Shoes",3,0,1,,no,2,2,2,0,0,18000,24000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 17502,"Mono Plate Boots","Mono Plate Boots",3,0,1,,no,2,3,5,5,0,30000,20000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -3432,7 +3462,7 @@
 17530,"Dragon Scale Greaves","Dragon Scale Greave",3,0,1,,no,2,3,5,5,12,100000,17000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 17531,"Exquisite Arashi Greaves (M)","ARASHI's Exquisite Greave For Men",3,0,1,,no,2,2,5,12,12,22000,17000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 17532,"Exquisite Arashi Greaves (F)","ARASHI's Exquisite Greave For Women",3,0,1,,no,2,2,5,12,12,22000,17000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
-17533,"Neko Greave","Neko Greave",3,0,1,,no,2,3,5,2,2,34000,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
+17533,"Cat Greaves","Neko Greave",3,0,1,,no,2,3,5,2,2,34000,15000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 17534,"Claus Knight Boots","klaus knight boots",3,0,1,,no,2,3,5,5,0,7777,15000,2,1,0,0,0,0,0,0,0,0,0,{},{},{}
 17535,"Giant Half Guard Leather Greaves (M)","Izurietta's Half Guard Leather Greave for Giant Men",3,0,1,,no,2,2,62,62,12,22000,17000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
 17536,"Giant Half Guard Leather Greaves (F)","Izurietta's Half Guard Leather Greave for Giant Women",3,0,1,,no,2,2,65,65,12,22000,17000,1,1,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -4150,7 +4180,7 @@
 2103,"Devcat Bag(10X10)","Devcat Bag(10X10)",6,0,1,,no,2,2,12,1,0,37500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 2104,"Succubus Bag(7X7)","Succubus Bag(7X7)",6,0,1,,no,2,3,1,1,0,37500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 2105,"Incubus Bag(5X5)","Incubus Bag(5X5)",6,0,1,,no,2,3,1,1,1,37500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-2108,"Carasek's bag(10x16)","Carasek's bag(10x16)",6,0,1,,no,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+2108,"Carasek Bag","Carasek's bag(10x16)",6,0,1,,no,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 67116,"Hillwen Engineering Bag","Heulwen Engineering Bag",6,0,1,,no,4,1,1,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 67219,"Ecology Specimen Bag","Sulien Ecology Bag",6,0,1,,no,4,1,1,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 70553,"Stone of Rebirth","Stone of Rebirth",6,0,1,,no,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -4887,7 +4917,7 @@
 40365,"Dragon Blade","Dragon Blade",8,0,1,,no,1,5,23,92,92,11200,12000,0,0,0,2,0,25,55,10,40,4,1,{},{},{}
 40368,"Knight_Sword","Knight_Sword",8,0,1,,no,1,5,23,24,2,31500,13000,0,0,0,2,0,28,55,5,40,4,1,{},{},{}
 40369,"Large Shaved Ice Bowl","Big Bowl",8,0,1,,no,2,2,1,12,0,2000,5000,0,0,0,0,0,0,4,20,30,2,2,{},{},{}
-40373,"Tonghua xinqing`s Two-Handed Sword","Tonghua xinqing`s Two-Handed Sword",8,0,1,,no,1,4,5,5,12,19800,12000,0,0,0,2,0,30,55,10,40,4,1,{},{},{}
+40373,"Cursed Killer Sword","Tonghua xinqing`s Two-Handed Sword",8,0,1,,no,1,4,5,5,12,19800,12000,0,0,0,2,0,30,55,10,40,4,1,{},{},{}
 40375,"Great Mallet (for practice)","Training Great Mallet",8,0,1,,no,2,4,13,24,5,0,12000,0,0,0,3,0,7,42,5,50,2,1,{},{},{}
 40376,"Practice Short Bow","Training Short Bow",8,0,1,,no,1,3,13,0,1,0,6000,0,0,0,4,1600,8,20,20,50,6,2,{},{},{}
 40377,"Glory Sword","Glory Sword",8,0,1,,no,2,4,5,2,0,50000,17000,0,0,0,2,0,34,59,33,29,4,1,{},{},{}
@@ -4973,6 +5003,7 @@
 40655,"Smiley Knuckle","Smile Knuckle",8,0,1,,no,2,2,1,1,0,100000,17000,0,0,0,2,0,41,129,35,9,0,4,{},{},{}
 40656,"Shyllien Mana Knuckle","Sulien Magical Knuckle",8,0,1,,no,2,2,5,2,0,42300,11000,0,0,0,2,0,45,74,15,55,0,4,{},{},{}
 40657,"Merlin's Shyllien Mana Knuckle","Merlin's Sulien Magical Knuckle",8,0,1,,no,2,2,5,2,0,65000,17000,0,0,0,2,0,18,45,24,32,0,4,{},{},{}
+40665,"Snowboard","Snow Board",8,0,1,,no,1,3,1,1,0,15000,16000,0,0,0,3,0,10,60,10,35,4,2,{},{},{}
 40715,"Devil Slayer","Kill The Devil Scythe",8,0,1,,no,2,4,5,5,1,50000,16000,0,0,0,2,0,30,55,10,35,2,2,{},{},{}
 40716,"Barbaric Fox Scythe","Barbarous Fox Scythe",8,0,1,,no,2,4,5,1,1,50000,15000,0,0,0,2,0,29,54,10,35,2,2,{},{},{}
 40726,"Beginner Bear Knuckle","Bear Knuckle",8,0,1,,no,2,2,23,23,5,0,16000,0,0,0,2,0,14,23,29,55,0,4,{},{},{}
@@ -5084,6 +5115,8 @@
 41137,"Tube","Tube",8,0,1,,no,2,2,1,1,0,5000,12000,0,0,0,3,0,43,80,20,60,2,2,{},{},{}
 41138,"Tube","Tube",8,0,1,,no,2,2,1,1,1,5000,12000,0,0,0,3,0,43,80,20,60,2,2,{},{},{}
 41139,"Tube","Tube",8,0,1,,no,2,2,1,1,1,5000,12000,0,0,0,3,0,43,80,20,60,2,2,{},{},{}
+41140,"Lord Waffle Cone Heart Key","Chocolate Waffle Key",8,0,1,,no,2,3,1,1,1,5000,10000,0,0,0,3,0,26,43,20,60,1,2,{},{},{}
+41141,"Lady Waffle Cone Heart Clutch","Chocolate Waffle Clutch",8,0,1,,no,2,2,1,1,0,5000,10000,0,0,0,3,0,26,43,20,60,1,2,{},{},{}
 44008,"Demonic Solitude Knuckle","Demonic Solitude Knuckle",8,0,1,,no,2,2,5,5,0,100000,15000,0,0,0,2,0,22,54,31,24,0,4,{},{},{}
 44009,"NPC Black Mask's Cane","Black Mask's Staff",8,0,1,,no,1,4,5,5,5,70000,14000,0,0,0,3,0,1,6,15,55,2,2,{},{},{}
 44010,"NPC Black Mask's Cane","Black Mask's Staff",8,0,1,,no,1,4,5,5,5,70000,14000,0,0,0,3,0,1,6,15,55,2,2,{},{},{}
@@ -5546,7 +5579,7 @@
 19130,"Assassin Robe","Assassin Robe",12,0,1,,no,2,4,1,1,1,27800,15000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19131,"Oriental Robe","Lupa's Oriental Robe",12,0,1,,no,2,4,1,1,1,19000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19132,"Grim Reaper's Robe","Robe for Grim Reaper",12,0,1,,no,2,4,1,1,0,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19133,"Robe of Golden insignia","Robe of Golden insignia",12,0,1,,no,2,4,1,1,1,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19133,"Golden Insignia Robe","Robe of Golden insignia",12,0,1,,no,2,4,1,1,1,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19136,"Waterproof Snowball Robe","Waterproof Robe for Snow Fight",12,0,1,,no,2,3,1,1,1,0,15000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19137,"Mysterious Robe","Secret Robe",12,0,1,,no,2,4,1,1,1,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19138,"Black Angel Wings","Black Angel's Wing",12,0,1,,no,2,3,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -5586,15 +5619,15 @@
 19172,"Salamander Wings","Salamander Wings",12,0,1,,no,2,1,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19173,"CaitSith Wings","CaitSith Wings",12,0,1,,no,2,1,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19174,"spriggan Wing","spriggan Wing",12,0,1,,no,2,1,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19178,"Twinkle Cupid wing","Twinkle Cupid wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19179,"Twinkle Cupid wing","Twinkle Cupid wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19180,"Twinkle Cupid wing","Twinkle Cupid wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19181,"Twinkle Butterfly wing","Twinkle Butterfly wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19182,"Twinkle Butterfly wing","Twinkle Butterfly wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19183,"Twinkle Butterfly wing","Twinkle Butterfly wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19184,"Twinkle Devil wing","Twinkle Devil wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19185,"Twinkle Devil wing","Twinkle Devil wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-19186,"Twinkle Devil wing","Twinkle Devil wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19178,"Warm Twinkling Cupid Wings","Twinkle Cupid wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19179,"Twilight Twinkling Cupid Wings","Twinkle Cupid wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19180,"Cool Twinkling Cupid Wings","Twinkle Cupid wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19181,"Dayglow Twinkling Butterfly Wings","Twinkle Butterfly wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19182,"Gaslamp Twinkling Butterfly Wings","Twinkle Butterfly wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19183,"Skybound Twinkling Butterfly Wings","Twinkle Butterfly wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19184,"Turkish Blue Twinkling Devil Wings","Twinkle Devil wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19185,"Blood Red Twinkling Devil Wings","Twinkle Devil wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+19186,"Royal Purple Twinkling Devil Wings","Twinkle Devil wing",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19187,"Blaze Wing","Blaze Wing",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19188,"Blaze Wing","Blaze Wing",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 19189,"Blaze Wing","Blaze Wing",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -6351,6 +6384,13 @@
 91939,"Vampire's Fang","Canine of Vampire",29,0,1,,no,1,1,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91940,"Ghost Bride's Tiara","Tiara of Ghost bride",29,0,1,,no,2,1,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91941,"Halloween Scarecrow","Halloween Scarecrow",29,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92358,"Sweetheart's Ring","You and the Couple ring",29,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92359,"Sweetheart's Letter","You and the Loveletter",29,0,1,,no,2,1,12,0,0,10000,0,2,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92360,"Sweetheart's Note","You and the Note",29,0,1,,no,1,1,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92361,"Sweetheart's Picture","You and the Picture",29,0,1,,no,2,1,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92362,"Sweetheart's Handwarmer","You and the Hand warmer",29,0,1,,no,1,1,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92363,"Matching Couples Bracelet","You and the Couple bracelet",29,0,1,,no,2,1,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92364,"Matching Couples T-Shirt","You and the Couple T-shirt",29,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 93032,"Mysterious Cat Whistle","Mysterious Cat Whistle",29,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 93033,"Mysterious Dog Whistle","Mysterious Dog Whistle",29,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 221001,"plastic frame glasses","plastic frame glasses",30,0,1,,no,2,1,1,1,1,132700,8000,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -7065,7 +7105,7 @@
 50081,"Valentine Chocolate Gift","Presented Chocolate",501,0,1,,yes,2,2,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 50083,"Valentine Day Cake","Valentine Day Cake",501,0,1,,yes,2,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 1, upper: 1, lower: 1, str: -1, int_: -1, dex: -1, will: 1, luck: 1, life: 1, stm: 1); },{},{}
 50084,"Whiteday Cookie","Whiteday Cookie",501,0,1,,yes,2,2,12,21,0,50,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 3, upper: 3, lower: 3); },{},{}
-50085,"Silver Vine Fruit","Silver Vine Berry",501,1,5,,yes,1,1,29,29,29,12,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{}
+50085,"Silvervine Fruit","Silver Vine Berry",501,1,5,,yes,1,1,29,29,29,12,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{}
 50101,"Potato & Egg Salad","Potato And Egg Salad",501,0,1,,yes,2,1,12,12,0,3000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 45, weight: 1, lower: -1, str: 1, int_: -1, dex: -1, will: 2, life: 1, stm: 1); },{},{}
 50102,"Potato Salad","Potato Salad",501,0,1,,yes,2,1,12,12,0,1800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 27, upper: -1, int_: -2, will: 1, life: 1, stm: 1); },{},{}
 50103,"French Fries","French Fried",501,0,1,,yes,2,1,12,12,0,1050,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 27, weight: 1, int_: -3, will: -1, life: -1, stm: 2); },{},{}
@@ -7441,28 +7481,28 @@
 50587,"Osechi-ryri of Erinn","Osechi-ryri of Erinn",501,0,1,,yes,2,2,12,12,0,25000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 30); },{},{}
 50588,"Lileas's Honey Drink","Lileas' Honey Drink",501,0,1,,yes,1,2,12,12,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 11, weight: 3, upper: 1, lower: 1, str: 8, dex: 5, will: 5, luck: 8, mana: 3, stm: 8); },{},{}
 50589,"YukinoSake","YukinoSake",501,0,1,,yes,1,1,12,12,0,3500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5); },{},{}
-50590,"Maguro Sashimi","Maguro Sashimi",501,0,1,,yes,2,1,12,12,12,3800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 11, weight: 3, upper: 1, lower: 1, str: 8, dex: 5, will: 5, luck: 8, mana: 3, stm: 8); },{},{}
+50590,"Tuna Sashimi","Maguro Sashimi",501,0,1,,yes,2,1,12,12,12,3800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 11, weight: 3, upper: 1, lower: 1, str: 8, dex: 5, will: 5, luck: 8, mana: 3, stm: 8); },{},{}
 50591,"Takoyaki","Takoyaki",501,0,1,,yes,2,1,12,12,24,2700,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 17, weight: 6, upper: 2, lower: 2, str: 16, dex: 10, will: 10, luck: 16, mana: 6, stm: 16); },{},{}
 50592,"Okonomiyaki","Okonomiyaki",501,0,1,,yes,2,1,12,12,36,3500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 23, weight: 9, upper: 3, lower: 3, str: 24, dex: 15, will: 15, luck: 24, mana: 9, stm: 24); },{},{}
-50593,"Shrimp Sushi","Shrimp Sushi",501,0,1,,yes,2,1,12,12,48,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 29, weight: 12, upper: 4, lower: 4, str: 32, dex: 20, will: 20, luck: 32, mana: 12, stm: 32); },{},{}
-50594,"Octopus Sushi","Octopus Sushi",501,0,1,,yes,2,1,12,12,60,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 15, upper: 5, lower: 5, str: 40, dex: 25, will: 25, luck: 40, mana: 15, stm: 40); },{},{}
-50595,"Eel Sushi","Eel Sushi",501,0,1,,yes,2,1,12,12,72,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 41, weight: 18, upper: 6, lower: 6, str: 48, dex: 30, will: 30, luck: 48, mana: 18, stm: 48); },{},{}
-50596,"Oden","Oden",501,0,1,,yes,2,1,12,12,84,1300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 47, weight: 21, upper: 7, lower: 7, str: 56, dex: 35, will: 35, luck: 56, mana: 21, stm: 56); },{},{}
-50597,"Sakura Rice-cake","Sakura Rice-cake",501,0,1,,yes,1,1,12,12,96,1800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 53, weight: 24, upper: 8, lower: 8, str: 64, dex: 40, will: 40, luck: 64, mana: 24, stm: 64); },{},{}
-50598,"Wagashi","Wagashi",501,0,1,,yes,2,1,12,12,108,2100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 59, weight: 27, upper: 9, lower: 9, str: 72, dex: 45, will: 45, luck: 72, mana: 27, stm: 72); },{},{}
+50593,"Ebi Sushi","Shrimp Sushi",501,0,1,,yes,2,1,12,12,48,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 29, weight: 12, upper: 4, lower: 4, str: 32, dex: 20, will: 20, luck: 32, mana: 12, stm: 32); },{},{}
+50594,"Tako Sushi","Octopus Sushi",501,0,1,,yes,2,1,12,12,60,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 15, upper: 5, lower: 5, str: 40, dex: 25, will: 25, luck: 40, mana: 15, stm: 40); },{},{}
+50595,"Unagi Sushi","Eel Sushi",501,0,1,,yes,2,1,12,12,72,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 41, weight: 18, upper: 6, lower: 6, str: 48, dex: 30, will: 30, luck: 48, mana: 18, stm: 48); },{},{}
+50596,"Fish Cake","Oden",501,0,1,,yes,2,1,12,12,84,1300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 47, weight: 21, upper: 7, lower: 7, str: 56, dex: 35, will: 35, luck: 56, mana: 21, stm: 56); },{},{}
+50597,"Sakura Rice Cake","Sakura Rice-cake",501,0,1,,yes,1,1,12,12,96,1800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 53, weight: 24, upper: 8, lower: 8, str: 64, dex: 40, will: 40, luck: 64, mana: 24, stm: 64); },{},{}
+50598,"Aka Wagashi","Wagashi",501,0,1,,yes,2,1,12,12,108,2100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 59, weight: 27, upper: 9, lower: 9, str: 72, dex: 45, will: 45, luck: 72, mana: 27, stm: 72); },{},{}
 50599,"Katsudon","Katsudon",501,0,1,,yes,2,1,12,12,120,2800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 65, weight: 30, upper: 10, lower: 10, str: 80, dex: 50, will: 50, luck: 80, mana: 30, stm: 80); },{},{}
-50600,"Gyudon","Gyudon",501,0,1,,yes,2,1,12,12,132,3200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 71, weight: 33, upper: 11, lower: 11, str: 88, dex: 55, will: 55, luck: 88, mana: 33, stm: 88); },{},{}
-50601,"Buffalo Wing","Buffalo Wing",501,0,1,,yes,2,1,12,12,144,3500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 77, weight: 36, upper: 12, lower: 12, str: 96, dex: 60, will: 60, luck: 96, mana: 36, stm: 96); },{},{}
-50602,"Yakitori","Yakitori",501,0,1,,yes,2,1,12,12,156,3800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 83, weight: 39, upper: 13, lower: 13, str: 104, dex: 65, will: 65, luck: 104, mana: 39, stm: 104); },{},{}
-50603,"Yakisoba","Yakisoba",501,0,1,,yes,2,1,12,12,168,3300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 89, weight: 42, upper: 14, lower: 14, str: 112, dex: 70, will: 70, luck: 112, mana: 42, stm: 112); },{},{}
-50604,"Baked Corn","Baked Corn",501,0,1,,yes,2,1,12,12,180,1200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 95, weight: 45, upper: 15, lower: 15, str: 120, dex: 75, will: 75, luck: 120, mana: 45, stm: 120); },{},{}
-50605,"Tuna Bacon Roll","Tuna Bacon Roll",501,0,1,,yes,2,1,12,12,192,1800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 101, weight: 48, upper: 16, lower: 16, str: 128, dex: 80, will: 80, luck: 128, mana: 48, stm: 128); },{},{}
+50600,"Gyuudon","Gyudon",501,0,1,,yes,2,1,12,12,132,3200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 71, weight: 33, upper: 11, lower: 11, str: 88, dex: 55, will: 55, luck: 88, mana: 33, stm: 88); },{},{}
+50601,"Buffalo Wings","Buffalo Wing",501,0,1,,yes,2,1,12,12,144,3500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 77, weight: 36, upper: 12, lower: 12, str: 96, dex: 60, will: 60, luck: 96, mana: 36, stm: 96); },{},{}
+50602,"Chicken Skewers","Yakitori",501,0,1,,yes,2,1,12,12,156,3800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 83, weight: 39, upper: 13, lower: 13, str: 104, dex: 65, will: 65, luck: 104, mana: 39, stm: 104); },{},{}
+50603,"Chicken Chow Mein","Yakisoba",501,0,1,,yes,2,1,12,12,168,3300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 89, weight: 42, upper: 14, lower: 14, str: 112, dex: 70, will: 70, luck: 112, mana: 42, stm: 112); },{},{}
+50604,"Grilled Corn","Baked Corn",501,0,1,,yes,2,1,12,12,180,1200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 95, weight: 45, upper: 15, lower: 15, str: 120, dex: 75, will: 75, luck: 120, mana: 45, stm: 120); },{},{}
+50605,"Bacon Wrapped Tuna","Tuna Bacon Roll",501,0,1,,yes,2,1,12,12,192,1800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 101, weight: 48, upper: 16, lower: 16, str: 128, dex: 80, will: 80, luck: 128, mana: 48, stm: 128); },{},{}
 50606,"Salmon Salad","Salmon Salad",501,0,1,,yes,2,1,12,12,204,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 107, weight: 51, upper: 17, lower: 17, str: 136, dex: 85, will: 85, luck: 136, mana: 51, stm: 136); },{},{}
-50607,"Seasoned With Tuna and Onion","Seasoned With Tuna and Onion",501,0,1,,yes,2,1,12,12,216,5000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 113, weight: 54, upper: 18, lower: 18, str: 144, dex: 90, will: 90, luck: 144, mana: 54, stm: 144); },{},{}
+50607,"Onion Fried Tuna","Seasoned With Tuna and Onion",501,0,1,,yes,2,1,12,12,216,5000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 113, weight: 54, upper: 18, lower: 18, str: 144, dex: 90, will: 90, luck: 144, mana: 54, stm: 144); },{},{}
 50608,"Fried Capelin","Fried Capelin",501,0,1,,yes,2,1,12,12,228,5500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 119, weight: 57, upper: 19, lower: 19, str: 152, dex: 95, will: 95, luck: 152, mana: 57, stm: 152); },{},{}
-50609,"Hard-Boiled Silver Vine Sparidae","Hard-Boiled Silver Vine Sparidae",501,0,1,,yes,2,1,12,12,240,4500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 125, weight: 60, upper: 20, lower: 20, str: 160, dex: 100, will: 100, luck: 160, mana: 60, stm: 160); },{},{}
-50610,"Silver Vine Tea","Silver Vine Tea",501,0,1,,yes,1,1,12,12,252,800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 131, weight: 63, upper: 21, lower: 21, str: 168, dex: 105, will: 105, luck: 168, mana: 63, stm: 168); },{},{}
-50615,"Silver Vine Drink","Silver Vine Drink",501,0,1,,yes,1,2,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{}
+50609,"Silvervine and Snapper","Hard-Boiled Silver Vine Sparidae",501,0,1,,yes,2,1,12,12,240,4500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 125, weight: 60, upper: 20, lower: 20, str: 160, dex: 100, will: 100, luck: 160, mana: 60, stm: 160); },{},{}
+50610,"Silvervine Tea","Silver Vine Tea",501,0,1,,yes,1,1,12,12,252,800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 131, weight: 63, upper: 21, lower: 21, str: 168, dex: 105, will: 105, luck: 168, mana: 63, stm: 168); },{},{}
+50615,"Silvervine Drink","Silver Vine Drink",501,0,1,,yes,1,2,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{}
 50618,"Lileas's Honey Drink Light","Lileas' Honey Drink Lite",501,0,1,,yes,1,2,12,12,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 11, weight: 3, upper: 1, lower: 1, str: 8, dex: 5, will: 5, luck: 8, mana: 3, stm: 8); },{},{}
 50619,"E.O. Grand Blago","E.O. Grand Blago",501,0,1,,yes,1,2,12,12,12,5000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5); },{},{}
 50622,"E.O. Errans Crus","E.O. Errans Cru",501,0,1,,yes,1,2,12,12,12,5000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5); },{},{}
@@ -7968,7 +8008,7 @@
 85147,"Skill Training EXP Seal","Skill Training EXP Seal",501,1,1000,,yes,1,1,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85152,"Fishing Skill Training 10 EXP Seal","Fishing Skill Training 10 EXP Seal",501,1,1000,,yes,1,1,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85153,"Crystal of Shadow","Crystal of Shadow",501,1,2,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85154,"Skill Training EXP Seal","Skill Training EXP Seal",501,1,1000,,yes,1,1,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85154,"Carasek's Skill Training Seal (100)","Skill Training EXP Seal",501,1,1000,,yes,1,1,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85502,"Special Metal Dye Ampoule","Special Metal Dye Ampul",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85504,"Special Combat Power Weakness Potion","Special Combat Power Weakness Potion",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85505,"Special Combat Power Weakness Potion S","Special Combat Power Weakness Potion S",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -8098,7 +8138,7 @@
 85761,"Double Training EXP Potion - ALL","Double Training EXP Potion - ALL",501,0,1,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85765,"Skill Training Seal (50) (Event)","Skill Training EXP Seal",501,1,1000,,yes,1,1,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85767,"Full Recovery Potion","Full Recovery Potion",501,1,5,,yes,1,2,12,30,13,0,0,0,0,0,0,0,0,0,0,0,0,0,{ HealFull(cr); Poison(cr, 1.0); },{},{}
-85775,"Ground Speed Up Potion","Ground Speed Up Potion",501,1,20,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85775,"Speed Walk Potion 40% (Event)","Ground Speed Up Potion",501,1,20,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85784,"Refine Skill Training 10 EXP Seal","Refine Skill Training 10 EXP Seal",501,1,1000,,yes,1,1,44,0,0,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85785,"Blacksmith Skill Training 10 EXP Seal","Blacksmith Skill Training 10 EXP Seal",501,1,1000,,yes,1,1,44,0,0,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85791,"Manus' Secret Potion","Manus' Secret Potion",501,1,100,,yes,1,2,12,12,12,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -8116,7 +8156,7 @@
 85814,"Double Training EXP Potion - Martial Arts","Double Training EXP Potion - Martial Arts",501,1,100,,yes,1,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 85815,"Double Training EXP Potion - Music Skill","Double Training EXP Potion - Music Skill",501,1,100,,yes,1,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 85816,"Double Training EXP Potion - Marionette Skill","Double Training EXP Potion - Marionette Skill",501,1,100,,yes,1,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-85824,"Movement Speed 40% Increase Potion (15 secs) (Event)","Ground Speed Up Potion",501,1,20,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85824,"Speed Walk Potion 40% (15 secs) (Event)","Ground Speed Up Potion",501,1,20,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 90100,"HP 10 Potion","Life 10 Potion",501,1,20,,yes,1,1,21,22,13,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 10, 0, 0); Poison(cr, 0.3); },{},{}
 90101,"Stamina 10 Potion","Stamina 10 Potion",501,1,20,,yes,1,1,32,22,13,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 10); Poison(cr, 0.2); },{},{}
 90102,"Berry","Berry",501,0,1,,yes,1,1,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{}
@@ -8194,17 +8234,17 @@
 91303,"Double Combat Skill EXP Potion","Double Training EXP Potion - Combat Skill",501,1,100,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91304,"Double Magic Skill EXP Potion","Double Training EXP Potion - Magic Skill",501,1,100,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91305,"Double Alchemy Skill EXP Potion","Double Training EXP Potion - Alchemy Skill",501,1,100,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-91396,"High Speed Burst Potion (5 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-91397,"High Speed Burst Potion (10 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-91398,"Hyper Speed Burst Potion (5 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-91399,"Hyper Speed Burst Potion (10 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
+91396,"Speed Walk Potion 30% (5 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
+91397,"Speed Walk Potion 30% (10 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
+91398,"Speed Walk Potion 40% (5 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
+91399,"Speed Walk Potion 40% (10 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91465,"Double Fighter Skill EXP Potion","Double Training EXP Potion - Martial Arts",501,1,100,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91478,"Double Fighter Skill EXP Potion","Double Training EXP Potion - Martial Arts",501,0,1,,yes,1,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91553,"Double Music Skill EXP Potion","Double Training EXP Potion - Music Skill",501,1,100,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-91579,"Movement Speed 30% Boost Potion (5 min)","Ground Speed Up Potion",501,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-91580,"Movement Speed 30% Boost Potion (10 min)","Ground Speed Up Potion",501,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-91581,"Movement Speed 40% Boost Potion (5 min)","Ground Speed Up Potion",501,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-91582,"Movement Speed 40% Boost Potion (10 min)","Ground Speed Up Potion",501,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
+91579,"Speed Walk Potion 30% (5 min)","Ground Speed Up Potion",501,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
+91580,"Speed Walk Potion 30% (10 min)","Ground Speed Up Potion",501,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
+91581,"Speed Walk Potion 40% (5 min)","Ground Speed Up Potion",501,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
+91582,"Speed Walk Potion 40% (10 min)","Ground Speed Up Potion",501,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91599,"Double Music Skill EXP Potion","Double Training EXP Potion - Music Skill",501,0,1,,yes,1,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91618,"Double Puppeteer Skill EXP Potion","Double Training EXP Potion - Marionette Skill",501,1,100,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91635,"Music Composition Training Potion (For Restoration)","Refine Train Potion",501,0,1,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
@@ -8225,7 +8265,7 @@
 91660,"Chain: Drop Kick Training Potion","Chain : Drop Kick Train Potion",501,0,1,,yes,1,2,42,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91661,"Chain: Pummel Training Potion","Chain : Pounding Train Potion",501,0,1,,yes,1,2,42,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91662,"Chain Mastery Training Potion","Chain Mastery Train Potion",501,0,1,,yes,1,2,42,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-91713,"Movement Speed 60% Boost Potion (10 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,500,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
+91713,"Speed Walk Potion 60% (10 min)","Ground Speed Up Potion",501,0,1,,yes,1,2,12,12,12,500,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91750,"Enchant Training Potion","Enchant Train Potion",501,0,1,,yes,1,2,20,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91773,"Control Marionette Training Potion","Marionette Control Train Potion",501,0,1,,yes,1,2,27,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91774,"Pierrot Marionette Training Potion","Pierrot Marionette Train Potion",501,0,1,,yes,1,2,27,0,0,5000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
@@ -8524,8 +8564,8 @@
 2058,"Pan's Goldbox","Pan Goldbox",1000,2,50000,2000,no,1,2,12,0,0,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 2067,"Cobweb Pouch","Cobweb Sac",1000,2,100,60008,no,2,2,1,1,1,1850,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 2101,"Big Moneybag","Big Moneybag",1000,2,50000,2000,no,2,2,1,6,0,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-2106,"Lorna Special Goldbox","Lorna Special Goldbox",1000,2,50000,2000,no,1,1,12,0,0,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-2107,"Pan Special Goldbox","Pan Special Goldbox",1000,2,50000,2000,no,1,1,12,0,0,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+2106,"Lorna's Special Gold Coin Box","Lorna Special Goldbox",1000,2,50000,2000,no,1,1,12,0,0,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+2107,"Pan's Special Gold Coin Box","Pan Special Goldbox",1000,2,50000,2000,no,1,1,12,0,0,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 2109,"Alpaca Fur Pouch","Alpaca Sac",1000,2,1000,60079,no,2,2,1,1,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 2110,"Alpaca Wool Collection Pouch","Alpaca Wool Sac",1000,2,100,60009,no,2,2,1,1,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 2111,"Alpaca Cobweb Pouch","Alpaca Cobweb Sac",1000,2,100,60008,no,2,2,1,1,1,2500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -8753,6 +8793,7 @@
 50679,"Belvast Eel","Belfast Eel",1001,0,1,,no,2,1,12,12,12,900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 50680,"Beltfish","Cutlassfish",1001,0,1,,no,2,1,12,12,12,600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 50716,"Silk-Striped Marlin","Silk Striped Marlin",1001,0,1,,no,2,1,12,12,0,150,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+50831,"VIP Pet Box","Lucky Bag",1001,1,30,,yes,2,2,25,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 51033,"Spirit Liqueur","Spirit's Liquor",1001,1,5,,no,1,1,12,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 51035,"Poison Potion","Poison Potion",1001,1,5,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 51037,"Base Potion","Base Potion",1001,1,10,,no,1,1,12,22,22,150,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -8993,14 +9034,14 @@
 52171,"Ragdoll Lucky Box","Ragdoll Lucky Box",1001,0,1,,no,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 52172,"Devcat Bag Coupon","Devcat Bag Coupon",1001,0,1,,no,2,1,27,27,27,37500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 52173,"Caravan Joe's Coupon","Event Coupon",1001,1,10,,no,2,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-52174,"Track Complete Medal -Maiz Line","Track Complete Medal -Maiz Line",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-52175,"Track Complete Medal -Karu Forest","Track Complete Medal -Karu Forest",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-52176,"Track Complete Medal -Connous","Track Complete Medal -Connous",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-52177,"Track Complete Medal -Courcle","Track Complete Medal -Courcle",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-52178,"Track Complete Medal -Physis","Track Complete Medal -Physis",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-52179,"Track Complete Medal -Zardine","Track Complete Medal -Zardine",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-52180,"Carasek's Bag Coupon","Carasek's Bag Coupon",1001,0,1,,no,2,1,27,27,27,37500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-52181,"Track Complete Medal -Desert","Track Complete Medal -Desert",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+52174,"Skyrace Medal - Maiz Prairie","Track Complete Medal -Maiz Line",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+52175,"Skyrace Medal - Karu Forest","Track Complete Medal -Karu Forest",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+52176,"Skyrace Medal - Connous","Track Complete Medal -Connous",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+52177,"Skyrace Medal - Courcle","Track Complete Medal -Courcle",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+52178,"Skyrace Medal - Physis","Track Complete Medal -Physis",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+52179,"Skyrace Medal - Zardine","Track Complete Medal -Zardine",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+52180,"Carasek's Bag (10x16) Coupon","Carasek's Bag Coupon",1001,0,1,,no,2,1,27,27,27,37500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+52181,"Skyrace Medal - Muyu Desert","Track Complete Medal -Desert",1001,1,10,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 53000,"Statue Stone Artifact","Fragment of Stone Statue",1001,0,1,,no,1,1,57,57,57,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 53001,"Stone Artifact of a Broken-Headed Statue","Fragment of Broken Head Stone Statue",1001,0,1,,no,1,1,57,57,57,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 53002,"Stone Artifact of a Broken-Waisted Statue","Fragment of Broken waist Stone Statue",1001,0,1,,no,1,1,57,57,57,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -9353,7 +9394,7 @@
 54065,"Homestead Street Light (Snowfield)","Street Light (Snowfield)",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54066,"Homestead Snowman","Snowman",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54067,"Homestead Ladeca","Ladeca",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-54068,"Homestead Mysterious Glittering Well","Glitering Water Well",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+54068,"Homestead Fractal Well","Glitering Water Well",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54069,"Homestead Sheep","Sheep",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54070,"Homestead Rooster","Cock",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54071,"Homestead Hen","Hen",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -9406,7 +9447,7 @@
 54118,"Homestead Fierce Baby Dragon","Wild Dragon",1001,0,1,,no,2,2,1,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54119,"Homestead Docile Baby Dragon","Gentle Dragon",1001,0,1,,no,2,2,1,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54120,"Homestead Cute Baby Dragon","Lovely Dragon",1001,0,1,,no,2,2,1,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-54121,"Homestead Very Mysterious Glittering Well","High Grade Glitering Water Well",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+54121,"Homestead Magic Fractal Well","High Grade Glitering Water Well",1001,1,100,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54122,"Christmas Wreath","Christmas Wreath",1001,0,1,,no,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54123,"Christmas Wreath","Christmas Wreath",1001,0,1,,no,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 54124,"Christmas Wreath","Christmas Wreath",1001,0,1,,no,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -11172,6 +11213,9 @@
 73228,"Rudolf Star Decoration","Christmas decorations",1001,1,10,,yes,1,1,0,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 73229,"Rudolf Decorative Ribbon","Christmas decorations",1001,1,10,,yes,2,1,0,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 73230,"Rudolf Decorative Stocking","Christmas decorations",1001,1,10,,yes,1,2,0,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+73231,"Boom Box","Boom Box",1001,0,1,,no,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+73232,"Traveling Boom Box","Special Boom Box",1001,0,1,,no,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+73233,"Dahlia Flowerpot","Dahlia Flowerpot",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 74001,"Barri Dungeon Pass for Paladin-in-Training","Pass for Paladin Trainee : Barri Dungeon",1001,0,1,,no,1,2,9,21,19,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 74002,"Barri Dungeon Pass","Pass for Barri Dungeon",1001,0,1,,no,1,2,9,21,19,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 74003,"Mythril Mine Pass","Pass for Mythril mine",1001,0,1,,no,1,2,9,21,19,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -12442,13 +12486,14 @@
 85803,"Halloween Transformation Medal","Halloween Medal",1001,0,1,,yes,1,1,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85805,"Premium Metalware Tool","Premium Metalware Tool",1001,1,100,,yes,2,2,12,12,12,100000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85807,"AP 200 Potion","AP 200 Potion",1001,0,1,,no,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85817,"Recovered Relic","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85818,"Recovered Relic","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85819,"Recovered Relic","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85820,"Recovered Relic","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85821,"Recovered Relic","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85822,"Recovered Relic","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85817,"Mysterious Elephant Statue","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85818,"Mysterious Dragon Statue","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85819,"Mysterious Sundial Artifact","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85820,"Mysterious Elephant Statue","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85821,"Mysterious Dragon Statue","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85822,"Mysterious Sundial Artifact","Recovered Relic",1001,1,100,,no,2,2,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85823,"Permanent Stat Increase Potion","all stat Rise Potion",1001,0,1,,yes,1,2,53,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85843,"Pink Cheetah Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 90011,"Capella Level 1 Pass","Brown Evil Scroll",1001,1,5,,no,1,2,9,21,19,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 90012,"Capella Level 2 Pass","Brown Evil Scroll",1001,1,5,,no,1,2,9,21,19,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 90013,"Capella Level 3 Pass","Brown Evil Scroll",1001,1,5,,no,1,2,9,21,19,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -12901,7 +12946,7 @@
 91533,"Trump Card Box","Trump Card Box",1001,1,100,,yes,2,2,1,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91534,"Trump Gift Box","Trump Gift Box",1001,1,100,,yes,2,2,37,37,37,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91535,"Special Trump Gift Box","Special Trump Gift Box",1001,1,100,,yes,2,2,37,37,37,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-91536,"Eweca Orb","Eweca's Cristal Ball",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91536,"Eweca's Cristal Ball","Eweca's Cristal Ball",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91537,"Eweca's Glass bead","Eweca's Glass bead",1001,1,1000,,no,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91538,"Eweca's Premium Ball","Eweca's Premium Ball",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91539,"Oriharcon","Oriharcon",1001,0,1,,no,2,2,12,12,12,50000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
@@ -12922,7 +12967,7 @@
 91555,"Hand Chime Bar Box","Music Plate Box",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91556,"Belvast Instrument Box","Instrument Box",1001,1,100,,yes,2,2,28,28,28,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91557,"Lileas's Organization Box","Cleanup Box of Lileas",1001,1,100,,yes,2,2,31,31,31,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-91558,"Sign of the Winner","Sign of the Winner",1001,1,1000,,no,1,1,5,1,19,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91558,"Joustmaster's Emblem","Sign of the Winner",1001,1,1000,,no,1,1,5,1,19,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91560,"Blue Wings of a Goddess (Tara Jousting Tournament)","Blue Wings of the Goddess",1001,0,1,,no,1,2,20,0,0,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91561,"Relay Treasure Chest","Relay Treasure Chest",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91562,"Fashion Slot Key (30 Days)","Ticket for dual layer(30days)",1001,1,5,,yes,2,1,51,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -13024,7 +13069,7 @@
 91683,"Carasek's Treasure Chest","Carasek's Treasure Chest",1001,1,100,,yes,2,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91684,"Shamala's Transformation Box","NPC Medallion Box",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91685,"China 7th Gift Box","China 7th Gift Box",1001,1,100,,yes,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-91686,"Eweca Orb","Eweca's Cristal Ball",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91686,"Eweca Crystal Ball","Eweca's Cristal Ball",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91687,"Eweca's Premium Ball","Eweca's Premium Ball",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91688,"Teeny Hatsune Miku Gift Box","Vocaloid Tan Gift Box",1001,1,100,,yes,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91689,"Hatsune Miku Dye Gachapon","Vocaloid Color Dye Ampul Set",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
@@ -13292,11 +13337,11 @@
 91978,"Halloween Cube","Halloween Cube",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91979,"Eluned Filelot Uniform (M)","Eluned Filelot Uniform for Men",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91980,"Eluned Stewardess Uniform (F)","Eluned Stewardess Uniform for Women",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-91981,"Blessed Box of the Azure Sky","Blessed Box of the Azure Sky",1001,1,100,,yes,2,2,20,20,20,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-91982,"Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-91983,"Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-91984,"Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-91985,"Pet Box of the Azure Sky","Pet Box of the Azure Sky",1001,1,1,,no,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91981,"Sky Blessing Box","Blessed Box of the Azure Sky",1001,1,100,,yes,2,2,20,20,20,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91982,"Oak Magic Broom Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91983,"Eagle Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91984,"Battle Pegasus Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91985,"Sky Pet Box","Pet Box of the Azure Sky",1001,1,1,,no,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91986,"Eweca's Cristal Ball","Eweca's Cristal Ball",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91987,"Carasek's Treasure Chest","Carasek's Treasure Chest",1001,1,100,,yes,2,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 91988,"Sealed Monster Pot","Monster Sealed Pot",1001,1,100,,yes,2,2,12,0,0,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -13304,6 +13349,11 @@
 91990,"Monster Sealed Pot","Monster Sealed Pot",1001,1,100,,yes,2,2,12,0,0,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91991,"Alpaca's Christmas Box","Alpaca's Christmas Box",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 91992,"Romantic Christmas Box","Romantic Christmas Box",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91994,"Lovely Siamese Whistle","Whistle",1001,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91995,"Lovely Scottish Fold Whistle","Whistle",1001,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91996,"Lovely Boston Terrier Whistle","Whistle",1001,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91997,"Lovely Labrador Retriever Whistle","Whistle",1001,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+91998,"Doki Doki Pet Box","Romantic Island Pet Box",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92015,"Bandage for Premium PC Cafe","Bandage",1001,1,20,,yes,1,1,16,0,0,700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92016,"Phoenix Feather for Premium PC Cafe","Feather of Phoenix",1001,1,20,,yes,1,1,12,0,0,1400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92017,"Wings of a Goddess for Premium PC Cafe","Wings of the Goddess",1001,1,5,,yes,1,2,0,0,0,3500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -13606,7 +13656,7 @@
 92314,"SAO Final Mission Box","SAO Final Mission Box",1001,1,10,,yes,2,2,0,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92315,"Attendance King Gift Box","Attendance King Gift Box",1001,1,10,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
 92316,"Beginner's Bundle of Enchant Scroll","Beginner's Bundle of Enchant Scroll",1001,0,1,,no,1,2,14,0,0,10000,10000,0,0,0,0,0,0,0,0,0,2,2,{},{},{}
-92317,"Glittering Paint Bottle","Glitering Paint Jar",1001,1,100,,yes,2,2,12,3,3,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92317,"Glittering Dye Bottle","Glitering Paint Jar",1001,1,100,,yes,2,2,12,3,3,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92318,"Suspicious Box","Strange Box",1001,0,1,,no,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92319,"Winter Ace Box","Zero Hero Box",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92320,"Succubus Bag Box","Succubus Bag Box",1001,1,100,,yes,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -13647,6 +13697,10 @@
 92355,"Ducat Hongbao","Ducat Hongbao",1001,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92356,"Gold Hongbao","Gold Hongbao",1001,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 92357,"Ducat Hongbao","Ducat Hongbao",1001,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92365,"Doki Doki Celebration Box","Romantic Island Gift Box",1001,1,100,,yes,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92379,"Chocolate Waffle Suit (M)","Chocolate Waffle Suit for Men",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92380,"Chocolate Waffle Dress (F)","Chocolate Waffle Dress for Women",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+92392,"Eweca Crystal Ball","Eweca's Cristal Ball",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 93034,"Love Letter from him 1","Love Letter from him 1",1001,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 93035,"Love Letter from him 2","Love Letter from him 2",1001,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 93036,"Love Letter from him 4","Love Letter from him 4",1001,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
@@ -13669,6 +13723,8 @@
 94007,"Yellow Jindo Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 94008,"Thoroughbred Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 94009,"Border Collie Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+94013,"Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+94014,"Whistle","Whistle",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 95000,"Letter From Little Tarlach","Letter From Little Tarlach",1001,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 95001,"MasterChef's Errands Box","MasterChef's Errands Box",1001,0,1,,no,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 95004,"Whistle","Whistle",1001,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
