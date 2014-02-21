@@ -20,7 +20,7 @@ public class BeginnerUladh1QuestScript : QuestScript
 		AddHook("_duncan", "after_intro", TalkDuncan);
 	}
 	
-	public IEnumerable TalkDuncan(NpcScript npc, params object[] args)
+	public async Task<HookResult> TalkDuncan(NpcScript npc, params object[] args)
 	{
 		if(npc.QuestActive(this.Id, "talk_duncan"))
 		{
@@ -36,8 +36,7 @@ public class BeginnerUladh1QuestScript : QuestScript
 			while (true)
 			{
 				npc.Msg(npc.Text("Press the "), npc.Hotkey("QuestView"), npc.Text(" key or<br/>press the Quest button at the bottom of your screen."), npc.Button("I pressed the Quest button", "@pressed"), npc.Button("$hidden", "@quest_btn_clicked", "autoclick_QuestView"));
-				var r = npc.Select();
-				if (r != "@pressed")
+				if (await npc.Select() != "@pressed")
 					break;
 				npc.Msg("Hmm... Are you sure you pressed the Quest button?<br/>It's possible that the Quest Window was already open, so<br/>try pressing it again.");
 			}
@@ -48,7 +47,9 @@ public class BeginnerUladh1QuestScript : QuestScript
 			npc.Msg("You've just learned one very basic skill<br/>to survive in Erinn.");
 			npc.Msg("Soon, you will recieve a quest from an owl.<br/>Then, you will be able to start your training for real.");
 
-			Return("break_hook");
+			return HookResult.Break;
 		}
+		
+		return HookResult.Continue;
 	}
 }

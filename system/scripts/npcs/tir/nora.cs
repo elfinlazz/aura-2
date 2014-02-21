@@ -34,7 +34,7 @@ public class NoraBaseScript : NpcScript
 	{
 		SetBgm("NPC_Nora.mp3");
 	
-		Intro(
+		await Intro(
 			"A girl wearing a well-ironed green apron leans forward, gazing cheerfully at her sorroundings.",
 			"Her bright eyes are azure blue and a faint smile plays on her lips.",
 			"Cross-shaped earrings dangle from her ears, dancing playfully between her honey-blonde hair.",

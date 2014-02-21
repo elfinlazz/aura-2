@@ -39,7 +39,7 @@ public class TreforBaseScript : NpcScript
 	
 	protected override async Task Talk()
 	{
-		Intro(
+		await Intro(
 			"Quite a specimen of physical fitness appears before you wearing well-polished armor that fits closely the contours of his body.",
 			"A medium-length sword hangs delicately from the scabbard at his waist. While definitely a sight to behold,",
 			"it's difficult to see much of his face because of his lowered visor, but one cannot help but notice the flash in his eyes",

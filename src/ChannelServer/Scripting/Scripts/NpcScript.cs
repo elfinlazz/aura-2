@@ -103,9 +103,24 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Conversation (keywords) loop with initial mood message.
 		/// </summary>
 		/// <returns></returns>
-		protected virtual async Task StartConversation()
+		public virtual async Task StartConversation()
 		{
-			this.Msg(Hide.Name, "(<npcname/> is waiting for me to say something.)");
+			switch (this.Random(2))
+			{
+				case 0: this.Msg(Hide.Name, "(<npcname/> is looking in my direction.)"); break;
+				case 1: this.Msg(Hide.Name, "(<npcname/> is waiting for me to say something.)"); break;
+				//case 2: this.Msg(Hide.Name, "(<npcname/> is giving me a look that it may be better to stop this conversation.)"); break;
+			}
+
+			// (<npcname/> is looking in my direction)
+			// (<npcname/> is waiting for me to say something)
+			// (<npcname/> is giving me a look that it may be better to stop this conversation.)
+			// (<npcname/> is smiling at me as if we've known each other for years.)
+			// (<npcname/> is giving me a friendly smile.)
+			// (<npcname/> is giving me a welcome look.)
+			// (<npcname/> is looking at me with great interest.)
+			// (<npcname/> is really giving me a friendly vibe.) 
+
 			await Conversation();
 		}
 
@@ -113,20 +128,23 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Conversation (keywords) loop.
 		/// </summary>
 		/// <returns></returns>
-		protected virtual async Task Conversation()
+		public virtual async Task Conversation()
 		{
 			while (true)
 			{
 				this.ShowKeywords();
 				var keyword = await Select();
 
-				//Call(Hook("before_keywords", keyword));
-
-				// update intimicy, based on mood? ...
+				await Hook("before_keywords", keyword);
 
 				await this.Keywords(keyword);
 
-				// mood message if it changed ...
+				// (I think I left a good impression.)
+				// (The conversation drew a lot of interest.)
+				// (That was a great conversation!)
+
+				// mood message if mood changed? ...
+				// update intimicy, based on mood? ...
 			}
 		}
 
@@ -296,15 +314,18 @@ namespace Aura.Channel.Scripting.Scripts
 		/// but only once per creature and NPC.
 		/// </summary>
 		/// <param name="lines"></param>
-		protected void Intro(params object[] lines)
+		protected async Task Intro(params object[] lines)
 		{
 			if (this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] == null)
 			{
-				this.Msg(Hide.Both, string.Join("<br/>", lines));
+				// Why an explicit button? Dunno. Ask devCAT, I'm just
+				// imitating them :) [exec]
+				this.Msg(Hide.Both, string.Join("<br/>", lines), this.Button("Continue"));
+				await Select();
 				this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] = true;
 			}
 
-			//Call(Hook("after_intro"));
+			await Hook("after_intro");
 		}
 
 		/// <summary>
@@ -326,18 +347,12 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </remarks>
 		/// <param name="hookName"></param>
 		/// <returns></returns>
-		protected IEnumerable Hook(string hookName, params object[] args)
+		protected async Task Hook(string hookName, params object[] args)
 		{
 			foreach (var hook in ChannelServer.Instance.ScriptManager.GetHooks(this.NPC.Name, hookName))
 			{
-				foreach (var call in hook(this, args))
-				{
-					var result = call as string;
-					if (result != null && result == "break_hook")
-						yield break;
-
-					yield return call;
-				}
+				if (await hook(this, args) == HookResult.Break)
+					return;
 			}
 		}
 
@@ -468,7 +483,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="message">Dialog closes immediately if null.</param>
-		protected void Close(string message = null)
+		public void Close(string message = null)
 		{
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
 			throw new OperationCanceledException("NPC closed by script");
@@ -562,4 +577,5 @@ namespace Aura.Channel.Scripting.Scripts
 
 	public enum Hide { Face, Name, Both }
 	public enum ConversationState { Ongoing, Select, Ended }
+	public enum HookResult { Continue, Break, End }
 }

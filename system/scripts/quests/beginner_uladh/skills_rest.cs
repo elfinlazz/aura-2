@@ -24,7 +24,7 @@ public class BeginnerUladhRestQuestScript : QuestScript
 		AddHook("_nora", "before_keywords", TalkNora);
 	}
 	
-	public IEnumerable TalkNora(NpcScript npc, params object[] args)
+	public async Task<HookResult> TalkNora(NpcScript npc, params object[] args)
 	{
 		var keyword = args[0] as string;
 		
@@ -36,9 +36,11 @@ public class BeginnerUladhRestQuestScript : QuestScript
 			npc.Msg("Now, open the Skill window. Press the 'Skills' button at the bottom of the screen.<br/>Or, just press 'S'.");
 			npc.Msg("Do you see the Resting skill? You can't use it now because you're talking to me.<br/>You can activate it from the Skill window or drag-and-drop it at the top of the screen and use the Function keys as hotkeys.<br/>In my case, I use F1 to activate it.");
 			npc.Msg("You usually use the Resting skill when you need to fill your Stamina.<br/>But it is also useful to recover HP,<br/>and it's good to heal wounds, although it does take longer.");
-			npc.Msg("Anyway, I don't understand why so many people ask me about skills.");
 			
-			Return("end");
+			npc.Msg("Anyway, I don't understand why so many people ask me about skills.");
+			await npc.Conversation();
 		}
+		
+		return HookResult.Continue;
 	}
 }

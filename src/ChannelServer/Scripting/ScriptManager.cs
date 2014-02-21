@@ -20,6 +20,7 @@ using Aura.Shared.Util;
 using Aura.Channel.World;
 using Aura.Channel.World.Quests;
 using System.Collections;
+using System.Threading.Tasks;
 
 namespace Aura.Channel.Scripting
 {
@@ -683,5 +684,5 @@ namespace Aura.Channel.Scripting
 		}
 	}
 
-	public delegate IEnumerable ScriptHook(NpcScript npc, params object[] args);
+	public delegate Task<HookResult> ScriptHook(NpcScript npc, params object[] args);
 }

@@ -31,7 +31,7 @@ public class BeginnerUladh2QuestScript : QuestScript
 		AddHook("_trefor", "after_intro", TalkTrefor);
 	}
 	
-	public IEnumerable TalkTrefor(NpcScript npc, params object[] args)
+	public async Task<HookResult> TalkTrefor(NpcScript npc, params object[] args)
 	{
 		if(npc.QuestActive(this.Id, "talk_trefor"))
 		{
@@ -44,8 +44,7 @@ public class BeginnerUladh2QuestScript : QuestScript
 			npc.Msg("Against monsters that are using the Defense skill,<br/>Smash will be the only way to penetrate that skill and deliver a killer blow.");
 			npc.Msg("However... looking at the way you're holding your sword, I'm not sure if you are up to the task.<br/>Let me test your skills first. Do you see those brown foxes wandering in front of me?<br/>They're quite a nuisance, praying on those roosters in town.<br/>I want you to go and hunt 5 Young Brown Foxes right now.");
 			npc.Msg("Foxes use the Defense Skill a lot, and as I told you before, regular attacks do not work against defending targets.<br/>That's then the Smash skill comes in handy.<br/><br/>Watch how I do it, and try picking up the important parts so you can use it too.<br/>You don't need to overstrain yourself by going for the Brown Foxes. Young Brown Foxes will do just fine.", npc.Movie("skillbar_guide_us.wmv", 500, 300), npc.Button("Continue"));
-			npc.Select();
-			npc.Close();
+			await npc.Select();
 
 			var scene = new Cutscene("tuto_smash", npc.Player);
 			scene.AddActor("me", npc.Player);
@@ -53,7 +52,9 @@ public class BeginnerUladh2QuestScript : QuestScript
 			scene.AddActor("#brownfox", 50001);
 			scene.Play();
 			
-			Return();
+			npc.Close();
+			
+			return HookResult.End;
 		}
 		else if(npc.QuestActive(this.Id, "talk_trefor2"))
 		{
@@ -64,7 +65,7 @@ public class BeginnerUladh2QuestScript : QuestScript
 			
 			npc.GiveItem(63140, 1);
 			
-			Return("break_hook");
+			return HookResult.Break;
 		}
 		else if(npc.QuestActive(this.Id, "clear_alby"))
 		{
@@ -75,7 +76,9 @@ public class BeginnerUladh2QuestScript : QuestScript
 			if(npc.Player.Skills.Is(SkillId.Smash, SkillRank.Novice))
 				npc.Player.Skills.GiveExp(SkillId.Smash, 100000);
 			
-			Return("break_hook");
+			return HookResult.Break;
 		}
+		
+		return HookResult.Continue;
 	}
 }
