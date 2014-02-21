@@ -185,10 +185,10 @@ namespace Aura.Channel.Network.Sending
 				packet.PutShort((short)creature.DefenseBaseMod);
 				packet.PutShort((short)(creature.BalanceBase * 100));
 
-				// Weird. If those aren't 3 and 4 the client displays
-				// incorrect values for Damage.
-				packet.PutShort(3);                  // MeleeAttackMinBaseMod (8)
-				packet.PutShort(4);                  // MeleeAttackMaxBaseMod (18)
+				// In some tests the damage display would be messed up if
+				// those two weren't set to something.
+				packet.PutShort(0);                  // MeleeAttackMinBaseMod (8 / 3)
+				packet.PutShort(0);                  // MeleeAttackMaxBaseMod (18 / 4)
 
 				packet.PutShort(0);                  // MeleeWAttackMinBaseMod
 				packet.PutShort(0);                  // MeleeWAttackMaxBaseMod
