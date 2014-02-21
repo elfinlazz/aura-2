@@ -351,8 +351,13 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			foreach (var hook in ChannelServer.Instance.ScriptManager.GetHooks(this.NPC.Name, hookName))
 			{
-				if (await hook(this, args) == HookResult.Break)
-					return;
+				var result = await hook(this, args);
+				switch (result)
+				{
+					case HookResult.Break: return;
+					case HookResult.End: this.Exit(); return;
+				}
+
 			}
 		}
 
@@ -487,13 +492,31 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Closes dialog box, by sending NpcTalkEndR.
+		/// Closes dialog box, by sending NpcTalkEndR, and leaves the NPC.
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="message">Dialog closes immediately if null.</param>
 		public void Close(string message = null)
 		{
+			this.Close2(message);
+			this.Exit();
+		}
+
+		/// <summary>
+		/// Sends NpcTalkEndR but doesn't leave NPC.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="message">Dialog closes immediately if null.</param>
+		public void Close2(string message = null)
+		{
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
+		}
+
+		/// <summary>
+		/// Throws exception to leave NPC.
+		/// </summary>
+		public void Exit()
+		{
 			throw new OperationCanceledException("NPC closed by script");
 		}
 

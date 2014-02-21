@@ -128,7 +128,9 @@ namespace Aura.Shared.Network
 		//public const int ? = 0x59F8; // Request for that --v ?
 		//public const int ? = 0x59F9; // "Unable to receive [something]."
 
-		public const int NPCTalkSelectEnd = 0x59FB;
+		// Does this actually have to do something with Npcs? Sent by the
+		// server when selecting "@end", before the actual NpcTalkEnd
+		public const int NpcTalkSelectEnd = 0x59FB;
 
 		public const int SwitchSet = 0x5BCD;
 		public const int SwitchSetR = 0x5BCE;

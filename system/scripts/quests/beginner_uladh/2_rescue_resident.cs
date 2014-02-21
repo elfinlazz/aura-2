@@ -45,14 +45,13 @@ public class BeginnerUladh2QuestScript : QuestScript
 			npc.Msg("However... looking at the way you're holding your sword, I'm not sure if you are up to the task.<br/>Let me test your skills first. Do you see those brown foxes wandering in front of me?<br/>They're quite a nuisance, praying on those roosters in town.<br/>I want you to go and hunt 5 Young Brown Foxes right now.");
 			npc.Msg("Foxes use the Defense Skill a lot, and as I told you before, regular attacks do not work against defending targets.<br/>That's then the Smash skill comes in handy.<br/><br/>Watch how I do it, and try picking up the important parts so you can use it too.<br/>You don't need to overstrain yourself by going for the Brown Foxes. Young Brown Foxes will do just fine.", npc.Movie("skillbar_guide_us.wmv", 500, 300), npc.Button("Continue"));
 			await npc.Select();
+			npc.Close2();
 
 			var scene = new Cutscene("tuto_smash", npc.Player);
 			scene.AddActor("me", npc.Player);
 			scene.AddActor("#trefor", npc.NPC);
 			scene.AddActor("#brownfox", 50001);
 			scene.Play();
-			
-			npc.Close();
 			
 			return HookResult.End;
 		}

@@ -837,7 +837,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutInt(0);
 			}
 
-			// [180X00, NA181? (12.02.2014)] ?
+			// [180500, NA181 (12.02.2014)] ?
 			// Without this the "me" creature in the Smash cutscene had a
 			// red aura.
 			// --------------------------------------------------------------
@@ -910,6 +910,11 @@ namespace Aura.Channel.Network.Sending
 				}
 
 				// [180?00] ?
+				{
+					packet.PutByte(1);
+				}
+
+				// [180500, NA181 (12.02.2014)] ?
 				{
 					packet.PutByte(1);
 				}
