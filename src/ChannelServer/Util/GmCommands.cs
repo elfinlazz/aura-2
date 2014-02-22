@@ -17,6 +17,8 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
 using Aura.Channel.Skills;
+using Aura.Channel.Database;
+using Aura.Shared.Database;
 
 namespace Aura.Channel.Util
 {
@@ -49,6 +51,8 @@ namespace Aura.Channel.Util
 			Add(50, 50, "spawn", "<race> [amount]", HandleSpawn);
 			Add(50, 50, "ap", "<amount>", HandleAp);
 			Add(50, 50, "gmcp", "", HandleGmcp);
+			Add(50, 99, "card", "<id>", HandleCard);
+			Add(50, 99, "petcard", "<race>", HandleCard);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -784,6 +788,34 @@ namespace Aura.Channel.Util
 			}
 
 			Send.GmcpOpen(sender);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleCard(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			int type, race;
+			if (args[0] == "card")
+			{
+				race = 0;
+				if (!int.TryParse(args[1], out type))
+					return CommandResult.InvalidArgument;
+			}
+			else
+			{
+				type = MabiId.PetCardType;
+				if (!int.TryParse(args[1], out race))
+					return CommandResult.InvalidArgument;
+			}
+
+			AuraDb.Instance.AddCard(target.Client.Account.Id, type, race);
+
+			Send.ServerMessage(sender, Localization.Get("gm.card_success")); // Added card.
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("gm.card_target"), sender.Name); // You've received a card from '{0}'.
 
 			return CommandResult.Okay;
 		}

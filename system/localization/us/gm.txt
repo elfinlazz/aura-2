@@ -72,3 +72,7 @@ die_killer		You've been killed by {0}.
 // >reloadX
 reload_wait		Reloading, this might take a moment.
 reload_done		Reload complete.
+
+// >(pet)card
+card_success	Added card.
+card_target		You've received a card from '{0}'.
