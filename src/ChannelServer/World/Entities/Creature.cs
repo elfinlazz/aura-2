@@ -1023,8 +1023,6 @@ namespace Aura.Channel.World.Entities
 			this.Exp += val;
 
 			var levelStats = AuraData.StatsLevelUpDb.Find(this.Race, this.Age);
-			if (levelStats == null)
-				Log.Unimplemented("Level up stats missing for race '{0}'.", this.Race);
 
 			var prevLevel = this.Level;
 			float ap = this.AbilityPoints;
@@ -1057,6 +1055,10 @@ namespace Aura.Channel.World.Entities
 
 			if (prevLevel < this.Level)
 			{
+				// Only notify on level up
+				if (levelStats == null)
+					Log.Unimplemented("GiveExp: Level up stats missing for race '{0}'.", this.Race);
+
 				this.FullHeal();
 
 				Send.StatUpdateDefault(this);
