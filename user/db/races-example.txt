@@ -1,0 +1,8 @@
+// Aura
+// Database file
+// 
+// Example of replacing a race.
+//---------------------------------------------------------------------------
+
+// Nine-Tailed Fox with max-size inventory
+202201,"Nine-Tailed Fox","petmaplefox/none","/pet/fox/vehicle/color_variation/riding_control/use_c4/use_master_skill_rank/",0,42,0xA0000000,32,32,18,35,200,2,2,35,240,60,0,0x03,"none",0x808080,0x808080,0x808080,1.0,1000.0,10,0,0.0,0,0,0,0

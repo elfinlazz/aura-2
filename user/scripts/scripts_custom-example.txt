@@ -1,0 +1,7 @@
+// Aura
+// Script list file
+// 
+// Example of loading an additional custom NPC.
+//---------------------------------------------------------------------------
+
+custom/telephant.cs
