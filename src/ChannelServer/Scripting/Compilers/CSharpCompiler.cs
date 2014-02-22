@@ -74,6 +74,7 @@ namespace Aura.Channel.Scripting.Compilers
 			defaultUsings.Append("using Aura.Shared.Mabi;");
 			defaultUsings.Append("using Aura.Shared.Network;");
 			defaultUsings.Append("using Aura.Shared.Util;");
+			defaultUsings.Append("using Aura.Shared.Util.Commands;");
 			script = defaultUsings + script;
 
 			// Return();

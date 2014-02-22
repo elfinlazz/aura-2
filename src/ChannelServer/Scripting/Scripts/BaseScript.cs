@@ -2,8 +2,11 @@
 // For more information, see license file in the main folder
 
 using System;
-using Aura.Shared.Util;
 using System.Collections;
+using Aura.Channel.Network;
+using Aura.Channel.Util;
+using Aura.Shared.Network;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -138,6 +141,29 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void AddHook(string npcName, string hookName, ScriptHook func)
 		{
 			ChannelServer.Instance.ScriptManager.AddHook(npcName, hookName, func);
+		}
+
+		/// <summary>
+		/// Adds packet handler.
+		/// </summary>
+		/// <param name="op"></param>
+		/// <param name="handler"></param>
+		protected void AddPacketHandler(int op, PacketHandlerManager<ChannelClient>.PacketHandlerFunc handler)
+		{
+			ChannelServer.Instance.Server.Handlers.Add(op, handler);
+		}
+
+		/// <summary>
+		/// Adds command.
+		/// </summary>
+		/// <param name="auth"></param>
+		/// <param name="charAuth"></param>
+		/// <param name="name"></param>
+		/// <param name="usage"></param>
+		/// <param name="func"></param>
+		protected void AddCommand(int auth, int charAuth, string name, string usage, GmCommandFunc func)
+		{
+			ChannelServer.Instance.CommandProcessor.Add(auth, charAuth, name, usage, func);
 		}
 	}
 
