@@ -160,6 +160,8 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.CutsceneEnd(creature.Temp.CurrentCutscene);
 			Send.CharacterUnlock(creature, Locks.Default);
+
+			creature.Temp.CurrentCutscene = null;
 		}
 	}
 }

@@ -57,7 +57,7 @@ public class TreforBaseScript : NpcScript
 				
 			case "@shop":
 				Msg("Do you need a Quest Scroll?");
-				OpenShop();
+				OpenShop("TreforShop");
 				return;
 				
 			case "@upgrade":

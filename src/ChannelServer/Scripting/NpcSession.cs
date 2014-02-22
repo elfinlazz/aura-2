@@ -45,7 +45,6 @@ namespace Aura.Channel.Scripting
 
 			var script = Activator.CreateInstance(target.Script.GetType()) as NpcScript;
 			script.NPC = target.Script.NPC;
-			script.Shop = target.Script.Shop;
 			script.Player = creature;
 			this.Script = script;
 

@@ -1,0 +1,10 @@
+// Aura
+// Script list file
+//
+// All scripts listed here will be loaded.
+//---------------------------------------------------------------------------
+
+shops/grocery.cs
+shops/tailor.cs
+
+include "/user/scripts/scripts_shops.txt"

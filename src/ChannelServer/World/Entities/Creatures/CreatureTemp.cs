@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.World.Shops;
 using Aura.Data.Database;
 
 namespace Aura.Channel.World.Entities.Creatures
@@ -16,8 +17,13 @@ namespace Aura.Channel.World.Entities.Creatures
 		public float LifeFoodChange, ManaFoodChange, StaminaFoodChange;
 		public float StrFoodChange, IntFoodChange, DexFoodChange, WillFoodChange, LuckFoodChange;
 
+		// True while visiting Nao
 		public bool InSoulStream;
 
+		// Currently playing cutscene
 		public Cutscene CurrentCutscene;
+
+		// Last open shop
+		public NpcShop CurrentShop;
 	}
 }

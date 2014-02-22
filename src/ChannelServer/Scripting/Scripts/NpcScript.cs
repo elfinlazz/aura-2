@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -25,7 +26,6 @@ namespace Aura.Channel.Scripting.Scripts
 		public ConversationState ConversationState { get; private set; }
 
 		public NPC NPC { get; set; }
-		public NpcShop Shop { get; set; }
 
 		private Creature _player;
 		public Creature Player
@@ -58,7 +58,7 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				await this.Talk();
 			}
-			catch (OperationCanceledException ex)
+			catch (OperationCanceledException)
 			{
 				//Log.Debug(ex.Message);
 			}
@@ -276,6 +276,13 @@ namespace Aura.Channel.Scripting.Scripts
 				this.NPC.AI.Phrases.Add(phrase);
 		}
 
+		/// <summary>
+		/// Sets id of the NPC.
+		/// </summary>
+		/// <remarks>
+		/// Only required for NPCs like Nao and Tin, avoid if possible!
+		/// </remarks>
+		/// <param name="entityId"></param>
 		protected void SetId(long entityId)
 		{
 			this.NPC.EntityId = entityId;
@@ -295,18 +302,19 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Opens NPC shop for creature.
+		/// Opens shop for player.
 		/// </summary>
-		/// <param name="creature"></param>
-		protected void OpenShop()
+		/// <param name="shopType"></param>
+		protected void OpenShop(string shopType)
 		{
-			if (this.Shop == null)
+			var shop = ChannelServer.Instance.ScriptManager.GetShop(shopType);
+			if (shop == null)
 			{
 				this.Close("(Missing shop.)");
 				return;
 			}
 
-			Send.OpenNpcShop(this.Player, this.Shop);
+			shop.OpenFor(this.Player);
 		}
 
 		/// <summary>

@@ -21,6 +21,7 @@ using Aura.Channel.World;
 using Aura.Channel.World.Quests;
 using System.Collections;
 using System.Threading.Tasks;
+using Aura.Channel.World.Shops;
 
 namespace Aura.Channel.Scripting
 {
@@ -34,6 +35,7 @@ namespace Aura.Channel.Scripting
 
 		private Dictionary<int, ItemScript> _itemScripts;
 		private Dictionary<string, Type> _aiScripts;
+		private Dictionary<string, NpcShop> _shops;
 		private Dictionary<int, QuestScript> _questScripts;
 
 		private Dictionary<string, Dictionary<string, List<ScriptHook>>> _hooks;
@@ -50,6 +52,7 @@ namespace Aura.Channel.Scripting
 
 			_itemScripts = new Dictionary<int, ItemScript>();
 			_aiScripts = new Dictionary<string, Type>();
+			_shops = new Dictionary<string, NpcShop>();
 			_questScripts = new Dictionary<int, QuestScript>();
 
 			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
@@ -97,6 +100,7 @@ namespace Aura.Channel.Scripting
 			_creatureSpawns.Clear();
 			_questScripts.Clear();
 			_hooks.Clear();
+			_shops.Clear();
 
 			if (!File.Exists(IndexPath))
 			{
@@ -285,6 +289,19 @@ namespace Aura.Channel.Scripting
 			Log.Info("Done loading AI scripts.");
 		}
 
+
+		/// <summary>
+		/// Returns shop or null.
+		/// </summary>
+		/// <param name="typeName"></param>
+		/// <returns></returns>
+		public NpcShop GetShop(string typeName)
+		{
+			NpcShop result;
+			_shops.TryGetValue(typeName, out result);
+			return result;
+		}
+
 		/// <summary>
 		/// Returns new AI script by name for creature, or null.
 		/// </summary>
@@ -375,79 +392,87 @@ namespace Aura.Channel.Scripting
 		/// <returns></returns>
 		private void LoadScriptAssembly(Assembly asm, string filePath)
 		{
-			foreach (var type in asm.GetTypes().Where(a => a.IsSubclassOf(typeof(BaseScript))))
+			foreach (var type in asm.GetTypes().Where(a => !a.IsAbstract && !a.Name.StartsWith("_")))
 			{
 				try
 				{
-					// Ignore abstract class and ones starting with underscore,
-					// which are used for inheritance.
-					if (type.IsAbstract || type.Name.StartsWith("_"))
-						continue;
-
-					var baseScript = Activator.CreateInstance(type) as BaseScript;
-					baseScript.ScriptFilePath = filePath;
-
-					// Try to load as NpcScript
-					if (baseScript is NpcScript)
+					if (type.IsSubclassOf(typeof(BaseScript)))
 					{
-						var npcScript = baseScript as NpcScript;
+						var baseScript = Activator.CreateInstance(type) as BaseScript;
+						baseScript.ScriptFilePath = filePath;
 
-						npcScript.NPC.AI = this.GetAi("npc_normal", npcScript.NPC);
-
-						npcScript.Load();
-						npcScript.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
-						npcScript.NPC.Script = npcScript;
-						npcScript.NPC.LoadDefault();
-
-						if (npcScript.NPC.RegionId > 0)
+						// Try to load as NpcScript
+						if (baseScript is NpcScript)
 						{
-							var region = ChannelServer.Instance.World.GetRegion(npcScript.NPC.RegionId);
-							if (region == null)
+							var npcScript = baseScript as NpcScript;
+
+							npcScript.NPC.AI = this.GetAi("npc_normal", npcScript.NPC);
+
+							npcScript.Load();
+							npcScript.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
+							npcScript.NPC.Script = npcScript;
+							npcScript.NPC.LoadDefault();
+
+							if (npcScript.NPC.RegionId > 0)
 							{
-								Log.Error("Failed to spawn '{0}', region '{1}' not found.", type, npcScript.NPC.RegionId);
+								var region = ChannelServer.Instance.World.GetRegion(npcScript.NPC.RegionId);
+								if (region == null)
+								{
+									Log.Error("Failed to spawn '{0}', region '{1}' not found.", type, npcScript.NPC.RegionId);
+									continue;
+								}
+
+								region.AddCreature(npcScript.NPC);
+							}
+						}
+						// Try to load as QuestScript
+						else if (baseScript is QuestScript)
+						{
+							var questScript = baseScript as QuestScript;
+							questScript.Load();
+
+							if (questScript.Id == 0 || _questScripts.ContainsKey(questScript.Id))
+							{
+								Log.Error("{1}.Load: Invalid id or already in use ({0}).", questScript.Id, type.Name);
 								continue;
 							}
 
-							region.AddCreature(npcScript.NPC);
-						}
-					}
-					// Try to load as QuestScript
-					else if (baseScript is QuestScript)
-					{
-						var questScript = baseScript as QuestScript;
-						questScript.Load();
+							if (questScript.Objectives.Count == 0)
+							{
+								Log.Error("{1}.Load: Quest '{0}' doesn't have any objectives.", questScript.Id, type.Name);
+								continue;
+							}
 
-						if (questScript.Id == 0 || _questScripts.ContainsKey(questScript.Id))
+							questScript.Init();
+
+							_questScripts[questScript.Id] = questScript;
+						}
+						// Try to load as RegionScript
+						else if (baseScript is RegionScript)
 						{
-							Log.Error("{1}.Load: Invalid id or already in use ({0}).", questScript.Id, type.Name);
+							var regionScript = baseScript as RegionScript;
+							regionScript.Load();
+							regionScript.LoadWarps();
+							regionScript.LoadSpawns();
+						}
+						else
+						{
+							// General Script, just load it.
+							baseScript.Load();
+						}
+
+						baseScript.AutoLoadEvents();
+					}
+					else if (type.IsSubclassOf(typeof(NpcShop)))
+					{
+						if (_shops.ContainsKey(type.Name))
+						{
+							Log.Error("LoadShops: Duplicate '{0}'", type.Name);
 							continue;
 						}
 
-						if (questScript.Objectives.Count == 0)
-						{
-							Log.Error("{1}.Load: Quest '{0}' doesn't have any objectives.", questScript.Id, type.Name);
-							continue;
-						}
-
-						questScript.Init();
-
-						_questScripts[questScript.Id] = questScript;
+						_shops[type.Name] = Activator.CreateInstance(type) as NpcShop;
 					}
-					// Try to load as RegionScript
-					else if (baseScript is RegionScript)
-					{
-						var regionScript = baseScript as RegionScript;
-						regionScript.Load();
-						regionScript.LoadWarps();
-						regionScript.LoadSpawns();
-					}
-					else
-					{
-						// General Script, just load it.
-						baseScript.Load();
-					}
-
-					baseScript.AutoLoadEvents();
 				}
 				catch (Exception ex)
 				{

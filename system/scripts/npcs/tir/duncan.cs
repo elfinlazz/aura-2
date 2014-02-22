@@ -52,7 +52,7 @@ public class DuncanBaseScript : NpcScript
 				
 			case "@shop":
 				Msg("Choose a quest you would like to do.");
-				OpenShop();
+				OpenShop("DuncanShop");
 				return;
 				
 			case "@lostandfound":

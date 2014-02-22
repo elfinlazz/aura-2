@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System.Collections.Generic;
+using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 
@@ -39,6 +40,37 @@ namespace Aura.Channel.World.Shops
 		public NpcShop()
 		{
 			_tabs = new Dictionary<string, NpcShopTab>();
+			this.Setup();
+		}
+
+		/// <summary>
+		/// Called when creating the shop.
+		/// </summary>
+		public virtual void Setup()
+		{
+		}
+
+		/// <summary>
+		/// Adds empty tab.
+		/// </summary>
+		/// <param name="tabTitle"></param>
+		/// <returns></returns>
+		public NpcShopTab Add(string tabTitle)
+		{
+			NpcShopTab tab;
+			_tabs.Add(tabTitle, (tab = new NpcShopTab(tabTitle, _tabs.Count)));
+			return tab;
+		}
+
+		/// <summary>
+		/// Adds empty tabs.
+		/// </summary>
+		/// <param name="tabTitle"></param>
+		/// <returns></returns>
+		public void Add(params string[] tabTitles)
+		{
+			foreach (var title in tabTitles)
+				this.Add(title);
 		}
 
 		/// <summary>
@@ -86,7 +118,7 @@ namespace Aura.Channel.World.Shops
 			NpcShopTab tab;
 			_tabs.TryGetValue(tabTitle, out tab);
 			if (tab == null)
-				_tabs.Add(tabTitle, (tab = new NpcShopTab(tabTitle, _tabs.Count)));
+				tab = this.Add(tabTitle);
 
 			if (price >= 0)
 			{
@@ -115,6 +147,21 @@ namespace Aura.Channel.World.Shops
 			}
 
 			return null;
+		}
+
+		/// <summary>
+		/// Sends OpenNpcShop for creature and this shop.
+		/// </summary>
+		/// <param name="creature"></param>
+		public void OpenFor(Creature creature)
+		{
+			// Shops without tabs are weird.
+			if (_tabs.Count == 0)
+				this.Add("Empty");
+
+			creature.Temp.CurrentShop = this;
+
+			Send.OpenNpcShop(creature, this);
 		}
 	}
 

@@ -52,7 +52,7 @@ public class NoraBaseScript : NpcScript
 				
 			case "@shop":
 				Msg("Are you looking for a Tailoring Kit and materials?<br/>If so, you've come to the right place.");
-				OpenShop();
+				OpenShop("TailorShop");
 				return;
 				
 			case "@repair":

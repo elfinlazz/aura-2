@@ -119,6 +119,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			client.NpcSession.Clear();
+			creature.Temp.CurrentShop = null;
 
 			Send.NpcTalkEndR(creature, npcId);
 		}
@@ -249,17 +250,22 @@ namespace Aura.Channel.Network.Handlers
 			if (!client.NpcSession.IsValid())
 			{
 				Log.Warning("NpcShopBuyItem: Player '{0}' is in invalid session.", creature.Name);
-				Send.NpcShopBuyItemR(creature, false);
-				return;
+				goto L_Fail;
+			}
+
+			// Check open shop
+			if (creature.Temp.CurrentShop == null)
+			{
+				Log.Warning("NpcShopBuyItem: Player '' tried to buy something with cur shop being null.", creature.EntityIdHex);
+				goto L_Fail;
 			}
 
 			// Get item
-			var item = client.NpcSession.Target.Script.Shop.GetItem(entityId);
+			var item = creature.Temp.CurrentShop.GetItem(entityId);
 			if (item == null)
 			{
 				Log.Warning("NpcShopBuyItem: Item '{0}' doesn't exist in shop.", entityId.ToString("X16"));
-				Send.NpcShopBuyItemR(creature, false);
-				return;
+				goto L_Fail;
 			}
 
 			// The client expects the price for a full stack to be sent
@@ -272,8 +278,7 @@ namespace Aura.Channel.Network.Handlers
 			if (creature.Inventory.Gold < price)
 			{
 				Send.MsgBox(creature, Localization.Get("world.shop_gold")); // Insufficient amount of gold.
-				Send.NpcShopBuyItemR(creature, false);
-				return;
+				goto L_Fail;
 			}
 
 			var success = false;
@@ -289,6 +294,11 @@ namespace Aura.Channel.Network.Handlers
 				creature.Inventory.RemoveGold(price);
 
 			Send.NpcShopBuyItemR(creature, success);
+			return;
+
+		L_Fail:
+			Send.NpcShopBuyItemR(creature, false);
+			return;
 		}
 
 		/// <summary>
@@ -312,8 +322,14 @@ namespace Aura.Channel.Network.Handlers
 			if (!client.NpcSession.IsValid())
 			{
 				Log.Warning("NpcShopSellItem: Player '{0}' is in invalid session.", creature.Name);
-				Send.NpcShopBuyItemR(creature, false);
-				return;
+				goto L_End;
+			}
+
+			// Check open shop
+			if (creature.Temp.CurrentShop == null)
+			{
+				Log.Warning("NpcShopSellItem: Player '' tried to sell something with cur shop being null.", creature.EntityIdHex);
+				goto L_End;
 			}
 
 			// Get item
