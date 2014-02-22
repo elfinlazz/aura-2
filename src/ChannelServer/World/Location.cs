@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Aura.Channel.World
 {
+	/// <summary>
+	/// Representation of a location in the world.
+	/// </summary>
+	/// <remarks>
+	/// Used to save locations, ie a location to warp back to.
+	/// </remarks>
 	public struct Location
 	{
 		public int RegionId;

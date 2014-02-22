@@ -31,7 +31,14 @@ namespace Aura.Channel.World
 
 		protected RegionData _regionData;
 
+		/// <summary>
+		/// Region's id
+		/// </summary>
 		public int Id { get; protected set; }
+
+		/// <summary>
+		/// Manager for blocking objects in the region.
+		/// </summary>
 		public RegionCollision Collissions { get; protected set; }
 
 		public Region(int id)
@@ -255,6 +262,7 @@ namespace Aura.Channel.World
 					_clients.Add(creature.Client);
 			}
 
+			// TODO: Technically not required? Handled by LookAround.
 			Send.EntityAppears(creature);
 
 			if (creature.EntityId < MabiId.Npcs)
@@ -276,6 +284,7 @@ namespace Aura.Channel.World
 				_creaturesRWLS.ExitWriteLock();
 			}
 
+			// TODO: Technically not required? Handled by LookAround.
 			Send.EntityDisappears(creature);
 
 			creature.Region = null;
@@ -555,11 +564,11 @@ namespace Aura.Channel.World
 				_itemsRWLS.ExitReadLock();
 			}
 
-			// All props spawned by the server, without range check.
 			_propsRWLS.EnterReadLock();
 			try
 			{
-				result.AddRange(_props.Values.Where(a => a.ServerSide));
+				// All props are visible, but not all of them are in range.
+				result.AddRange(_props.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range) && a.ServerSide));
 			}
 			finally
 			{
