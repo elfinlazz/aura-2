@@ -748,6 +748,7 @@ namespace Aura.Channel.Util
 
 		public CommandResult HandleReloadScripts(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
+			Send.ServerMessage(sender, Localization.Get("gm.reload_warning")); // Beware, reloading should only be used during development, it's not guaranteed to be safe.
 			Send.ServerMessage(sender, Localization.Get("gm.reload_wait")); // Reloading, this might take a moment.
 			ChannelServer.Instance.ScriptManager.Reload();
 			Send.ServerMessage(sender, Localization.Get("gm.reload_done")); // Reload complete.
