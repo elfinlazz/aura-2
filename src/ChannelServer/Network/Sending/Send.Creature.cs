@@ -214,13 +214,16 @@ namespace Aura.Channel.Network.Sending
 						case Stat.LifeMax: packet.PutFloat(creature.LifeMaxBaseTotal); break;
 						case Stat.LifeMaxMod: packet.PutFloat(creature.StatMods.Get(Stat.LifeMaxMod)); break;
 						case Stat.LifeInjured: packet.PutFloat(creature.LifeInjured); break;
+						case Stat.LifeMaxFoodMod: packet.PutFloat(creature.LifeFoodMod); break;
 						case Stat.Mana: packet.PutFloat(creature.Mana); break;
 						case Stat.ManaMax: packet.PutFloat(creature.ManaMaxBaseTotal); break;
 						case Stat.ManaMaxMod: packet.PutFloat(creature.StatMods.Get(Stat.ManaMaxMod)); break;
+						case Stat.ManaMaxFoodMod: packet.PutFloat(creature.ManaFoodMod); break;
 						case Stat.Stamina: packet.PutFloat(creature.Stamina); break;
 						case Stat.Hunger: packet.PutFloat(creature.StaminaHunger); break;
 						case Stat.StaminaMax: packet.PutFloat(creature.StaminaMaxBaseTotal); break;
 						case Stat.StaminaMaxMod: packet.PutFloat(creature.StatMods.Get(Stat.StaminaMaxMod)); break;
+						case Stat.StaminaMaxFoodMod: packet.PutFloat(creature.StaminaFoodMod); break;
 
 						case Stat.StrMod: packet.PutFloat(creature.StatMods.Get(Stat.StrMod)); break;
 						case Stat.DexMod: packet.PutFloat(creature.StatMods.Get(Stat.DexMod)); break;
@@ -232,6 +235,11 @@ namespace Aura.Channel.Network.Sending
 						case Stat.Dex: packet.PutFloat(creature.DexBaseTotal); break;
 						case Stat.Will: packet.PutFloat(creature.WillBaseTotal); break;
 						case Stat.Luck: packet.PutFloat(creature.LuckBaseTotal); break;
+						case Stat.StrFoodMod: packet.PutFloat(creature.StrFoodMod); break;
+						case Stat.DexFoodMod: packet.PutFloat(creature.DexFoodMod); break;
+						case Stat.IntFoodMod: packet.PutFloat(creature.IntFoodMod); break;
+						case Stat.LuckFoodMod: packet.PutFloat(creature.LuckFoodMod); break;
+						case Stat.WillFoodMod: packet.PutFloat(creature.WillFoodMod); break;
 
 						case Stat.DefenseBase: packet.PutShort((short)creature.DefenseBase); break;
 						case Stat.ProtectionBase: packet.PutFloat(creature.ProtectionBase); break;
