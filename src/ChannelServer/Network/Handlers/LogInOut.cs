@@ -66,7 +66,7 @@ namespace Aura.Channel.Network.Handlers
 			Send.ChannelLoginR(client, character.EntityId);
 
 			// Log into world
-			if (character.Has(CreatureStates.EverEnteredWorld))
+			if (character.Has(CreatureStates.EverEnteredWorld) || character.IsPet)
 			{
 				// Fallback for invalid region ids, like 0, dynamics, and dungeons.
 				if (character.RegionId == 0 || Math2.Between(character.RegionId, 35000, 40000) || Math2.Between(character.RegionId, 10000, 11000))
