@@ -1020,21 +1020,40 @@ namespace Aura.Channel.World.Entities
 			var pos = this.GetPosition();
 
 			// Gold
-			if (rnd.NextDouble() < ChannelServer.Instance.Conf.World.GoldDropRate)
+			if (rnd.NextDouble() < ChannelServer.Instance.Conf.World.GoldDropChance)
 			{
 				var amount = rnd.Next(this.Drops.GoldMin, this.Drops.GoldMax + 1);
+				amount = Math.Min(21000, (int)(amount * ChannelServer.Instance.Conf.World.GoldDropRate));
 				if (amount > 0)
 				{
-					var dropPos = pos.GetRandomInRange(50, rnd);
+					var i = 0;
+					var pattern = (amount == 21000);
 
-					var gold = new Item(2000);
-					gold.Info.Amount = (ushort)amount;
-					gold.Info.Region = this.RegionId;
-					gold.Info.X = dropPos.X;
-					gold.Info.Y = dropPos.Y;
-					gold.DisappearTime = DateTime.Now.AddSeconds(60);
+					do
+					{
+						Position dropPos;
+						if (!pattern)
+						{
+							dropPos = pos.GetRandomInRange(50, rnd);
+						}
+						else
+						{
+							dropPos = new Position(pos.X + CreatureDrops.MaxGoldPattern[i, 0], pos.Y + CreatureDrops.MaxGoldPattern[i, 1]);
+							i++;
+						}
 
-					this.Region.AddItem(gold);
+						var gold = new Item(2000);
+						gold.Info.Amount = (ushort)Math.Min(1000, amount);
+						gold.Info.Region = this.RegionId;
+						gold.Info.X = dropPos.X;
+						gold.Info.Y = dropPos.Y;
+						gold.DisappearTime = DateTime.Now.AddSeconds(60);
+
+						this.Region.AddItem(gold);
+
+						amount -= gold.Info.Amount;
+					}
+					while (amount > 0);
 				}
 			}
 

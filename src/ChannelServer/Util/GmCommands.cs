@@ -58,6 +58,7 @@ namespace Aura.Channel.Util
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
 			Add(99, 99, "reloaddata", "", HandleReloadData);
 			Add(99, 99, "reloadscripts", "", HandleReloadScripts);
+			Add(99, 99, "reloadconf", "", HandleReloadConf);
 			Add(99, 99, "closenpc", "", HandleCloseNpc);
 			Add(99, 99, "test", "", HandleTest);
 
@@ -751,6 +752,16 @@ namespace Aura.Channel.Util
 			Send.ServerMessage(sender, Localization.Get("gm.reload_warning")); // Beware, reloading should only be used during development, it's not guaranteed to be safe.
 			Send.ServerMessage(sender, Localization.Get("gm.reload_wait")); // Reloading, this might take a moment.
 			ChannelServer.Instance.ScriptManager.Reload();
+			Send.ServerMessage(sender, Localization.Get("gm.reload_done")); // Reload complete.
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleReloadConf(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			Send.ServerMessage(sender, Localization.Get("gm.reload_warning")); // Beware, reloading should only be used during development, it's not guaranteed to be safe.
+			Send.ServerMessage(sender, Localization.Get("gm.reload_wait")); // Reloading, this might take a moment.
+			ChannelServer.Instance.Conf.Load();
 			Send.ServerMessage(sender, Localization.Get("gm.reload_done")); // Reload complete.
 
 			return CommandResult.Okay;

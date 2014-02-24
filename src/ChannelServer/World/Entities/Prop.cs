@@ -118,7 +118,7 @@ namespace Aura.Channel.World.Entities
 		{
 			return (creature, prop) =>
 			{
-				if (RandomProvider.Get().NextDouble() > ChannelServer.Instance.Conf.World.PropDropRate)
+				if (RandomProvider.Get().NextDouble() > ChannelServer.Instance.Conf.World.PropDropChance)
 					return;
 
 				var dropInfo = AuraData.PropDropDb.Find(dropType);

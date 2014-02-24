@@ -11,8 +11,9 @@ namespace Aura.Channel.Util.Configuration.Files
 		public float QuestExpRate { get; protected set; }
 
 		public float DropRate { get; protected set; }
+		public float GoldDropChance { get; protected set; }
 		public float GoldDropRate { get; protected set; }
-		public float PropDropRate { get; protected set; }
+		public float PropDropChance { get; protected set; }
 
 		public bool EnableContinentWarp { get; protected set; }
 
@@ -26,8 +27,9 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.QuestExpRate = this.GetFloat("quest_exp_rate", 100) / 100.0f;
 
 			this.DropRate = this.GetFloat("drop_rate", 100) / 100.0f;
-			this.GoldDropRate = this.GetFloat("gold_drop_rate", 30) / 100.0f;
-			this.PropDropRate = this.GetFloat("prop_drop_rate", 30) / 100.0f;
+			this.GoldDropChance = this.GetFloat("gold_drop_chance", 30) / 100.0f;
+			this.GoldDropRate = this.GetFloat("gold_drop_rate", 100) / 100.0f;
+			this.PropDropChance = this.GetFloat("prop_drop_chance", 30) / 100.0f;
 
 			this.EnableContinentWarp = this.GetBool("enable_continent_warp", true);
 

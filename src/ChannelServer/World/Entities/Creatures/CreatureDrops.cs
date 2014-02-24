@@ -12,6 +12,14 @@ namespace Aura.Channel.World.Entities.Creatures
 {
 	public class CreatureDrops
 	{
+		public static int[,] MaxGoldPattern = new int[,] { 
+			            {-50,100},  {0,100},  {50,100},
+			{-100,50},  {-50,50},   {0,50},   {50,50},   {100,50},
+			{-100,0},   {-50,0},    {0,0},    {50,0},    {100,0},
+			{-100,-50}, {-50,-50},  {0,-50},  {50,-50},  {100,-50},
+			            {-50,-100}, {0,-100}, {50,-100},
+		};
+
 		private Creature _creature;
 		private Dictionary<int, DropData> _drops;
 
