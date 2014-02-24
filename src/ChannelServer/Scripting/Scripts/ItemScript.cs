@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -136,6 +138,18 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void Treat(Creature creature, double injuries)
 		{
 			creature.Injuries -= (float)injuries;
+		}
+
+		/// <summary>
+		/// Adds gesture by keyword.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="keyword"></param>
+		/// <param name="name"></param>
+		protected void AddGesture(Creature creature, string keyword, string name)
+		{
+			creature.Keywords.Give(keyword);
+			Send.Notice(creature, Localization.Get("items.gesture_added"), name); // The {0} Gesture has been added. Check your gestures window.
 		}
 	}
 }

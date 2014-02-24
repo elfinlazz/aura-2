@@ -1,0 +1,5 @@
+﻿// Aura
+// Localization file
+// --------------------------------------------------------------------------
+
+gesture_added	The {0} Gesture has been added. Check your gestures window.
