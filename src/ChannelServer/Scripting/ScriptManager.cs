@@ -42,6 +42,8 @@ namespace Aura.Channel.Scripting
 
 		private Dictionary<int, CreatureSpawn> _creatureSpawns;
 
+		private List<IDisposable> _scriptsToDispose;
+
 		public ScriptVariables GlobalVars { get; protected set; }
 
 		public ScriptManager()
@@ -58,6 +60,8 @@ namespace Aura.Channel.Scripting
 			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
 
 			_creatureSpawns = new Dictionary<int, CreatureSpawn>();
+
+			_scriptsToDispose = new List<IDisposable>();
 
 			this.GlobalVars = new ScriptVariables();
 		}
@@ -85,6 +89,10 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		public void Reload()
 		{
+			foreach (var script in _scriptsToDispose)
+				script.Dispose();
+			_scriptsToDispose.Clear();
+
 			ChannelServer.Instance.World.RemoveScriptedEntities();
 
 			this.Load();
@@ -462,6 +470,7 @@ namespace Aura.Channel.Scripting
 						}
 
 						baseScript.AutoLoadEvents();
+						_scriptsToDispose.Add(baseScript);
 					}
 					else if (type.IsSubclassOf(typeof(NpcShop)))
 					{

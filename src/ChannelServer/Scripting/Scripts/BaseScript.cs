@@ -75,7 +75,7 @@ namespace Aura.Channel.Scripting.Scripts
 				if (eventHandlerInfo == null)
 				{
 					// Erroring on load should be enough.
-					//Log.Error("AutoLoadEvents: Unknown event '{0}' on '{1}.{2}'.", attr.Event, type.Name, method.Name);
+					//Log.Error("Dispose: Unknown event '{0}' on '{1}.{2}'.", attr.Event, type.Name, method.Name);
 					continue;
 				}
 
@@ -85,9 +85,18 @@ namespace Aura.Channel.Scripting.Scripts
 				}
 				catch (Exception ex)
 				{
-					Log.Exception(ex, "AutoLoadEvents: Failed to unsubscribe '{1}.{2}' from '{0}'.", attr.Event, type.Name, method.Name);
+					Log.Exception(ex, "Dispose: Failed to unsubscribe '{1}.{2}' from '{0}'.", attr.Event, type.Name, method.Name);
 				}
 			}
+
+			this.CleanUp();
+		}
+
+		/// <summary>
+		/// Called from Dispose, use for cleaning up before reload.
+		/// </summary>
+		protected virtual void CleanUp()
+		{
 		}
 
 		/// <summary>

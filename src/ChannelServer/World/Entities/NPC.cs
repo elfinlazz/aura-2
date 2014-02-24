@@ -40,9 +40,6 @@ namespace Aura.Channel.World.Entities
 
 			if (this.AI != null)
 				this.AI.Dispose();
-
-			if (this.Script != null)
-				this.Script.Dispose();
 		}
 
 		/// <summary>
