@@ -571,5 +571,23 @@ namespace Aura.Login.Database
 				}
 			}
 		}
+
+		/// <summary>
+		/// Changes auth level of account.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="level"></param>
+		/// <returns></returns>
+		public bool ChangeAuth(string accountId, int level)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new UpdateCommand("UPDATE `accounts` SET {0} WHERE `accountId` = @accountId", conn))
+			{
+				cmd.AddParameter("@accountId", accountId);
+				cmd.Set("authority", level);
+
+				return (cmd.Execute() > 0);
+			}
+		}
 	}
 }
