@@ -17,3 +17,7 @@ upper_plus		Your upper body got bigger.
 upper_minus		Your upper body got slimmer.
 lower_plus		Your legs got bigger.
 lower_minus		Your legs got slimmer.
+
+lucky_finish		Lucky Finish!!
+big_lucky_finish	Big Lucky Finish!!
+huge_lucky_finish	Huge Lucky Finish!!
