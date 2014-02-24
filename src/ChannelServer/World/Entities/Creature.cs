@@ -56,6 +56,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureStatMods StatMods { get; protected set; }
 		public CreatureConditions Conditions { get; protected set; }
 		public CreatureQuests Quests { get; protected set; }
+		public CreatureDrops Drops { get; protected set; }
 
 		public ScriptVariables Vars { get; protected set; }
 
@@ -528,6 +529,8 @@ namespace Aura.Channel.World.Entities
 			this.Skills = new CreatureSkills(this);
 			this.StatMods = new CreatureStatMods(this);
 			this.Conditions = new CreatureConditions(this);
+			this.Quests = new CreatureQuests(this);
+			this.Drops = new CreatureDrops(this);
 
 			this.Vars = new ScriptVariables();
 		}
@@ -1012,6 +1015,46 @@ namespace Aura.Channel.World.Entities
 			ChannelServer.Instance.Events.OnCreatureKilled(this, killer);
 			if (killer != null && killer.IsPlayer)
 				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer);
+
+			var rnd = RandomProvider.Get();
+			var pos = this.GetPosition();
+
+			// Gold
+			if (rnd.NextDouble() < ChannelServer.Instance.Conf.World.GoldDropRate)
+			{
+				var amount = rnd.Next(this.Drops.GoldMin, this.Drops.GoldMax + 1);
+				if (amount > 0)
+				{
+					var dropPos = pos.GetRandomInRange(50, rnd);
+
+					var gold = new Item(2000);
+					gold.Info.Amount = (ushort)amount;
+					gold.Info.Region = this.RegionId;
+					gold.Info.X = dropPos.X;
+					gold.Info.Y = dropPos.Y;
+					gold.DisappearTime = DateTime.Now.AddSeconds(60);
+
+					this.Region.AddItem(gold);
+				}
+			}
+
+			// Drops
+			foreach (var drop in this.Drops.Drops)
+			{
+				if (rnd.NextDouble() < drop.Chance * ChannelServer.Instance.Conf.World.DropRate)
+				{
+					var dropPos = pos.GetRandomInRange(50, rnd);
+
+					var item = new Item(drop.ItemId);
+					item.Info.Amount = 1;
+					item.Info.Region = this.RegionId;
+					item.Info.X = dropPos.X;
+					item.Info.Y = dropPos.Y;
+					item.DisappearTime = DateTime.Now.AddSeconds(60);
+
+					this.Region.AddItem(item);
+				}
+			}
 		}
 
 		/// <summary>

@@ -69,11 +69,6 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		public PlayerCreature()
-		{
-			this.Quests = new CreatureQuests(this);
-		}
-
 		/// <summary>
 		/// Instructs client to move to target location.
 		/// Returns false if region doesn't exist.

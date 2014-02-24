@@ -52,13 +52,13 @@ namespace Aura.Data.Database
 
 		public int GoldMin { get; internal set; }
 		public int GoldMax { get; internal set; }
-		public List<DropInfo> Drops { get; internal set; }
+		public List<DropData> Drops { get; internal set; }
 
 		public List<RaceSkillData> Skills { get; internal set; }
 
 		public RaceData()
 		{
-			this.Drops = new List<DropInfo>();
+			this.Drops = new List<DropData>();
 			this.Skills = new List<RaceSkillData>();
 		}
 
@@ -97,10 +97,20 @@ namespace Aura.Data.Database
 		}
 	}
 
-	public class DropInfo
+	public class DropData
 	{
 		public int ItemId;
 		public float Chance;
+
+		public DropData()
+		{
+		}
+
+		public DropData(int itemId, float chance)
+		{
+			this.ItemId = itemId;
+			this.Chance = chance;
+		}
 	}
 
 	public enum RaceStands : int
@@ -169,7 +179,7 @@ namespace Aura.Data.Database
 				if (drop.Length != 2)
 					throw new DatabaseWarningException("Incomplete drop information.");
 
-				var di = new DropInfo();
+				var di = new DropData();
 				di.ItemId = Convert.ToInt32(drop[0]);
 				di.Chance = float.Parse(drop[1], NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"));
 

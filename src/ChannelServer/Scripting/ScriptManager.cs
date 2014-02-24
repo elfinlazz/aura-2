@@ -646,6 +646,10 @@ namespace Aura.Channel.Scripting
 			creature.State = (CreatureStates)creature.RaceData.DefaultState;
 			creature.Direction = (byte)RandomProvider.Get().Next(256);
 
+			creature.Drops.GoldMin = creature.RaceData.GoldMin;
+			creature.Drops.GoldMax = creature.RaceData.GoldMax;
+			creature.Drops.Add(creature.RaceData.Drops);
+
 			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI) && creature.RaceData.AI != "none")
 			{
 				creature.AI = this.GetAi(creature.RaceData.AI, creature);
