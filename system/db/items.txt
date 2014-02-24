@@ -12428,20 +12428,20 @@
 85715,"Kaleido Box Metalware Tool","Kaleido Box Metalware Tool",1001,1,100,,yes,2,2,12,12,12,100000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85716,"Onion Whistle","Onion Whistle",1001,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85717,"Maple Crab Whistle","Maple Crab Whistle",1001,0,1,,no,2,2,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85720,"Rage Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85721,"Splat Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85722,"Shiver Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85723,"Crossed Arms Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85724,"Look Around Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85725,"Jump Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85726,"Formal Greeting 2 Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85727,"Cheer Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85728,"Collapse Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85729,"Gasp Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85730,"Clumsy Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85731,"Toady Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85732,"Cutie Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
-85733,"Wahoo Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
+85720,"Rage Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_1"); },{},{}
+85721,"Splat Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_2"); },{},{}
+85722,"Shiver Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_3"); },{},{}
+85723,"Crossed Arms Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_4"); },{},{}
+85724,"Look Around Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_5"); },{},{}
+85725,"Jump Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_6"); },{},{}
+85726,"Formal Greeting 2 Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_7"); },{},{}
+85727,"Cheer Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_8"); },{},{}
+85728,"Collapse Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_9"); },{},{}
+85729,"Gasp Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_10"); },{},{}
+85730,"Clumsy Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_11"); },{},{}
+85731,"Toady Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_12"); },{},{}
+85732,"Cutie Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_13"); },{},{}
+85733,"Wahoo Gesture Card","Gesture Card",1001,1,100,,yes,1,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{ cr.Keywords.Give("rare_gesture_14"); },{},{}
 85734,"Transformation Medal Coupon","Ticket for NPC Medal",1001,1,100,,yes,1,1,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85736,"AP Coupon","Ticket for AP",1001,1,100,,yes,1,1,12,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}
 85738,"Hatsune Miku Soul Stone","Hatsune Miku's Soulstone",1001,1,35,,no,1,1,12,12,12,150000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{}

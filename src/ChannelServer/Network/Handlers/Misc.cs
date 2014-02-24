@@ -9,6 +9,7 @@ using Aura.Shared.Network;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
 using Aura.Shared.Mabi.Const;
+using Aura.Data;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -162,6 +163,34 @@ namespace Aura.Channel.Network.Handlers
 			Send.CharacterUnlock(creature, Locks.Default);
 
 			creature.Temp.CurrentCutscene = null;
+		}
+
+		/// <summary>
+		/// Sent to use gesture.
+		/// </summary>
+		/// <example>
+		/// 001 [................] String : rare_1
+		/// </example>
+		[PacketHandler(Op.UseGesture)]
+		public void UseGesture(ChannelClient client, Packet packet)
+		{
+			var gestureName = packet.GetString();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null) return;
+
+			creature.StopMove();
+
+			var motionData = AuraData.MotionDb.Find(gestureName);
+			if (motionData == null)
+			{
+				Log.Warning("Creature '{0}' tried to use missing gesture '{1}'.", creature.EntityIdHex, gestureName);
+				Send.UseGestureR(creature, false);
+				return;
+			}
+
+			Send.UseMotion(creature, motionData.Category, motionData.Type, motionData.Loop);
+			Send.UseGestureR(creature, true);
 		}
 	}
 }

@@ -43,22 +43,19 @@ disregard,14,14,no
 victory,82,0,no
 proposal1,53,46,no
 proposal2,53,47,no
-
-// G17
-// Commented ones don't seem to work (yet).
-// ---------------------------------------------------------------------------
-//head_shake,53,48,no
-blow_away,53,49,no
-cold,53,50,no
-fold_arms,53,51,no
-gaze_around,53,52,no
-jump,53,53,no
-//politely_greeting,53,54,no
-revolution,53,55,no
-side_die,53,56,no
-surprise2,53,57,no
-trip,53,58,no
-offer,53,59,no
-//cuite,53,60,no
-//tarzan,53,61,no
-psydance,53,62,no
+rare_1,53,48,no
+rare_2,53,49,no
+rare_3,53,50,no
+rare_4,53,51,no
+rare_5,53,52,no
+rare_6,53,53,no
+rare_7,53,54,no
+rare_8,53,55,no
+rare_9,53,56,no
+rare_10,53,57,no
+rare_11,53,58,no
+rare_12,53,59,no
+rare_13,53,60,no
+rare_14,53,61,no
+psy_motion,53,62,no
+motionnewyearsbow,53,63,no

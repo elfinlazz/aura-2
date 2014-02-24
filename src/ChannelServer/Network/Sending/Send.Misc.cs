@@ -227,5 +227,47 @@ namespace Aura.Channel.Network.Sending
 			// TODO: Send to whole party?
 			cutscene.Leader.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends UseGestureR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void UseGestureR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.UseGestureR, creature.EntityId);
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts UseMotion and CancelMotion (cancel is true) around creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="category"></param>
+		/// <param name="type"></param>
+		/// <param name="loop"></param>
+		/// <param name="cancel"></param>
+		public static void UseMotion(Creature creature, int category, int type, bool loop = false, bool cancel = false)
+		{
+			if (cancel)
+			{
+				// Cancel motion
+				var cancelPacket = new Packet(Op.CancelMotion, creature.EntityId);
+				cancelPacket.PutByte(0);
+
+				creature.Region.Broadcast(cancelPacket, creature);
+			}
+
+			// Do motion
+			var packet = new Packet(Op.UseMotion, creature.EntityId);
+			packet.PutInt(category);
+			packet.PutInt(type);
+			packet.PutByte(loop);
+			packet.PutShort(0);
+
+			creature.Region.Broadcast(packet, creature);
+		}
 	}
 }
