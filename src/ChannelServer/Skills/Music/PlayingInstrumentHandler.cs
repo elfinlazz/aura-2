@@ -67,10 +67,7 @@ namespace Aura.Channel.Skills.Music
 
 			creature.Skills.ActiveSkill = skill;
 
-			creature.Temp.SkillCallback = () =>
-			{
-				Send.Notice(creature, this.GetRandomComplete(quality));
-			};
+			creature.Skills.Callback(SkillId.PlayingInstrument, () => Send.Notice(creature, this.GetRandomComplete(quality)));
 		}
 
 		public void Complete(Creature creature, Skill skill, Packet packet)
@@ -79,11 +76,7 @@ namespace Aura.Channel.Skills.Music
 
 			Send.Effect(creature, Effect.StopMusic);
 
-			if (creature.Temp.SkillCallback != null)
-			{
-				creature.Temp.SkillCallback();
-				creature.Temp.SkillCallback = null;
-			}
+			creature.Skills.Callback(SkillId.PlayingInstrument);
 
 			Send.SkillComplete(creature, skill.Info.Id);
 		}

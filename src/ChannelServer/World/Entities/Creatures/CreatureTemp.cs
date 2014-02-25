@@ -26,7 +26,5 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		// Last open shop
 		public NpcShop CurrentShop;
-
-		public Action SkillCallback;
 	}
 }

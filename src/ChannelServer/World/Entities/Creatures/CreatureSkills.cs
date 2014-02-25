@@ -17,15 +17,25 @@ namespace Aura.Channel.World.Entities.Creatures
 	{
 		private Creature _creature;
 		private Dictionary<SkillId, Skill> _skills;
+		private Dictionary<SkillId, Action> _callbacks;
 
+		// Skill of creature with highest combat power
 		public float HighestSkillCp { get; private set; }
+
+		/// <summary>
+		/// Skill of creature with second highest combat power
+		/// </summary>
 		public float SecondHighestSkillCp { get; private set; }
 
+		/// <summary>
+		/// Currently active skill
+		/// </summary>
 		public Skill ActiveSkill { get; set; }
 
 		public CreatureSkills(Creature creature)
 		{
 			_skills = new Dictionary<SkillId, Skill>();
+			_callbacks = new Dictionary<SkillId, Action>();
 			_creature = creature;
 		}
 
@@ -325,6 +335,34 @@ namespace Aura.Channel.World.Entities.Creatures
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Adds callback
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <param name="action"></param>
+		public void Callback(SkillId skillId, Action action)
+		{
+			lock (_callbacks)
+				_callbacks[skillId] = action;
+		}
+
+		/// <summary>
+		/// Runs and resets callback (it one was set)
+		/// </summary>
+		/// <param name="skillId"></param>
+		public void Callback(SkillId skillId)
+		{
+			lock (_callbacks)
+			{
+				Action callback;
+				_callbacks.TryGetValue(skillId, out callback);
+				if (callback == null) return;
+
+				callback();
+				_callbacks[skillId] = null;
+			}
 		}
 	}
 }

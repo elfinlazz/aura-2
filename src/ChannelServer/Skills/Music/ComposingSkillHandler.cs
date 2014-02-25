@@ -59,7 +59,7 @@ namespace Aura.Channel.Skills.Music
 			if (knowledge != null) level = knowledge.Info.Rank;
 
 			// Update item and send skill complete from Complete
-			creature.Temp.SkillCallback = () =>
+			creature.Skills.Callback(SkillId.Composing, () =>
 			{
 				item.MetaData1.SetString("TITLE", title);
 				item.MetaData1.SetString("AUTHOR", author);
@@ -70,7 +70,7 @@ namespace Aura.Channel.Skills.Music
 
 				Send.ItemUpdate(creature, item);
 				Send.SkillCompleteEntity(creature, skill.Info.Id, item.EntityId);
-			};
+			});
 
 			creature.Skills.ActiveSkill = skill;
 
@@ -85,12 +85,7 @@ namespace Aura.Channel.Skills.Music
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
 			creature.Skills.ActiveSkill = null;
-
-			if (creature.Temp.SkillCallback == null)
-				return;
-
-			creature.Temp.SkillCallback();
-			creature.Temp.SkillCallback = null;
+			creature.Skills.Callback(SkillId.Composing);
 		}
 
 		public void Cancel(Creature creature, Skill skill)
