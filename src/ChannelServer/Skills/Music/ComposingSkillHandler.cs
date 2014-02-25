@@ -20,15 +20,14 @@ namespace Aura.Channel.Skills.Music
 	/// </summary>
 	/// <remarks>
 	/// Goes straight to Complete from Prepare, by sending the response of Use.
-	/// </remarks>
-	/// <remarks>
+	/// 
 	/// Var 1: Melody max length
 	/// Var 2: Harmony 1 max length
 	/// Var 3: Harmony 2 max length
 	/// Var 4: Magical Effect chance
 	/// </remarks>
 	[Skill(SkillId.Composing)]
-	public class Composing : IPreparable, ICompletable, ICancelable
+	public class ComposingSkillHandler : IPreparable, ICompletable, ICancelable
 	{
 		private const int MMLMaxLength = 10000;
 

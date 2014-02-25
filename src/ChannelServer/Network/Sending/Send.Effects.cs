@@ -10,6 +10,7 @@ using Aura.Shared.Network;
 using Aura.Channel.World;
 using Aura.Shared.Mabi.Const;
 using E = Aura.Shared.Mabi.Const.Effect;
+using Aura.Data.Database;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -81,7 +82,35 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(0);
 
 			pet.Region.Broadcast(packet, pet);
+		}
 
+		/// <summary>
+		/// Broadcasts Effect in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="instrument"></param>
+		/// <param name="quality"></param>
+		/// <param name="compressedMML"></param>
+		/// <param name="rndScore"></param>
+		public static void PlayEffect(Creature creature, InstrumentType instrument, PlayingQuality quality, string compressedMML, int rndScore)
+		{
+			var packet = new Packet(Op.Effect, creature.EntityId);
+			packet.PutInt(E.PlayMusic);
+			packet.PutByte(compressedMML != null); // has scroll
+			if (compressedMML != null)
+				packet.PutString(compressedMML);
+			else
+				packet.PutInt(rndScore);
+			packet.PutInt(0);
+			packet.PutShort(0);
+			packet.PutInt(14113); // ?
+			packet.PutByte((byte)quality);
+			packet.PutByte((byte)instrument);
+			packet.PutByte(0);
+			packet.PutByte(0);
+			packet.PutByte(1); // loops
+
+			creature.Region.Broadcast(packet, creature);
 		}
 	}
 }

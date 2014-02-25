@@ -10,6 +10,7 @@ using Aura.Shared.Network;
 using Aura.Channel.World;
 using Aura.Channel.Skills;
 using Aura.Shared.Mabi.Const;
+using Aura.Data.Database;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -233,6 +234,31 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Broadcasts Effect in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="instrument"></param>
+		/// <param name="quality"></param>
+		/// <param name="compressedMML"></param>
+		/// <param name="rndScore"></param>
+		public static void SkillUsePlayingInstrument(Creature creature, SkillId skillId, InstrumentType instrument, string compressedMML, int rndScore)
+		{
+			var packet = new Packet(Op.SkillUse, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutLong(0);
+			packet.PutByte(compressedMML != null); // has scroll
+			if (compressedMML != null)
+				packet.PutString(compressedMML);
+			else
+				packet.PutInt(rndScore);
+			packet.PutByte((byte)instrument);
+			packet.PutByte(1);
+			packet.PutByte(0);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends SkillTrainingUp to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
@@ -258,6 +284,19 @@ namespace Aura.Channel.Network.Sending
 			var packet = new Packet(Op.SkillCancel, creature.EntityId);
 			packet.PutByte(0);
 			packet.PutByte(1);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillComplete to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		public static void SkillComplete(Creature creature, SkillId skillId)
+		{
+			var packet = new Packet(Op.SkillComplete, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
 
 			creature.Client.Send(packet);
 		}

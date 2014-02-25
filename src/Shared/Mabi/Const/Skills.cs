@@ -529,4 +529,12 @@ namespace Aura.Shared.Mabi.Const
 		SuperWindmillGMSkill = 65002,
 		BlockWorldGMSkill = 65003,
 	}
+
+	public enum PlayingQuality
+	{
+		VeryBad = 0,
+		Bad = 1,
+		Good = 2,
+		VeryGood = 3
+	}
 }

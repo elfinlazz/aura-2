@@ -903,6 +903,20 @@ namespace Aura.Channel.World
 
 			return result;
 		}
+
+		/// <summary>
+		/// Reduces durability and updates client.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="amount"></param>
+		public void ReduceDurability(Item item, int amount)
+		{
+			if (!this.Has(item))
+				return;
+
+			item.OptionInfo.Durability = Math.Max(0, item.OptionInfo.Durability - amount);
+			Send.ItemDurabilityUpdate(_creature, item);
+		}
 	}
 
 	public enum WeaponSet : byte
