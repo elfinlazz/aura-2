@@ -199,15 +199,26 @@ namespace Aura.Channel.World.Entities.Creatures
 			{
 				foreach (var effect in data.Effects)
 				{
+					// Simply adding the bonuses allows to "recover" stats by
+					// using different titles, eg first +40, then +120, to
+					// add 160 Life, even though it should only be 120?
+					// Not much of a problem with title apply delay.
+
 					switch (effect.Key)
 					{
 						case "Life":
 							_creature.StatMods.Add(Stat.LifeMaxMod, effect.Value, StatModSource.Title, data.Id);
-							_creature.Life = _creature.Life; // "Reset" stat (in case of reducation, stat = max)
+							if (effect.Value > 0)
+								_creature.Life += effect.Value; // Add value
+							else
+								_creature.Life = _creature.Life; // "Reset" stat (in case of reducation, stat = max)
 							break;
 						case "Mana":
 							_creature.StatMods.Add(Stat.ManaMaxMod, effect.Value, StatModSource.Title, data.Id);
-							_creature.Mana = _creature.Mana;
+							if (effect.Value > 0)
+								_creature.Mana += effect.Value;
+							else
+								_creature.Mana = _creature.Mana;
 							break;
 						case "Stamina":
 							// Adjust hunger to new max value, so Food stays
@@ -215,7 +226,10 @@ namespace Aura.Channel.World.Entities.Creatures
 							var hungerRate = (100 / _creature.StaminaMax * _creature.Hunger) / 100f;
 
 							_creature.StatMods.Add(Stat.StaminaMaxMod, effect.Value, StatModSource.Title, data.Id);
-							_creature.Stamina = _creature.Stamina;
+							if (effect.Value > 0)
+								_creature.Stamina += effect.Value;
+							else
+								_creature.Stamina = _creature.Stamina;
 							_creature.Hunger = _creature.StaminaMax * hungerRate;
 							break;
 						case "Str": _creature.StatMods.Add(Stat.StrMod, effect.Value, StatModSource.Title, data.Id); break;
