@@ -240,7 +240,7 @@ namespace Aura.Channel
 
 		private void InitializeWorld()
 		{
-			Log.Info("Initilizing world...");
+			Log.Info("Initializing world...");
 
 			this.World = new WorldManager();
 			this.World.Initialize();

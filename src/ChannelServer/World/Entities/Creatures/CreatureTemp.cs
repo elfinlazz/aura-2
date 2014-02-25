@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using Aura.Channel.World.Shops;
 using Aura.Data.Database;
 
@@ -25,5 +26,7 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		// Last open shop
 		public NpcShop CurrentShop;
+
+		public Action SkillCallback;
 	}
 }
