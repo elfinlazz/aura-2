@@ -96,6 +96,8 @@ namespace Aura.Channel.Skills.Actions
 
 			creature.Warp(regionId, x, y);
 
+			creature.Skills.ActiveSkill = null;
+
 			Send.SkillComplete(creature, skill.Info.Id, (byte)destination);
 		}
 

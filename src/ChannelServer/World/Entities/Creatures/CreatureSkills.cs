@@ -273,7 +273,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		{
 			if (this.ActiveSkill == null)
 			{
-				Log.Warning("Player '{0}' tried to cancel skill, without it being active.", _creature.Name);
+				Log.Warning("CancelActiveSkill: Player '{0}' tried to cancel skill, without it being active.", _creature.Name);
 				return;
 			}
 

@@ -73,6 +73,8 @@ namespace Aura.Channel.Skills.Music
 				Send.SkillCompleteEntity(creature, skill.Info.Id, item.EntityId);
 			};
 
+			creature.Skills.ActiveSkill = skill;
+
 			// Finish
 			Send.SkillUseEntity(creature, skill.Info.Id, scrollId);
 			return;
@@ -83,6 +85,8 @@ namespace Aura.Channel.Skills.Music
 
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
+			creature.Skills.ActiveSkill = null;
+
 			if (creature.Temp.SkillCallback == null)
 				return;
 
