@@ -192,5 +192,19 @@ namespace Aura.Channel.Network.Handlers
 			Send.UseMotion(creature, motionData.Category, motionData.Type, motionData.Loop);
 			Send.UseGestureR(creature, true);
 		}
+
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Purpose unknown, sent when pressing escape.
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.UnkEsc)]
+		public void UnkEsc(ChannelClient client, Packet packet)
+		{
+		}
 	}
 }
