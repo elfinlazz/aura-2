@@ -393,6 +393,8 @@ namespace Aura.Shared.Network
 		public const int CollectionRequest = 0xAA87;
 		public const int CollectionRequestR = 0xAA88;
 
+		public const int UnkEsc = 0xAAEE;
+
 		public const int GoBeautyShop = 0xAAF4;
 		public const int GoBeautyShopR = 0xAAF5;
 		public const int LeaveBeautyShop = 0xAAF6;
