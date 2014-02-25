@@ -39,6 +39,8 @@ namespace Aura.Channel.Skills.Music
 				return;
 			}
 
+			creature.StopMove();
+
 			// Score scrolls go into the magazine pocket and need a SCORE tag.
 			var hasScroll = (creature.Magazine != null && creature.Magazine.MetaData1.Has("SCORE") && creature.Magazine.OptionInfo.Durability >= DurabilityUse);
 			string mml = (hasScroll ? creature.Magazine.MetaData1.GetString("SCORE") : null);
@@ -66,15 +68,16 @@ namespace Aura.Channel.Skills.Music
 			Send.SkillUsePlayingInstrument(creature, skill.Info.Id, creature.RightHand.Data.InstrumentType, mml, rndScore);
 
 			creature.Skills.ActiveSkill = skill;
+			creature.Skills.Callback(SkillId.PlayingInstrument, () => Send.Notice(creature, this.GetRandomQualityMessage(quality)));
 
-			creature.Skills.Callback(SkillId.PlayingInstrument, () => Send.Notice(creature, this.GetRandomComplete(quality)));
+			creature.Regens.Add("PlayingInstrument", Stat.Stamina, skill.RankData.StaminaActive, creature.StaminaMax);
 		}
 
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
 			creature.Skills.ActiveSkill = null;
 
-			Send.Effect(creature, Effect.StopMusic);
+			this.Cancel(creature, skill);
 
 			creature.Skills.Callback(SkillId.PlayingInstrument);
 
@@ -84,6 +87,7 @@ namespace Aura.Channel.Skills.Music
 		public void Cancel(Creature creature, Skill skill)
 		{
 			Send.Effect(creature, Effect.StopMusic);
+			creature.Regens.Remove("PlayingInstrument");
 		}
 
 		/// <summary>
@@ -91,7 +95,7 @@ namespace Aura.Channel.Skills.Music
 		/// </summary>
 		/// <param name="quality"></param>
 		/// <returns></returns>
-		private string GetRandomComplete(PlayingQuality quality)
+		private string GetRandomQualityMessage(PlayingQuality quality)
 		{
 			string[] msgs = null;
 			switch (quality)
@@ -103,7 +107,7 @@ namespace Aura.Channel.Skills.Music
 				case PlayingQuality.VeryBad: msgs = Localization.Get("skills.quality_verybad").Split(';'); break;
 			}
 
-			if (msgs.Length < 1)
+			if (msgs == null || msgs.Length < 1)
 				return "...";
 
 			return msgs[RandomProvider.Get().Next(0, msgs.Length)].Trim();
