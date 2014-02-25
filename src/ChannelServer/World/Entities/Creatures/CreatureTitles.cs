@@ -188,9 +188,13 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <param name="data"></param>
 		private void SwitchStatMods(TitleData data, bool option)
 		{
-			if ((!option ? _titleData : _optionTitleData) != null)
+			// Remove prev stat mods
+			if (option && _optionTitleData != null)
+				_creature.StatMods.Remove(StatModSource.Title, this.SelectedOptionTitle);
+			else if (!option && _titleData != null)
 				_creature.StatMods.Remove(StatModSource.Title, this.SelectedTitle);
 
+			// Add new stat mods
 			if (data != null)
 			{
 				foreach (var effect in data.Effects)
@@ -228,15 +232,18 @@ namespace Aura.Channel.World.Entities.Creatures
 				}
 			}
 
+			// Broadcast new stats if creature is in a region yet
 			if (_creature.Region != null)
 			{
 				Send.StatUpdate(_creature, StatUpdateType.Private,
-					Stat.LifeMaxMod, Stat.Life, Stat.ManaMaxMod, Stat.Mana, Stat.StaminaMaxMod, Stat.Stamina, Stat.StrMod, Stat.IntMod, Stat.DexMod, Stat.WillMod, Stat.LuckMod,
+					Stat.LifeMaxMod, Stat.Life, Stat.LifeInjured, Stat.ManaMaxMod, Stat.Mana, Stat.StaminaMaxMod,
+					Stat.Stamina, Stat.StrMod, Stat.IntMod, Stat.DexMod, Stat.WillMod, Stat.LuckMod,
 					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
 				);
 				Send.StatUpdate(_creature, StatUpdateType.Public, Stat.Life, Stat.LifeMaxMod, Stat.LifeMax);
 			}
 
+			// Save data
 			if (!option)
 				_titleData = data;
 			else
