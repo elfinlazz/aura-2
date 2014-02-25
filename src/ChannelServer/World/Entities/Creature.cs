@@ -688,13 +688,17 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public float GetSpeed()
 		{
-			var multiplicator = 1f;
+			var speed = (!this.IsWalking ? this.RaceData.RunningSpeed : this.RaceData.WalkingSpeed);
+
+			// RaceSpeedFactor
+			if (!this.IsWalking)
+				speed *= this.RaceData.RunSpeedFactor;
 
 			// Hurry condition
 			var hurry = this.Conditions.GetExtraVal(169);
-			multiplicator += hurry / 100f;
+			speed *= 1 + (hurry / 100f);
 
-			return (!this.IsWalking ? this.RaceData.RunningSpeed : this.RaceData.WalkingSpeed) * multiplicator;
+			return speed;
 		}
 
 		/// <summary>

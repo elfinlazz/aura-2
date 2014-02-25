@@ -18,6 +18,7 @@ namespace Aura.Data.Database
 
 		public int DefaultState { get; internal set; }
 		public int VehicleType { get; internal set; }
+		public float RunSpeedFactor { get; internal set; }
 		public Element Element { get; internal set; }
 
 		public float Size { get; internal set; }
@@ -131,7 +132,7 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower() == name);
 		}
 
-		[MinFieldCount(32)]
+		[MinFieldCount(33)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			var info = new RaceData();
@@ -141,6 +142,7 @@ namespace Aura.Data.Database
 			info.Tags = entry.ReadString();
 			info.Gender = (Gender)entry.ReadByte();
 			info.VehicleType = entry.ReadInt();
+			info.RunSpeedFactor = entry.ReadFloat();
 			info.DefaultState = entry.ReadIntHex();
 			info.InventoryWidth = entry.ReadInt();
 			info.InventoryHeight = entry.ReadInt();
