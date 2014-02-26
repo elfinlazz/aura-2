@@ -12,6 +12,7 @@ using Aura.Channel.Skills;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World.Entities.Creatures;
+using Aura.Channel.World.Quests;
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared.Database;
@@ -19,7 +20,6 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
-using Aura.Channel.World.Quests;
 
 namespace Aura.Channel.Database
 {
@@ -385,9 +385,20 @@ namespace Aura.Channel.Database
 					{
 						var skillId = (SkillId)reader.GetInt32("skillId");
 						var rank = (SkillRank)reader.GetByte("rank");
-						var exp = reader.GetInt32("exp");
 
-						character.Skills.Add(new Skill(skillId, rank, character.Race, exp));
+						var skill = new Skill(skillId, rank, character.Race);
+						skill.Info.ConditionCount1 = reader.GetInt16("condition1");
+						skill.Info.ConditionCount2 = reader.GetInt16("condition2");
+						skill.Info.ConditionCount3 = reader.GetInt16("condition3");
+						skill.Info.ConditionCount4 = reader.GetInt16("condition4");
+						skill.Info.ConditionCount5 = reader.GetInt16("condition5");
+						skill.Info.ConditionCount6 = reader.GetInt16("condition6");
+						skill.Info.ConditionCount7 = reader.GetInt16("condition7");
+						skill.Info.ConditionCount8 = reader.GetInt16("condition8");
+						skill.Info.ConditionCount9 = reader.GetInt16("condition9");
+						skill.Train(1, 0); // Fake a train to calculate the exp.
+
+						character.Skills.Add(skill);
 					}
 				}
 			}
@@ -836,7 +847,15 @@ namespace Aura.Channel.Database
 						cmd.Set("skillId", (ushort)skill.Info.Id);
 						cmd.Set("creatureId", creature.CreatureId);
 						cmd.Set("rank", (byte)skill.Info.Rank);
-						cmd.Set("exp", skill.Info.Experience);
+						cmd.Set("condition1", skill.Info.ConditionCount1);
+						cmd.Set("condition2", skill.Info.ConditionCount2);
+						cmd.Set("condition3", skill.Info.ConditionCount3);
+						cmd.Set("condition4", skill.Info.ConditionCount4);
+						cmd.Set("condition5", skill.Info.ConditionCount5);
+						cmd.Set("condition6", skill.Info.ConditionCount6);
+						cmd.Set("condition7", skill.Info.ConditionCount7);
+						cmd.Set("condition8", skill.Info.ConditionCount8);
+						cmd.Set("condition9", skill.Info.ConditionCount9);
 
 						cmd.Execute();
 					}

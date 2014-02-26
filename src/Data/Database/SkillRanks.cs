@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Aura.Data.Database
@@ -59,6 +60,15 @@ namespace Aura.Data.Database
 		public float Var7 { get; internal set; }
 		public float Var8 { get; internal set; }
 		public float Var9 { get; internal set; }
+
+		public List<TrainingsConditionData> Conditions { get; internal set; }
+	}
+
+	public class TrainingsConditionData
+	{
+		public float Exp { get; internal set; }
+		public int Count { get; internal set; }
+		public bool Visible { get; internal set; }
 	}
 
 	/// <summary>
@@ -103,7 +113,7 @@ namespace Aura.Data.Database
 			}
 		}
 
-		[MinFieldCount(36)]
+		[MinFieldCount(45)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			var info = new SkillRankData();
@@ -143,6 +153,19 @@ namespace Aura.Data.Database
 			info.Var7 = entry.ReadFloat();
 			info.Var8 = entry.ReadFloat();
 			info.Var9 = entry.ReadFloat();
+
+			info.Conditions = new List<TrainingsConditionData>();
+			for (int i = 0; i < 9; ++i)
+			{
+				var conditionSplit = entry.ReadStringList();
+
+				var condition = new TrainingsConditionData();
+				condition.Exp = float.Parse(conditionSplit[0], NumberStyles.Float, CultureInfo.InvariantCulture);
+				condition.Count = int.Parse(conditionSplit[1]);
+				condition.Visible = (conditionSplit[2] == "yes");
+
+				info.Conditions.Add(condition);
+			}
 
 			if (!this.Entries.ContainsKey(info.SkillId))
 				this.Entries[info.SkillId] = new Dictionary<int, Dictionary<int, SkillRankData>>();

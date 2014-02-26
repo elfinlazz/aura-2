@@ -243,33 +243,28 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
-		/// Adds exp to skill.
+		/// Trains skill
 		/// </summary>
-		/// <param name="skill"></param>
+		/// <param name="skillId"></param>
 		/// <param name="exp"></param>
-		public void GiveExp(SkillId skillId, int exp)
+		public void Train(SkillId skillId, int condition, int amount = 1)
 		{
 			var skill = this.Get(skillId);
 			if (skill == null) return;
 
-			this.GiveExp(skill, exp);
+			this.Train(skill, condition, amount);
 		}
 
 		/// <summary>
-		/// Adds exp to skill.
+		/// Trains skill
 		/// </summary>
 		/// <param name="skill"></param>
 		/// <param name="exp"></param>
-		public void GiveExp(Skill skill, float exp)
+		public void Train(Skill skill, int condition, int amount = 1)
 		{
-			if (skill.Info.Experience >= 100000)
-				return;
-
-			skill.Info.Experience = (int)Math2.MinMax(0, 100000, skill.Info.Experience + exp * 1000);
-			if (skill.IsRankable)
-				skill.Info.Flag |= SkillFlags.Rankable;
-
-			Send.SkillTrainingUp(_creature, skill, exp);
+			var exp = skill.Train(condition, amount);
+			if (exp > 0)
+				Send.SkillTrainingUp(_creature, skill, exp);
 		}
 
 		/// <summary>
