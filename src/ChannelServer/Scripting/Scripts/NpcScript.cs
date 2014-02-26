@@ -171,6 +171,15 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Sets NPC's portrait.
+		/// </summary>
+		/// <param name="name"></param>
+		protected void SetPortrait(string name)
+		{
+			this.NPC.DialogPortrait = name;
+		}
+
+		/// <summary>
 		/// Sets NPC's location.
 		/// </summary>
 		/// <param name="regionId"></param>
@@ -433,9 +442,8 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		/// <summary>
-		/// Sends dialog to creature's client.
+		/// Sends dialog to player's client.
 		/// </summary>
-		/// <param name="creature"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
 		public void Msg(string message, params DialogElement[] elements)
@@ -444,24 +452,18 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Sends dialog to creature's client.
+		/// Sends dialog to player's client.
 		/// </summary>
-		/// <param name="creature"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
 		public void Msg(Hide hide, string message, params DialogElement[] elements)
 		{
 			var mes = new DialogElement();
 
-			if (hide == Hide.Face || hide == Hide.Both)
-				mes.Add(new DialogFaceExpression(null));
-			if (hide == Hide.Name || hide == Hide.Both)
-				mes.Add(new DialogTitle(null));
-
 			mes.Add(new DialogText(message));
 			mes.Add(elements);
 
-			this.Msg(mes);
+			this.Msg(hide, mes);
 		}
 
 		/// <summary>
@@ -477,12 +479,32 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Sends dialog to creature's client.
+		/// Sends dialog to player's client.
 		/// </summary>
-		/// <param name="creature"></param>
 		/// <param name="elements"></param>
 		public void Msg(params DialogElement[] elements)
 		{
+			this.Msg(Hide.None, elements);
+		}
+
+		/// <summary>
+		/// Sends dialog to player's client.
+		/// </summary>
+		/// <param name="elements"></param>
+		public void Msg(Hide hide, params DialogElement[] elements)
+		{
+			var element = new DialogElement();
+
+			if (hide == Hide.Face || hide == Hide.Both)
+				element.Add(new DialogPortrait(null));
+			else if (this.NPC.DialogPortrait != null)
+				element.Add(new DialogPortrait(this.NPC.DialogPortrait));
+
+			if (hide == Hide.Name || hide == Hide.Both)
+				element.Add(new DialogTitle(null));
+
+			element.Add(elements);
+
 			var xml = string.Format(
 				"<call convention='thiscall' syncmode='non-sync'>" +
 					"<this type='character'>{0}</this>" +
@@ -494,7 +516,7 @@ namespace Aura.Channel.Scripting.Scripts
 							"</arguments>" +
 						"</function>" +
 				"</call>",
-			this.Player.EntityId, HttpUtility.HtmlEncode(new DialogElement(elements).ToString()));
+			this.Player.EntityId, HttpUtility.HtmlEncode(element.ToString()));
 
 			Send.NpcTalk(this.Player, xml);
 		}
@@ -502,7 +524,6 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Closes dialog box, by sending NpcTalkEndR, and leaves the NPC.
 		/// </summary>
-		/// <param name="creature"></param>
 		/// <param name="message">Dialog closes immediately if null.</param>
 		public void Close(string message = null)
 		{
@@ -513,10 +534,12 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Sends NpcTalkEndR but doesn't leave NPC.
 		/// </summary>
-		/// <param name="creature"></param>
 		/// <param name="message">Dialog closes immediately if null.</param>
 		public void Close2(string message = null)
 		{
+			if (message != null && this.NPC.DialogPortrait != null)
+				message = new DialogPortrait(this.NPC.DialogPortrait).ToString() + message;
+
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
 		}
 
@@ -564,7 +587,6 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Select should be sent afterwards...
 		/// so you can actually select a keyword.
 		/// </remarks>
-		/// <param name="creature"></param>
 		protected void ShowKeywords()
 		{
 			var script = string.Format(

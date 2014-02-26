@@ -21,6 +21,8 @@ namespace Aura.Channel.World.Entities
 		public AiScript AI { get; set; }
 		public int SpawnId { get; set; }
 
+		public string DialogPortrait { get; set; }
+
 		public NPC()
 		{
 			this.EntityId = Interlocked.Increment(ref _npcId);
