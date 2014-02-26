@@ -748,8 +748,9 @@ namespace Aura.Channel.Database
 				foreach (var title in creature.Titles.GetList())
 				{
 					// Dynamic titles shouldn't be saved
-					// TODO: Title db that tells us this?
-					if (title.Key == 60000 || title.Key == 60001 || title.Key == 50000) // GM, devCAT, Guild
+					// TODO: Are enough titles affected to justify a column
+					//   in the db for this?
+					if (title.Key == 60000 || title.Key == 60001 || title.Key == 60002 || title.Key == 50000) // GM, devCAT, Guild
 						continue;
 
 					using (var cmd = new InsertCommand("INSERT INTO `titles` {0}", conn, transaction))
