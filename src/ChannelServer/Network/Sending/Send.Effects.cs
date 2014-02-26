@@ -110,6 +110,10 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(0);
 			packet.PutByte(1); // loops
 
+			// Singing?
+			//packet.PutByte(0);
+			//packet.PutByte(1);
+
 			creature.Region.Broadcast(packet, creature);
 		}
 	}

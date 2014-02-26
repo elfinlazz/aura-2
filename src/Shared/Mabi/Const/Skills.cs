@@ -54,10 +54,7 @@ namespace Aura.Shared.Mabi.Const
 		// Life
 		Tailoring = 10001,
 		ReadinDetail = 10002,
-		PlayingInstrument = 10003,
 		Rest = 10004,
-		Composing = 10005,
-		MusicalKnowledge = 10006,
 		TownCry = 10007,
 		Campfire = 10008,
 		FirstAid = 10009,
@@ -219,7 +216,6 @@ namespace Aura.Shared.Mabi.Const
 		MonsterResurrection = 30012,
 		YarnBinding = 30013,
 		SilentMove = 30014,
-		EnthrallingPerformance = 30015,
 		FireMastery = 30016,
 		IceMastery = 30017,
 		LightningMastery = 30018,
@@ -485,7 +481,11 @@ namespace Aura.Shared.Mabi.Const
 		MerrowRisingDragon = 52001,
 		MerrowTidalWave = 52002,
 
-		// Bard
+		// Music
+		PlayingInstrument = 10003,
+		Composing = 10005,
+		MusicalKnowledge = 10006,
+		EnthrallingPerformance = 30015,
 		Dischord = 53001,
 		BattlefieldOverture = 53101,
 		Lullaby = 53102,
@@ -493,6 +493,7 @@ namespace Aura.Shared.Mabi.Const
 		EnduringMelody = 53104,
 		HarvestSong = 53105,
 		MarchSong = 53106,
+		Song = 53200,
 
 		// Puppetry
 		ControlMarionette = 54001,

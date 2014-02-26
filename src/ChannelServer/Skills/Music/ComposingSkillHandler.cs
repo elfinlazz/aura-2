@@ -37,7 +37,7 @@ namespace Aura.Channel.Skills.Music
 			var title = packet.GetString();
 			var author = packet.GetString();
 			var mml = packet.GetString();
-			var singing = packet.GetString(); // [180300, NA166 (18.09.2013)] Singing
+			var song = packet.GetString(); // [180300, NA166 (18.09.2013)] Singing
 			var hidden = packet.GetByte(); // bool, but the meta data is a byte
 
 			// Get item
@@ -48,7 +48,7 @@ namespace Aura.Channel.Skills.Music
 			var mmlParts = mml.Split(',');
 
 			// Check lengths
-			if (mml.Length > MMLMaxLength) goto L_Fail; // Total
+			if (mml.Length > MMLMaxLength || song.Length > MMLMaxLength) goto L_Fail; // Total
 			if (mmlParts.Length > 0 && mmlParts[0].Length > skill.RankData.Var1) goto L_Fail; // Melody
 			if (mmlParts.Length > 1 && mmlParts[1].Length > skill.RankData.Var2) goto L_Fail; // Harmony 1
 			if (mmlParts.Length > 2 && mmlParts[2].Length > skill.RankData.Var3) goto L_Fail; // Harmony 2
@@ -64,7 +64,7 @@ namespace Aura.Channel.Skills.Music
 				item.MetaData1.SetString("TITLE", title);
 				item.MetaData1.SetString("AUTHOR", author);
 				item.MetaData1.SetString("SCORE", MabiZip.Compress(mml));
-				item.MetaData1.SetString("SCSING", ""); // [180300, NA166 (18.09.2013)] Singing
+				item.MetaData1.SetString("SCSING", MabiZip.Compress(song)); // [180300, NA166 (18.09.2013)] Singing
 				item.MetaData1.SetByte("HIDDEN", hidden);
 				item.MetaData1.SetShort("LEVEL", (short)level);
 

@@ -15,5 +15,9 @@ quality_bad				Lots of mistakes, although most didn't notice ; An embarrassing p
 quality_verybad			A disastrous performance ; That was a total mess... ; That was a difficult song for me to play.
 perfect_play			Regardless of the result, perfect play will let your performance sound perfect.
 
+quality_song_verygood	Your song was heavenly. ; That was a perfect song.
+quality_song_good		You did a fine job. ; That really boosted your confidence. ; You gave a great performance.
+quality_song_bad		This song was too difficult for you to sing. ; That was too difficult for you to sing. ; This song is still difficult for you to sing ; You need to work harder to sing this song. ; That was horrible. ; Not only was the song you chose horrible, but you also sang it terribly. ; You should apologize for that performance. ; That was an easy song and you still butchered it. ; Did anyone notice how much you messed up? ; You should feel ashamed of your performance. ; You sang it well, but you won't improve if you keep singing such easy songs.
+
 // Windmill
 wm_no_target			Unable to use when there is no target.

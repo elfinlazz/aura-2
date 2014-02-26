@@ -26,6 +26,7 @@ namespace Aura.Channel.Skills.Music
 	public class PlayingInstrumentHandler : IPreparable, ICompletable, ICancelable
 	{
 		private const int RandomScoreMin = 1, RandomScoreMax = 52;
+		private const int RandomSongScoreMin = 2001, RandomSongScoreMax = 2052;
 		private const int DurabilityUse = 1000;
 
 		public void Prepare(Creature creature, Skill skill, Packet packet)
@@ -41,14 +42,19 @@ namespace Aura.Channel.Skills.Music
 
 			creature.StopMove();
 
-			// Score scrolls go into the magazine pocket and need a SCORE tag.
-			var hasScroll = (creature.Magazine != null && creature.Magazine.MetaData1.Has("SCORE") && creature.Magazine.OptionInfo.Durability >= DurabilityUse);
-			string mml = (hasScroll ? creature.Magazine.MetaData1.GetString("SCORE") : null);
+			// Get instrument type
+			var instrumentType = this.GetInstrumentType(creature);
+
+			// TODO: Make db for instruments with installable props.
+
+			// Get mml from equipped score scroll if available.
+			var mml = this.GetScore(creature);
 
 			// Random score if no usable scroll was found.
-			var rndScore = (!hasScroll ? rnd.Next(RandomScoreMin, RandomScoreMax + 1) : 0);
+			var rndScore = (mml == null ? this.GetRandomScore(rnd) : 0);
 
 			// Quality seems to go from 0 (worst) to 3 (best).
+			// TODO: Base quality on skills and score ranks.
 			var quality = (PlayingQuality)rnd.Next((int)PlayingQuality.VeryBad, (int)PlayingQuality.VeryGood + 1);
 
 			// Up quality by chance, based on Musical Knowledge
@@ -60,15 +66,19 @@ namespace Aura.Channel.Skills.Music
 				quality = PlayingQuality.VeryGood;
 
 			// Reduce scroll's durability.
-			if (hasScroll)
+			if (mml != null)
 				creature.Inventory.ReduceDurability(creature.Magazine, DurabilityUse);
 
 			// Music effect and Use
-			Send.PlayEffect(creature, creature.RightHand.Data.InstrumentType, quality, mml, rndScore);
-			Send.SkillUsePlayingInstrument(creature, skill.Info.Id, creature.RightHand.Data.InstrumentType, mml, rndScore);
+			Send.PlayEffect(creature, instrumentType, quality, mml, rndScore);
+			this.AdditionalPlayEffect(creature, skill, quality);
+			Send.SkillUsePlayingInstrument(creature, skill.Info.Id, instrumentType, mml, rndScore);
 
 			creature.Skills.ActiveSkill = skill;
-			creature.Skills.Callback(SkillId.PlayingInstrument, () => Send.Notice(creature, this.GetRandomQualityMessage(quality)));
+			creature.Skills.Callback(skill.Info.Id, () =>
+			{
+				Send.Notice(creature, this.GetRandomQualityMessage(quality));
+			});
 
 			creature.Regens.Add("PlayingInstrument", Stat.Stamina, skill.RankData.StaminaActive, creature.StaminaMax);
 		}
@@ -79,15 +89,67 @@ namespace Aura.Channel.Skills.Music
 
 			this.Cancel(creature, skill);
 
-			creature.Skills.Callback(SkillId.PlayingInstrument);
+			creature.Skills.Callback(skill.Info.Id);
 
 			Send.SkillComplete(creature, skill.Info.Id);
 		}
 
-		public void Cancel(Creature creature, Skill skill)
+		public virtual void Cancel(Creature creature, Skill skill)
 		{
 			Send.Effect(creature, Effect.StopMusic);
+			if (skill.Info.Id != SkillId.Song)
+				Send.Effect(creature, 356, (byte)0);
+
 			creature.Regens.Remove("PlayingInstrument");
+		}
+
+		/// <summary>
+		/// Returns instrument type to use.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <returns></returns>
+		protected virtual InstrumentType GetInstrumentType(Creature creature)
+		{
+			return creature.RightHand.Data.InstrumentType;
+		}
+
+		/// <summary>
+		/// Plays additional effect, aside from playing.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		protected virtual void AdditionalPlayEffect(Creature creature, Skill skill, PlayingQuality quality)
+		{
+		}
+
+		/// <summary>
+		/// Returns score from magazine's item.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <returns></returns>
+		private string GetScore(Creature creature)
+		{
+			// Score scrolls go into the magazine pocket and need a specific tag.
+			if (creature.Magazine == null || !creature.Magazine.MetaData1.Has(this.MetaDataScoreField) || creature.Magazine.OptionInfo.Durability < DurabilityUse)
+				return null;
+
+			return creature.Magazine.MetaData1.GetString(this.MetaDataScoreField);
+		}
+
+		/// <summary>
+		/// Returns score field name in the item's meta data.
+		/// </summary>
+		protected virtual string MetaDataScoreField { get { return "SCORE"; } }
+
+		/// <summary>
+		/// Returns random score scroll id.
+		/// </summary>
+		/// <param name="rnd"></param>
+		/// <returns></returns>
+		protected virtual int GetRandomScore(Random rnd)
+		{
+			return rnd.Next(RandomScoreMin, RandomScoreMax + 1);
 		}
 
 		/// <summary>
@@ -95,7 +157,7 @@ namespace Aura.Channel.Skills.Music
 		/// </summary>
 		/// <param name="quality"></param>
 		/// <returns></returns>
-		private string GetRandomQualityMessage(PlayingQuality quality)
+		protected virtual string GetRandomQualityMessage(PlayingQuality quality)
 		{
 			string[] msgs = null;
 			switch (quality)

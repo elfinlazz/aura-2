@@ -211,14 +211,20 @@ namespace Aura.Data.Database
 
 		Xylophone = 77,
 
-		MaleVoice1 = 81,
-		MaleVoice2 = 82,
-		MaleVoice3 = 83,
-		MaleVoice4 = 84,
-		FemaleVoice1 = 90,
-		FemaleVoice2 = 91,
-		FemaleVoice3 = 92,
-		FemaleVoice4 = 93,
-		FemaleVoice5 = 94,
+		MaleVoiceKr1 = 81,
+		MaleVoiceKr2 = 82,
+		MaleVoiceKr3 = 83,
+		MaleVoiceKr4 = 84,
+		FemaleVoiceKr1 = 90,
+		FemaleVoiceKr2 = 91,
+		FemaleVoiceKr3 = 92,
+		FemaleVoiceKr4 = 93,
+		FemaleVoiceKr5 = 94,
+
+		MaleChorusVoice = 100,
+		FemaleChorusVoice = 110,
+
+		MaleVoiceJp = 120,
+		FemaleVoiceJp = 121,
 	}
 }
