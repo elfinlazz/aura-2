@@ -301,7 +301,7 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		public int AttackMinBase
+		public int AttackMinBaseMod
 		{
 			get
 			{
@@ -321,7 +321,7 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		public int AttackMaxBase
+		public int AttackMaxBaseMod
 		{
 			get
 			{
@@ -380,6 +380,9 @@ namespace Aura.Channel.World.Entities
 				return result;
 			}
 		}
+
+		public int AttackMinMod { get { return (int)this.StatMods.Get(Stat.AttackMinMod); } }
+		public int AttackMaxMod { get { return (int)this.StatMods.Get(Stat.AttackMaxMod); } }
 
 		// Food Mods
 		// ------------------------------------------------------------------
@@ -913,6 +916,9 @@ namespace Aura.Channel.World.Entities
 
 			min += (Math.Max(0, this.Str - 10) / 3.0f);
 			max += (Math.Max(0, this.Str - 10) / 2.5f);
+
+			min += this.AttackMinMod;
+			max += this.AttackMaxMod;
 
 			if (min > max)
 				min = max;

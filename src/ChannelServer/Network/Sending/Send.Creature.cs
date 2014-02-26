@@ -251,10 +251,12 @@ namespace Aura.Channel.Network.Sending
 						case Stat.BalanceBaseMod: packet.PutShort((short)(creature.BalanceBase * 100)); break;
 						case Stat.CriticalBaseMod: packet.PutFloat(creature.CriticalBase * 100); break;
 
-						case Stat.AttackMinBaseMod: packet.PutShort((short)creature.AttackMinBase); break;
-						case Stat.AttackMaxBaseMod: packet.PutShort((short)creature.AttackMaxBase); break;
+						case Stat.AttackMinBaseMod: packet.PutShort((short)creature.AttackMinBaseMod); break;
+						case Stat.AttackMaxBaseMod: packet.PutShort((short)creature.AttackMaxBaseMod); break;
 						case Stat.WAttackMinBaseMod: packet.PutShort((short)creature.WAttackMinBase); break;
 						case Stat.WAttackMaxBaseMod: packet.PutShort((short)creature.WAttackMaxBase); break;
+						case Stat.AttackMinMod: packet.PutShort((short)creature.AttackMinMod); break;
+						case Stat.AttackMaxMod: packet.PutShort((short)creature.AttackMaxMod); break;
 
 						// Client might crash with a mismatching value, 
 						// take a chance and put an int by default.
