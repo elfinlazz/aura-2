@@ -1026,5 +1026,49 @@ namespace Aura.Channel.Database
 					return reader.HasRows;
 			}
 		}
+
+		/// <summary>
+		/// Returns coupon or null. 
+		/// </summary>
+		/// <param name="code"></param>
+		/// <returns></returns>
+		public string GetCouponScript(string code)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `coupons` WHERE `code` = @code AND (`expiration` IS NULL OR `expiration` > NOW()) AND NOT `used`", conn))
+			{
+				mc.Parameters.AddWithValue("@code", code);
+
+				using (var reader = mc.ExecuteReader())
+				{
+					if (reader.HasRows)
+					{
+						reader.Read();
+						return reader.GetStringSafe("script");
+					}
+					else
+					{
+						return null;
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Sets coupon to used, so it can't be redeemed anymore.
+		/// </summary>
+		/// <param name="code"></param>
+		/// <returns></returns>
+		public bool UseCoupon(string code)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new UpdateCommand("UPDATE `coupons` SET {0} WHERE `code` = @code", conn))
+			{
+				cmd.AddParameter("@code", code);
+				cmd.Set("used", true);
+
+				return (cmd.Execute() > 0);
+			}
+		}
 	}
 }

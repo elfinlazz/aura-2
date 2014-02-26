@@ -8,10 +8,12 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Aura.Channel.Database;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World.Shops;
 using Aura.Data;
+using Aura.Shared.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 
@@ -436,6 +438,72 @@ namespace Aura.Channel.Scripting.Scripts
 		public void Notice(string format, params object[] args)
 		{
 			Send.Notice(this.Player, format, args);
+		}
+
+		/// <summary>
+		/// Redeems code if found.
+		/// </summary>
+		/// <param name="code"></param>
+		public bool RedeemCoupon(string code)
+		{
+			var script = ChannelDb.Instance.GetCouponScript(code);
+			if (script == null) return false;
+
+			if (string.IsNullOrWhiteSpace(script))
+			{
+				Log.Error("CheckCouponCode: Empty script in '{0}'", code);
+				return false;
+			}
+
+			var splitted = script.Split(':');
+			if (splitted.Length < 2)
+			{
+				Log.Error("CheckCouponCode: Invalid script '{0}' in '{1}'", script, code);
+				return false;
+			}
+
+			switch (splitted[0])
+			{
+				case "item":
+					int itemId;
+					if (!int.TryParse(splitted[1], out itemId))
+						return false;
+
+					var item = new Item(itemId);
+					this.Player.Inventory.Add(item, true);
+					Send.AcquireItemInfo(this.Player, item.EntityId);
+
+					break;
+
+				case "title":
+					ushort titleId;
+					if (!ushort.TryParse(splitted[1], out titleId))
+						return false;
+					this.Player.Titles.Enable(titleId);
+					break;
+
+				case "card":
+					int cardId;
+					if (!int.TryParse(splitted[1], out cardId))
+						return false;
+					AuraDb.Instance.AddCard(this.Player.Client.Account.Id, cardId, 0);
+					break;
+
+				case "petcard":
+					int raceId;
+					if (!int.TryParse(splitted[1], out raceId))
+						return false;
+					AuraDb.Instance.AddCard(this.Player.Client.Account.Id, MabiId.PetCardType, raceId);
+					break;
+
+				default:
+					Log.Error("CheckCouponCode: Unknown script type '{0}' in '{1}'", splitted[0], code);
+					return false;
+			}
+
+			ChannelDb.Instance.UseCoupon(code);
+
+			return true;
 		}
 
 		// Dialog
