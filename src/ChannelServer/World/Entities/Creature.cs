@@ -1011,8 +1011,6 @@ namespace Aura.Channel.World.Entities
 		/// <param name="killer"></param>
 		public virtual void Kill(Creature killer)
 		{
-			//Log.Debug(this.Name + " was killed by " + killer.Name);
-
 			if (this.Conditions.Has(ConditionsA.Deadly))
 				this.Conditions.Deactivate(ConditionsA.Deadly);
 			this.Activate(CreatureStates.Dead);
