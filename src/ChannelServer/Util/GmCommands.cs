@@ -153,7 +153,7 @@ namespace Aura.Channel.Util
 				return true;
 			}
 
-			var commandConf = ChannelServer.Instance.Conf.Commands.GetAuth(args[0], command.Auth, command.CharAuth);
+			var commandConf = ChannelServer.Instance.Conf.Commands.GetAuth(command.Name, command.Auth, command.CharAuth);
 
 			// Check auth
 			if ((!isCharCommand && client.Account.Authority < commandConf.Auth) || (isCharCommand && client.Account.Authority < commandConf.CharAuth))
