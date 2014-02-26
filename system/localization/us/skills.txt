@@ -13,7 +13,7 @@ quality_verygood		It seemed as if the God of Music had descended ; A perfect per
 quality_good			The performance was quite alright ; Not a bad performance ; I'm slowly gaining confidence in playing instruments.
 quality_bad				Lots of mistakes, although most didn't notice ; An embarrassing performance;The song is still too difficult for me. ; I need more practice to play this song well.
 quality_verybad			A disastrous performance ; That was a total mess... ; That was a difficult song for me to play.
-perfect_play			Regardless of the result, perfect play will let your performance sound perfect.
+perfect_play			Perfect play is enabled, your performance will sound perfect.
 
 quality_song_verygood	Your song was heavenly. ; That was a perfect song.
 quality_song_good		You did a fine job. ; That really boosted your confidence. ; You gave a great performance.

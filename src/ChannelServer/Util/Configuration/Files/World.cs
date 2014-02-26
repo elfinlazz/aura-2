@@ -22,6 +22,8 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public int GmcpMinAuth { get; protected set; }
 
+		public bool PerfectPlay { get; protected set; }
+
 		public void Load()
 		{
 			this.Require("system/conf/world.conf");
@@ -40,6 +42,8 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.EnableContinentWarp = this.GetBool("enable_continent_warp", true);
 
 			this.GmcpMinAuth = this.GetInt("gmcp_min_auth", 50);
+
+			this.PerfectPlay = this.GetBool("perfect_play", false);
 		}
 	}
 }

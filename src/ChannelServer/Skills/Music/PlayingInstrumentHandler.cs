@@ -26,7 +26,6 @@ namespace Aura.Channel.Skills.Music
 	public class PlayingInstrumentHandler : IPreparable, ICompletable, ICancelable
 	{
 		private const int RandomScoreMin = 1, RandomScoreMax = 52;
-		private const int RandomSongScoreMin = 2001, RandomSongScoreMax = 2052;
 		private const int DurabilityUse = 1000;
 
 		public void Prepare(Creature creature, Skill skill, Packet packet)
@@ -65,12 +64,20 @@ namespace Aura.Channel.Skills.Music
 			if (quality > PlayingQuality.VeryGood)
 				quality = PlayingQuality.VeryGood;
 
+			// Get quality for the effect, perfect play makes every sound perfect.
+			var effectQuality = quality;
+			if (ChannelServer.Instance.Conf.World.PerfectPlay)
+			{
+				effectQuality = PlayingQuality.VeryGood;
+				Send.ServerMessage(creature, Localization.Get("skills.perfect_play"));
+			}
+
 			// Reduce scroll's durability.
 			if (mml != null)
 				creature.Inventory.ReduceDurability(creature.Magazine, DurabilityUse);
 
 			// Music effect and Use
-			Send.PlayEffect(creature, instrumentType, quality, mml, rndScore);
+			Send.PlayEffect(creature, instrumentType, effectQuality, mml, rndScore);
 			this.AdditionalPlayEffect(creature, skill, quality);
 			Send.SkillUsePlayingInstrument(creature, skill.Info.Id, instrumentType, mml, rndScore);
 
@@ -97,8 +104,6 @@ namespace Aura.Channel.Skills.Music
 		public virtual void Cancel(Creature creature, Skill skill)
 		{
 			Send.Effect(creature, Effect.StopMusic);
-			if (skill.Info.Id != SkillId.Song)
-				Send.Effect(creature, 356, (byte)0);
 
 			creature.Regens.Remove("PlayingInstrument");
 		}
