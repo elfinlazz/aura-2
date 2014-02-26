@@ -176,8 +176,8 @@ namespace Aura.Channel.Network.Sending
 					packet.PutShort(0);			     // ArmorPierceMod
 				}
 				packet.PutLong(0);			         // Score
-				packet.PutShort((short)creature.AttackMinBase);
-				packet.PutShort((short)creature.AttackMaxBase);
+				packet.PutShort((short)creature.AttackMinBaseMod);
+				packet.PutShort((short)creature.AttackMaxBaseMod);
 				packet.PutShort((short)creature.WAttackMinBase);
 				packet.PutShort((short)creature.WAttackMaxBase);
 				packet.PutFloat(creature.CriticalBase * 100);

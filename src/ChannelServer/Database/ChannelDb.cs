@@ -634,6 +634,10 @@ namespace Aura.Channel.Database
 				var characterLocation = creature.GetPosition();
 
 				cmd.AddParameter("@creatureId", creature.CreatureId);
+				cmd.Set("skinColor", creature.SkinColor);
+				cmd.Set("eyeType", creature.EyeType);
+				cmd.Set("eyeColor", creature.EyeColor);
+				cmd.Set("mouthType", creature.MouthType);
 				cmd.Set("height", creature.Height);
 				cmd.Set("weight", creature.Weight);
 				cmd.Set("upper", creature.Upper);
