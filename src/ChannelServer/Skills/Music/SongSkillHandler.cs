@@ -23,9 +23,13 @@ namespace Aura.Channel.Skills.Music
 	/// Prepare starts the singing, complete is sent once it's over.
 	/// </remarks>
 	[Skill(SkillId.Song)]
-	public class SongInstrumentHandler : PlayingInstrumentHandler
+	public class SongSkillHandler : PlayingInstrumentHandler
 	{
 		private const int RandomSongScoreMin = 2001, RandomSongScoreMax = 2052;
+
+		public override void Init()
+		{
+		}
 
 		public override void Cancel(Creature creature, Skill skill)
 		{
@@ -46,16 +50,6 @@ namespace Aura.Channel.Skills.Music
 				return InstrumentType.FemaleVoiceJp;
 			else
 				return InstrumentType.MaleVoiceJp;
-		}
-
-		/// <summary>
-		/// Plays singing effect.
-		/// </summary>
-		/// <param name="creature"></param>
-		/// <param name="skill"></param>
-		protected override void AdditionalPlayEffect(Creature creature, Skill skill, PlayingQuality quality)
-		{
-			Send.Effect(creature, 356, (byte)1);
 		}
 
 		/// <summary>
@@ -94,6 +88,49 @@ namespace Aura.Channel.Skills.Music
 				return "...";
 
 			return msgs[RandomProvider.Get().Next(0, msgs.Length)].Trim();
+		}
+
+		/// <summary>
+		/// Called when starting playing (training).
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="quality"></param>
+		protected override void OnPlay(Creature creature, Skill skill, PlayingQuality quality)
+		{
+			Send.Effect(creature, 356, (byte)1);
+
+			if (skill.Info.Rank == SkillRank.Novice)
+				creature.Skills.Train(skill, 1); // Use the skill.
+		}
+
+		/// <summary>
+		/// Called when completing (training).
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="quality"></param>
+		protected override void AfterPlay(Creature creature, Skill skill, PlayingQuality quality)
+		{
+			// All ranks above F have the same 3 first conditions.
+			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.R1)
+			{
+				if (quality >= PlayingQuality.Bad)
+					creature.Skills.Train(skill, 1); // Use the skill successfully.
+
+				if (quality == PlayingQuality.Good)
+					creature.Skills.Train(skill, 2); // Give an excellent vocal performance.
+
+				if (quality == PlayingQuality.VeryGood)
+					creature.Skills.Train(skill, 3); // Give a heavenly performance.
+
+				// Very bad training possible till E.
+				if (skill.Info.Rank <= SkillRank.RE && quality == PlayingQuality.VeryBad)
+					creature.Skills.Train(skill, 4); // Fail at using the skill.
+			}
+
+			// TODO: "Use the skill to grow crops faster."
+			// TODO: "Grant a buff to a party member."
 		}
 	}
 }

@@ -396,7 +396,7 @@ namespace Aura.Channel.Database
 						skill.Info.ConditionCount7 = reader.GetInt16("condition7");
 						skill.Info.ConditionCount8 = reader.GetInt16("condition8");
 						skill.Info.ConditionCount9 = reader.GetInt16("condition9");
-						skill.Train(1, 0); // Fake a train to calculate the exp.
+						skill.UpdateExperience();
 
 						character.Skills.Add(skill);
 					}

@@ -75,4 +75,12 @@ namespace Aura.Channel.Skills.Base
 	public interface IStartStoppable : IStartable, IStoppable
 	{
 	}
+
+	/// <summary>
+	/// Handler with an Init method to subscribe to events.
+	/// </summary>
+	public interface IInitiableSkillHandler
+	{
+		void Init();
+	}
 }

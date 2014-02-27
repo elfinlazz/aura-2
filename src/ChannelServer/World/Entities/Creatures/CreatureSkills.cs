@@ -246,7 +246,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Trains skill
 		/// </summary>
 		/// <param name="skillId"></param>
-		/// <param name="exp"></param>
+		/// <param name="condition">Condition nr (1-9)</param>
+		/// <param name="amount"></param>
 		public void Train(SkillId skillId, int condition, int amount = 1)
 		{
 			var skill = this.Get(skillId);
@@ -259,7 +260,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Trains skill
 		/// </summary>
 		/// <param name="skill"></param>
-		/// <param name="exp"></param>
+		/// <param name="condition">Condition nr (1-9)</param>
+		/// <param name="amount"></param>
 		public void Train(Skill skill, int condition, int amount = 1)
 		{
 			var exp = skill.Train(condition, amount);

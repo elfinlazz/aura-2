@@ -45,6 +45,9 @@ namespace Aura.Channel.Skills
 						if (_handlers.ContainsKey(skillId))
 							Log.Warning("SkillManager: Duplicate handler for '{0}', using '{1}'.", skillId, type.Name);
 
+						var initHandler = handler as IInitiableSkillHandler;
+						if (initHandler != null) initHandler.Init();
+
 						_handlers[skillId] = handler;
 					}
 				}

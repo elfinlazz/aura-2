@@ -23,10 +23,15 @@ namespace Aura.Channel.Skills.Music
 	/// Prepare starts the playing, complete is sent once it's over.
 	/// </remarks>
 	[Skill(SkillId.PlayingInstrument)]
-	public class PlayingInstrumentHandler : IPreparable, ICompletable, ICancelable
+	public class PlayingInstrumentHandler : IPreparable, ICompletable, ICancelable, IInitiableSkillHandler
 	{
 		private const int RandomScoreMin = 1, RandomScoreMax = 52;
 		private const int DurabilityUse = 1000;
+
+		public virtual void Init()
+		{
+			ChannelServer.Instance.Events.CreatureAttackedByPlayer += this.OnCreatureAttackedByPlayer;
+		}
 
 		public void Prepare(Creature creature, Skill skill, Packet packet)
 		{
@@ -78,13 +83,14 @@ namespace Aura.Channel.Skills.Music
 
 			// Music effect and Use
 			Send.PlayEffect(creature, instrumentType, effectQuality, mml, rndScore);
-			this.AdditionalPlayEffect(creature, skill, quality);
+			this.OnPlay(creature, skill, quality);
 			Send.SkillUsePlayingInstrument(creature, skill.Info.Id, instrumentType, mml, rndScore);
 
 			creature.Skills.ActiveSkill = skill;
 			creature.Skills.Callback(skill.Info.Id, () =>
 			{
 				Send.Notice(creature, this.GetRandomQualityMessage(quality));
+				this.AfterPlay(creature, skill, quality);
 			});
 
 			creature.Regens.Add("PlayingInstrument", Stat.Stamina, skill.RankData.StaminaActive, creature.StaminaMax);
@@ -117,15 +123,6 @@ namespace Aura.Channel.Skills.Music
 		protected virtual InstrumentType GetInstrumentType(Creature creature)
 		{
 			return creature.RightHand.Data.InstrumentType;
-		}
-
-		/// <summary>
-		/// Plays additional effect, aside from playing.
-		/// </summary>
-		/// <param name="creature"></param>
-		/// <param name="skill"></param>
-		protected virtual void AdditionalPlayEffect(Creature creature, Skill skill, PlayingQuality quality)
-		{
 		}
 
 		/// <summary>
@@ -178,6 +175,78 @@ namespace Aura.Channel.Skills.Music
 				return "...";
 
 			return msgs[RandomProvider.Get().Next(0, msgs.Length)].Trim();
+		}
+
+		/// <summary>
+		/// Called when starting playing (training).
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="quality"></param>
+		protected virtual void OnPlay(Creature creature, Skill skill, PlayingQuality quality)
+		{
+			if (skill.Info.Rank == SkillRank.Novice)
+				creature.Skills.Train(skill, 1); // Try the skill.
+		}
+
+		/// <summary>
+		/// Called when completing (training).
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="quality"></param>
+		protected virtual void AfterPlay(Creature creature, Skill skill, PlayingQuality quality)
+		{
+			// Success unless total failure, condition 2 for Novice.
+			if (skill.Info.Rank == SkillRank.Novice && quality != PlayingQuality.VeryBad)
+				creature.Skills.Train(skill, 2); // Use the skill successfully.
+
+			// All ranks above F have the same 2 first conditions.
+			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.R1)
+			{
+				if (quality >= PlayingQuality.Bad)
+					creature.Skills.Train(skill, 1); // Use the skill successfully.
+
+				if (quality == PlayingQuality.VeryGood)
+					creature.Skills.Train(skill, 2); // Get a very good result.
+			}
+
+			// Training by failing is possible between F and 6.
+			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.R6 && quality == PlayingQuality.Bad)
+				creature.Skills.Train(skill, 3); // Fail at using the skill.
+
+			// Training by failing badly is possible at F and E.
+			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.RE && quality == PlayingQuality.VeryBad)
+				creature.Skills.Train(skill, 4); // Get a horrible result.
+
+			// TODO: "Use the skill successfully to grow crops faster."
+			// TODO: "Use a music buff skill."
+		}
+
+		/// <summary>
+		/// Called when a player attacks someone (training).
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="attacker"></param>
+		protected virtual void OnCreatureAttackedByPlayer(Creature creature, Creature attacker, TargetAction action)
+		{
+			// Check for instrument in attacker's right hand
+			if (attacker == null || attacker.RightHand == null || attacker.RightHand.Data.Type != ItemType.Instrument)
+				return;
+
+			// Get skill
+			var skill = attacker.Skills.Get(SkillId.PlayingInstrument);
+			if (skill == null) return;
+
+			// Equip an instrument and attack an enemy.
+			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.RE)
+				attacker.Skills.Train(skill, 6);
+			else if (skill.Info.Rank >= SkillRank.RD && skill.Info.Rank <= SkillRank.R6)
+				attacker.Skills.Train(skill, 5);
+			else if (skill.Info.Rank >= SkillRank.R7 && skill.Info.Rank <= SkillRank.R2)
+				attacker.Skills.Train(skill, 4);
+			else if (skill.Info.Rank == SkillRank.R1)
+				attacker.Skills.Train(skill, 3);
 		}
 	}
 }

@@ -130,7 +130,15 @@ namespace Aura.Channel.Skills
 				}
 			}
 
-			// Update experience
+			return this.UpdateExperience();
+		}
+
+		/// <summary>
+		/// Updates exp and returns gained amount.
+		/// </summary>
+		/// <returns></returns>
+		public float UpdateExperience()
+		{
 			var result = this.Info.Experience / 1000f;
 			var exp = 0f;
 			exp += ((this.RankData.Conditions[0].Count - this.Info.ConditionCount1) * this.RankData.Conditions[0].Exp);
