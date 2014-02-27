@@ -115,10 +115,16 @@ namespace Aura.Channel.World
 		public void OnCreatureKilled(Creature creature, Creature killer) { CreatureKilled.Raise(creature, killer); }
 
 		/// <summary>
-		/// Raised when a creature is killed by something.
+		/// Raised when a creature is killed by a player.
 		/// </summary>
 		public event Action<Creature, Creature> CreatureKilledByPlayer;
 		public void OnCreatureKilledByPlayer(Creature creature, Creature killer) { CreatureKilledByPlayer.Raise(creature, killer); }
+
+		/// <summary>
+		/// Raised when a creature is attacked by a player.
+		/// </summary>
+		public event Action<Creature, Creature, TargetAction> CreatureAttackedByPlayer;
+		public void OnCreatureAttackedByPlayer(Creature creature, Creature attacker, TargetAction action) { CreatureAttackedByPlayer.Raise(creature, attacker, action); }
 	}
 
 	public static class EventHandlerExtensions
