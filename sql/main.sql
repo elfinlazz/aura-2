@@ -105,6 +105,14 @@ CREATE TABLE IF NOT EXISTS `creatures` (
 INSERT INTO `creatures` (`creatureId`, `server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`, `region`, `x`, `y`, `direction`, `level`, `levelTotal`, `exp`, `ap`, `age`, `lifeMax`, `lifeDelta`, `injuries`, `manaMax`, `manaDelta`, `staminaMax`, `staminaDelta`, `hunger`, `str`, `int`, `dex`, `will`, `luck`, `lifeFood`, `manaFood`, `staminaFood`, `strFood`, `intFood`, `dexFood`, `willFood`, `luckFood`, `defense`, `protection`, `deletionTime`, `weaponSet`, `title`, `optionTitle`, `state`) VALUES
 (1, 'AuraSystem', '_Dummy', 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 12800, 38100, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0);
 
+CREATE TABLE IF NOT EXISTS `coupons` (
+  `code` varchar(19) NOT NULL,
+  `expiration` datetime DEFAULT NULL,
+  `script` varchar(128) NOT NULL,
+  `used` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `items` (
   `entityId` bigint(20) NOT NULL AUTO_INCREMENT,
   `creatureId` bigint(20) NOT NULL,
@@ -201,7 +209,15 @@ CREATE TABLE IF NOT EXISTS `skills` (
   `skillId` smallint(5) unsigned NOT NULL,
   `creatureId` bigint(20) NOT NULL,
   `rank` tinyint(3) unsigned NOT NULL,
-  `exp` int(11) NOT NULL DEFAULT '0',
+  `condition1` smallint(5) NOT NULL DEFAULT '0',
+  `condition2` smallint(5) NOT NULL DEFAULT '0',
+  `condition3` smallint(5) NOT NULL DEFAULT '0',
+  `condition4` smallint(5) NOT NULL DEFAULT '0',
+  `condition5` smallint(5) NOT NULL DEFAULT '0',
+  `condition6` smallint(5) NOT NULL DEFAULT '0',
+  `condition7` smallint(5) NOT NULL DEFAULT '0',
+  `condition8` smallint(5) NOT NULL DEFAULT '0',
+  `condition9` smallint(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`skillId`,`creatureId`),
   KEY `creatureId` (`creatureId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
