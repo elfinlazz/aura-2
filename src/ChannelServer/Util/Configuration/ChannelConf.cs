@@ -6,22 +6,22 @@ using Aura.Channel.Util.Configuration.Files;
 
 namespace Aura.Channel.Util.Configuration
 {
-	public class ChannelConf : BaseConf
+	public sealed class ChannelConf : BaseConf
 	{
 		/// <summary>
 		/// channel.conf
 		/// </summary>
-		public ChannelConfFile Channel { get; protected set; }
+		public ChannelConfFile Channel { get; private set; }
 
 		/// <summary>
 		/// channel.conf
 		/// </summary>
-		public CommandsConfFile Commands { get; protected set; }
+		public CommandsConfFile Commands { get; private set; }
 
 		/// <summary>
 		/// channel.conf
 		/// </summary>
-		public WorldConfFile World { get; protected set; }
+		public WorldConfFile World { get; private set; }
 
 		public ChannelConf()
 		{
