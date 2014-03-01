@@ -211,7 +211,7 @@ namespace Aura.Channel.World
 					if (x > _width - 1 || y > _height - 1)
 						continue;
 
-					if (_map[x, y] != null)
+					if (_map[x, y] != null && !result.Contains(_map[x, y]))
 						result.Add(_map[x, y]);
 				}
 			}
