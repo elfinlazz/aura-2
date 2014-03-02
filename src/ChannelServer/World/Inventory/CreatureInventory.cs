@@ -300,19 +300,24 @@ namespace Aura.Channel.World
 
 			var source = item.Info.Pocket;
 			var amount = item.Info.Amount;
-			//var newItem = new Item(item);
+
+			// We have to copy the item to get a new id, otherwise there could
+			// be collisions when saving, because the moved item is still in
+			// the inventory of the pet/character (from the pov of the db).
+			// http://dev.mabinoger.com/forum/index.php/topic/804-pet-inventory/
+			var newItem = new Item(item);
 
 			Item collidingItem = null;
-			if (!other.Inventory._pockets[target].TryAdd(item, (byte)targetX, (byte)targetY, out collidingItem))
+			if (!other.Inventory._pockets[target].TryAdd(newItem, (byte)targetX, (byte)targetY, out collidingItem))
 				return false;
 
 			// If amount differs (item was added to stack)
-			if (collidingItem != null && item.Info.Amount != amount)
+			if (collidingItem != null && newItem.Info.Amount != amount)
 			{
 				Send.ItemAmount(other, collidingItem);
 
 				// Left overs, update
-				if (item.Info.Amount > 0)
+				if (newItem.Info.Amount > 0)
 				{
 					Send.ItemAmount(_creature, item);
 				}
@@ -339,7 +344,7 @@ namespace Aura.Channel.World
 					Send.ItemNew(_creature, collidingItem);
 				}
 
-				Send.ItemNew(other, item);
+				Send.ItemNew(other, newItem);
 
 				Send.ItemMoveInfo(_creature, item, source, collidingItem);
 			}
