@@ -15,19 +15,19 @@ namespace Aura.Shared.Util.Configuration
 		/// <summary>
 		/// database.conf
 		/// </summary>
-		public DatabaseConfFile Database { get; protected set; }
+		public DatabaseConfFile Database { get; private set; }
 
 		/// <summary>
 		/// localization.conf
 		/// </summary>
-		public LocalizationConfFile Localization { get; protected set; }
+		public LocalizationConfFile Localization { get; private set; }
 
 		/// <summary>
 		/// internal.conf
 		/// </summary>
-		public InterConfFile Internal { get; protected set; }
+		public InterConfFile Internal { get; private set; }
 
-		public BaseConf()
+		protected BaseConf()
 		{
 			this.Log = new LogConfFile();
 			this.Database = new DatabaseConfFile();
@@ -39,7 +39,7 @@ namespace Aura.Shared.Util.Configuration
 		/// Loads several conf files that are generally required,
 		/// like log, database, etc.
 		/// </summary>
-		public void LoadDefault()
+		protected void LoadDefault()
 		{
 			this.Log.Load();
 			this.Database.Load();

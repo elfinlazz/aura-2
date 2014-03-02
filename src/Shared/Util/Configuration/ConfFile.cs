@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
@@ -16,9 +17,9 @@ namespace Aura.Shared.Util.Configuration
 	/// </remarks>
 	public class ConfFile
 	{
-		protected Dictionary<string, string> _options;
+		protected readonly Dictionary<string, string> _options;
 
-		public ConfFile()
+		protected ConfFile()
 		{
 			_options = new Dictionary<string, string>();
 		}
@@ -41,7 +42,7 @@ namespace Aura.Shared.Util.Configuration
 		/// Throws FileNotFoundException if file couldn't be found.
 		/// </summary>
 		/// <param name="filePath"></param>
-		public void Require(string filePath)
+		protected void Require(string filePath)
 		{
 			this.LoadFile(filePath);
 		}
@@ -74,11 +75,13 @@ namespace Aura.Shared.Util.Configuration
 		/// <param name="option"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public bool GetBool(string option, bool defaultValue = false)
+		protected bool GetBool(string option, bool defaultValue = false)
 		{
 			string value;
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
+
+			value = value.ToLower().Trim();
 
 			return (value == "1" || value == "yes" || value == "true");
 		}
@@ -90,21 +93,18 @@ namespace Aura.Shared.Util.Configuration
 		/// <param name="option"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public byte GetByte(string option, byte defaultValue = 0)
+		protected byte GetByte(string option, byte defaultValue = 0)
 		{
 			string value;
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
 
-			try
-			{
-				return byte.Parse(value);
-			}
-			catch
-			{
-				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
-				return defaultValue;
-			}
+			byte ret;
+			if (byte.TryParse(value, out ret))
+				return ret;
+
+			Log.Warning("Invalid value for '{0}', defaulting to '{1}'", option, defaultValue);
+			return defaultValue;
 		}
 
 		/// <summary>
@@ -114,21 +114,18 @@ namespace Aura.Shared.Util.Configuration
 		/// <param name="option"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public short GetShort(string option, short defaultValue = 0)
+		protected short GetShort(string option, short defaultValue = 0)
 		{
 			string value;
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
 
-			try
-			{
-				return short.Parse(value);
-			}
-			catch
-			{
-				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
-				return defaultValue;
-			}
+			short ret;
+			if (short.TryParse(value, out ret))
+				return ret;
+
+			Log.Warning("Invalid value for '{0}', defaulting to '{1}'", option, defaultValue);
+			return defaultValue;
 		}
 
 		/// <summary>
@@ -138,21 +135,18 @@ namespace Aura.Shared.Util.Configuration
 		/// <param name="option"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public int GetInt(string option, int defaultValue = 0)
+		protected int GetInt(string option, int defaultValue = 0)
 		{
 			string value;
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
 
-			try
-			{
-				return int.Parse(value);
-			}
-			catch
-			{
-				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
-				return defaultValue;
-			}
+			int ret;
+			if (int.TryParse(value, out ret))
+				return ret;
+
+			Log.Warning("Invalid value for '{0}', defaulting to '{1}'", option, defaultValue);
+			return defaultValue;
 		}
 
 		/// <summary>
@@ -162,21 +156,18 @@ namespace Aura.Shared.Util.Configuration
 		/// <param name="option"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public long GetLong(string option, long defaultValue = 0)
+		protected long GetLong(string option, long defaultValue = 0)
 		{
 			string value;
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
 
-			try
-			{
-				return long.Parse(value);
-			}
-			catch
-			{
-				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
-				return defaultValue;
-			}
+			long ret;
+			if (long.TryParse(value, out ret))
+				return ret;
+
+			Log.Warning("Invalid value for '{0}', defaulting to '{1}'", option, defaultValue);
+			return defaultValue;
 		}
 
 		/// <summary>
@@ -186,13 +177,10 @@ namespace Aura.Shared.Util.Configuration
 		/// <param name="option"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public string GetString(string option, string defaultValue = "")
+		protected string GetString(string option, string defaultValue = "")
 		{
 			string value;
-			if (!_options.TryGetValue(option, out value))
-				return defaultValue;
-
-			return value;
+			return !_options.TryGetValue(option, out value) ? defaultValue : value;
 		}
 
 		/// <summary>
@@ -202,21 +190,96 @@ namespace Aura.Shared.Util.Configuration
 		/// <param name="option"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public float GetFloat(string option, float defaultValue = 0)
+		protected float GetFloat(string option, float defaultValue = 0)
 		{
 			string value;
 			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
 
-			try
-			{
-				return float.Parse(value, CultureInfo.InvariantCulture);
-			}
-			catch
-			{
-				Log.Warning("Invalid value for '{0}', defaulting to '{1}'.", option, defaultValue);
+			float ret;
+			if (float.TryParse(value, out ret))
+				return ret;
+
+			Log.Warning("Invalid value for '{0}', defaulting to '{1}'", option, defaultValue);
+			return defaultValue;
+
+		}
+
+		/// <summary>
+		/// Returns the option as a DateTime, or the default value, if the
+		/// option doesn't exist.
+		/// </summary>
+		/// <remarks>
+		/// For acceptable value formatting, see <see href="http://msdn.microsoft.com/en-us/library/system.datetime.parse(v=vs.110).aspx">MSDN</see>.
+		/// </remarks>
+		/// <param name="option"></param>
+		/// <param name="defaultValue"></param>
+		/// <returns></returns>
+		protected DateTime GetDateTime(string option, DateTime defaultValue = default(DateTime))
+		{
+			string value;
+			if (!_options.TryGetValue(option, out value))
 				return defaultValue;
-			}
+
+			DateTime ret;
+			if (DateTime.TryParse(value, out ret))
+				return ret;
+
+			Log.Warning("Invalid value for '{0}', defaulting to '{1}'", option, defaultValue);
+			return defaultValue;
+
+		}
+
+		/// <summary>
+		/// Returns the option as a TimeSpan, or the default value, if the
+		/// option doesn't exist.
+		/// </summary>
+		/// <remarks>
+		/// Value must be formatted as [-]{ d | [d.]hh:mm[:ss[.ff]] }
+		/// 
+		/// For more details, see <see href="http://msdn.microsoft.com/en-us/library/se73z7b9(v=vs.110).aspx">MSDN</see>.
+		/// </remarks>
+		/// <param name="option"></param>
+		/// <param name="defaultValue"></param>
+		/// <returns></returns>
+		protected TimeSpan GetTimeSpan(string option, TimeSpan defaultValue = default(TimeSpan))
+		{
+			string value;
+			if (!_options.TryGetValue(option, out value))
+				return defaultValue;
+
+			TimeSpan ret;
+			if (TimeSpan.TryParse(value, out ret))
+				return ret;
+
+			Log.Warning("Invalid value for '{0}', defaulting to '{1}'", option, defaultValue);
+			return defaultValue;
+		}
+
+		/// <summary>
+		/// Returns the option as an enum, or the default value, if the option
+		/// doesn't exist.
+		/// </summary>
+		/// <typeparam name="T">The type of the enum</typeparam>
+		/// <param name="option"></param>
+		/// <param name="defaultValue"></param>
+		/// <returns></returns>
+		protected T GetEnum<T>(string option, T defaultValue = default(T)) where T : struct
+		{
+			if (!typeof(T).IsEnum)
+				throw new NotSupportedException("Type " + typeof (T) + " is not an enum.");
+
+			string value;
+			if (!_options.TryGetValue(option, out value))
+				return defaultValue;
+
+			T ret;
+
+			if (Enum.TryParse<T>(value, true, out ret))
+				return ret;
+
+			Log.Warning("Invalid value for '{0}', defaulting to '{1}'", option, defaultValue);
+			return defaultValue;
 		}
 	}
 }
