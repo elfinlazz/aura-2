@@ -707,4 +707,15 @@ namespace Aura.Channel.Scripting.Scripts
 	public enum Hide { None, Face, Name, Both }
 	public enum ConversationState { Ongoing, Select, Ended }
 	public enum HookResult { Continue, Break, End }
+
+#if __MonoCS__
+	// Added in Mono 3.0.8, adding it here for convenience.
+	public static class SemaphoreSlimExtension
+	{
+		public static Task WaitAsync(this SemaphoreSlim slim, CancellationToken cancellationToken)
+		{
+			return Task.Factory.StartNew(() => slim.Wait(cancellationToken), cancellationToken);
+		}
+	}
+#endif
 }
