@@ -32,7 +32,8 @@ namespace Aura.Channel.Scripting.Compilers
 
 				foreach (System.CodeDom.Compiler.CompilerError err in errors)
 				{
-					var newEx = new CompilerError(path, err.Line, err.Column, err.ErrorText, err.IsWarning);
+					// Line-1 to compensate lines added by the pre-compiler.
+					var newEx = new CompilerError(path, err.Line - 1, err.Column, err.ErrorText, err.IsWarning);
 					newExs.Errors.Add(newEx);
 				}
 
@@ -42,6 +43,9 @@ namespace Aura.Channel.Scripting.Compilers
 			{
 				// Thrown if file can't be copied. Happens if script was
 				// initially loaded from cache.
+				// TODO: Also thrown if CS-Script can't create the file,
+				//   ie under Linux, if /tmp/CSSCRIPT isn't writeable.
+				//   Handle that somehow?
 			}
 			catch (Exception ex)
 			{
@@ -53,29 +57,35 @@ namespace Aura.Channel.Scripting.Compilers
 
 		public string PreCompile(string script)
 		{
-			// Default usings
-			var defaultUsings = new StringBuilder();
-			defaultUsings.Append("using System;");
-			defaultUsings.Append("using System.Collections.Generic;");
-			defaultUsings.Append("using System.Collections;");
-			defaultUsings.Append("using System.Linq;");
-			defaultUsings.Append("using System.Text;");
-			defaultUsings.Append("using System.Threading.Tasks;");
-			defaultUsings.Append("using System.Timers;");
-			defaultUsings.Append("using Microsoft.CSharp;");
-			defaultUsings.Append("using Aura.Channel.Network.Sending;");
-			defaultUsings.Append("using Aura.Channel.Scripting.Scripts;");
-			defaultUsings.Append("using Aura.Channel.Scripting;");
-			defaultUsings.Append("using Aura.Channel.World.Entities;");
-			defaultUsings.Append("using Aura.Channel.World.Shops;");
-			defaultUsings.Append("using Aura.Channel.World;");
-			defaultUsings.Append("using Aura.Channel;");
-			defaultUsings.Append("using Aura.Shared.Mabi.Const;");
-			defaultUsings.Append("using Aura.Shared.Mabi;");
-			defaultUsings.Append("using Aura.Shared.Network;");
-			defaultUsings.Append("using Aura.Shared.Util;");
-			defaultUsings.Append("using Aura.Shared.Util.Commands;");
-			script = defaultUsings + script;
+			// Default usings and compiler options
+			var add = new StringBuilder();
+
+			// Mono needs this to not treat harmless warnings as errors
+			// (like a missing await in an async Task) and to not spam
+			// us with warnings.
+			add.AppendLine("//css_co /warnaserror- /warn:0;");
+
+			add.Append("using System;");
+			add.Append("using System.Collections.Generic;");
+			add.Append("using System.Collections;");
+			add.Append("using System.Linq;");
+			add.Append("using System.Text;");
+			add.Append("using System.Threading.Tasks;");
+			add.Append("using System.Timers;");
+			add.Append("using Microsoft.CSharp;");
+			add.Append("using Aura.Channel.Network.Sending;");
+			add.Append("using Aura.Channel.Scripting.Scripts;");
+			add.Append("using Aura.Channel.Scripting;");
+			add.Append("using Aura.Channel.World.Entities;");
+			add.Append("using Aura.Channel.World.Shops;");
+			add.Append("using Aura.Channel.World;");
+			add.Append("using Aura.Channel;");
+			add.Append("using Aura.Shared.Mabi.Const;");
+			add.Append("using Aura.Shared.Mabi;");
+			add.Append("using Aura.Shared.Network;");
+			add.Append("using Aura.Shared.Util;");
+			add.Append("using Aura.Shared.Util.Commands;");
+			script = add + script;
 
 			// Return();
 			// --> yield break;
