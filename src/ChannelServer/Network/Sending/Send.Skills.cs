@@ -204,6 +204,23 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends SkillReady to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="itemEntityId"></param>
+		/// <param name="dyeEntityId"></param>
+		public static void SkillReadyDye(Creature creature, SkillId skillId, long itemEntityId, long dyeEntityId)
+		{
+			var packet = new Packet(Op.SkillReady, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutLong(itemEntityId);
+			packet.PutLong(dyeEntityId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends SkillUse to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
@@ -213,6 +230,42 @@ namespace Aura.Channel.Network.Sending
 		{
 			var packet = new Packet(Op.SkillUse, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
+			packet.PutByte(unkByte);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillUse to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="part"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public static void SkillUseDye(Creature creature, SkillId skillId, int part, short x, short y)
+		{
+			var packet = new Packet(Op.SkillUse, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutInt(part);
+			packet.PutShort(x);
+			packet.PutShort(y);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillUse to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="part"></param>
+		/// <param name="unkByte"></param>
+		public static void SkillUseDye(Creature creature, SkillId skillId, int part, byte unkByte)
+		{
+			var packet = new Packet(Op.SkillUse, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutInt(part);
 			packet.PutByte(unkByte);
 
 			creature.Client.Send(packet);
@@ -312,6 +365,21 @@ namespace Aura.Channel.Network.Sending
 			var packet = new Packet(Op.SkillComplete, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
 			packet.PutByte(unkByte);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillComplete to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="part"></param>
+		public static void SkillCompleteDye(Creature creature, SkillId skillId, int part)
+		{
+			var packet = new Packet(Op.SkillComplete, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutInt(part);
 
 			creature.Client.Send(packet);
 		}

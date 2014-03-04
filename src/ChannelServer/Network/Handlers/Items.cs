@@ -342,5 +342,58 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.UseItemR(creature, true, item.Info.Id);
 		}
+
+		/// <summary>
+		/// Sent after regular dye was prepared.
+		/// </summary>
+		/// <remarks>
+		/// What's sent back are the parameters for the wave algorithm,
+		/// creating the random pattern.
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.DyePaletteReq)]
+		public void DyePaletteReq(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null) return;
+
+			Send.DyePaletteReqR(creature, 0, 0, 0, 0);
+		}
+
+		/// <summary>
+		/// Sent when clicking "Pick Color".
+		/// </summary>
+		/// <remarks>
+		/// Generates the randomly placed pickers' positions for regular dyes.
+		/// They are placed relative to the cursor, if the whole array/struct
+		/// is 0 all pickers will be at the cursor, giving all 5 options
+		/// the same color.
+		/// </remarks>
+		/// <example>
+		/// 0001 [005000CB994586F1] Long   : 22518872586684145
+		/// </example>
+		[PacketHandler(Op.DyePickColor)]
+		public void DyePickColor(ChannelClient client, Packet packet)
+		{
+			var itemEntityId = packet.GetLong();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null) return;
+
+			// Empty array
+			creature.Temp.RegularDyePickers = new byte[5 * 2 * 2];
+
+			// Example:
+			// 5x x+y. First byte is +, second -?
+			// 0x00, 0x00, 0x00, 0x00, // Color Picker 1
+			// 0xF5, 0xFF, 0xF5, 0xFF, // Color Picker 2
+			// 0x0A, 0x00, 0xF5, 0xFF, // Color Picker 3
+			// 0xF5, 0xFF, 0x0A, 0x00, // Color Picker 4
+			// 0x0A, 0x00, 0x0A, 0x00, // Color Picker 5
+
+			Send.DyePickColorR(creature, true);
+		}
 	}
 }

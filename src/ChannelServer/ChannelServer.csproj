@@ -142,6 +142,7 @@
     <Compile Include="Skills\Base\StartStopSkillHandler.cs" />
     <Compile Include="Skills\CombatAction.cs" />
     <Compile Include="Skills\Combat\CombatMastery.cs" />
+    <Compile Include="Skills\Hidden\DyeSkillHandler.cs" />
     <Compile Include="Skills\Life\RestSkillHandler.cs" />
     <Compile Include="Skills\Magic\ManaShieldSkillHandler.cs" />
     <Compile Include="Skills\Music\ComposingSkillHandler.cs" />

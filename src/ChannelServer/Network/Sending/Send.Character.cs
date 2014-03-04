@@ -251,6 +251,35 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends AcquireInfo2 to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="itemEntityId"></param>
+		/// <param name="selected"></param>
+		public static void AcquireDyedItemInfo(Creature creature, long itemEntityId, byte selected)
+		{
+			var packet = new Packet(Op.AcquireInfo2, creature.EntityId);
+			packet.PutString("<xml type='dyeing' objectid='{0}' selected='{1}'/>", itemEntityId, selected);
+			packet.PutInt(3000);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends AcquireInfo2 to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="itemEntityId"></param>
+		public static void AcquireFixedDyedItemInfo(Creature creature, long itemEntityId)
+		{
+			var packet = new Packet(Op.AcquireInfo2, creature.EntityId);
+			packet.PutString("<xml type='fixed_color_dyeing' objectid='{0}'/>", itemEntityId);
+			packet.PutInt(3000);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends DeadMenuR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>

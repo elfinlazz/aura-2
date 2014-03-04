@@ -26,5 +26,11 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		// Last open shop
 		public NpcShop CurrentShop;
+
+		// Items temporarily used by skills
+		public Item SkillItem1, SkillItem2;
+
+		// Random dyeing cursors for regular dyes
+		public byte[] RegularDyePickers;
 	}
 }
