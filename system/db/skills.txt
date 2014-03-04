@@ -32,14 +32,10 @@
 10033,"Carpentry",10091
 10036,"Make Theatre Mission Pass",0
 10037,"Wine Making",50015
-10038,"Perfume Making",0
 10040,"Hillwen Engineering",10920
 10041,"Magic Craft",10921
 10042,"Rare Mineralogy",10922
 10043,"Shyllien Ecology",10923
-10044,"Food Mastery",10711
-10045,"Find Material",10712
-10046,"Festival Food",10713
 50005,"Web Spinning",0
 50115,"Wyvern Fire Breath",0
 50160,"Save Location",0
@@ -54,9 +50,6 @@
 55007,"Hoeing",10807
 55100,"Commerce Mastery",10808
 56001,"Transformation Mastery",10809
-57001,"Exploration Mastery",10714
-57002,"Relic Investigation",10715
-57004,"TreasureDungeonExploration",0
 
 // Combat
 //---------------------------------------------------------------------------
@@ -197,7 +190,6 @@
 52013,"Titan Bump",0
 52014,"Titan Leap",0
 52500,"Freeze! Stop Right There!",0
-57003,"Emergency Escape",10716
 65002,"Super Windmill (GM Skill)",0
 65004,"Kill All",0
 65005,"Kill Self",0
@@ -448,8 +440,6 @@
 50057,"Continent Warp",0
 50058,"Add Seasoning",0
 50064,"Chorus",0
-50065,"Blow Up Balloon",0
-50066,"Group Motion",0
 50126,"Watering",0
 50127,"Fertilizing",0
 50128,"Bug Catching",0
@@ -459,7 +449,6 @@
 50165,"Spread Wings",0
 50172,"1st Couples Flight",0
 50173,"2nd Couples Flight",0
-50511,"Yui's Support",0
 52010,"Bolt Out of the Blue",0
 
 // Personas
@@ -535,7 +524,6 @@
 50059,"Water Balloon Attack",0
 50060,"Emergency Ice Bomb",0
 50061,"Marionette Hidden Resurrection",0
-50063,"Use Item to Share EXP",0
 50101,"Pet Buffing",0
 50108,"PetSealToItem",0
 50113,"Eat Volcanic Bomb",0
