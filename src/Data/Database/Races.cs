@@ -8,12 +8,11 @@ using System.Text.RegularExpressions;
 
 namespace Aura.Data.Database
 {
-	public class RaceData
+	public class RaceData : TaggableData
 	{
 		public int Id { get; internal set; }
 		public string Name { get; internal set; }
 		public string Group { get; internal set; }
-		public string Tags { get; internal set; }
 		public Gender Gender { get; internal set; }
 
 		public int DefaultState { get; internal set; }
@@ -66,35 +65,6 @@ namespace Aura.Data.Database
 		public bool Is(RaceStands stand)
 		{
 			return (this.Stand & stand) != 0;
-		}
-
-		/// <summary>
-		/// Return true if tags contain input.
-		/// </summary>
-		/// <remarks>
-		/// Use asterisks (*) as place-holders.
-		/// </remarks>
-		/// <example>
-		/// Tags: /animal/beast/blackleopard/goodnpc_no_attack_pc/activate_signal/revivebyrp/heal/pc/neutral/unable_tame/unable_bubble/unable_unsummon/no_finish/
-		/// 
-		/// Input: */*
-		/// Result: True
-		/// 
-		/// Input: */blackleopard/*
-		/// Result: True
-		/// 
-		/// Input: */animal/*
-		/// Result: True
-		/// 
-		/// Input: */bear/*
-		/// Result: False
-		/// </example>
-		/// <param name="tag"></param>
-		/// <returns></returns>
-		public bool HasTag(string tag)
-		{
-			tag = tag.Replace("*", ".*");
-			return Regex.IsMatch(this.Tags, tag, RegexOptions.Compiled);
 		}
 	}
 

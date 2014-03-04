@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Aura.Data.Database
 {
-	public class ItemData
+	public class ItemData : TaggableData
 	{
 		public int Id { get; internal set; }
 
@@ -70,7 +70,7 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
-		[MinFieldCount(29)]
+		[MinFieldCount(30)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			var info = new ItemData();
@@ -78,6 +78,7 @@ namespace Aura.Data.Database
 
 			info.Name = entry.ReadString();
 			info.KorName = entry.ReadString();
+			info.Tags = entry.ReadString();
 			info.Type = (ItemType)entry.ReadInt();
 			info.StackType = (StackType)entry.ReadInt();
 			info.StackMax = entry.ReadUShort();
