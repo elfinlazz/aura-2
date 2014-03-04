@@ -4,8 +4,11 @@
 using System;
 using System.Collections;
 using Aura.Channel.Network;
+using Aura.Channel.Network.Sending;
 using Aura.Channel.Util;
+using Aura.Channel.World;
 using Aura.Channel.World.Entities;
+using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 
@@ -272,6 +275,46 @@ namespace Aura.Channel.Scripting.Scripts
 		protected PropFunc PropWarp(int region, int x, int y)
 		{
 			return Prop.GetWarpBehavior(region, x, y);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="radius"></param>
+		/// <param name="effect"></param>
+		protected void Spawn(int raceId, int amount, int regionId, int x, int y, int radius = 0, bool effect = false)
+		{
+			this.Spawn(raceId, amount, regionId, new Position(x, y), radius, effect);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="radius"></param>
+		/// <param name="effect"></param>
+		protected void Spawn(int raceId, int amount, int regionId, Position pos, int radius = 0, bool effect = false)
+		{
+			amount = Math2.MinMax(1, 100, amount);
+
+			var rnd = RandomProvider.Get();
+
+			for (int i = 0; i < amount; ++i)
+			{
+				if (radius > 0)
+					pos = pos.GetRandomInRange(radius, rnd);
+
+				ChannelServer.Instance.ScriptManager.Spawn(raceId, regionId, pos.X, pos.Y, -1, true, effect);
+			}
 		}
 	}
 

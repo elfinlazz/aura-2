@@ -22,6 +22,7 @@ using Aura.Channel.World.Quests;
 using System.Collections;
 using System.Threading.Tasks;
 using Aura.Channel.World.Shops;
+using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.Scripting
 {
@@ -613,7 +614,7 @@ namespace Aura.Channel.Scripting
 			for (int i = 0; i < amount; ++i)
 			{
 				var pos = spawn.GetRandomPosition();
-				if (this.Spawn(spawn.RaceId, spawn.RegionId, pos.X, pos.Y, spawn.Id) == null)
+				if (this.Spawn(spawn.RaceId, spawn.RegionId, pos.X, pos.Y, spawn.Id, false, false) == null)
 					return result;
 
 				result++;
@@ -631,7 +632,7 @@ namespace Aura.Channel.Scripting
 		/// <param name="y"></param>
 		/// <param name="spawnId"></param>
 		/// <returns></returns>
-		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId = -1, bool active = false)
+		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId, bool active, bool effect)
 		{
 			var creature = new NPC();
 			creature.Race = raceId;
@@ -665,6 +666,9 @@ namespace Aura.Channel.Scripting
 
 			if (creature.AI != null && active)
 				creature.AI.Activate(0);
+
+			if (effect)
+				Send.SpawnEffect(SpawnEffect.Monster, creature.RegionId, x, y, creature, creature);
 
 			return creature;
 		}
