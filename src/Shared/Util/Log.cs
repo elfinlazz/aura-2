@@ -42,7 +42,7 @@ namespace Aura.Shared.Util
 		public static string Archive { get; set; }
 
 		/// <summary>
-		/// Sets or returns the file to log to. Upon setting the file will
+		/// Sets or returns the file to log to. Upon setting, the file will
 		/// be deleted. If Archive is set, it will be moved to safety first.
 		/// </summary>
 		public static string LogFile
@@ -64,12 +64,17 @@ namespace Aura.Shared.Util
 							if (!Directory.Exists(Archive))
 								Directory.CreateDirectory(Archive);
 
-							var archive = Path.Combine(Archive, File.GetLastWriteTime(value).ToString("yyyy-MM-dd_hh-mm-ss"));
+							var time = File.GetCreationTime(value);
+							var archive = Path.Combine(Archive, time.ToString("yyyy-MM-dd_hh-mm"));
+							var archiveFilePath = Path.Combine(archive, Path.GetFileName(value));
+
 							if (!Directory.Exists(archive))
-							{
 								Directory.CreateDirectory(archive);
-								File.Move(value, Path.Combine(archive, Path.GetFileName(value)));
-							}
+
+							if(File.Exists(archiveFilePath))
+								File.Delete(archiveFilePath);
+
+							File.Move(value, archiveFilePath);
 						}
 
 						File.Delete(value);
