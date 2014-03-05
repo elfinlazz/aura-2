@@ -105,6 +105,12 @@ namespace Aura.Channel.Skills
 
 				if (action.Category == CombatActionCategory.Target && this.Attacker.IsPlayer)
 					ChannelServer.Instance.Events.OnCreatureAttackedByPlayer(action.Creature, this.Attacker, action as TargetAction);
+
+				var npc = action.Creature as NPC;
+				if (npc != null && npc.AI != null)
+				{
+					npc.AI.OnHit(action as TargetAction);
+				}
 			}
 
 			// Start combat action

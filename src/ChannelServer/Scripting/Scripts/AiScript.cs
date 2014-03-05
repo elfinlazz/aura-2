@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Skills;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
@@ -153,8 +154,9 @@ namespace Aura.Channel.Scripting.Scripts
 				// Stop and clear if stunned
 				if (this.Creature.IsStunned)
 				{
-					// Clearing causes it to run aggro from beginning again and
-					// again, this should be moved to the take damage "event".
+					// Clearing causes it to run aggro from beginning again
+					// and again, this should probably be moved to the take
+					// damage "event"?
 					//this.Clear();
 					return;
 				}
@@ -525,6 +527,18 @@ namespace Aura.Channel.Scripting.Scripts
 			action.GetEnumerator().MoveNext();
 		}
 
+		/// <summary>
+		/// Sets target and puts creature in battle mode.
+		/// </summary>
+		/// <param name="creature"></param>
+		protected void AggroCreature(Creature creature)
+		{
+			_state = AiState.Aggro;
+			this.Creature.BattleStance = BattleStance.Ready;
+			this.Creature.Target = creature;
+			Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
+		}
+
 		// Actions
 		// ------------------------------------------------------------------
 
@@ -793,6 +807,20 @@ namespace Aura.Channel.Scripting.Scripts
 					Log.Error("AI.Attack: Unhandled combat skill result ({0}).", result);
 					yield break;
 				}
+			}
+		}
+
+		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Called when creature is hit.
+		/// </summary>
+		/// <param name="action"></param>
+		public virtual void OnHit(TargetAction action)
+		{
+			if (this.Creature.Target == null || _state != AiState.Aggro)
+			{
+				this.AggroCreature(action.Attacker);
 			}
 		}
 
