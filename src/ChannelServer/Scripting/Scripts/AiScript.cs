@@ -783,7 +783,8 @@ namespace Aura.Channel.Scripting.Scripts
 					var pos = this.Creature.GetPosition();
 					var targetPos = this.Creature.Target.GetPosition();
 
-					this.ExecuteOnce(this.RunTo(pos.GetRelative(targetPos, -attackRange + 50)));
+					//this.ExecuteOnce(this.RunTo(pos.GetRelative(targetPos, -attackRange + 50)));
+					this.ExecuteOnce(this.RunTo(targetPos));
 
 					yield return true;
 				}
