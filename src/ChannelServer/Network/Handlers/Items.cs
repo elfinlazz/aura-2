@@ -12,6 +12,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Data.Database;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World;
+using Aura.Shared.Mabi.Structs;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -367,7 +368,7 @@ namespace Aura.Channel.Network.Handlers
 		/// </summary>
 		/// <remarks>
 		/// Generates the randomly placed pickers' positions for regular dyes.
-		/// They are placed relative to the cursor, if the whole array/struct
+		/// They are placed relative to the cursor, if the whole struct
 		/// is 0 all pickers will be at the cursor, giving all 5 options
 		/// the same color.
 		/// </remarks>
@@ -382,16 +383,13 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
 
-			// Empty array
-			creature.Temp.RegularDyePickers = new byte[5 * 2 * 2];
+			var pickers = new DyePickers();
+			//pickers.Picker2.X = 10;
+			//pickers.Picker2.Y = 10;
+			//pickers.Picker3.X = -10;
+			//pickers.Picker3.Y = 10;
 
-			// Example:
-			// 5x x+y. First byte is +, second -?
-			// 0x00, 0x00, 0x00, 0x00, // Color Picker 1
-			// 0xF5, 0xFF, 0xF5, 0xFF, // Color Picker 2
-			// 0x0A, 0x00, 0xF5, 0xFF, // Color Picker 3
-			// 0xF5, 0xFF, 0x0A, 0x00, // Color Picker 4
-			// 0x0A, 0x00, 0x0A, 0x00, // Color Picker 5
+			creature.Temp.RegularDyePickers = pickers;
 
 			Send.DyePickColorR(creature, true);
 		}

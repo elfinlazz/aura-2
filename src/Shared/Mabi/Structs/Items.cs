@@ -87,4 +87,26 @@ namespace Aura.Shared.Mabi.Structs
 		public int PonsPrice;
 		private int __unknown3;
 	}
+
+	/// <summary>
+	/// Positions of the pickers when using regular dye.
+	/// </summary>
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public struct DyePickers
+	{
+		public DyePicker Picker1;
+		public DyePicker Picker2;
+		public DyePicker Picker3;
+		public DyePicker Picker4;
+		public DyePicker Picker5;
+	}
+
+	/// <summary>
+	/// Position of a picker when using regular dye.
+	/// </summary>
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public struct DyePicker
+	{
+		public short X, Y;
+	}
 }
