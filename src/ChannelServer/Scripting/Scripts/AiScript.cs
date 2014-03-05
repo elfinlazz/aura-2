@@ -226,12 +226,15 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		private void SelectState()
 		{
-			if (_aggroType == AggroType.Neutral)
+			// Always goes back into idle if there's no target.
+			// Continue if neutral has a target, for the reset checks.
+			if (_aggroType == AggroType.Neutral && this.Creature.Target == null)
 			{
 				_state = AiState.Idle;
 				return;
 			}
 
+			// Find a target if you don't have one.
 			if (this.Creature.Target == null)
 			{
 				// Try to find a target
@@ -242,6 +245,7 @@ namespace Aura.Channel.Scripting.Scripts
 					_awareTime = DateTime.Now;
 				}
 			}
+			// Got target.
 			else
 			{
 				// Untarget on death, out of range, or disconnect
@@ -265,6 +269,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 						Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
 					}
+					// Reset if target ran away like a coward.
 					else
 					{
 						this.Reset();
@@ -273,9 +278,8 @@ namespace Aura.Channel.Scripting.Scripts
 					return;
 				}
 
-
 				// Switch to aggro from alert after the delay
-				if ((_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready)) && _state == AiState.Alert && DateTime.Now >= _alertTime + _aggroDelay)
+				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready) || (_aggroType > AggroType.Neutral && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
 				{
 					this.Clear();
 
