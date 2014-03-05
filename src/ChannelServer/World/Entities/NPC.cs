@@ -115,5 +115,21 @@ namespace Aura.Channel.World.Entities
 			// Actual formula unknown.
 			return ((this.Will * 10) + RandomProvider.Get().Next(1001)) > 999;
 		}
+
+		/// <summary>
+		/// Returns random damage based on race data.
+		/// </summary>
+		/// <param name="weapon"></param>
+		/// <param name="balance"></param>
+		/// <returns></returns>
+		public override float GetRndDamage(Item weapon, float balance = float.NaN)
+		{
+			float min = this.RaceData.AttackMin, max = this.RaceData.AttackMax;
+
+			if (float.IsNaN(balance))
+				balance = this.GetRndBalance(weapon);
+
+			return (min + ((max - min) * balance));
+		}
 	}
 }

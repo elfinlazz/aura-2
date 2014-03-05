@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Skills.Base;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
@@ -152,7 +153,9 @@ namespace Aura.Channel.Scripting.Scripts
 				// Stop and clear if stunned
 				if (this.Creature.IsStunned)
 				{
-					this.Clear();
+					// Clearing causes it to run aggro from beginning again and
+					// again, this should be moved to the take damage "event".
+					//this.Clear();
 					return;
 				}
 
@@ -332,6 +335,7 @@ namespace Aura.Channel.Scripting.Scripts
 			yield break;
 		}
 
+		// Setup
 		// ------------------------------------------------------------------
 
 		/// <summary>
@@ -381,24 +385,6 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Clears AI and sets new current action.
-		/// </summary>
-		/// <param name="action"></param>
-		protected void SwitchAction(Func<IEnumerable> action)
-		{
-			_curAction = action().GetEnumerator();
-		}
-
-		/// <summary>
-		/// Creates enumerator and runs it once.
-		/// </summary>
-		/// <param name="action"></param>
-		protected void ExecuteOnce(IEnumerable action)
-		{
-			action.GetEnumerator().MoveNext();
-		}
-
-		/// <summary>
 		/// Adds a race tag that the AI hates and will target.
 		/// </summary>
 		/// <param name="tags"></param>
@@ -437,15 +423,8 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 		}
 
+		// Functions
 		// ------------------------------------------------------------------
-
-		/// <summary>
-		/// Cleares action queue.
-		/// </summary>
-		protected void Clear()
-		{
-			_curAction = null;
-		}
 
 		/// <summary>
 		/// Returns random number between 0.0 and 100.0.
@@ -510,6 +489,40 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 
 			return false;
+		}
+
+		// Flow control
+		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Cleares action queue.
+		/// </summary>
+		protected void Clear()
+		{
+			_curAction = null;
+		}
+
+		/// <summary>
+		/// Clears AI and sets new current action.
+		/// </summary>
+		/// <param name="action"></param>
+		protected void SwitchAction(Func<IEnumerable> action)
+		{
+			_curAction = action().GetEnumerator();
+		}
+
+		/// <summary>
+		/// Creates enumerator and runs it once.
+		/// </summary>
+		/// <remarks>
+		/// Useful if you want to make a creature go somewhere, but you don't
+		/// want to wait for it to arrive there. Effectively running the action
+		/// with a 0 timeout.
+		/// </remarks>
+		/// <param name="action"></param>
+		protected void ExecuteOnce(IEnumerable action)
+		{
+			action.GetEnumerator().MoveNext();
 		}
 
 		// Actions
@@ -713,9 +726,100 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 		}
 
+		/// <summary>
+		/// Attacks target creature "KnockCount" times.
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable Attack()
+		{
+			return this.Attack(this.Creature.RaceData.KnockCount);
+		}
+
+		/// <summary>
+		/// Attacks target creature x times.
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable Attack(int count)
+		{
+			if (this.Creature.Target == null)
+			{
+				this.Reset();
+				yield break;
+			}
+
+			var skillId = SkillId.CombatMastery;
+
+			// Get skill
+			var skill = this.Creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Error("AI.Attack: Skill '{0}' not found for '{1}'.", skillId, this.Creature.Race);
+				yield break;
+			}
+
+			// Get skill handler
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<ICombatSkill>(skillId);
+			if (skillHandler == null)
+			{
+				Log.Error("AI.Attack: Skill handler not found for '{0}'.", skillId);
+				yield break;
+			}
+
+			var attackRange = this.Creature.AttackRangeFor(this.Creature.Target);
+
+			// Each successful hit counts, attack until count is reached.
+			for (int i = 0; ; )
+			{
+				var result = skillHandler.Use(this.Creature, skill, this.Creature.Target.EntityId);
+				if (result == CombatSkillResult.Okay)
+				{
+					if (++i >= count)
+						yield break;
+					else
+						yield return true;
+				}
+				else if (result == CombatSkillResult.OutOfRange)
+				{
+					var pos = this.Creature.GetPosition();
+					var targetPos = this.Creature.Target.GetPosition();
+
+					this.ExecuteOnce(this.RunTo(pos.GetRelative(targetPos, -attackRange + 50)));
+
+					yield return true;
+				}
+				else
+				{
+					Log.Error("AI.Attack: Unhandled combat skill result ({0}).", result);
+					yield break;
+				}
+			}
+		}
+
 		// ------------------------------------------------------------------
 
-		protected enum AiState { Idle, Aware, Alert, Aggro }
+		protected enum AiState
+		{
+			/// <summary>
+			/// Doing nothing
+			/// </summary>
+			Idle,
+
+			/// <summary>
+			/// Doing nothing, but noticed a potential target
+			/// </summary>
+			Aware,
+
+			/// <summary>
+			/// Watching target (!)
+			/// </summary>
+			Alert,
+
+			/// <summary>
+			/// Aggroing target (!!)
+			/// </summary>
+			Aggro,
+		}
+
 		protected enum AggroType
 		{
 			/// <summary>

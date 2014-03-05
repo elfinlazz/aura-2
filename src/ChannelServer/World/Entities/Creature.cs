@@ -896,7 +896,7 @@ namespace Aura.Channel.World.Entities
 		/// <param name="weapon">null for hands</param>
 		/// <param name="balance">NaN for individual balance calculation</param>
 		/// <returns></returns>
-		public float GetRndDamage(Item weapon, float balance = float.NaN)
+		public virtual float GetRndDamage(Item weapon, float balance = float.NaN)
 		{
 			float min = 0, max = 0;
 
