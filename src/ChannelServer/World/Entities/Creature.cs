@@ -1020,6 +1020,8 @@ namespace Aura.Channel.World.Entities
 			Send.IsNowDead(this);
 			Send.SetFinisher(this, 0);
 
+			ChannelServer.Instance.CombatManager.AggroChange(this, null);
+
 			ChannelServer.Instance.Events.OnCreatureKilled(this, killer);
 			if (killer != null && killer.IsPlayer)
 				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer);

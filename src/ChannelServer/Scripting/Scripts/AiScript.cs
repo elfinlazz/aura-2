@@ -47,6 +47,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected TimeSpan _alertDelay, _aggroDelay;
 		protected DateTime _awareTime, _alertTime;
 		protected AggroType _aggroType;
+		protected AggroLimit _aggroLimit;
 		protected Dictionary<string, string> _hateTags, _loveTags;
 
 		/// <summary>
@@ -83,8 +84,12 @@ namespace Aura.Channel.Scripting.Scripts
 			_loveTags = new Dictionary<string, string>();
 
 			_aggroType = AggroType.Neutral;
+			_aggroLimit = AggroLimit.One;
 		}
 
+		/// <summary>
+		/// Disables heartbeat timer.
+		/// </summary>
 		public void Dispose()
 		{
 			_heartbeatTimer.Change(-1, -1);
@@ -218,6 +223,7 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				this.Creature.Target = null;
 				Send.SetCombatTarget(this.Creature, 0, 0);
+				ChannelServer.Instance.CombatManager.AggroChange(this.Creature, null);
 			}
 		}
 
@@ -281,10 +287,14 @@ namespace Aura.Channel.Scripting.Scripts
 				// Switch to aggro from alert after the delay
 				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready) || (_aggroType > AggroType.Neutral && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
 				{
+					// Check aggro limit
+					var aggroCount = ChannelServer.Instance.CombatManager.GetAggroCount(this.Creature.Target, this.Creature.Race);
+					if (aggroCount >= (int)_aggroLimit) return;
+					ChannelServer.Instance.CombatManager.AggroChange(this.Creature, this.Creature.Target);
+
 					this.Clear();
 
 					_state = AiState.Aggro;
-
 					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
 
 					return;
@@ -373,7 +383,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Milliseconds before creature attacks.
+		/// Radius in which creature become potential targets.
 		/// </summary>
 		/// <param name="time"></param>
 		protected void SetAggroRadius(int radius)
@@ -382,12 +392,21 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Milliseconds before creature attacks.
+		/// The way the AI decides whether to go into Alert/Aggro.
 		/// </summary>
 		/// <param name="time"></param>
 		protected void SetAggroType(AggroType type)
 		{
 			_aggroType = type;
+		}
+
+		/// <summary>
+		/// Milliseconds before creature attacks.
+		/// </summary>
+		/// <param name="time"></param>
+		protected void SetAggroLimit(AggroLimit limit)
+		{
+			_aggroLimit = limit;
 		}
 
 		/// <summary>
@@ -540,6 +559,7 @@ namespace Aura.Channel.Scripting.Scripts
 			_state = AiState.Aggro;
 			this.Creature.BattleStance = BattleStance.Ready;
 			this.Creature.Target = creature;
+			ChannelServer.Instance.CombatManager.AggroChange(this.Creature, this.Creature.Target);
 			Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
 		}
 
@@ -874,6 +894,32 @@ namespace Aura.Channel.Scripting.Scripts
 			/// Goes straight into alert and aggro.
 			/// </summary>
 			Aggressive,
+		}
+
+		protected enum AggroLimit
+		{
+			/// <summary>
+			/// Only auto aggroes if no other creature of the same race
+			/// aggroed target yet.
+			/// </summary>
+			One = 1,
+
+			/// <summary>
+			/// Only auto aggroes if at most one other creature of the same
+			/// race aggroed target.
+			/// </summary>
+			Two,
+
+			/// <summary>
+			/// Only auto aggroes if at most two other creatures of the same
+			/// race aggroed target.
+			/// </summary>
+			Three,
+
+			/// <summary>
+			/// Auto aggroes regardless of other enemies.
+			/// </summary>
+			None = int.MaxValue,
 		}
 	}
 }
