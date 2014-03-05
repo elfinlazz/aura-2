@@ -113,7 +113,7 @@ namespace Aura.Channel.Skills
 				}
 			}
 
-			// Start combat action
+			// Send combat action
 			Send.CombatAction(this);
 
 			// Skill used

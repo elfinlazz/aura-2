@@ -111,12 +111,15 @@ namespace Aura.Channel.Network.Handlers
 			var unkString = packet.GetString();
 
 			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			if (creature == null) return;
 
 			// Check target
 			var target = creature.Region.GetCreature(targetEntityId);
 			if (target == null || !creature.CanTarget(target))
+				goto L_End;
+
+			// Check Stun
+			if (creature.IsStunned)
 				goto L_End;
 
 			// Get skill
