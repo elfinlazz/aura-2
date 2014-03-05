@@ -26,8 +26,8 @@ public class FoxAi : AiScript
 		switch(Random(10))
 		{
 			case 0:
-			case 1:  Do(Circle(400, 1000, 5000)); break;
-			case 3:  Do(Circle(400, 1000, 5000)); break;
+			case 1:  
+			case 2:  Do(Circle(400, 1000, 5000)); break;
 			case 9:  Do(Say("Defense!")); break;
 			default: break;
 		}
