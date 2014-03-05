@@ -50,9 +50,6 @@ namespace Aura.Channel.Skills.Hidden
 		{
 			var part = packet.GetInt();
 
-			if (creature.Skills.ActiveSkill != skill) return;
-			if (creature.Temp.SkillItem1 == null || creature.Temp.SkillItem2 == null) return;
-
 			if (packet.Peek() == PacketElementType.Short)
 				this.UseRegular(creature, skill, packet, part);
 			else if (packet.Peek() == PacketElementType.Byte)
@@ -64,11 +61,7 @@ namespace Aura.Channel.Skills.Hidden
 			var x = packet.GetShort();
 			var y = packet.GetShort();
 
-			// TODO: Get the distort formula for regulars
-
-			throw new NotImplementedException();
-
-			//Send.SkillUseDye(creature, skill.Info.Id, part, x, y);
+			Send.SkillUseDye(creature, skill.Info.Id, part, x, y);
 		}
 
 		private void UseFixed(Creature creature, Skill skill, Packet packet, int part)
@@ -80,9 +73,10 @@ namespace Aura.Channel.Skills.Hidden
 
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
-			if (creature.Temp.SkillItem1 == null || creature.Temp.SkillItem2 == null) return;
-
 			var part = packet.GetInt();
+
+			if (creature.Skills.ActiveSkill != skill) return;
+			if (creature.Temp.SkillItem1 == null || creature.Temp.SkillItem2 == null) return;
 
 			creature.Skills.ActiveSkill = null;
 
@@ -94,7 +88,13 @@ namespace Aura.Channel.Skills.Hidden
 
 		private void CompleteRegular(Creature creature, Packet packet, Skill skill, int part)
 		{
-			throw new NotImplementedException();
+			var x = packet.GetShort();
+			var y = packet.GetShort();
+
+			// TODO: Get the distort formula for regulars
+
+			Send.ServerMessage(creature, Localization.Get("aura.unimplemented_skill2"));
+			Send.SkillCompleteDye(creature, skill.Info.Id, part);
 		}
 
 		private void CompleteFixed(Creature creature, Packet packet, Skill skill, int part)
