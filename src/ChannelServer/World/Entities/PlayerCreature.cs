@@ -116,7 +116,15 @@ namespace Aura.Channel.World.Entities
 			if (!base.CanTarget(creature))
 				return false;
 
-			return (!creature.IsPlayer && !creature.Has(CreatureStates.GoodNpc));
+			// Players can only target "bad" NPCs.
+			if (creature.Has(CreatureStates.GoodNpc))
+				return false;
+
+			// Players can't target players (outside of PvP, TODO)
+			if (creature.IsPlayer)
+				return false;
+
+			return true;
 		}
 
 		/// <summary>

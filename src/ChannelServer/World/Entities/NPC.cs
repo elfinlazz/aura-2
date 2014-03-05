@@ -73,7 +73,12 @@ namespace Aura.Channel.World.Entities
 			if (!base.CanTarget(creature))
 				return false;
 
-			return (creature.IsPlayer && !this.Has(CreatureStates.GoodNpc));
+			// Named NPCs (normal dialog ones) can't be targeted.
+			// Important because AIs target /pc/ and most NPCs are humans.
+			if (creature.Has(CreatureStates.NamedNpc))
+				return false;
+
+			return true;
 		}
 
 		public override void Kill(Creature killer)

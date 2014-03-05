@@ -45,6 +45,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected TimeSpan _alertDelay, _aggroDelay;
 		protected DateTime _awareTime, _alertTime;
 		protected AggroType _aggroType;
+		protected Dictionary<string, string> _hateTags, _loveTags;
 
 		/// <summary>
 		/// Creature controlled by AI.
@@ -76,6 +77,8 @@ namespace Aura.Channel.Scripting.Scripts
 			_aggroMaxRadius = 3000;
 			_alertDelay = TimeSpan.FromMilliseconds(8000);
 			_aggroDelay = TimeSpan.FromMilliseconds(4000);
+			_hateTags = new Dictionary<string, string>();
+			_loveTags = new Dictionary<string, string>();
 
 			_aggroType = AggroType.Neutral;
 		}
@@ -196,13 +199,21 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Clears action, target, and stats state to Idle.
+		/// Clears action, target, and sets state to Idle.
 		/// </summary>
 		private void Reset()
 		{
 			this.Clear();
-			this.Creature.Target = null;
 			_state = AiState.Idle;
+
+			if (this.Creature.BattleStance == BattleStance.Ready)
+				this.Creature.BattleStance = BattleStance.Idle;
+
+			if (this.Creature.Target != null)
+			{
+				this.Creature.Target = null;
+				Send.SetCombatTarget(this.Creature, 0, 0);
+			}
 		}
 
 		/// <summary>
@@ -219,7 +230,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.Creature.Target == null)
 			{
 				// Try to find a target
-				this.Creature.Target = this.SelectTarget(this.Creature.Region.GetCreaturesInRange(this.Creature, _aggroRadius));
+				this.Creature.Target = this.SelectRandomTarget(this.Creature.Region.GetCreaturesInRange(this.Creature, _aggroRadius));
 				if (this.Creature.Target != null)
 				{
 					_state = AiState.Aware;
@@ -232,24 +243,27 @@ namespace Aura.Channel.Scripting.Scripts
 				if (this.Creature.Target.IsDead || !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) || this.Creature.Target.Client.State == ClientState.Dead)
 				{
 					this.Reset();
-
-					this.Creature.BattleStance = BattleStance.Idle;
-
-					Send.SetCombatTarget(this.Creature, 0, 0);
-
 					return;
 				}
 
 				// Switch to alert from aware after the delay
 				if (_state == AiState.Aware && DateTime.Now >= _awareTime + _alertDelay)
 				{
-					this.Clear();
+					// Check if target is still in range
+					if (this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroRadius))
+					{
+						this.Clear();
 
-					_state = AiState.Alert;
-					_alertTime = DateTime.Now;
-					this.Creature.BattleStance = BattleStance.Ready;
+						_state = AiState.Alert;
+						_alertTime = DateTime.Now;
+						this.Creature.BattleStance = BattleStance.Ready;
 
-					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
+						Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
+					}
+					else
+					{
+						this.Reset();
+					}
 
 					return;
 				}
@@ -274,13 +288,20 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creatures"></param>
 		/// <returns></returns>
-		private Creature SelectTarget(ICollection<Creature> creatures)
+		private Creature SelectRandomTarget(ICollection<Creature> creatures)
 		{
 			if (creatures == null || creatures.Count == 0)
 				return null;
 
 			// Random targetable creature
-			var potentialTargets = creatures.Where(a => this.Creature.CanTarget(a)).ToList();
+			var potentialTargets = creatures.Where(target =>
+			{
+				return
+					this.Creature.CanTarget(target) &&
+					this.DoesHate(target) &&
+					!this.DoesLove(target);
+			}).ToList();
+
 			if (potentialTargets.Count == 0)
 				return null;
 
@@ -377,6 +398,45 @@ namespace Aura.Channel.Scripting.Scripts
 			action.GetEnumerator().MoveNext();
 		}
 
+		/// <summary>
+		/// Adds a race tag that the AI hates and will target.
+		/// </summary>
+		/// <param name="tags"></param>
+		protected void Hates(params string[] tags)
+		{
+			foreach (var tag in tags)
+			{
+				var key = tag.Trim(' ', '/');
+				if (_hateTags.ContainsKey(key))
+					return;
+
+				_hateTags.Add(key, tag);
+			}
+		}
+
+		/// <summary>
+		/// Adds a race tag that the AI likes and will not target unless
+		/// provoked.
+		/// </summary>
+		/// <remarks>
+		/// By default the AI will only target hated races. Loved races are
+		/// a white-list, to filter some races out. For example, when creating
+		/// an AI that hates everybody (*), but isn't supposed to target
+		/// players (/pc/).
+		/// </remarks>
+		/// <param name="tags"></param>
+		protected void Loves(params string[] tags)
+		{
+			foreach (var tag in tags)
+			{
+				var key = tag.Trim(' ', '/');
+				if (_loveTags.ContainsKey(key))
+					return;
+
+				_loveTags.Add(key, tag);
+			}
+		}
+
 		// ------------------------------------------------------------------
 
 		/// <summary>
@@ -418,6 +478,38 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			lock (_rnd)
 				return _rnd.Next(min, max);
+		}
+
+		/// <summary>
+		/// Returns true if AI hates target creature.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		protected bool DoesHate(Creature target)
+		{
+			foreach (var tag in _hateTags.Values)
+			{
+				if (target.RaceData.HasTag(tag))
+					return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Returns true if AI loves target creature.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		protected bool DoesLove(Creature target)
+		{
+			foreach (var tag in _loveTags.Values)
+			{
+				if (target.RaceData.HasTag(tag))
+					return true;
+			}
+
+			return false;
 		}
 
 		// Actions

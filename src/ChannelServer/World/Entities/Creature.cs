@@ -884,7 +884,7 @@ namespace Aura.Channel.World.Entities
 			else
 				result = targetRange;
 
-			// Buffer
+			// A little something extra
 			result += 25;
 
 			return result;

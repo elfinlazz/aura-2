@@ -9,6 +9,8 @@ public class FoxAi : AiScript
 	public FoxAi()
 	{
 		SetAggroType(AggroType.Careful);
+		Hates("/pc/", "/pet/");
+		Hates("/chicken/");
 	}
 
 	protected override IEnumerable Idle()
@@ -19,10 +21,14 @@ public class FoxAi : AiScript
 	
 	protected override IEnumerable Alert()
 	{
+		// 30% chance to circle
+		// 10% chance to active defense
 		switch(Random(10))
 		{
-			case 0:  Do(Circle(400, 1000, 5000)); break;
-			case 1:  Do(Say("Defense!")); break;
+			case 0:
+			case 1:  Do(Circle(400, 1000, 5000)); break;
+			case 3:  Do(Circle(400, 1000, 5000)); break;
+			case 9:  Do(Say("Defense!")); break;
 			default: break;
 		}
 			
