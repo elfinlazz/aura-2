@@ -214,6 +214,7 @@
 601, nekojima_dungeon_entrance                                                  // JP_Nekojima_dungeon_hall_after
 602, studio_nekojima_dungeon_bossroom                                           // Studio_JP_Nekojima_dungeon_bossroom
 603, studio_nekojima_dungeon_entrance                                           // Studio_JP_Nekojima_dungeon_entrance
+604, doki_doki_island                                                           // Re_Nekojima_islet
 701, farm_a                                                                     // Farm_A
 800, farm_testa                                                                 // Farm_TestA
 801, farm_testb                                                                 // Farm_TestB
