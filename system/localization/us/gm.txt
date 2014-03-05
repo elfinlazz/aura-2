@@ -77,3 +77,10 @@ reload_warning	Beware, reloading should only be used during development, it's no
 // >(pet)card
 card_success	Added card.
 card_target		You've received a card from '{0}'.
+
+// >warp
+warp_invalid_id	Invalid region id.
+warp_invalid_x	Invalid X coordinate.
+warp_invalid_y	Invalid X coordinate.
+warp_unknown	Region doesn't exist.
+warp_target		You've been warped by '{0}'.
