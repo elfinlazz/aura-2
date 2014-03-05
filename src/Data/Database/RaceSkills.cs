@@ -8,7 +8,7 @@ namespace Aura.Data.Database
 	public class RaceSkillData
 	{
 		public int RaceId { get; internal set; }
-		public short SkillId { get; internal set; }
+		public ushort SkillId { get; internal set; }
 		public byte Rank { get; internal set; }
 	}
 
@@ -17,7 +17,7 @@ namespace Aura.Data.Database
 		public List<RaceSkillData> FindAll(int raceId)
 		{
 			if (!this.Entries.ContainsKey(raceId))
-				return null;
+				return new List<RaceSkillData>();
 			return this.Entries[raceId];
 		}
 
@@ -26,13 +26,13 @@ namespace Aura.Data.Database
 		{
 			var info = new RaceSkillData();
 			info.RaceId = entry.ReadInt();
-			info.SkillId = entry.ReadShort();
+			info.SkillId = entry.ReadUShort();
 			info.Rank = (byte)(16 - entry.ReadByteHex());
 
 			if (!this.Entries.ContainsKey(info.RaceId))
 				this.Entries[info.RaceId] = new List<RaceSkillData>();
 
-			this.Entries[info.RaceId].Add(info); ;
+			this.Entries[info.RaceId].Add(info);
 		}
 	}
 }

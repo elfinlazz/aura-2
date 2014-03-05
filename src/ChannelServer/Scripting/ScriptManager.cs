@@ -23,6 +23,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using Aura.Channel.World.Shops;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Skills;
 
 namespace Aura.Channel.Scripting
 {
@@ -634,6 +635,7 @@ namespace Aura.Channel.Scripting
 		/// <returns></returns>
 		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId, bool active, bool effect)
 		{
+			// Create NPC
 			var creature = new NPC();
 			creature.Race = raceId;
 			creature.LoadDefault();
@@ -647,10 +649,29 @@ namespace Aura.Channel.Scripting
 			creature.State = (CreatureStates)creature.RaceData.DefaultState;
 			creature.Direction = (byte)RandomProvider.Get().Next(256);
 
+			// Set drops
 			creature.Drops.GoldMin = creature.RaceData.GoldMin;
 			creature.Drops.GoldMax = creature.RaceData.GoldMax;
 			creature.Drops.Add(creature.RaceData.Drops);
 
+			// Give skills
+			try
+			{
+				foreach (var skill in creature.RaceData.Skills)
+					creature.Skills.Add(new Skill((SkillId)skill.SkillId, (SkillRank)skill.Rank, creature.Race));
+			}
+			catch (Exception ex)
+			{
+				Log.Debug(creature.Race);
+				Log.Debug(creature.Skills == null);
+				Log.Debug(creature.RaceData == null);
+				if (creature.RaceData != null)
+					Log.Debug(creature.RaceData.Skills == null);
+
+				throw;
+			}
+
+			// Set AI
 			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI) && creature.RaceData.AI != "none")
 			{
 				creature.AI = this.GetAi(creature.RaceData.AI, creature);
@@ -658,15 +679,18 @@ namespace Aura.Channel.Scripting
 					Log.Warning("Spawn: Missing AI '{0}' for '{1}'.", creature.RaceData.AI, raceId);
 			}
 
+			// Warp to spawn point
 			if (!creature.Warp(regionId, x, y))
 			{
 				Log.Error("Failed to spawn '{0}'s.", raceId);
 				return null;
 			}
 
+			// Activate AI at least once
 			if (creature.AI != null && active)
 				creature.AI.Activate(0);
 
+			// Spawn effect
 			if (effect)
 				Send.SpawnEffect(SpawnEffect.Monster, creature.RegionId, x, y, creature, creature);
 
