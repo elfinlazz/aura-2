@@ -378,16 +378,16 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
-		/// Returns all player creatures in range of entity, without itself.
+		/// Returns all visible creatures in range of entity, excluding itself.
 		/// </summary>
 		/// <param name="range"></param>
 		/// <returns></returns>
-		public List<Creature> GetCreaturesInRange(Entity entity, int range = VisibleRange)
+		public List<Creature> GetVisibleCreaturesInRange(Entity entity, int range = VisibleRange)
 		{
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-				return _creatures.Values.Where(a => a != entity && a.GetPosition().InRange(entity.GetPosition(), range)).ToList();
+				return _creatures.Values.Where(a => a != entity && a.GetPosition().InRange(entity.GetPosition(), range) && !a.Conditions.Has(ConditionsA.Invisible)).ToList();
 			}
 			finally
 			{

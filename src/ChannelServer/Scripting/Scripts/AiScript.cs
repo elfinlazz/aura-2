@@ -248,7 +248,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.Creature.Target == null)
 			{
 				// Try to find a target
-				this.Creature.Target = this.SelectRandomTarget(this.Creature.Region.GetCreaturesInRange(this.Creature, _aggroRadius));
+				this.Creature.Target = this.SelectRandomTarget(this.Creature.Region.GetVisibleCreaturesInRange(this.Creature, _aggroRadius));
 				if (this.Creature.Target != null)
 				{
 					_state = AiState.Aware;
@@ -259,7 +259,7 @@ namespace Aura.Channel.Scripting.Scripts
 			else
 			{
 				// Untarget on death, out of range, or disconnect
-				if (this.Creature.Target.IsDead || !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) || this.Creature.Target.Client.State == ClientState.Dead)
+				if (this.Creature.Target.IsDead || !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) || this.Creature.Target.Client.State == ClientState.Dead || (_state != AiState.Aggro && this.Creature.Target.Conditions.Has(ConditionsA.Invisible)))
 				{
 					this.Reset();
 					return;
