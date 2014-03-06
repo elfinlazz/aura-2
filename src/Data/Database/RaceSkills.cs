@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Aura.Data.Database
 {
@@ -27,7 +28,10 @@ namespace Aura.Data.Database
 			var info = new RaceSkillData();
 			info.RaceId = entry.ReadInt();
 			info.SkillId = entry.ReadUShort();
-			info.Rank = (byte)(16 - entry.ReadByteHex());
+
+			var rank = entry.ReadString();
+			if (rank == "N") info.Rank = 0;
+			else info.Rank = (byte)(16 - int.Parse(rank, NumberStyles.HexNumber));
 
 			if (!this.Entries.ContainsKey(info.RaceId))
 				this.Entries[info.RaceId] = new List<RaceSkillData>();

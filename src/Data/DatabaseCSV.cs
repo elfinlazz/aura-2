@@ -48,11 +48,11 @@ namespace Aura.Data
 						this.Warnings.Add(new DatabaseWarningException(Path.GetFileName(path), entry.Line, "Variable not fit for number (#{0}).", entry.Pointer));
 						continue;
 					}
-					//catch (FormatException)
-					//{
-					//    this.Warnings.Add(new DatabaseWarningException(Path.GetFileName(path), entry.Line, "Number format exception."));
-					//    continue;
-					//}
+					catch (FormatException)
+					{
+						this.Warnings.Add(new DatabaseWarningException(Path.GetFileName(path), entry.Line, "Number format exception."));
+						continue;
+					}
 				}
 			}
 

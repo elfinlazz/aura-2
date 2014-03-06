@@ -346,8 +346,8 @@
 // Friendly
 // Id  Name  Group  Tags  Gender  VehicleType  RunSpeedFactor  State  InvW  InvH  AttMin  AttMax  Range  AttSpeed  KnockCount  Crit  SRadius  SAngle  SDamage  Stand  AI  Color1-3  Size  CP  Life  Defense  Protection  Element  Exp  GoldMin  GoldMax  Drops...
 //---------------------------------------------------------------------------
-20101,"Dog","dog/none","/animal/dog/cattle/",0,0,1,0xA0000000,6,10,5,15,200,2,2,0,240,60,0,0x03,"wander",0x008F7245,0x000000,0x000000,1.0,480.0,100,0,0.0,0,30,0,0
-40001,"Sheep","sheep/none","/animal/sheep/cattle/",0,0,1,0xA0000000,6,10,1,5,190,2,2,0,228,60,0,0x03,"wander",0x808080,0x808080,0x808080,1.0,130.0,50,0,0.0,0,0,0,0
-60002,"Rooster","chicken/adult","/animal/chicken/cattle/cock/",0,0,1,0xA0000000,6,10,1,5,150,2,2,0,180,60,0,0x03,"wander",0x909070,0x000000,0x000000,1.0,150.0,70,0,0.0,0,0,0,0
-60003,"Hen","chicken/adult","/animal/chicken/cattle/hen/",0,0,1,0xA0000000,6,10,1,5,150,2,2,0,180,60,0,0x03,"wander",0x909070,0x000000,0x000000,1.0,100.0,50,0,0.0,0,0,0,0
-60004,"Chick","chicken/infant","/animal/chicken/cattle/chick/",0,0,1,0xA0000000,6,10,1,2,150,2,2,0,180,60,0,0x03,"wander",0x808080,0x808080,0x808080,0.125,60.0,40,0,0.0,0,0,0,0
+20101,"Dog","dog/none","/animal/dog/cattle/",0,0,1,0xA0000000,6,10,5,15,200,2,2,0,240,60,0,0x03,"sheep",0x8F7245,0x000000,0x000000,1.0,480.0,100,0,0.0,0,30,0,0
+40001,"Sheep","sheep/none","/animal/sheep/cattle/",0,0,1,0xA0000000,6,10,1,5,190,2,2,0,228,60,0,0x03,"sheep",0x808080,0x808080,0x808080,1.0,130.0,50,0,0.0,0,0,0,0
+60002,"Rooster","chicken/adult","/animal/chicken/cattle/cock/",0,0,1,0xA0000000,6,10,1,5,150,2,2,0,180,60,0,0x03,"sheep",0x909070,0x000000,0x000000,1.0,150.0,70,0,0.0,0,0,0,0
+60003,"Hen","chicken/adult","/animal/chicken/cattle/hen/",0,0,1,0xA0000000,6,10,1,5,150,2,2,0,180,60,0,0x03,"sheep",0x909070,0x000000,0x000000,1.0,100.0,50,0,0.0,0,0,0,0
+60004,"Chick","chicken/infant","/animal/chicken/cattle/chick/",0,0,1,0xA0000000,6,10,1,2,150,2,2,0,180,60,0,0x03,"sheep",0x808080,0x808080,0x808080,0.125,60.0,40,0,0.0,0,0,0,0
