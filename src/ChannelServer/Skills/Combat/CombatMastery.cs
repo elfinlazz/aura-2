@@ -222,71 +222,71 @@ namespace Aura.Channel.Skills.Combat
 			switch (attackerSkill.Info.Rank)
 			{
 				case SkillRank.Novice:
-					action.Attacker.Skills.Train(attackerSkill, 1); // Attack Anything.
+					attackerSkill.Train(1); // Attack Anything.
 					break;
 
 				case SkillRank.RF:
-					action.Attacker.Skills.Train(attackerSkill, 1); // Attack anything.
-					action.Attacker.Skills.Train(attackerSkill, 2); // Attack an enemy.
-					if (action.IsKnockBack) action.Attacker.Skills.Train(attackerSkill, 3); // Knock down an enemy with multiple hits.
-					if (action.Creature.IsDead) action.Attacker.Skills.Train(attackerSkill, 4); // Kill an enemy.
+					attackerSkill.Train(1); // Attack anything.
+					attackerSkill.Train(2); // Attack an enemy.
+					if (action.IsKnockBack) attackerSkill.Train(3); // Knock down an enemy with multiple hits.
+					if (action.Creature.IsDead) attackerSkill.Train(4); // Kill an enemy.
 					break;
 
 				case SkillRank.RE:
-					if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 3); // Attack a same level enemy.
+					if (rating == PowerRating.Normal) attackerSkill.Train(3); // Attack a same level enemy.
 
 					if (action.IsKnockBack)
 					{
-						action.Attacker.Skills.Train(attackerSkill, 1); // Knock down an enemy with multiple hits.
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 4); // Knockdown a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 7); // Knockdown a strong enemy.
+						attackerSkill.Train(1); // Knock down an enemy with multiple hits.
+						if (rating == PowerRating.Normal) attackerSkill.Train(4); // Knockdown a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(7); // Knockdown a strong enemy.
 					}
 
 					if (action.Creature.IsDead)
 					{
-						action.Attacker.Skills.Train(attackerSkill, 2); // Kill an enemy.
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 6); // Kill a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 8); // Kill a strong enemy.
+						attackerSkill.Train(2); // Kill an enemy.
+						if (rating == PowerRating.Normal) attackerSkill.Train(6); // Kill a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(8); // Kill a strong enemy.
 					}
 
 					break;
 
 				case SkillRank.RD:
-					action.Attacker.Skills.Train(attackerSkill, 1); // Attack an enemy.
-					if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 4); // Attack a same level enemy.
+					attackerSkill.Train(1); // Attack an enemy.
+					if (rating == PowerRating.Normal) attackerSkill.Train(4); // Attack a same level enemy.
 
 					if (action.IsKnockBack)
 					{
-						action.Attacker.Skills.Train(attackerSkill, 2); // Knock down an enemy with multiple hits.
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 5); // Knockdown a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 7); // Knockdown a strong enemy.
+						attackerSkill.Train(2); // Knock down an enemy with multiple hits.
+						if (rating == PowerRating.Normal) attackerSkill.Train(5); // Knockdown a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(7); // Knockdown a strong enemy.
 					}
 
 					if (action.Creature.IsDead)
 					{
-						action.Attacker.Skills.Train(attackerSkill, 3); // Kill an enemy.
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 6); // Kill a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 8); // Kill a strong enemy.
+						attackerSkill.Train(3); // Kill an enemy.
+						if (rating == PowerRating.Normal) attackerSkill.Train(6); // Kill a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(8); // Kill a strong enemy.
 					}
 
 					break;
 
 				case SkillRank.RC:
 				case SkillRank.RB:
-					if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 1); // Attack a same level enemy.
+					if (rating == PowerRating.Normal) attackerSkill.Train(1); // Attack a same level enemy.
 
 					if (action.IsKnockBack)
 					{
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 2); // Knockdown a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 4); // Knockdown a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 6); // Knockdown an awful level enemy.
+						if (rating == PowerRating.Normal) attackerSkill.Train(2); // Knockdown a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(4); // Knockdown a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(6); // Knockdown an awful level enemy.
 					}
 
 					if (action.Creature.IsDead)
 					{
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 3); // Kill a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 5); // Kill a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 7); // Kill an awful level enemy.
+						if (rating == PowerRating.Normal) attackerSkill.Train(3); // Kill a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(5); // Kill a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(7); // Kill an awful level enemy.
 					}
 
 					break;
@@ -295,16 +295,16 @@ namespace Aura.Channel.Skills.Combat
 				case SkillRank.R9:
 					if (action.IsKnockBack)
 					{
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 1); // Knockdown a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 3); // Knockdown a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 5); // Knockdown an awful level enemy.
+						if (rating == PowerRating.Normal) attackerSkill.Train(1); // Knockdown a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(3); // Knockdown a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(5); // Knockdown an awful level enemy.
 					}
 
 					if (action.Creature.IsDead)
 					{
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 2); // Kill a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 4); // Kill a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 6); // Kill an awful level enemy.
+						if (rating == PowerRating.Normal) attackerSkill.Train(2); // Kill a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(4); // Kill a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(6); // Kill an awful level enemy.
 					}
 
 					break;
@@ -312,18 +312,18 @@ namespace Aura.Channel.Skills.Combat
 				case SkillRank.R8:
 					if (action.IsKnockBack)
 					{
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 1); // Knockdown a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 3); // Knockdown a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 5); // Knockdown an awful level enemy.
-						if (rating == PowerRating.Boss) action.Attacker.Skills.Train(attackerSkill, 7); // Knockdown a boss level enemy.
+						if (rating == PowerRating.Normal) attackerSkill.Train(1); // Knockdown a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(3); // Knockdown a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(5); // Knockdown an awful level enemy.
+						if (rating == PowerRating.Boss) attackerSkill.Train(7); // Knockdown a boss level enemy.
 					}
 
 					if (action.Creature.IsDead)
 					{
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 2); // Kill a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 4); // Kill a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 6); // Kill an awful level enemy.
-						if (rating == PowerRating.Boss) action.Attacker.Skills.Train(attackerSkill, 8); // Kill a boss level enemy.
+						if (rating == PowerRating.Normal) attackerSkill.Train(2); // Kill a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(4); // Kill a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(6); // Kill an awful level enemy.
+						if (rating == PowerRating.Boss) attackerSkill.Train(8); // Kill a boss level enemy.
 					}
 
 					break;
@@ -331,17 +331,17 @@ namespace Aura.Channel.Skills.Combat
 				case SkillRank.R7:
 					if (action.IsKnockBack)
 					{
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 2); // Knockdown a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 4); // Knockdown an awful level enemy.
-						if (rating == PowerRating.Boss) action.Attacker.Skills.Train(attackerSkill, 6); // Knockdown a boss level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(2); // Knockdown a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(4); // Knockdown an awful level enemy.
+						if (rating == PowerRating.Boss) attackerSkill.Train(6); // Knockdown a boss level enemy.
 					}
 
 					if (action.Creature.IsDead)
 					{
-						if (rating == PowerRating.Normal) action.Attacker.Skills.Train(attackerSkill, 1); // Kill a same level enemy.
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 3); // Kill a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 5); // Kill an awful level enemy.
-						if (rating == PowerRating.Boss) action.Attacker.Skills.Train(attackerSkill, 7); // Kill a boss level enemy.
+						if (rating == PowerRating.Normal) attackerSkill.Train(1); // Kill a same level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(3); // Kill a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(5); // Kill an awful level enemy.
+						if (rating == PowerRating.Boss) attackerSkill.Train(7); // Kill a boss level enemy.
 					}
 
 					break;
@@ -354,16 +354,16 @@ namespace Aura.Channel.Skills.Combat
 				case SkillRank.R1:
 					if (action.IsKnockBack)
 					{
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 1); // Knockdown a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 3); // Knockdown an awful level enemy.
-						if (rating == PowerRating.Boss) action.Attacker.Skills.Train(attackerSkill, 5); // Knockdown a boss level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(1); // Knockdown a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(3); // Knockdown an awful level enemy.
+						if (rating == PowerRating.Boss) attackerSkill.Train(5); // Knockdown a boss level enemy.
 					}
 
 					if (action.Creature.IsDead)
 					{
-						if (rating == PowerRating.Strong) action.Attacker.Skills.Train(attackerSkill, 2); // Kill a strong level enemy.
-						if (rating == PowerRating.Awful) action.Attacker.Skills.Train(attackerSkill, 4); // Kill an awful level enemy.
-						if (rating == PowerRating.Boss) action.Attacker.Skills.Train(attackerSkill, 6); // Kill a boss level enemy.
+						if (rating == PowerRating.Strong) attackerSkill.Train(2); // Kill a strong level enemy.
+						if (rating == PowerRating.Awful) attackerSkill.Train(4); // Kill an awful level enemy.
+						if (rating == PowerRating.Boss) attackerSkill.Train(6); // Kill a boss level enemy.
 					}
 
 					break;
@@ -373,16 +373,16 @@ namespace Aura.Channel.Skills.Combat
 			switch (targetSkill.Info.Rank)
 			{
 				case SkillRank.RF:
-					if (action.IsKnockBack) action.Creature.Skills.Train(targetSkill, 5); // Learn something by falling down.
-					if (action.Creature.IsDead) action.Creature.Skills.Train(targetSkill, 6); // Learn through losing.
+					if (action.IsKnockBack) targetSkill.Train(5); // Learn something by falling down.
+					if (action.Creature.IsDead) targetSkill.Train(6); // Learn through losing.
 					break;
 
 				case SkillRank.RE:
-					if (action.IsKnockBack) action.Creature.Skills.Train(targetSkill, 5); // Get knocked down. 
+					if (action.IsKnockBack) targetSkill.Train(5); // Get knocked down. 
 					break;
 
 				case SkillRank.RD:
-					if (targetRating == PowerRating.Strong) action.Creature.Skills.Train(targetSkill, 9); // Get hit by an awful level enemy.
+					if (targetRating == PowerRating.Strong) targetSkill.Train(9); // Get hit by an awful level enemy.
 					break;
 			}
 		}

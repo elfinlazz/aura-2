@@ -656,7 +656,7 @@ namespace Aura.Channel.Scripting
 
 			// Give skills
 			foreach (var skill in creature.RaceData.Skills)
-				creature.Skills.Add(new Skill((SkillId)skill.SkillId, (SkillRank)skill.Rank, creature.Race));
+				creature.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, creature.Race);
 
 			// Set AI
 			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI) && creature.RaceData.AI != "none")

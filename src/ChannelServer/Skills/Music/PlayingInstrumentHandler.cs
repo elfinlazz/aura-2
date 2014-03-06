@@ -186,7 +186,7 @@ namespace Aura.Channel.Skills.Music
 		protected virtual void OnPlay(Creature creature, Skill skill, PlayingQuality quality)
 		{
 			if (skill.Info.Rank == SkillRank.Novice)
-				creature.Skills.Train(skill, 1); // Try the skill.
+				skill.Train(1); // Try the skill.
 		}
 
 		/// <summary>
@@ -199,25 +199,25 @@ namespace Aura.Channel.Skills.Music
 		{
 			// Success unless total failure, condition 2 for Novice.
 			if (skill.Info.Rank == SkillRank.Novice && quality != PlayingQuality.VeryBad)
-				creature.Skills.Train(skill, 2); // Use the skill successfully.
+				skill.Train(2); // Use the skill successfully.
 
 			// All ranks above F have the same 2 first conditions.
 			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.R1)
 			{
 				if (quality >= PlayingQuality.Bad)
-					creature.Skills.Train(skill, 1); // Use the skill successfully.
+					skill.Train(1); // Use the skill successfully.
 
 				if (quality == PlayingQuality.VeryGood)
-					creature.Skills.Train(skill, 2); // Get a very good result.
+					skill.Train(2); // Get a very good result.
 			}
 
 			// Training by failing is possible between F and 6.
 			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.R6 && quality == PlayingQuality.Bad)
-				creature.Skills.Train(skill, 3); // Fail at using the skill.
+				skill.Train(3); // Fail at using the skill.
 
 			// Training by failing badly is possible at F and E.
 			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.RE && quality == PlayingQuality.VeryBad)
-				creature.Skills.Train(skill, 4); // Get a horrible result.
+				skill.Train(4); // Get a horrible result.
 
 			// TODO: "Use the skill successfully to grow crops faster."
 			// TODO: "Use a music buff skill."
@@ -240,13 +240,13 @@ namespace Aura.Channel.Skills.Music
 
 			// Equip an instrument and attack an enemy.
 			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.RE)
-				action.Attacker.Skills.Train(skill, 6);
+				skill.Train(6);
 			else if (skill.Info.Rank >= SkillRank.RD && skill.Info.Rank <= SkillRank.R6)
-				action.Attacker.Skills.Train(skill, 5);
+				skill.Train(5);
 			else if (skill.Info.Rank >= SkillRank.R7 && skill.Info.Rank <= SkillRank.R2)
-				action.Attacker.Skills.Train(skill, 4);
+				skill.Train(4);
 			else if (skill.Info.Rank == SkillRank.R1)
-				action.Attacker.Skills.Train(skill, 3);
+				skill.Train(3);
 		}
 	}
 }

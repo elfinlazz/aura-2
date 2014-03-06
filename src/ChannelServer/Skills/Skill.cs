@@ -5,16 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Aura.Shared.Mabi.Structs;
+using Aura.Channel.Network.Sending;
+using Aura.Channel.World.Entities;
+using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
-using Aura.Data;
+using Aura.Shared.Mabi.Structs;
 using Aura.Shared.Util;
 
 namespace Aura.Channel.Skills
 {
 	public class Skill
 	{
+		public Creature _creature;
 		private int _race;
 
 		public SkillInfo Info;
@@ -26,12 +29,14 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public bool IsRankable { get { return (this.Info.Experience >= 100000 && this.Info.Rank < this.Info.MaxRank); } }
 
-		public Skill(SkillId id, SkillRank rank, int race)
+		public Skill(Creature creature, SkillId id, SkillRank rank, int race)
 		{
+			_creature = creature;
+			_race = race;
+
 			this.Info.Id = id;
 			this.Info.Rank = rank;
 			this.Info.MaxRank = rank;
-			_race = race;
 
 			this.Info.Flag = SkillFlags.Shown;
 
@@ -104,12 +109,16 @@ namespace Aura.Channel.Skills
 		}
 
 		/// <summary>
-		/// Increases training condition count. Returns amount of exp gained.
+		/// Increases training condition count.
 		/// </summary>
 		/// <param name="condition"></param>
 		/// <param name="amount"></param>
-		public float Train(int condition, int amount = 1)
+		public void Train(int condition, int amount = 1)
 		{
+			// Only characters can train skills.
+			if (!_creature.IsCharacter)
+				return;
+
 			// Change count and reveal the condition
 			if (amount > 0)
 			{
@@ -130,7 +139,9 @@ namespace Aura.Channel.Skills
 				}
 			}
 
-			return this.UpdateExperience();
+			var exp = this.UpdateExperience();
+			if (exp > 0)
+				Send.SkillTrainingUp(_creature, this, exp);
 		}
 
 		/// <summary>
