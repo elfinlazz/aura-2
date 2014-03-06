@@ -1241,5 +1241,24 @@ namespace Aura.Channel.World.Entities
 			//Send.DeadFeather(creature);
 			Send.Revived(this);
 		}
+
+		/// <summary>
+		/// Returns the power rating (Weak, Boss, etc) of
+		/// compareCreature towards creature.
+		/// </summary>
+		/// <param name="compareCreature">Creature to compare to</param>
+		/// <returns></returns>
+		public PowerRating GetPowerRating(Creature compareCreature)
+		{
+			var cp = this.CombatPower;
+			var otherCp = compareCreature.CombatPower;
+
+			if (otherCp < cp * 0.8f) return PowerRating.Weakest;
+			if (otherCp < cp * 1.0f) return PowerRating.Weak;
+			if (otherCp < cp * 1.4f) return PowerRating.Normal;
+			if (otherCp < cp * 2.0f) return PowerRating.Strong;
+			if (otherCp < cp * 3.0f) return PowerRating.Awful;
+			return PowerRating.Boss;
+		}
 	}
 }

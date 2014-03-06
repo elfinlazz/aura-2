@@ -228,25 +228,25 @@ namespace Aura.Channel.Skills.Music
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="attacker"></param>
-		protected virtual void OnCreatureAttackedByPlayer(Creature creature, Creature attacker, TargetAction action)
+		protected virtual void OnCreatureAttackedByPlayer(TargetAction action)
 		{
 			// Check for instrument in attacker's right hand
-			if (attacker == null || attacker.RightHand == null || attacker.RightHand.Data.Type != ItemType.Instrument)
+			if (action.Attacker == null || action.Attacker.RightHand == null || action.Attacker.RightHand.Data.Type != ItemType.Instrument)
 				return;
 
 			// Get skill
-			var skill = attacker.Skills.Get(SkillId.PlayingInstrument);
+			var skill = action.Attacker.Skills.Get(SkillId.PlayingInstrument);
 			if (skill == null) return;
 
 			// Equip an instrument and attack an enemy.
 			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.RE)
-				attacker.Skills.Train(skill, 6);
+				action.Attacker.Skills.Train(skill, 6);
 			else if (skill.Info.Rank >= SkillRank.RD && skill.Info.Rank <= SkillRank.R6)
-				attacker.Skills.Train(skill, 5);
+				action.Attacker.Skills.Train(skill, 5);
 			else if (skill.Info.Rank >= SkillRank.R7 && skill.Info.Rank <= SkillRank.R2)
-				attacker.Skills.Train(skill, 4);
+				action.Attacker.Skills.Train(skill, 4);
 			else if (skill.Info.Rank == SkillRank.R1)
-				attacker.Skills.Train(skill, 3);
+				action.Attacker.Skills.Train(skill, 3);
 		}
 	}
 }
