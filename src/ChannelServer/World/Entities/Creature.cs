@@ -518,6 +518,14 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public float StaminaRegenMultiplicator { get { return (this.Stamina < this.StaminaHunger ? 1f : 0.2f); } }
 
+		// Events
+		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Raised when creature dies.
+		/// </summary>
+		public event Action<Creature, Creature> Death;
+
 		// ------------------------------------------------------------------
 
 		public Creature()
@@ -1023,6 +1031,7 @@ namespace Aura.Channel.World.Entities
 			ChannelServer.Instance.Events.OnCreatureKilled(this, killer);
 			if (killer != null && killer.IsPlayer)
 				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer);
+			this.Death.Raise(this, killer);
 
 			var rnd = RandomProvider.Get();
 			var pos = this.GetPosition();
