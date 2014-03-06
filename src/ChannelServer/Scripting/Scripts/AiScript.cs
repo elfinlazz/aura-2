@@ -88,7 +88,7 @@ namespace Aura.Channel.Scripting.Scripts
 			_hateTags = new Dictionary<string, string>();
 			_loveTags = new Dictionary<string, string>();
 
-			_aggroType = AggroType.Neutral;
+			_aggroType = AggroType.Passive;
 			_aggroLimit = AggroLimit.One;
 		}
 
@@ -238,7 +238,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			// Always goes back into idle if there's no target.
 			// Continue if neutral has a target, for the reset checks.
-			if (_aggroType == AggroType.Neutral && this.Creature.Target == null)
+			if (_aggroType == AggroType.Passive && this.Creature.Target == null)
 			{
 				_state = AiState.Idle;
 				return;
@@ -289,7 +289,7 @@ namespace Aura.Channel.Scripting.Scripts
 				}
 
 				// Switch to aggro from alert after the delay
-				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready) || (_aggroType > AggroType.Neutral && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
+				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
 				{
 					// Check aggro limit
 					var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
@@ -857,7 +857,7 @@ namespace Aura.Channel.Scripting.Scripts
 			/// <summary>
 			/// Stays in Idle unless provoked
 			/// </summary>
-			Neutral,
+			Passive,
 
 			/// <summary>
 			/// Goes into alert, but doesn't attack unprovoked.
