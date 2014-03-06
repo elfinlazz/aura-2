@@ -70,6 +70,11 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns whether creature is able to receive exp and level up.
+		/// </summary>
+		public override bool LevelingEnabled { get { return true; } }
+
+		/// <summary>
 		/// Instructs client to move to target location.
 		/// Returns false if region doesn't exist.
 		/// </summary>

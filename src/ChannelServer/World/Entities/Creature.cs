@@ -73,6 +73,11 @@ namespace Aura.Channel.World.Entities
 
 		public override int RegionId { get; set; }
 
+		/// <summary>
+		/// Returns whether creature is able to receive exp and level up.
+		/// </summary>
+		public virtual bool LevelingEnabled { get { return false; } }
+
 		// Look
 		// ------------------------------------------------------------------
 
@@ -1133,6 +1138,8 @@ namespace Aura.Channel.World.Entities
 		/// <param name="val"></param>
 		public void GiveExp(long val)
 		{
+			if (!this.LevelingEnabled) return;
+
 			this.Exp += val;
 
 			var levelStats = AuraData.StatsLevelUpDb.Find(this.Race, this.Age);
