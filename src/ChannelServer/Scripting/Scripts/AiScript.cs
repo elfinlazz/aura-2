@@ -65,6 +65,11 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public bool Active { get { return _active; } }
 
+		/// <summary>
+		/// Returns state of the AI
+		/// </summary>
+		public AiState State { get { return _state; } }
+
 		public AiScript()
 		{
 			this.Phrases = new List<string>();
@@ -223,7 +228,6 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				this.Creature.Target = null;
 				Send.SetCombatTarget(this.Creature, 0, 0);
-				ChannelServer.Instance.CombatManager.AggroChange(this.Creature, null);
 			}
 		}
 
@@ -288,9 +292,8 @@ namespace Aura.Channel.Scripting.Scripts
 				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready) || (_aggroType > AggroType.Neutral && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
 				{
 					// Check aggro limit
-					var aggroCount = ChannelServer.Instance.CombatManager.GetAggroCount(this.Creature.Target, this.Creature.Race);
+					var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
 					if (aggroCount >= (int)_aggroLimit) return;
-					ChannelServer.Instance.CombatManager.AggroChange(this.Creature, this.Creature.Target);
 
 					this.Clear();
 
@@ -559,7 +562,6 @@ namespace Aura.Channel.Scripting.Scripts
 			_state = AiState.Aggro;
 			this.Creature.BattleStance = BattleStance.Ready;
 			this.Creature.Target = creature;
-			ChannelServer.Instance.CombatManager.AggroChange(this.Creature, this.Creature.Target);
 			Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
 		}
 
@@ -850,29 +852,6 @@ namespace Aura.Channel.Scripting.Scripts
 
 		// ------------------------------------------------------------------
 
-		protected enum AiState
-		{
-			/// <summary>
-			/// Doing nothing
-			/// </summary>
-			Idle,
-
-			/// <summary>
-			/// Doing nothing, but noticed a potential target
-			/// </summary>
-			Aware,
-
-			/// <summary>
-			/// Watching target (!)
-			/// </summary>
-			Alert,
-
-			/// <summary>
-			/// Aggroing target (!!)
-			/// </summary>
-			Aggro,
-		}
-
 		protected enum AggroType
 		{
 			/// <summary>
@@ -920,6 +899,29 @@ namespace Aura.Channel.Scripting.Scripts
 			/// Auto aggroes regardless of other enemies.
 			/// </summary>
 			None = int.MaxValue,
+		}
+
+		public enum AiState
+		{
+			/// <summary>
+			/// Doing nothing
+			/// </summary>
+			Idle,
+
+			/// <summary>
+			/// Doing nothing, but noticed a potential target
+			/// </summary>
+			Aware,
+
+			/// <summary>
+			/// Watching target (!)
+			/// </summary>
+			Alert,
+
+			/// <summary>
+			/// Aggroing target (!!)
+			/// </summary>
+			Aggro,
 		}
 	}
 }

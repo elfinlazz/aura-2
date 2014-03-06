@@ -568,23 +568,11 @@ namespace Aura.Channel.World
 
 		/// <summary>
 		/// Adds new gold stacks to the inventory until the amount was added.
-		/// Spare gold will simply be ignored.
-		/// TODO: Add it to temp? Drop it?
 		/// </summary>
 		/// <param name="amount"></param>
 		/// <returns></returns>
 		public bool AddGold(int amount)
 		{
-			//// Add gold, stack for stack
-			//do
-			//{
-			//    var stackAmount = Math.Min(GoldStackMax, amount);
-			//    this.Add(GoldItemId, stackAmount);
-			//    amount -= stackAmount;
-			//}
-			//while (amount > 0);
-
-			//return true;
 			return this.Add(GoldItemId, amount);
 		}
 

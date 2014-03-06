@@ -638,6 +638,32 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns amount of creatures of race that are targetting target
+		/// in this region.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="raceId"></param>
+		/// <returns></returns>
+		public int CountAggro(Creature target, int raceId)
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				var result = 0;
+				foreach (NPC npc in _creatures.Values.Where(a => a.Is(EntityType.NPC)))
+				{
+					if (npc.AI != null && npc.AI.State == Aura.Channel.Scripting.Scripts.AiScript.AiState.Aggro && npc.Race == raceId && npc.Target == target)
+						result++;
+				}
+				return result;
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
 		/// Adds all good NPCs of region to list.
 		/// </summary>
 		/// <param name="list"></param>

@@ -141,7 +141,6 @@
     <Compile Include="Skills\Base\Interfaces.cs" />
     <Compile Include="Skills\Base\StartStopSkillHandler.cs" />
     <Compile Include="Skills\CombatAction.cs" />
-    <Compile Include="Skills\CombatManager.cs" />
     <Compile Include="Skills\Combat\CombatMastery.cs" />
     <Compile Include="Skills\Life\RestSkillHandler.cs" />
     <Compile Include="Skills\Magic\ManaShieldSkillHandler.cs" />

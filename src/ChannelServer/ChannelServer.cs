@@ -55,7 +55,6 @@ namespace Aura.Channel
 		public ScriptManager ScriptManager { get; private set; }
 		public SkillManager SkillManager { get; private set; }
 		public EventManager Events { get; private set; }
-		public CombatManager CombatManager { get; private set; }
 
 		public WorldManager World { get; private set; }
 
@@ -75,7 +74,6 @@ namespace Aura.Channel
 			this.ScriptManager = new ScriptManager();
 			this.SkillManager = new SkillManager();
 			this.Events = new EventManager();
-			this.CombatManager = new CombatManager();
 		}
 
 		/// <summary>

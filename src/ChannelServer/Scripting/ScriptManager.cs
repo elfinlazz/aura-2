@@ -655,21 +655,8 @@ namespace Aura.Channel.Scripting
 			creature.Drops.Add(creature.RaceData.Drops);
 
 			// Give skills
-			try
-			{
-				foreach (var skill in creature.RaceData.Skills)
-					creature.Skills.Add(new Skill((SkillId)skill.SkillId, (SkillRank)skill.Rank, creature.Race));
-			}
-			catch (Exception ex)
-			{
-				Log.Debug(creature.Race);
-				Log.Debug(creature.Skills == null);
-				Log.Debug(creature.RaceData == null);
-				if (creature.RaceData != null)
-					Log.Debug(creature.RaceData.Skills == null);
-
-				throw;
-			}
+			foreach (var skill in creature.RaceData.Skills)
+				creature.Skills.Add(new Skill((SkillId)skill.SkillId, (SkillRank)skill.Rank, creature.Race));
 
 			// Set AI
 			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI) && creature.RaceData.AI != "none")
