@@ -258,10 +258,13 @@ namespace Aura.Channel.Network.Sending
 		public static void DeadMenuR(Creature creature, CreatureDeadMenu menu)
 		{
 			var packet = new Packet(Op.DeadMenuR, creature.EntityId);
-			packet.PutByte(true);
-			packet.PutString(menu.ToString());
-			packet.PutInt(0); // Beginner Nao Stone count
-			packet.PutInt(0); // Nao Stone Count
+			packet.PutByte(menu != null);
+			if (menu != null)
+			{
+				packet.PutString(menu.ToString());
+				packet.PutInt(0); // Beginner Nao Stone count
+				packet.PutInt(0); // Nao Stone Count
+			}
 
 			creature.Client.Send(packet);
 		}
