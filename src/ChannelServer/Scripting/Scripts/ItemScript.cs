@@ -4,6 +4,7 @@
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
+using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
@@ -41,6 +42,14 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="item"></param>
 		public virtual void OnUnequip(Creature creature, Item item)
+		{ }
+
+		/// <summary>
+		/// Executed when item is first created.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		public virtual void OnCreation(Item item)
 		{ }
 
 		// Functions

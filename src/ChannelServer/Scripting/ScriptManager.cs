@@ -220,6 +220,8 @@ namespace Aura.Channel.Scripting
 								sb.AppendFormat("	public override void OnEquip(Creature cr, Item i)   {{ {0} }}" + Environment.NewLine, entry.OnEquip.Trim());
 							if (!string.IsNullOrWhiteSpace(entry.OnUnequip))
 								sb.AppendFormat("	public override void OnUnequip(Creature cr, Item i) {{ {0} }}" + Environment.NewLine, entry.OnUnequip.Trim());
+							if (!string.IsNullOrWhiteSpace(entry.OnCreation))
+								sb.AppendFormat("	public override void OnCreation(Item i) {{ {0} }}" + Environment.NewLine, entry.OnCreation.Trim());
 						}
 						sb.AppendFormat("}}" + Environment.NewLine + Environment.NewLine);
 					}
