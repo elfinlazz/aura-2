@@ -177,7 +177,7 @@ namespace Aura.Shared.Mabi
 			if (string.IsNullOrWhiteSpace(str))
 				return;
 
-			foreach (Match match in Regex.Matches(str, "([^:]+):([^:]+):([^;]+);"))
+			foreach (Match match in Regex.Matches(str, "([^:]+):([^:]+):([^;]*);"))
 			{
 				var key = match.Groups[1].Value;
 				var val = match.Groups[3].Value;
