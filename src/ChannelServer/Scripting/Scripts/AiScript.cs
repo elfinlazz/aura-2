@@ -844,7 +844,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="action"></param>
 		public virtual void OnHit(TargetAction action)
 		{
-			if (this.Creature.Target == null || (!this.Creature.Target.IsPlayer && action.Attacker.IsPlayer) || _state != AiState.Aggro)
+			if (this.Creature.Target == null || (this.Creature.Target != null && action.Attacker != null && !this.Creature.Target.IsPlayer && action.Attacker.IsPlayer) || _state != AiState.Aggro)
 			{
 				this.AggroCreature(action.Attacker);
 			}
