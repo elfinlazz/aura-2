@@ -82,12 +82,34 @@ namespace Aura.Channel.World.Entities
 		/// <param name="itemId"></param>
 		public Item(int itemId)
 		{
+			this.Init(itemId);
 			this.SetNewEntityId();
-			this.Info.Id = itemId;
-			this.MetaData1 = new MabiDictionary();
-			this.MetaData2 = new MabiDictionary();
 
-			this.LoadDefault();
+			var script = ChannelServer.Instance.ScriptManager.GetItemScript(itemId);
+			if (script != null)
+				script.OnCreation(this);
+
+			// Color of book seals
+			var sealColor = this.MetaData1.GetString("MGCSEL");
+			if (sealColor != null)
+			{
+				switch (sealColor)
+				{
+					case "yellow": this.Info.Color3 = 0xF4AE05; break;
+					//case "blue": this.Info.Color3 = 0xF4AE05; break;
+					//case "red": this.Info.Color3 = 0xF4AE05; break;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Item based on item and entity id.
+		/// </summary>
+		/// <param name="itemId"></param>
+		public Item(int itemId, long entityId)
+		{
+			this.Init(itemId);
+			this.EntityId = entityId;
 		}
 
 		/// <summary>
@@ -104,6 +126,19 @@ namespace Aura.Channel.World.Entities
 			this.QuestId = baseItem.QuestId;
 
 			this.SetNewEntityId();
+		}
+
+		/// <summary>
+		/// Sets item id, initializes item and loads defaults.
+		/// </summary>
+		/// <param name="itemId"></param>
+		private void Init(int itemId)
+		{
+			this.Info.Id = itemId;
+			this.MetaData1 = new MabiDictionary();
+			this.MetaData2 = new MabiDictionary();
+
+			this.LoadDefault();
 		}
 
 		public override Position GetPosition()

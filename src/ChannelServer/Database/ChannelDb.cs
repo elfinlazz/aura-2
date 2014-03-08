@@ -271,9 +271,9 @@ namespace Aura.Channel.Database
 					while (reader.Read())
 					{
 						var itemId = reader.GetInt32("itemId");
+						var entityId = reader.GetInt64("entityId");
 
-						var item = new Item(itemId);
-						item.EntityId = reader.GetInt64("entityId");
+						var item = new Item(itemId, entityId);
 						item.Info.Pocket = (Pocket)reader.GetInt32("pocket");
 						item.Info.X = reader.GetInt32("x");
 						item.Info.Y = reader.GetInt32("y");

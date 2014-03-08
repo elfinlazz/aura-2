@@ -160,5 +160,16 @@ namespace Aura.Channel.Scripting.Scripts
 			creature.Keywords.Give(keyword);
 			Send.Notice(creature, Localization.Get("items.gesture_added"), name); // The {0} Gesture has been added. Check your gestures window.
 		}
+
+		/// <summary>
+		/// Adds magic seal meta data to item.
+		/// </summary>
+		/// <param name="color"></param>
+		/// <param name="script"></param>
+		protected void MagicSeal(Item item, string color, string script = null)
+		{
+			item.MetaData1.SetString("MGCSEL", color);
+			item.MetaData1.SetString("MGCWRD", script);
+		}
 	}
 }

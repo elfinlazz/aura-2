@@ -3661,33 +3661,33 @@
 1001,"The Story of a White Doe","The White Doe Story","/equip/usable/readable/book/story01/not_enchantable/",4,0,1,,no,1,2,2,5,1,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1002,"Basic Tailoring","Basic Tailoring","/equip/usable/readable/book/skillbook/tailor01/not_enchantable/",4,0,1,,no,1,2,2,5,1,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1003,"test","Basic Fighting Manual","/equip/usable/readable/book/skillbook/tailor01/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1004,"Action! Defense Skill","Action! Defense Skill","/equip/usable/readable/book/skillbook/figting01/not_enchantable/",4,0,1,,no,1,2,2,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1005,"Smash Basics","Easy Steps of Smash Skill","/equip/usable/readable/book/skillbook/smash_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1006,"Introduction to Music Composition","A Guide to Composing","/equip/usable/readable/book/skillbook/composing_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1007,"Healing: The Basics of Magic","Healing : The Basic of Sorcery","/equip/usable/readable/book/skillbook/healing_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1008,"Icebolt Spell: Origin and Training","Icebolt : Its origin and training","/equip/usable/readable/book/skillbook/icebolt_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,7980,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1009,"A Guidebook on Firebolt","Firebolt : We don't start it fire","/equip/usable/readable/book/skillbook/firebolt_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,4980,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1010,"Basics of Lightning Magic: the Lightning Bolt","Lightning Bolt : The Basic of Electric Shock","/equip/usable/readable/book/skillbook/lightning_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,7980,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1011,"Improving Your Composing Skill","Advance your Composing skill","/equip/usable/readable/book/skillbook/composing_E/not_enchantable/",4,0,1,,no,1,2,2,5,1,2500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1012,"Campfire Manual","Campfire Manual","/equip/usable/readable/book/skillbook/campfire_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1013,"Music Theory","An Introduction to Music","/equip/usable/readable/book/skillbook/musical_knowledge_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1004,"Action! Defense Skill","Action! Defense Skill","/equip/usable/readable/book/skillbook/figting01/not_enchantable/",4,0,1,,no,1,2,2,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "openskill(20001)"); }
+1005,"Smash Basics","Easy Steps of Smash Skill","/equip/usable/readable/book/skillbook/smash_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "openskill(20002)"); }
+1006,"Introduction to Music Composition","A Guide to Composing","/equip/usable/readable/book/skillbook/composing_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(10005)"); }
+1007,"Healing: The Basics of Magic","Healing : The Basic of Sorcery","/equip/usable/readable/book/skillbook/healing_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(30006);openskill(30006)"); }
+1008,"Icebolt Spell: Origin and Training","Icebolt : Its origin and training","/equip/usable/readable/book/skillbook/icebolt_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,7980,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(30301);openskill(30301)"); }
+1009,"A Guidebook on Firebolt","Firebolt : We don't start it fire","/equip/usable/readable/book/skillbook/firebolt_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,4980,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(30201);openskill(30201)"); }
+1010,"Basics of Lightning Magic: the Lightning Bolt","Lightning Bolt : The Basic of Electric Shock","/equip/usable/readable/book/skillbook/lightning_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,7980,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(30101);openskill(30101)"); }
+1011,"Improving Your Composing Skill","Advance your Composing skill","/equip/usable/readable/book/skillbook/composing_E/not_enchantable/",4,0,1,,no,1,2,2,5,1,2500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,1)"); }
+1012,"Campfire Manual","Campfire Manual","/equip/usable/readable/book/skillbook/campfire_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(10008)"); }
+1013,"Music Theory","An Introduction to Music","/equip/usable/readable/book/skillbook/musical_knowledge_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(10006);openskill(10006)"); }
 1014,"Dungeon Exploration Guide","Guide for Dungeon Travelers","/equip/usable/readable/book/dungeon_guide00/not_enchantable/",4,0,1,,no,1,2,2,5,1,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1015,"Seal Stone Research Almanac : Rabbie Dungeon","Research for the Sealstone : Rabbie Dungeon","/equip/usable/readable/book/rabbie00/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1016,"Seal Stone Research Almanac : Ciar Dungeon","Research for the Sealstone : Ciar Dungeon","/equip/usable/readable/book/ciar00/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1017,"Seal Stone Research Almanac : Dugald Aisle","Research for the Sealstone : Dugald Aisle","/equip/usable/readable/book/dugaldaisle00/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1018,"The History of Music in Erinn (1)","The History of Erinn Music (1)","/equip/usable/readable/book/skillbook/musical_knowledge_E/not_enchantable/",4,0,1,,no,1,2,2,5,1,4400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1019,"The History of Music in Erinn (2)","The History of Erinn Music (2)","/equip/usable/readable/book/skillbook/musical_knowledge_D/not_enchantable/",4,0,1,,no,1,2,2,5,1,5600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1020,"Composition Lessons with Helene (1)","Composing Exercises with Helene (1)","/equip/usable/readable/book/skillbook/composing_D/not_enchantable/",4,0,1,,no,1,2,2,5,1,7100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1021,"The Tir Chonaill Environs","The Environment of Tir Chonaill","/equip/usable/readable/book/book_env_of_tirchonaill/not_enchantable/",4,0,1,,no,1,2,2,5,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1022,"The Dunbarton Environs","The Environment of Dunbarton","/equip/usable/readable/book/book_env_of_dunbarton/not_enchantable/",4,0,1,,no,1,2,2,5,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1015,"Seal Stone Research Almanac : Rabbie Dungeon","Research for the Sealstone : Rabbie Dungeon","/equip/usable/readable/book/rabbie00/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "modify(int,1)"); }
+1016,"Seal Stone Research Almanac : Ciar Dungeon","Research for the Sealstone : Ciar Dungeon","/equip/usable/readable/book/ciar00/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "modify(int,1)"); }
+1017,"Seal Stone Research Almanac : Dugald Aisle","Research for the Sealstone : Dugald Aisle","/equip/usable/readable/book/dugaldaisle00/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "modify(int,1)"); }
+1018,"The History of Music in Erinn (1)","The History of Erinn Music (1)","/equip/usable/readable/book/skillbook/musical_knowledge_E/not_enchantable/",4,0,1,,no,1,2,2,5,1,4400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10006,1)"); }
+1019,"The History of Music in Erinn (2)","The History of Erinn Music (2)","/equip/usable/readable/book/skillbook/musical_knowledge_D/not_enchantable/",4,0,1,,no,1,2,2,5,1,5600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10006,2)"); }
+1020,"Composition Lessons with Helene (1)","Composing Exercises with Helene (1)","/equip/usable/readable/book/skillbook/composing_D/not_enchantable/",4,0,1,,no,1,2,2,5,1,7100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,2)"); }
+1021,"The Tir Chonaill Environs","The Environment of Tir Chonaill","/equip/usable/readable/book/book_env_of_tirchonaill/not_enchantable/",4,0,1,,no,1,2,2,5,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "modify(int,1)"); }
+1022,"The Dunbarton Environs","The Environment of Dunbarton","/equip/usable/readable/book/book_env_of_dunbarton/not_enchantable/",4,0,1,,no,1,2,2,5,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "modify(int,1)"); }
 1023,"The Story of Spiral Hill","The Story of Spiral Hill","/equip/usable/readable/book/book_Spiralhill/not_enchantable/",4,0,1,,no,1,2,2,5,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1025,"Mystery of the Dungeon","Something Curious about Dungeon","/equip/usable/readable/book/book_Dungeonmystery/not_enchantable/",4,0,1,,no,1,2,2,5,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1026,"A Report on Astralium","We call it Astralium","/equip/usable/readable/book/book_Astralium/not_enchantable/",4,0,1,,no,1,2,2,5,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1027,"I Hate Cuteness","I don't like Cuty","/equip/usable/readable/book/book_hatecuty/not_enchantable/",4,0,1,,no,1,2,2,5,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1028,"Tracy's Secret","The Secret of Tracy","/equip/usable/readable/book/book_secret_of_Tracy/not_enchantable/",4,0,1,,no,1,2,2,5,1,30,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1029,"A Campfire Memory","Campfire Memorandum","/equip/usable/readable/book/skillbook/campfire_E/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1030,"Musicians of Erinn","Musicians of Erinn","/equip/usable/readable/book/skillbook/musical_knowledge_9/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1031,"Understanding Elementals","Research of Elemental","/equip/usable/readable/book/book_Elementalresearch/not_enchantable/",4,0,1,,no,1,2,2,5,1,1800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1029,"A Campfire Memory","Campfire Memorandum","/equip/usable/readable/book/skillbook/campfire_E/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10008,1)"); }
+1030,"Musicians of Erinn","Musicians of Erinn","/equip/usable/readable/book/skillbook/musical_knowledge_9/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "addkeyword(musical_know_a_nele_loeiz)"); }
+1031,"Understanding Elementals","Research of Elemental","/equip/usable/readable/book/book_Elementalresearch/not_enchantable/",4,0,1,,no,1,2,2,5,1,1800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "modify(int,1)"); }
 1032,"The Shadow Mystery","The Mystery of Shadow","/equip/usable/readable/book/book_shadow/not_enchantable/",4,0,1,,no,1,2,2,5,1,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1033,"Guidebook for Dungeon Exploration - Theory","The Guide for Dungeon Exploration - part 1","/equip/usable/readable/book/dungeon_guide01/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1034,"Guidebook for Dungeon Exploration - Practicum","The Guide for Dungeon Exploration - part 2","/equip/usable/readable/book/dungeon_guide02/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -3719,26 +3719,26 @@
 1060,"Imp's Diary","Imp's Diary","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1061,"The Tale of Ifan the Rich","A Tale of Rich Ivan","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1062,"The Greedy Snow Imp","The greedy snow imp","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1063,"Step-By-Step Cooking Skill 101","Follow up! Cooking Step","/equip/usable/readable/book/skillbook/cooking_Practice/not_enchantable/",4,0,1,,no,1,2,2,5,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1064,"Master Chef's Cooking Class: Baking","Chef's Easy Cooking Series - Broil","/equip/usable/readable/book/skillbook/cooking_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,5500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1065,"Master Chef's Cooking Class: Simmering","Chef's Easy Cooking Series - Boiling","/equip/usable/readable/book/skillbook/cooking_E/not_enchantable/",4,0,1,,no,1,2,2,5,1,5500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1066,"About Kneading","About Making Dough","/equip/usable/readable/book/skillbook/cooking_D/not_enchantable/",4,0,1,,no,1,2,2,5,1,6000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1067,"Boiling: The Basics of Heat Cooking","Boiling : Basic Step of Heat Cooking","/usable/readable/book/skillbook/cooking_C/",4,0,1,,no,1,2,2,5,1,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1068,"About Noodle-Making","About Making Noodles","/usable/readable/book/skillbook/cooking_B/",4,0,1,,no,1,2,2,5,1,9900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1069,"Master Chef's Cooking Class: Frying","Chef's Easy Cooking Series - Deep Fry","/usable/readable/book/skillbook/cooking_A/",4,0,1,,no,1,2,2,5,1,11800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1070,"Master Chef's Cooking Class: Stir-frying","Chef's Easy Cooking Series - Frying","/usable/readable/book/skillbook/cooking_9/",4,0,1,,no,1,2,2,5,1,25800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1071,"Making Pasta","Making Pasta","/usable/readable/book/skillbook/cooking_8/",4,0,1,,no,1,2,2,5,1,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1063,"Step-By-Step Cooking Skill 101","Follow up! Cooking Step","/equip/usable/readable/book/skillbook/cooking_Practice/not_enchantable/",4,0,1,,no,1,2,2,5,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(10020)"); }
+1064,"Master Chef's Cooking Class: Baking","Chef's Easy Cooking Series - Broil","/equip/usable/readable/book/skillbook/cooking_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,5500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020,0)"); }
+1065,"Master Chef's Cooking Class: Simmering","Chef's Easy Cooking Series - Boiling","/equip/usable/readable/book/skillbook/cooking_E/not_enchantable/",4,0,1,,no,1,2,2,5,1,5500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020,1)"); }
+1066,"About Kneading","About Making Dough","/equip/usable/readable/book/skillbook/cooking_D/not_enchantable/",4,0,1,,no,1,2,2,5,1,6000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020,2)"); }
+1067,"Boiling: The Basics of Heat Cooking","Boiling : Basic Step of Heat Cooking","/usable/readable/book/skillbook/cooking_C/",4,0,1,,no,1,2,2,5,1,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020,3)"); }
+1068,"About Noodle-Making","About Making Noodles","/usable/readable/book/skillbook/cooking_B/",4,0,1,,no,1,2,2,5,1,9900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020,4)"); }
+1069,"Master Chef's Cooking Class: Frying","Chef's Easy Cooking Series - Deep Fry","/usable/readable/book/skillbook/cooking_A/",4,0,1,,no,1,2,2,5,1,11800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020,5)"); }
+1070,"Master Chef's Cooking Class: Stir-frying","Chef's Easy Cooking Series - Frying","/usable/readable/book/skillbook/cooking_9/",4,0,1,,no,1,2,2,5,1,25800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020,6)"); }
+1071,"Making Pasta","Making Pasta","/usable/readable/book/skillbook/cooking_8/",4,0,1,,no,1,2,2,5,1,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020,7)"); }
 1072,"Cooking on Your Own Vol. 1","Popular recipes Vol. 1","/usable/readable/book/recipe_book/",4,0,1,,no,1,2,2,5,1,4400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1073,"Cooking on Your Own Vol. 2","Popular recipes Vol. 2","/usable/readable/book/recipe_book/",4,0,1,,no,1,2,2,5,1,5400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1074,"(Temp)Very Very Hard Recipes","(Temp)Very Very Hard Recipes","/usable/readable/book/skillbook/cooking_Mixing/",4,0,1,,no,1,2,2,5,1,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1077,"Wanderer of the Fiodh Forest","The wanderer of Fiodhe","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1078,"Don't Give Up! Trefor's Training Towards Veteranship","About Trefor 86","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1082,"Resting Guide","Guide for Real Rest","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,3800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1083,"Campfire Skill : Beyond the Kit","Campfire with skill","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1084,"Quick and Effective First Aid","For Faster and Effective First Aid","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,4700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1085,"The First Steps of Meditation","A Step Toward Meditation","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,3500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1086,"What is an Ensemble?","Ensemble In Erinn","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1087,"Wind Instruments: Melodies of the Soul","A Woodwind Instrument","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,7500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1082,"Resting Guide","Guide for Real Rest","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,3800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10004,2)"); }
+1083,"Campfire Skill : Beyond the Kit","Campfire with skill","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10008,2)"); }
+1084,"Quick and Effective First Aid","For Faster and Effective First Aid","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,4700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10009,1)"); }
+1085,"The First Steps of Meditation","A Step Toward Meditation","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,3500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(30003,1)"); }
+1086,"What is an Ensemble?","Ensemble In Erinn","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,3)"); }
+1087,"Wind Instruments: Melodies of the Soul","A Woodwind Instrument","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,7500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10006,3)"); }
 1090,"How Am I Going to Survive Like This?","I want to go there - Emain Macha","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1091,"Action! Defense Skill","Action! Defense Skill","/equip/usable/readable/book/skillbook/defense_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1092,"Enchant, Another Mysterious Magic","Enchant, Another Kind of Mysterious Magic","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -3749,76 +3749,76 @@
 1102,"Your Pet","Your Pets","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1103,"The Story of a Lizard","A Story of a Little Lizard","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1104,"The Origin of Moon Gates","The Origin of Moongates","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1105,"Defense Guidebook","Guide Book for Defence","/equip/usable/readable/book/skillbook/defense_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1111,"The Path of Composing","The Way To Composing","/equip/usable/readable/book/skillbook/composing_b/not_enchantable/",4,0,1,,no,1,2,2,5,1,11020,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1112,"First Aid Using Splints","How To Apply A Splint","/equip/usable/readable/book/skillbook/first_aid_d/not_enchantable/",4,0,1,,no,1,2,2,5,1,8000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1113,"The History of Music in Erinn (4)","The History of Erinn Music (4)","/equip/usable/readable/book/skillbook/musical_knowledge_a/not_enchantable/",4,0,1,,no,1,2,2,5,1,13200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1114,"The History of Music in Erinn (3)","The History of Erinn Music (3)","/equip/usable/readable/book/skillbook/musical_knowledge_b/not_enchantable/",4,0,1,,no,1,2,2,5,1,10400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1115,"Effective Meditation","For Effective Meditation","/equip/usable/readable/book/skillbook/meditation_c/not_enchantable/",4,0,1,,no,1,2,2,5,1,6190,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1116,"The True Value of Mental Rest","The Value of Rest for Mind","/equip/usable/readable/book/skillbook/rest_c/not_enchantable/",4,0,1,,no,1,2,2,5,1,6190,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1121,"Instrument Ranges","Ranges of Instruments","/equip/usable/readable/book/skillbook/composing_a/not_enchantable/",4,0,1,,no,1,2,2,5,1,11000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1122,"The Fundamentals of Becoming a Great Composer","The Fundamental of The Great Composer","/equip/usable/readable/book/skillbook/composing_9/not_enchantable/",4,0,1,,no,1,2,2,5,1,26000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1123,"The Great Camping Companion: Camp Kit","Camp Kit, the Great Friend of Campfire","/equip/usable/readable/book/skillbook/composing_a/not_enchantable/",4,0,1,,no,1,2,2,5,1,8000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1105,"Defense Guidebook","Guide Book for Defence","/equip/usable/readable/book/skillbook/defense_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "openskill(20001)"); }
+1111,"The Path of Composing","The Way To Composing","/equip/usable/readable/book/skillbook/composing_b/not_enchantable/",4,0,1,,no,1,2,2,5,1,11020,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,4)"); }
+1112,"First Aid Using Splints","How To Apply A Splint","/equip/usable/readable/book/skillbook/first_aid_d/not_enchantable/",4,0,1,,no,1,2,2,5,1,8000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10009,2);erasekeyword(Manus_FirstAidD_hidden)"); }
+1113,"The History of Music in Erinn (4)","The History of Erinn Music (4)","/equip/usable/readable/book/skillbook/musical_knowledge_a/not_enchantable/",4,0,1,,no,1,2,2,5,1,13200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10006,5);erasekeyword(Aeira_ErinMusicA_hidden)"); }
+1114,"The History of Music in Erinn (3)","The History of Erinn Music (3)","/equip/usable/readable/book/skillbook/musical_knowledge_b/not_enchantable/",4,0,1,,no,1,2,2,5,1,10400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10006,4)"); }
+1115,"Effective Meditation","For Effective Meditation","/equip/usable/readable/book/skillbook/meditation_c/not_enchantable/",4,0,1,,no,1,2,2,5,1,6190,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(30003,2);erasekeyword(Aeira_MeditationC_hidden)"); }
+1116,"The True Value of Mental Rest","The Value of Rest for Mind","/equip/usable/readable/book/skillbook/rest_c/not_enchantable/",4,0,1,,no,1,2,2,5,1,6190,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10004,3);erasekeyword(Manus_RestC_hidden)"); }
+1121,"Instrument Ranges","Ranges of Instruments","/equip/usable/readable/book/skillbook/composing_a/not_enchantable/",4,0,1,,no,1,2,2,5,1,11000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,5)"); }
+1122,"The Fundamentals of Becoming a Great Composer","The Fundamental of The Great Composer","/equip/usable/readable/book/skillbook/composing_9/not_enchantable/",4,0,1,,no,1,2,2,5,1,26000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,6)"); }
+1123,"The Great Camping Companion: Camp Kit","Camp Kit, the Great Friend of Campfire","/equip/usable/readable/book/skillbook/composing_a/not_enchantable/",4,0,1,,no,1,2,2,5,1,8000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10008,3)"); }
 1124,"An Easy Guide to Taking Up Residence in a Home","Easy Way to My Home","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1125,"Castle Bidding Guide for Guild Master","A Bid Guide for Guildmasters","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1126,"My House 101 for New Residents","My Home White Book for New Dweller","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1134,"(Temp) Test book","(Temp) Test book","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,9800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1140,"It's a 'paper airplane' that flies.","I'm a paper plane","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1150,"Minute Book","Minute Book","/equip/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1153,"Strange Book","Queer Book","/usable/readable/book/not_enchantable/queer_book/hide_world_tooltip/hide_world_popup/hide_item_sticker/",4,0,1,,no,1,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1153,"Strange Book","Queer Book","/usable/readable/book/not_enchantable/queer_book/hide_world_tooltip/hide_world_popup/hide_item_sticker/",4,0,1,,no,1,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "red", "domint(data/script/event/queer_book.mint::QueerBook)"); }
 1154,"Strange Book","Queer Book","/equip/usable/script/book/queerbook/hide_world_tooltip/hide_world_popup/hide_item_sticker/",4,0,1,,no,1,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1155,"Glewyas's Mythril Chef Recipe Book","Recipe Book of Glewyas","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1155,"Glewyas's Mythril Chef Recipe Book","Recipe Book of Glewyas","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "domint(data/script/event/item/glewyas_book.mint::GlewyasBook)"); }
 1200,"Iria's Giant Statue","Giant Stone Statue In Iria","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1201,"Legend of the Giant Bird","Legend of Giant Bird","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1202,"The Snake's Altar","The Temple of Snake","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1203,"Guide for the Beginner Explorer","Beginner's Guide to Exploration","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1204,"Face-changing Statue","The Expressive Stone Statue","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1205,"Eternal Rest","Near Death Experience","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1206,"Time for Rest","Time for the Rest of Your Life","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,4300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1207,"Mystery of the Karu Forest","The Mystery of the Karu Forest","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,8600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1208,"My Nubes Meditation Method","Meditation in the Nubes","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,7900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1209,"Giant Mark on the Maiz Prairie","The Mystery of the Maiz Line","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,31200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1210,"The Innocence of the Lute","Soft on Me","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,29800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1205,"Eternal Rest","Near Death Experience","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10004,5)"); }
+1206,"Time for Rest","Time for the Rest of Your Life","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,4300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10004,4)"); }
+1207,"Mystery of the Karu Forest","The Mystery of the Karu Forest","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,8600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(30003,4)"); }
+1208,"My Nubes Meditation Method","Meditation in the Nubes","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,7900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(30003,3)"); }
+1209,"Giant Mark on the Maiz Prairie","The Mystery of the Maiz Line","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,31200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10006,8)"); }
+1210,"The Innocence of the Lute","Soft on Me","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,29800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,7)"); }
 1211,"Snake Gauntlet","Snake's Gauntlet","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1214,"Campfire : The Mystery of Flame","The Mystery Of Fire","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,7900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1215,"Rest in Paradise","Rest In Paradise","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,7900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1216,"Cor Meditation Method Research -Beginner-","Cor meditations thesis -  beginning -","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1217,"Secrets to Healthy Living","The secret of healthy life understood through cases","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1214,"Campfire : The Mystery of Flame","The Mystery Of Fire","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,7900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10008,4)"); }
+1215,"Rest in Paradise","Rest In Paradise","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,7900,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10004,6)"); }
+1216,"Cor Meditation Method Research -Beginner-","Cor meditations thesis -  beginning -","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(30003,6)"); }
+1217,"Secrets to Healthy Living","The secret of healthy life understood through cases","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10004,8)"); }
 1218,"Introduction to Alchemy","Alchemy's Guide - Basic","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1219,"About Synthesis and Fragmentation in Alchemy","Alchemy's Guide - Transform","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,14200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1220,"Alchemy and Battling","Alchemy's Guide - Combat","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,28800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1221,"The Good Son","Falc Story","/equip/usable/readable/book/not_enchantable/need_alternative_gold/",4,0,1,,no,1,2,2,5,1,28800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1222,"Pie Story 1: All About Pies","Pie Story vol.1: About Pie","/equip/usable/readable/book/not_enchantable/need_alternative_gold/",4,0,1,,no,1,2,2,5,1,30000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1223,"temp","temp","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,28800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1225,"Composition at Rest","Draw a comma","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,14200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1226,"Instrumental Timbre","Timbre of Instrument","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,15600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1227,"The Soundbox:  Heart of the Instrument","A Sound Box","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,13400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1228,"String Instruments: Hand-Made Melody","A String Instrument","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,14200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1219,"About Synthesis and Fragmentation in Alchemy","Alchemy's Guide - Transform","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,14200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(10030)"); }
+1220,"Alchemy and Battling","Alchemy's Guide - Combat","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,28800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(50032)"); }
+1221,"The Good Son","Falc Story","/equip/usable/readable/book/not_enchantable/need_alternative_gold/",4,0,1,,no,1,2,2,5,1,28800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020, 8)"); }
+1222,"Pie Story 1: All About Pies","Pie Story vol.1: About Pie","/equip/usable/readable/book/not_enchantable/need_alternative_gold/",4,0,1,,no,1,2,2,5,1,30000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020, 9)"); }
+1223,"temp","temp","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,28800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020, 10)"); }
+1225,"Composition at Rest","Draw a comma","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,14200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,9)"); }
+1226,"Instrumental Timbre","Timbre of Instrument","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,15600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,10)"); }
+1227,"The Soundbox:  Heart of the Instrument","A Sound Box","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,13400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10006,10)"); }
+1228,"String Instruments: Hand-Made Melody","A String Instrument","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,14200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10006,11)"); }
 1229,"Golvan's Short Story Book","Golvan's Book","/equip/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1230,"Ferghus's Letter","Letter from The Ferghus","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1231,"Letter from the Past","Letter from The Past","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,57,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1232,"Letter for Ascon","Letters for Ascon","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,57,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1231,"Letter from the Past","Letter from The Past","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,57,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "addkeyword(g14s4_ascon_05)"); }
+1232,"Letter for Ascon","Letters for Ascon","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,57,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "addkeyword(g14s4_ascon_06)"); }
 1233,"Portia's Love Letter","Love Letter from Portia","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1234,"Bassanio's Reply","Answer from Bassanio","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1235,"Shylock's Journal","The Diary of a Shylock","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1236,"Antonio's Final Letter","Last Letter from Antonio","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1237,"Shakespeare's Journal","Shakespeare's Journal","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,21,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1238,"Transfers the Spirit's memory.","How to Transfer Recollection of Spirit","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1239,"Cor Meditation Method Research -Intermediate-","Cor meditations thesis - Middle -","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1239,"Cor Meditation Method Research -Intermediate-","Cor meditations thesis - Middle -","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(30003,7)"); }
 1240,"Letter for Duncan","Letter for Duncan","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1241,"Letter for Aodhan","Letter for Aodhan","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1242,"Letter for Corentin","Letter for Corentin","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1243,"Bella's Notebook","Bella's Diary","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1244,"Pitfalls of Composition","Trap of the Composition","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,30000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1245,"A Composer's Life","A Composer's Life","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,45000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1246,"Unknown Song Vol. I","Unknown song -1-","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,57000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1247,"Unknown Song Vol. II","Unknown song -2-","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,80000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1244,"Pitfalls of Composition","Trap of the Composition","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,30000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,11)"); }
+1245,"A Composer's Life","A Composer's Life","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,45000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,12)"); }
+1246,"Unknown Song Vol. I","Unknown song -1-","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,57000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,13)"); }
+1247,"Unknown Song Vol. II","Unknown song -2-","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,80000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10005,14)"); }
 1300,"Traveler's Guide","Traveler's Guide","/equip/usable/readable/book/manual01/not_enchantable/",4,0,1,,no,1,2,2,5,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1301,"Guide for the Beginner Explorer","Beginner's Guide to Exploration","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1302,"Your First Glass of Wine Vol. 1","Wine Beginner Vol. 1","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1303,"Your First Glass of Wine Vol. 2","Wine Beginner Vol. 2","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1304,"Wine for the Everyman","Can you drink wine?","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,3000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1305,"Tin's Liquor Drop","Tin's drop of wine","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1302,"Your First Glass of Wine Vol. 1","Wine Beginner Vol. 1","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10037,1)"); }
+1303,"Your First Glass of Wine Vol. 2","Wine Beginner Vol. 2","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10037,2)"); }
+1304,"Wine for the Everyman","Can you drink wine?","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,3000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10037,6)"); }
+1305,"Tin's Liquor Drop","Tin's drop of wine","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10037,15)"); }
 1600,"Quest Guidebook Vol. 1","Guide Book for Quest Vol.1","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1601,"Skill Guidebook","Guide Book for Skill","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1602,"Quest Guidebook Vol. 2","Guide Book for Quest Vol.2","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -3832,7 +3832,7 @@
 1610,"Blessing Guidebook","Guide Book for Blessing","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1611,"Item Upgrade Guidebook","Guide Book for Item Upgrade","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1612,"Defense Guidebook","Guide Book for Defence","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-40731,"Icebolt Spell: Origin and Training (Beginner)","Icebolt : Its origin and training","/equip/usable/readable/book/skillbook/icebolt_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+40731,"Icebolt Spell: Origin and Training (Beginner)","Icebolt : Its origin and training","/equip/usable/readable/book/skillbook/icebolt_F/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "knowskill(30301);openskill(30301)"); }
 63414,"Hamlet Script","Hamlet Drama","/equip/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 63415,"Hamlet Script","Hamlet Drama","/equip/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 63416,"Hamlet Script","Hamlet Drama","/equip/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -3906,18 +3906,18 @@
 70266,"Trick Book","Trick Book","/usable/readable/book/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 70267,"Trick Book","Trick Book","/usable/readable/book/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 70284,"A Beginner's Indispensable Guide to Learning Skills","Basic Skill Guide Book","/usable/readable/book/",4,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-73051,"The Land of Eternity, Tir Na Nog","The Land of Eternity, Tir Na Nog","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+73051,"The Land of Eternity, Tir Na Nog","The Land of Eternity, Tir Na Nog","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "addkeyword(g1_paradise)"); }
 73052,"Book of Fomor","Book of Evil","/usable/readable/book/G1/quest_item/",4,0,1,,no,2,2,12,12,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-73053,"The Book of Revenge","Book of the revenge","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+73053,"The Book of Revenge","Book of the revenge","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "addkeyword(g1_mores)"); }
 73054,"The Book of Revenge, Vol. 2","Book of the revenge, volume II","/usable/readable/book/G1/quest_item/",4,0,1,,no,2,2,12,12,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 73055,"The Book of Revenge, Vol. 2 (Translated)","Book of the revenge, volume II (translated)","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 73056,"The Book of Revenge, Vol. 3","Book of the revenge, volume III","/usable/readable/book/G1/quest_item/",4,0,1,,no,2,2,12,12,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-73057,"The Book of Revenge, Vol. 3 (Translated)","Book of the revenge, volume III (translated)","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+73057,"The Book of Revenge, Vol. 3 (Translated)","Book of the revenge, volume III (translated)","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "addkeyword(g1_glasgavelen)"); }
 73058,"The Embodiment of Destruction, Glas Ghaibhleann","Embodiment of the destruction, Glasgavelen","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 73059,"The Goddess Who Turned into Stone","The story of goddess turned into a stone","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 73062,"Book of Revenge","Book of the revenge","/usable/readable/book/G1/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 73113,"Ruway's Diary","Ruway's Diary","/equip/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-74012,"Food for the soul for true good deeds","A Mental Pabulum for Genuine Good Deeds","/equip/usable/readable/book/story01/not_enchantable/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+74012,"Food for the soul for true good deeds","A Mental Pabulum for Genuine Good Deeds","/equip/usable/readable/book/story01/not_enchantable/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "addkeyword(g2_16_GoodDeed01);addkeyword(g2_16_readbookok);erasekeyword(g2_14_PaladinNDarkKnight)"); }
 74013,"Letter Box from Redire","The letters of Esras","/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 74014,"Esras' Letters","The letters of Esras","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 74016,"Status Report: Laoch's Activity","A Report to Esras","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -3930,7 +3930,7 @@
 74029,"The Tragedy of Emain Macha","The Tragedy of Emain Macha","/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,0,0,0,800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 74213,"Book of Tir Na Nog's Doom","The end of Tirnanog","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,2,5,1,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 75052,"Tarlach's Record","Report of Tarlach","/equip/usable/readable/book/manual01/not_enchantable/quest_item/",4,0,1,,no,1,2,2,2,2,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-75107,"Dark Knights and the Armor of Blackness","Dark Knight, in the Dark Armor","/usable/readable/book/G3/quest_item/",4,0,1,,no,1,2,57,42,42,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+75107,"Dark Knights and the Armor of Blackness","Dark Knight, in the Dark Armor","/usable/readable/book/G3/quest_item/",4,0,1,,no,1,2,57,42,42,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "addkeyword(G3_DarkKnight_Dark_Power);deletekeyword(G3_DarkKnight_Rumor_Armor)"); }
 75117,"The Legend of the Continent Far Away","Legend of a distant land","/usable/readable/book/G3/",4,0,1,,no,1,2,57,42,42,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 75188,"Book of Irinid","Book of the Irinid","/book/G6/bookofirinid/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 75190,"Book of the Ancient Giants","Book of the Ancient Giant","/book/G6/bookofgiant/quest_item/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -5836,7 +5836,7 @@
 1502,"Fashion Item - Cores","Fashion Item - Cores Special","/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,2,5,1,7700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1503,"Special Item Collection - Signs","Special Item Collection - Signs","/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,2,5,1,7700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1504,"Electric Magic for the Advanced - Thunder","High Level Magic of Lightning : Thunder","/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,2,5,1,7700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-1505,"The World of Handicrafts","World Of Handicraft","/equip/usable/readable/book/skillbook/not_enchantable/collectionbook/",18,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+1505,"The World of Handicrafts","World Of Handicraft","/equip/usable/readable/book/skillbook/not_enchantable/collectionbook/",18,0,1,,no,1,2,2,5,1,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "addskill(10013,1)"); }
 1506,"Collect Music Bottles","The Tone Bottle Collection","/equip/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,2,5,1,12000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1507,"Food Collection - Snacks for Everyone","Cooking Collection Book - Have A Snack Together","/equip/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,2,5,1,7700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1508,"Food Collection - Meal that's Simple, yet Filling","Cooking Collection Book - A Substantial & Simple Meal","/equip/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,2,5,1,8800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -5919,8 +5919,8 @@
 75144,"Simon's Card Collection Book","The Coupon Note of Simon","/equip/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,57,57,57,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 75156,"Nerys' Card Collection Book","The Coupon Note of Nerys","/equip/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,57,57,57,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 75157,"Simon's Card Collection Book","The Coupon Note of Simon","/equip/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,57,57,57,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-75189,"Irinid's Book","Book of the Irinid","/usable/readable/book/G6/bookofirinid/collectionbook/quest_item/",18,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-75191,"Book of the Ancient Giants","Book of the Ancient Giant","/usable/readable/book/G6/bookofgiant/collectionbook/quest_item/",18,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+75189,"Irinid's Book","Book of the Irinid","/usable/readable/book/G6/bookofirinid/collectionbook/quest_item/",18,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "blue"); }
+75191,"Book of the Ancient Giants","Book of the Ancient Giant","/usable/readable/book/G6/bookofgiant/collectionbook/quest_item/",18,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "red"); }
 75200,"Nerys' Card Collection Book","The Coupon Note of Nerys","/equip/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,57,57,57,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 75201,"Simon's Card Collection Book","The Coupon Note of Simon","/equip/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,57,57,57,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 75329,"Dungeon Collection Book Vol. 1","The Collection Book of Dungeon Vol. 1","/equip/usable/readable/book/not_enchantable/collectionbook/",18,0,1,,no,1,2,57,5,1,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
