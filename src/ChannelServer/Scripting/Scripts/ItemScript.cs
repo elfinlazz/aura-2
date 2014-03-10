@@ -169,7 +169,8 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void MagicSeal(Item item, string color, string script = null)
 		{
 			item.MetaData1.SetString("MGCSEL", color);
-			item.MetaData1.SetString("MGCWRD", script);
+			if (script != null)
+				item.MetaData1.SetString("MGCWRD", script);
 		}
 	}
 }
