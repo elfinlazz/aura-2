@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
@@ -26,7 +27,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="item"></param>
 		public virtual void OnUse(Creature creature, Item item)
-		{ }
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// Executed when item is equipped.

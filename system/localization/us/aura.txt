@@ -5,6 +5,7 @@
 unimplemented			Unimplemented.
 unimplemented_skill		This skill isn't implemented yet.
 unimplemented_skill2	This skill isn't implemented completely yet.
-unimplemented_item		Unimplemented item.
+unimplemented_item		This item isn't implemented yet.
+unimplemented_item2		This item isn't implemented completely yet.
 
 continent_disabled		Continent Warp has been disabled by the admin.

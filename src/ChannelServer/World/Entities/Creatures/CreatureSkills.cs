@@ -32,6 +32,10 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// </summary>
 		public Skill ActiveSkill { get; set; }
 
+		/// <summary>
+		/// New skill manager for creature.
+		/// </summary>
+		/// <param name="creature"></param>
 		public CreatureSkills(Creature creature)
 		{
 			_skills = new Dictionary<SkillId, Skill>();
@@ -253,7 +257,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
-		/// Trains skill
+		/// Trains condition in skill.
 		/// </summary>
 		/// <param name="skillId"></param>
 		/// <param name="condition">Condition nr (1-9)</param>
@@ -262,6 +266,21 @@ namespace Aura.Channel.World.Entities.Creatures
 		{
 			var skill = this.Get(skillId);
 			if (skill == null) return;
+
+			skill.Train(condition, amount);
+		}
+
+		/// <summary>
+		/// Trains condition in skill if it has the given rank.
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <param name="rank">Rank to which the training is limited.</param>
+		/// <param name="condition">Condition nr (1-9)</param>
+		/// <param name="amount"></param>
+		public void Train(SkillId skillId, SkillRank rank, int condition, int amount = 1)
+		{
+			var skill = this.Get(skillId);
+			if (skill == null || skill.Info.Rank != rank) return;
 
 			skill.Train(condition, amount);
 		}

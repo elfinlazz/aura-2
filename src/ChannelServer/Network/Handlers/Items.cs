@@ -12,6 +12,8 @@ using Aura.Shared.Mabi.Const;
 using Aura.Data.Database;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World;
+using System.Text.RegularExpressions;
+using Aura.Channel.Scripting;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -298,15 +300,13 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 
 			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			if (creature == null) return;
 
 			// Check states
 			if (creature.IsDead)
 			{
 				Log.Warning("Player '{0}' tried to use item while being dead.", creature.Name);
-				Send.UseItemR(creature, false, 0);
-				return;
+				goto L_Fail;
 			}
 
 			// Get item
@@ -314,26 +314,70 @@ namespace Aura.Channel.Network.Handlers
 			if (item == null)
 			{
 				Log.Warning("Player '{0}' tried to use item he doesn't possess.", creature.Name);
-				Send.UseItemR(creature, false, 0);
-				return;
+				goto L_Fail;
 			}
 
-			// Get script
-			var script = ChannelServer.Instance.ScriptManager.GetItemScript(item.Info.Id);
-			if (script == null)
+			// Meta Data Scripts
+			var gotMetaScript = false;
 			{
-				Log.Unimplemented("Item script for '{0}' not found.", item.Info.Id);
-				Send.UseItemR(creature, false, 0);
-				Send.ServerMessage(creature, Localization.Get("aura.unimplemented_item")); // Unimplemented item.
-				return;
+				// Sealed books
+				if (item.MetaData1.Has("MGCWRD") && item.MetaData1.Has("MGCSEL"))
+				{
+					var magicWords = item.MetaData1.GetString("MGCWRD");
+					try
+					{
+						var sms = new MagicWordsScript(magicWords);
+						sms.Run(creature, item);
+
+						gotMetaScript = true;
+					}
+					catch (Exception ex)
+					{
+						Log.Exception(ex, "Problem while running magic words script '{0}'", magicWords);
+						Send.ServerMessage(creature, Localization.Get("aura.unimplemented_item")); // Unimplemented item.
+						goto L_Fail;
+					}
+				}
 			}
 
-			// Use item
-			script.OnUse(creature, item);
+			// Aura Scripts
+			if (!gotMetaScript)
+			{
+				// Get script
+				var script = ChannelServer.Instance.ScriptManager.GetItemScript(item.Info.Id);
+				if (script == null)
+				{
+					Log.Unimplemented("Item script for '{0}' not found.", item.Info.Id);
+					Send.ServerMessage(creature, Localization.Get("aura.unimplemented_item")); // This item isn't implemented yet.
+					goto L_Fail;
+				}
+
+				// Run script
+				try
+				{
+					script.OnUse(creature, item);
+				}
+				catch (NotImplementedException)
+				{
+					Log.Unimplemented("UseItem: Item OnUse method for '{0}'.", item.Info.Id);
+					Send.ServerMessage(creature, Localization.Get("aura.unimplemented_item2")); // This item isn't implemented completely yet.
+					goto L_Fail;
+				}
+			}
+
+			// Decrease item count
 			if (item.Data.Consumed)
 			{
 				creature.Inventory.Decrement(item);
-				ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item.Info.Id, item.Info.Amount);
+				ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item.Info.Id, 1);
+			}
+
+			// Break seal after use
+			if (item.MetaData1.Has("MGCSEL"))
+			{
+				item.MetaData1.Remove("MGCWRD");
+				item.MetaData1.Remove("MGCSEL");
+				Send.ItemUpdate(creature, item);
 			}
 
 			// Mandatory stat update
@@ -341,6 +385,10 @@ namespace Aura.Channel.Network.Handlers
 			Send.StatUpdate(creature, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
 
 			Send.UseItemR(creature, true, item.Info.Id);
+			return;
+
+		L_Fail:
+			Send.UseItemR(creature, false, 0);
 		}
 	}
 }
