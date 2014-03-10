@@ -73,14 +73,38 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
-		/// Removes keyword.
+		/// Removes keyword and updates client.
 		/// </summary>
 		/// <param name="keywordId"></param>
 		/// <returns></returns>
 		public bool Remove(ushort keywordId)
 		{
+			bool result;
+
 			lock (_list)
-				return _list.Remove(keywordId);
+				result = _list.Remove(keywordId);
+
+			if (result)
+				Send.RemoveKeyword(_creature, keywordId);
+
+			return result;
+		}
+
+		/// <summary>
+		/// Removes keyword.
+		/// </summary>
+		/// <param name="keyword"></param>
+		/// <returns></returns>
+		public bool Remove(string keyword)
+		{
+			var data = AuraData.KeywordDb.Find(keyword);
+			if (data == null)
+			{
+				Log.Error("Keywords.Remove: Unknown keyword '{0}'.", keyword);
+				return false;
+			}
+
+			return this.Remove(data.Id);
 		}
 
 		/// <summary>

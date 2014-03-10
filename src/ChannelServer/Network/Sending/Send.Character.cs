@@ -139,6 +139,19 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends RemoveKeyword to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="keywordId"></param>
+		public static void RemoveKeyword(Creature creature, ushort keywordId)
+		{
+			var packet = new Packet(Op.RemoveKeyword, creature.EntityId);
+			packet.PutUShort(keywordId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends AddTitle(Knowledge) to creature's client,
 		/// depending on state.
 		/// </summary>
