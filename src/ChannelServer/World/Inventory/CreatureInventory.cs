@@ -430,6 +430,21 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Tries to add item to pocket. Returns false if the pocket
+		/// doesn't exist or there was no space.
+		/// </summary>
+		public bool Add(int itemId, Pocket pocket)
+		{
+			var item = new Item(itemId);
+
+			if (!this.Add(item, pocket))
+				return false;
+
+			this.CheckEquipMoved(item, Pocket.None, pocket);
+			return true;
+		}
+
+		/// <summary>
 		/// Adds item to pocket at the position it currently has.
 		/// Returns false if pocket doesn't exist.
 		/// </summary>

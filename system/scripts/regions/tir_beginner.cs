@@ -1,5 +1,5 @@
 //--- Aura Script -----------------------------------------------------------
-// Tir Chonaill - Beginner Area (125)
+// Tir Chonaill - Beginner Area (125) (Forst of Souls)
 //--- Description -----------------------------------------------------------
 // Region you are warped to after talking to Nao/Tin.
 //---------------------------------------------------------------------------
@@ -19,5 +19,34 @@ public class TirBeginnerRegionScript : RegionScript
 	public override void LoadSpawns()
 	{
 		// ...
+	}
+
+	public override void LoadEvents()
+	{
+		// "Altar" near Tin
+		OnClientEvent(0x00B0007D0001009C, SignalType.Enter, (creature, eventData) =>
+		{
+			// Only do this once.
+			if (creature.Vars.Perm["TinCutscene"] != null) return;
+
+			if (!creature.Quests.Has(1000001))
+				creature.Quests.Start(1000001); // Nao's Letter of Introduction
+
+			var cutscene = new Cutscene("tuto_meet_tin", creature);
+			cutscene.AddActor("me", creature);
+			cutscene.AddActor("#tin", creature.Region.GetCreature("_tin"));
+			cutscene.Play((scene) =>
+			{
+				// Give first weapon
+				if(creature.RightHand == null)
+					creature.Inventory.Add(40005, Pocket.RightHand1); // Short Sword
+
+				// Set as soon as the player got everything
+				creature.Vars.Perm["TinCutscene"] = true;
+
+				// Required to remove the fade effect.
+				scene.Leader.Warp(125, 22930, 75423);
+			});
+		});
 	}
 }
