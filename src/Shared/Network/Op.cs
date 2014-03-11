@@ -428,7 +428,7 @@ namespace Aura.Shared.Network
 		public const int FinishedCutscene = 0x186A0;
 		public const int PlayCutscene = 0x186A6;
 		public const int CutsceneEnd = 0x186A7;
-		//public const int ? = 0x186A8;
+		public const int CutsceneUnk = 0x186A8;
 
 		public const int Weather = 0x1ADB0;
 
