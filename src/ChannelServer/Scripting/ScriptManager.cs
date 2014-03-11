@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using Aura.Channel.World.Shops;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills;
+using Aura.Data.Database;
 
 namespace Aura.Channel.Scripting
 {
@@ -39,6 +40,7 @@ namespace Aura.Channel.Scripting
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<string, NpcShop> _shops;
 		private Dictionary<int, QuestScript> _questScripts;
+		private Dictionary<long, Dictionary<SignalType, ClientEvent>> _clientEventHandlers;
 
 		private Dictionary<string, Dictionary<string, List<ScriptHook>>> _hooks;
 
@@ -58,6 +60,7 @@ namespace Aura.Channel.Scripting
 			_aiScripts = new Dictionary<string, Type>();
 			_shops = new Dictionary<string, NpcShop>();
 			_questScripts = new Dictionary<int, QuestScript>();
+			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, ClientEvent>>();
 
 			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
 
@@ -111,6 +114,7 @@ namespace Aura.Channel.Scripting
 			_questScripts.Clear();
 			_hooks.Clear();
 			_shops.Clear();
+			_clientEventHandlers.Clear();
 
 			if (!File.Exists(IndexPath))
 			{
@@ -466,6 +470,7 @@ namespace Aura.Channel.Scripting
 							regionScript.Load();
 							regionScript.LoadWarps();
 							regionScript.LoadSpawns();
+							regionScript.LoadEvents();
 						}
 						else
 						{
@@ -744,6 +749,39 @@ namespace Aura.Channel.Scripting
 				_hooks[npcName][hook] = new List<ScriptHook>();
 
 			_hooks[npcName][hook].Add(func);
+		}
+
+		/// <summary>
+		/// Adds handler for client event.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="signal"></param>
+		/// <param name="onTriggered"></param>
+		public void AddClientEventHandler(long id, SignalType signal, Action<Creature, EventData> onTriggered)
+		{
+			Dictionary<SignalType, ClientEvent> clientEvent;
+			if (!_clientEventHandlers.TryGetValue(id, out clientEvent))
+				_clientEventHandlers[id] = new Dictionary<SignalType, ClientEvent>();
+
+			_clientEventHandlers[id][signal] = new ClientEvent(id, signal, onTriggered);
+		}
+
+		/// <summary>
+		/// Returns handler for client event.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="signal"></param>
+		public ClientEvent GetClientEventHandler(long id, SignalType signal)
+		{
+			Dictionary<SignalType, ClientEvent> clientEvent;
+			if (!_clientEventHandlers.TryGetValue(id, out clientEvent))
+				return null;
+
+			ClientEvent result;
+			if (!clientEvent.TryGetValue(signal, out result))
+				return null;
+
+			return result;
 		}
 	}
 

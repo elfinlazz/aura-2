@@ -48,7 +48,19 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public bool InRange(Position otherPos, int range)
 		{
-			return (Math.Pow(X - otherPos.X, 2) + Math.Pow(Y - otherPos.Y, 2) <= Math.Pow(range, 2));
+			return this.InRange(otherPos.X, otherPos.Y, range);
+		}
+
+		/// <summary>
+		/// Returns true if the other position is within range.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="range"></param>
+		/// <returns></returns>
+		public bool InRange(int x, int y, int range)
+		{
+			return (Math.Pow(X - x, 2) + Math.Pow(Y - y, 2) <= Math.Pow(range, 2));
 		}
 
 		/// <summary>

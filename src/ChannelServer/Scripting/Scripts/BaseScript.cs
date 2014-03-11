@@ -8,6 +8,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Channel.Util;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
+using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
@@ -407,6 +408,15 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		#endregion Spawn
+
+		#region Client Events
+
+		public void OnClientEvent(long id, SignalType signal, Action<Creature, EventData> onTriggered)
+		{
+			ChannelServer.Instance.ScriptManager.AddClientEventHandler(id, signal, onTriggered);
+		}
+
+		#endregion Client Events
 	}
 
 	public class OnAttribute : Attribute

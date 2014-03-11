@@ -77,7 +77,8 @@ namespace Aura.Data.Database
 	public class EventData
 	{
 		public long Id { get; internal set; }
-		public EventType Type { get; internal set; }
+		public SignalType Type { get; internal set; }
+		public int RegionId { get; internal set; }
 		public float X { get; internal set; }
 		public float Y { get; internal set; }
 		public bool IsAltar { get; internal set; }
@@ -85,11 +86,13 @@ namespace Aura.Data.Database
 		public List<RegionElementData> Parameters { get; internal set; }
 	}
 
-	public enum EventType : int
+	public enum SignalType : int
 	{
 		Unk1 = 1,
 		AreaChange = 10, // ? (texts, bgm change)
 		Collision = 14,
+		Enter = 101,
+		Leave = 102,
 		Unk2 = 2000,     // something about the monsters
 	}
 
@@ -276,9 +279,10 @@ namespace Aura.Data.Database
 					{
 						var ei = new EventData();
 						ei.Id = br.ReadInt64();
+						ei.RegionId = ri.Id;
 						ei.X = br.ReadSingle();
 						ei.Y = br.ReadSingle();
-						ei.Type = (EventType)br.ReadInt32();
+						ei.Type = (SignalType)br.ReadInt32();
 
 						var cShapes = br.ReadInt32();
 						ei.Shapes = new List<ShapeData>();

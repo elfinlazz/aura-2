@@ -80,6 +80,8 @@ namespace Aura.Channel.Scripting.Compilers
 			add.Append("using Aura.Channel.World.Shops;");
 			add.Append("using Aura.Channel.World;");
 			add.Append("using Aura.Channel;");
+			add.Append("using Aura.Data;");
+			add.Append("using Aura.Data.Database;");
 			add.Append("using Aura.Shared.Mabi.Const;");
 			add.Append("using Aura.Shared.Mabi;");
 			add.Append("using Aura.Shared.Network;");
