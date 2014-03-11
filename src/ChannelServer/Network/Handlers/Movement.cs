@@ -85,11 +85,11 @@ namespace Aura.Channel.Network.Handlers
 			//   can be triggered after we've changed the creature's region.
 			//   Checking position doesn't work because the events can be
 			//   quite large.
-			//if (eventData.RegionId != creature.RegionId /*|| out of range? */)
-			//{
-			//	Log.Warning("EventInform: Player '{0:X16}' triggered event '{1:X16}' out of range.", creature.EntityId, eventId);
-			//	return;
-			//}
+			if (eventData.RegionId != creature.RegionId && signalType == SignalType.Enter)
+			{
+				Log.Warning("EventInform: Player '{0:X16}' triggered event '{1:X16}' out of range.", creature.EntityId, eventId);
+				return;
+			}
 
 			// Check handler
 			var clientEvent = ChannelServer.Instance.ScriptManager.GetClientEventHandler(eventId, signalType);

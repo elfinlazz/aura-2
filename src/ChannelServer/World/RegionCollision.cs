@@ -43,7 +43,7 @@ namespace Aura.Channel.World
 						_tree.Insert(new LinePath(p4, p1));
 					}
 				}
-				foreach (var ev in area.Events.Values.Where(a => a.Type == SignalType.Collision))
+				foreach (var ev in area.Events.Values.Where(a => a.Type == EventType.Collision))
 				{
 					foreach (var shape in ev.Shapes)
 					{
