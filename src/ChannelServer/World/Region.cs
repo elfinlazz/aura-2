@@ -199,24 +199,29 @@ namespace Aura.Channel.World
 			var result = new List<Entity>();
 			var pos = creature.GetPosition();
 
-			_creaturesRWLS.EnterReadLock();
-			try
+			// Players don't see anything else while they're watching a cutscene.
+			// This automatically (de)spawns entities (from LookAround) while watching.
+			if (creature.Temp.CurrentCutscene == null || !creature.IsPlayer)
 			{
-				result.AddRange(_creatures.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange) && !a.Conditions.Has(ConditionsA.Invisible)));
-			}
-			finally
-			{
-				_creaturesRWLS.ExitReadLock();
-			}
+				_creaturesRWLS.EnterReadLock();
+				try
+				{
+					result.AddRange(_creatures.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange) && !a.Conditions.Has(ConditionsA.Invisible)));
+				}
+				finally
+				{
+					_creaturesRWLS.ExitReadLock();
+				}
 
-			_itemsRWLS.EnterReadLock();
-			try
-			{
-				result.AddRange(_items.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange)));
-			}
-			finally
-			{
-				_itemsRWLS.ExitReadLock();
+				_itemsRWLS.EnterReadLock();
+				try
+				{
+					result.AddRange(_items.Values.Where(a => a.GetPosition().InRange(pos, VisibleRange)));
+				}
+				finally
+				{
+					_itemsRWLS.ExitReadLock();
+				}
 			}
 
 			_propsRWLS.EnterReadLock();
