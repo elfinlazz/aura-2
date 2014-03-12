@@ -272,5 +272,40 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends DyePaletteReqR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="var1"></param>
+		/// <param name="var2"></param>
+		/// <param name="var3"></param>
+		/// <param name="var4"></param>
+		public static void DyePaletteReqR(Creature creature, int var1, int var2, int var3, int var4)
+		{
+			var packet = new Packet(Op.DyePaletteReqR, creature.EntityId);
+			packet.PutByte(true);
+			packet.PutInt(var1); // PutInt(62);
+			packet.PutInt(var2); // PutInt(123);
+			packet.PutInt(var3); // PutInt(6);
+			packet.PutInt(var4); // PutInt(238);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends DyePickColorR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void DyePickColorR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.DyePickColorR, creature.EntityId);
+			packet.PutByte(success);
+			if (success)
+				packet.PutBin(creature.Temp.RegularDyePickers);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

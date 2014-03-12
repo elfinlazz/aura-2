@@ -5,15 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Aura.Shared.Network;
-using Aura.Channel.Network.Sending;
-using Aura.Shared.Util;
-using Aura.Shared.Mabi.Const;
-using Aura.Data.Database;
-using Aura.Channel.World.Entities;
-using Aura.Channel.World;
 using System.Text.RegularExpressions;
+using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting;
+using Aura.Channel.World;
+using Aura.Channel.World.Entities;
+using Aura.Data.Database;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Mabi.Structs;
+using Aura.Shared.Network;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -389,6 +390,56 @@ namespace Aura.Channel.Network.Handlers
 
 		L_Fail:
 			Send.UseItemR(creature, false, 0);
+		}
+
+		/// <summary>
+		/// Sent after regular dye was prepared.
+		/// </summary>
+		/// <remarks>
+		/// What's sent back are the parameters for the wave algorithm,
+		/// creating the random pattern.
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.DyePaletteReq)]
+		public void DyePaletteReq(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null) return;
+
+			Send.DyePaletteReqR(creature, 0, 0, 0, 0);
+		}
+
+		/// <summary>
+		/// Sent when clicking "Pick Color".
+		/// </summary>
+		/// <remarks>
+		/// Generates the randomly placed pickers' positions for regular dyes.
+		/// They are placed relative to the cursor, if the whole struct
+		/// is 0 all pickers will be at the cursor, giving all 5 options
+		/// the same color.
+		/// </remarks>
+		/// <example>
+		/// 0001 [005000CB994586F1] Long   : 22518872586684145
+		/// </example>
+		[PacketHandler(Op.DyePickColor)]
+		public void DyePickColor(ChannelClient client, Packet packet)
+		{
+			var itemEntityId = packet.GetLong();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null) return;
+
+			var pickers = new DyePickers();
+			//pickers.Picker2.X = 10;
+			//pickers.Picker2.Y = 10;
+			//pickers.Picker3.X = -10;
+			//pickers.Picker3.Y = 10;
+
+			creature.Temp.RegularDyePickers = pickers;
+
+			Send.DyePickColorR(creature, true);
 		}
 	}
 }

@@ -4,6 +4,7 @@
 using System;
 using Aura.Channel.World.Shops;
 using Aura.Data.Database;
+using Aura.Shared.Mabi.Structs;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
@@ -26,5 +27,11 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		// Last open shop
 		public NpcShop CurrentShop;
+
+		// Items temporarily used by skills
+		public Item SkillItem1, SkillItem2;
+
+		// Random dyeing cursors for regular dyes
+		public DyePickers RegularDyePickers;
 	}
 }
