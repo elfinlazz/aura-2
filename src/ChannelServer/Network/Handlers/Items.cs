@@ -5,15 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Aura.Shared.Network;
-using Aura.Channel.Network.Sending;
-using Aura.Shared.Util;
-using Aura.Shared.Mabi.Const;
-using Aura.Data.Database;
-using Aura.Channel.World.Entities;
-using Aura.Channel.World;
 using System.Text.RegularExpressions;
+using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting;
+using Aura.Channel.World;
+using Aura.Channel.World.Entities;
+using Aura.Data.Database;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Mabi.Structs;
+using Aura.Shared.Network;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Network.Handlers
 {
