@@ -96,8 +96,7 @@ namespace Aura.Channel.Network.Handlers
 			if (clientEvent == null) return;
 
 			// Run
-			if (clientEvent.OnTriggered != null)
-				clientEvent.OnTriggered(creature, eventData);
+			clientEvent(creature, eventData);
 		}
 	}
 }

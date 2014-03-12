@@ -40,7 +40,7 @@ namespace Aura.Channel.Scripting
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<string, NpcShop> _shops;
 		private Dictionary<int, QuestScript> _questScripts;
-		private Dictionary<long, Dictionary<SignalType, ClientEvent>> _clientEventHandlers;
+		private Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>> _clientEventHandlers;
 
 		private Dictionary<string, Dictionary<string, List<ScriptHook>>> _hooks;
 
@@ -60,7 +60,7 @@ namespace Aura.Channel.Scripting
 			_aiScripts = new Dictionary<string, Type>();
 			_shops = new Dictionary<string, NpcShop>();
 			_questScripts = new Dictionary<int, QuestScript>();
-			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, ClientEvent>>();
+			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>>();
 
 			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
 
@@ -759,11 +759,11 @@ namespace Aura.Channel.Scripting
 		/// <param name="onTriggered"></param>
 		public void AddClientEventHandler(long id, SignalType signal, Action<Creature, EventData> onTriggered)
 		{
-			Dictionary<SignalType, ClientEvent> clientEvent;
+			Dictionary<SignalType, Action<Creature, EventData>> clientEvent;
 			if (!_clientEventHandlers.TryGetValue(id, out clientEvent))
-				_clientEventHandlers[id] = new Dictionary<SignalType, ClientEvent>();
+				_clientEventHandlers[id] = new Dictionary<SignalType, Action<Creature, EventData>>();
 
-			_clientEventHandlers[id][signal] = new ClientEvent(id, signal, onTriggered);
+			_clientEventHandlers[id][signal] = onTriggered;
 		}
 
 		/// <summary>
@@ -771,13 +771,13 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="signal"></param>
-		public ClientEvent GetClientEventHandler(long id, SignalType signal)
+		public Action<Creature, EventData> GetClientEventHandler(long id, SignalType signal)
 		{
-			Dictionary<SignalType, ClientEvent> clientEvent;
+			Dictionary<SignalType, Action<Creature, EventData>> clientEvent;
 			if (!_clientEventHandlers.TryGetValue(id, out clientEvent))
 				return null;
 
-			ClientEvent result;
+			Action<Creature, EventData> result;
 			if (!clientEvent.TryGetValue(signal, out result))
 				return null;
 
