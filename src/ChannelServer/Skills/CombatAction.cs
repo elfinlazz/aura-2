@@ -107,7 +107,7 @@ namespace Aura.Channel.Skills
 					ChannelServer.Instance.Events.OnCreatureAttackedByPlayer(action as TargetAction);
 
 				var npc = action.Creature as NPC;
-				if (npc != null && npc.AI != null)
+				if (npc != null && npc.AI != null && action.Category == CombatActionCategory.Target)
 				{
 					npc.AI.OnHit(action as TargetAction);
 				}
