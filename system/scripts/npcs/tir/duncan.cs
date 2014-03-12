@@ -71,12 +71,54 @@ public class DuncanBaseScript : NpcScript
 	{
 		switch (keyword)
 		{
-			case "personal_info": Msg("I'm the chief of this town..."); break;
-			case "rumor":         Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?"); break;
-			case "about_skill":   Msg("I don't know of any skills... Why don't you ask Malcom?"); break;
-			case "about_arbeit":  Msg("I don't have any jobs for you, but you can get a part time job in town."); break;
-			case "about_study":   Msg("You can study different magic down at the school!"); break;
-			default:              Msg("I don't know anything about that..."); break;
+			case "personal_info":
+				Msg("I'm the chief of this town...");
+				//Msg("Once again, welcome to Tir Chonaill.");
+				// MoodChange
+				break;
+				
+			case "rumor":
+				Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?");
+				//Msg("Talk to the good people in Tir Chonaill as much as you can, and pay close attention to what they say.<br/>Once you become friends with them, they will help you in many ways.<br/>Why don't you start off by visiting the buildings around the Square?");
+				// MoodChange
+				break;
+				
+			case "about_skill":
+				Msg("I don't know of any skills... Why don't you ask Malcom?");
+				//Msg("You know about the Combat Mastery skill?<br/>It's one of the basic skills needed to protect yourself in combat.<br/>It may look simple, but never underestimate its efficiency.<br/>Continue training the skill diligently and you will soon reap the rewards. That's a promise.");
+				break;
+			
+			case "about_arbeit":
+				Msg("I don't have any jobs for you, but you can get a part time job in town.");
+				//Msg("Are you interested in a part-time job?<br/>It's great to see young people eager to work!<br/>To get one, talk to the people in town with the 'Part-Time Jobs' keyword.<br/>If you go at the right time, you'll be offered a job.<p/>If you do a good job, you will be duly rewarded.<br/>Just make sure to return to the person who gave you the job and report the results before the deadline.<br/>If you miss the deadline, you will not be rewarded regardless of how hard you worked.<p/>Part-time jobs aren't available 24 hours a day.<br/>You have to get there at the right time.<p/>The sign-up period usually begins between 7:00 am and 9:00 am.<br/>Since there are only a limited number of jobs available,<br/>others may take them all if you're too late.<br/>Also, you can do only one part-time job per day.<p/>It looks like Nora and Caitin could use your help,<br/>so head to the Grocery Store or the Inn and talk to them.<br/>Start the conversation with them with the keyword 'Part-Time Jobs' and make sure it's between 7 and 9 am.<br/>Good luck!");
+				break;
+			
+			case "about_study":
+				Msg("You can study different magic down at the school!");
+				break;
+			
+			case "shop_misc":
+				Msg("If you look down at the Square, you can see a building with a dark roof.<br/>That's the General Shop,<br/>where Malcolm sells homemade products.<br/>The quality of his products are quite good.");
+				break;
+			
+			case "shop_bank":
+				Msg("It's been a while since the Erskin Bank first opened its doors...<br/>It's that big building with a tiled roof below in the Square.<br/>There, you'll find Bebhinn, the teller.<br/>She knows a lot of gossip, so talk to her if you're curious.");
+				break;
+			
+			case "skill_counter_attack":
+				Msg("Haha, I am just the Chief of a small town. I don't know the details of that...<br/>I'm too old to give demonstrations, don't you think?<br/>Why don't you go ask Trefor to teach you?<br/>Go farther up the hill past the Healer's House, and you will see him.");
+				break;
+				
+			default:
+				RndMsg(
+					"I don't know anything about that...",
+					"I think it'd be better for you to ask someone else.",
+					"Hmm, I wonder who might know about that...",
+					"I have no idea...",
+					"I don't really know about that... "
+				);
+				// MoodChange
+				break;
 		}
 	}
 }

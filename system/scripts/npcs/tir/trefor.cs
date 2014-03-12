@@ -52,6 +52,7 @@ public class TreforBaseScript : NpcScript
 		{
 			case "@talk":
 				Msg("Hmm? Are you a new traveler?");
+				//Msg("Hello <username/>, nice to see you.");
 				await StartConversation();
 				return;
 				
@@ -81,8 +82,95 @@ public class TreforBaseScript : NpcScript
 	{
 		switch (keyword)
 		{
-			case "about_skill": Msg("I've been observing your combat style for some time now.<br/>If you want to be a warrior, you shouldn't limit yourself to just melee attacks.<p/>I'm sure Ranald at the School can teach you some things about ranged attacks<br/>which will allow you to attack monsters from a distance."); break;
-			default:            Msg("Oh, is that so?"); break;
+			case "personal_info":
+				Msg("Hmm... Have something to ask me?<br/>I'm nothing but a regular fellow from this town.<br/>I am but a humble servant of Lymirark, whose duty is to protect this town.");
+				break;
+				
+			case "rumor":
+				Msg("Recently, the people in this town have become somewhat anxious<br/>about the howling of wild animals outside.<br/>For some reason, their howling seems to be getting a little bit closer each day.<p/>That's why I'm standing guard like this.");
+				break;
+				
+			case "about_skill":
+				Msg("I've been observing your combat style for some time now.<br/>If you want to be a warrior, you shouldn't limit yourself to just melee attacks.<p/>I'm sure Ranald at the School can teach you some things about ranged attacks<br/>which will allow you to attack monsters from a distance.");
+				//Msg("Since you've learned the Support Shot skill now,<br/>why don't you start your training by going back to Alby Dungeon.<br/>You can hone your archery skills there.<p/>If you form a party,<br/>you'll be able to learn how archers assist warriors engaged in melee combat.<br/>I guarantee it, in the name of the number one town guard of Tir Chonaill.");
+				break;
+				
+			case "about_arbeit":
+				Msg("Hmm... I don't have any work for you.<br/>But I have something to tell you that might help.<br/>I've noticed travelers aren't good at the following two things.<p/>First, when you're done with your job,<br/>you must always go back<br/>and report your results.<p/>When you're finished with your work,<br/>report your results by using<br/>the [About Part-Time Jobs] keyword.<p/>You wouldn't believe how many people just sit around after finishing their work,<br/>having no clue on how to report their results when the deadline comes.<br/>I really feel bad for them.<p/>The next one would be when to get a part-time job.<br/>You can only do 1 part-time job per day.<br/>... Most of them are given in the morning.<p/>Stand still and click the Auto Camera button located on the lower right screen.<br/>The camera will automatically return to its default view.<p/>You will now be able to see the shadows.<br/>If you watch the shadow's direction, you can guess what time it is.<br/>Most people here use this method to tell the time.<br/>It will help you know when you can get a part-time job.<p/>But I recently heard about adventurers<br/>carrying something called a watch.<br/>They say it can be activated by pressing<hotkey name='ClockView'/>,<br/>but I haven't tried it myself.<p/>Don't forget what I told you today.<br/>If you already knew about it,<br/>then you should pass this knowledge on<br/>to others around you.");
+				break;
+				
+			case "shop_misc":
+				Msg("Don't you think the General Shop in this town doesn't carry enough items?<br/>I know that Malcolm runs it by himself, but still...");
+				break;
+				
+			case "shop_grocery":
+				Msg("Speaking of the Grocery Store, people like us that have laborious jobs<br/>must always wash our hands before eating.<br/>Keep that in mind. You don't want to get sick like that.");
+				break;
+				
+			case "shop_bank":
+				Msg("Bebhinn? Sure, she's cute... But I think she gossips way too much.<br/>Definitely not my style.");
+				break;
+				
+			case "shop_smith":
+				Msg("You can only repair metal items at the Blacksmith's Shop.<br/>It would not be right to try to repair anything else.");
+				break;
+				
+			case "skill_counter_attack":
+				Player.Keywords.Remove("skill_counter_attack");
+				Msg("So you're aware of the Counterattack skill.<br/>Counterattack is a skill that utilizes your enemy's power.<br/>This means the more powerful the enemy's attack is, the more damage it will deliver.");
+				Msg("The way to use Counterattack is actually very simple.<br/>All you need to do is turn on the skill and just wait. Wait until the enemy attacks you.<br/>As soon as the enemy attacks, you know you will have the last laugh!", Image("Tutorial_dungeon_skill_06", 200, 200));
+				Msg("This skill, however, requires a high level of concentration<br/>in that you'll have to accurately anticipate your enemy's next move.<br/>The main drawbacks of using this skill is that your Stamina will be continually spent,<br/>and you won't be able to move during the skill.");
+				Msg("Now let's see your stance.<br/>Oh no... What kind of a stance is that? You won't be able to react quick enough with that.<br/>Actually, you won't be able to fight a raccoon with that.");
+				Msg("The basics of the Counterattack skill involves utilizing your enemy's power.<br/>This skill does not involve utilizing YOUR strength.");
+				Msg("Your legs are all tensed up. You can't react in time like that.<br/>Loosen your left leg to make sure you can absorb your enemy's strength...<br/>Yes. That's it. Now you look like you're ready.");
+				Msg("Now all you need to do is actually pull it off in the heat of the battle!<br/>Please don't try it on other villagers, though.");
+				break;
+				
+			case "square":
+				Msg("Are you talking about the Square?<br/>The Square is just down there.<p/>Hmm... <username/>, <br/>if you were asking such a silly question to test my patience,<br/>I'd be very annoyed and disappointed.");
+				break;
+				
+			case "farmland":
+				Msg("The farmland?<br/>Isn't there a small garden by Caitin's Grocery Store?<br/>Hmm... I think there is one in front of the School.<p/>Do not just walk in there to gather the wheat.<br/>You might easily ruin a year's effort.");
+				break;
+				
+			case "shop_headman":
+				Msg("You want to know where the Chief's House is?<br/>Hmm... It's on the hill on the opposite side of the Square, but...<br/>You haven't gone to see him yet?<p/>You must have, right?<br/>I'll just assume that you came here because you like me.");
+				break;
+				
+			case "temple":
+				Msg("The Church is located down south, following the road behind the Bank.<br/>The people there are really nice. They will treat you well.");
+				break;
+				
+			case "skill_campfire":
+				Msg("You want to know what the Campfire skill is?<br/>It's a skill that all adventurers should learn.<p/>If you use the Campfire skill, you can rest more comfortably<br/>while recovering your health faster.<p/>Piaras traveled to a lot of places, so he would definitely know about this skill.<br/>However, I'm afraid that he might not be willing to teach you, since he runs the Inn now.<p/>Aha!!! Last time I saw Deian, he was trying to start a campfire.<br/>How about asking him?");
+				break;
+				
+			case "shop_restaurant":
+				Msg("After running around working up a sweat, people tend to get hungry.<br/>It'd be good if we had a decent restaurant in town,<br/>but people here usually go to the Grocery Store.<p/>I think the Campfire skill is mainly responsible for that.<p/>What? You don't know what I'm talking about?<br/>Hmm, so you haven't used the skill to share food with others, right?<p/>You heard me right. With the Campfire skill,<br/>you can cook your food by the fire and share it with the people around you.<br/>If you haven't done it before, why don't you try it now?<p/>Food always tastes better when you share it with the people you love.");
+				break;
+				
+			case "shop_armory":
+				Msg("You are looking for the Weapons Shop?<br/>Hahaha. You should go to the Blacksmith's Shop.<br/>Go and get a bunch of arrows!<p/>Hmm... You don't have a bow?");
+				break;
+				
+			case "shop_cloth":
+				Msg("If you need some clothes, you can go to the General Shop,<br/>but if you want an armor like mine, then you must go to the Blacksmith's Shop.");
+				break;
+				
+			case "shop_goverment_office":
+				Msg("Tir Chonaill was founded by the descendents of Ulaid,<br/>inheritors of the proud bloodline of Partholon.<br/>It's worthy to note that it's not governed by the Aliech Kingdom.<p/>If you wish to find any items you might have lost in a dungeon,<br/>you will need to see Chief Duncan near the Square.<br/>He's aware of everything that goes on around here.<p/>If you are looking for a town office,<br/>you should head all the way down south into the Kingdom's territory.");
+				break;
+				
+			default:
+				RndMsg(
+					"Oh, is that so?",
+					"That was quite boring...",
+					"Never heard of it. I don't think that has anything to do with me.",
+					"I'm bored. Why don't we talk about something else?",
+					"Do you have anything more interesting to talk about?"
+				);
+				break;
 		}
 	}
 }

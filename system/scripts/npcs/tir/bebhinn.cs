@@ -46,6 +46,7 @@ public class BebhinnBaseScript : NpcScript
 		{
 			case "@talk":
 				Msg("Is this your first time here? Nice to meet you.");
+				//Msg("I think we've met before... nice to see you again.");
 				await StartConversation();
 				return;
 				
@@ -85,7 +86,89 @@ public class BebhinnBaseScript : NpcScript
 	{
 		switch (keyword)
 		{
-			default: Msg("Can we change the subject?"); break;
+			case "personal_info":
+				Msg("My name is Bebhinn. Don't forget it!");
+				// MoodChange if not first?
+				break;
+				
+			case "rumor":
+				Msg("Oh, you know what?<br/>Some people were hitting the scarecrow at the School to practice their skills,<br/>and they wandered off and ruined the crops in the farmland.<br/>The owner got pretty upset about it.");
+				// MoodChange
+				break;
+				
+			case "about_skill":
+				if(Player.Skills.Has(SkillId.Composing))
+				{
+					Msg("Wow! You know about the Composition skill?<br/>Can you write me a song someday? Hehe...");
+					break;
+				}
+				goto default;
+				
+			case "shop_misc":
+				Msg("Are you looking for the General Shop? It's just across the road.<br/>You know who's there, right? Just ask for Malcolm.");
+				break;
+				
+			case "shop_grocery":
+				Player.Keywords.Give("skill_gathering");
+				Msg("The Grocery Store is next to the Bank.<br/>There's a big chef sign next to it.<br/>And chat with Caitin while you're there.<p/>Her food is fresh because she uses ingredients harvested directly<br/>from the farm next to the shop.");
+				break;
+				
+			case "shop_bank":
+				Msg("Do you have something for me?<br/>The Bank charges you for making deposits,<br/>but I accept things for free!<br/>...<br/>However, I never give them back...");
+				break;
+				
+			case "shop_smith":
+				Msg("If you have anything that's broken and needs to be repaired, get it fixed at the General Shop or the Blacksmith's Shop<br/>before depositing it at the Bank.<br/>Once it starts to rust, there's just no stopping it!<p/>Oh, and send my regards to Ferghus if you go to the Blacksmith's Shop.");
+				break;
+				
+			case "skill_gathering":
+				Msg("Gathering?<br/>I wouldn't know anything about that...I grew up never getting my hands dirty...<br/>Hehe...");
+				break;
+				
+			case "square":
+				Msg("The Square is just in front of here.<br/>Walk out and it's right there.<br/>I guess it is a bit small for a square, huh?");
+				break;
+				
+			case "farmland":
+				Msg("The farmland is located south of here, just past the Church.<br/>There is nothing to see there...<br/>That doesn't mean you can harvest anything you want.<br/>Even boring farms have owners.");
+				break;
+				
+			case "shop_headman":
+				Msg("The Chief's House is just over there.<br/>Take the stairs from the Square<br/>and go up the hill.<p/>You know his name is Duncan, right?");
+				break;
+				
+			case "temple":
+				Msg("The Church?<br/>It's downhill from here.<br/>When you go out, go downhill towards the right.<br/>It will come up shortly.<p/>Can you send my regards to Priest Meven<br/>and Priestess Endelyon?");
+				break;
+				
+			case "shop_restaurant":
+				Msg("You mean, a restaurant?<br/>If you are looking for something to eat,<br/>you can go see Caitin.<br/>The grocery store sells food ingredients,<br/>as well as homemade food prepared  by Caitin herself.<br/>Why don't you go and ask her?");
+				break;
+				
+			case "shop_armory":
+				Msg("We don't have a dedicated Weapons Shop,<br/>but I guess you could find some weapons at the Blacksmith's Shop.<br/>Ferghus is the owner of the Blacksmith's Shop,<br/>so tell him what you want<br/>and he might be able to get it for you.");
+				break;
+				
+			case "shop_cloth":
+				Msg("There are no clothing shops in this town.<br/>Malcolm does sell some clothes though.<br/>If you're looking for something to wear,<br/>just go to the General Shop.<br/>But you might not find anything you like...");
+				break;
+				
+			case "shop_goverment_office":
+				Msg("Haha! You're joking, right? We have the Chief's House and that's it.<br/>A town office? In this small town? Please!<br/>Since this town is in the Ulaid region,<br/>we are not governed directly by the king.<p/>Instead, Duncan represents our town.<br/>If you are looking for an elder,<br/>go up the hill to Duncan's House.");
+				break;
+			
+			default:
+				RndMsg(
+					"Can we change the subject?",
+					"Hmm... You know a story I've never heard of... How could that be?",
+					"Hehe... I don't know what you're talking about...",
+					"I said I don't know! Why do you keep rubbing it in my face? That's mean... Hehe.",
+					"I have no idea... Why don't you ask someone else?",
+					"What's that?",
+					"Well...what do you mean?"
+				);
+				// MoodChange
+				break;
 		}
 	}
 }

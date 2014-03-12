@@ -47,6 +47,8 @@ public class NoraBaseScript : NpcScript
 		{
 			case "@talk":
 				Msg("Welcome!");
+				//Msg("We've met before, right? I remember you!");
+				//Msg("Nice to see you, <username/>.");
 				await StartConversation();
 				return;
 				
@@ -70,11 +72,82 @@ public class NoraBaseScript : NpcScript
 	{
 		switch (keyword)
 		{
-			case "personal_info": Msg("My name is Nora. Please don't forget it."); break;
-			case "rumor":         Msg("The Square is right up the little hill next to us.<br/>It's worth a visit if you have some time."); break;
-			case "about_skill":   Msg("Are you making good use of the Rest skill?<br/>Here's a tip. Only for you, <username/>.<br/>If you continue to rank up your Rest skill,<br/>your HP will increase steadily."); break;
-			case "about_arbeit":  Msg("Are you interested in the Inn business?<br/>If so, why don't you ask Uncle Piaras?<br/>He is in the Inn."); break;
-			default:              RndMsg("Can we change the subject?", "I don't... I don't know."); break;
+			case "personal_info":
+				Msg("My name is Nora. Please don't forget it.");
+				break;
+			
+			case "rumor":
+				Msg("The Square is right up the little hill next to us.<br/>It's worth a visit if you have some time.");
+				break;
+			
+			case "about_skill":
+				Msg("Are you making good use of the Rest skill?<br/>Here's a tip. Only for you, <username/>.<br/>If you continue to rank up your Rest skill,<br/>your HP will increase steadily.");
+				break;
+			
+			case "about_arbeit":
+				Msg("Are you interested in the Inn business?<br/>If so, why don't you ask Uncle Piaras?<br/>He is in the Inn.");
+				break;
+			
+			case "shop_misc":
+				Msg("Go up the hill.<br/>It's just the next building.<p/>Petty Malcolm will probably be at his General Shop.<br/>Don't pay any attention to what he says!");
+				break;
+			
+			case "shop_bank":
+				Msg("Bebhinn is the clerk at the Bank.<br/>She loves interesting stories.<br/>But be careful.<br/>I learned the hard way that it's easy to become the subject of her gossip...");
+				break;
+			
+			case "skill_counter_attack":
+				Msg("Have you talked to Ranald?<br/>If you haven't, go to the School to find him.");
+				break;
+			
+			case "square":
+				Msg("The Square is just up there. Walk up the slope to reach it.");
+				break;
+			
+			case "farmland":
+				Msg("Why are you looking for farmland?<br/>You don't look like a farmer to me.");
+				break;
+			
+			case "shop_headman":
+				Msg("The Chief's House? It's right up there.<br/>You already met him, I suppose?<br/>He has a lot of experience from the old days.");
+				break;
+			
+			case "temple":
+				Msg("To get to the Church,<br/>walk up the hill and follow the path down from the Bank.<br/>It's not far.<p/>Can you say hello to Priestess Endelyon for me?<br/>If she's not in,<br/>ask Priest Meven to do it on my behalf.");
+				break;
+			
+			case "skill_campfire":
+				Msg("No way! I can't tell you about that skill.<br/>We would run out of business!<br/>You don't know how hard it was to get permission to open our Inn!<br/>Hey, business is business.");
+				break;
+			
+			case "shop_restaurant":
+				Player.Keywords.Give("shop_grocery");
+				Msg("Are you looking for a place to have a nice meal?<br/>Many people buy food at the Grocery Store<br/>and come here to eat with others.<br/>Didn't Caitin at the Grocery Store<br/>tell you?");
+				break;
+			
+			case "shop_armory":
+				Player.Keywords.Give("shop_smith");
+				Msg("Are you looking for a Weapons Shop?<br/>Hmm... I can't remember...<br/>Oh, right! Head to the Blacksmith's Shop.<br/>Ferghus is good at making things.<br/>I'm sure he can make all sorts of weapons.");
+				break;
+			
+			case "shop_cloth":
+				Msg("Sorry.<br/>There are no Clothing Shops in this town.<br/>Malcolm at the General Shop sells some clothes,<br/>but I wouldn't call them fashionable.");
+				break;
+			
+			case "shop_goverment_office":
+				Msg("A town office in this small town?<br/>Yeah, right!<br/>The Chief's House is probably the closest thing, though.<p/>It's right on the hill<br/>near the Square.");
+				break;
+			
+			default:
+				RndMsg(
+					"Can we change the subject?",
+					"Huh?",
+					"I don't know much about that.",
+					"What are you talking about?",
+					"I can't understand what you're asking.",
+					"I don't... I don't know."
+				);
+				break;
 		}
 	}
 }
