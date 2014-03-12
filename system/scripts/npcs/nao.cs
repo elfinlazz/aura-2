@@ -96,9 +96,8 @@ public class NaoScript : NpcScript
 		Player.SetLocation(125, 21489, 76421);
 		Player.Direction = 233;
 
-		GiveItem(1000, 1); // Traveler's Guide
+		GiveItem(1000,  1); // Traveler's Guide
 		GiveItem(50004, 1); // Bread
-		GiveItem(85539, 3); // Nao's Soul Stone for Beginners
 
 		Close();
 	}
