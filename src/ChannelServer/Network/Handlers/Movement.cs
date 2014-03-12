@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using Aura.Shared.Network;
 using Aura.Channel.World;
+using Aura.Shared.Util;
+using Aura.Data;
+using Aura.Data.Database;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -50,7 +53,7 @@ namespace Aura.Channel.Network.Handlers
 		/// </summary>
 		/// <remarks>
 		/// For example, when entering a new area.
-		/// On the client events also trigger new BGM and stuff like that.
+		/// The client events also trigger new BGM and stuff like that.
 		/// </remarks>
 		/// <example>
 		/// 001 [00B0000100090576] Long   : 49539600196633974
@@ -61,14 +64,39 @@ namespace Aura.Channel.Network.Handlers
 		public void EventInform(ChannelClient client, Packet packet)
 		{
 			var eventId = packet.GetLong();
-			var eventType = packet.GetInt();
+			var signalType = (SignalType)packet.GetInt();
 			var unkString = packet.GetString();
 
 			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			if (creature == null) return;
 
 			// Do something with this information?
+
+			// Get event
+			var eventData = AuraData.RegionInfoDb.FindEvent(eventId);
+			if (eventData == null)
+			{
+				Log.Warning("EventInform: Player '{0:X16}' triggered unknown event '{1:X16}'.", creature.EntityId, eventId);
+				return;
+			}
+
+			// Check range
+			// TODO: Checking region id doesn't work because a "leave" event
+			//   can be triggered after we've changed the creature's region.
+			//   Checking position doesn't work because the events can be
+			//   quite large.
+			if (eventData.RegionId != creature.RegionId && signalType == SignalType.Enter)
+			{
+				Log.Warning("EventInform: Player '{0:X16}' triggered event '{1:X16}' out of range.", creature.EntityId, eventId);
+				return;
+			}
+
+			// Check handler
+			var clientEvent = ChannelServer.Instance.ScriptManager.GetClientEventHandler(eventId, signalType);
+			if (clientEvent == null) return;
+
+			// Run
+			clientEvent(creature, eventData);
 		}
 	}
 }

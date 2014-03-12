@@ -22,6 +22,9 @@ using Aura.Channel.World.Quests;
 using System.Collections;
 using System.Threading.Tasks;
 using Aura.Channel.World.Shops;
+using Aura.Channel.Network.Sending;
+using Aura.Channel.Skills;
+using Aura.Data.Database;
 
 namespace Aura.Channel.Scripting
 {
@@ -37,6 +40,7 @@ namespace Aura.Channel.Scripting
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<string, NpcShop> _shops;
 		private Dictionary<int, QuestScript> _questScripts;
+		private Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>> _clientEventHandlers;
 
 		private Dictionary<string, Dictionary<string, List<ScriptHook>>> _hooks;
 
@@ -56,6 +60,7 @@ namespace Aura.Channel.Scripting
 			_aiScripts = new Dictionary<string, Type>();
 			_shops = new Dictionary<string, NpcShop>();
 			_questScripts = new Dictionary<int, QuestScript>();
+			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>>();
 
 			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
 
@@ -109,6 +114,7 @@ namespace Aura.Channel.Scripting
 			_questScripts.Clear();
 			_hooks.Clear();
 			_shops.Clear();
+			_clientEventHandlers.Clear();
 
 			if (!File.Exists(IndexPath))
 			{
@@ -199,7 +205,7 @@ namespace Aura.Channel.Scripting
 			// Go through all items
 			foreach (var entry in AuraData.ItemDb.Entries.Values)
 			{
-				var empty = (string.IsNullOrWhiteSpace(entry.OnUse) && string.IsNullOrWhiteSpace(entry.OnEquip) && string.IsNullOrWhiteSpace(entry.OnUnequip));
+				var empty = (string.IsNullOrWhiteSpace(entry.OnUse) && string.IsNullOrWhiteSpace(entry.OnEquip) && string.IsNullOrWhiteSpace(entry.OnUnequip) && string.IsNullOrWhiteSpace(entry.OnCreation));
 				var match = Regex.Match(entry.OnUse, @"^\s*use\s*\(\s*""([^"")]+)""\s*\)\s*;?\s*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 				var use = match.Success;
 
@@ -218,6 +224,8 @@ namespace Aura.Channel.Scripting
 								sb.AppendFormat("	public override void OnEquip(Creature cr, Item i)   {{ {0} }}" + Environment.NewLine, entry.OnEquip.Trim());
 							if (!string.IsNullOrWhiteSpace(entry.OnUnequip))
 								sb.AppendFormat("	public override void OnUnequip(Creature cr, Item i) {{ {0} }}" + Environment.NewLine, entry.OnUnequip.Trim());
+							if (!string.IsNullOrWhiteSpace(entry.OnCreation))
+								sb.AppendFormat("	public override void OnCreation(Item i) {{ {0} }}" + Environment.NewLine, entry.OnCreation.Trim());
 						}
 						sb.AppendFormat("}}" + Environment.NewLine + Environment.NewLine);
 					}
@@ -462,6 +470,7 @@ namespace Aura.Channel.Scripting
 							regionScript.Load();
 							regionScript.LoadWarps();
 							regionScript.LoadSpawns();
+							regionScript.LoadEvents();
 						}
 						else
 						{
@@ -613,7 +622,7 @@ namespace Aura.Channel.Scripting
 			for (int i = 0; i < amount; ++i)
 			{
 				var pos = spawn.GetRandomPosition();
-				if (this.Spawn(spawn.RaceId, spawn.RegionId, pos.X, pos.Y, spawn.Id) == null)
+				if (this.Spawn(spawn.RaceId, spawn.RegionId, pos.X, pos.Y, spawn.Id, false, false) == null)
 					return result;
 
 				result++;
@@ -631,8 +640,9 @@ namespace Aura.Channel.Scripting
 		/// <param name="y"></param>
 		/// <param name="spawnId"></param>
 		/// <returns></returns>
-		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId = -1, bool active = false)
+		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId, bool active, bool effect)
 		{
+			// Create NPC
 			var creature = new NPC();
 			creature.Race = raceId;
 			creature.LoadDefault();
@@ -646,10 +656,16 @@ namespace Aura.Channel.Scripting
 			creature.State = (CreatureStates)creature.RaceData.DefaultState;
 			creature.Direction = (byte)RandomProvider.Get().Next(256);
 
+			// Set drops
 			creature.Drops.GoldMin = creature.RaceData.GoldMin;
 			creature.Drops.GoldMax = creature.RaceData.GoldMax;
 			creature.Drops.Add(creature.RaceData.Drops);
 
+			// Give skills
+			foreach (var skill in creature.RaceData.Skills)
+				creature.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, creature.Race);
+
+			// Set AI
 			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI) && creature.RaceData.AI != "none")
 			{
 				creature.AI = this.GetAi(creature.RaceData.AI, creature);
@@ -657,14 +673,20 @@ namespace Aura.Channel.Scripting
 					Log.Warning("Spawn: Missing AI '{0}' for '{1}'.", creature.RaceData.AI, raceId);
 			}
 
+			// Warp to spawn point
 			if (!creature.Warp(regionId, x, y))
 			{
 				Log.Error("Failed to spawn '{0}'s.", raceId);
 				return null;
 			}
 
+			// Activate AI at least once
 			if (creature.AI != null && active)
 				creature.AI.Activate(0);
+
+			// Spawn effect
+			if (effect)
+				Send.SpawnEffect(SpawnEffect.Monster, creature.RegionId, x, y, creature, creature);
 
 			return creature;
 		}
@@ -727,6 +749,39 @@ namespace Aura.Channel.Scripting
 				_hooks[npcName][hook] = new List<ScriptHook>();
 
 			_hooks[npcName][hook].Add(func);
+		}
+
+		/// <summary>
+		/// Adds handler for client event.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="signal"></param>
+		/// <param name="onTriggered"></param>
+		public void AddClientEventHandler(long id, SignalType signal, Action<Creature, EventData> onTriggered)
+		{
+			Dictionary<SignalType, Action<Creature, EventData>> clientEvent;
+			if (!_clientEventHandlers.TryGetValue(id, out clientEvent))
+				_clientEventHandlers[id] = new Dictionary<SignalType, Action<Creature, EventData>>();
+
+			_clientEventHandlers[id][signal] = onTriggered;
+		}
+
+		/// <summary>
+		/// Returns handler for client event.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="signal"></param>
+		public Action<Creature, EventData> GetClientEventHandler(long id, SignalType signal)
+		{
+			Dictionary<SignalType, Action<Creature, EventData>> clientEvent;
+			if (!_clientEventHandlers.TryGetValue(id, out clientEvent))
+				return null;
+
+			Action<Creature, EventData> result;
+			if (!clientEvent.TryGetValue(signal, out result))
+				return null;
+
+			return result;
 		}
 	}
 

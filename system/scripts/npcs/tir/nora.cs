@@ -52,7 +52,7 @@ public class NoraBaseScript : NpcScript
 				
 			case "@shop":
 				Msg("Are you looking for a Tailoring Kit and materials?<br/>If so, you've come to the right place.");
-				OpenShop("TailorShop");
+				OpenShop("NoraShop");
 				return;
 				
 			case "@repair":
@@ -76,5 +76,13 @@ public class NoraBaseScript : NpcScript
 			case "about_arbeit":  Msg("Are you interested in the Inn business?<br/>If so, why don't you ask Uncle Piaras?<br/>He is in the Inn."); break;
 			default:              RndMsg("Can we change the subject?", "I don't... I don't know."); break;
 		}
+	}
+}
+
+public class NoraShop : TailorShop
+{
+	public NoraShop()
+	{
+		Add("Not so secret", 1082); // Resting Guide
 	}
 }

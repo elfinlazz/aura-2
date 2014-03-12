@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Skills;
+using Aura.Channel.Skills.Base;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
@@ -45,6 +47,8 @@ namespace Aura.Channel.Scripting.Scripts
 		protected TimeSpan _alertDelay, _aggroDelay;
 		protected DateTime _awareTime, _alertTime;
 		protected AggroType _aggroType;
+		protected AggroLimit _aggroLimit;
+		protected Dictionary<string, string> _hateTags, _loveTags;
 
 		/// <summary>
 		/// Creature controlled by AI.
@@ -61,6 +65,11 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public bool Active { get { return _active; } }
 
+		/// <summary>
+		/// Returns state of the AI
+		/// </summary>
+		public AiState State { get { return _state; } }
+
 		public AiScript()
 		{
 			this.Phrases = new List<string>();
@@ -76,10 +85,16 @@ namespace Aura.Channel.Scripting.Scripts
 			_aggroMaxRadius = 3000;
 			_alertDelay = TimeSpan.FromMilliseconds(8000);
 			_aggroDelay = TimeSpan.FromMilliseconds(4000);
+			_hateTags = new Dictionary<string, string>();
+			_loveTags = new Dictionary<string, string>();
 
-			_aggroType = AggroType.Neutral;
+			_aggroType = AggroType.Passive;
+			_aggroLimit = AggroLimit.One;
 		}
 
+		/// <summary>
+		/// Disables heartbeat timer.
+		/// </summary>
 		public void Dispose()
 		{
 			_heartbeatTimer.Change(-1, -1);
@@ -149,7 +164,10 @@ namespace Aura.Channel.Scripting.Scripts
 				// Stop and clear if stunned
 				if (this.Creature.IsStunned)
 				{
-					this.Clear();
+					// Clearing causes it to run aggro from beginning again
+					// and again, this should probably be moved to the take
+					// damage "event"?
+					//this.Clear();
 					return;
 				}
 
@@ -196,13 +214,21 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Clears action, target, and stats state to Idle.
+		/// Clears action, target, and sets state to Idle.
 		/// </summary>
 		private void Reset()
 		{
 			this.Clear();
-			this.Creature.Target = null;
 			_state = AiState.Idle;
+
+			if (this.Creature.BattleStance == BattleStance.Ready)
+				this.Creature.BattleStance = BattleStance.Idle;
+
+			if (this.Creature.Target != null)
+			{
+				this.Creature.Target = null;
+				Send.SetCombatTarget(this.Creature, 0, 0);
+			}
 		}
 
 		/// <summary>
@@ -210,58 +236,68 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		private void SelectState()
 		{
-			if (_aggroType == AggroType.Neutral)
+			// Always goes back into idle if there's no target.
+			// Continue if neutral has a target, for the reset checks.
+			if (_aggroType == AggroType.Passive && this.Creature.Target == null)
 			{
 				_state = AiState.Idle;
 				return;
 			}
 
+			// Find a target if you don't have one.
 			if (this.Creature.Target == null)
 			{
 				// Try to find a target
-				this.Creature.Target = this.SelectTarget(this.Creature.Region.GetCreaturesInRange(this.Creature, _aggroRadius));
+				this.Creature.Target = this.SelectRandomTarget(this.Creature.Region.GetVisibleCreaturesInRange(this.Creature, _aggroRadius));
 				if (this.Creature.Target != null)
 				{
 					_state = AiState.Aware;
 					_awareTime = DateTime.Now;
 				}
 			}
+			// Got target.
 			else
 			{
 				// Untarget on death, out of range, or disconnect
-				if (this.Creature.Target.IsDead || !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) || this.Creature.Target.Client.State == ClientState.Dead)
+				if (this.Creature.Target.IsDead || !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) || this.Creature.Target.Client.State == ClientState.Dead || (_state != AiState.Aggro && this.Creature.Target.Conditions.Has(ConditionsA.Invisible)))
 				{
 					this.Reset();
-
-					this.Creature.BattleStance = BattleStance.Idle;
-
-					Send.SetCombatTarget(this.Creature, 0, 0);
-
 					return;
 				}
 
 				// Switch to alert from aware after the delay
 				if (_state == AiState.Aware && DateTime.Now >= _awareTime + _alertDelay)
 				{
-					this.Clear();
+					// Check if target is still in range
+					if (this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroRadius))
+					{
+						this.Clear();
 
-					_state = AiState.Alert;
-					_alertTime = DateTime.Now;
-					this.Creature.BattleStance = BattleStance.Ready;
+						_state = AiState.Alert;
+						_alertTime = DateTime.Now;
+						this.Creature.BattleStance = BattleStance.Ready;
 
-					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
+						Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
+					}
+					// Reset if target ran away like a coward.
+					else
+					{
+						this.Reset();
+					}
 
 					return;
 				}
 
-
 				// Switch to aggro from alert after the delay
-				if ((_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready)) && _state == AiState.Alert && DateTime.Now >= _alertTime + _aggroDelay)
+				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
 				{
+					// Check aggro limit
+					var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
+					if (aggroCount >= (int)_aggroLimit) return;
+
 					this.Clear();
 
 					_state = AiState.Aggro;
-
 					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
 
 					return;
@@ -274,13 +310,20 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="creatures"></param>
 		/// <returns></returns>
-		private Creature SelectTarget(ICollection<Creature> creatures)
+		private Creature SelectRandomTarget(ICollection<Creature> creatures)
 		{
 			if (creatures == null || creatures.Count == 0)
 				return null;
 
 			// Random targetable creature
-			var potentialTargets = creatures.Where(a => this.Creature.CanTarget(a)).ToList();
+			var potentialTargets = creatures.Where(target =>
+			{
+				return
+					this.Creature.CanTarget(target) &&
+					this.DoesHate(target) &&
+					!this.DoesLove(target);
+			}).ToList();
+
 			if (potentialTargets.Count == 0)
 				return null;
 
@@ -311,6 +354,7 @@ namespace Aura.Channel.Scripting.Scripts
 			yield break;
 		}
 
+		// Setup
 		// ------------------------------------------------------------------
 
 		/// <summary>
@@ -342,7 +386,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Milliseconds before creature attacks.
+		/// Radius in which creature become potential targets.
 		/// </summary>
 		/// <param name="time"></param>
 		protected void SetAggroRadius(int radius)
@@ -351,7 +395,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Milliseconds before creature attacks.
+		/// The way the AI decides whether to go into Alert/Aggro.
 		/// </summary>
 		/// <param name="time"></param>
 		protected void SetAggroType(AggroType type)
@@ -360,32 +404,55 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Clears AI and sets new current action.
+		/// Milliseconds before creature attacks.
 		/// </summary>
-		/// <param name="action"></param>
-		protected void SwitchAction(Func<IEnumerable> action)
+		/// <param name="time"></param>
+		protected void SetAggroLimit(AggroLimit limit)
 		{
-			_curAction = action().GetEnumerator();
+			_aggroLimit = limit;
 		}
 
 		/// <summary>
-		/// Creates enumerator and runs it once.
+		/// Adds a race tag that the AI hates and will target.
 		/// </summary>
-		/// <param name="action"></param>
-		protected void ExecuteOnce(IEnumerable action)
+		/// <param name="tags"></param>
+		protected void Hates(params string[] tags)
 		{
-			action.GetEnumerator().MoveNext();
+			foreach (var tag in tags)
+			{
+				var key = tag.Trim(' ', '/');
+				if (_hateTags.ContainsKey(key))
+					return;
+
+				_hateTags.Add(key, tag);
+			}
 		}
 
+		/// <summary>
+		/// Adds a race tag that the AI likes and will not target unless
+		/// provoked.
+		/// </summary>
+		/// <remarks>
+		/// By default the AI will only target hated races. Loved races are
+		/// a white-list, to filter some races out. For example, when creating
+		/// an AI that hates everybody (*), but isn't supposed to target
+		/// players (/pc/).
+		/// </remarks>
+		/// <param name="tags"></param>
+		protected void Loves(params string[] tags)
+		{
+			foreach (var tag in tags)
+			{
+				var key = tag.Trim(' ', '/');
+				if (_loveTags.ContainsKey(key))
+					return;
+
+				_loveTags.Add(key, tag);
+			}
+		}
+
+		// Functions
 		// ------------------------------------------------------------------
-
-		/// <summary>
-		/// Cleares action queue.
-		/// </summary>
-		protected void Clear()
-		{
-			_curAction = null;
-		}
 
 		/// <summary>
 		/// Returns random number between 0.0 and 100.0.
@@ -418,6 +485,84 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			lock (_rnd)
 				return _rnd.Next(min, max);
+		}
+
+		/// <summary>
+		/// Returns true if AI hates target creature.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		protected bool DoesHate(Creature target)
+		{
+			foreach (var tag in _hateTags.Values)
+			{
+				if (target.RaceData.HasTag(tag))
+					return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Returns true if AI loves target creature.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		protected bool DoesLove(Creature target)
+		{
+			foreach (var tag in _loveTags.Values)
+			{
+				if (target.RaceData.HasTag(tag))
+					return true;
+			}
+
+			return false;
+		}
+
+		// Flow control
+		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Cleares action queue.
+		/// </summary>
+		protected void Clear()
+		{
+			_curAction = null;
+		}
+
+		/// <summary>
+		/// Clears AI and sets new current action.
+		/// </summary>
+		/// <param name="action"></param>
+		protected void SwitchAction(Func<IEnumerable> action)
+		{
+			_curAction = action().GetEnumerator();
+		}
+
+		/// <summary>
+		/// Creates enumerator and runs it once.
+		/// </summary>
+		/// <remarks>
+		/// Useful if you want to make a creature go somewhere, but you don't
+		/// want to wait for it to arrive there. Effectively running the action
+		/// with a 0 timeout.
+		/// </remarks>
+		/// <param name="action"></param>
+		protected void ExecuteOnce(IEnumerable action)
+		{
+			action.GetEnumerator().MoveNext();
+		}
+
+		/// <summary>
+		/// Sets target and puts creature in battle mode.
+		/// </summary>
+		/// <param name="creature"></param>
+		protected void AggroCreature(Creature creature)
+		{
+			_state = AiState.Aggro;
+			this.Creature.BattleStance = BattleStance.Ready;
+			this.Creature.Target = creature;
+			Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
 		}
 
 		// Actions
@@ -621,15 +766,98 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 		}
 
+		/// <summary>
+		/// Attacks target creature "KnockCount" times.
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable Attack()
+		{
+			return this.Attack(this.Creature.RaceData.KnockCount);
+		}
+
+		/// <summary>
+		/// Attacks target creature x times.
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable Attack(int count)
+		{
+			if (this.Creature.Target == null)
+			{
+				this.Reset();
+				yield break;
+			}
+
+			var skillId = SkillId.CombatMastery;
+
+			// Get skill
+			var skill = this.Creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Error("AI.Attack: Skill '{0}' not found for '{1}'.", skillId, this.Creature.Race);
+				yield break;
+			}
+
+			// Get skill handler
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<ICombatSkill>(skillId);
+			if (skillHandler == null)
+			{
+				Log.Error("AI.Attack: Skill handler not found for '{0}'.", skillId);
+				yield break;
+			}
+
+			var attackRange = this.Creature.AttackRangeFor(this.Creature.Target);
+
+			// Each successful hit counts, attack until count is reached.
+			for (int i = 0; ; )
+			{
+				var result = skillHandler.Use(this.Creature, skill, this.Creature.Target.EntityId);
+				if (result == CombatSkillResult.Okay)
+				{
+					if (++i >= count)
+						yield break;
+					else
+						yield return true;
+				}
+				else if (result == CombatSkillResult.OutOfRange)
+				{
+					var pos = this.Creature.GetPosition();
+					var targetPos = this.Creature.Target.GetPosition();
+
+					//this.ExecuteOnce(this.RunTo(pos.GetRelative(targetPos, -attackRange + 50)));
+					this.ExecuteOnce(this.RunTo(targetPos));
+
+					yield return true;
+				}
+				else
+				{
+					Log.Error("AI.Attack: Unhandled combat skill result ({0}).", result);
+					yield break;
+				}
+			}
+		}
+
 		// ------------------------------------------------------------------
 
-		protected enum AiState { Idle, Aware, Alert, Aggro }
+		/// <summary>
+		/// Called when creature is hit.
+		/// </summary>
+		/// <param name="action"></param>
+		public virtual void OnHit(TargetAction action)
+		{
+			if (this.Creature.Target == null || (this.Creature.Target != null && action.Attacker != null && !this.Creature.Target.IsPlayer && action.Attacker.IsPlayer) || _state != AiState.Aggro)
+			{
+				this.AggroCreature(action.Attacker);
+			}
+		}
+
+		// ------------------------------------------------------------------
+
 		protected enum AggroType
 		{
 			/// <summary>
 			/// Stays in Idle unless provoked
 			/// </summary>
-			Neutral,
+			Passive,
 
 			/// <summary>
 			/// Goes into alert, but doesn't attack unprovoked.
@@ -645,6 +873,55 @@ namespace Aura.Channel.Scripting.Scripts
 			/// Goes straight into alert and aggro.
 			/// </summary>
 			Aggressive,
+		}
+
+		protected enum AggroLimit
+		{
+			/// <summary>
+			/// Only auto aggroes if no other creature of the same race
+			/// aggroed target yet.
+			/// </summary>
+			One = 1,
+
+			/// <summary>
+			/// Only auto aggroes if at most one other creature of the same
+			/// race aggroed target.
+			/// </summary>
+			Two,
+
+			/// <summary>
+			/// Only auto aggroes if at most two other creatures of the same
+			/// race aggroed target.
+			/// </summary>
+			Three,
+
+			/// <summary>
+			/// Auto aggroes regardless of other enemies.
+			/// </summary>
+			None = int.MaxValue,
+		}
+
+		public enum AiState
+		{
+			/// <summary>
+			/// Doing nothing
+			/// </summary>
+			Idle,
+
+			/// <summary>
+			/// Doing nothing, but noticed a potential target
+			/// </summary>
+			Aware,
+
+			/// <summary>
+			/// Watching target (!)
+			/// </summary>
+			Alert,
+
+			/// <summary>
+			/// Aggroing target (!!)
+			/// </summary>
+			Aggro,
 		}
 	}
 }

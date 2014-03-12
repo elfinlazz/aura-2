@@ -101,7 +101,7 @@ namespace Aura.Channel.Skills.Music
 			Send.Effect(creature, 356, (byte)1);
 
 			if (skill.Info.Rank == SkillRank.Novice)
-				creature.Skills.Train(skill, 1); // Use the skill.
+				skill.Train(1); // Use the skill.
 		}
 
 		/// <summary>
@@ -116,17 +116,17 @@ namespace Aura.Channel.Skills.Music
 			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.R1)
 			{
 				if (quality >= PlayingQuality.Bad)
-					creature.Skills.Train(skill, 1); // Use the skill successfully.
+					skill.Train(1); // Use the skill successfully.
 
 				if (quality == PlayingQuality.Good)
-					creature.Skills.Train(skill, 2); // Give an excellent vocal performance.
+					skill.Train(2); // Give an excellent vocal performance.
 
 				if (quality == PlayingQuality.VeryGood)
-					creature.Skills.Train(skill, 3); // Give a heavenly performance.
+					skill.Train(3); // Give a heavenly performance.
 
 				// Very bad training possible till E.
 				if (skill.Info.Rank <= SkillRank.RE && quality == PlayingQuality.VeryBad)
-					creature.Skills.Train(skill, 4); // Fail at using the skill.
+					skill.Train(4); // Fail at using the skill.
 			}
 
 			// TODO: "Use the skill to grow crops faster."

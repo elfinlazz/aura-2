@@ -51,6 +51,7 @@ namespace Aura.Data.Database
 		public string OnUse { get; internal set; }
 		public string OnEquip { get; internal set; }
 		public string OnUnequip { get; internal set; }
+		public string OnCreation { get; internal set; }
 	}
 
 	/// <summary>
@@ -70,7 +71,7 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
-		[MinFieldCount(30)]
+		[MinFieldCount(31)]
 		protected override void ReadEntry(CSVEntry entry)
 		{
 			var info = new ItemData();
@@ -119,6 +120,7 @@ namespace Aura.Data.Database
 			info.OnUse = entry.ReadString();
 			info.OnEquip = entry.ReadString();
 			info.OnUnequip = entry.ReadString();
+			info.OnCreation = entry.ReadString();
 
 			this.Entries[info.Id] = info;
 		}

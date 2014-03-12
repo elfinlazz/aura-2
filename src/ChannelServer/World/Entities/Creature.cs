@@ -73,6 +73,11 @@ namespace Aura.Channel.World.Entities
 
 		public override int RegionId { get; set; }
 
+		/// <summary>
+		/// Returns whether creature is able to receive exp and level up.
+		/// </summary>
+		public virtual bool LevelingEnabled { get { return false; } }
+
 		// Look
 		// ------------------------------------------------------------------
 
@@ -518,6 +523,14 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public float StaminaRegenMultiplicator { get { return (this.Stamina < this.StaminaHunger ? 1f : 0.2f); } }
 
+		// Events
+		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Raised when creature dies.
+		/// </summary>
+		public event Action<Creature, Creature> Death;
+
 		// ------------------------------------------------------------------
 
 		public Creature()
@@ -884,7 +897,7 @@ namespace Aura.Channel.World.Entities
 			else
 				result = targetRange;
 
-			// Buffer
+			// A little something extra
 			result += 25;
 
 			return result;
@@ -896,7 +909,7 @@ namespace Aura.Channel.World.Entities
 		/// <param name="weapon">null for hands</param>
 		/// <param name="balance">NaN for individual balance calculation</param>
 		/// <returns></returns>
-		public float GetRndDamage(Item weapon, float balance = float.NaN)
+		public virtual float GetRndDamage(Item weapon, float balance = float.NaN)
 		{
 			float min = 0, max = 0;
 
@@ -1023,6 +1036,7 @@ namespace Aura.Channel.World.Entities
 			ChannelServer.Instance.Events.OnCreatureKilled(this, killer);
 			if (killer != null && killer.IsPlayer)
 				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer);
+			this.Death.Raise(this, killer);
 
 			var rnd = RandomProvider.Get();
 			var pos = this.GetPosition();
@@ -1124,6 +1138,8 @@ namespace Aura.Channel.World.Entities
 		/// <param name="val"></param>
 		public void GiveExp(long val)
 		{
+			if (!this.LevelingEnabled) return;
+
 			this.Exp += val;
 
 			var levelStats = AuraData.StatsLevelUpDb.Find(this.Race, this.Age);
@@ -1231,6 +1247,25 @@ namespace Aura.Channel.World.Entities
 			Send.RiseFromTheDead(this);
 			//Send.DeadFeather(creature);
 			Send.Revived(this);
+		}
+
+		/// <summary>
+		/// Returns the power rating (Weak, Boss, etc) of
+		/// compareCreature towards creature.
+		/// </summary>
+		/// <param name="compareCreature">Creature to compare to</param>
+		/// <returns></returns>
+		public PowerRating GetPowerRating(Creature compareCreature)
+		{
+			var cp = this.CombatPower;
+			var otherCp = compareCreature.CombatPower;
+
+			if (otherCp < cp * 0.8f) return PowerRating.Weakest;
+			if (otherCp < cp * 1.0f) return PowerRating.Weak;
+			if (otherCp < cp * 1.4f) return PowerRating.Normal;
+			if (otherCp < cp * 2.0f) return PowerRating.Strong;
+			if (otherCp < cp * 3.0f) return PowerRating.Awful;
+			return PowerRating.Boss;
 		}
 	}
 }

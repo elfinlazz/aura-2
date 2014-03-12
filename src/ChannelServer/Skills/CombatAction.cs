@@ -104,10 +104,16 @@ namespace Aura.Channel.Skills
 					action.Creature.Skills.CancelActiveSkill();
 
 				if (action.Category == CombatActionCategory.Target && this.Attacker.IsPlayer)
-					ChannelServer.Instance.Events.OnCreatureAttackedByPlayer(action.Creature, this.Attacker, action as TargetAction);
+					ChannelServer.Instance.Events.OnCreatureAttackedByPlayer(action as TargetAction);
+
+				var npc = action.Creature as NPC;
+				if (npc != null && npc.AI != null && action.Category == CombatActionCategory.Target)
+				{
+					npc.AI.OnHit(action as TargetAction);
+				}
 			}
 
-			// Start combat action
+			// Send combat action
 			Send.CombatAction(this);
 
 			// Skill used

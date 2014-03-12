@@ -156,13 +156,20 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
 
-			if (creature.Temp.CurrentCutscene == null || creature.Temp.CurrentCutscene.Leader != creature)
+			if (creature.Temp.CurrentCutscene == null)
+			{
+				Log.Error("FinishedCutscene: Player '{0}' tried to finish invalud cutscene.", creature.EntityIdHex);
 				return;
+			}
 
-			Send.CutsceneEnd(creature.Temp.CurrentCutscene);
-			Send.CharacterUnlock(creature, Locks.Default);
+			if (creature.Temp.CurrentCutscene.Leader != creature)
+			{
+				// TODO: Do we have to send the no-leader message here?
+				Log.Warning("FinishedCutscene: Player '{0}' tried to finish cutscene without being the leader.", creature.EntityIdHex);
+				return;
+			}
 
-			creature.Temp.CurrentCutscene = null;
+			creature.Temp.CurrentCutscene.Finish();
 		}
 
 		/// <summary>

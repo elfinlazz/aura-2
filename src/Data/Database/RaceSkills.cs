@@ -2,13 +2,14 @@
 // For more information, see license file in the main folder
 
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Aura.Data.Database
 {
 	public class RaceSkillData
 	{
 		public int RaceId { get; internal set; }
-		public short SkillId { get; internal set; }
+		public ushort SkillId { get; internal set; }
 		public byte Rank { get; internal set; }
 	}
 
@@ -17,7 +18,7 @@ namespace Aura.Data.Database
 		public List<RaceSkillData> FindAll(int raceId)
 		{
 			if (!this.Entries.ContainsKey(raceId))
-				return null;
+				return new List<RaceSkillData>();
 			return this.Entries[raceId];
 		}
 
@@ -26,13 +27,16 @@ namespace Aura.Data.Database
 		{
 			var info = new RaceSkillData();
 			info.RaceId = entry.ReadInt();
-			info.SkillId = entry.ReadShort();
-			info.Rank = (byte)(16 - entry.ReadByteHex());
+			info.SkillId = entry.ReadUShort();
+
+			var rank = entry.ReadString();
+			if (rank == "N") info.Rank = 0;
+			else info.Rank = (byte)(16 - int.Parse(rank, NumberStyles.HexNumber));
 
 			if (!this.Entries.ContainsKey(info.RaceId))
 				this.Entries[info.RaceId] = new List<RaceSkillData>();
 
-			this.Entries[info.RaceId].Add(info); ;
+			this.Entries[info.RaceId].Add(info);
 		}
 	}
 }

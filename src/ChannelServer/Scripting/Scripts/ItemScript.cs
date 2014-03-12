@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
+using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
@@ -25,7 +27,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="item"></param>
 		public virtual void OnUse(Creature creature, Item item)
-		{ }
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// Executed when item is equipped.
@@ -41,6 +45,14 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="item"></param>
 		public virtual void OnUnequip(Creature creature, Item item)
+		{ }
+
+		/// <summary>
+		/// Executed when item is first created.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		public virtual void OnCreation(Item item)
 		{ }
 
 		// Functions
@@ -150,6 +162,18 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			creature.Keywords.Give(keyword);
 			Send.Notice(creature, Localization.Get("items.gesture_added"), name); // The {0} Gesture has been added. Check your gestures window.
+		}
+
+		/// <summary>
+		/// Adds magic seal meta data to item.
+		/// </summary>
+		/// <param name="color"></param>
+		/// <param name="script"></param>
+		protected void MagicSeal(Item item, string color, string script = null)
+		{
+			item.MetaData1.SetString("MGCSEL", color);
+			if (script != null)
+				item.MetaData1.SetString("MGCWRD", script);
 		}
 	}
 }

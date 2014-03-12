@@ -1,16 +1,16 @@
 //--- Aura Script -----------------------------------------------------------
-//  Fox AI
+//  Wolf AI
 //--- Description -----------------------------------------------------------
-//  AI for foxes and fox-like creatures.
+//  AI for wolves.
 //---------------------------------------------------------------------------
 
-public class FoxAi : AiScript
+public class WolfAi : AiScript
 {
-	public FoxAi()
+	public WolfAi()
 	{
-		SetAggroType(AggroType.Careful);
+		SetAggroType(AggroType.CarefulAggressive);
 		Hates("/pc/", "/pet/");
-		Hates("/chicken/");
+		Hates("/cattle/");
 	}
 
 	protected override IEnumerable Idle()
@@ -23,21 +23,23 @@ public class FoxAi : AiScript
 	{
 		// 30% chance to circle
 		// 10% chance to active defense
+		// 10% chance to active counter
 		switch(Random(10))
 		{
 			case 0:
 			case 1:  
 			case 2:  Do(Circle(400, 1000, 5000)); break;
-			case 9:  Do(Say("Defense!")); break;
+			case 8:  Do(Say("Defense!")); break;
+			case 9:  Do(Say("Counter!")); break;
 			default: break;
 		}
 			
-		Do(Wait(6000, 8000));
+		Do(Wait(1000, 5000));
 	}
 	
 	protected override IEnumerable Aggro()
 	{
-		Do(Attack());
-		Do(Wait(3000, 6000));
+		Do(Attack(3));
+		Do(Wait(3000, 8000));
 	}
 }

@@ -13,6 +13,8 @@ namespace Aura.Channel.World
 {
 	public class Cutscene
 	{
+		public Action<Cutscene> _callback;
+
 		/// <summary>
 		/// Name of the cutscene file.
 		/// </summary>
@@ -47,6 +49,12 @@ namespace Aura.Channel.World
 		/// <param name="creature"></param>
 		public void AddActor(string name, Creature creature)
 		{
+			if (creature == null)
+			{
+				creature = new NPC();
+				creature.Name = name;
+			}
+
 			this.Actors[name] = creature;
 		}
 
@@ -70,14 +78,39 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
-		/// Plays cutscene for leader.
+		/// Plays cutscene for everybody.
 		/// </summary>
 		public void Play()
 		{
 			this.Leader.Temp.CurrentCutscene = this;
 
+			// TODO: All viewers
 			Send.CharacterLock(this.Leader, Locks.Default);
 			Send.PlayCutscene(this.Leader, this);
+		}
+
+		/// <summary>
+		/// Plays cutscene for everybody.
+		/// </summary>
+		public void Play(Action<Cutscene> onFinish)
+		{
+			this.Play();
+			_callback = onFinish;
+		}
+
+		/// <summary>
+		/// Ends cutscene for everybody.
+		/// </summary>
+		public void Finish()
+		{
+			Send.CutsceneEnd(this);
+			Send.CharacterUnlock(this.Leader, Locks.Default);
+			Send.CutsceneUnk(this);
+
+			if (_callback != null)
+				_callback(this);
+
+			this.Leader.Temp.CurrentCutscene = null;
 		}
 	}
 }

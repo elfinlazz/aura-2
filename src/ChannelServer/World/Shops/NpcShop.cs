@@ -111,6 +111,21 @@ namespace Aura.Channel.World.Shops
 		/// Adds item to tab.
 		/// </summary>
 		/// <param name="tabTitle"></param>
+		/// <param name="itemId"></param>
+		/// <param name="metaData"></param>
+		/// <param name="price">Uses db value if lower than 0 (default).</param>
+		public void Add(string tabTitle, int itemId, string metaData, int price = -1)
+		{
+			var item = new Item(itemId);
+			item.MetaData1.Parse(metaData);
+
+			this.Add(tabTitle, item, price);
+		}
+
+		/// <summary>
+		/// Adds item to tab.
+		/// </summary>
+		/// <param name="tabTitle"></param>
 		/// <param name="item"></param>
 		/// <param name="price">Uses db value if lower than 0 (default).</param>
 		public void Add(string tabTitle, Item item, int price = -1)
@@ -125,7 +140,7 @@ namespace Aura.Channel.World.Shops
 				item.OptionInfo.Price = price;
 
 				if (item.OptionInfo.SellingPrice > item.OptionInfo.Price)
-					Log.Warning("Selling price of '{0}' higher than buying price.", item.Info.Id);
+					Log.Warning("NpcShop.Add: Selling price of '{0}' higher than buying price.", item.Info.Id);
 			}
 
 			tab.Add(item);

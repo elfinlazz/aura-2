@@ -21,5 +21,9 @@ namespace Aura.Channel.Scripting.Scripts
 		public virtual void LoadSpawns()
 		{
 		}
+
+		public virtual void LoadEvents()
+		{
+		}
 	}
 }

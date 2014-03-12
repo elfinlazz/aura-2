@@ -873,7 +873,7 @@ namespace Aura.Channel.Network.Sending
 			// --------------------------------------------------------------
 			if (type == CreaturePacketType.Public)
 			{
-				packet.PutLong(0);			         // DoubleGoreTarget
+				packet.PutLong(0);			         // DoubleGoreTarget (Doppelganger condition)
 				packet.PutInt(0);			         // DoubleGoreTargetType
 
 				// [180300, NA169 (23.10.2013)] ?

@@ -70,6 +70,11 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns whether creature is able to receive exp and level up.
+		/// </summary>
+		public override bool LevelingEnabled { get { return true; } }
+
+		/// <summary>
 		/// Instructs client to move to target location.
 		/// Returns false if region doesn't exist.
 		/// </summary>
@@ -116,7 +121,15 @@ namespace Aura.Channel.World.Entities
 			if (!base.CanTarget(creature))
 				return false;
 
-			return (!creature.IsPlayer && !creature.Has(CreatureStates.GoodNpc));
+			// Players can only target "bad" NPCs.
+			if (creature.Has(CreatureStates.GoodNpc))
+				return false;
+
+			// Players can't target players (outside of PvP, TODO)
+			if (creature.IsPlayer)
+				return false;
+
+			return true;
 		}
 
 		/// <summary>

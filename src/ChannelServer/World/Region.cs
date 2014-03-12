@@ -378,16 +378,16 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
-		/// Returns all player creatures in range of entity, without itself.
+		/// Returns all visible creatures in range of entity, excluding itself.
 		/// </summary>
 		/// <param name="range"></param>
 		/// <returns></returns>
-		public List<Creature> GetCreaturesInRange(Entity entity, int range = VisibleRange)
+		public List<Creature> GetVisibleCreaturesInRange(Entity entity, int range = VisibleRange)
 		{
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-				return _creatures.Values.Where(a => a != entity && a.GetPosition().InRange(entity.GetPosition(), range)).ToList();
+				return _creatures.Values.Where(a => a != entity && a.GetPosition().InRange(entity.GetPosition(), range) && !a.Conditions.Has(ConditionsA.Invisible)).ToList();
 			}
 			finally
 			{
@@ -630,6 +630,32 @@ namespace Aura.Channel.World
 
 					npc.AI.Activate(time);
 				}
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
+		/// Returns amount of creatures of race that are targetting target
+		/// in this region.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="raceId"></param>
+		/// <returns></returns>
+		public int CountAggro(Creature target, int raceId)
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				var result = 0;
+				foreach (NPC npc in _creatures.Values.Where(a => a.Is(EntityType.NPC)))
+				{
+					if (npc.AI != null && npc.AI.State == Aura.Channel.Scripting.Scripts.AiScript.AiState.Aggro && npc.Race == raceId && npc.Target == target)
+						result++;
+				}
+				return result;
 			}
 			finally
 			{

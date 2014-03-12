@@ -4,8 +4,12 @@
 using System;
 using System.Collections;
 using Aura.Channel.Network;
+using Aura.Channel.Network.Sending;
 using Aura.Channel.Util;
+using Aura.Channel.World;
 using Aura.Channel.World.Entities;
+using Aura.Data.Database;
+using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 
@@ -99,17 +103,8 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 		}
 
-		/// <summary>
-		/// Creates creature spawn area.
-		/// </summary>
-		/// <param name="raceId"></param>
-		/// <param name="amount"></param>
-		/// <param name="regionId"></param>
-		/// <param name="coordinates"></param>
-		protected void CreatureSpawn(int raceId, int amount, int regionId, params int[] coordinates)
-		{
-			ChannelServer.Instance.ScriptManager.AddCreatureSpawn(new CreatureSpawn(raceId, amount, regionId, coordinates));
-		}
+		// Functions
+		// ------------------------------------------------------------------
 
 		/// <summary>
 		/// Returns random number between 0.0 and 100.0.
@@ -144,6 +139,8 @@ namespace Aura.Channel.Scripting.Scripts
 			return rnd.Next(min, max);
 		}
 
+		#region Extension
+
 		/// <summary>
 		/// Adds hook for NPC.
 		/// </summary>
@@ -177,6 +174,10 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			ChannelServer.Instance.CommandProcessor.Add(auth, charAuth, name, usage, func);
 		}
+
+		#endregion Extension
+
+		#region Props
 
 		/// <summary>
 		/// Creates prop and spawns it.
@@ -273,6 +274,149 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			return Prop.GetWarpBehavior(region, x, y);
 		}
+
+		#endregion Props
+
+		#region Spawn
+
+		/// <summary>
+		/// Creates creature spawn area.
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="coordinates"></param>
+		protected void CreatureSpawn(int raceId, int amount, int regionId, params int[] coordinates)
+		{
+			ChannelServer.Instance.ScriptManager.AddCreatureSpawn(new CreatureSpawn(raceId, amount, regionId, coordinates));
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		protected void Spawn(int raceId, int amount, int regionId, int x, int y)
+		{
+			this.Spawn(raceId, amount, regionId, x, y, null);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="radius">Radius around position for random spawn</param>
+		protected void Spawn(int raceId, int amount, int regionId, int x, int y, int radius)
+		{
+			this.Spawn(raceId, amount, regionId, x, y, radius, true, null);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="radius">Radius around position for random spawn</param>
+		/// <param name="effect">Whether to display spawn effect</param>
+		protected void Spawn(int raceId, int amount, int regionId, int x, int y, int radius, bool effect)
+		{
+			this.Spawn(raceId, amount, regionId, x, y, radius, effect, null);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="onDeath">Runs when one of the creatures dies</param>
+		protected void Spawn(int raceId, int amount, int regionId, int x, int y, Action<Creature, Creature> onDeath)
+		{
+			this.Spawn(raceId, amount, regionId, x, y, 0, true, onDeath);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="radius">Radius around position for random spawn</param>
+		/// <param name="onDeath">Runs when one of the creatures dies</param>
+		protected void Spawn(int raceId, int amount, int regionId, int x, int y, int radius, Action<Creature, Creature> onDeath)
+		{
+			this.Spawn(raceId, amount, regionId, x, y, 0, true, onDeath);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="radius">Radius around position for random spawn</param>
+		/// <param name="effect">Whether to display spawn effect</param>
+		/// <param name="onDeath">Runs when one of the creatures dies</param>
+		protected void Spawn(int raceId, int amount, int regionId, int x, int y, int radius, bool effect, Action<Creature, Creature> onDeath)
+		{
+			this.Spawn(raceId, amount, regionId, new Position(x, y), radius, effect, onDeath);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="radius">Radius around position for random spawn</param>
+		/// <param name="effect">Whether to display spawn effect</param>
+		/// <param name="onDeath">Runs when one of the creatures dies</param>
+		protected void Spawn(int raceId, int amount, int regionId, Position pos, int radius, bool effect, Action<Creature, Creature> onDeath)
+		{
+			amount = Math2.MinMax(1, 100, amount);
+
+			var rnd = RandomProvider.Get();
+
+			for (int i = 0; i < amount; ++i)
+			{
+				if (radius > 0)
+					pos = pos.GetRandomInRange(radius, rnd);
+
+				var creature = ChannelServer.Instance.ScriptManager.Spawn(raceId, regionId, pos.X, pos.Y, -1, true, effect);
+
+				if (onDeath != null)
+					creature.Death += onDeath;
+			}
+		}
+
+		#endregion Spawn
+
+		#region Client Events
+
+		public void OnClientEvent(long id, SignalType signal, Action<Creature, EventData> onTriggered)
+		{
+			ChannelServer.Instance.ScriptManager.AddClientEventHandler(id, signal, onTriggered);
+		}
+
+		#endregion Client Events
 	}
 
 	public class OnAttribute : Attribute

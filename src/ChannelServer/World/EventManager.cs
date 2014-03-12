@@ -123,8 +123,8 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Raised when a creature is attacked by a player.
 		/// </summary>
-		public event Action<Creature, Creature, TargetAction> CreatureAttackedByPlayer;
-		public void OnCreatureAttackedByPlayer(Creature creature, Creature attacker, TargetAction action) { CreatureAttackedByPlayer.Raise(creature, attacker, action); }
+		public event Action<TargetAction> CreatureAttackedByPlayer;
+		public void OnCreatureAttackedByPlayer(TargetAction action) { CreatureAttackedByPlayer.Raise(action); }
 	}
 
 	public static class EventHandlerExtensions

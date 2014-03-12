@@ -32,6 +32,10 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// </summary>
 		public Skill ActiveSkill { get; set; }
 
+		/// <summary>
+		/// New skill manager for creature.
+		/// </summary>
+		/// <param name="creature"></param>
 		public CreatureSkills(Creature creature)
 		{
 			_skills = new Dictionary<SkillId, Skill>();
@@ -50,7 +54,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
-		/// Add skill silently. Returns false if the skill already exists,
+		/// Adds skill silently. Returns false if the skill already exists,
 		/// with a rank that's equal or higher.
 		/// </summary>
 		/// <param name="skill"></param>
@@ -65,6 +69,16 @@ namespace Aura.Channel.World.Entities.Creatures
 			this.AddBonuses(skill);
 
 			return true;
+		}
+
+		/// <summary>
+		/// Adds skill silently. Returns false if the skill already exists,
+		/// with a rank that's equal or higher.
+		/// </summary>
+		/// <param name="skill"></param>
+		public bool Add(SkillId skillId, SkillRank skillRank, int raceId)
+		{
+			return this.Add(new Skill(_creature, skillId, skillRank, raceId));
 		}
 
 		/// <summary>
@@ -116,7 +130,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			var skill = this.Get(id);
 			if (skill == null)
 			{
-				this.Add(skill = new Skill(id, rank, _creature.Race));
+				this.Add(skill = new Skill(_creature, id, rank, _creature.Race));
 
 				Send.SkillInfo(_creature, skill);
 				Send.RankUp(_creature);
@@ -243,7 +257,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
-		/// Trains skill
+		/// Trains condition in skill.
 		/// </summary>
 		/// <param name="skillId"></param>
 		/// <param name="condition">Condition nr (1-9)</param>
@@ -253,20 +267,22 @@ namespace Aura.Channel.World.Entities.Creatures
 			var skill = this.Get(skillId);
 			if (skill == null) return;
 
-			this.Train(skill, condition, amount);
+			skill.Train(condition, amount);
 		}
 
 		/// <summary>
-		/// Trains skill
+		/// Trains condition in skill if it has the given rank.
 		/// </summary>
-		/// <param name="skill"></param>
+		/// <param name="skillId"></param>
+		/// <param name="rank">Rank to which the training is limited.</param>
 		/// <param name="condition">Condition nr (1-9)</param>
 		/// <param name="amount"></param>
-		public void Train(Skill skill, int condition, int amount = 1)
+		public void Train(SkillId skillId, SkillRank rank, int condition, int amount = 1)
 		{
-			var exp = skill.Train(condition, amount);
-			if (exp > 0)
-				Send.SkillTrainingUp(_creature, skill, exp);
+			var skill = this.Get(skillId);
+			if (skill == null || skill.Info.Rank != rank) return;
+
+			skill.Train(condition, amount);
 		}
 
 		/// <summary>

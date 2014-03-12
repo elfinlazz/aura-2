@@ -146,6 +146,7 @@ namespace Aura.Shared.Network
 		public const int OptionSet = 0x5BE7;
 		public const int OptionSetR = 0x5BE8;
 		public const int AddKeyword = 0x5DC1;
+		public const int RemoveKeyword = 0x5DC3;
 		public const int NpcTalkKeyword = 0x5DC4;
 		public const int NpcTalkKeywordR = 0x5DC5;
 
@@ -427,7 +428,7 @@ namespace Aura.Shared.Network
 		public const int FinishedCutscene = 0x186A0;
 		public const int PlayCutscene = 0x186A6;
 		public const int CutsceneEnd = 0x186A7;
-		//public const int ? = 0x186A8;
+		public const int CutsceneUnk = 0x186A8;
 
 		public const int Weather = 0x1ADB0;
 

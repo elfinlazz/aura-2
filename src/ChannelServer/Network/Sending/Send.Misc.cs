@@ -229,6 +229,22 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends CutsceneUnk to cutscene's leader.
+		/// </summary>
+		/// <remarks>
+		/// Doesn't seem to be required, but it's usually sent after unlocking
+		/// the character after watching the cutscene.
+		/// </remarks>
+		/// <param name="cutscene"></param>
+		public static void CutsceneUnk(Cutscene cutscene)
+		{
+			var packet = new Packet(Op.CutsceneUnk, MabiId.Channel);
+			packet.PutLong(cutscene.Leader.EntityId);
+
+			cutscene.Leader.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends UseGestureR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>

@@ -139,6 +139,19 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends RemoveKeyword to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="keywordId"></param>
+		public static void RemoveKeyword(Creature creature, ushort keywordId)
+		{
+			var packet = new Packet(Op.RemoveKeyword, creature.EntityId);
+			packet.PutUShort(keywordId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends AddTitle(Knowledge) to creature's client,
 		/// depending on state.
 		/// </summary>
@@ -287,10 +300,13 @@ namespace Aura.Channel.Network.Sending
 		public static void DeadMenuR(Creature creature, CreatureDeadMenu menu)
 		{
 			var packet = new Packet(Op.DeadMenuR, creature.EntityId);
-			packet.PutByte(true);
-			packet.PutString(menu.ToString());
-			packet.PutInt(0); // Beginner Nao Stone count
-			packet.PutInt(0); // Nao Stone Count
+			packet.PutByte(menu != null);
+			if (menu != null)
+			{
+				packet.PutString(menu.ToString());
+				packet.PutInt(0); // Beginner Nao Stone count
+				packet.PutInt(0); // Nao Stone Count
+			}
 
 			creature.Client.Send(packet);
 		}
