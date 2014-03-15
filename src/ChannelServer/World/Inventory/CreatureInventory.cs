@@ -287,13 +287,14 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Moving item between char and pet, used from handler.
 		/// </summary>
+		/// <param name="pet">Always the pet</param>
 		/// <param name="item"></param>
-		/// <param name="other"></param>
+		/// <param name="other">The "other" creature, player when taking out, pet when putting in.</param>
 		/// <param name="target"></param>
 		/// <param name="targetX"></param>
 		/// <param name="targetY"></param>
 		/// <returns></returns>
-		public bool MovePet(Item item, Creature other, Pocket target, int targetX, int targetY)
+		public bool MovePet(Creature pet, Item item, Creature other, Pocket target, int targetX, int targetY)
 		{
 			if (!this.Has(target) || !other.Inventory.Has(target))
 				return false;
@@ -348,6 +349,8 @@ namespace Aura.Channel.World
 
 				Send.ItemMoveInfo(_creature, item, source, collidingItem);
 			}
+
+			pet.Inventory.UpdateInventory(newItem, source, target);
 
 			return true;
 		}

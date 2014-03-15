@@ -63,6 +63,7 @@ namespace Aura.Channel.World.Entities
 		public bool IsPlayer { get { return (this.IsCharacter || this.IsPet); } }
 		public bool IsCharacter { get { return (this.EntityType == EntityType.Character); } }
 		public bool IsPet { get { return (this.EntityType == EntityType.Pet); } }
+		public bool IsPartner { get { return (this.EntityType == EntityType.Pet && this.EntityId >= MabiId.Partners); } }
 
 		public bool IsHuman { get { return (this.Race == 10001 || this.Race == 10002); } }
 		public bool IsElf { get { return (this.Race == 9001 || this.Race == 9002); } }

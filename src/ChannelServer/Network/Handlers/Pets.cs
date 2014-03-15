@@ -190,44 +190,43 @@ namespace Aura.Channel.Network.Handlers
 
 			// Get creature
 			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			if (creature == null) return;
 
 			// Get pet
 			var pet = client.GetCreature(petEntityId);
 			if (pet == null || pet.Master == null)
 			{
-				Log.Warning("Player '{0}' tried to move item to invalid pet.", creature.Name);
-				Send.PutItemIntoPetInvR(creature, false);
-				return;
+				Log.Warning("PutItemIntoPetInv: Player '{0}' tried to move item to invalid pet.", creature.Name);
+				goto L_Fail;
 			}
 
 			// Get item
 			var item = creature.Inventory.GetItem(itemEntityId);
 			if (item == null)
 			{
-				Log.Warning("Player '{0}' tried to move invalid item to pet.", creature.Name);
-				Send.PutItemIntoPetInvR(creature, false);
-				return;
+				Log.Warning("PutItemIntoPetInv: Player '{0}' tried to move invalid item to pet.", creature.Name);
+				goto L_Fail;
 			}
 
 			// Check pocket
-			if (pocket != Pocket.Inventory)
+			if (!pet.IsPartner && pocket != Pocket.Inventory)
 			{
-				Log.Warning("Player '{0}' tried to move item to invalid pocket '{1}'.", creature.Name, pocket);
-				Send.PutItemIntoPetInvR(creature, false);
-				return;
+				Log.Warning("PutItemIntoPetInv: Player '{0}' tried to move item to invalid pocket '{1}'.", creature.Name, pocket);
+				goto L_Fail;
 			}
 
 			// Try move
-			if (!creature.Inventory.MovePet(item, pet, pocket, x, y))
+			if (!creature.Inventory.MovePet(pet, item, pet, pocket, x, y))
 			{
 				Log.Warning("PutItemIntoPetInv: Moving item failed.");
-				Send.PutItemIntoPetInvR(creature, false);
-				return;
+				goto L_Fail;
 			}
 
 			Send.PutItemIntoPetInvR(creature, true);
+			return;
+
+		L_Fail:
+			Send.PutItemIntoPetInvR(creature, false);
 		}
 
 		/// <summary>
@@ -267,7 +266,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Try move
-			if (!pet.Inventory.MovePet(item, creature, Pocket.Cursor, 0, 0))
+			if (!pet.Inventory.MovePet(pet, item, creature, Pocket.Cursor, 0, 0))
 			{
 				Log.Warning("TakeItemFromPetInv: Moving item failed.");
 				Send.TakeItemFromPetInvR(creature, false);
