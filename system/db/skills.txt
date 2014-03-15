@@ -440,6 +440,8 @@
 50057,"Continent Warp",0
 50058,"Add Seasoning",0
 50064,"Chorus",0
+50065,"Inflate Balloon",0
+50066,"Group Gesture",0
 50126,"Watering",0
 50127,"Fertilizing",0
 50128,"Bug Catching",0

@@ -1022,12 +1022,12 @@
 15711,"Magus Crest Outfit (F)","Merlin Circle Suit for Women","/equip/armor/cloth/magic_armor/",0,0,1,,no,2,3,1,1,2,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15712,"Starlet Circle Outfit (M)","Diva Circle Suit for Men","/equip/armor/cloth/magic_armor/",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15713,"Starlet Circle Outfit (F)","Diva Circle Suit for Women","/equip/armor/cloth/magic_armor/",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-15714,"Kendo Club Outfit (M)","Kendo Uniform for Men","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,12,23000,12000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-15715,"Kendo Club Outfit (F)","Kendo Uniform for Women","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,12,23000,12000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-15716,"Music Club Outfit","Music Uniform for Women","/equip/armor/cloth/group_idle_motion/",0,0,1,,no,2,4,1,1,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15714,"Kendogi (M)","Kendo Uniform for Men","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,12,23000,12000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15715,"Kendogi (F)","Kendo Uniform for Women","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,12,23000,12000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15716,"Music Club Uniform","Music Uniform for Women","/equip/armor/cloth/group_idle_motion/",0,0,1,,no,2,4,1,1,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15717,"School Swimsuit (M)","School Swimsuit for Men","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-15718,"Old School Swimsuit (F)","School Swimsuit Old Type","/equip/armor/cloth/",0,0,1,,no,2,2,1,0,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-15719,"New School Swimsuit (F)","School Swimsuit New Type","/equip/armor/cloth/",0,0,1,,no,2,2,1,1,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15718,"Classic School Swimsuit (F)","School Swimsuit Old Type","/equip/armor/cloth/",0,0,1,,no,2,2,1,0,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15719,"Modern School Swimsuit (F)","School Swimsuit New Type","/equip/armor/cloth/",0,0,1,,no,2,2,1,1,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15720,"School Sportswear (M)","School Gym Suit for Men","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15721,"School Sportswear (F)","School Gym Suit for Women","/equip/armor/cloth/",0,0,1,,no,2,2,1,1,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15722,"Hawaiian Swimsuit (M)","Hawaiian Swimsuit for Men","/equip/armor/cloth/custom_idle_motion/",0,0,1,,no,2,3,1,1,0,23000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -1044,8 +1044,8 @@
 15733,"Mini Nurse Outfit","Mini Apron Nurse uniform","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15734,"Baseball Uniform","Baseball Uniform","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15735,"Cheerleader Uniform","Cheerleader Uniform","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-15736,"Master Chef Uniform (M)","Master Chef Uniform for Men","/equip/armor/cloth/magic_armor/",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-15737,"Master Chef Uniform (F)","Master Chef Uniform for Women","/equip/armor/cloth/magic_armor/",0,0,1,,no,2,3,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15736,"Culinary Artist Outfit (M)","Master Chef Uniform for Men","/equip/armor/cloth/magic_armor/",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15737,"Culinary Artist Outfit (F)","Master Chef Uniform for Women","/equip/armor/cloth/magic_armor/",0,0,1,,no,2,3,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15738,"Women's See-through Swimsuit","Women's See-through Swimsuit","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,0,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15739,"Treasure Hunter Uniform (M)","Treasure Hunter Uniform for Men","/equip/armor/cloth/magic_armor/",0,0,1,,no,2,3,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15740,"Treasure Hunter Uniform (F)","Treasure Hunter Uniform for Women","/equip/armor/cloth/magic_armor/",0,0,1,,no,2,3,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -1089,6 +1089,8 @@
 15787,"Figure Skating Outfit (F)","Figure Skating Costume for Women","/equip/armor/cloth/custom_idle_motion/",0,0,1,,no,2,3,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15788,"Snowboard Outfit (M)","Snow Board Costume for Men","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15789,"Snowboard Outfit (F)","Snow Board Costume for Women","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15790,"Butterfly Suit","Butterfly Suit","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,1,30000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15791,"Butterfly Dress","Butterfly Dress","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,1,30000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15800,"clanraccoon banya wear","clanraccoon banya wear","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,2,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15801,"Raccoon Family Basic Outfit","Racoon Clan Basic Clothes","/equip/armor/cloth/",0,0,1,,no,2,4,1,1,0,60000,17000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15802,"clanraccoon budamaster wear","clanraccoon budamaster wear","/equip/armor/cloth/",0,0,1,,no,2,4,5,1,1,17500,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -2310,6 +2312,8 @@
 18836,"Figure Skating Wig (F)","Figure Skating Wig for Women","/equip/head/headgear/",1,0,1,,no,2,2,1,1,0,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18837,"Snowboard Beanie (M)","Snow Board Cap for Men","/equip/head/headgear/",1,0,1,,no,2,2,1,1,0,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18838,"Snowboard Beanie (F)","Snow Board Cap for Women","/equip/head/headgear/",1,0,1,,no,2,2,1,1,0,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
+18840,"Butterfly Suit Hat (M)","Butterfly Hat for Men","/equip/head/headgear/",1,0,1,,no,2,2,1,1,5,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
+18841,"Butterfly Headdress (F)","Butterfly Headdress for Women","/equip/head/headgear/",1,0,1,,no,3,2,1,1,1,30000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18900,"Broken Horn Hunter Helmet","Broken Horn Hunter Helmet","/equip/head/helmet/steel/smith_repairable/brokenhorn_hunter/",1,0,1,,no,2,2,5,0,0,50000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18901,"Broken Horn Monk Cap","Broken Horn Monk Cap","/equip/head/headgear/steel/brokenhorn_monk/",1,0,1,,no,2,2,62,62,0,40000,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18902,"clancow bone helmet","clancow bone helmet","/equip/head/helmet/steel/smith_repairable/",1,0,1,,no,2,2,1,1,0,7777,14000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -3303,8 +3307,8 @@
 17339,"Sexy Nurse Shoes","Sexy Nurse Shoes","/equip/foot/shoes/",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17340,"Baseball Shoes","Baseball Shoes","/equip/foot/shoes/",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17341,"Cheerleader Boots","Cheerleader Boots","/equip/foot/shoes/",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-17345,"Master Chef Circle Safety Shoes (M)","Master Chef Circle Safety Shoes for Men","/equip/foot/shoes/magic_armor/",3,0,1,,no,2,3,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-17346,"Master Chef Circle Safety Shoes (F)","Master Chef Circle Safety Shoes for Women","/equip/foot/shoes/magic_armor/",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+17345,"Culinary Artist Safety Shoes (M)","Master Chef Circle Safety Shoes for Men","/equip/foot/shoes/magic_armor/",3,0,1,,no,2,3,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+17346,"Culinary Artist Safety Boots (F)","Master Chef Circle Safety Shoes for Women","/equip/foot/shoes/magic_armor/",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17347,"Ancient Vampire Boots","Ancient Vampire Boots","/equip/foot/shoes/",3,0,1,,no,2,3,1,0,0,30000,12000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17349,"Treasure Hunter Shoes (M)","Treasure Hunter Shoes for Men","/equip/foot/shoes/magic_armor/",3,0,1,,no,2,2,1,1,5,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17350,"Treasure Hunter Shoes (F)","Treasure Hunter Shoes for Women","/equip/foot/shoes/magic_armor/",3,0,1,,no,2,2,1,1,5,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -3335,6 +3339,8 @@
 17375,"Figure Skates (F)","Figure Skating Boots For Women","/equip/foot/shoes/skate/",3,0,1,,no,2,2,1,1,1,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17376,"Snowboard Boots (M)","Snow Board Boots for Men","/equip/foot/shoes/",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17377,"Snowboard Boots (F)","Snow Board Boots for Women","/equip/foot/shoes/",3,0,1,,no,2,2,1,1,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+17378,"Butterfly Shoes (M)","Butterfly Shoes for Men","/equip/foot/shoes/",3,0,1,,no,2,2,1,1,1,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+17379,"Butterfly Boots (F)","Butterfly Boots for Women","/equip/foot/shoes/",3,0,1,,no,2,3,1,5,0,30000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17500,"High Polean Plate Boots","High Polean Plate Boots","/equip/foot/armorboots/steel/boots03/smith_repairable/human_only/",3,0,1,,no,2,3,2,5,0,19000,20000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17501,"Solleret Shoes","Solleret Shoes","/equip/foot/armorboots/steel/boots01/smith_repairable/human_elf_only/",3,0,1,,no,2,2,2,0,0,18000,24000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17502,"Mono Plate Boots","Mono Plate Boots","/equip/foot/armorboots/steel/boots02/smith_repairable/human_only/",3,0,1,,no,2,3,5,5,0,30000,20000,1,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -4418,7 +4424,7 @@
 40796,"Freezing Ice Cream","Ice Cream Ice Wand","/equip/righthand/weapon/wand/ice_wand/magic_school_repairable/not_holyfire/hardwand/",7,0,1,,no,1,2,12,0,0,180000,15000,0,0,0,3,0,4,10,13,40,4,2,{},{},{},{}
 40811,"Egg Basket","Egg Basket","/equip/righthand/weapon/edged/steel/blade/no_scale/not_dropable/destroyable/not_dyeable/not_enchantable/expiring/not_holyfire/not_bless/onlybaseattack/misc_repairable/",7,0,1,,no,2,2,12,0,0,0,14000,0,0,0,3,0,13,30,12,55,0,2,{},{},{},{}
 40813,"Spring Onion Sword","Spring Onion Sword","/equip/righthand/weapon/edged/steel/blade/onion_blace/fruits_weapon/smith_repairable/twin_sword/no_scale/not_dyeable/not_enchantable/",7,0,1,,no,1,4,12,0,0,70000,12000,0,0,0,2,0,42,76,15,51,1,2,{},{},{},{}
-40818,"Kendo Club Wooden Sword","Wooden Blade","/equip/righthand/weapon/edged/wood/sword01/Wooden_Blade/smith_repairable/twin_sword/not_dyeable/group_idle_motion/",7,0,1,,no,1,3,13,0,0,20000,10000,0,0,0,2,0,4,11,10,50,2,2,{},{},{},{}
+40818,"Kendo Club Bokken","Wooden Blade","/equip/righthand/weapon/edged/wood/sword01/Wooden_Blade/smith_repairable/twin_sword/not_dyeable/group_idle_motion/",7,0,1,,no,1,3,13,0,0,20000,10000,0,0,0,2,0,4,11,10,50,2,2,{},{},{},{}
 40819,"Baseball Bat","Baseball Bat","/equip/righthand/weapon/blunt/wood/club03/Club/smith_repairable/twin_club/not_dyeable/",7,0,1,,no,1,4,1,1,0,15000,16000,0,0,0,3,0,0,19,10,60,4,2,{},{},{},{}
 40820,"Baseball Glove","Baseball Glove","/equip/righthand/weapon/blunt/wood/club03/Club/magicsmith_repairable/twin_club/fixedcolor_dyeable/",7,0,1,,no,2,2,2,2,2,13000,14000,0,0,0,3,0,18,35,13,45,1,2,{},{},{},{}
 40821,"Cheerleading Pom Pom","Pom-Poms","/equip/righthand/weapon/wand/tikka_healing_wand/healing_wand/magic_school_repairable/not_dyeable/",7,0,1,,no,2,2,1,0,0,35000,15000,0,0,0,3,0,4,15,15,30,3,2,{},{},{},{}
@@ -4875,7 +4881,7 @@
 40823,"Baseball Bat","Baseball Bat","/equip/twohand/weapon/blunt/wood/Club/smith_repairable/monster1hit/",8,0,1,,no,1,4,1,1,0,30000,22000,0,0,0,0,0,9,151,15,1,2,0,{},{},{},{}
 40824,"Pom-Poms","Pom-Poms","/equip/twohand/weapon/blunt/Club/smith_repairable/pompoms/monster1hit/",8,0,1,,no,2,2,1,0,0,30000,22000,0,0,0,0,0,9,151,15,1,2,0,{},{},{},{}
 40825,"Chef's Touch","Chef's Touch","/equip/twohand/weapon/edged/steel/twin_blade/chefs_touch/smith_repairable/no_scale/twintype_oneweapon/",8,0,1,,no,2,3,5,5,12,40000,17000,0,0,0,2,0,20,66,20,20,1,2,{},{},{},{}
-40826,"Chef's Rough Touch","Chef's Rough Touch","/equip/twohand/weapon/edged/steel/twin_blade/chefs_rough_touch/smith_repairable/no_scale/twintype_oneweapon/",8,0,1,,no,2,3,5,5,5,40000,20000,0,0,0,2,0,20,66,20,20,1,2,{},{},{},{}
+40826,"Chef's Passion","Chef's Rough Touch","/equip/twohand/weapon/edged/steel/twin_blade/chefs_rough_touch/smith_repairable/no_scale/twintype_oneweapon/",8,0,1,,no,2,3,5,5,5,40000,20000,0,0,0,2,0,20,66,20,20,1,2,{},{},{},{}
 40830,"Duke's Rapier","Duke's Rapier","/equip/twohand/weapon/edged/steel/sword01/Rapier/smith_repairable/not_ego/not_enchantable/",8,0,1,,no,1,4,5,5,0,55500,22000,0,0,0,2,0,103,198,50,40,3,1,{},{},{},{}
 40831,"Sephirot Crossbow","Sephiroth's Crossbow","/equip/righthand/weapon/crossbow/wood/Crossbow/smith_repairable/not_ego/",8,0,1,,no,2,2,5,1,1,55000,20000,0,0,0,8,1800,21,52,30,88,7,2,{},{},{},{}
 40834,"Sun Rod Colt","Sun Rod Colt","/equip/twohand/weapon/gun/dualgun/sun_colt/steel/twintype_oneweapon/equip_usable/heulwen_e_weapon/heulwen/engineer_repairable/no_scale/not_ego/l_rod/",8,0,1,,no,2,2,5,2,1,40000,12000,0,0,0,10,800,1,30,10,15,16,4,{},{},{},{}
@@ -5249,7 +5255,7 @@
 46052,"Targe Shield","Targe Shield","/equip/lefthand/shield/kite/Targe_Shield/smith_repairable/hide_backtool/UpMax2Shield/no_scale/",11,0,1,,no,2,2,2,2,0,10000,10000,4,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 46053,"Full Moon Eweca Shield","Eweca Shield of the Full Moon","/equip/lefthand/shield/round/smith_repairable/not_enchantable/not_dyeable/hide_backtool/",11,0,1,,no,2,2,12,12,12,70000,8000,6,3,0,0,0,0,0,0,0,0,0,{},{},{},{}
 46054,"Full Moon Ladeca Shield","Ladeca Shield of the Full Moon","/equip/lefthand/shield/round/smith_repairable/not_enchantable/not_dyeable/hide_backtool/",11,0,1,,no,2,2,12,12,12,70000,8000,6,3,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50482,"Food Dish","Food Dish","/equip/lefthand/shield/round/roundshield01/smith_repairable/not_dyeable/UpMax1Shield/hide_backtool/human_elf_only/wavedefence/",11,0,1,,no,2,2,5,13,0,2000,15000,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
+50482,"Sharing Dish","Food Dish","/equip/lefthand/shield/round/roundshield01/smith_repairable/not_dyeable/UpMax1Shield/hide_backtool/human_elf_only/wavedefence/",11,0,1,,no,2,2,5,13,0,2000,15000,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
 91076,"Magic Assistance Book","Magic Assistance Book","/equip/lefthand/shield/tool/not_dyeable/magic_assistance_book/",11,0,1,,no,2,2,2,5,1,0,5000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91312,"Basic Eweca Spell Book","Lower Grade Eweca's Grimoire","/equip/lefthand/shield/tool/not_dyeable/magic_assistance_book/destroytime_20min/",11,0,1,,no,2,2,2,5,1,0,5000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91313,"Average Eweca Spell Book","Middle Grade Eweca's Grimoire","/equip/lefthand/shield/tool/not_dyeable/magic_assistance_book/destroytime_20min/",11,0,1,,no,2,2,2,5,1,0,5000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -5400,7 +5406,7 @@
 19130,"Assassin Robe","Assassin Robe","/equip/robe/human_elf_only/",12,0,1,,no,2,4,1,1,1,27800,15000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19131,"Oriental Robe","Lupa's Oriental Robe","/equip/robe/",12,0,1,,no,2,4,1,1,1,19000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19132,"Grim Reaper's Robe","Robe for Grim Reaper","/equip/robe/",12,0,1,,no,2,4,1,1,0,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-19133,"Golden Insignia Robe","Robe of Golden insignia","/equip/robe/",12,0,1,,no,2,4,1,1,1,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19133,"Traveler's Robe","Traveller Robe","/equip/robe/",12,0,1,,no,2,4,1,1,1,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19136,"Waterproof Snowball Robe","Waterproof Robe for Snow Fight","/equip/robe/temporary/notTransServer/",12,0,1,,no,2,3,1,1,1,0,15000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19137,"Mysterious Robe","Secret Robe","/equip/robe/destroytime_20min/ ",12,0,1,,no,2,4,1,1,1,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19138,"Black Angel Wings","Black Angel's Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,3,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -5409,8 +5415,8 @@
 19141,"Black Cupid Wings","Black Cupid's Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19142,"White Cupid Wings","White Cupid's Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19143,"Red Cupid Wings","Red Cupid's Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-19144,"Turkey Blue Cupid's Wing","Turkey Blue Cupid's Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-19145,"Sapphire Blue Cupid's Wing","Sapphire Blue Cupid's Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19144,"Turquoise Cupid Wings","Turkey Blue Cupid's Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19145,"Sapphire Cupid Wings","Sapphire Blue Cupid's Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19146,"Canary Yellow Cupid's Wing","Canary Yellow Cupid's Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,1,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19147,"Female Sword Spirit Wings","Wing of Female Sword Spirit","/equip/wing/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19148,"Male Sword Spirit Wings","Wing of Male Sword Spirit","/equip/wing/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -5427,7 +5433,7 @@
 19159,"Red Demon Wings","Red Devil's Wing","/equip/wing/activate_action/action_small_type/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,1,1,1,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19160,"Incubus Wings","Incubus Wing","/equip/wing/activate_action/action_large_type/cloth/not_enchantable/destroytime_20min/ ",12,0,1,,no,2,3,1,0,0,80000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19161,"Mysterious Robe","Secret Robe","/equip/robe/destroytime_20min/ ",12,0,1,,no,2,4,1,1,1,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-19162,"Fomor Research Unit Robe","Occult Robe","/equip/robe/group_idle_motion/",12,0,1,,no,2,3,1,1,1,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19162,"Fomor Research Robe","Occult Robe","/equip/robe/group_idle_motion/",12,0,1,,no,2,3,1,1,1,23000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19163,"Snow-white Hummingbird Wings","White Humming bird wing","/equip/wing/activate_action/action_small_type/cloth/not_enchantable/destroytime_20min/ ",12,0,1,,no,2,2,12,1,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19164,"Dark Hummingbird Wings","Black Humming bird wing","/equip/wing/activate_action/action_small_type/cloth/not_enchantable/destroytime_20min/ ",12,0,1,,no,2,2,12,1,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19165,"Sky Hummingbird Wings","Sky Humming bird wing","/equip/wing/activate_action/action_small_type/cloth/not_enchantable/destroytime_20min/ ",12,0,1,,no,2,2,12,1,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -5445,11 +5451,15 @@
 19184,"Turkish Blue Twinkling Devil Wings","Twinkle Devil wing","/equip/wing/activate_action/action_small_type/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19185,"Blood Red Twinkling Devil Wings","Twinkle Devil wing","/equip/wing/activate_action/action_small_type/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 19186,"Royal Purple Twinkling Devil Wings","Twinkle Devil wing","/equip/wing/activate_action/action_small_type/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,2,12,0,0,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-19187,"Blaze Wing","Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-19188,"Blaze Wing","Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-19189,"Blaze Wing","Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-19190,"Blaze Wing","Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-19191,"Blaze Wing","Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19187,"Golden Flame Wings","Gold Light Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19188,"Crimson Flame Wings","Red Light Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/ ",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19189,"Azure Flame Wings","Bule Light Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19190,"Violet Flame Wings","Purple Light Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19191,"Emerald Flame Wings","Green Light Blaze Wing","/equip/wing/activate_action/cloth/not_enchantable/not_dyeable/destroytime_20min/",12,0,1,,no,2,3,12,12,12,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19192,"Cutiepie Butterfly Wings","Cute Butterfly Wing","/equip/wing/activate_action/action_butterfly_type/cloth/not_enchantable/not_dyeable/destroytime_20min/",12,0,1,,no,2,2,1,1,0,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19193,"Sweetiepie Butterfly Wings","Sweet Butterfly Wing","/equip/wing/activate_action/action_butterfly_big_type/cloth/not_enchantable/not_dyeable/destroytime_20min/",12,0,1,,no,2,2,1,1,0,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19194,"Hot Pink Heart Wing","Hot Pink Heart Wing","/equip/wing/activate_action/action_small_type/cloth/not_enchantable/destroytime_20min/not_dyeable/",12,0,1,,no,2,2,1,1,0,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+19195,"Heart Wings","Hot Pink Heart Wing","/equip/wing/activate_action/action_small_type/cloth/not_enchantable/destroytime_20min/not_dyeable/",12,0,1,,no,2,2,1,1,0,100000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 210319,"Muffler Robe","Muffler Robe","/equip/robe/human_elf_only/random_box/",12,0,1,,no,2,3,1,1,1,15000,20000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 210320,"Glow-in-the-Dark Muffler robe","Luminous Muffler Robe","/equip/robe/not_repairable/human_elf_only/random_box/",12,0,1,,no,2,3,33,33,33,20000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 210321,"Owl Robe","Licori's Owl Robe","/equip/robe/human_elf_only/random_box/",12,0,1,,no,2,3,1,1,1,17800,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -5551,7 +5561,7 @@
 12141,"Cichol Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,12,12,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12142,"Macha Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,12,12,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12143,"Sage of the Night Badge","Amulet of Night Sage","/equip/accessary/not_dyeable/not_dropable/destroyable/not_partner_feed/writelog_destroy_inven/skill_exp_boost_item/",13,0,1,,no,2,2,12,12,12,100000,50000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-12146,"Amulet of Master Chef","Amulet of Master Chef","/equip/accessary/not_dyeable/not_dropable/destroyable/not_partner_feed/writelog_destroy_inven/skill_exp_boost_item/",13,0,1,,no,2,2,12,12,12,100000,50000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+12146,"Culinary Artist Badge","Amulet of Master Chef","/equip/accessary/not_dyeable/not_dropable/destroyable/not_partner_feed/writelog_destroy_inven/skill_exp_boost_item/",13,0,1,,no,2,2,12,12,12,100000,50000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12147,"Amulet of Master Hunter","Amulet of Master Hunter","/equip/accessary/not_dyeable/not_dropable/destroyable/not_partner_feed/writelog_destroy_inven/skill_exp_boost_item/",13,0,1,,no,2,2,12,12,12,100000,50000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12148,"Lorna Balloon","Lorna Balloon","/equip/accessary/not_dyeable/not_enchantable/not_repairable/not_dropable/no_abrasion/balloon_revival_count/destroyable/not_partner_feed/not_bless/not_holyfire/not_one_time_upgrade/writelog_destroy_inven/",13,0,1,,no,2,2,3,73,0,100000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12149,"Starlet's Badge","Amulet of Soulstar","/equip/accessary/not_dyeable/not_dropable/destroyable/not_partner_feed/writelog_destroy_inven/skill_exp_boost_item/",13,0,1,,no,2,2,12,12,12,100000,50000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -5559,14 +5569,14 @@
 12151,"Odd-Eye Belisha Support Puppet","Flying Support Puppet","/equip/accessary/not_partner_feed/daily_expire/support_puppet/",13,0,1,,no,2,2,1,1,0,150000,10000,3,3,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12152,"Belisha Flying Puppet","Flying Puppet","/equip/accessary/not_partner_feed/",13,0,1,,no,2,2,1,1,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12153,"Odd Belisha Flying Puppet","Flying Puppet","/equip/accessary/not_partner_feed/",13,0,1,,no,2,2,1,1,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
-12154,"Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,0,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
-12155,"Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,0,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
-12156,"Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,0,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
-12157,"Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,0,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
+12154,"Little Ghost Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,0,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
+12155,"Jack o' Lantern Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,0,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
+12156,"Skull Balloon Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,0,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
+12157,"Shadow Bat Flying Puppet","Flying Puppet","/equip/accessary/not_dyeable/not_partner_feed/",13,0,1,,no,2,2,12,0,0,100000,8000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12287,"Portia's Pendant","Portia's Pendant","/equip/accessary/not_dyeable/",13,0,1,,no,1,1,41,0,0,100000,4000,2,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12299,"Snowflake Buckle","Buckle","/equip/accessary/not_dyeable/",13,0,1,,no,1,1,12,12,12,100000,5000,1,2,0,0,0,0,0,0,0,0,0,{},{},{},{}
 12300,"Cheer up! Ballon","Cheer up! Ballon","/equip/accessary/not_dyeable/not_enchantable/not_repairable/not_dropable/no_abrasion/balloon_revival_count/destroyable/not_partner_feed/not_bless/not_holyfire/not_one_time_upgrade/writelog_destroy_inven/",13,0,1,,no,2,2,12,73,0,100000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-45132,"Big Ballon","Big Ballon","/equip/accessary/not_dyeable/destroyable/not_enchantable/not_repairable/not_dropable/no_abrasion/not_partner_feed/not_bless/not_holyfire/not_one_time_upgrade/writelog_destroy_inven/",13,0,1,,no,2,2,1,12,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+45132,"Full Balloon","Big Ballon","/equip/accessary/not_dyeable/destroyable/not_enchantable/not_repairable/not_dropable/no_abrasion/not_partner_feed/not_bless/not_holyfire/not_one_time_upgrade/writelog_destroy_inven/",13,0,1,,no,2,2,1,12,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50698,"Moon Charm","Portable Lucky Pouch","/equip/accessary/not_dyeable/",13,0,1,,no,2,2,16,0,0,100000,5000,2,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 63007,"Guild Leader's Pendant","Guild Master's Pendant","/item/notTransServer/",13,0,1,,no,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 63008,"Guild Leader's Pendant","Guild Master's Pendant","/item/notTransServer/",13,0,1,,no,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -6613,7 +6623,7 @@
 8097,"(Unknown)","(Unknown)","",100,0,1,,no,1,1,0,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 8098,"(Unknown)","(Unknown)","",100,0,1,,no,1,1,0,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 8099,"(Unknown)","(Unknown)","",100,0,1,,no,1,1,0,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-8100,"NPC (Unknown)","(Unknown)","",100,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+8100,"Culinary Artist Hair","(Unknown)","",100,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 8501,"(Unknown)","(Unknown)","",100,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 8502,"(Unknown)","(Unknown)","",100,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 8503,"(Unknown)","(Unknown)","",100,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -6715,7 +6725,7 @@
 4967,"(Unknown)","(Unknown)","",101,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 4968,"Merlin Face","(Unknown)","",101,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 4969,"(Unknown)","(Unknown)","",101,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-4970,"(Unknown)","(Unknown)","",101,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+4970,"Culinary Artist Face","(Unknown)","",101,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 4971,"(Unknown)","(Unknown)","",101,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 5900,"(Unknown)","(Unknown)","",101,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 5901,"(Unknown)","(Unknown)","",101,0,1,,no,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -6940,7 +6950,7 @@
 50269,"Ray Gill Filet","Ray Gill Puree","/usable/food/cooking/ray_gill_puree/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,2300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 12, will: 1, mana: 1, stm: 1); },{},{},{}
 50270,"Jellyfish Salad","Cold Jellyfish and Vegetables","/usable/food/cooking/cold_jellyfish_and_vegetables/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,1800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 14, int_: 1, will: 1, luck: -1, life: -1, mana: 1); },{},{},{}
 50271,"Braised Angler Fish","Steamed Angler","/usable/food/cooking/boiled_angler/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,2600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, weight: 1, str: 1, will: -2, luck: -1, life: 1, mana: 1, stm: 1); },{},{},{}
-50273,"Mashed Tofu","Crushed Bean Curd","/usable/food/cooking/crushed_bean_curd/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
+50273,"Mashed Roasted Bean Flour Tofu","Crushed Bean Curd","/usable/food/cooking/crushed_bean_curd/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
 50274,"Magic Bean Tofu","Magic Bean Curd","/usable/food/cooking/bean_curd/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, dex: 1, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
 50276,"Hazelnut Mushroom","Hazel Mushroom","/usable/food/cooking/hazel_mushroom/deer_mushroom/",501,1,10,,yes,1,1,12,12,12,600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5, weight: -1, upper: -1, lower: -1, str: -1, int_: 1, dex: 1, luck: 4, mana: 3, stm: -2); },{},{},{}
 50278,"Mushroom Potage","Mushroom Potage","/usable/food/cooking/mushroom_potage\n/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,4300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, int_: 1, dex: 2, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
@@ -7050,8 +7060,8 @@
 50388,"Homesickness Candy from Kelpie","Homesickness Candy from Kelpie","/usable/food/cooking/candy_npc/no_hotkey/",501,0,1,,yes,2,2,12,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50389,"3rd Anniversary Cake","3rd Anniversary Cake","/usable/food/cooking/",501,0,1,,yes,2,2,12,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
 50390,"Power Mushroom","Mystery Mushroom","/usable/food/cooking/white_button_mushroom/expiring/",501,0,1,,yes,1,1,30,32,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5, weight: -1, upper: -1, lower: -1, str: -1, dex: 1, mana: 1, stm: -2); },{},{},{}
-50393,"Crushed Bean Curd","Crushed Bean Curd","/usable/food/cooking/crushed_bean_curd/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
-50394,"Crushed Bean Curd","Crushed Bean Curd","/usable/food/cooking/crushed_bean_curd/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
+50393,"Mashed Peeled Bean Flour Tofu","Crushed Bean Curd","/usable/food/cooking/crushed_bean_curd/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
+50394,"Mashed Water-soaked Bean Flour Tofu","Crushed Bean Curd","/usable/food/cooking/crushed_bean_curd/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
 50400,"Fortune Cookie","Fortune Cookie","/usable/food/cooking/solid/cookie/script/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, upper: 1, int_: 2, dex: 4, will: -2, luck: -1, mana: 3, stm: 1); },{},{},{}
 50401,"Fortune Cookie","Fortune Cookie","/usable/food/cooking/solid/cookie/script/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, upper: 1, int_: 2, dex: 4, will: -2, luck: -1, mana: 3, stm: 1); },{},{},{}
 50402,"Eggplant","Eggplant","/usable/food/expiring/farm_crop/",501,1,100,,yes,1,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
@@ -8110,7 +8120,7 @@
 45123,"Water Balloon","Water Balloon","/usable/waterballoon_attack/destroyable/",1001,1,10,,yes,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 45125,"Monkey's Invitation","HotSpring Monkey Invitation Card","/usable/warp_scroll/party_enable/",1001,1,5,,yes,2,2,53,12,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 45126,"Monkey's Wedding Invitation","HotSpring Monkey Wedding Card","/item/",1001,1,5,,no,2,2,12,1,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-45131,"Empty Balloon","Empty Balloon","/usable/empty_balloon/",1001,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+45131,"Deflated Balloon","Empty Balloon","/usable/empty_balloon/",1001,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50011,"Broken Egg","Broken Egg","/food/cooking/solid/egg/",1001,1,5,,no,1,1,12,12,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50015,"Christmas Egg","Christmas Egg","/usable/food/cooking/solid/christmas_egg/",1001,1,5,,yes,1,1,21,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50018,"Chocolate Ingredient","Chocolate Material","/food/cooking/solid/chocolate_material_normal/expiring/",1001,1,5,,no,2,2,2,0,0,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -8210,7 +8220,7 @@
 50410,"Cabbage Seeds","Cabbage Seeds","/expiring/farm_seed/",1001,1,5,,no,1,1,12,0,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50411,"Tomato Seeds","Tomato Seeds","/expiring/farm_seed/",1001,1,5,,no,1,1,12,0,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50448,"Candy Tree Seed","Candytree Seed","/item//destroyable/",1001,1,100,,no,1,1,12,12,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50481,"Question Mark","Question Mark","/item/",1001,0,1,,no,1,1,12,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50481,"Hidden Ingredient","Question Mark","/item/",1001,0,1,,no,1,1,12,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50518,"Sturgeon","Sturgeon","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50519,"Lamprey","Lamprey","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50520,"Smelt","Pond Smelt","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,1,10,,yes,1,1,12,12,12,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -8266,7 +8276,7 @@
 51067,"Snow","Snow","/item/snow/dust/",1001,1,5,,no,1,1,12,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 51068,"Snowball","Snowball","/item/snow/ball/",1001,0,1,,no,1,1,12,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 51069,"Christmas Ornament","Decoration for Christmas","/item/event/",1001,0,1,,no,1,1,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-51070,"Wish Note","Wish Memo","/usable/readable/event/wish_memo/",1001,1,10,,yes,1,1,16,16,16,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+51070,"Written Wish","Wish Memo","/usable/readable/event/wish_memo/",1001,1,10,,yes,1,1,16,16,16,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 51071,"Omikuji Fortune","Omikuji","/usable/readable/event/fortune/",1001,0,1,,no,1,1,16,16,16,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 51072,"Clean Blossom of Cherry","Clean Blossom of Cherry","/item/cherryleaf/perfect/",1001,1,10,,no,1,1,12,0,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 51073,"Damage Blossom of Cherry","Damage Blossom of Cherry","/item/cherryleaf/damage/",1001,1,10,,no,1,1,12,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -8613,18 +8623,18 @@
 53171,"Mysterious Lingerie","Underwear","/item/quest_item/",1001,0,1,,no,2,2,28,28,28,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 53172,"Giant Lion's Spirit Ewer","Giant Lion's Soul","/item/quest_item/",1001,0,1,,no,1,2,28,28,28,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 53173,"Possessed Potion","Potion of Soul","/item/quest_item/",1001,0,1,,no,1,2,30,30,30,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53174,"Kendo Club Item","Kendo Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53175,"Kendo Club Item","Kendo Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53176,"Kendo Club Item","Kendo Club Item","/item/quest_item/",1001,0,1,,no,1,2,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53177,"Kendo Club Item","Kendo Club Item","/item/quest_item/",1001,0,1,,no,2,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53178,"Music Club Item","Music Club Item","/item/quest_item/",1001,0,1,,no,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53179,"Music Club Item","Music Club Item","/item/quest_item/",1001,0,1,,no,2,1,38,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53180,"Music Club Item","Music Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53181,"Music Club Item","Music Club Item","/item/quest_item/",1001,0,1,,no,2,4,2,5,5,0,0,0,0,0,3,0,0,0,0,0,0,0,{},{},{},{}
-53182,"Occult Club Item","Occult Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53183,"Occult Club Item","Occult Club Item","/item/quest_item/",1001,0,1,,no,1,1,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53184,"Occult Club Item","Occult Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-53185,"Occult Club Item","Occult Club Item","/item/quest_item/",1001,0,1,,no,1,1,11,11,11,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53174,"Tsukasa's Handkerchief","Kendo Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53175,"Shinobu's Ledger","Kendo Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53176,"Satsuki's Locket","Kendo Club Item","/item/quest_item/",1001,0,1,,no,1,2,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53177,"Taiga's Eye Patch","Kendo Club Item","/item/quest_item/",1001,0,1,,no,2,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53178,"Suzune's Bunny Doll","Music Club Item","/item/quest_item/",1001,0,1,,no,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53179,"Aika's Cat Food Bowl","Music Club Item","/item/quest_item/",1001,0,1,,no,2,1,38,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53180,"Uta's Textbook","Music Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53181,"Erika's Electric Guitar","Music Club Item","/item/quest_item/",1001,0,1,,no,2,4,2,5,5,0,0,0,0,0,3,0,0,0,0,0,0,0,{},{},{},{}
+53182,"Yoshiko's Josephine","Occult Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53183,"Takuro's Key","Occult Club Item","/item/quest_item/",1001,0,1,,no,1,1,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53184,"Minoru's Sakura Bottle","Occult Club Item","/item/quest_item/",1001,0,1,,no,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+53185,"Lily's Four-leaf Clover","Occult Club Item","/item/quest_item/",1001,0,1,,no,1,1,11,11,11,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 53186,"Club Certificate","Club Certificate","/item/quest_item/",1001,0,1,,no,1,1,12,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 53200,"Appraised Artifact","Appraised Relic","/item/appraisal/after/",1001,0,1,,no,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 53201,"Appraised Artifact","Appraised Relic","/item/appraisal/after/",1001,0,1,,no,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -12034,7 +12044,7 @@
 91419,"Human Caravan Event Reward Box","Event Gift Box","/usable/script/no_hotkey/expiring/writelog_use/writelog_combined/",1001,1,10,,yes,2,2,26,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
 91420,"Halloween Mercenary Scroll","Halloween Monster Sealed Scroll","/usable/no_hotkey/destroyable/use_summon/expiring/",1001,1,20,,yes,1,2,2,5,2,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91421,"Orange Wing of the Goddess (Maiz Prairie)","Orange Wings of the Goddess","/usable/expiring/writelog_use/warp_scroll/",1001,0,1,,no,1,2,29,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-91422,"Nightshade Mustang Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+91422,"Nightshade Mustang Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91423,"Royal Magic Carpet Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91424,"Black Sheep Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91425,"Mini Unicorn Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -12139,9 +12149,9 @@
 91533,"Trump Card Box","Trump Card Box","/item/usable/script/writelog_use/destroyable/",1001,1,100,,yes,2,2,1,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91534,"Trump Gift Box","Trump Gift Box","/item/usable/script/writelog_use/destroyable/",1001,1,100,,yes,2,2,37,37,37,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91535,"Special Trump Gift Box","Special Trump Gift Box","/item/usable/script/writelog_use/",1001,1,100,,yes,2,2,37,37,37,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-91536,"Eweca's Cristal Ball","Eweca's Cristal Ball","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-91537,"Eweca's Glass bead","Eweca's Glass bead","/item/no_hotkey/",1001,1,1000,,no,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-91538,"Eweca's Premium Ball","Eweca's Premium Ball","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+91536,"Eweca Orb","Eweca's Cristal Ball","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+91537,"Eweca Glass Orb","Eweca's Glass bead","/item/no_hotkey/",1001,1,1000,,no,1,1,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+91538,"Eweca Premium Orb","Eweca's Premium Ball","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91539,"Oriharcon","Oriharcon","/item/usable/script/writelog_use/",1001,0,1,,no,2,2,12,12,12,50000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
 91540,"Adamantium","Adamantium","/item/usable/script/writelog_use/",1001,0,1,,no,2,2,12,12,12,50000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
 91541,"Yellow Event Wings","Yellow Wings of Event","/usable/warp_scroll/writelog_use/event_warp/not_dropable/destroyable/expiring/self_destructive/",1001,0,1,,no,1,2,28,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -12407,10 +12417,10 @@
 91845,"Starlet Outfit Shopping Bag (F)","Diva Dress for Women","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91846,"Starlet Circle Ear Cuffs Coupon","Diva Circle Ear Cuff Coupon","/usable/script/no_hotkey/writelog_use/",1001,0,1,,no,2,1,34,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91847,"Hot Air Balloon Festival Gift","Hot Air Balloon Festival Gift","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
-91848,"Kendo Club 1st Gift Box","Kendo Club 1st Gift Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
-91849,"Music Club 1st Gift Box","Music Club 1st Gift Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
-91850,"Occult Club 1st Gift Box","Occult Club 1st Gift Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
-91851,"Balloon Gift Box","Balloon Gift Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
+91848,"Kendo Club Victory Box","Kendo Club 1st Gift Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
+91849,"Music Club Victory Box","Music Club 1st Gift Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
+91850,"Fomor Research Unit Victory Box","Occult Club 1st Gift Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
+91851,"Balloon Consolation Box","Balloon Gift Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
 91852,"2nd Commemorative Saga Gift Box","Iria Drama Gift Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
 91853,"Flying Cube","Flying Cube","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91854,"Devil Outfit Box","Devil's Costume Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -12451,8 +12461,8 @@
 91890,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/",1001,0,1,,no,2,2,35,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91891,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/",1001,0,1,,no,2,2,37,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91892,"Carasek's Treasure Chest","Carasek's Treasure Chest","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-91893,"Masterchef Suit (M)","Masterchef Suit for Men","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-91894,"Masterchef Dress (F)","Masterchef Dress for Women","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+91893,"Culinary Artist Outfit Shopping Bag (M)","Masterchef Suit for Men","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+91894,"Culinary Artist Outfit Shopping Bag (F)","Masterchef Dress for Women","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91896,"TreasureHunter Suit (M)","TreasureHunter Suit for Men","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91897,"TreasureHunter Dress (F)","TreasureHunter Dress for Women","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91898,"Pet The dream Box","Pet The dream Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -12511,7 +12521,7 @@
 91961,"The Milester Inheritance (Crude)","Mailster's Lower Heritage","/item/usable/script/writelog_use/no_hotkey/destroyable/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91962,"Maple Tree Coupon","Maple Tree Coupon","/item/mapleleaf/large/destroyable/",1001,1,100,,no,2,2,82,1,1,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
 91963,"Halloween Party Invitation","Invitation Card","/item/destroyable/",1001,1,10,,no,2,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-91964,"Orange Wings of the Goddess","Orange Wings of the Goddess","/usable/expiring/writelog_use/warp_scroll/",1001,0,1,,no,1,2,29,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+91964,"Orange Wings of a Goddess (Qilla Base Camp )","Orange Wings of the Goddess","/usable/expiring/writelog_use/warp_scroll/",1001,0,1,,no,1,2,29,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91965,"Carasek's Treasure Chest","Carasek's Treasure Chest","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,1,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91966,"Halloween Vampire Hunter Outfit Box (M)","Halloween Vampire Hunter Uniform Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 91967,"Halloween Vampire Hunter Outfit Box (F)","Halloween Vampire Hunter Uniform Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -12554,8 +12564,8 @@
 92021,"Enchant Expiration Removal Scroll","Expiration Date Elimination Scroll","/usable/enchantscroll_expiration_elimation/",1001,1,10,,yes,1,2,14,1,5,700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 92022,"Combo Card Extension Coupon (30 days)","Combo Card`s Due Date Expansion","/combocard_extend/",1001,1,10,,no,2,2,12,0,0,700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 92023,"Combo Card Recovery Coupon (30 days)","Combo Card`s Rivival Item","/combocard_revival/",1001,1,10,,no,2,2,12,0,0,700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-92024,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-92025,"Black Flame Mare Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92024,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92025,"Black Flame Mare Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 92026,"Permanent Combo Card Coupon","Combo Card`s Remove Limitation","/combocard_removelimitation/destroyable/not_dropable/",1001,1,10,,no,2,2,12,0,0,700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 92027,"NPC Medallion Box 5th","NPC Medallion Box 5th","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 92028,"100 Million Gold Box","One Hundred Million Gold Box","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -12890,6 +12900,14 @@
 92379,"Chocolate Waffle Suit (M)","Chocolate Waffle Suit for Men","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 92380,"Chocolate Waffle Dress (F)","Chocolate Waffle Dress for Women","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 92392,"Eweca Crystal Ball","Eweca's Cristal Ball","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92395,"Flame Wings Gachapon","Blaze Wing Lucky Box","/usable/script/no_hotkey/expiring/writelog_use/destroytime_20min/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92396,"Emerald Clover Hot Time Orb","Green Cristal Ball","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92405,"Wings Surprise Box","Wings Lucky Box","/usable/script/no_hotkey/expiring/writelog_use/destroytime_20min/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92406,"Earthly Feather Crystal","Gold Wing Crystal Ball","/usable/script/no_hotkey/expiring/writelog_use/destroytime_20min/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92407,"Infernal Feather Crystal","Purple Wing Crystal Ball","/usable/script/no_hotkey/expiring/writelog_use/destroytime_20min/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92408,"Heavenly Feather Crystal","White Wing Crystal Ball","/usable/script/no_hotkey/expiring/writelog_use/destroytime_20min/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92409,"Rainbow Feather Crystal","Green Wing Crystal Ball","/usable/script/no_hotkey/expiring/writelog_use/destroytime_20min/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+92413,"Wings of Spring Box","Spring Spirited Box","/usable/script/no_hotkey/expiring/writelog_use/destroytime_20min/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 93034,"Love Letter from him 1","Love Letter from him 1","/item/destroyable/",1001,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 93035,"Love Letter from him 2","Love Letter from him 2","/item/destroyable/",1001,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 93036,"Love Letter from him 4","Love Letter from him 4","/item/destroyable/",1001,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -12900,9 +12918,10 @@
 93041,"Love Letter from her 5","Love Letter from her 5","/item/destroyable/",1001,0,1,,no,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 93042,"Partial Rebirth Posion","Partial Rebirth Posion","/item/maxbundlechange/destroyable/",1001,1,3,,no,1,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 93043,"Rebirth Posion","Rebirth Posion","/usable/rebirth_reset/script/expiring//destroyable/",1001,0,1,,no,1,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-93044,"Sign of Meeting","Sign of Meeting","/item/destroyable/",1001,1,2,,no,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-93045,"Sign of Heaven mission","Sign of Heaven mission","/item/destroyable/",1001,1,100,,no,1,1,11,11,11,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-93046,"Sign of Hell mission","Sign of Hell mission","/item/destroyable/",1001,1,100,,no,1,1,10,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+93044,"Interconnected Symbol","Sign of Meeting","/item/destroyable/",1001,1,2,,no,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+93045,"Heavenly Love Badge","Sign of Heaven mission","/item/destroyable/",1001,1,100,,no,1,1,11,11,11,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+93046,"Arduous Loneliness Badge","Sign of Hell mission","/item/destroyable/",1001,1,100,,no,1,1,10,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+93053,"Pet Box of Bule Horse","Pet Box of Bule Horse","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94001,"Silver Fox Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94002,"Dark Russian Blue Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94003,"Magic Carpet Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -12912,6 +12931,9 @@
 94007,"Yellow Jindo Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94008,"Thoroughbred Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94009,"Border Collie Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+94010,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+94011,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+94012,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94013,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94014,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 110000,"Post-Event Processor","Event PostProcessor","/event/script/",1001,0,1,,no,1,1,0,0,0,0,15000,0,0,0,0,0,3,12,5,20,4,2,{},{},{},{}
