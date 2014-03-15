@@ -1,5 +1,5 @@
 //--- Aura Script -----------------------------------------------------------
-// Tir Chonaill - Beginner Area (125) (Forst of Souls)
+// Tir Chonaill - Beginner Area (125) (Forest of Souls)
 //--- Description -----------------------------------------------------------
 // Region you are warped to after talking to Nao/Tin.
 //---------------------------------------------------------------------------
