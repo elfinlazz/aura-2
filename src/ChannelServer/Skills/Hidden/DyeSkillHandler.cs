@@ -125,13 +125,13 @@ namespace Aura.Channel.Skills.Hidden
 			// Remove dye
 			creature.Inventory.Decrement(creature.Temp.SkillItem2);
 
-			// Success effect
-			Send.Effect(creature, 2, (byte)4);
-
 			// Update item color
 			Send.ItemUpdate(creature, creature.Temp.SkillItem1);
 			if (creature.Temp.SkillItem1.Info.Pocket.IsEquip())
 				Send.EquipmentChanged(creature, creature.Temp.SkillItem1);
+
+			// Success effect
+			Send.Effect(creature, 2, (byte)4);
 		}
 
 		public void Cancel(Creature creature, Skill skill)
