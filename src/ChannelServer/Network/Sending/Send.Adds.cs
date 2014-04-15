@@ -134,9 +134,9 @@ namespace Aura.Channel.Network.Sending
 				packet.PutFloat(creature.LuckFoodMod);
 				packet.PutShort(creature.AbilityPoints);
 				packet.PutShort(0);			         // AttackMinBase
-				packet.PutShort(0);			         // AttackMinMod
+				packet.PutShort((short)creature.AttackMinMod);
 				packet.PutShort(0);			         // AttackMaxBase
-				packet.PutShort(0);			         // AttackMaxMod
+				packet.PutShort((short)creature.AttackMaxMod);
 				packet.PutShort(0);			         // WAttackMinBase
 				packet.PutShort(0);			         // WAttackMinMod
 				packet.PutShort(0);			         // WAttackMaxBase
