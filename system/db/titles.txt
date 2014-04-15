@@ -328,43 +328,47 @@
 10184, "Sabina's Valentine", Mana:+30, Int:+30, Protection:+5
 10185, "My Valentine", Will:+30, Luck:+30, MaxAttack:+13
 10190, "The Phoenix's Witness", Life:+50
-10192, "the Silencer"
+10192, "the Silencer", MaxAttack:+5
 10193, "the Aspiring Maestro", Life:+10, Stamina:+10, Str:+20
-10195, "Is Gone with the Wind", Protection:+1, Crit:+2, Speed:+1
+10195, "Is Gone with the Wind", MaxAttack:+15, Protection:+1, Crit:+2, Speed:+1
 10196, "에린 생활을 즐기는", Luck:+55
-10197, "Is Gone with the Wind", Protection:+1, Crit:+2, Speed:+1
-10198, "the Nutcracker", Life:+20, Luck:+20, Crit:+5
-10199, "the Nutcracker", Life:+20, Crit:+5
-10204, "겨울 여행자", Defense:+5, Protection:+1, Crit:+5
-10205, "세배하는", Luck:+10, Protection:+1, Crit:+2
+10197, "Is Gone with the Wind", MaxAttack:+8, Protection:+1, Crit:+2, Speed:+1
+10198, "the Nutcracker", Life:+20, Luck:+20, MaxAttack:+7, Crit:+5
+10199, "the Nutcracker", Life:+20, MaxAttack:+7, Crit:+5
+10204, "겨울 여행자", MaxAttack:+6, Defense:+5, Protection:+1, Crit:+5
+10205, "세배하는", Luck:+10, MaxAttack:+8, Protection:+1, Crit:+2
 10206, "내가 딱히 도와달라는 건 아니야! : 유아형"
 10207, "내가 딱히 도와달라는 건 아니야! : 성장형", Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
 10208, "내가 딱히 도와달라는 건 아니야! : 완성형", Str:+15, Int:+15, Dex:+15, Will:+15, Luck:+15
-10209, "내가 딱히 도와달라는 건 아니야! : 완전체형", Str:+20, Int:+20, Dex:+20, Will:+20, Luck:+20, MagicAttack:+8
+10209, "내가 딱히 도와달라는 건 아니야! : 완전체형", Str:+20, Int:+20, Dex:+20, Will:+20, Luck:+20, MaxAttack:+8, MagicAttack:+32
 10210, "내가 딱히 도와주겠다는 건 아니야! : 유아형"
-10211, "내가 딱히 도와주겠다는 건 아니야! : 성장형"
-10212, "내가 딱히 도와주겠다는 건 아니야! : 완성형"
-10213, "내가 딱히 도와주겠다는 건 아니야! : 완전체형"
-10214, "에린에서 만나 결혼한", Life:+20, Stamina:+20, Luck:+20
+10211, "내가 딱히 도와주겠다는 건 아니야! : 성장형", MaxAttack:+5, MagicAttack:+4
+10212, "내가 딱히 도와주겠다는 건 아니야! : 완성형", MaxAttack:+8, MagicAttack:+20
+10213, "내가 딱히 도와주겠다는 건 아니야! : 완전체형", MaxAttack:+15, MagicAttack:+32
+10214, "에린에서 만나 결혼한", Life:+20, Stamina:+20, Luck:+20, MaxAttack:+10
 10215, "Scissor Ruler", Dex:+20
 10216, "Ruler of Rock", Will:+20
 10217, "Paper Ruler", Str:+20
 10218, "Cut Down", Dex:-20
 10219, "Crushed", Will:-20
 10220, "Slashed", Str:-20
-10221, "Rock Paper Scissors Beginner"
-10222, "Rock Paper Scissors Novice", Crit:+1
-10223, "Rock Paper Scissors Expert", Crit:+2
-10224, "Rock Paper Scissors Master", Crit:+3
+10221, "Rock Paper Scissors Beginner", MaxAttack:+6
+10222, "Rock Paper Scissors Novice", MaxAttack:+8, Crit:+1
+10223, "Rock Paper Scissors Expert", MaxAttack:+10, Crit:+2
+10224, "Rock Paper Scissors Master", MaxAttack:+12, Crit:+3
 10225, "Elemental Wave Master", Life:+30, Mana:+30, Stamina:+30
 10226, "Golden Time Master", Crit:+3
 10227, "Hydra Transmutation Master", Crit:+3
 10228, "Guard Cylinder Master", Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
 10229, "9년간 함께한", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10230, "Unknown", Str:-10, Int:+10, Dex:-10, Will:+10, Luck:+20, Protection:-5
-10231, "새 옷을 입은", Luck:+10, Protection:+1, Crit:+2
+10230, "10살에 탐험 레벨 50이 되다", Str:-10, Int:+10, Dex:-10, Will:+10, Luck:+20, Protection:-5
+10231, "새 옷을 입은", Luck:+10, MaxAttack:+8, Protection:+1, Crit:+2
 10232, "개근상", Life:+14, Str:+14, Dex:+14
 10304, "출석왕", Stamina:+15, Luck:+15
+10305, "사막에서도 바늘을 찾을"
+10306, "믿는 도끼에 발등 찍힐"
+10307, "뒤로 넘어져도 코가 깨질"
+10308, "등산하다 산삼을 볼"
 10501, "the Aspiring Adventurer", Life:+10, Mana:+10, Stamina:+10, Will:+10
 10502, "the Aspiring Warrior", Life:+10, Str:+25
 10503, "the Aspiring Mage", Mana:+20
@@ -383,8 +387,9 @@
 10516, "the Aspiring Apothecary", Mana:+20, Stamina:+25
 10517, "the Aspiring Carpenter", Life:+20, Str:+20
 10518, "Aspiring Marksman", Life:+10
-10519, "Legendary Lumberjack", Life:+20, Stamina:+10, Crit:+5
-10520, "Blood Master", Life:+25, Str:+10, Crit:+5
+10519, "Legendary Lumberjack", Life:+20, Stamina:+10, MaxAttack:+10, Crit:+5
+10520, "Blood Master", Life:+25, Str:+10, MaxAttack:+12, Crit:+5
+10521, "로나판 라디오 리스너", Luck:+15
 10680, "Avid Collector", Dex:+7, Will:+7
 10681, "King Collector", Str:+8, Int:+8, Dex:+8, MaxAttack:+10, Defense:+6, Protection:+6
 10700, "the Master of Battlefield Overture"
@@ -398,12 +403,12 @@
 10708, "the Encore Master"
 10709, "the Song Master"
 10710, "the Fantastic Chorus Master"
-10711, "음식 마스터"
-10712, "재료 찾기 마스터"
-10713, "페스티벌 푸드 마스터"
-10714, "탐험 마스터"
-10715, "유물 조사 마스터"
-10716, "위기 탈출 마스터"
+10711, "Master of Tasting"
+10712, "Master Ingredient Hunter"
+10713, "Master of Catering"
+10714, "Exploration Master"
+10715, "Artifact Investigation Master"
+10716, "Crisis Escape Master"
 10801, "the Shearer of Sheep", Dex:+25, Luck:+20
 10802, "the Master of Mining", Stamina:+25, Str:+25
 10803, "the Gatherer of Eggs", Dex:+35
@@ -438,7 +443,7 @@
 10923, "the Ecologist"
 10924, "Heavy Armor Master", Defense:+10, Protection:+5
 10925, "Light Armor Master", Defense:+6, Protection:+2
-11001, "who Saved the Goddess", Mana:+10, Will:+20, Luck:+20
+11001, "who Saved the Goddess", Mana:+10, Will:+20, Luck:+20, MinAttack:+1, MaxAttack:+1
 11002, "the Savior of Erinn", Life:+10, Mana:+10, Stamina:+10, Int:+15, Dex:+15
 11003, "the Dragon Knight", Life:+30, Mana:+10, Stamina:+10, Defense:+2, Protection:+2
 11004, "the Scoring Master", Stamina:+10, Str:+10, Dex:+10
@@ -446,11 +451,11 @@
 11006, "the Stealing Master", Str:+15, Will:+15
 11008, "the Winner of the Guild Battle", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
 11009, "프리미엄 PC방 사용자", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, MaxAttack:+10
-11010, "the Shadow Hero", Will:+10, Defense:+2, Protection:+2
+11010, "the Shadow Hero", Will:+10, MinAttack:+3, MaxAttack:+3, Defense:+2, Protection:+2
 11011, "the Summer Reveler", Stamina:+10, Str:+5, Dex:+5
 11012, "The Royal Alchemist"
 11013, "the Family Oriented"
-11014, "the Winner of the Guild Battle", Life:+30, Mana:+30, Stamina:+30, Str:+15, Int:+15, Dex:+15, Will:+15, Luck:+15, Exp:+1
+11014, "the Winner of the Guild Battle", Life:+30, Mana:+30, Stamina:+30, Str:+15, Int:+15, Dex:+15, Will:+15, Luck:+15, MaxAttack:+30, Exp:+1
 13000, "the Master of Knuckles", Life:+10
 13001, "the Master of Chain Attack", Stamina:+10, Will:+30
 13002, "the Master of Tumble", Mana:+10, Stamina:+15, Protection:+2
@@ -535,7 +540,7 @@
 
 // Transformations
 //---------------------------------------------------------------------------
-11007, "the Giant", Life:+1500, Defense:+20, Protection:+20
+11007, "the Giant", Life:+1500, MinAttack:+120, MaxAttack:+130, Defense:+20, Protection:+20
 40001, "the Paladin"
 40002, "the White Knight"
 40003, "the Holy Knight"
@@ -600,16 +605,16 @@
 10402, "the Precise"
 10403, "the Top Gun"
 10500, "the Courteous"
-10601, "Fashionogi Leader"
+10601, "Fashionogi Leader", MaxAttack:+5
 10602, "Unknown", Str:+8, Int:+8, Dex:+8, Will:+8, Luck:+8
 10603, "Pierrot", Dex:+7
 10604, "Colossus"
 10605, "Huw", Life:+10, Str:+12, Dex:+12
-10606, "항마", Life:+10, Protection:+2
-10607, "Bell Fox", Life:+10
-10608, "Shamala", Stamina:+10
-10609, "the Halloween Haunter", Mana:+15
-10610, "Hatsune Miku"
+10606, "항마", Life:+10, MaxAttack:+4, Protection:+2
+10607, "Bell Fox", Life:+10, MaxAttack:+8
+10608, "Shamala", Life:+20, Stamina:+10
+10609, "the Halloween Haunter", Mana:+15, MagicAttack:+12
+10610, "Hatsune Miku", MaxAttack:+5
 10611, "Kagamine Len", Crit:+2
 10612, "Kagamine Rin", Protection:+3
 10613, "Kaito", MagicAttack:+8
@@ -618,85 +623,85 @@
 10616, "Merchant Imp", Life:+30, Mana:+20
 10617, "God's Feather"
 10618, "Pan", Defense:+6, Protection:+6
-10619, "Ruwai", Speed:+1
-10620, "Romeo", Crit:+12
-10621, "Hamlet", Life:+10
-10622, "Juliet", Mana:+10
-10623, "Fleta"
-10624, "Shop Brownie", Stamina:+30
-10625, "Tarlach", Life:+10, Mana:+20
+10619, "Ruwai", Mana:+20, Speed:+1
+10620, "Romeo", MaxAttack:+15, Crit:+12
+10621, "Hamlet", Life:+10, MaxAttack:+15
+10622, "Juliet", Mana:+10, MagicAttack:+24
+10623, "Fleta", MagicAttack:+32
+10624, "Shop Brownie", Stamina:+30, MaxAttack:+8
+10625, "Tarlach", Life:+10, Mana:+20, MagicAttack:+32
 10626, "Claudius", Life:+10, Defense:+6, Protection:+6
-10627, "Castanea", Mana:+20, Stamina:+10
+10627, "Castanea", Mana:+20, Stamina:+10, MagicAttack:+28
 10628, "Carasek", Life:+30, Defense:+5, Protection:+5
 10629, "Eabha"
 10630, "Ailla", Defense:+6, Protection:+7
 10631, "Hamelin", Life:+30, Mana:+30
 10632, "Yvona"
-10633, "Effie"
-10634, "Kristell", Mana:+40
+10633, "Effie", MaxAttack:+8
+10634, "Kristell", Mana:+40, MagicAttack:+20
 10635, "Nessa", Stamina:+30, Defense:+5, Protection:+5
 10636, "Endelyon", Mana:+40, Defense:+6, Protection:+6
-10637, "Alissa", Life:+40
-10638, "Portia", Stamina:+20
+10637, "Alissa", Life:+40, Stamina:+30
+10638, "Portia", Stamina:+20, MaxAttack:+12
 10639, "Edern", Stamina:+60
 10640, "Tupai"
 10641, "Eavan", Stamina:+40, Defense:+6, Protection:+6
-10642, "Aer"
-10643, "Succubus Kristell"
+10642, "Aer", MagicAttack:+24
+10643, "Succubus Kristell", MagicAttack:+32
 10644, "Duncan", Defense:+8, Protection:+8, Crit:+3
-10645, "Ferghus", Stamina:+40
+10645, "Ferghus", Stamina:+40, MaxAttack:+10
 10646, "Andras", Defense:+7, Protection:+7, Crit:+3
-10647, "Mabinogi", Crit:+15
+10647, "Mabinogi", MaxAttack:+10, MagicAttack:+20, Crit:+15
 10648, "Ruairi", MaxAttack:+15, Crit:+10
 10649, "Redire", Defense:+8, Protection:+8, Crit:+5
 10650, "Nuadha", Crit:+30
-10651, "Mari", Crit:+5
+10651, "Mari", MaxAttack:+15, Crit:+5
 10652, "Dark Lord", Mana:+10, Defense:+9, Protection:+9
 10653, "Dark Ruairi", Life:+10, MaxAttack:+18, Crit:+10
 10654, "Morrighan", Life:+120, Crit:+15
 10655, "Transport Helper Ogre", Stamina:+30, Speed:+1
-10656, "Lileas", Mana:+30
+10656, "Lileas", Mana:+30, MaxAttack:+9
 10657, "Fomor Token", Life:+40, MaxAttack:+10
 10658, "Ibbie", Life:+40, Defense:+6, Protection:+6
-10659, "Shena", Life:+30
-10660, "Adniel", Crit:+10
-10661, "Legatus", Crit:+10
-10662, "Master Tin", MagicAttack:+20
+10659, "Shena", Life:+30, MagicAttack:+12
+10660, "Adniel", MagicAttack:+28, Crit:+10
+10661, "Legatus", MaxAttack:+14, Crit:+10
+10662, "Master Tin", MaxAttack:+10, MagicAttack:+20
 10663, "Scathach", MagicAttack:+40
 10664, "Cichol", Mana:+120, Crit:+15
-10665, "Nao"
+10665, "Nao", MaxAttack:+20
 10666, "Neamhain", Stamina:+120, Crit:+15
 10667, "Pierrick", MagicAttack:+12
 10668, "Rua", MagicAttack:+28, Crit:+10
 10669, "Del", Life:+10, Mana:+10, MaxAttack:+10
 10670, "Lassar", Stamina:+40, MagicAttack:+24
 10671, "Bebhinn", Mana:+30, Defense:+5, Protection:+5
-10672, "Emain Macha Beggar"
+10672, "Emain Macha Beggar", MaxAttack:+12, Crit:+10
 10673, "실장(미적용)"
 10674, "Eirawen", Stamina:+10, Defense:+8, Protection:+8
-10675, "Kusina"
+10675, "Kusina", MaxAttack:+15, MagicAttack:+12
 10676, "the Lucky Snake", Luck:+30
 10677, "Lucky Bunny", Stamina:+25, Int:+5, Luck:+10
-10678, "아라드 전기", Luck:+30
-10679, "MapleStory", Luck:+30
-10682, "8주년을 기념하는", Str:+8, Int:+8, Dex:+8, Will:+8, Luck:+8, Speed:+8
-10683, "판타지스타", MagicDefense:+6, MagicProtection:+6
+10678, "아라드 전기", Luck:+30, MaxAttack:+5
+10679, "MapleStory", Luck:+30, Crit:+5
+10682, "8주년을 기념하는", Str:+8, Int:+8, Dex:+8, Will:+8, Luck:+8, MaxAttack:+8, Speed:+8
+10683, "판타지스타", MaxAttack:+20, MagicAttack:+12, MagicDefense:+6, MagicProtection:+6
 10684, "Unknown", Defense:+10, Protection:+10
-10685, "Unknown", Speed:+3
-10686, "Unknown", Defense:+5, Protection:+5
+10685, "Unknown", MaxAttack:+8, Crit:+5, Speed:+3
+10686, "Unknown", MaxAttack:+10, Defense:+5, Protection:+5
 10687, "Unknown"
 10688, "Unknown"
 10689, "Unknown"
-10690, "Unknown", Str:+10, Speed:+2
-10691, "Unknown"
+10690, "Unknown", Str:+10, MaxAttack:+7, Speed:+2
+10691, "Unknown", MagicAttack:+40
 10692, "Unknown", Will:+10, Luck:+15
 10693, "Unknown", Mana:+10, MagicAttack:+24
-10694, "Halloween Party", MagicDefense:+6, MagicProtection:+6
+10694, "Halloween Party", MagicAttack:+12, MagicDefense:+6, MagicProtection:+6
 10695, "Santa Claus", Str:+10, MaxAttack:+10, Crit:+5
 10696, "Gift Sack", Dex:+10, MinAttack:+5, MaxAttack:+5, Crit:+5
 10697, "Christmas Tree", Will:+10, MinAttack:+10, Crit:+5
 10698, "Red-Nosed", Int:+10, MagicAttack:+10, Crit:+5
-15000, "겨울 천사", Will:+10, MinAttack:+10, Crit:+5
-15001, "크리스마스에 눈이 내리면", Will:+10, MinAttack:+10, Crit:+5
-15002, "크리스마스에 비나 왔으면", Will:+10, MinAttack:+10, Crit:+5
-15003, "빙판길 조심", Will:+10, MinAttack:+10, Crit:+5
+15000, "겨울 천사", Mana:+35, MagicAttack:+28
+15001, "크리스마스에 눈이 내리면", Life:+35, MaxAttack:+15, Crit:+10
+15002, "크리스마스에 비나 왔으면", Dex:+12, Will:+20, Luck:+12, MaxAttack:+12
+15003, "빙판길 조심", Stamina:+35, MaxAttack:+10
