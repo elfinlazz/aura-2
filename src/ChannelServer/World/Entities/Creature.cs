@@ -1220,6 +1220,18 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Fully heals life.
+		/// </summary>
+		public void FullLifeHeal()
+		{
+			this.Injuries = 0;
+			this.Life = this.LifeMax;
+
+			Send.StatUpdate(this, StatUpdateType.Private, Stat.Life, Stat.LifeInjured);
+			Send.StatUpdate(this, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
+		}
+
+		/// <summary>
 		/// Increases AP and updates client.
 		/// </summary>
 		/// <param name="amount"></param>
