@@ -12,7 +12,8 @@ namespace Aura.Shared.Network
 	/// </summary>
 	public class Client
 	{
-		private const int BufferDefaultSize = 2048;
+		// Largest known packet is composing on R1, up to ~3700 bytes.
+		private const int BufferDefaultSize = 4096;
 
 		public Socket Socket { get; set; }
 		public byte[] Buffer { get; set; }
