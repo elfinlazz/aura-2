@@ -66,15 +66,19 @@ namespace Aura.Channel.Skills.Combat
 				cap.PrevId = prevId;
 				prevId = cap.Id;
 
+				// Default attacker options
 				aAction.Set(AttackerOptions.Result);
 				if (dualWield)
 					aAction.Set(AttackerOptions.DualWield);
 
+				// Base damage
 				var damage = attacker.GetRndDamage(weapon);
 				tAction.Damage = damage;
 
+				// Deal with it!
 				target.TakeDamage(tAction.Damage, attacker);
 
+				// Evaluate caused damage
 				if (!target.IsDead)
 				{
 					target.KnockBack += this.GetKnockBack(weapon) / maxHits;
@@ -86,6 +90,7 @@ namespace Aura.Channel.Skills.Combat
 					tAction.Set(TargetOptions.FinishingKnockDown);
 				}
 
+				// React to knock back
 				if (tAction.IsKnockBack)
 				{
 					var newPos = attacker.GetPosition().GetRelative(targetPosition, KnockBackDistance);
@@ -101,11 +106,17 @@ namespace Aura.Channel.Skills.Combat
 					cap.MaxHits = cap.Hit;
 				}
 
+				// Set stun time
 				aAction.Stun = this.GetAttackerStun(weapon, tAction.IsKnockBack);
 				tAction.Stun = this.GetTargetStun(weapon, tAction.IsKnockBack);
 
+				// Second hit doubles stun time for normal hits
+				if (cap.Hit == 2 && !tAction.IsKnockBack)
+					aAction.Stun *= 2;
+
 				cap.Handle();
 
+				// No second hit if target was knocked back
 				if (tAction.IsKnockBack)
 					break;
 			}
