@@ -346,9 +346,9 @@
 10212, "내가 딱히 도와주겠다는 건 아니야! : 완성형", MaxAttack:+8, MagicAttack:+20
 10213, "내가 딱히 도와주겠다는 건 아니야! : 완전체형", MaxAttack:+15, MagicAttack:+32
 10214, "에린에서 만나 결혼한", Life:+20, Stamina:+20, Luck:+20, MaxAttack:+10
-10215, "Scissor Ruler", Dex:+20
-10216, "Ruler of Rock", Will:+20
-10217, "Paper Ruler", Str:+20
+10215, "Scissor Hand", Dex:+20
+10216, "Rock Fist", Will:+20
+10217, "Paper Palm", Str:+20
 10218, "Cut Down", Dex:-20
 10219, "Crushed", Will:-20
 10220, "Slashed", Str:-20
@@ -389,7 +389,23 @@
 10518, "Aspiring Marksman", Life:+10
 10519, "Legendary Lumberjack", Life:+20, Stamina:+10, MaxAttack:+10, Crit:+5
 10520, "Blood Master", Life:+25, Str:+10, MaxAttack:+12, Crit:+5
-10521, "로나판 라디오 리스너", Luck:+15
+10521, "로나판 라디오 리스너", Luck:+1
+10522, "새가족", Stamina:+1, Str:+1, Int:+1, Dex:+1, Luck:+1
+10523, "던컨을 만난지 1년된", Luck:+1
+10524, "2년째 수련중인", Luck:+2
+10525, "3년째 낚시에재미들린", Luck:+3
+10526, "4년째 요리중인", Luck:+4
+10527, "나오만난지 5년", Luck:+5
+10528, "6년째 윈드밀 수련중인", Luck:+6
+10529, "7년째 동안인", Luck:+7
+10530, "8년째 환생중인", Luck:+8
+10531, "던컨과 함께한지 9년된", Luck:+9
+10532, "10년을 한결같은", Luck:+10
+10533, "딸기농사를 11년째 하는", Luck:+11
+10534, "12년째 곰만 잡는", Luck:+12
+10535, "13년지기 친구", Luck:+13
+10536, "마비노기 Forever", Luck:+14
+10537, "불로장생", Luck:+15
 10680, "Avid Collector", Dex:+7, Will:+7
 10681, "King Collector", Str:+8, Int:+8, Dex:+8, MaxAttack:+10, Defense:+6, Protection:+6
 10700, "the Master of Battlefield Overture"
@@ -403,12 +419,12 @@
 10708, "the Encore Master"
 10709, "the Song Master"
 10710, "the Fantastic Chorus Master"
-10711, "Master of Tasting"
-10712, "Master Ingredient Hunter"
-10713, "Master of Catering"
-10714, "Exploration Master"
-10715, "Artifact Investigation Master"
-10716, "Crisis Escape Master"
+10711, "the Master of Tasting"
+10712, "the Master of Ingredient Hunting"
+10713, "the Master of Catering"
+10714, "the Master of Exploration"
+10715, "the Master of Artifact Investigation"
+10716, "the Master of Crisis Escape"
 10801, "the Shearer of Sheep", Dex:+25, Luck:+20
 10802, "the Master of Mining", Stamina:+25, Str:+25
 10803, "the Gatherer of Eggs", Dex:+35
@@ -475,6 +491,8 @@
 14006, "Spellwalk Master"
 14007, "Snap Cast Master"
 14008, "Magic Weapon Master", Dex:-30, MaxAttack:+8, MagicAttack:+25
+15010, "그린노기 운동가", MaxAttack:+10, MagicAttack:+6, MagicDefense:+3, MagicProtection:+3
+15011, "봄의 시작을 함께 한", Life:+10, Str:+10, Dex:+10, Luck:+15
 30001, "the Tough-looking", MaxAttackRate:+100, MinAttackRate:+100
 30002, "the Very Tough-looking", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100
 30003, "who Looks Dangerous", MinWAttack:-100, MaxWAttack:+100, MaxAttackRate:+100, MinAttackRate:+100
@@ -701,7 +719,14 @@
 10696, "Gift Sack", Dex:+10, MinAttack:+5, MaxAttack:+5, Crit:+5
 10697, "Christmas Tree", Will:+10, MinAttack:+10, Crit:+5
 10698, "Red-Nosed", Int:+10, MagicAttack:+10, Crit:+5
+10699, "성전의 영웅", Int:+20, Defense:+6
 15000, "겨울 천사", Mana:+35, MagicAttack:+28
 15001, "크리스마스에 눈이 내리면", Life:+35, MaxAttack:+15, Crit:+10
 15002, "크리스마스에 비나 왔으면", Dex:+12, Will:+20, Luck:+12, MaxAttack:+12
 15003, "빙판길 조심", Stamina:+35, MaxAttack:+10
+15004, "Unknown", MaxAttack:+20, MagicAttack:+18, MagicDefense:+10, MagicProtection:+6
+15005, "Unknown", MaxAttack:+10, MagicDefense:+10, MagicProtection:+6
+15006, "Unknown", MaxAttack:+20, MagicDefense:+12, MagicProtection:+8
+15007, "Unknown", MaxAttack:+10, MagicDefense:+10, MagicProtection:+6
+15008, "Unknown", MaxAttack:+15, MagicDefense:+10, MagicProtection:+6
+15009, "커플 브레이커", Stamina:+50, Str:+15, Will:+30

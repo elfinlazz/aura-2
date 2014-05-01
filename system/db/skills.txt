@@ -449,8 +449,8 @@
 50150,"Scare",0
 50153,"Normal Attack",0
 50165,"Spread Wings",0
-50172,"1st Couples Flight",0
-50173,"2nd Couples Flight",0
+50172,"Couples Flight",0
+50173,"Flight",0
 52010,"Bolt Out of the Blue",0
 
 // Personas
