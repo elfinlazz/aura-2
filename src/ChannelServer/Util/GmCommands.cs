@@ -60,7 +60,6 @@ namespace Aura.Channel.Util
 			Add(99, 99, "reloadscripts", "", HandleReloadScripts);
 			Add(99, 99, "reloadconf", "", HandleReloadConf);
 			Add(99, 99, "closenpc", "", HandleCloseNpc);
-			Add(99, 99, "test", "", HandleTest);
 
 			// Aliases
 			AddAlias("item", "drop");
@@ -185,20 +184,6 @@ namespace Aura.Channel.Util
 		}
 
 		// ------------------------------------------------------------------
-
-		public CommandResult HandleTest(ChannelClient client, Creature sender, Creature target, string message, string[] args)
-		{
-			//for (int i = 0; i < args.Length; ++i)
-			//{
-			//    Send.ServerMessage(sender, "Arg{0}: {1}", i, args[i]);
-			//}
-
-			//Log.Debug(target.Inventory.RemoveGold(10000));
-
-			Send.ServerMessage(sender, "test, test");
-
-			return CommandResult.Okay;
-		}
 
 		public CommandResult HandleWhere(ChannelClient client, Creature sender, Creature target, string message, string[] args)
 		{
