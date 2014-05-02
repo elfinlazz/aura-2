@@ -1443,6 +1443,7 @@
 30011,"NPC Revived Ruairi Outfit","Iria Rueri Cloth","/equip/armor/cloth/",0,0,1,,no,2,4,12,12,12,58000,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 30012,"NPC Young Tarlach Robe","Young Tarlach Robe","/equip/robe/human_elf_only/",0,0,1,,no,2,3,1,1,1,15000,20000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 30015,"Starlet's Outfit","Diva Cloth","/equip/armor/cloth/",0,0,1,,no,1,1,1,1,1,1000000,16000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+30016,"Culinary Artist Outfit","Master Chef Cloth","/equip/armor/cloth/",0,0,1,,no,1,1,1,1,1,1000000,16000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 30018,"Duke's Full Set (Not Wearable)","Duke full set","/equip/armor/cloth/",0,0,1,,no,2,2,12,12,12,0,20000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 30019,"Duke 02","Duke 02","/equip/armor/cloth/",0,0,1,,no,2,2,12,12,12,0,20000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 30020,"Duke 03","Duke 03","/equip/armor/cloth/",0,0,1,,no,2,2,12,12,12,0,20000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -3605,6 +3606,7 @@
 17997,"Colossus Boots","Colosus Boots","/equip/foot/armorboots/steel/smith_repairable/",3,0,1,,no,2,3,5,5,0,70000,12000,3,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17998,"Pierrot Shoes","Pierrot Boots","/equip/foot/shoes/",3,0,1,,no,2,2,1,0,0,20000,10000,1,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 17999,"Colossus Boots","Colosus Boots","/equip/foot/armorboots/steel/smith_repairable/",3,0,1,,no,2,3,5,5,0,70000,12000,3,1,0,0,0,0,0,0,0,0,0,{},{},{},{}
+30017,"Culinary Artist Shoes","Master Chef Shoes","/equip/foot/shoes/magic_armor/",3,0,1,,no,1,1,1,1,1,1000000,16000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 30023,"NPC Treasure Hunter Gloves","Treasure Hunter Shoes","/equip/foot/shoes/magic_armor/",3,0,1,,no,1,1,1,1,1,1000000,16000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 30024,"NPC Treasure Hunter Shoes","Treasure Hunter Gloves","/equip/hand/glove/magic_armor/",3,0,1,,no,1,1,1,0,0,1000000,16000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 90004,"Golem Feet","Feet of Golem","",3,0,1,,no,2,2,1,0,0,0,25000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -3783,6 +3785,7 @@
 1153,"Strange Book","Queer Book","/usable/readable/book/not_enchantable/queer_book/hide_world_tooltip/hide_world_popup/hide_item_sticker/",4,0,1,,no,1,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "red", "domint(data/script/event/queer_book.mint::QueerBook)"); }
 1154,"Strange Book","Queer Book","/equip/usable/script/book/queerbook/hide_world_tooltip/hide_world_popup/hide_item_sticker/",4,0,1,,no,1,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1155,"Glewyas's Mythril Chef Recipe Book","Recipe Book of Glewyas","/usable/readable/book/not_enchantable/quest_item/",4,0,1,,no,1,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "domint(data/script/event/item/glewyas_book.mint::GlewyasBook)"); }
+1159,"Culinary Artist's Course: Steaming","Chef's Easy Cooking Series - Steam","/equip/usable/readable/book/skillbook/cooking_5/not_enchantable/need_alternative_gold/",4,0,1,,no,1,2,2,5,1,35000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{ MagicSeal(i, "yellow", "trainskill(10020, 10)"); }
 1200,"Iria's Giant Statue","Giant Stone Statue In Iria","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1201,"Legend of the Giant Bird","Legend of Giant Bird","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 1202,"The Snake's Altar","The Temple of Snake","/equip/usable/readable/book/not_enchantable/",4,0,1,,no,1,2,2,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -6813,11 +6816,11 @@
 50003,"Apple","Apple","/usable/food/cooking/solid/raw01/expiring/",501,0,1,,yes,1,1,8,11,0,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, weight: -2, upper: -2, int_: 4, dex: 7, will: -2, mana: 1, stm: 4); },{},{},{}
 50004,"Bread","Bread","/usable/food/cooking/solid/boiled01/expiring/",501,0,1,,yes,2,1,9,0,0,56,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 15, upper: 2, lower: -1, str: 3, will: 3, life: 1, mana: 1, stm: 1); },{},{},{}
 50005,"Large Meat","Large Meat","/usable/food/cooking/solid/raw04/expiring/",501,0,1,,yes,2,2,10,0,0,450,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 100, weight: 5, upper: 4, lower: -2, str: 5, will: 5, life: 4, stm: 8); },{},{},{}
-50006,"Slice of Meat","Slice of Meat","/usable/food/cooking/solid/raw05/expiring/",501,1,5,,yes,1,1,10,0,0,625,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 30, weight: 3, upper: 2, lower: -1, str: 3, will: 4, life: 2, stm: 5); },{},{},{}
-50007,"Berry","Berry","/usable/food/cooking/solid/raw06/expiring/",501,1,5,,yes,1,1,8,0,0,12,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
+50006,"Sliced Meat","Slice of Meat","/usable/food/cooking/solid/raw05/expiring/",501,1,20,,yes,1,1,10,0,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 30, weight: 3, upper: 2, lower: -1, str: 3, will: 4, life: 2, stm: 5); },{},{},{}
+50007,"Berry","Berry","/usable/food/cooking/solid/raw06/expiring/",501,1,20,,yes,1,1,8,0,0,48,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50008,"Bread from Nao","Bread","/usable/food/cooking/solid/boiled01/",501,0,1,,yes,2,1,9,0,0,14,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 15, upper: 2, lower: -1, str: 3, will: 3, life: 1, mana: 1, stm: 1); },{},{},{}
-50009,"Egg","Egg","/usable/food/cooking/solid/egg/expiring/",501,1,5,,yes,1,1,16,12,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, upper: -1, lower: -1, str: 1, int_: -1, dex: -1, life: 2, stm: 2); },{},{},{}
-50010,"Potato","Potato","/usable/food/cooking/solid/potato/expiring/",501,1,10,,yes,1,1,12,0,0,40,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 12, weight: -1, upper: 1, lower: 3, str: 1, dex: -1, life: 2, mana: -2, stm: 1); },{},{},{}
+50009,"Egg","Egg","/usable/food/cooking/solid/egg/expiring/",501,1,20,,yes,1,1,16,12,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, upper: -1, lower: -1, str: 1, int_: -1, dex: -1, life: 2, stm: 2); },{},{},{}
+50010,"Potato","Potato","/usable/food/cooking/solid/potato/expiring/",501,1,20,,yes,1,1,12,0,0,80,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 12, weight: -1, upper: 1, lower: 3, str: 1, dex: -1, life: 2, mana: -2, stm: 1); },{},{},{}
 50012,"Golden Egg","Golden Egg","/usable/food/cooking/solid/golden_egg/",501,1,5,,yes,1,1,6,0,0,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 16, upper: -1, lower: -1, str: 1, int_: -1, dex: -1, life: 2, stm: 2); },{},{},{}
 50013,"Golden Apple","Golden Apple","/usable/food/cooking/solid/golden_apple/",501,0,1,,yes,1,1,6,29,0,3000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: -1, lower: -1, str: 1, int_: -1, dex: -1, life: 2, stm: 2); },{},{},{}
 50014,"Giant Potato","Giant Potato","/usable/food/cooking/solid/giant_potato/",501,0,1,,yes,2,2,12,0,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 24, weight: -3, upper: 3, lower: 6, str: 3, dex: -3, life: 4, mana: -4, stm: 3); },{},{},{}
@@ -6829,14 +6832,14 @@
 50025,"Bonanza Candy","Whiteday Candy","/usable/food/cooking/solid/candy/",501,0,1,,yes,2,2,12,21,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 3, upper: 3, lower: 3); },{},{},{}
 50026,"Holiday Cake","Christmas Cake","/usable/food/cooking/solid/xmascake/",501,0,1,,yes,2,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 1, upper: 1, lower: 1, str: -1, int_: -1, dex: -1, will: 1, luck: 1, life: 1, stm: 1); },{},{},{}
 50027,"Christmas Cake from Nao","Christmas Cake from Nao","/usable/food/cooking/solid/nao_xmascake/",501,0,1,,yes,2,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 1, upper: 1, lower: 1, str: -1, int_: -1, dex: -1, will: 1, luck: 1, life: 1, stm: 1); },{},{},{}
-50028,"Coconut","Coconut","/usable/food/cooking/solid/coconut/",501,1,3,,yes,1,1,13,12,12,16,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 12, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: 2, stm: 1); },{},{},{}
-50035,"Bean","Bean","/usable/food/cooking/solid/bean/",501,1,5,,yes,1,1,49,12,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
-50036,"Baked Bean","Baked Bean","/usable/food/cooking/milling/solid/bean/baked_bean/",501,1,5,,yes,1,1,51,12,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
-50037,"Peeled Bean","Scaled Bean","/usable/food/cooking/milling/solid/bean/scaled_bean/",501,1,5,,yes,1,1,54,12,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
-50038,"Bloated Bean","Macerated Bean","/usable/food/cooking/milling/solid/bean/macerated_bean/",501,1,5,,yes,1,1,52,12,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
-50041,"Baked Bean Powder","Baked Bean Flour","/food/cooking/solid/bean/baked_bean_flour/",501,1,5,,yes,1,1,54,51,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
-50042,"Peeled Bean Powder","Scaled Bean Flour","/food/cooking/solid/bean/scaled_bean_flour/",501,1,5,,yes,1,1,50,54,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
-50043,"Bloated Bean Powder","Macerated Bean Flour","/food/cooking/solid/bean/macerated_bean_flour/",501,1,5,,yes,1,1,16,52,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
+50028,"Coconut","Coconut","/usable/food/cooking/solid/coconut/",501,1,20,,yes,1,1,13,12,12,112,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 12, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: 2, stm: 1); },{},{},{}
+50035,"Bean","Bean","/usable/food/cooking/solid/bean/",501,1,20,,yes,1,1,49,12,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
+50036,"Roasted Bean","Baked Bean","/usable/food/cooking/milling/solid/bean/baked_bean/",501,1,20,,yes,1,1,51,12,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
+50037,"Peeled Bean","Scaled Bean","/usable/food/cooking/milling/solid/bean/scaled_bean/",501,1,20,,yes,1,1,54,12,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
+50038,"Water-soaked Bean","Macerated Bean","/usable/food/cooking/milling/solid/bean/macerated_bean/",501,1,20,,yes,1,1,52,12,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
+50041,"Roasted Bean Flour","Baked Bean Flour","/food/cooking/solid/bean/baked_bean_flour/",501,1,20,,yes,1,1,54,51,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
+50042,"Peeled Bean Flour","Scaled Bean Flour","/food/cooking/solid/bean/scaled_bean_flour/",501,1,20,,yes,1,1,50,54,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
+50043,"Water-soaked Bean Flour","Macerated Bean Flour","/food/cooking/solid/bean/macerated_bean_flour/",501,1,20,,yes,1,1,16,52,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: -1, stm: 1); },{},{},{}
 50045,"Pine Nut","Pine nuts","/usable/food/cooking/pine_nuts/",501,0,1,,yes,1,1,7,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 2, weight: 2, upper: 2, lower: 1, str: 1, int_: 4, dex: 3, will: -2, mana: 1, stm: 4); },{},{},{}
 50046,"Juniper Berry","Juniper berry","/usable/food/cooking/juniper_berry/",501,0,1,,yes,1,1,26,12,12,250,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 2, str: 1, int_: 3, dex: 2, will: 4, luck: 4, mana: 3, stm: -1); },{},{},{}
 50047,"Camellia Seeds","Camellia seeds","/usable/food/cooking/camellia_seeds/",501,0,1,,yes,1,1,8,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 1, weight: 5, upper: 3, lower: 2, str: 1, will: -2, luck: 1, mana: -2, stm: -2); },{},{},{}
@@ -6844,7 +6847,7 @@
 50049,"Bonanza Marshmallow","Whiteday Marshmellow","/usable/food/cooking/solid/marshmallow/",501,0,1,,yes,2,2,12,3,3,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 3, upper: 3, lower: 3); },{},{},{}
 50051,"Whiteday White Chocolate","Whiteday White Chocolate","/usable/food/cooking/solid/whitechocolate_npc/",501,0,1,,yes,2,2,12,3,3,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 3, upper: 3, lower: 3); },{},{},{}
 50052,"Whiteday Marshmellow","Whiteday Marshmellow","/usable/food/cooking/solid/marshmallow_npc/",501,0,1,,yes,2,2,12,3,3,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 3, upper: 3, lower: 3); },{},{},{}
-50064,"Maple Fruit","Maple Seeds","/usable/food/cooking/solid/raw06/expiring/",501,1,5,,yes,1,1,12,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 20); },{},{},{}
+50064,"Maple Seed","Maple Seeds","/usable/food/cooking/solid/raw06/expiring/",501,1,20,,yes,1,1,12,12,12,48,0,0,0,0,0,0,0,0,0,0,0,0,{ Heal(cr, 0, 0, 20); },{},{},{}
 50074,"Arat Berry","Arat Berry","/usable/food/expiring/scan/",501,1,5,,yes,1,1,85,0,0,12,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
 50075,"Arat Berry","Arat Berry","/usable/food/expiring/scan/",501,1,5,,yes,1,1,86,0,0,12,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
 50076,"Arat Berry","Arat Berry","/usable/food/expiring/scan/",501,1,5,,yes,1,1,87,0,0,12,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
@@ -6855,7 +6858,7 @@
 50081,"Valentine Chocolate Gift","Presented Chocolate","/usable/food/cooking/chocolate_npc/no_hotkey/",501,0,1,,yes,2,2,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50083,"Valentine Day Cake","Valentine Day Cake","/usable/food/cooking/solid/valentinecake/writelog_use/",501,0,1,,yes,2,2,12,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 1, upper: 1, lower: 1, str: -1, int_: -1, dex: -1, will: 1, luck: 1, life: 1, stm: 1); },{},{},{}
 50084,"Whiteday Cookie","Whiteday Cookie","/usable/food/cooking/solid/whitedaycookie/writelog_use/",501,0,1,,yes,2,2,12,21,0,50,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35, weight: 3, upper: 3, lower: 3); },{},{},{}
-50085,"Silvervine Fruit","Silver Vine Berry","/usable/food/cooking/solid/raw06/silvervine/expiring/",501,1,5,,yes,1,1,29,29,29,12,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
+50085,"Silvervine Fruit","Silver Vine Berry","/usable/food/cooking/solid/raw06/silvervine/expiring/",501,1,20,,yes,1,1,29,29,29,48,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50101,"Potato & Egg Salad","Potato And Egg Salad","/usable/food/cooking/potato_and_egg_salad/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,3000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 45, weight: 1, lower: -1, str: 1, int_: -1, dex: -1, will: 2, life: 1, stm: 1); },{},{},{}
 50102,"Potato Salad","Potato Salad","/usable/food/cooking/potato_salad/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 27, upper: -1, int_: -2, will: 1, life: 1, stm: 1); },{},{},{}
 50103,"French Fries","French Fried","/usable/food/cooking/french_fried/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1050,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 27, weight: 1, int_: -3, will: -1, life: -1, stm: 2); },{},{},{}
@@ -6865,12 +6868,12 @@
 50107,"Fruit Salad","Fruits Salad","/usable/food/cooking/fruits_salad/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,2750,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 37, weight: -1, upper: -1, lower: -1, str: -2, int_: -1, dex: 3, will: -1, life: -1, mana: 3); },{},{},{}
 50109,"Roasted Chicken Wing","Well-done Chicken Wing","/usable/food/cooking/well-done_chicken_wing/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 24, lower: 1, str: 1, dex: 1, will: -1, life: 2, mana: -1, stm: 1); },{},{},{}
 50110,"Fried Chicken Wing","Fried Chicken Wing","/usable/food/cooking/fried_chicken_wing/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 24, weight: 1, str: 2, int_: -1, dex: 1, will: -2, life: 1, mana: -2, stm: 2); },{},{},{}
-50111,"Carrot","Carrot","/usable/food/cooking/carrot/expiring/",501,1,10,,yes,1,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, weight: -1, upper: -1, str: -1, int_: 2, life: 1, stm: -2); },{},{},{}
-50112,"Strawberry","Strawberry","/usable/food/cooking/strawberry/expiring/",501,1,10,,yes,1,1,12,12,0,150,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -1, upper: -2, str: -1, int_: 1, dex: 1, life: 1, stm: -2); },{},{},{}
+50111,"Carrot","Carrot","/usable/food/cooking/carrot/expiring/",501,1,20,,yes,1,1,12,12,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, weight: -1, upper: -1, str: -1, int_: 2, life: 1, stm: -2); },{},{},{}
+50112,"Strawberry","Strawberry","/usable/food/cooking/strawberry/expiring/",501,1,20,,yes,1,1,12,12,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -1, upper: -2, str: -1, int_: 1, dex: 1, life: 1, stm: -2); },{},{},{}
 50113,"Strawberry Milk","Strawberry Milk","/usable/food/cooking/strawberry_milk/no_hotkey/expiring/festival_source/",501,0,1,,yes,1,2,12,12,0,1350,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 19, upper: -1, str: 1, int_: 1, dex: -2, will: 1, mana: 1, stm: -1); },{},{},{}
 50115,"Garlic Bread","Garlic Bread","/usable/food/cooking/garlic_bread/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,450,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 21, weight: 1, lower: -1, str: -1, int_: 2, dex: 1, will: 1, life: 1, mana: 1); },{},{},{}
 50120,"Steamed Rice","Boiled Rice","/usable/food/cooking/boiled_rice/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1650,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 15, weight: 1, str: 1, int_: 2, dex: -3, will: -2, life: -2, mana: -1, stm: 2); },{},{},{}
-50122,"Bacon","Bacon","/usable/food/cooking/bacon/expiring/",501,1,10,,yes,1,1,12,12,0,750,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 15, weight: 2, upper: 1, lower: 2, str: 3, int_: -2, dex: -2, will: 1, life: -3, stm: 1); },{},{},{}
+50122,"Bacon","Bacon","/usable/food/cooking/bacon/expiring/",501,1,20,,yes,1,1,12,12,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 15, weight: 2, upper: 1, lower: 2, str: 3, int_: -2, dex: -2, will: 1, life: -3, stm: 1); },{},{},{}
 50123,"Roasted Bacon","Roasted Bacon","/usable/food/cooking/roasted_bacon/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, weight: 1, upper: 1, lower: 1, str: 3, int_: -2, dex: -2, will: 1, life: -3, stm: 1); },{},{},{}
 50124,"Beef Steak","Beefsteak","/usable/food/cooking/beefsteak/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,4050,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 17, weight: 2, upper: 1, str: 4, dex: -2, life: 1, mana: -3, stm: 3); },{},{},{}
 50125,"Steamed Potato","Boiled Potato","/usable/food/cooking/boiled_potato/no_hotkey/expiring/festival_source/",501,0,1,,yes,1,1,12,12,0,600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, weight: -1, str: 3, int_: 1, dex: -3, will: -1, life: 4, mana: -4, stm: 3); },{},{},{}
@@ -6881,8 +6884,8 @@
 50134,"Sliced Bread","Tin Bread","/usable/food/cooking/tin_bread/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,2,12,12,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 11, upper: 1, lower: -1, int_: -2, dex: 2, life: 2, mana: 1, stm: 1); },{},{},{}
 50136,"Fried Vegetables","Fried Vegetables","/usable/food/cooking/fried_vegetables/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1050,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 19, weight: 1, str: -1, int_: -1, dex: 3, will: -1, life: -1, mana: 3, stm: -1); },{},{},{}
 50137,"Vegetable Soup","Vegetable soup","/usable/food/cooking/vegetable_soup/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1650,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 26, weight: -1, upper: -1, str: -1, dex: 1, will: 1, mana: 2, stm: -1); },{},{},{}
-50138,"Cabbage","Cabbage","/usable/food/cooking/cabbage/expiring/",501,1,10,,yes,2,1,12,12,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -1, lower: -1, str: -1, dex: 1, will: 1, stm: -1); },{},{},{}
-50139,"Mushroom","White Button Mushroom","/usable/food/cooking/white_button_mushroom/expiring/",501,1,10,,yes,1,1,12,12,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5, weight: -1, upper: -1, lower: -1, str: -1, dex: 1, mana: 1, stm: -2); },{},{},{}
+50138,"Cabbage","Cabbage","/usable/food/cooking/cabbage/expiring/",501,1,20,,yes,2,1,12,12,0,600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, weight: -1, upper: -1, lower: -1, str: -1, dex: 1, will: 1, stm: -1); },{},{},{}
+50139,"Button Mushroom","White Button Mushroom","/usable/food/cooking/white_button_mushroom/expiring/",501,1,20,,yes,1,1,12,12,0,600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5, weight: -1, upper: -1, lower: -1, str: -1, dex: 1, mana: 1, stm: -2); },{},{},{}
 50140,"Fried Mushroom","Fried White Button Mushroom","/usable/food/cooking/fried_white_button_mushroom/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,900,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 11, weight: -1, upper: -1, lower: -1, str: -1, int_: -1, dex: 2, will: -1, life: -1, mana: 2, stm: -1); },{},{},{}
 50141,"Mushroom Soup","White Button Mushroom Soup","/usable/food/cooking/white_button_mushroom_soup/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 16, upper: -1, str: -1, dex: 2, will: -1, mana: 2, stm: -2); },{},{},{}
 50143,"Fried Onion","Fried Onion","/usable/food/cooking/fried_onion/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,1050,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, lower: 1, str: -2, int_: -1, dex: 2, will: -1, life: -1, mana: 3, stm: -1); },{},{},{}
@@ -6915,8 +6918,8 @@
 50181,"Leighean Gin","Leighean Gin","/usable/food/cooking/leighean_gin/no_hotkey/expiring/festival_source/",501,0,1,,yes,1,2,12,2,0,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
 50182,"Brifne Whiskey","Brifne Whisky","/usable/food/cooking/brifne_whisky/no_hotkey/expiring/festival_source/",501,0,1,,yes,1,2,12,2,0,2200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
 50183,"Devenish Black Beer","Devenish Black Beer","/usable/food/cooking/devenish_black_beer/no_hotkey/expiring/festival_source/",501,0,1,,yes,1,2,12,2,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
-50187,"Lemon","Lemon","/usable/food/cooking/lemon/expiring/",501,1,10,,yes,1,1,12,12,0,350,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, upper: 1, str: 1, int_: -1, dex: -1, will: 1, life: 1, stm: 1); },{},{},{}
-50188,"Orange","Orange","/usable/food/cooking/orange/expiring/",501,1,10,,yes,1,1,12,12,0,350,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, weight: 1, str: 1, int_: -2, dex: -1, will: 1, life: 1, stm: 2); },{},{},{}
+50187,"Lemon","Lemon","/usable/food/cooking/lemon/expiring/",501,1,20,,yes,1,1,12,12,0,700,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, upper: 1, str: 1, int_: -1, dex: -1, will: 1, life: 1, stm: 1); },{},{},{}
+50188,"Orange","Orange","/usable/food/cooking/orange/expiring/",501,1,20,,yes,1,1,12,12,0,700,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, weight: 1, str: 1, int_: -2, dex: -1, will: 1, life: 1, stm: 2); },{},{},{}
 50190,"Apple Juice","Apple Juice","/usable/food/cooking/apple_juice/no_hotkey/expiring/festival_source/",501,0,1,,yes,1,2,12,12,0,550,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 17, weight: -1, upper: -1, lower: -1, str: -2, int_: -1, dex: 3, will: -1, life: -1, mana: 3); },{},{},{}
 50191,"Curry Bread","Curry Bread","/usable/food/cooking/curry_bread/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,700,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 23, weight: 1, str: 1, dex: 1, will: -2, life: 1, mana: -1, stm: 1); },{},{},{}
 50193,"(Not Used) Cloin Monsieur","Croque Monsieur","/usable/food/cooking/croque_monsieur/no_hotkey/",501,0,1,,yes,2,1,12,12,0,10,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0, weight: -1, lower: -1, str: 1, int_: -1, dex: 1, life: 1, mana: -1, stm: 1); },{},{},{}
@@ -6938,7 +6941,7 @@
 50214,"Bacon and Potato Dog Food","Bacon & Potato for Dogs","/usable/food/cooking/no_hotkey/festival_source/",501,0,1,,yes,2,1,38,12,12,480,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 25, weight: 1, int_: -1, dex: 1, will: -1, life: 1, stm: -1); },{},{},{}
 50215,"Shrimp Dog Food","Shrimp & Rice for Dogs","/usable/food/cooking/no_hotkey/festival_source/",501,0,1,,yes,2,1,38,12,12,600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 25, weight: 1, int_: -1, dex: 1, will: -1, life: 1, stm: -1); },{},{},{}
 50217,"Celery","celery","/food/cooking/expiring/",501,0,1,,yes,1,2,12,12,0,125,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
-50218,"Tomato","tomato","/usable/food/cooking/tomato/",501,1,10,,yes,1,1,12,12,0,90,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
+50218,"Tomato","tomato","/usable/food/cooking/tomato/",501,1,20,,yes,1,1,12,12,0,180,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
 50220,"Corn Powder","corn grain","/food/cooking/no_hotkey/expiring/",501,0,1,,yes,2,2,57,0,0,80,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
 50221,"Mixed vegetables","mixed vegetable","/food/cooking/no_hotkey/expiring/",501,0,1,,yes,2,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
 50222,"Omelet","omelet","/usable/food/cooking/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,0,3500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, upper: 1, str: 1, int_: 1, dex: -1, life: 1); },{},{},{}
@@ -6972,7 +6975,7 @@
 50271,"Braised Angler Fish","Steamed Angler","/usable/food/cooking/boiled_angler/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,2600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, weight: 1, str: 1, will: -2, luck: -1, life: 1, mana: 1, stm: 1); },{},{},{}
 50273,"Mashed Roasted Bean Flour Tofu","Crushed Bean Curd","/usable/food/cooking/crushed_bean_curd/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
 50274,"Magic Bean Tofu","Magic Bean Curd","/usable/food/cooking/bean_curd/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, dex: 1, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
-50276,"Hazelnut Mushroom","Hazel Mushroom","/usable/food/cooking/hazel_mushroom/deer_mushroom/",501,1,10,,yes,1,1,12,12,12,600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5, weight: -1, upper: -1, lower: -1, str: -1, int_: 1, dex: 1, luck: 4, mana: 3, stm: -2); },{},{},{}
+50276,"Hazelnut Mushroom","Hazel Mushroom","/usable/food/cooking/hazel_mushroom/deer_mushroom/",501,1,20,,yes,1,1,12,12,12,1200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5, weight: -1, upper: -1, lower: -1, str: -1, int_: 1, dex: 1, luck: 4, mana: 3, stm: -2); },{},{},{}
 50278,"Mushroom Potage","Mushroom Potage","/usable/food/cooking/mushroom_potage\n/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,4300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, int_: 1, dex: 2, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
 50279,"Mushroom Consomme","Mushroom Consomme","/usable/food/cooking/mushroom_consomme\n/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,4000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, int_: 2, dex: 2, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
 50280,"Mushroom Cappuccino Soup","Mushroom Cappuccino Soup","/usable/food/cooking/mushroom_cappuccinosoup\n/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,3500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 28, str: 1, int_: 2, dex: 2, luck: -1, life: 1, mana: 1, stm: -1); },{},{},{}
@@ -7068,7 +7071,7 @@
 50373,"Vena's Chocolate","Vena's Chocolate","/usable/food/cooking/chocolate_npc/no_hotkey/",501,0,1,,yes,2,2,12,12,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50374,"Meriel's Chocolate","Meriel's Chocolate","/usable/food/cooking/chocolate_npc/no_hotkey/",501,0,1,,yes,2,2,12,12,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50375,"Petra's Chocolate","Petra's Chocolate","/usable/food/cooking/chocolate_npc/no_hotkey/",501,0,1,,yes,2,2,12,12,1,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50376,"Watermelon Slice","Watermelon","/usable/food/cooking/watermelon/",501,1,10,,yes,1,1,12,12,1,150,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50376,"Watermelon Slice","Watermelon","/usable/food/cooking/watermelon/",501,1,20,,yes,1,1,12,12,1,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50377,"Taiwanese Pound Cake","Taiwanese Pound Cake","/usable/food/cooking/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
 50378,"Magic Rice-cake","Magic Rice-cake","/usable/food/cooking/",501,0,1,,yes,2,1,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
 50380,"Chocolate made with Kristell's Appreciation","Chocolate with Kristell's gratitude","/usable/food/cooking/chocolate_npc/no_hotkey/",501,0,1,,yes,2,2,12,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -7098,17 +7101,55 @@
 50418,"Tara Specialty Sausage Sandwich","Tara Sausage Sandwich","/usable/food/cooking/festival_source/",501,0,1,,yes,2,1,12,0,0,2150,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50419,"Strawberry Jam & Toast","Simple Toast","/usable/food/cooking/festival_source/",501,0,1,,yes,2,1,12,0,0,850,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50420,"Club Sandwich","Club Sandwich","/usable/food/cooking/festival_source/",501,0,1,,yes,2,2,12,0,0,2350,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
-50421,"Pecans","Pecans","/usable/food/cooking/",501,1,10,,yes,1,1,12,0,0,500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
+50421,"Pecan","Pecans","/usable/food/cooking/",501,1,20,,yes,1,1,12,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50422,"Tart Crust","Tarte Shell","/food/cooking/",501,0,1,,yes,1,1,12,0,0,700,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50423,"Pan Pie Crust","Pie Shell","/food/cooking/",501,0,1,,yes,2,2,12,0,0,1200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50424,"Pumpkin Tart","Pumpkin Tarte","/usable/food/cooking/festival_source/",501,0,1,,yes,1,1,12,0,0,2250,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50425,"Egg Tart","Egg Tarte","/usable/food/cooking/festival_source/",501,0,1,,yes,1,1,12,0,0,2200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
-50426,"Peanuts","Peanuts","/usable/food/cooking/",501,1,10,,yes,1,1,12,0,0,500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
+50426,"Peanuts","Peanuts","/usable/food/cooking/",501,1,20,,yes,1,1,12,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50427,"Apple Pie","Apple Pie","/usable/food/cooking/festival_source/",501,0,1,,yes,2,2,12,0,0,3500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
 50428,"Pecan Pie","Pecan Pie","/usable/food/cooking/festival_source/",501,0,1,,yes,2,2,12,0,0,3250,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
-50429,"Lemon Juice","Lemon Juice","/food/cooking/",501,1,5,,yes,1,2,12,0,0,550,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
-50430,"Grapes","Grape","/usable/food/cooking/",501,1,10,,yes,1,2,12,0,0,800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
-50431,"Aged Pumpkin","Pumpkin","/usable/food/cooking/",501,1,10,,yes,2,2,12,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
+50429,"Lemon Juice","Lemon Juice","/food/cooking/",501,1,20,,yes,1,2,12,0,0,2200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
+50430,"Grapes","Grape","/usable/food/cooking/",501,1,20,,yes,1,2,12,0,0,1600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
+50431,"Ripe Pumpkin","Pumpkin","/usable/food/cooking/",501,1,20,,yes,2,2,12,0,0,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, weight: -2, upper: -2, lower: -1, int_: 4, dex: 5, stm: 2); },{},{},{}
+50450,"Block of Cheese","Large Cheese","/usable/food/cooking/solid/raw02/expiring/",501,1,20,,yes,2,2,7,0,0,9600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 40, weight: -2, lower: 2, str: 3, int_: 5, will: 2, mana: 8, stm: 4); },{},{},{}
+50451,"Slice of Cheese","Slice of Cheese","/usable/food/cooking/solid/raw03/expiring/",501,1,20,,yes,1,1,7,0,0,1600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, weight: -2, lower: 1, str: 2, int_: 4, will: 1, mana: 3, stm: 2); },{},{},{}
+50452,"Apple","Apple","/usable/food/cooking/solid/raw01/expiring/",501,1,20,,yes,1,1,8,11,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, weight: -2, upper: -2, int_: 4, dex: 7, will: -2, mana: 1, stm: 4); },{},{},{}
+50453,"Bread","Bread","/usable/food/cooking/solid/boiled01/expiring/",501,1,20,,yes,2,1,9,0,0,1120,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 15, upper: 2, lower: -1, str: 3, will: 3, life: 1, mana: 1, stm: 1); },{},{},{}
+50454,"Large Meat","Large Meat","/usable/food/cooking/solid/raw04/expiring/",501,1,20,,yes,2,2,10,0,0,9000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 100, weight: 5, upper: 4, lower: -2, str: 5, will: 5, life: 4, stm: 8); },{},{},{}
+50456,"Wheat Flour","Wheat Flour","/food/cooking/solid/wheat_flour/no_hotkey/expiring/need_alternative_gold/",501,1,20,,yes,2,2,7,0,0,1600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 1, str: -1, dex: -1, will: -1, life: 1); },{},{},{}
+50457,"Barley Flour","Barley Flour","/food/cooking/solid/barley_flour/no_hotkey/expiring/",501,1,20,,yes,2,2,9,0,0,1600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 1, str: -1, dex: -1, will: -1, life: 1); },{},{},{}
+50458,"Pine Nut","Pine nuts","/usable/food/cooking/pine_nuts/",501,1,20,,yes,1,1,7,12,12,4000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 2, weight: 2, upper: 2, lower: 1, str: 1, int_: 4, dex: 3, will: -2, mana: 1, stm: 4); },{},{},{}
+50459,"Juniper Berry","Juniper berry","/usable/food/cooking/juniper_berry/",501,1,20,,yes,1,1,26,12,12,5000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 2, str: 1, int_: 3, dex: 2, will: 4, luck: 4, mana: 3, stm: -1); },{},{},{}
+50460,"Camellia Seed","Camellia seeds","/usable/food/cooking/camellia_seeds/",501,1,20,,yes,1,1,8,12,12,4000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 1, weight: 5, upper: 3, lower: 2, str: 1, will: -2, luck: 1, mana: -2, stm: -2); },{},{},{}
+50461,"Beef","Beef","/food/cooking/beef/expiring/",501,1,20,,yes,2,1,12,12,0,30000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, weight: 2, upper: 1, str: 2, int_: 1, dex: -2, will: 1); },{},{},{}
+50462,"Celery","celery","/food/cooking/expiring/",501,1,20,,yes,1,2,12,12,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
+50463,"Cornmeal","corn grain","/food/cooking/no_hotkey/expiring/",501,1,20,,yes,2,2,57,0,0,1600,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 8, int_: -1, dex: -1, will: -1, luck: 2, life: 1, stm: -1); },{},{},{}
+50464,"Roasted Coffee","roasted bean","/food/cooking/roasted_bean/no_hotkey/",501,1,20,,yes,1,1,12,12,12,2000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, str: -1, dex: -1, will: -5, stm: -10); },{},{},{}
+50465,"Leek","Chives","/food/cooking/no_hotkey/chives/",501,1,20,,yes,1,2,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, str: -1, dex: -1, will: -5, stm: -10); },{},{},{}
+50466,"Mung Bean","Adzuki Bean","/food/cooking/no_hotkey/adzuki_bean/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, upper: -1, lower: -1, str: 1, int_: -1, dex: -1, life: 2, stm: 2); },{},{},{}
+50467,"Sweet Potato","Sweet Potato","/usable/food/cooking/no_hotkey/sweet_potato/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, str: -1, dex: -1, will: -5, stm: -10); },{},{},{}
+50468,"Octopus","Octopus","/food/cooking/no_hotkey/octopus/",501,1,20,,yes,1,2,12,12,0,800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, weight: 2, upper: 1, str: 2, int_: 1, dex: -2, will: 1); },{},{},{}
+50469,"Chestnut","Chestnut","/usable/food/cooking/no_hotkey/chestnut/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, upper: -1, lower: -1, str: 1, int_: -1, dex: -1, life: 2, stm: 2); },{},{},{}
+50470,"Sweet Pumpkin","Autumn Squash","/food/cooking/no_hotkey/autumn_squash/",501,1,20,,yes,2,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, str: -1, dex: -1, will: -5, stm: -10); },{},{},{}
+50471,"Bell Pepper","PaPrika","/usable/food/cooking/no_hotkey/paprika/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, str: -1, dex: -1, will: -5, stm: -10); },{},{},{}
+50472,"Malt","Malt","/food/cooking/no_hotkey/malt/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, str: -1, dex: -1, will: -5, stm: -10); },{},{},{}
+50473,"Turkey","Turkey","/food/cooking/no_hotkey/turkey/",501,1,20,,yes,2,2,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, weight: 2, upper: 1, str: 2, int_: 1, dex: -2, will: 1); },{},{},{}
+50474,"Chicken","Chicken","/food/cooking/no_hotkey/chicken/",501,1,20,,yes,2,2,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, weight: 2, upper: 1, str: 2, int_: 1, dex: -2, will: 1); },{},{},{}
+50475,"White Truffle","Truffle","/usable/food/cooking/no_hotkey/truffle/",501,1,20,,yes,1,1,12,12,0,1200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, weight: 2, upper: 1, str: 4, int_: 1, will: 1); },{},{},{}
+50476,"Gelatin","Gelatin","/food/cooking/no_hotkey/gelatin/",501,1,20,,yes,2,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, str: -1, dex: -1, will: -5, stm: -10); },{},{},{}
+50477,"Almond","Almond","/usable/food/cooking/no_hotkey/almond/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6, upper: -1, lower: -1, str: 1, int_: -1, dex: -1, life: 2, stm: 2); },{},{},{}
+50478,"Hat Cookie Cutter","Hat-Shaped Frame","/food/cooking/no_hotkey/hat_shaped_frame/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50479,"Star Cookie Cutter","Star-Shaped Frame","/food/cooking/no_hotkey/star_shaped_frame/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50480,"Owl Cookie Cutter","Owls-Shaped Frame","/food/cooking/no_hotkey/owls_shaped_frame/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50483,"Eggplant","Eggplant","/usable/food/cooking/no_hotkey/eggplant/",501,1,20,,yes,2,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5); },{},{},{}
+50484,"Fan Mussel","Pen Shell","/food/cooking/no_hotkey/pen_shell/",501,1,20,,yes,1,2,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50485,"Scallop","Scallop","/food/cooking/no_hotkey/scallop/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50486,"Poulp","Small Octopus","/food/cooking/no_hotkey/small_octopus/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50487,"Walnut","Walnut","/usable/food/cooking/no_hotkey/walnut/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5, upper: 10); },{},{},{}
+50488,"Blueberry","Blueberry","/usable/food/cooking/no_hotkey/blueberry/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 5, lower: 1); },{},{},{}
+50489,"Spicy Pepper","Tabasco Pepper","/food/cooking/no_hotkey/tabasco_pepper/",501,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50490,"Soy Sauce","Soy Sauce","/food/cooking/no_hotkey/soy_sauce/",501,1,20,,yes,1,2,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
 50500,"Basil Tea","basil tea","/usable/food/cooking/basil_tea/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,850,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10, upper: -2, str: -1, dex: 1, will: 2, stm: 1); },{},{},{}
 50501,"Lemon Tea","lemon tea","/usable/food/cooking/lemon_tea/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,650,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 11, lower: -1, will: 1, stm: 2); },{},{},{}
 50502,"Steamed Milk","steamed milk","/usable/food/cooking/steamed_milk/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,450,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 17, lower: -1, str: 1, dex: 1, will: -1, stm: 3); },{},{},{}
@@ -7144,7 +7185,7 @@
 50536,"Show-off Steak","High Horse Steak","/usable/food/cooking/highhorse_steak/no_hotkey/festival_source/",501,0,1,,yes,2,2,12,12,12,1800,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: 1, str: 1, will: 1, life: 1, mana: 1, stm: 1); },{},{},{}
 50537,"Heartbeat Gateau Au Chocolat","Pit a Pat Gateau au Chocolat","/usable/food/cooking/pitapat_gateau_au_chocolat/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,950,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: 1, str: 1, will: 1, life: 1, mana: 1, stm: 1); },{},{},{}
 50538,"Friendship Shrimp Fried Rice","Friendship Shrimp Fried Rice","/usable/food/cooking/friendship_shrimp_fried_rice/no_hotkey/festival_source/",501,0,1,,yes,2,2,12,12,12,850,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: 1, str: 1, will: 1, life: 1, mana: 1, stm: 1); },{},{},{}
-50539,"Courcle Coffee Berry","Courcle coffee bean","/usable/food/cooking/solid/coffee_bean/",501,1,10,,yes,1,1,12,12,12,50,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 3, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: 2, stm: 1); },{},{},{}
+50539,"Courcle Coffee Beans","Courcle coffee bean","/usable/food/cooking/solid/coffee_bean/",501,1,20,,yes,1,1,12,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 3, weight: -1, upper: -2, lower: -1, str: 1, int_: 1, dex: 2, stm: 1); },{},{},{}
 50540,"Roasted Coffee","roasted bean","/usable/food/cooking/roasted_bean/no_hotkey/",501,0,1,,yes,1,1,12,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, str: -1, dex: -1, will: -5, stm: -10); },{},{},{}
 50541,"Espresso","Espresso","/usable/food/cooking/espresso/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,300,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 4, str: 1, int_: 5, dex: 3, will: 3, luck: 6, mana: 5); },{},{},{}
 50542,"Espresso Macchiato","Espresso macchiato","/usable/food/cooking/espresso_macchiato\n/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 11, weight: 3, upper: 1, lower: 2, str: 3, int_: 3, dex: 1, will: -5, mana: 3, stm: 3); },{},{},{}
@@ -7275,7 +7316,7 @@
 50703,"Blue Magic Holiday Rice Cake","Magic Songpyeon","/usable/food/cooking/magicsongpeon/no_hotkey/expiring/writelog_use/writelog_separated/writelog_combined/",501,1,10,,yes,1,1,12,12,12,950,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: 1, str: 1, will: 1, life: 1, mana: 1, stm: 1); },{},{},{}
 50704,"Indigo Magic Holiday Rice Cake","Magic Songpyeon","/usable/food/cooking/magicsongpeon/no_hotkey/expiring/writelog_use/writelog_separated/writelog_combined/",501,1,10,,yes,1,1,12,12,12,950,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: 1, str: 1, will: 1, life: 1, mana: 1, stm: 1); },{},{},{}
 50705,"Violet Magic Holiday Rice Cake","Magic Songpyeon","/usable/food/cooking/magicsongpeon/no_hotkey/expiring/writelog_use/writelog_separated/writelog_combined/",501,1,10,,yes,1,1,12,12,12,950,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: 1, str: 1, will: 1, life: 1, mana: 1, stm: 1); },{},{},{}
-50706,"Cacao","Cacao","/food/cooking/Cacao/no_hotkey/expiring/",501,1,10,,yes,2,1,12,12,12,950,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50706,"Cacao","Cacao","/food/cooking/Cacao/no_hotkey/expiring/",501,1,20,,yes,2,1,12,12,12,1900,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
 50707,"Cacao Chocolate Cake","Cacao Chocolate Cake","/food/usable/food/cooking/Cacao Chocolate Cake/no_hotkey/expiring/",501,0,1,,yes,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: 1, str: 1, will: 1, life: 1, mana: 1, stm: 1); },{},{},{}
 50708,"Soy Chocolate","Soymilk Chocolate","/food/usable/food/cooking/Soymilk Chocolate/no_hotkey/expiring/",501,1,10,,yes,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: 1, str: 1, will: 1, life: 1, mana: 1, stm: 1); },{},{},{}
 50709,"Mustard Chocolate","Mustard Chocolate","/food/usable/food/cooking/Mustard Chocolate/no_hotkey/expiring/",501,1,10,,yes,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20, upper: 1, str: 1, will: 1, life: 1, mana: 1, stm: 1); },{},{},{}
@@ -7298,6 +7339,97 @@
 50727,"Dragon T-Bone Steak","Dragon T-bone steak","/usable/food/cooking/no_hotkey/expiring/writelog_use/writelog_separated/writelog_combined/festival_source/",501,0,1,,yes,2,1,12,12,12,5000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 25, int_: 1, dex: 1, will: 1, luck: 1, life: 1, mana: 1, stm: 1); },{},{},{}
 50728,"Dragon Blood White Wine","Dragon Blood White Wine","/usable/food/cooking/no_hotkey/expiring/writelog_use/writelog_separated/writelog_combined/festival_source/",501,0,1,,yes,1,2,22,12,12,7000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 25, int_: 1, dex: 1, will: 1, luck: 1, life: 1, mana: 1, stm: 1); },{},{},{}
 50729,"Dragon Blood Red Wine","Dragon Blood Red Wine","/usable/food/cooking/no_hotkey/expiring/writelog_use/writelog_separated/writelog_combined/festival_source/",501,0,1,,yes,1,2,31,12,12,7000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 25, int_: 1, dex: 1, will: 1, luck: 1, life: 1, mana: 1, stm: 1); },{},{},{}
+50731,"Catering Dish","Festival Food","/usable/food/festival_food/no_hotkey/hide_quality/script/",501,0,1,,yes,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50732,"Rice Cake Soup","Tteokguk","/usable/food/cooking/tteokguk/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 30); },{},{},{}
+50733,"Large Rice Cake Soup","Double Size Tteokguk","/usable/food/cooking/double_size_tteokguk/no_hotkey/festival_source/",501,0,1,,yes,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 40); },{},{},{}
+50734,"Jumbo Rice Cake Soup","Super Size Tteokguk","/usable/food/cooking/super_size_tteokguk/no_hotkey/festival_source/",501,0,1,,yes,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 60); },{},{},{}
+50735,"Moon Cake","Moon Cake","/usable/food/cooking/moon_cake/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 30); },{},{},{}
+50736,"Large Moon Cake","Double Size Moon Cake","/usable/food/cooking/double_size_moon_cake/no_hotkey/festival_source/",501,0,1,,yes,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 40); },{},{},{}
+50737,"Jumbo Moon Cake","Super Size Moon Ckae","/usable/food/cooking/super_size_moon_ckae/no_hotkey/festival_source/",501,0,1,,yes,3,3,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 60); },{},{},{}
+50738,"Halloween Pumpkin Candy","Halloween Pumpkin Candy","/usable/food/cooking/halloween_pumpkin_candy/no_hotkey/festival_source/",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50739,"Halloween Wrapped Candy","Halloween Candy Box","/usable/food/cooking/halloween_candy_box/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50740,"Halloween Pumpkin Chocolate","Halloween Pumpkin Chocolate","/usable/food/cooking/halloween_pumpkin_chocolate/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50741,"Halloween Wrapped Cookie","Halloween Cookie Box","/usable/food/cooking/halloween_cookie_box/no_hotkey/festival_source/",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50742,"Halloween Pumpkin Pie","Halloween Pumpkin Pie","/usable/food/cooking/halloween_pumpkin_pie/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50743,"Halloween Hat Cookie","Halloween Hat Cookie","/usable/food/cooking/halloween_hat_cookie/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50744,"Halloween Star Cookie","Halloween Star Cookie","/usable/food/cooking/halloween_star_cookie/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50745,"Halloween Owl Cookie","Halloween Owl Cookie","/usable/food/cooking/halloween_owl_cookie/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50746,"Halloween Ghost Jelly","Halloween Ghost Jelly","/usable/food/cooking/halloween_ghost_Jelly/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50747,"Halloween Pumpkin Jelly","Halloween Pumpkin Jelly","/usable/food/cooking/halloween_pumpkin_Jelly/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50748,"Fried Dumplings","Fried Bun","/usable/food/cooking/fried_bun/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 30, dex: 3, stm: 3); },{},{},{}
+50749,"Large Fried Dumplings","Double Size Fried Bun","/usable/food/cooking/double_size_fried_bun/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 40); },{},{},{}
+50750,"Jumbo Fried Dumplings","Super Size Fried Bun","/usable/food/cooking/super_size_fried_bun/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 60); },{},{},{}
+50751,"Toasted Rice Cake","Roast Rice-Cake","/usable/food/cooking/roast_rice_cake/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 35); },{},{},{}
+50752,"Fortune Cookie","Fortune Cookie","/usable/food/cooking/fortune_cookie/no_hotkey/festival_source/script/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50753,"Roasted Turkey","Roast Turkey","/usable/food/cooking/roast_turkey/no_hotkey/festival_source/",501,0,1,,yes,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 30); },{},{},{}
+50754,"Tara Sausage Sandwich","Tara Sausage Sandwich","/usable/food/cooking/tara_sausage_sandwich/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 6); },{},{},{}
+50755,"Holiday Rice Cake","Songpyeon","/usable/food/cooking/songpyeon/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20); },{},{},{}
+50756,"Truffle Pie","Truffes Pie","/usable/food/cooking/truffes_pie/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20); },{},{},{}
+50757,"Chocolate Souffle","Chocolate Souffle","/usable/food/cooking/chocolate_souffle/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20); },{},{},{}
+50758,"Celery Salad","Celery Salad","/usable/food/cooking/celery_salad/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 16); },{},{},{}
+50759,"Chicken Chow Mein","Chicken Fried-Noodles","/usable/food/cooking/chicken_fried_noodles/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 89); },{},{},{}
+50760,"Grilled Corn","Roast Corn","/usable/food/cooking/roast_corn/no_hotkey/festival_source/",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 95); },{},{},{}
+50761,"Triple Hotcakes","3-fold Pancake","/usable/food/cooking/3fold_pancake/no_hotkey/festival_source/",501,0,1,,yes,2,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50762,"Chocolate Cake","Chocolate Cake","/usable/food/cooking/chocolate_cake/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,240,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 15); },{},{},{}
+50763,"Chicken Soup","Samgyetang","/usable/food/cooking/samgyetang/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50764,"Taffy Stick","Garakyeot","/usable/food/cooking/garakyeot/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50765,"Giant Star Candy","Big Star-Candy","/usable/food/cooking/big_star_candy/no_hotkey/festival_source/",501,0,1,,yes,2,2,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50766,"Bean Stuffing","Bean Jam","/food/cooking/bean_Jam/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50767,"Simmered Sweet Potato","Boiled Sweet Potato","/usable/food/cooking/boiled_sweet_potato/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50768,"Simmered Beans","Boiled Bean","/usable/food/cooking/boiled_bean/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50769,"Simmered Octopus","Boiled Octopus","/usable/food/cooking/boiled_octopus/no_hotkey/festival_source/",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 30); },{},{},{}
+50770,"Simmered Cabbage","Boiled Cabbage","/usable/food/cooking/boiled_cabbage/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20); },{},{},{}
+50771,"Simmered Chestnuts","Boiled Chestnut","/usable/food/cooking/boiled_chestnut/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20); },{},{},{}
+50772,"Sweet Pumpkin Puree","Autumn Squash Puree","/food/cooking/autumn_squash_puree/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50773,"White Rice Cake","White Rice-Cake","/usable/food/cooking/white_rice_cake/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20); },{},{},{}
+50774,"Meat Pie","Meat Pie","/usable/food/cooking/meat_pie/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 45); },{},{},{}
+50775,"Meat Marinade","Meat Seasoning","/food/cooking/meat_seasoning/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50776,"Hotcakes","Pancake","/usable/food/cooking/pancake/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 20); },{},{},{}
+50777,"Sausage","Sausage","/usable/food/cooking/sausage/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50783,"Seafood Yakisoba","Seafood Stir-Fried Noodles","/usable/food/cooking/seafood_stir_fried_noodles/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50784,"Pad Thai","Phat-thai","/usable/food/cooking/phat_thai/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50785,"Shrimp Tempura Udon","Shrimp Tempura Udon","/usable/food/cooking/shrimp_tempura_udon/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50786,"Roasted Bean Noodles","Cold Baked Bean-soup Noodles","/usable/food/cooking/cold_baked_bean_soup_noodles/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50787,"Peeled Bean Noodles","Cold Scaled Bean-soup Noodles","/usable/food/cooking/cold_scaled_bean_soup_noodles/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50788,"Water-soaked Bean Noodles","Cold Macerated Bean-soup Noodles","/usable/food/cooking/cold_macerated_bean_soup_noodles/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50789,"Festive Noodles","Banquet Noodles","/usable/food/cooking/banquet_noodles/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50790,"Curry Udon","Curry Udon","/usable/food/cooking/curry_udon/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50791,"Tofu Noodles","Tofu Noodles","/usable/food/cooking/tofu_noodles/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50792,"Tofu Noodles","Tofu Noodles","/usable/food/cooking/tofu_noodles/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50793,"Tofu Noodles","Tofu Noodles","/usable/food/cooking/tofu_noodles/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50794,"Steamed Egg Casserole","Steamed Egg","/usable/food/cooking/steamed_egg/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50795,"Pork Galbi Stew","Steamed Pork Ribs","/usable/food/cooking/steamed_pork_ribs/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50796,"Pumpkin Galbi Stew","Steamed Sweet Pumpkins&Ribs","/usable/food/cooking/steamed_sweet_pumpkins_ribs/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50797,"Steamed Eggplants","Steamed Eggplant","/usable/food/cooking/steamed_eggplant/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50798,"Pumpkin Seafood Stew","Steamed Sweet Pumpkins&Seafood","/usable/food/cooking/steamed_sweet_pumpkins_seafood/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50799,"Vegetable Steamed Chicken","Steamed Vegetable&Chicken","/usable/food/cooking/steamed_vegetable_chicken/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50800,"Steamed Dumplings","Steamed Dumpling","/usable/food/cooking/steamed_dumpling/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50801,"Spaghetti Aglio e Olio","Aglio E Olio","/usable/food/cooking/aglio_e_olio/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50802,"Carbonara","Carbonara","/usable/food/cooking/carbonara/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50803,"Amatriciana","Amatiriciana","/usable/food/cooking/amatiriciana/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50804,"Spaghetti alle Vongole","Vongole","/usable/food/cooking/vongole/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50805,"Pane","Pane","/usable/food/cooking/pane/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50806,"Walnut Pie","Walnut Pie","/usable/food/cooking/walnut_pie/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50807,"Sweet Potato Pie","Sweet Potato Pie","/usable/food/cooking/sweet_potato_pie/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50808,"Almond Pie","Almond Pie","/usable/food/cooking/almond_pie/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50809,"Almond Strawberry Jam Tart","Almond Tart with Strawberry Jam","/usable/food/cooking/almond_tart_with_strawberry_jam/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50810,"Blueberry Jam","Blueberry Jam","/usable/food/cooking/blueberry_jam/no_hotkey/festival_source/",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50811,"Orange Marmalade","Orange Marmalade","/usable/food/cooking/orange_marmalade/no_hotkey/festival_source/",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50812,"Lemon Jam","Lemon Jam","/usable/food/cooking/lemon_jam/no_hotkey/festival_source/",501,0,1,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50813,"Pasta Ingredients","Pasta Ingredient","/usable/food/cooking/pasta_Ingredient/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50814,"Fried Sausage Vegetables","Stir-Fried Sausage&Vegetables","/usable/food/cooking/stir_fried_sausage_vegetables/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50815,"Fried Eggplants","Stir-Fried Eggplant","/usable/food/cooking/stir_fried_eggplant/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50816,"Fried Poulp","Stir-Fried Small Octopus","/usable/food/cooking/stir_fried_small_octopus/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50817,"Sweet Potato Fries","Fried Sweet Potato","/usable/food/cooking/fried_sweet_potato/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50818,"Potato Croquette","Potato Croquette","/usable/food/cooking/potato_croquette/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50819,"Glazed Sweet Potatoes","Sweet potato Mat-Tang","/usable/food/cooking/sweet_potato_mat_tang/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50820,"Pork Cutlet","Pork Cutlet","/usable/food/cooking/pork_cutlet/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50821,"Bread Crumb","Bread Crumbs","/food/cooking/bread_crumbs/no_hotkey/festival_source/",501,0,1,,yes,1,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50822,"Roasted Bean Broth","Baked Soymilk","/food/cooking/baked_soymilk/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50823,"Peeled Bean Broth","Scaled Soymilk","/food/cooking/scaled_soymilk/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50824,"Water-soaked Bean Broth","Macerated Soymilk","/food/cooking/macerated_soymilk/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50825,"Meat Broth","Meat Broth","/food/cooking/meat_broth/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
+50826,"Steamed Cabbage and Beans","Steamed Cabbage&Bean","/usable/food/cooking/steamed_cabbage_bean/no_hotkey/festival_source/",501,0,1,,yes,2,1,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
 50833,"Spicy Oden Soup","Hot Fishcake Soup","/usable/food/cooking/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,2,12,12,12,4050,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
 50834,"Tempura Udon","Fritters Noodles","/usable/food/cooking/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,2,12,12,12,3200,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
 50835,"Chicken Gizzards","Chicken Gizzard","/usable/food/cooking/no_hotkey/expiring/festival_source/",501,0,1,,yes,2,1,12,12,12,3000,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
@@ -8027,6 +8159,11 @@
 50628,"Indigo Cotton Candy","Childrens Day Indigo Cotton Candy","/equip/righthand/usable/food/cooking/solid/no_hotkey/not_enchantable/",503,1,100,,yes,2,2,71,3,0,0,0,0,0,0,3,0,0,0,0,0,0,0,{ Feed(cr, 6); },{},{},{}
 50629,"Purple Cotton Candy","Childrens Day Purple Cotton Candy","/equip/righthand/usable/food/cooking/solid/no_hotkey/not_enchantable/",503,1,100,,yes,2,2,72,3,0,0,0,0,0,0,3,0,0,0,0,0,0,0,{ Feed(cr, 6); },{},{},{}
 50630,"White Cotton Candy","Childrens Day White Cotton Candy","/equip/righthand/usable/food/cooking/solid/no_hotkey/not_enchantable/",503,1,100,,yes,2,2,73,3,0,0,0,0,0,0,3,0,0,0,0,0,0,0,{ Feed(cr, 6); },{},{},{}
+50778,"Candy Cane","Candy Cane","/equip/righthand/weapon/blunt/not_repairable/usable/food/candycane/not_enchantable/",503,0,1,,yes,1,3,1,0,0,0,1000,0,0,0,3,0,8,50,15,35,3,1,{ Feed(cr, 10); },{},{},{}
+50779,"Chocolate Candy Wand","Chocolate Stick Wand","/equip/righthand/weapon/not_repairable/not_dyeable/usable/food/pepero/chocolate/make_statue_free/not_enchantable/",503,0,1,,yes,1,3,12,12,12,0,5000,0,0,0,3,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50780,"Strawberry Candy Wand","Strawberry Stick Wand","/equip/righthand/weapon/not_repairable/not_dyeable/usable/food/pepero/strawberry/make_statue_free/not_enchantable/",503,0,1,,yes,1,3,12,12,12,0,5000,0,0,0,3,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50781,"Vanilla Candy Wand","White Stick Wand","/equip/righthand/weapon/not_repairable/not_dyeable/usable/food/pepero/white/make_statue_free/not_enchantable/",503,0,1,,yes,1,3,12,12,12,0,5000,0,0,0,3,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
+50782,"Green Tea Candy Wand","Green Tea Stick Wand","/equip/righthand/weapon/not_repairable/not_dyeable/usable/food/pepero/white/make_statue_free/not_enchantable/",503,0,1,,yes,1,3,12,12,12,0,5000,0,0,0,3,0,0,0,0,0,0,0,{ Feed(cr, 10); },{},{},{}
 59604,"Unusual Carrot","Special Carrot","/equip/righthand/usable/food/cooking/solid/no_hotkey/not_enchantable/festival_source/",503,1,100,,yes,2,1,12,12,12,0,0,0,0,0,3,0,0,0,0,0,0,0,{ Feed(cr, 6); },{},{},{}
 63020,"Empty Bottle","Empty Bottle","/equip/righthand/bottle/empty_bottle/not_enchantable/expiring/",503,0,1,,yes,1,2,12,0,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
 63022,"Empty Bottle (Part-Time Job)","Empty Bottle (Part-Time Job)","/equip/righthand/bottle/collecting_arbeit/arbeit_bottle/not_enchantable/",503,0,1,,yes,1,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ Feed(cr, 0); },{},{},{}
@@ -8146,10 +8283,10 @@
 45125,"Monkey's Invitation","HotSpring Monkey Invitation Card","/usable/warp_scroll/party_enable/",1001,1,5,,yes,2,2,53,12,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 45126,"Monkey's Wedding Invitation","HotSpring Monkey Wedding Card","/item/",1001,1,5,,no,2,2,12,1,1,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 45131,"Deflated Balloon","Empty Balloon","/usable/empty_balloon/",1001,1,100,,yes,1,2,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50011,"Broken Egg","Broken Egg","/food/cooking/solid/egg/",1001,1,5,,no,1,1,12,12,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50011,"Cracked Egg","Broken Egg","/food/cooking/solid/egg/",1001,1,20,,no,1,1,12,12,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50015,"Christmas Egg","Christmas Egg","/usable/food/cooking/solid/christmas_egg/",1001,1,5,,yes,1,1,21,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50018,"Chocolate Ingredient","Chocolate Material","/food/cooking/solid/chocolate_material_normal/expiring/",1001,1,5,,no,2,2,2,0,0,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50019,"White Chocolate Ingredient","White Chocolate Material","/food/cooking/solid/chocolate_material_white",1001,1,5,,no,2,2,16,0,0,30,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50018,"Baking Chocolate","Chocolate Material","/food/cooking/solid/chocolate_material_normal/expiring/",1001,1,20,,no,2,2,2,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50019,"Baking White Chocolate","White Chocolate Material","/food/cooking/solid/chocolate_material_white",1001,1,20,,no,2,2,16,0,0,120,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50020,"Cream","Milk Cream","/food/cooking/fluid/milk_cream",1001,0,1,,no,1,1,16,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50029,"Mango","Mango","/item/",1001,0,1,,no,1,1,29,29,29,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50030,"Avocado","Avocado","/item/",1001,0,1,,no,1,1,13,12,12,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -8157,10 +8294,10 @@
 50032,"Mushroom","Mushroom","/item/",1001,0,1,,no,1,1,9,7,7,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50033,"Poisonous Mushroom","Poisonous Mushroom","/item/",1001,0,1,,no,1,1,21,7,7,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50034,"Lizard Egg","Egg of Lizard","/item/",1001,0,1,,no,1,1,18,18,18,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50039,"Fomor Bean","Evil Bean","/food/cooking/solid/bean/evil_bean/",1001,1,5,,no,1,1,52,21,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50040,"Magic Bean","Magic Bean","/food/cooking/milling/solid/bean/magic_bean/",1001,1,5,,no,1,1,51,12,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50044,"Magic Bean Powder","Magic Bean Flour","/food/cooking/solid/bean/magic_bean_flour/",1001,1,5,,no,1,1,22,51,12,10,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50065,"Magic Cacao Bean","Magic Cacao Bean","/usable/food/cooking/solid/bean/Magic_Cacao/",1001,1,5,,yes,1,1,31,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50039,"Fomor Bean","Evil Bean","/food/cooking/solid/bean/evil_bean/",1001,1,20,,no,1,1,52,21,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50040,"Magic Bean","Magic Bean","/food/cooking/milling/solid/bean/magic_bean/",1001,1,20,,no,1,1,51,12,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50044,"Magic Bean Flour","Magic Bean Flour","/food/cooking/solid/bean/magic_bean_flour/",1001,1,20,,no,1,1,22,51,12,40,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50065,"Magic Cacao Bean","Magic Cacao Bean","/usable/food/cooking/solid/bean/Magic_Cacao/",1001,1,20,,yes,1,1,31,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50087,"School Chair","Chair","/usable/item/cashchair/writelog_use/sittable/show_durability/",1001,0,1,,no,2,3,0,0,0,1000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50088,"Living Room Chair","Chair","/usable/item/cashchair/writelog_use/sittable/show_durability/",1001,0,1,,no,2,3,13,3,0,1000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50089,"Reading Chair","Chair","/usable/item/cashchair/writelog_use/sittable/show_durability/",1001,0,1,,no,2,3,13,3,0,1000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -8173,33 +8310,33 @@
 50098,"Rainy Fox Chair","Rainy Fox chair","/usable/item/writelog_use/sittable/show_durability/cashchair/",1001,0,1,,no,3,2,12,1,12,1000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50099,"Single Sunbed","Single sunbeds","/usable/item/cashchair/writelog_use/sittable/show_durability/fishing/not_dyeable_twinkling_color/ ",1001,0,1,,no,2,2,5,1,1,1000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50100,"Double Sunbed","Double sunbeds","/usable/item/cashchair/writelog_use/sittable/show_durability/fishing/double/not_dyeable_twinkling_color/",1001,0,1,,no,2,2,5,1,1,1000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50108,"Chicken Wing","Chicken Wing","/food/cooking/chicken_wing/no_hotkey/expiring/",1001,1,10,,no,1,1,12,12,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50114,"Garlic","Garlic","/food/cooking/garlic/no_hotkey/expiring/",1001,1,10,,no,1,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50108,"Chicken Wings","Chicken Wing","/usable/food/cooking/chicken_wing/no_hotkey/expiring/",1001,1,20,,yes,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50114,"Garlic","Garlic","/food/cooking/garlic/no_hotkey/expiring/",1001,1,20,,no,1,1,12,12,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50116,"Mayonnaise","Mayonnaise","/food/cooking/mayonnaise/no_hotkey/expiring/",1001,0,1,,no,1,1,1,8,0,450,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50117,"Bun Shell","Bun Shell","/food/cooking/bun_shell/no_hotkey/",1001,0,1,,no,1,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50119,"Flour Dough","Dough","/food/cooking/dough/no_hotkey/",1001,0,1,,no,2,1,12,12,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50121,"Butter","Butter","/food/cooking/butter/no_hotkey/expiring/",1001,1,10,,no,1,1,12,12,0,150,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50127,"Shrimp","Shrimp","/food/cooking/shrimp/no_hotkey/expiring/",1001,1,10,,no,1,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50130,"Whipping Cream","Fresh Cream","/food/cooking/fresh_cream/no_hotkey/expiring/",1001,1,5,,no,1,1,1,7,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50131,"Sugar","Sugar","/food/cooking/sugar/no_hotkey/expiring/",1001,1,10,,no,1,1,5,1,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50132,"Salt","Salt","/food/cooking/salt/no_hotkey/expiring/",1001,1,10,,no,1,1,18,1,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50135,"Rice","Rice","/food/cooking/rice/no_hotkey/expiring/",1001,1,10,,no,2,2,4,1,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50142,"Onion","Onion","/food/cooking/onion/no_hotkey/expiring/",1001,1,10,,no,1,1,12,12,0,150,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50145,"Olive Oil","Olive Oil","/food/cooking/olive_oil/no_hotkey/expiring/",1001,1,10,,no,1,1,12,12,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50121,"Butter","Butter","/food/cooking/butter/no_hotkey/expiring/",1001,1,20,,no,1,1,12,12,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50127,"Shrimp","Shrimp","/food/cooking/shrimp/no_hotkey/expiring/",1001,1,20,,no,1,1,12,12,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50130,"Whipped Cream","Fresh Cream","/food/cooking/fresh_cream/no_hotkey/expiring/",1001,1,20,,no,1,1,1,7,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50131,"Sugar","Sugar","/food/cooking/sugar/no_hotkey/expiring/",1001,1,20,,no,1,1,5,1,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50132,"Salt","Salt","/food/cooking/salt/no_hotkey/expiring/",1001,1,20,,no,1,1,18,1,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50135,"Rice","Rice","/food/cooking/rice/no_hotkey/expiring/",1001,1,20,,no,2,2,4,1,0,600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50142,"Onion","Onion","/food/cooking/onion/no_hotkey/expiring/",1001,1,20,,no,1,1,12,12,0,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50145,"Olive Oil","Olive Oil","/food/cooking/olive_oil/no_hotkey/expiring/",1001,1,20,,no,1,1,12,12,0,600,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50146,"Udon Noodle","Udon Noodle","/food/cooking/udon_noodle/no_hotkey/",1001,0,1,,no,1,1,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50148,"Yeast","Yeast","/food/cooking/yeast/no_hotkey/expiring/",1001,1,10,,no,1,1,45,45,45,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50148,"Yeast","Yeast","/food/cooking/yeast/no_hotkey/expiring/",1001,1,20,,no,1,1,45,45,45,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50150,"Kalguksu Noodle","Kalguksu Noodle","/food/cooking/kalguksu_noodle/no_hotkey/",1001,0,1,,no,1,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50153,"Frying Powder","Fry Powder","/food/cooking/fry_powder/no_hotkey/expiring/",1001,1,10,,no,1,1,10,1,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50153,"Deep Fry Batter","Fry Powder","/food/cooking/fry_powder/no_hotkey/expiring/",1001,1,20,,no,1,1,10,1,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50154,"Fry Batter","Fry Skin","/food/cooking/fry_skin/no_hotkey/",1001,0,1,,no,1,1,14,1,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50155,"Pasta","Pasta","/food/cooking/pasta/no_hotkey/",1001,0,1,,no,1,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50156,"Pepper","Pepper","/food/cooking/pepper/no_hotkey/expiring/",1001,1,10,,no,1,1,13,13,5,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50156,"Pepper","Pepper","/food/cooking/pepper/no_hotkey/expiring/",1001,1,20,,no,1,1,13,13,5,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50157,"Food Waste","Failed Food","/food/cooking/failed_food/no_hotkey/",1001,0,1,,no,2,1,13,13,5,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50158,"Taitinn Carp","Taitinn Carp","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/\n",1001,1,10,,yes,1,1,12,12,0,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50158,"Taitinn Carp","Taitinn Carp","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/\n",1001,1,20,,yes,1,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50159,"Brifne Carp","Brifne Carp","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50184,"Ice","Ice","/food/cooking/ice/no_hotkey/expiring/",1001,1,10,,no,1,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50185,"Curry Powder","Curry Powder","/food/cooking/curry_powder/no_hotkey/expiring/",1001,1,10,,no,1,1,46,46,46,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50186,"Red Pepper Powder","Red Pepper Powder","/food/cooking/red_pepper_powder/no_hotkey/expiring/",1001,1,10,,no,1,1,47,47,47,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50189,"Thyme","Thyme","/food/cooking/thyme/no_hotkey/expiring/",1001,1,10,,no,1,1,12,12,0,350,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50184,"Ice","Ice","/food/cooking/ice/no_hotkey/expiring/",1001,1,20,,no,1,1,12,12,0,800,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50185,"Curry Powder","Curry Powder","/food/cooking/curry_powder/no_hotkey/expiring/",1001,1,20,,no,1,1,46,46,46,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50186,"Red Pepper Powder","Red Pepper Powder","/food/cooking/red_pepper_powder/no_hotkey/expiring/",1001,1,20,,no,1,1,47,47,47,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50189,"Thyme","Thyme","/food/cooking/thyme/no_hotkey/expiring/",1001,1,20,,no,1,1,12,12,0,700,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50192,"Curry Paste","Curry Paste","/food/cooking/curry_paste/no_hotkey/",1001,0,1,,no,2,1,12,12,0,350,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50204,"Golden Scale Fish","Golden Scale Fish","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50205,"Rainbow Trout","Rainbow Trout","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -8207,14 +8344,14 @@
 50211,"Spilled Double Size Magical Rice-cake Soup","Spilled Double Size Magical Rice-cake Soup","/item/",1001,0,1,,yes,2,2,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50212,"Spilled Magical Rice-cake Soup","Spilled Magical Rice-cake Soup","/item/",1001,0,1,,yes,2,1,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50216,"Carnivorous Fish","Fresh-water Huge Predator Fish","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/",1001,0,1,,no,3,2,12,12,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50219,"Basil","basil","/food/cooking/no_hotkey/",1001,1,10,,yes,1,1,12,12,0,80,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50219,"Basil","basil","/food/cooking/no_hotkey/",1001,1,20,,yes,1,1,12,12,0,160,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50226,"Tomato Sauce","tomato paste","/food/cooking/",1001,0,1,,yes,2,1,12,12,0,3500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50227,"Cream Sauce","cream paste","/food/cooking/",1001,0,1,,yes,2,1,12,12,0,3500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50228,"Seafood Sauce","sea food paste","/food/cooking/",1001,0,1,,yes,2,1,12,12,0,3500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50229,"Pasta Dough","pasta dough","/food/cooking/",1001,0,1,,yes,2,1,12,12,0,3500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50237,"Long Pasta","long pasta","/food/cooking/",1001,0,1,,yes,2,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50238,"Short Pasta","short pasta","/food/cooking/",1001,0,1,,yes,2,1,12,12,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50248,"Shellfish","Shellfish","/food/cooking/fish/no_hotkey/expiring/",1001,1,5,,no,1,1,12,0,0,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50248,"Shellfish","Shellfish","/food/cooking/fish/no_hotkey/expiring/",1001,1,20,,no,1,1,12,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50250,"Silk-Striped Marlin","Silk Striped Marlin","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,0,150,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50252,"Cake in a Box","Cake Cooking Kit","/usable/food/cooking/CakeKit/no_hotkey/festival_source/",1001,0,1,,yes,2,2,23,53,1,1500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50253,"Angler Fish","Angler","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -8229,9 +8366,9 @@
 50262,"Sunfish Bone","Sunfish Backbone","/food/cooking/sunfish_backbone/no_hotkey/",1001,1,5,,no,2,1,12,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50263,"Flying Fish Fin","Flying Fish Pinna","/food/cooking/flying_fish_pinna/no_hotkey/",1001,1,5,,no,1,1,12,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50264,"King Crab Shell","King Crab Backbone","/food/cooking/king_crab_backbone/no_hotkey/",1001,1,5,,no,1,1,12,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50272,"Coagulant","Solidification Potion","/food/cooking/solidification_potion/no_hotkey/",1001,1,10,,no,1,1,29,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50275,"Brown Pine Mushroom","Lightbrown Mushroom","/food/cooking/lightbrown_mushroom/deer_mushroom/",1001,1,10,,yes,1,1,12,12,12,1200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50277,"Gold Mushroom","Golden Mushroom","/food/cooking/golden_mushroom/deer_mushroom/",1001,1,10,,yes,1,1,12,12,12,4000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50272,"Nigari","Solidification Potion","/food/cooking/solidification_potion/no_hotkey/",1001,1,20,,no,1,1,29,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50275,"Brown Pine Mushroom","Lightbrown Mushroom","/food/cooking/lightbrown_mushroom/deer_mushroom/",1001,1,20,,yes,1,1,12,12,12,2400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50277,"Gold Mushroom","Golden Mushroom","/food/cooking/golden_mushroom/deer_mushroom/",1001,1,20,,yes,1,1,12,12,12,8000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50290,"Shadow of Eweca","Eweca Reflection Over The Water","/food/cooking/fish/eweca_shadow/no_hotkey/",1001,0,1,,no,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50356,"Valentine Chocolate Gift for Nao","Whiteday Candy for Nao","/candy_nao/",1001,0,1,,no,2,2,12,21,0,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50379,"Chocolate made with Kristell's Love","Chocolate with Kristell's love","/usable/food/cooking/chocolate_npc/no_hotkey/",1001,0,1,,yes,2,2,12,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -8245,24 +8382,25 @@
 50410,"Cabbage Seeds","Cabbage Seeds","/expiring/farm_seed/",1001,1,5,,no,1,1,12,0,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50411,"Tomato Seeds","Tomato Seeds","/expiring/farm_seed/",1001,1,5,,no,1,1,12,0,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50448,"Candy Tree Seed","Candytree Seed","/item//destroyable/",1001,1,100,,no,1,1,12,12,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50455,"Cream","Milk Cream","/food/cooking/fluid/milk_cream",1001,1,20,,no,1,1,16,0,0,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50481,"Hidden Ingredient","Question Mark","/item/",1001,0,1,,no,1,1,12,0,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50518,"Sturgeon","Sturgeon","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50519,"Lamprey","Lamprey","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50520,"Smelt","Pond Smelt","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,1,10,,yes,1,1,12,12,12,50,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50520,"Smelt","Pond Smelt","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,1,20,,yes,1,1,12,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50532,"Broken Ice Piece","Fragment of Cracked Ice","/food/cooking/fish/no_hotkey/icepiece/",1001,0,1,,no,2,2,12,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50556,"Holiday Rice Cake Kit","Songpeon Cooking Kit","/usable/food/cooking/SongpeonKit/no_hotkey/",1001,0,1,,yes,2,2,23,53,1,150,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50569,"Abb Neagh Carp","Abb Neagh Carp","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50570,"Sweetfish","Sweet Fish","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,1,10,,yes,1,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50570,"Sweetfish","Sweet Fish","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,1,20,,yes,1,1,12,12,12,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50571,"Catfish","Catfish","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50611,"Salmon","Chum Salmon","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50612,"Bluefin Tuna","Bluefin Tuna","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50613,"Shishamo","Capelin","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,1,10,,yes,1,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50613,"Capelin","Capelin","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,1,20,,yes,1,1,12,12,12,400,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50614,"Silk Snapper","Silver Vine Sparidae","/food/cooking/fish/no_hotkey/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50616,"Grand Blago","Grand Blago","/food/cooking/blago_wine/no_hotkey/",1001,0,1,,no,1,2,12,12,12,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50617,"Blago Noir","Blago Noir","/blago_grape/blago_grape01/",1001,1,50,,no,1,2,12,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50620,"Errans Crus","Errans Cru","/food/cooking/blago_wine/no_hotkey/",1001,0,1,,no,1,2,12,12,12,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50621,"Errans Sauvignon","Errans Sauvignon","/blago_grape/blago_grape02/",1001,1,50,,no,1,2,12,12,12,100,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-50663,"Starch Syrup","Starch Syrup","/food/cooking/Starch_Syrup/no_hotkey/expiring/",1001,1,10,,no,1,1,12,12,12,150,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+50663,"Starch Syrup","Starch Syrup","/food/cooking/Starch_Syrup/no_hotkey/expiring/",1001,1,20,,no,1,1,12,12,12,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50672,"Blowfish","Puffer","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,500,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50673,"Black Sea Bream","Black Sea Bream","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,200,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 50674,"Red Sea Bream","Red Sea Bream","/food/cooking/fish/no_hotkey/expiring/favorite_to_seal/usable/",1001,0,1,,no,2,1,12,12,12,300,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -8373,7 +8511,7 @@
 52026,"Gathering Axe Coupon","Gathering Axe Coupon","/item/coupon/01/",1001,0,1,,no,2,1,19,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 52027,"Wheat","Wheat","/item/milling/wheat/",1001,1,10,,no,1,3,12,0,0,40,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 52028,"Barley","Barley","/item/milling/barley/",1001,1,10,,no,1,3,12,0,0,40,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-52029,"Corn","Corn","/item/milling/food/cooking/corn/expiring/",1001,1,10,,no,1,2,12,0,0,40,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+52029,"Corn","Corn","/item/milling/food/cooking/corn/expiring/",1001,1,20,,no,1,2,12,0,0,80,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 52031,"Bundle of Flower","Mass of Flower","/item/milling/flower/",1001,1,5,,no,1,1,0,38,0,40,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 52032,"Blue Coin","Blue Coin","/item/event_coin/",1001,1,1000,,no,1,1,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 52033,"Red Coin","Red Coin","/item/event_coin/",1001,1,1000,,no,1,1,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}

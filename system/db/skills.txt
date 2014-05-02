@@ -36,6 +36,9 @@
 10041,"Magic Craft",10921
 10042,"Rare Mineralogy",10922
 10043,"Shyllien Ecology",10923
+10044,"Tasting",10711
+10045,"Ingredient Hunting",10712
+10046,"Catering",10713
 50005,"Web Spinning",0
 50115,"Wyvern Fire Breath",0
 50160,"Save Location",0
@@ -275,6 +278,7 @@
 50166,"Burnout",0
 50169,"Hop In",0
 50171,"Hop Shield",0
+50175,"Truck to the Head",0
 50512,"Yui's Defense",0
 52001,"Merrow Rising Dragon",0
 52002,"Merrow Tidal Wave",0
