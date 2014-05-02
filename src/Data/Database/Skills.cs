@@ -17,6 +17,9 @@ namespace Aura.Data.Database
 
 		public SkillRankData GetRankData(int rank, int raceId)
 		{
+			if (this.RankData == null)
+				return null;
+
 			raceId = raceId & ~3;
 
 			// Check race specific first, fall back to default (0).
@@ -30,6 +33,9 @@ namespace Aura.Data.Database
 
 		public SkillRankData GetFirstRankData(int raceId)
 		{
+			if (this.RankData == null)
+				return null;
+
 			raceId = raceId & ~3;
 
 			// Check race specific first, fall back to default (0).
@@ -68,6 +74,9 @@ namespace Aura.Data.Database
 				var rankList = info.RankData.Values.First();
 				info.MaxRank = rankList.Values.Last().Rank;
 			}
+
+			if (info.RankData == null)
+				throw new DatabaseWarningException("No rank data found for skill '{0}'.", info.Id);
 
 			this.Entries[info.Id] = info;
 		}

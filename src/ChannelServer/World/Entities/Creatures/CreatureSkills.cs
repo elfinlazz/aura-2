@@ -10,6 +10,7 @@ using Aura.Channel.Skills;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
 using Aura.Channel.Skills.Base;
+using Aura.Data;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
@@ -78,6 +79,12 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <param name="skill"></param>
 		public bool Add(SkillId skillId, SkillRank skillRank, int raceId)
 		{
+			if (!AuraData.SkillDb.Exists((int)skillId))
+			{
+				Log.Warning("CreatureSkills.Add: Skill '{0}' not found in data.", skillId);
+				return false;
+			}
+
 			return this.Add(new Skill(_creature, skillId, skillRank, raceId));
 		}
 
