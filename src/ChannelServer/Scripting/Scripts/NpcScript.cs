@@ -311,6 +311,16 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			this.NPC.EntityId = entityId;
 		}
+		
+		public void SetHoodDown()
+		{
+			var item = this.NPC.Inventory.GetItemAt(Pocket.Robe, 0, 0);
+			if (item != null)
+				item.Info.State = 1;
+			item = this.NPC.Inventory.GetItemAt(Pocket.RobeStyle, 0, 0);
+			if (item != null)
+				item.Info.State = 1;
+		}
 
 		// Functions
 		// ------------------------------------------------------------------
@@ -624,16 +634,6 @@ namespace Aura.Channel.Scripting.Scripts
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
 		}
 		
-		public void SetHoodDown()
-		{
-			var item = this.NPC.Inventory.GetItemAt(Pocket.Robe, 0, 0);
-			if (item != null)
-				item.Info.State = 1;
-			item = this.NPC.Inventory.GetItemAt(Pocket.RobeStyle, 0, 0);
-			if (item != null)
-				item.Info.State = 1;
-		}
-
 		/// <summary>
 		/// Throws exception to leave NPC.
 		/// </summary>
