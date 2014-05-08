@@ -234,6 +234,19 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Sets NPC's color values.
+		/// </summary>
+		/// <param name="color1"></param>
+		/// <param name="color2"></param>
+		/// <param name="color3"></param>
+		protected void SetColor(uint color1 = 0x808080, uint color2 = 0x808080, uint color3 = 0x808080)
+		{
+			this.NPC.Color1 = color1;
+			this.NPC.Color2 = color2;
+			this.NPC.Color3 = color3;
+		}
+
+		/// <summary>
 		/// Sets NPC's stand style.
 		/// </summary>
 		/// <param name="stand"></param>
@@ -297,6 +310,16 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void SetId(long entityId)
 		{
 			this.NPC.EntityId = entityId;
+		}
+		
+		public void SetHoodDown()
+		{
+			var item = this.NPC.Inventory.GetItemAt(Pocket.Robe, 0, 0);
+			if (item != null)
+				item.Info.State = 1;
+			item = this.NPC.Inventory.GetItemAt(Pocket.RobeStyle, 0, 0);
+			if (item != null)
+				item.Info.State = 1;
 		}
 
 		// Functions
@@ -610,7 +633,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
 		}
-
+		
 		/// <summary>
 		/// Throws exception to leave NPC.
 		/// </summary>
