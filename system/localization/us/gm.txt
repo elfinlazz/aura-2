@@ -45,6 +45,11 @@ si_none			No skills found for '{0}'.
 si_result		{0}: {1}
 si_result_count	Results: {0} (Max. {1} shown)
 
+// >raceinfo
+ri_none			No races found for '{0}'.
+ri_result		{0}: {1}
+ri_result_count	Results: {0} (Max. {1} shown)
+
 // >height, weight, etc.
 body_success	Change successful, new value: {0}
 body_target		Your appearance has been changed by {0}.

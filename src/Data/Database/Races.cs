@@ -99,7 +99,7 @@ namespace Aura.Data.Database
 		public List<RaceData> FindAll(string name)
 		{
 			name = name.ToLower();
-			return this.Entries.FindAll(a => a.Value.Name.ToLower() == name);
+			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
 		[MinFieldCount(33)]

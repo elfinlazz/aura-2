@@ -34,6 +34,7 @@ namespace Aura.Channel.Util
 			Add(01, 50, "go", "<location>", HandleGo);
 			Add(01, 50, "iteminfo", "<name>", HandleItemInfo);
 			Add(01, 50, "skillinfo", "<name>", HandleSkillInfo);
+			Add(01, 50, "raceinfo", "<name>", HandleRaceInfo);
 			Add(01, 50, "height", "<height>", HandleBody);
 			Add(01, 50, "weight", "<weight>", HandleBody);
 			Add(01, 50, "upper", "<upper>", HandleBody);
@@ -66,6 +67,7 @@ namespace Aura.Channel.Util
 			AddAlias("item", "drop");
 			AddAlias("iteminfo", "ii");
 			AddAlias("skillinfo", "si");
+			AddAlias("raceinfo", "ri");
 		}
 
 		// ------------------------------------------------------------------
@@ -482,7 +484,7 @@ namespace Aura.Channel.Util
 				return CommandResult.Okay;
 			}
 
-			var eItems = items.OrderBy(a => a.Name.LevenshteinDistance(search)).GetEnumerator();
+			var eItems = items.OrderBy(a => a.Name.LevenshteinDistance(search)).ThenBy(a => a.Id).GetEnumerator();
 			var max = 20;
 			for (int i = 0; eItems.MoveNext() && i < max; ++i)
 			{
@@ -508,7 +510,7 @@ namespace Aura.Channel.Util
 				return CommandResult.Okay;
 			}
 
-			var eItems = items.OrderBy(a => a.Name.LevenshteinDistance(search)).GetEnumerator();
+			var eItems = items.OrderBy(a => a.Name.LevenshteinDistance(search)).ThenBy(a => a.Id).GetEnumerator();
 			var max = 20;
 			for (int i = 0; eItems.MoveNext() && i < max; ++i)
 			{
@@ -517,6 +519,32 @@ namespace Aura.Channel.Util
 			}
 
 			Send.ServerMessage(target, Localization.Get("gm.si_result_count"), items.Count, max); // Results: {0} (Max. {1} shown)
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleRaceInfo(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			var search = message.Substring(message.IndexOf(" ")).Trim();
+			var items = AuraData.RaceDb.FindAll(search);
+			if (items.Count == 0)
+			{
+				Send.ServerMessage(target, Localization.Get("gm.ri_none"), search); // No races found for '{0}'.
+				return CommandResult.Okay;
+			}
+
+			var eItems = items.OrderBy(a => a.Name.LevenshteinDistance(search)).ThenBy(a => a.Id).GetEnumerator();
+			var max = 20;
+			for (int i = 0; eItems.MoveNext() && i < max; ++i)
+			{
+				var item = eItems.Current;
+				Send.ServerMessage(target, Localization.Get("gm.ri_result"), item.Id, item.Name); // {0}: {1}
+			}
+
+			Send.ServerMessage(target, Localization.Get("gm.ri_result_count"), items.Count, max); // Results: {0} (Max. {1} shown)
 
 			return CommandResult.Okay;
 		}
