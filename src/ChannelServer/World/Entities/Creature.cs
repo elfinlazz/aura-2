@@ -1205,7 +1205,7 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Heals all life, mana, stamina, hunger, and wounds.
+		/// Heals all life, mana, stamina, hunger, and wounds and updates client.
 		/// </summary>
 		public void FullHeal()
 		{
@@ -1220,7 +1220,7 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Fully heals life.
+		/// Fully heals life and updates client.
 		/// </summary>
 		public void FullLifeHeal()
 		{

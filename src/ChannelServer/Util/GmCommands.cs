@@ -5,20 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Aura.Channel.Database;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Skills;
 using Aura.Channel.Util.Configuration.Files;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Data.Database;
+using Aura.Shared.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
-using Aura.Channel.Skills;
-using Aura.Channel.Database;
-using Aura.Shared.Database;
 
 namespace Aura.Channel.Util
 {
@@ -53,6 +53,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "gmcp", "", HandleGmcp);
 			Add(50, 99, "card", "<id>", HandleCard);
 			Add(50, 99, "petcard", "<race>", HandleCard);
+			Add(50, 50, "heal", "", HandleHeal);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -812,6 +813,13 @@ namespace Aura.Channel.Util
 			Send.ServerMessage(sender, Localization.Get("gm.card_success")); // Added card.
 			if (target != sender)
 				Send.ServerMessage(target, Localization.Get("gm.card_target"), sender.Name); // You've received a card from '{0}'.
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleHeal(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			target.FullHeal();
 
 			return CommandResult.Okay;
 		}
