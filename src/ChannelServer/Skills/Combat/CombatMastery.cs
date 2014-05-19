@@ -11,6 +11,8 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 using Aura.Data.Database;
 using Aura.Channel.World;
+using Aura.Channel.Skills.Life;
+using Aura.Shared.Mabi;
 
 namespace Aura.Channel.Skills.Combat
 {
@@ -73,10 +75,39 @@ namespace Aura.Channel.Skills.Combat
 
 				// Base damage
 				var damage = attacker.GetRndDamage(weapon);
-				tAction.Damage = damage;
+
+				// Crit...
+
+				// Defense...
+
+				// Mana Shield
+				if (target.Conditions.Has(ConditionsA.ManaShield))
+				{
+					var manaShield = target.Skills.Get(SkillId.ManaShield);
+					if (manaShield != null) // Checks for things that should never ever happen, yay.
+					{
+						// Var 1 = Efficiency
+						var manaDamage = damage / manaShield.RankData.Var1;
+						if (target.Mana >= manaDamage)
+							damage = 0;
+						else
+						{
+							damage -= (manaDamage - target.Mana) * manaShield.RankData.Var1;
+							manaDamage = target.Mana;
+						}
+
+						target.Mana -= manaDamage;
+
+						if (target.Mana <= 0)
+							ChannelServer.Instance.SkillManager.GetHandler<StartStopSkillHandler>(SkillId.ManaShield).Stop(target, manaShield);
+
+						tAction.ManaDamage = manaDamage;
+					}
+				}
 
 				// Deal with it!
-				target.TakeDamage(tAction.Damage, attacker);
+				if (damage > 0)
+					target.TakeDamage(tAction.Damage = damage, attacker);
 
 				// Evaluate caused damage
 				if (!target.IsDead)

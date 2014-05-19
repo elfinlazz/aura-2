@@ -96,6 +96,16 @@ namespace Aura.Channel.Skills.Base
 				Send.SkillStop(creature, skill.Info.Id, unkByte);
 		}
 
+		public void Stop(Creature creature, Skill skill)
+		{
+			var result = this.Stop(creature, skill, new MabiDictionary());
+
+			if (result == StartStopResult.Fail)
+				Send.SkillStopSilentCancel(creature, skill.Info.Id);
+			else
+				Send.SkillStop(creature, skill.Info.Id, "");
+		}
+
 		public virtual StartStopResult Start(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			throw new NotImplementedException();

@@ -96,20 +96,33 @@ namespace Aura.Channel.Skills
 			{
 				action.Creature.Stun = action.Stun;
 
-				Send.StatUpdate(action.Creature, StatUpdateType.Private, Stat.Life, Stat.LifeInjured);
+				// Life update
+				Send.StatUpdate(action.Creature, StatUpdateType.Private, Stat.Life, Stat.LifeInjured, Stat.Mana);
 				Send.StatUpdate(action.Creature, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
 
 				// Cancel defense if applicable
 				if (action.Is(CombatActionType.Defended))
 					action.Creature.Skills.CancelActiveSkill();
 
-				if (action.Category == CombatActionCategory.Target && this.Attacker.IsPlayer)
-					ChannelServer.Instance.Events.OnCreatureAttackedByPlayer(action as TargetAction);
-
-				var npc = action.Creature as NPC;
-				if (npc != null && npc.AI != null && action.Category == CombatActionCategory.Target)
+				// If target action
+				if (action.Category == CombatActionCategory.Target)
 				{
-					npc.AI.OnHit(action as TargetAction);
+					var tAction = action as TargetAction;
+
+					// Mana Shield flag
+					if (tAction.ManaDamage > 0 && tAction.Damage == 0)
+						tAction.Options |= TargetOptions.ManaShield;
+
+					// CreatureAttackedByPlayer event
+					if (this.Attacker.IsPlayer)
+						ChannelServer.Instance.Events.OnCreatureAttackedByPlayer(tAction);
+
+					// OnHit AI event
+					var npc = action.Creature as NPC;
+					if (npc != null && npc.AI != null)
+					{
+						npc.AI.OnHit(tAction);
+					}
 				}
 			}
 
