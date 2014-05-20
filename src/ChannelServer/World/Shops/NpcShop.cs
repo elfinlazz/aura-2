@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 
@@ -28,9 +29,9 @@ namespace Aura.Channel.World.Shops
 	/// Pons overweights everything, but it's displayed alongside
 	/// other prices if they aren't 0.
 	/// </remarks>
-	public class NpcShop
+	public class NpcShop : IScript
 	{
-		public Dictionary<string, NpcShopTab> _tabs;
+		protected Dictionary<string, NpcShopTab> _tabs;
 
 		/// <summary>
 		/// All tabs in the shop.
@@ -40,7 +41,21 @@ namespace Aura.Channel.World.Shops
 		public NpcShop()
 		{
 			_tabs = new Dictionary<string, NpcShopTab>();
+		}
+
+		public bool Init()
+		{
+			if (ChannelServer.Instance.ScriptManager.ShopExists(this.GetType().Name))
+			{
+				Log.Error("NpcShop.Init: Duplicate '{0}'", this.GetType().Name);
+				return false;
+			}
+
 			this.Setup();
+
+			ChannelServer.Instance.ScriptManager.AddShop(this);
+
+			return true;
 		}
 
 		/// <summary>

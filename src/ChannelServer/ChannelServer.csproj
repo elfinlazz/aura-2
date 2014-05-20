@@ -127,6 +127,7 @@
     <Compile Include="Scripting\Scripts\AiScript.cs" />
     <Compile Include="Scripting\Scripts\BaseScript.cs" />
     <Compile Include="Scripting\Scripts\DialogElements.cs" />
+    <Compile Include="Scripting\Scripts\IScript.cs" />
     <Compile Include="Scripting\Scripts\ItemScript.cs" />
     <Compile Include="Scripting\Scripts\NpcScript.cs" />
     <Compile Include="Scripting\Compilers\Compiler.cs" />

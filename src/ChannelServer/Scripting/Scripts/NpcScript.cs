@@ -48,6 +48,30 @@ namespace Aura.Channel.Scripting.Scripts
 			_cancellation = new CancellationTokenSource();
 		}
 
+		public override bool Init()
+		{
+			this.NPC.AI = ChannelServer.Instance.ScriptManager.GetAi("npc_normal", this.NPC);
+
+			this.Load();
+			this.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
+			this.NPC.Script = this;
+			this.NPC.LoadDefault();
+
+			if (this.NPC.RegionId > 0)
+			{
+				var region = ChannelServer.Instance.World.GetRegion(this.NPC.RegionId);
+				if (region == null)
+				{
+					Log.Error("Failed to spawn '{0}', region '{1}' not found.", this.GetType().Name, this.NPC.RegionId);
+					return false;
+				}
+
+				region.AddCreature(this.NPC);
+			}
+
+			return true;
+		}
+
 		// ------------------------------------------------------------------
 
 		/// <summary>
@@ -270,13 +294,13 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			if (!pocket.IsEquip())
 			{
-				Log.Error("Pocket '{0}' is not for equipment ({1})", pocket, this.ScriptFilePath);
+				Log.Error("Pocket '{0}' is not for equipment ({1})", pocket, this.GetType().Name);
 				return;
 			}
 
 			if (!AuraData.ItemDb.Exists(itemId))
 			{
-				Log.Error("Unknown item '{0}' ({1})", itemId, this.ScriptFilePath);
+				Log.Error("Unknown item '{0}' ({1})", itemId, this.GetType().Name);
 				return;
 			}
 

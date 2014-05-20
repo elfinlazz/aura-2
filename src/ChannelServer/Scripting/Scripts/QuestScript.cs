@@ -45,6 +45,32 @@ namespace Aura.Channel.Scripting.Scripts
 			this.MetaData = new MabiDictionary();
 		}
 
+		public override bool Init()
+		{
+			this.Load();
+
+			if (this.Id == 0 || ChannelServer.Instance.ScriptManager.QuestScriptExists(this.Id))
+			{
+				Log.Error("{1}.Init: Invalid id or already in use ({0}).", this.Id, this.GetType().Name);
+				return false;
+			}
+
+			if (this.Objectives.Count == 0)
+			{
+				Log.Error("{1}.Init: Quest '{0}' doesn't have any objectives.", this.Id, this.GetType().Name);
+				return false;
+			}
+
+			if (this.ReceiveMethod == Receive.Automatically)
+				ChannelServer.Instance.Events.PlayerLoggedIn += this.OnPlayerLoggedIn;
+
+			this.MetaData.SetString("QSTTIP", "N_{0}|D_{1}|A_|R_{2}|T_0", this.Name, this.Description, string.Join(", ", this.Rewards));
+
+			ChannelServer.Instance.ScriptManager.AddQuestScript(this);
+
+			return true;
+		}
+
 		public override void Dispose()
 		{
 			base.Dispose();
@@ -191,17 +217,6 @@ namespace Aura.Channel.Scripting.Scripts
 
 		// Where the magic happens~
 		// ------------------------------------------------------------------
-
-		/// <summary>
-		/// Sets up necessary subscriptions.
-		/// </summary>
-		public void Init()
-		{
-			if (this.ReceiveMethod == Receive.Automatically)
-				ChannelServer.Instance.Events.PlayerLoggedIn += this.OnPlayerLoggedIn;
-
-			this.MetaData.SetString("QSTTIP", "N_{0}|D_{1}|A_|R_{2}|T_0", this.Name, this.Description, string.Join(", ", this.Rewards));
-		}
 
 		/// <summary>
 		/// Checks and starts auto quests.

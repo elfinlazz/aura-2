@@ -154,8 +154,10 @@ public class NoraBaseScript : NpcScript
 
 public class NoraShop : TailorShop
 {
-	public NoraShop()
+	public override void Setup()
 	{
+		base.Setup();
+		
 		Add("Not so secret", 1082); // Resting Guide
 	}
 }

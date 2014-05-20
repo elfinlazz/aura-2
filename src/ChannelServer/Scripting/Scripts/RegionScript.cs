@@ -14,6 +14,16 @@ namespace Aura.Channel.Scripting.Scripts
 	/// </summary>
 	public class RegionScript : BaseScript
 	{
+		public override bool Init()
+		{
+			this.Load();
+			this.LoadWarps();
+			this.LoadSpawns();
+			this.LoadEvents();
+
+			return true;
+		}
+
 		public virtual void LoadWarps()
 		{
 		}

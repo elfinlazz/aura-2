@@ -15,13 +15,17 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
 {
-	public abstract class BaseScript : IDisposable
+	public abstract class BaseScript : IDisposable, IScript
 	{
 		private const int PropDropRadius = 50;
 
-		public string ScriptFilePath { get; set; }
-
 		protected ScriptVariables GlobalVars { get { return ChannelServer.Instance.ScriptManager.GlobalVars; } }
+
+		public virtual bool Init()
+		{
+			this.Load();
+			return true;
+		}
 
 		public virtual void Load()
 		{

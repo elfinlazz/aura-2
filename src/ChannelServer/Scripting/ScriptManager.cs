@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -9,22 +10,21 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Aura.Channel.Database;
+using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting.Compilers;
 using Aura.Channel.Scripting.Scripts;
+using Aura.Channel.Skills;
+using Aura.Channel.World;
 using Aura.Channel.World.Entities;
+using Aura.Channel.World.Quests;
+using Aura.Channel.World.Shops;
 using Aura.Data;
+using Aura.Data.Database;
 using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
-using Aura.Channel.World;
-using Aura.Channel.World.Quests;
-using System.Collections;
-using System.Threading.Tasks;
-using Aura.Channel.World.Shops;
-using Aura.Channel.Network.Sending;
-using Aura.Channel.Skills;
-using Aura.Data.Database;
 
 namespace Aura.Channel.Scripting
 {
@@ -319,11 +319,30 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
+		/// Returns true if shop of type exists.
+		/// </summary>
+		/// <param name="typeName"></param>
+		/// <returns></returns>
+		public bool ShopExists(string typeName)
+		{
+			return _shops.ContainsKey(typeName);
+		}
+
+		/// <summary>
+		/// Adds shop.
+		/// </summary>
+		/// <param name="shop"></param>
+		public void AddShop(NpcShop shop)
+		{
+			_shops[shop.GetType().Name] = shop;
+		}
+
+		/// <summary>
 		/// Returns new AI script by name for creature, or null.
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		private AiScript GetAi(string name, Creature creature)
+		public AiScript GetAi(string name, Creature creature)
 		{
 			Type type;
 			_aiScripts.TryGetValue(name, out type);
@@ -368,7 +387,14 @@ namespace Aura.Channel.Scripting
 			}
 			catch (CompilerErrorsException ex)
 			{
-				File.Delete(outPath);
+				try
+				{
+					File.Delete(outPath);
+				}
+				catch (UnauthorizedAccessException)
+				{
+					Log.Debug("Unable to delete '{0}'", outPath);
+				}
 
 				var lines = File.ReadAllLines(path);
 
@@ -408,88 +434,24 @@ namespace Aura.Channel.Scripting
 		/// <returns></returns>
 		private void LoadScriptAssembly(Assembly asm, string filePath)
 		{
-			foreach (var type in asm.GetTypes().Where(a => !a.IsAbstract && !a.Name.StartsWith("_")))
+			foreach (var type in asm.GetTypes().Where(a => a.GetInterfaces().Contains(typeof(IScript)) && !a.IsAbstract && !a.Name.StartsWith("_")))
 			{
 				try
 				{
+					// Initiate script
+					var script = Activator.CreateInstance(type) as IScript;
+					if (!script.Init())
+					{
+						Log.Debug("LoadScriptAssembly: Failed to initiate '{0}'.", type.Name);
+						continue;
+					}
+
+					// Run default methods for base scripts.
 					if (type.IsSubclassOf(typeof(BaseScript)))
 					{
-						var baseScript = Activator.CreateInstance(type) as BaseScript;
-						baseScript.ScriptFilePath = filePath;
-
-						// Try to load as NpcScript
-						if (baseScript is NpcScript)
-						{
-							var npcScript = baseScript as NpcScript;
-
-							npcScript.NPC.AI = this.GetAi("npc_normal", npcScript.NPC);
-
-							npcScript.Load();
-							npcScript.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
-							npcScript.NPC.Script = npcScript;
-							npcScript.NPC.LoadDefault();
-
-							if (npcScript.NPC.RegionId > 0)
-							{
-								var region = ChannelServer.Instance.World.GetRegion(npcScript.NPC.RegionId);
-								if (region == null)
-								{
-									Log.Error("Failed to spawn '{0}', region '{1}' not found.", type, npcScript.NPC.RegionId);
-									continue;
-								}
-
-								region.AddCreature(npcScript.NPC);
-							}
-						}
-						// Try to load as QuestScript
-						else if (baseScript is QuestScript)
-						{
-							var questScript = baseScript as QuestScript;
-							questScript.Load();
-
-							if (questScript.Id == 0 || _questScripts.ContainsKey(questScript.Id))
-							{
-								Log.Error("{1}.Load: Invalid id or already in use ({0}).", questScript.Id, type.Name);
-								continue;
-							}
-
-							if (questScript.Objectives.Count == 0)
-							{
-								Log.Error("{1}.Load: Quest '{0}' doesn't have any objectives.", questScript.Id, type.Name);
-								continue;
-							}
-
-							questScript.Init();
-
-							_questScripts[questScript.Id] = questScript;
-						}
-						// Try to load as RegionScript
-						else if (baseScript is RegionScript)
-						{
-							var regionScript = baseScript as RegionScript;
-							regionScript.Load();
-							regionScript.LoadWarps();
-							regionScript.LoadSpawns();
-							regionScript.LoadEvents();
-						}
-						else
-						{
-							// General Script, just load it.
-							baseScript.Load();
-						}
-
+						var baseScript = script as BaseScript;
 						baseScript.AutoLoadEvents();
-						_scriptsToDispose.Add(baseScript);
-					}
-					else if (type.IsSubclassOf(typeof(NpcShop)))
-					{
-						if (_shops.ContainsKey(type.Name))
-						{
-							Log.Error("LoadShops: Duplicate '{0}'", type.Name);
-							continue;
-						}
-
-						_shops[type.Name] = Activator.CreateInstance(type) as NpcShop;
+						this.RegisterDisposableScript(baseScript);
 					}
 				}
 				catch (Exception ex)
@@ -714,6 +676,25 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
+		/// Returns true if quest with the given id exists.
+		/// </summary>
+		/// <param name="questId"></param>
+		/// <returns></returns>
+		public bool QuestScriptExists(int questId)
+		{
+			return _questScripts.ContainsKey(questId);
+		}
+
+		/// <summary>
+		/// Adds quest script.
+		/// </summary>
+		/// <param name="script"></param>
+		public void AddQuestScript(QuestScript script)
+		{
+			_questScripts[script.Id] = script;
+		}
+
+		/// <summary>
 		/// Calls delegates for npc and hook.
 		/// </summary>
 		/// <param name="npcName"></param>
@@ -782,6 +763,15 @@ namespace Aura.Channel.Scripting
 				return null;
 
 			return result;
+		}
+
+		/// <summary>
+		/// Adds scriptt o list of scripts that are to disposed upon reload.
+		/// </summary>
+		/// <param name="script"></param>
+		public void RegisterDisposableScript(IDisposable script)
+		{
+			_scriptsToDispose.Add(script);
 		}
 	}
 
