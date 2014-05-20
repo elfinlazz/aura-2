@@ -162,11 +162,6 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Rewards.Add(reward);
 		}
 
-		protected void AddHook(string npc, string hook, Func<IEnumerable> func)
-		{
-
-		}
-
 		// Prerequisite Factory
 		// ------------------------------------------------------------------
 

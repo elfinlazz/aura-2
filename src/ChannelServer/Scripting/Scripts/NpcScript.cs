@@ -311,7 +311,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			this.NPC.EntityId = entityId;
 		}
-		
+
 		public void SetHoodDown()
 		{
 			var item = this.NPC.Inventory.GetItemAt(Pocket.Robe, 0, 0);
@@ -633,7 +633,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
 		}
-		
+
 		/// <summary>
 		/// Throws exception to leave NPC.
 		/// </summary>
@@ -645,12 +645,6 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Informs the client that something can be selected now.
 		/// </summary>
-		/// <remarks>
-		/// Replaced by the pre-processor, to yield after the call,
-		/// to wait for a response.
-		/// If there actually is nothing to select, the last auto button
-		/// (End Conversation) is gonna come in as a select.
-		/// </remarks>
 		public async Task<string> Select()
 		{
 			var script = string.Format(
