@@ -7,7 +7,7 @@ using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 
-namespace Aura.Channel.World.Shops
+namespace Aura.Channel.Scripting.Scripts
 {
 	/// <summary>
 	/// Represents a regular NPC shop.
@@ -29,7 +29,7 @@ namespace Aura.Channel.World.Shops
 	/// Pons overweights everything, but it's displayed alongside
 	/// other prices if they aren't 0.
 	/// </remarks>
-	public class NpcShop : IScript
+	public class NpcShopScript : IScript
 	{
 		protected Dictionary<string, NpcShopTab> _tabs;
 
@@ -38,7 +38,7 @@ namespace Aura.Channel.World.Shops
 		/// </summary>
 		public ICollection<NpcShopTab> Tabs { get { return _tabs.Values; } }
 
-		public NpcShop()
+		public NpcShopScript()
 		{
 			_tabs = new Dictionary<string, NpcShopTab>();
 		}

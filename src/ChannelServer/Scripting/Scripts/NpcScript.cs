@@ -11,7 +11,6 @@ using System.Web;
 using Aura.Channel.Database;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
-using Aura.Channel.World.Shops;
 using Aura.Data;
 using Aura.Shared.Database;
 using Aura.Shared.Mabi.Const;

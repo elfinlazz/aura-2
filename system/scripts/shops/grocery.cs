@@ -4,7 +4,7 @@
 // 
 //---------------------------------------------------------------------------
 
-public class GroceryShop : NpcShop
+public class GroceryShop : NpcShopScript
 {
 	public override void Setup()
 	{

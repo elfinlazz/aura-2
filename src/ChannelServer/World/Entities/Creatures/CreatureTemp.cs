@@ -2,7 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
-using Aura.Channel.World.Shops;
+using Aura.Channel.Scripting.Scripts;
 using Aura.Data.Database;
 using Aura.Shared.Mabi.Structs;
 
@@ -26,7 +26,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		public Cutscene CurrentCutscene;
 
 		// Last open shop
-		public NpcShop CurrentShop;
+		public NpcShopScript CurrentShop;
 
 		// Items temporarily used by skills
 		public Item SkillItem1, SkillItem2;

@@ -189,7 +189,7 @@
     <Compile Include="World\Quests\Rewards.cs" />
     <Compile Include="World\Region.cs" />
     <Compile Include="World\RegionCollision.cs" />
-    <Compile Include="World\Shops\NpcShop.cs" />
+    <Compile Include="Scripting\Scripts\NpcShopScript.cs" />
     <Compile Include="World\WorldManager.cs" />
   </ItemGroup>
   <ItemGroup>

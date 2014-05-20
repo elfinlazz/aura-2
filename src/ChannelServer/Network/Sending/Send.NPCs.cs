@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Aura.Shared.Network;
+using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
-using Aura.Channel.World.Shops;
+using Aura.Shared.Network;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -102,7 +102,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="shop"></param>
-		public static void OpenNpcShop(Creature creature, NpcShop shop)
+		public static void OpenNpcShop(Creature creature, NpcShopScript shop)
 		{
 			var packet = new Packet(Op.OpenNpcShop, creature.EntityId);
 			packet.PutString("shopname");

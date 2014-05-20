@@ -19,7 +19,6 @@ using Aura.Channel.Skills;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World.Quests;
-using Aura.Channel.World.Shops;
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared.Mabi;
@@ -38,7 +37,7 @@ namespace Aura.Channel.Scripting
 
 		private Dictionary<int, ItemScript> _itemScripts;
 		private Dictionary<string, Type> _aiScripts;
-		private Dictionary<string, NpcShop> _shops;
+		private Dictionary<string, NpcShopScript> _shops;
 		private Dictionary<int, QuestScript> _questScripts;
 		private Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>> _clientEventHandlers;
 
@@ -58,7 +57,7 @@ namespace Aura.Channel.Scripting
 
 			_itemScripts = new Dictionary<int, ItemScript>();
 			_aiScripts = new Dictionary<string, Type>();
-			_shops = new Dictionary<string, NpcShop>();
+			_shops = new Dictionary<string, NpcShopScript>();
 			_questScripts = new Dictionary<int, QuestScript>();
 			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>>();
 
@@ -311,9 +310,9 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		/// <param name="typeName"></param>
 		/// <returns></returns>
-		public NpcShop GetShop(string typeName)
+		public NpcShopScript GetShop(string typeName)
 		{
-			NpcShop result;
+			NpcShopScript result;
 			_shops.TryGetValue(typeName, out result);
 			return result;
 		}
@@ -332,7 +331,7 @@ namespace Aura.Channel.Scripting
 		/// Adds shop.
 		/// </summary>
 		/// <param name="shop"></param>
-		public void AddShop(NpcShop shop)
+		public void AddShop(NpcShopScript shop)
 		{
 			_shops[shop.GetType().Name] = shop;
 		}
