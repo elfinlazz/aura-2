@@ -12,7 +12,7 @@ namespace Aura.Channel.Scripting.Scripts
 	/// <summary>
 	/// Simple base class for region scripts.
 	/// </summary>
-	public class RegionScript : BaseScript
+	public class RegionScript : GeneralScript
 	{
 		public override bool Init()
 		{

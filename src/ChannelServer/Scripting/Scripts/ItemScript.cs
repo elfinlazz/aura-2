@@ -16,7 +16,7 @@ namespace Aura.Channel.Scripting.Scripts
 	/// <remarks>
 	/// Stat updates are done automatically, after running the scripts.
 	/// </remarks>
-	public abstract class ItemScript : BaseScript
+	public abstract class ItemScript : GeneralScript
 	{
 		private const float WeightChangePlus = 0.0015f;
 		private const float WeightChangeMinus = 0.000375f;

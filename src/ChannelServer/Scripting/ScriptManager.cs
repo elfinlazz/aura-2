@@ -446,9 +446,9 @@ namespace Aura.Channel.Scripting
 					}
 
 					// Run default methods for base scripts.
-					if (type.IsSubclassOf(typeof(BaseScript)))
+					if (type.IsSubclassOf(typeof(GeneralScript)))
 					{
-						var baseScript = script as BaseScript;
+						var baseScript = script as GeneralScript;
 						baseScript.AutoLoadEvents();
 						this.RegisterDisposableScript(baseScript);
 					}

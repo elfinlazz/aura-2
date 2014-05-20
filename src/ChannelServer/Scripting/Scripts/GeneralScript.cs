@@ -15,7 +15,7 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
 {
-	public abstract class BaseScript : IDisposable, IScript
+	public abstract class GeneralScript : IDisposable, IScript
 	{
 		private const int PropDropRadius = 50;
 
@@ -431,5 +431,10 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			this.Event = evnt;
 		}
+	}
+
+	// Backwards compatibility
+	public abstract class BaseScript : GeneralScript
+	{
 	}
 }

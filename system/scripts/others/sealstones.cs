@@ -9,7 +9,7 @@
 
 public class DugaldSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of Dugald Aisle", "_sealstone_dugald");
 		SetLocation(16, 19798, 4456, 1.48f);
@@ -34,7 +34,7 @@ public class DugaldSealStoneScript : _SealStoneScript
 
 public class CiarSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of Ciar Dungeon", "_sealstone_ciar");
 		SetLocation(1, 28003, 30528, 0.16f);
@@ -57,7 +57,7 @@ public class CiarSealStoneScript : _SealStoneScript
 
 public class RabbieSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of Rabbie Dungeon", "_sealstone_rabbie");
 		SetLocation(14, 16801, 58978, 4.71f);
@@ -80,7 +80,7 @@ public class RabbieSealStoneScript : _SealStoneScript
 
 public class MathSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of Math Dungeon", "_sealstone_math");
 		SetLocation(14, 58409, 58185, 4.71f);
@@ -108,7 +108,7 @@ public class MathSealStoneScript : _SealStoneScript
 
 public class BangorSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of Bangor", "_sealstone_bangor");
 		SetLocation(30, 39189, 17014, 1.54f);
@@ -133,7 +133,7 @@ public class BangorSealStoneScript : _SealStoneScript
 
 public class FiodhSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of Fiodh Dungeon", "_sealstone_fiodh");
 		SetLocation(30, 10696, 83099, 4.7f);
@@ -156,7 +156,7 @@ public class FiodhSealStoneScript : _SealStoneScript
 
 public class NorthEmainSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of North Emain Macha", "_sealstone_osnasail");
 		SetLocation(70, 7844, 13621, 0);
@@ -179,7 +179,7 @@ public class NorthEmainSealStoneScript : _SealStoneScript
 
 public class SouthEmainSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of South Emain Macha", "_sealstone_south_emainmacha");
 		SetLocation(53, 67830, 107710, 0);
@@ -202,7 +202,7 @@ public class SouthEmainSealStoneScript : _SealStoneScript
 
 public class AbbSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of Abb Neagh", "_sealstone_south_taillteann");
 		SetLocation(14, 14023, 56756, 0);
@@ -212,7 +212,7 @@ public class AbbSealStoneScript : _SealStoneScript
 	public override bool Check(Creature creature, Prop prop)
 	{
 		return false;
-	
+
 		// Wand
 		if (creature.RightHand != null && creature.RightHand.Info.Id >= 40038 && creature.RightHand.Info.Id <= 40041)
 			return true;
@@ -231,7 +231,7 @@ public class AbbSealStoneScript : _SealStoneScript
 
 public class SliabSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of Sliab Cuilin", "_sealstone_east_taillteann");
 		SetLocation(16, 6336, 62882, 0);
@@ -241,7 +241,7 @@ public class SliabSealStoneScript : _SealStoneScript
 	public override bool Check(Creature creature, Prop prop)
 	{
 		return false;
-	
+
 		return (creature.LeftHand != null && creature.LeftHand.Info.Id == 1028); // Tracy's Secret
 	}
 
@@ -256,7 +256,7 @@ public class SliabSealStoneScript : _SealStoneScript
 
 public class TaraSealStoneScript : _SealStoneScript
 {
-	public override void Init()
+	public override void Setup()
 	{
 		SetName("Seal Stone of Tara", "_sealstone_tara");
 		SetLocation(400, 56799, 33820, 2.23f);
@@ -266,7 +266,7 @@ public class TaraSealStoneScript : _SealStoneScript
 	public override bool Check(Creature creature, Prop prop)
 	{
 		return false;
-	
+
 		// Have alchemist clothes, shoes, a Cylinder, and Beginner Alchemist title equipped ?
 
 		if (creature.Titles.SelectedTitle != 26)
@@ -306,7 +306,7 @@ public class TaraSealStoneScript : _SealStoneScript
 // Base Script
 // --------------------------------------------------------------------------
 
-public abstract class _SealStoneScript : BaseScript
+public abstract class _SealStoneScript : GeneralScript
 {
 	protected const bool AllowMultiple = true;
 
@@ -319,8 +319,8 @@ public abstract class _SealStoneScript : BaseScript
 
 	public override void Load()
 	{
-		Init();
-		
+		Setup();
+
 		var stone = new Prop(_ident, "", "", 40000, _region, _x, _y, _direction);
 		stone.State = "state1";
 
@@ -417,9 +417,9 @@ public abstract class _SealStoneScript : BaseScript
 	}
 
 	public virtual void OnBreak(Creature creature)
-	{ 
+	{
 	}
 
-	public abstract void Init();
+	public abstract void Setup();
 	public abstract bool Check(Creature creature, Prop prop);
 }

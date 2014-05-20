@@ -17,7 +17,7 @@ using Aura.Channel.Skills;
 
 namespace Aura.Channel.Scripting.Scripts
 {
-	public class QuestScript : BaseScript
+	public class QuestScript : GeneralScript
 	{
 		public int Id { get; set; }
 

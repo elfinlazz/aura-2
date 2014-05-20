@@ -18,7 +18,7 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
 {
-	public abstract class NpcScript : BaseScript
+	public abstract class NpcScript : GeneralScript
 	{
 		private string _response;
 		private SemaphoreSlim _resumeSignal;
