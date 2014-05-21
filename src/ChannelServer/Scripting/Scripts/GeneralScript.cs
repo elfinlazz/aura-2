@@ -15,6 +15,10 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts
 {
+	/// <summary>
+	/// General purpose script with various helpful methods and the
+	/// auto subscription feature.
+	/// </summary>
 	public abstract class GeneralScript : IDisposable, IScript
 	{
 		private const int PropDropRadius = 50;
