@@ -433,7 +433,25 @@ namespace Aura.Channel.Scripting
 		/// <returns></returns>
 		private void LoadScriptAssembly(Assembly asm, string filePath)
 		{
-			foreach (var type in asm.GetTypes().Where(a => a.GetInterfaces().Contains(typeof(IScript)) && !a.IsAbstract && !a.Name.StartsWith("_")))
+			Type[] types = null;
+			try
+			{
+				types = asm.GetTypes();
+			}
+			catch (ReflectionTypeLoadException)
+			{
+				// Happens if classes in source or other scripts change,
+				// i.e. a class name changes, or a parent class. Only
+				// fixable by recaching, so they can "sync" again.
+
+				Log.Error("LoadScriptAssembly: Loading of one or multiple types in '{0}' failed, classes in this file won't be loaded. Delete your cache folder if this error persists.", filePath);
+				return;
+			}
+
+			if (types == null)
+				return;
+
+			foreach (var type in types.Where(a => a.GetInterfaces().Contains(typeof(IScript)) && !a.IsAbstract && !a.Name.StartsWith("_")))
 			{
 				try
 				{
@@ -444,6 +462,12 @@ namespace Aura.Channel.Scripting
 						Log.Debug("LoadScriptAssembly: Failed to initiate '{0}'.", type.Name);
 						continue;
 					}
+
+					// Obsolescence check
+					if (type.IsSubclassOf(typeof(BaseScript)))
+						Log.Warning("{0}: BaseScript is obsolete and will eventually be removed, use GeneralScript instead.", filePath);
+					if (type.IsSubclassOf(typeof(NpcShop)))
+						Log.Warning("{0}: NpcShop is obsolete and will eventually be removed, use NpcShopScript instead.", filePath);
 
 					// Run default methods for base scripts.
 					if (type.IsSubclassOf(typeof(GeneralScript)))
