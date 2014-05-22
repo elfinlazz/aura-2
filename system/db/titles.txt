@@ -360,10 +360,21 @@
 10226, "Golden Time Master", Crit:+3
 10227, "Hydra Transmutation Master", Crit:+3
 10228, "Guard Cylinder Master", Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
-10229, "9년간 함께한", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10229, "the Memory Walker", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
 10230, "10살에 탐험 레벨 50이 되다", Str:-10, Int:+10, Dex:-10, Will:+10, Luck:+20, Protection:-5
 10231, "새 옷을 입은", Luck:+10, MaxAttack:+8, Protection:+1, Crit:+2
 10232, "개근상", Life:+14, Str:+14, Dex:+14
+10233, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10234, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10235, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10236, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10237, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10238, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10239, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10240, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10241, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10242, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
+10243, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
 10304, "출석왕", Stamina:+15, Luck:+15
 10305, "사막에서도 바늘을 찾을"
 10306, "믿는 도끼에 발등 찍힐"
@@ -406,6 +417,8 @@
 10535, "13년지기 친구", Luck:+13
 10536, "마비노기 Forever", Luck:+14
 10537, "불로장생", Luck:+15
+10538, "닌자왕을 꿈꾸는", Life:+10
+10539, "the Strange Dreamer", Str:+6, Int:+6, Dex:+6, Will:+6, Luck:+6
 10680, "Avid Collector", Dex:+7, Will:+7
 10681, "King Collector", Str:+8, Int:+8, Dex:+8, MaxAttack:+10, Defense:+6, Protection:+6
 10700, "the Master of Battlefield Overture"
@@ -459,6 +472,14 @@
 10923, "the Ecologist"
 10924, "Heavy Armor Master", Defense:+10, Protection:+5
 10925, "Light Armor Master", Defense:+6, Protection:+2
+10926, "수리검 마스터", Life:+15
+10927, "수리검 돌진 마스터", Str:+10, Will:+10
+10928, "수리검 폭풍 마스터", Str:+10, Will:+10
+10929, "그림자 속박 마스터", Str:+10, Will:+10
+10930, "그림자 은신 마스터", Str:+10, Will:+10
+10931, "수리검 폭쇄 마스터", Str:+10, Will:+10
+10932, "잿빛 연막술 마스터", Str:+10, Will:+10, Defense:+10
+10933, "심연의 소환술 마스터", Str:+10, Will:+10
 11001, "who Saved the Goddess", Mana:+10, Will:+20, Luck:+20, MinAttack:+1, MaxAttack:+1
 11002, "the Savior of Erinn", Life:+10, Mana:+10, Stamina:+10, Int:+15, Dex:+15
 11003, "the Dragon Knight", Life:+30, Mana:+10, Stamina:+10, Defense:+2, Protection:+2
@@ -493,6 +514,7 @@
 14008, "Magic Weapon Master", Dex:-30, MaxAttack:+8, MagicAttack:+25
 15010, "그린노기 운동가", MaxAttack:+10, MagicAttack:+6, MagicDefense:+3, MagicProtection:+3
 15011, "봄의 시작을 함께 한", Life:+10, Str:+10, Dex:+10, Luck:+15
+15012, "Unknown", Life:+5, Will:+15, Luck:+5
 30001, "the Tough-looking", MaxAttackRate:+100, MinAttackRate:+100
 30002, "the Very Tough-looking", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100
 30003, "who Looks Dangerous", MinWAttack:-100, MaxWAttack:+100, MaxAttackRate:+100, MinAttackRate:+100
@@ -711,7 +733,7 @@
 10688, "Unknown"
 10689, "Unknown"
 10690, "Unknown", Str:+10, MaxAttack:+7, Speed:+2
-10691, "Unknown", MagicAttack:+40
+10691, "Unknown", MagicAttack:+10
 10692, "Unknown", Will:+10, Luck:+15
 10693, "Unknown", Mana:+10, MagicAttack:+24
 10694, "Halloween Party", MagicAttack:+12, MagicDefense:+6, MagicProtection:+6

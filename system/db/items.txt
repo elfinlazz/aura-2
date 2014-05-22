@@ -929,7 +929,7 @@
 15614,"Cressida Wear","Cressida Wear","/equip/armor/cloth/",0,0,1,,no,2,4,2,2,2,16200,14000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15615,"NPC Horatio's Clothes","Horatio's Clothes","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,1,0,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15616,"NPC Polonius's Clothes","Polonius's Clothes","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,1,0,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-15617,"Marlowe's Clothes","Marlowe's Clothes","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,1,0,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+15617,"Marlowe's Costume","Marlowe's Clothes","/equip/armor/cloth/",0,0,1,,no,2,3,1,1,1,0,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15618,"Edward Elric's Suit","Edward Elric's Suit","/equip/armor/cloth/human_elf_only/",0,0,1,,no,2,4,1,1,1,9900,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15619,"Winry Rockbell Suit","Winry Rockbell's Sulit","/equip/armor/cloth/human_elf_only/",0,0,1,,no,2,4,1,1,12,9900,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 15620,"Amestriss Colonel Military Uniform (M)","Amestriss Colonel Military Uniform For Men","/equip/armor/cloth/human_elf_only/",0,0,1,,no,2,4,1,1,1,9900,16000,2,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -1964,7 +1964,7 @@
 18332,"Adonis Hat (F)","Adonis Hat for Women","/equip/head/headgear/",1,0,1,,no,2,1,1,0,0,15000,7000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18333,"Bohemian Hat (F)","Bohemian Hat for Women","/equip/head/headgear/",1,0,1,,no,2,2,1,0,0,15000,7000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18334,"Belmont Hat (F)","Belmont Hat for Women","/equip/head/headgear/",1,0,1,,no,2,2,1,1,1,15000,7000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-18335,"Marlowe's Hat","Marlowe's Hat","/equip/head/headgear/human_elf_only/",1,0,1,,no,2,1,5,1,0,8000,7000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+18335,"Marlowe's Mask","Marlowe's Hat","/equip/head/headgear/human_elf_only/",1,0,1,,no,2,1,5,1,0,8000,7000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18336,"Goggle Hat","Cureless's Casquette and goggle","/equip/head/headgear/",1,0,1,,no,2,2,1,1,1,10000,10000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18338,"Lennox's Glasses","Lennox's Glasses","/equip/head/headgear/glasses/glasses01/misc_repairable/not_dyeable/slot_changeable_item/specialacc_not_eye/",1,0,1,,no,2,1,12,0,0,7600,6000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 18340,"devCAT Ear Muffs","Devcat Hairband","/equip/head/headgear/not_enchantable/",1,0,1,,no,2,2,1,12,12,15240,5000,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -7711,7 +7711,7 @@
 85144,"Blacksmith Skill Training 90 EXP Seal","Blacksmith Skill Training 90 EXP Seal","/usable/writelog_use/skill_exp_plus/script/",501,1,1000,,yes,1,1,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 85145,"Blacksmith Skill Training 100 EXP Seal","Blacksmith Skill Training 100 EXP Seal","/usable/writelog_use/skill_exp_plus/script/",501,1,1000,,yes,1,1,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 85146,"Skill Training EXP Seal","Skill Training EXP Seal","/usable/writelog_use/skill_exp_plus/script/",501,1,1000,,yes,1,1,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
-85147,"Skill Training EXP Seal","Skill Training EXP Seal","/usable/writelog_use/skill_exp_plus/script/",501,1,1000,,yes,1,1,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+85147,"Skill Training Seal (10)","Skill Training EXP Seal","/usable/writelog_use/skill_exp_plus/script/",501,1,1000,,yes,1,1,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 85152,"Fishing Skill Training 10 EXP Seal","Fishing Skill Training 10 EXP Seal","/usable/writelog_use/skill_exp_plus/script/",501,1,1000,,yes,1,1,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 85153,"Crystal of Shadow","Crystal of Shadow","/usable/potion/no_hotkey/expiring/writelog_use/shadow_mission_bonus/not_feed/",501,1,2,,yes,1,2,12,0,0,5000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 85154,"Carasek's Skill Training Seal (100)","Skill Training EXP Seal","/usable/writelog_use/skill_exp_plus/script/",501,1,1000,,yes,1,1,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -13096,6 +13096,8 @@
 93050,"Fashionogi Outfit Box","Wear Box for Fashionista","/usable/script/no_hotkey/expiring/writelog_use/not_dyeable/not_dropable/",1001,1,10,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
 93051,"Fashionogi Special Box","Special Box for Fashionista","/usable/script/no_hotkey/expiring/writelog_use/not_dyeable/not_dropable/",1001,1,10,,yes,2,2,12,12,12,10000,0,0,0,0,0,0,0,0,0,0,2,2,{},{},{},{}
 93053,"Pet Box of Bule Horse","Pet Box of Bule Horse","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,12,12,12,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+93064,"New Basic Starter Package","Basic Starter Package","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,21,21,42,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+93065,"New Premium Starter Package","Premium Starter Package","/usable/script/no_hotkey/expiring/writelog_use/",1001,1,100,,yes,2,2,21,21,41,1000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94001,"Silver Fox Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94002,"Dark Russian Blue Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94003,"Magic Carpet Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
@@ -13110,4 +13112,7 @@
 94012,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94013,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 94014,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+94017,"Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+94022,"Siamese Cat Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
+94023,"Borzoi Whistle","Whistle","/usable/no_hotkey/expiring/writelog_use/not_dyeable/create_pet/destroyable/",1001,0,1,,no,2,2,21,0,0,10000,0,0,0,0,0,0,0,0,0,0,0,0,{},{},{},{}
 110000,"Post-Event Processor","Event PostProcessor","/event/script/",1001,0,1,,no,1,1,0,0,0,0,15000,0,0,0,0,0,3,12,5,20,4,2,{},{},{},{}
