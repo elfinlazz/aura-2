@@ -9,6 +9,7 @@ public class WanderNpcAi : AiScript
 	public WanderNpcAi()
 	{
 		SetHeartbeat(500);
+		SetMaxDistanceFromSpawn(500);
 	}
 
 	protected override IEnumerable Idle()

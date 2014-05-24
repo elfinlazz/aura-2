@@ -665,6 +665,8 @@ namespace Aura.Channel.Scripting
 				return null;
 			}
 
+			creature.SpawnLocation = new Location(regionId, x, y);
+
 			// Activate AI at least once
 			if (creature.AI != null && active)
 				creature.AI.Activate(0);

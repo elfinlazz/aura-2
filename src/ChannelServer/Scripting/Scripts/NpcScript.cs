@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Aura.Channel.Database;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Shared.Database;
@@ -67,6 +68,8 @@ namespace Aura.Channel.Scripting.Scripts
 
 				region.AddCreature(this.NPC);
 			}
+
+			this.NPC.SpawnLocation = new Location(this.NPC.RegionId, this.NPC.GetPosition());
 
 			return true;
 		}

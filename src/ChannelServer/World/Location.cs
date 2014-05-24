@@ -14,6 +14,8 @@ namespace Aura.Channel.World
 		public int RegionId;
 		public int X, Y;
 
+		public Position Position { get { return new Position(X, Y); } }
+
 		public Location(int regionId, int x, int y)
 		{
 			this.RegionId = regionId;

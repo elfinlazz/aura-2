@@ -21,6 +21,11 @@ namespace Aura.Channel.World.Entities
 		public AiScript AI { get; set; }
 		public int SpawnId { get; set; }
 
+		/// <summary>
+		/// Location the NPC was spawned at.
+		/// </summary>
+		public Location SpawnLocation { get; set; }
+
 		public string DialogPortrait { get; set; }
 
 		public NPC()

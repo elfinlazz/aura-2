@@ -49,6 +49,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected AggroType _aggroType;
 		protected AggroLimit _aggroLimit;
 		protected Dictionary<string, string> _hateTags, _loveTags;
+		protected int _maxDistanceFromSpawn;
 
 		/// <summary>
 		/// Creature controlled by AI.
@@ -87,6 +88,8 @@ namespace Aura.Channel.Scripting.Scripts
 			_aggroDelay = TimeSpan.FromMilliseconds(4000);
 			_hateTags = new Dictionary<string, string>();
 			_loveTags = new Dictionary<string, string>();
+
+			_maxDistanceFromSpawn = 3000;
 
 			_aggroType = AggroType.Passive;
 			_aggroLimit = AggroLimit.One;
@@ -451,6 +454,15 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 		}
 
+		/// <summary>
+		/// Sets the max distance an NPC can wander away from its spawn.
+		/// </summary>
+		/// <param name="distance"></param>
+		protected void SetMaxDistanceFromSpawn(int distance)
+		{
+			_maxDistanceFromSpawn = distance;
+		}
+
 		// Functions
 		// ------------------------------------------------------------------
 
@@ -624,6 +636,11 @@ namespace Aura.Channel.Scripting.Scripts
 			var rnd = RandomProvider.Get();
 			var pos = this.Creature.GetPosition();
 			var destination = pos.GetRandomInRange(minDistance, maxDistance, rnd);
+
+			// Make sure NPCs don't wander off
+			var npc = this.Creature as NPC;
+			if (npc != null && destination.GetDistance(npc.SpawnLocation.Position) > _maxDistanceFromSpawn)
+				destination = pos.GetRelative(npc.SpawnLocation.Position, (minDistance + maxDistance) / 2);
 
 			foreach (var action in this.WalkTo(destination))
 				yield return action;
