@@ -335,6 +335,9 @@ namespace Aura.Channel.Scripting.Scripts
 			this.NPC.EntityId = entityId;
 		}
 
+		/// <summary>
+		/// Pulls down the hood of all equipped robes.
+		/// </summary>
 		public void SetHoodDown()
 		{
 			var item = this.NPC.Inventory.GetItemAt(Pocket.Robe, 0, 0);
@@ -343,6 +346,25 @@ namespace Aura.Channel.Scripting.Scripts
 			item = this.NPC.Inventory.GetItemAt(Pocket.RobeStyle, 0, 0);
 			if (item != null)
 				item.Info.State = 1;
+		}
+
+		/// <summary>
+		/// Changes the NPC's AI.
+		/// </summary>
+		/// <param name="name"></param>
+		public void SetAi(string name)
+		{
+			if (this.NPC.AI != null)
+				this.NPC.AI.Dispose();
+
+			var ai = ChannelServer.Instance.ScriptManager.GetAi(name, this.NPC);
+			if (ai == null)
+			{
+				Log.Error("SetAi: AI '{0}' not found ({1})", name, this.GetType().Name);
+				return;
+			}
+
+			this.NPC.AI = ai;
 		}
 
 		// Functions
