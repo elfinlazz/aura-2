@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Aura.Data.Database
 {
@@ -16,7 +17,7 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by keyword id.
 	/// </summary>
-	public class KeywordDb : DatabaseCSVIndexed<string, KeywordData>
+	public class KeywordDb : DatabaseJsonIndexed<string, KeywordData>
 	{
 		private Dictionary<ushort, KeywordData> IdEntries = new Dictionary<ushort, KeywordData>();
 
@@ -25,12 +26,14 @@ namespace Aura.Data.Database
 			return this.IdEntries.GetValueOrDefault(id);
 		}
 
-		[MinFieldCount(2)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(JObject entry)
 		{
 			var info = new KeywordData();
-			info.Id = entry.ReadUShort();
-			info.Name = entry.ReadString();
+			info.Id = entry.ReadUShort("id");
+			info.Name = entry.ReadString("name");
+
+			if (info.Id == 0 || string.IsNullOrWhiteSpace(info.Name))
+				throw new DatabaseWarningException("Missing mandatory data");
 
 			this.Entries[info.Name] = info;
 			this.IdEntries[info.Id] = info;

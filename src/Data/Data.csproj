@@ -52,6 +52,7 @@
     <Compile Include="Database.cs" />
     <Compile Include="DatabaseCSV.cs" />
     <Compile Include="DatabaseDat.cs" />
+    <Compile Include="DatabaseJson.cs" />
     <Compile Include="Database\AncientDrops.cs" />
     <Compile Include="Database\Chairs.cs" />
     <Compile Include="Database\CharCards.cs" />

@@ -11,9 +11,11 @@ namespace Aura.Data
 			: base(msg)
 		{ }
 
-		public DatabaseWarningException(string msg, params object[] args)
-			: base(string.Format(msg, args))
-		{ }
+		public DatabaseWarningException(string msg, string source)
+			: this(msg)
+		{
+			this.Source = source;
+		}
 
 		public override string ToString()
 		{
@@ -26,9 +28,8 @@ namespace Aura.Data
 		public int Line { get; set; }
 
 		public CsvDatabaseWarningException(string source, int line, string msg, params object[] args)
-			: base(string.Format(msg, args))
+			: base(string.Format(msg, args), source)
 		{
-			this.Source = source;
 			this.Line = line;
 		}
 

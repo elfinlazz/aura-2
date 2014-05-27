@@ -171,6 +171,11 @@ namespace Aura.Shared.Util
 					this.LoadDb(AuraData.TitleDb, "db/titles.txt", reload);
 				}
 			}
+			catch (DatabaseWarningException ex)
+			{
+				Log.Error(ex.ToString());
+				CliUtil.Exit(1);
+			}
 			catch (FileNotFoundException ex)
 			{
 				Log.Error(ex.Message);
@@ -178,7 +183,7 @@ namespace Aura.Shared.Util
 			}
 			catch (Exception ex)
 			{
-				Log.Exception(ex);
+				Log.Exception(ex, "Error while loading data.");
 				CliUtil.Exit(1);
 			}
 		}

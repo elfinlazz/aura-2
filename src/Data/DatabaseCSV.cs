@@ -11,7 +11,12 @@ using MsgPack.Serialization;
 
 namespace Aura.Data
 {
-	public abstract class DatabaseCSVBase<TList, TInfo> : Database<TList, TInfo>
+	/// <summary>
+	/// CSV database base class
+	/// </summary>
+	/// <typeparam name="TList">Type of the list managed by this database</typeparam>
+	/// <typeparam name="TInfo">Data type</typeparam>
+	public abstract class DatabaseCSVBase<TList, TInfo> : DatabaseBase<TList, TInfo>
 		where TInfo : class, new()
 		where TList : ICollection, new()
 	{
@@ -24,68 +29,7 @@ namespace Aura.Data
 				_min = (attr[0] as MinFieldCountAttribute).Count;
 		}
 
-		public override int Load(string path, bool clear)
-		{
-			if (clear)
-				this.Clear();
-
-			this.Warnings.Clear();
-
-			this.LoadFromFile(path);
-
-			return this.Entries.Count;
-		}
-
-		public override int Load(string[] files, string cache, bool clear)
-		{
-			if (clear)
-				this.Clear();
-
-			this.Warnings.Clear();
-
-			var fromFiles = false;
-			if (cache == null || !File.Exists(cache))
-			{
-				fromFiles = true;
-			}
-			else
-			{
-				foreach (var file in files)
-				{
-					if (File.GetLastWriteTime(file) > File.GetLastWriteTime(cache))
-					{
-						fromFiles = true;
-						break;
-					}
-				}
-			}
-
-			if (!fromFiles)
-			{
-				// deserialize
-				//Console.WriteLine("load from cache: " + cache);
-				using (var stream = new FileStream(cache, FileMode.OpenOrCreate))
-				{
-					var serializer = MessagePackSerializer.Create<TList>();
-					this.Entries = serializer.Unpack(stream);
-				}
-			}
-			else
-			{
-				foreach (var path in files.Where(a => File.Exists(a)))
-					this.LoadFromFile(path);
-
-				using (var stream = new FileStream(cache, FileMode.OpenOrCreate))
-				{
-					var serializer = MessagePackSerializer.Create<TList>();
-					serializer.Pack(stream, this.Entries);
-				}
-			}
-
-			return this.Entries.Count;
-		}
-
-		protected void LoadFromFile(string path)
+		protected override void LoadFromFile(string path)
 		{
 			using (var csv = new CSVReader(path))
 			{
@@ -122,6 +66,10 @@ namespace Aura.Data
 		protected abstract void ReadEntry(CSVEntry entry);
 	}
 
+	/// <summary>
+	/// CSV database holding a data list
+	/// </summary>
+	/// <typeparam name="TInfo">Data type</typeparam>
 	public abstract class DatabaseCSV<TInfo> : DatabaseCSVBase<List<TInfo>, TInfo> where TInfo : class, new()
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
@@ -134,10 +82,13 @@ namespace Aura.Data
 		{
 			this.Entries.Clear();
 		}
-
-		public Type ListType { get { return typeof(List<TInfo>); } }
 	}
 
+	/// <summary>
+	/// CSV database holding a data dictionary
+	/// </summary>
+	/// <typeparam name="TIndex">Type of the dictionary key</typeparam>
+	/// <typeparam name="TInfo">Data type</typeparam>
 	public abstract class DatabaseCSVIndexed<TIndex, TInfo> : DatabaseCSVBase<Dictionary<TIndex, TInfo>, TInfo> where TInfo : class, new()
 	{
 		public override IEnumerator<TInfo> GetEnumerator()

@@ -4,6 +4,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using MsgPack.Serialization;
 
 namespace Aura.Data
 {
@@ -64,6 +67,77 @@ namespace Aura.Data
 		{
 			return this.GetEnumerator();
 		}
+	}
+
+	public abstract class DatabaseBase<TList, TInfo> : Database<TList, TInfo>
+		where TInfo : class, new()
+		where TList : ICollection, new()
+	{
+		public override int Load(string path, bool clear)
+		{
+			if (clear)
+				this.Clear();
+
+			this.Warnings.Clear();
+
+			this.LoadFromFile(path);
+
+			return this.Entries.Count;
+		}
+
+		public override int Load(string[] files, string cache, bool clear)
+		{
+			if (clear)
+				this.Clear();
+
+			this.Warnings.Clear();
+
+			var fromFiles = false;
+			if (cache == null || !File.Exists(cache))
+			{
+				fromFiles = true;
+			}
+			else
+			{
+				foreach (var file in files)
+				{
+					if (File.GetLastWriteTime(file) > File.GetLastWriteTime(cache))
+					{
+						fromFiles = true;
+						break;
+					}
+				}
+			}
+
+			if (!fromFiles)
+			{
+				using (var stream = new FileStream(cache, FileMode.OpenOrCreate))
+				{
+					var serializer = MessagePackSerializer.Create<TList>();
+					this.Entries = serializer.Unpack(stream);
+				}
+			}
+			else
+			{
+				foreach (var path in files.Where(a => File.Exists(a)))
+					this.LoadFromFile(path);
+
+				// Only create cache, that would be used on the next run,
+				// if everything went smoothly.
+				if (this.Entries.Count > 0 && this.Warnings.Count == 0)
+				{
+					using (var stream = new FileStream(cache, FileMode.OpenOrCreate))
+					{
+						var serializer = MessagePackSerializer.Create<TList>();
+						serializer.Pack(stream, this.Entries);
+					}
+				}
+			}
+
+			return this.Entries.Count;
+		}
+
+		protected abstract void LoadFromFile(string path);
 	}
 
 	public class MinFieldCountAttribute : Attribute
