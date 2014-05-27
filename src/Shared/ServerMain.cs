@@ -171,9 +171,9 @@ namespace Aura.Shared.Util
 					this.LoadDb(AuraData.TitleDb, "db/titles.txt", reload);
 				}
 			}
-			catch (DatabaseWarningException ex)
+			catch (DatabaseErrorException ex)
 			{
-				Log.Error(ex.ToString());
+				Log.Error("{0}", ex.ToString());
 				CliUtil.Exit(1);
 			}
 			catch (FileNotFoundException ex)

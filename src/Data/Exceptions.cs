@@ -23,6 +23,24 @@ namespace Aura.Data
 		}
 	}
 
+	public class DatabaseErrorException : Exception
+	{
+		public DatabaseErrorException(string msg)
+			: base(msg)
+		{ }
+
+		public DatabaseErrorException(string msg, string source)
+			: this(msg)
+		{
+			this.Source = source;
+		}
+
+		public override string ToString()
+		{
+			return this.Source + ": " + this.Message;
+		}
+	}
+
 	public class CsvDatabaseWarningException : DatabaseWarningException
 	{
 		public int Line { get; set; }

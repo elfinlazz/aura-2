@@ -26,11 +26,9 @@ namespace Aura.Data.Database
 			return this.IdEntries.GetValueOrDefault(id);
 		}
 
+		[Mandatory("id", "name")]
 		protected override void ReadEntry(JObject entry)
 		{
-			if (entry.Count < 2)
-				throw new DatabaseWarningException("Missing mandatory data");
-
 			var info = new KeywordData();
 			info.Id = entry.ReadUShort("id");
 			info.Name = entry.ReadString("name");

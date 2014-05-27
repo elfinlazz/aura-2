@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using MsgPack.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,6 +22,15 @@ namespace Aura.Data
 		where TInfo : class, new()
 		where TList : ICollection, new()
 	{
+		private string[] _mandatoryKeys;
+
+		public DatabaseJsonBase()
+		{
+			var attr = this.GetType().GetMethod("ReadEntry", BindingFlags.NonPublic | BindingFlags.Instance).GetCustomAttributes(typeof(MandatoryAttribute), true);
+			if (attr.Length > 0)
+				_mandatoryKeys = (attr[0] as MandatoryAttribute).Keys;
+		}
+
 		protected override void LoadFromFile(string path)
 		{
 			using (var fs = new StreamReader(path))
@@ -37,6 +47,15 @@ namespace Aura.Data
 
 						try
 						{
+							if (_mandatoryKeys != null)
+							{
+								foreach (var key in _mandatoryKeys)
+								{
+									if (obj[key] == null)
+										throw new DatabaseErrorException("Missing mandatory key '" + key + "', in " + Environment.NewLine + obj.ToString(), path);
+								}
+							}
+
 							this.ReadEntry(obj);
 						}
 						catch (DatabaseWarningException ex)
@@ -55,7 +74,7 @@ namespace Aura.Data
 				{
 					// Throw to stop the server, databases depend on each
 					// other, skipping one could lead to problems.
-					throw new DatabaseWarningException(ex.Message, path);
+					throw new DatabaseErrorException(ex.Message, path);
 				}
 			}
 		}
@@ -107,6 +126,16 @@ namespace Aura.Data
 		public override void Clear()
 		{
 			this.Entries.Clear();
+		}
+	}
+
+	public class MandatoryAttribute : Attribute
+	{
+		public string[] Keys { get; protected set; }
+
+		public MandatoryAttribute(params string[] keys)
+		{
+			this.Keys = keys;
 		}
 	}
 }
