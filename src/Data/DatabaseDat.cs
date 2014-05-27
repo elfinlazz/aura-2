@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -58,6 +59,14 @@ namespace Aura.Data
 					}
 				}
 			}
+
+			return this.Count;
+		}
+
+		public override int Load(string[] files, string cache, bool clear)
+		{
+			if (files.Length > 0)
+				this.Load(files[0], clear);
 
 			return this.Count;
 		}

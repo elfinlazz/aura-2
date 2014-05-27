@@ -15,7 +15,7 @@ namespace Aura.Shared.Util
 	public abstract class ServerMain
 	{
 		/// <summary>
-		/// Tries to find aura root folder, and changes the working directory to it.
+		/// Tries to find aura root folder and changes the working directory to it.
 		/// Exits if not successful.
 		/// </summary>
 		public void NavigateToRoot()
@@ -52,7 +52,7 @@ namespace Aura.Shared.Util
 		}
 
 		/// <summary>
-		/// Tries to initialize database, with the information from conf,
+		/// Tries to initialize database with the information from conf,
 		/// exits on error.
 		/// </summary>
 		public virtual void InitDatabase(BaseConf conf)
@@ -189,28 +189,17 @@ namespace Aura.Shared.Util
 		/// </summary>
 		private void LoadDb(IDatabase db, string path, bool reload, bool log = true)
 		{
-			var systemPath = Path.Combine("system", path);
-			var userPath = Path.Combine("user", path);
+			var systemPath = Path.Combine("system", path).Replace('\\', '/');
+			var userPath = Path.Combine("user", path).Replace('\\', '/');
+			//var cachePath = Path.Combine("cache", path).Replace('\\','/');
 
-			// System
-			{
-				db.Load(systemPath, reload);
+			if (!File.Exists(systemPath))
+				throw new FileNotFoundException("Data file '" + systemPath + "' couldn't be found.", systemPath);
 
-				foreach (var ex in db.Warnings)
-					Log.Warning(ex.ToString());
-			}
+			db.Load(new string[] { systemPath, userPath }, null, reload);
 
-			// User
-			{
-				// It's okay if user dbs don't exist.
-				if (File.Exists(userPath))
-				{
-					db.Load(userPath, false);
-
-					foreach (var ex in db.Warnings)
-						Log.Warning(ex.ToString());
-				}
-			}
+			foreach (var ex in db.Warnings)
+				Log.Warning(ex.ToString());
 
 			if (log)
 				Log.Info("  done loading {0} entries from {1}", db.Count, Path.GetFileName(path));

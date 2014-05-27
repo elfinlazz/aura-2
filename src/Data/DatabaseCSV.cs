@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Aura.Data
@@ -13,6 +14,15 @@ namespace Aura.Data
 		where TInfo : class, new()
 		where TList : ICollection, new()
 	{
+		private int _min;
+
+		public DatabaseCSVBase()
+		{
+			var attr = this.GetType().GetMethod("ReadEntry", BindingFlags.NonPublic | BindingFlags.Instance).GetCustomAttributes(typeof(MinFieldCountAttribute), true);
+			if (attr.Length > 0)
+				_min = (attr[0] as MinFieldCountAttribute).Count;
+		}
+
 		public override int Load(string path, bool clear)
 		{
 			if (clear)
@@ -20,19 +30,60 @@ namespace Aura.Data
 
 			this.Warnings.Clear();
 
-			var min = 0;
-			var attr = this.GetType().GetMethod("ReadEntry", BindingFlags.NonPublic | BindingFlags.Instance).GetCustomAttributes(typeof(MinFieldCountAttribute), true);
-			if (attr.Length > 0)
-				min = (attr[0] as MinFieldCountAttribute).Count;
+			this.LoadFromFile(path);
 
+			return this.Entries.Count;
+		}
+
+		public override int Load(string[] files, string cache, bool clear)
+		{
+			if (clear)
+				this.Clear();
+
+			this.Warnings.Clear();
+
+			var fromFiles = false;
+			if (cache == null || !File.Exists(cache))
+			{
+				fromFiles = true;
+			}
+			else
+			{
+				foreach (var file in files)
+				{
+					if (File.GetLastWriteTime(file) > File.GetLastWriteTime(cache))
+					{
+						fromFiles = true;
+						break;
+					}
+				}
+			}
+
+			if (!fromFiles)
+			{
+				// deserialize
+			}
+			else
+			{
+				foreach (var path in files.Where(a => File.Exists(a)))
+					this.LoadFromFile(path);
+
+				// serialize
+			}
+
+			return this.Entries.Count;
+		}
+
+		protected void LoadFromFile(string path)
+		{
 			using (var csv = new CSVReader(path))
 			{
 				foreach (var entry in csv.Next())
 				{
 					try
 					{
-						if (entry.Count < min)
-							throw new FieldCountException(min, entry.Count);
+						if (entry.Count < _min)
+							throw new FieldCountException(_min, entry.Count);
 
 						this.ReadEntry(entry);
 					}
@@ -55,8 +106,6 @@ namespace Aura.Data
 					}
 				}
 			}
-
-			return this.Entries.Count;
 		}
 
 		protected abstract void ReadEntry(CSVEntry entry);
@@ -74,6 +123,8 @@ namespace Aura.Data
 		{
 			this.Entries.Clear();
 		}
+
+		public Type ListType { get { return typeof(List<TInfo>); } }
 	}
 
 	public abstract class DatabaseCSVIndexed<TIndex, TInfo> : DatabaseCSVBase<Dictionary<TIndex, TInfo>, TInfo> where TInfo : class, new()
