@@ -8,8 +8,8 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class SpeedData
 	{
-		public string Ident { get; internal set; }
-		public float Speed { get; internal set; }
+		public string Ident { get; set; }
+		public float Speed { get; set; }
 	}
 
 	/// <summary>

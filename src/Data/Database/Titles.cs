@@ -10,9 +10,9 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class TitleData
 	{
-		public ushort Id { get; internal set; }
-		public string Name { get; internal set; }
-		public Dictionary<string, float> Effects { get; internal set; }
+		public ushort Id { get; set; }
+		public string Name { get; set; }
+		public Dictionary<string, float> Effects { get; set; }
 	}
 
 	/// <summary>

@@ -8,10 +8,10 @@ namespace Aura.Data.Database
 {
 	public class ColorMapData
 	{
-		public int Id { get; internal set; }
-		public int Width { get; internal set; }
-		public int Height { get; internal set; }
-		public uint[] ColorMap { get; internal set; }
+		public int Id { get; set; }
+		public int Width { get; set; }
+		public int Height { get; set; }
+		public uint[] ColorMap { get; set; }
 	}
 
 	/// <summary>

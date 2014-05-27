@@ -8,10 +8,10 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class ChairData
 	{
-		public int ItemId { get; internal set; }
-		public int PropId { get; internal set; }
-		public int GiantPropId { get; internal set; }
-		public int Effect { get; internal set; }
+		public int ItemId { get; set; }
+		public int PropId { get; set; }
+		public int GiantPropId { get; set; }
+		public int Effect { get; set; }
 	}
 
 	/// <summary>

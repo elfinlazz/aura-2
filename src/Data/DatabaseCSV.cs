@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using MsgPack.Serialization;
 
 namespace Aura.Data
 {
@@ -62,13 +63,23 @@ namespace Aura.Data
 			if (!fromFiles)
 			{
 				// deserialize
+				//Console.WriteLine("load from cache: " + cache);
+				using (var stream = new FileStream(cache, FileMode.OpenOrCreate))
+				{
+					var serializer = MessagePackSerializer.Create<TList>();
+					this.Entries = serializer.Unpack(stream);
+				}
 			}
 			else
 			{
 				foreach (var path in files.Where(a => File.Exists(a)))
 					this.LoadFromFile(path);
 
-				// serialize
+				using (var stream = new FileStream(cache, FileMode.OpenOrCreate))
+				{
+					var serializer = MessagePackSerializer.Create<TList>();
+					serializer.Pack(stream, this.Entries);
+				}
 			}
 
 			return this.Entries.Count;

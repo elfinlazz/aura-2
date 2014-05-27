@@ -9,7 +9,7 @@ namespace Aura.Data
 	[Serializable]
 	public abstract class TaggableData
 	{
-		public string Tags { get; internal set; }
+		public string Tags { get; set; }
 
 		/// <summary>
 		/// Return true if tags contain input.

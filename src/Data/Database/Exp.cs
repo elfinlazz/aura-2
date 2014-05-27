@@ -10,8 +10,8 @@ namespace Aura.Data.Database
 	public class ExpData
 	{
 		//public uint Race;
-		public int Level { get; internal set; }
-		public int Exp { get; internal set; }
+		public int Level { get; set; }
+		public int Exp { get; set; }
 	}
 
 	public class ExpDb : DatabaseCSV<ExpData>

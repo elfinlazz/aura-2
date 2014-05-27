@@ -10,17 +10,17 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class ShamalaData
 	{
-		public int Id { get; internal set; }
-		public string Name { get; internal set; }
-		public string Category { get; internal set; }
-		public byte Rank { get; internal set; }
-		public float Rate { get; internal set; }
-		public byte Required { get; internal set; }
-		public float Size { get; internal set; }
-		public uint Color1 { get; internal set; }
-		public uint Color2 { get; internal set; }
-		public uint Color3 { get; internal set; }
-		public List<int> Races { get; internal set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Category { get; set; }
+		public byte Rank { get; set; }
+		public float Rate { get; set; }
+		public byte Required { get; set; }
+		public float Size { get; set; }
+		public uint Color1 { get; set; }
+		public uint Color2 { get; set; }
+		public uint Color3 { get; set; }
+		public List<int> Races { get; set; }
 
 		public ShamalaData()
 		{

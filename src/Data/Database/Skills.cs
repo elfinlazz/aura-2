@@ -10,12 +10,12 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class SkillData
 	{
-		public ushort Id { get; internal set; }
-		public string Name { get; internal set; }
-		public ushort MasterTitle { get; internal set; }
-		public byte MaxRank { get; internal set; }
+		public ushort Id { get; set; }
+		public string Name { get; set; }
+		public ushort MasterTitle { get; set; }
+		public byte MaxRank { get; set; }
 
-		public Dictionary<int, Dictionary<int, SkillRankData>> RankData { get; internal set; }
+		public Dictionary<int, Dictionary<int, SkillRankData>> RankData { get; set; }
 
 		public SkillRankData GetRankData(int rank, int raceId)
 		{

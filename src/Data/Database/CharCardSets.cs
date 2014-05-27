@@ -9,13 +9,13 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class CharCardSetData
 	{
-		public int SetId { get; internal set; }
-		public int Race { get; internal set; }
-		public int Class { get; internal set; }
-		public byte Pocket { get; internal set; }
-		public uint Color1 { get; internal set; }
-		public uint Color2 { get; internal set; }
-		public uint Color3 { get; internal set; }
+		public int SetId { get; set; }
+		public int Race { get; set; }
+		public int Class { get; set; }
+		public byte Pocket { get; set; }
+		public uint Color1 { get; set; }
+		public uint Color2 { get; set; }
+		public uint Color3 { get; set; }
 	}
 
 	public class CharCardSetDb : DatabaseCSVIndexed<int, Dictionary<int, List<CharCardSetData>>>

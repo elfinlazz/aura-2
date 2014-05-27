@@ -9,8 +9,8 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class KeywordData
 	{
-		public ushort Id { get; internal set; }
-		public string Name { get; internal set; }
+		public ushort Id { get; set; }
+		public string Name { get; set; }
 	}
 
 	/// <summary>

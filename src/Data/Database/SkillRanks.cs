@@ -11,67 +11,67 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class SkillRankData
 	{
-		public ushort SkillId { get; internal set; }
-		public int Race { get; internal set; }
-		public byte Rank { get; internal set; }
-		public byte AP { get; internal set; }
-		public float CP { get; internal set; }
-		public int Range { get; internal set; }
+		public ushort SkillId { get; set; }
+		public int Race { get; set; }
+		public byte Rank { get; set; }
+		public byte AP { get; set; }
+		public float CP { get; set; }
+		public int Range { get; set; }
 
-		public byte Stack { get; internal set; }
-		public byte StackMax { get; internal set; }
+		public byte Stack { get; set; }
+		public byte StackMax { get; set; }
 
-		public int LoadTime { get; internal set; }
-		public int NewLoadTime { get; internal set; }
-		public int CoolDown { get; internal set; }
+		public int LoadTime { get; set; }
+		public int NewLoadTime { get; set; }
+		public int CoolDown { get; set; }
 
-		public float StaminaCost { get; internal set; }
-		public float StaminaPrepare { get; internal set; }
-		public float StaminaWait { get; internal set; }
-		public float StaminaActive { get; internal set; }
+		public float StaminaCost { get; set; }
+		public float StaminaPrepare { get; set; }
+		public float StaminaWait { get; set; }
+		public float StaminaActive { get; set; }
 
-		public float ManaCost { get; internal set; }
-		public float ManaPrepare { get; internal set; }
-		public float ManaWait { get; internal set; }
-		public float ManaActive { get; internal set; }
+		public float ManaCost { get; set; }
+		public float ManaPrepare { get; set; }
+		public float ManaWait { get; set; }
+		public float ManaActive { get; set; }
 
-		public float Life { get; internal set; }
-		public float Mana { get; internal set; }
-		public float Stamina { get; internal set; }
-		public float Str { get; internal set; }
-		public float Int { get; internal set; }
-		public float Dex { get; internal set; }
-		public float Will { get; internal set; }
-		public float Luck { get; internal set; }
+		public float Life { get; set; }
+		public float Mana { get; set; }
+		public float Stamina { get; set; }
+		public float Str { get; set; }
+		public float Int { get; set; }
+		public float Dex { get; set; }
+		public float Will { get; set; }
+		public float Luck { get; set; }
 
-		public float LifeTotal { get; internal set; }
-		public float ManaTotal { get; internal set; }
-		public float StaminaTotal { get; internal set; }
-		public float StrTotal { get; internal set; }
-		public float IntTotal { get; internal set; }
-		public float DexTotal { get; internal set; }
-		public float WillTotal { get; internal set; }
-		public float LuckTotal { get; internal set; }
+		public float LifeTotal { get; set; }
+		public float ManaTotal { get; set; }
+		public float StaminaTotal { get; set; }
+		public float StrTotal { get; set; }
+		public float IntTotal { get; set; }
+		public float DexTotal { get; set; }
+		public float WillTotal { get; set; }
+		public float LuckTotal { get; set; }
 
-		public float Var1 { get; internal set; }
-		public float Var2 { get; internal set; }
-		public float Var3 { get; internal set; }
-		public float Var4 { get; internal set; }
-		public float Var5 { get; internal set; }
-		public float Var6 { get; internal set; }
-		public float Var7 { get; internal set; }
-		public float Var8 { get; internal set; }
-		public float Var9 { get; internal set; }
+		public float Var1 { get; set; }
+		public float Var2 { get; set; }
+		public float Var3 { get; set; }
+		public float Var4 { get; set; }
+		public float Var5 { get; set; }
+		public float Var6 { get; set; }
+		public float Var7 { get; set; }
+		public float Var8 { get; set; }
+		public float Var9 { get; set; }
 
-		public List<TrainingsConditionData> Conditions { get; internal set; }
+		public List<TrainingsConditionData> Conditions { get; set; }
 	}
 
 	[Serializable]
 	public class TrainingsConditionData
 	{
-		public float Exp { get; internal set; }
-		public int Count { get; internal set; }
-		public bool Visible { get; internal set; }
+		public float Exp { get; set; }
+		public int Count { get; set; }
+		public bool Visible { get; set; }
 	}
 
 	/// <summary>

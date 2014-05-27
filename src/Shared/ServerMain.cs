@@ -191,12 +191,17 @@ namespace Aura.Shared.Util
 		{
 			var systemPath = Path.Combine("system", path).Replace('\\', '/');
 			var userPath = Path.Combine("user", path).Replace('\\', '/');
-			//var cachePath = Path.Combine("cache", path).Replace('\\','/');
+
+			var cachePath = Path.Combine("cache", path).Replace('\\', '/');
+			cachePath = Path.ChangeExtension(cachePath, "mpk");
+			var cacheDir = Path.GetDirectoryName(cachePath);
+			if (!Directory.Exists(cacheDir))
+				Directory.CreateDirectory(cacheDir);
 
 			if (!File.Exists(systemPath))
 				throw new FileNotFoundException("Data file '" + systemPath + "' couldn't be found.", systemPath);
 
-			db.Load(new string[] { systemPath, userPath }, null, reload);
+			db.Load(new string[] { systemPath, userPath }, cachePath, reload);
 
 			foreach (var ex in db.Warnings)
 				Log.Warning(ex.ToString());

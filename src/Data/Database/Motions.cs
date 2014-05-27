@@ -8,10 +8,10 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class MotionData
 	{
-		public string Name { get; internal set; }
-		public short Category { get; internal set; }
-		public short Type { get; internal set; }
-		public bool Loop { get; internal set; }
+		public string Name { get; set; }
+		public short Category { get; set; }
+		public short Type { get; set; }
+		public bool Loop { get; set; }
 	}
 
 	/// <summary>

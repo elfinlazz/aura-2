@@ -10,9 +10,9 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class RaceSkillData
 	{
-		public int RaceId { get; internal set; }
-		public ushort SkillId { get; internal set; }
-		public byte Rank { get; internal set; }
+		public int RaceId { get; set; }
+		public ushort SkillId { get; set; }
+		public byte Rank { get; set; }
 	}
 
 	public class RaceSkillDb : DatabaseCSVIndexed<int, List<RaceSkillData>>

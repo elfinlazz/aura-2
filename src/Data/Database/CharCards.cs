@@ -9,10 +9,10 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class CharCardData
 	{
-		public int Id { get; internal set; }
-		public string Name { get; internal set; }
-		public int SetId { get; internal set; }
-		public List<int> Races { get; internal set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public int SetId { get; set; }
+		public List<int> Races { get; set; }
 
 		public CharCardData()
 		{

@@ -10,18 +10,18 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class StatsLevelUpData
 	{
-		public ushort Race { get; internal set; }
-		public byte Age { get; internal set; }
+		public ushort Race { get; set; }
+		public byte Age { get; set; }
 
-		public short AP { get; internal set; }
-		public float Life { get; internal set; }
-		public float Mana { get; internal set; }
-		public float Stamina { get; internal set; }
-		public float Str { get; internal set; }
-		public float Int { get; internal set; }
-		public float Dex { get; internal set; }
-		public float Will { get; internal set; }
-		public float Luck { get; internal set; }
+		public short AP { get; set; }
+		public float Life { get; set; }
+		public float Mana { get; set; }
+		public float Stamina { get; set; }
+		public float Str { get; set; }
+		public float Int { get; set; }
+		public float Dex { get; set; }
+		public float Will { get; set; }
+		public float Luck { get; set; }
 	}
 
 	public class StatsLevelUpDb : DatabaseCSVIndexed<int, Dictionary<int, StatsLevelUpData>>

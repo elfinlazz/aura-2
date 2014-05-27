@@ -10,50 +10,50 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class ItemData : TaggableData
 	{
-		public int Id { get; internal set; }
+		public int Id { get; set; }
 
-		public string Name { get; internal set; }
-		public string KorName { get; internal set; }
+		public string Name { get; set; }
+		public string KorName { get; set; }
 
-		public ItemType Type { get; internal set; }
+		public ItemType Type { get; set; }
 
 		/// <summary>
 		/// Specifies whether an item is consumed upon use.
 		/// </summary>
-		public bool Consumed { get; internal set; }
+		public bool Consumed { get; set; }
 
-		public byte Width { get; internal set; }
-		public byte Height { get; internal set; }
+		public byte Width { get; set; }
+		public byte Height { get; set; }
 
-		public byte ColorMap1 { get; internal set; }
-		public byte ColorMap2 { get; internal set; }
-		public byte ColorMap3 { get; internal set; }
+		public byte ColorMap1 { get; set; }
+		public byte ColorMap2 { get; set; }
+		public byte ColorMap3 { get; set; }
 
-		public StackType StackType { get; internal set; }
-		public ushort StackMax { get; internal set; }
-		public int StackItem { get; internal set; }
-		public int Price { get; internal set; }
-		public int SellingPrice { get; internal set; }
+		public StackType StackType { get; set; }
+		public ushort StackMax { get; set; }
+		public int StackItem { get; set; }
+		public int Price { get; set; }
+		public int SellingPrice { get; set; }
 		public int Durability;
 
-		public int Defense { get; internal set; }
-		public short Protection { get; internal set; }
+		public int Defense { get; set; }
+		public short Protection { get; set; }
 
-		public byte WeaponType { get; internal set; }
-		public InstrumentType InstrumentType { get; internal set; }
+		public byte WeaponType { get; set; }
+		public InstrumentType InstrumentType { get; set; }
 
-		public short Range { get; internal set; }
-		public ushort AttackMin { get; internal set; }
-		public ushort AttackMax { get; internal set; }
-		public byte Critical { get; internal set; }
-		public byte Balance { get; internal set; }
-		public byte AttackSpeed { get; internal set; }
-		public byte KnockCount { get; internal set; }
+		public short Range { get; set; }
+		public ushort AttackMin { get; set; }
+		public ushort AttackMax { get; set; }
+		public byte Critical { get; set; }
+		public byte Balance { get; set; }
+		public byte AttackSpeed { get; set; }
+		public byte KnockCount { get; set; }
 
-		public string OnUse { get; internal set; }
-		public string OnEquip { get; internal set; }
-		public string OnUnequip { get; internal set; }
-		public string OnCreation { get; internal set; }
+		public string OnUse { get; set; }
+		public string OnEquip { get; set; }
+		public string OnUnequip { get; set; }
+		public string OnCreation { get; set; }
 	}
 
 	/// <summary>

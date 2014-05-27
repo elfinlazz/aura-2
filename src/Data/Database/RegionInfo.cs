@@ -11,35 +11,35 @@ namespace Aura.Data.Database
 {
 	public class RegionData
 	{
-		public int Id { get; internal set; }
-		public int X1 { get; internal set; }
-		public int Y1 { get; internal set; }
-		public int X2 { get; internal set; }
-		public int Y2 { get; internal set; }
-		public Dictionary<int, AreaData> Areas { get; internal set; }
+		public int Id { get; set; }
+		public int X1 { get; set; }
+		public int Y1 { get; set; }
+		public int X2 { get; set; }
+		public int Y2 { get; set; }
+		public Dictionary<int, AreaData> Areas { get; set; }
 	}
 
 	public class AreaData
 	{
-		public int Id { get; internal set; }
-		public int X1 { get; internal set; }
-		public int Y1 { get; internal set; }
-		public int X2 { get; internal set; }
-		public int Y2 { get; internal set; }
-		public Dictionary<long, PropData> Props { get; internal set; }
-		public Dictionary<long, EventData> Events { get; internal set; }
+		public int Id { get; set; }
+		public int X1 { get; set; }
+		public int Y1 { get; set; }
+		public int X2 { get; set; }
+		public int Y2 { get; set; }
+		public Dictionary<long, PropData> Props { get; set; }
+		public Dictionary<long, EventData> Events { get; set; }
 	}
 
 	public class PropData
 	{
-		public long EntityId { get; internal set; }
-		public int Id { get; internal set; }
-		public float X { get; internal set; }
-		public float Y { get; internal set; }
-		public float Direction { get; internal set; }
-		public float Scale { get; internal set; }
-		public List<ShapeData> Shapes { get; internal set; }
-		public List<RegionElementData> Parameters { get; internal set; }
+		public long EntityId { get; set; }
+		public int Id { get; set; }
+		public float X { get; set; }
+		public float Y { get; set; }
+		public float Direction { get; set; }
+		public float Scale { get; set; }
+		public List<ShapeData> Shapes { get; set; }
+		public List<RegionElementData> Parameters { get; set; }
 
 		/// <summary>
 		/// Returns drop type, if one exists, or -1.
@@ -64,26 +64,26 @@ namespace Aura.Data.Database
 
 	public class ShapeData
 	{
-		public int X1 { get; internal set; }
-		public int Y1 { get; internal set; }
-		public int X2 { get; internal set; }
-		public int Y2 { get; internal set; }
-		public int X3 { get; internal set; }
-		public int Y3 { get; internal set; }
-		public int X4 { get; internal set; }
-		public int Y4 { get; internal set; }
+		public int X1 { get; set; }
+		public int Y1 { get; set; }
+		public int X2 { get; set; }
+		public int Y2 { get; set; }
+		public int X3 { get; set; }
+		public int Y3 { get; set; }
+		public int X4 { get; set; }
+		public int Y4 { get; set; }
 	}
 
 	public class EventData
 	{
-		public long Id { get; internal set; }
-		public EventType Type { get; internal set; }
-		public int RegionId { get; internal set; }
-		public float X { get; internal set; }
-		public float Y { get; internal set; }
-		public bool IsAltar { get; internal set; }
-		public List<ShapeData> Shapes { get; internal set; }
-		public List<RegionElementData> Parameters { get; internal set; }
+		public long Id { get; set; }
+		public EventType Type { get; set; }
+		public int RegionId { get; set; }
+		public float X { get; set; }
+		public float Y { get; set; }
+		public bool IsAltar { get; set; }
+		public List<ShapeData> Shapes { get; set; }
+		public List<RegionElementData> Parameters { get; set; }
 	}
 
 	public enum EventType : int
@@ -109,10 +109,10 @@ namespace Aura.Data.Database
 
 	public class RegionElementData
 	{
-		public int EventType { get; internal set; }
-		public int SignalType { get; internal set; }
-		public string Name { get; internal set; }
-		public string XML { get; internal set; }
+		public int EventType { get; set; }
+		public int SignalType { get; set; }
+		public string Name { get; set; }
+		public string XML { get; set; }
 	}
 
 	public class RegionInfoDb : DatabaseDatIndexed<int, RegionData>

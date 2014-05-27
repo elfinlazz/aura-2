@@ -11,51 +11,51 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class RaceData : TaggableData
 	{
-		public int Id { get; internal set; }
-		public string Name { get; internal set; }
-		public string Group { get; internal set; }
-		public Gender Gender { get; internal set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Group { get; set; }
+		public Gender Gender { get; set; }
 
-		public int DefaultState { get; internal set; }
-		public int VehicleType { get; internal set; }
-		public float RunSpeedFactor { get; internal set; }
-		public Element Element { get; internal set; }
+		public int DefaultState { get; set; }
+		public int VehicleType { get; set; }
+		public float RunSpeedFactor { get; set; }
+		public Element Element { get; set; }
 
-		public float Size { get; internal set; }
-		public uint Color1 { get; internal set; }
-		public uint Color2 { get; internal set; }
-		public uint Color3 { get; internal set; }
+		public float Size { get; set; }
+		public uint Color1 { get; set; }
+		public uint Color2 { get; set; }
+		public uint Color3 { get; set; }
 
-		public float RunningSpeed { get; internal set; }
-		public float WalkingSpeed { get; internal set; }
+		public float RunningSpeed { get; set; }
+		public float WalkingSpeed { get; set; }
 
-		public int InventoryWidth { get; internal set; }
-		public int InventoryHeight { get; internal set; }
+		public int InventoryWidth { get; set; }
+		public int InventoryHeight { get; set; }
 
-		public short AttackSkill { get; internal set; }
-		public int AttackRange { get; internal set; }
-		public int AttackMin { get; internal set; }
-		public int AttackMax { get; internal set; }
-		public int AttackSpeed { get; internal set; }
-		public int KnockCount { get; internal set; }
-		public int Critical { get; internal set; }
-		public int SplashRadius { get; internal set; }
-		public int SplashAngle { get; internal set; }
-		public float SplashDamage { get; internal set; }
-		public RaceStands Stand { get; internal set; }
+		public short AttackSkill { get; set; }
+		public int AttackRange { get; set; }
+		public int AttackMin { get; set; }
+		public int AttackMax { get; set; }
+		public int AttackSpeed { get; set; }
+		public int KnockCount { get; set; }
+		public int Critical { get; set; }
+		public int SplashRadius { get; set; }
+		public int SplashAngle { get; set; }
+		public float SplashDamage { get; set; }
+		public RaceStands Stand { get; set; }
 
-		public string AI { get; internal set; }
-		public float CombatPower { get; internal set; }
-		public float Life { get; internal set; }
-		public int Defense { get; internal set; }
-		public int Protection { get; internal set; }
-		public int Exp { get; internal set; }
+		public string AI { get; set; }
+		public float CombatPower { get; set; }
+		public float Life { get; set; }
+		public int Defense { get; set; }
+		public int Protection { get; set; }
+		public int Exp { get; set; }
 
-		public int GoldMin { get; internal set; }
-		public int GoldMax { get; internal set; }
-		public List<DropData> Drops { get; internal set; }
+		public int GoldMin { get; set; }
+		public int GoldMax { get; set; }
+		public List<DropData> Drops { get; set; }
 
-		public List<RaceSkillData> Skills { get; internal set; }
+		public List<RaceSkillData> Skills { get; set; }
 
 		public RaceData()
 		{
@@ -72,8 +72,8 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class DropData
 	{
-		public int ItemId { get; internal set; }
-		public float Chance { get; internal set; }
+		public int ItemId { get; set; }
+		public float Chance { get; set; }
 
 		public DropData()
 		{

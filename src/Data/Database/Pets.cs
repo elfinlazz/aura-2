@@ -7,30 +7,30 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class PetData
 	{
-		public int RaceId { get; internal set; }
+		public int RaceId { get; set; }
 
-		public short TimeLimit { get; internal set; }
-		public float ExpMultiplicator { get; internal set; }
+		public short TimeLimit { get; set; }
+		public float ExpMultiplicator { get; set; }
 
-		public float Height { get; internal set; }
-		public float Upper { get; internal set; }
-		public float Lower { get; internal set; }
+		public float Height { get; set; }
+		public float Upper { get; set; }
+		public float Lower { get; set; }
 
-		public float Life { get; internal set; }
-		public float Mana { get; internal set; }
-		public float Stamina { get; internal set; }
-		public float Str { get; internal set; }
-		public float Int { get; internal set; }
-		public float Dex { get; internal set; }
-		public float Will { get; internal set; }
-		public float Luck { get; internal set; }
+		public float Life { get; set; }
+		public float Mana { get; set; }
+		public float Stamina { get; set; }
+		public float Str { get; set; }
+		public float Int { get; set; }
+		public float Dex { get; set; }
+		public float Will { get; set; }
+		public float Luck { get; set; }
 
-		public short Defense { get; internal set; }
-		public float Protection { get; internal set; }
+		public short Defense { get; set; }
+		public float Protection { get; set; }
 
-		public uint Color1 { get; internal set; }
-		public uint Color2 { get; internal set; }
-		public uint Color3 { get; internal set; }
+		public uint Color1 { get; set; }
+		public uint Color2 { get; set; }
+		public uint Color3 { get; set; }
 	}
 
 	public class PetDb : DatabaseCSVIndexed<int, PetData>

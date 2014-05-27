@@ -9,8 +9,8 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class PropDropData
 	{
-		public int Type { get; internal set; }
-		public List<PropDropItemInfo> Items { get; internal set; }
+		public int Type { get; set; }
+		public List<PropDropItemInfo> Items { get; set; }
 
 		public PropDropData()
 		{
@@ -46,10 +46,10 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class PropDropItemInfo
 	{
-		public int Type { get; internal set; }
-		public int ItemClass { get; internal set; }
-		public ushort Amount { get; internal set; }
-		public float Chance { get; internal set; }
+		public int Type { get; set; }
+		public int ItemClass { get; set; }
+		public ushort Amount { get; set; }
+		public float Chance { get; set; }
 	}
 
 	public class PropDropDb : DatabaseCSVIndexed<int, PropDropData>

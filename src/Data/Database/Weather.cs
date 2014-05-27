@@ -9,9 +9,9 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class WeatherData
 	{
-		public int Region { get; internal set; }
-		public WeatherInfoType Type { get; internal set; }
-		public List<float> Values { get; internal set; }
+		public int Region { get; set; }
+		public WeatherInfoType Type { get; set; }
+		public List<float> Values { get; set; }
 	}
 
 	/// <summary>
