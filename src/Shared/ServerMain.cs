@@ -204,7 +204,7 @@ namespace Aura.Shared.Util
 			db.Load(new string[] { systemPath, userPath }, cachePath, reload);
 
 			foreach (var ex in db.Warnings)
-				Log.Warning(ex.ToString());
+				Log.Warning("{0}", ex.ToString());
 
 			if (log)
 				Log.Info("  done loading {0} entries from {1}", db.Count, Path.GetFileName(path));

@@ -31,7 +31,7 @@ namespace Aura.Data.Database
 
 			// Every type has at least 1 value.
 			if (values.Count < 1)
-				throw new DatabaseWarningException("Too few values.");
+				throw new CsvDatabaseWarningException("Too few values.");
 
 			foreach (var region in regions)
 			{

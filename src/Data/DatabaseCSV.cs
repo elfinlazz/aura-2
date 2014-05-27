@@ -98,7 +98,7 @@ namespace Aura.Data
 
 						this.ReadEntry(entry);
 					}
-					catch (DatabaseWarningException ex)
+					catch (CsvDatabaseWarningException ex)
 					{
 						ex.Line = entry.Line;
 						ex.Source = path.Replace("\\", "/");
@@ -107,12 +107,12 @@ namespace Aura.Data
 					}
 					catch (OverflowException)
 					{
-						this.Warnings.Add(new DatabaseWarningException(Path.GetFileName(path), entry.Line, "Variable not fit for number (#{0}).", entry.Pointer));
+						this.Warnings.Add(new CsvDatabaseWarningException(Path.GetFileName(path), entry.Line, "Variable not fit for number (#{0}).", entry.Pointer));
 						continue;
 					}
 					catch (FormatException)
 					{
-						this.Warnings.Add(new DatabaseWarningException(Path.GetFileName(path), entry.Line, "Number format exception."));
+						this.Warnings.Add(new CsvDatabaseWarningException(Path.GetFileName(path), entry.Line, "Number format exception."));
 						continue;
 					}
 				}

@@ -33,11 +33,11 @@ namespace Aura.Data.Database
 				var sEffects = entry.ReadString().Trim();
 				var splitted = sEffects.Split(':');
 				if (splitted.Length != 2)
-					throw new DatabaseWarningException("Invalid effect format: " + sEffects);
+					throw new CsvDatabaseWarningException("Invalid effect format: " + sEffects);
 
 				float val;
 				if (!float.TryParse(splitted[1], NumberStyles.Float, CultureInfo.InvariantCulture, out val))
-					throw new DatabaseWarningException("Invalid effect value: " + splitted[1].Trim());
+					throw new CsvDatabaseWarningException("Invalid effect value: " + splitted[1].Trim());
 
 				data.Effects[splitted[0].Trim()] = val;
 			}

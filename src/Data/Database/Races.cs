@@ -151,7 +151,7 @@ namespace Aura.Data.Database
 				// Drop format: <itemId>:<chance>, skip this drop if incorrect.
 				var drop = entry.ReadString().Split(':');
 				if (drop.Length != 2)
-					throw new DatabaseWarningException("Incomplete drop information.");
+					throw new CsvDatabaseWarningException("Incomplete drop information.");
 
 				var di = new DropData();
 				di.ItemId = Convert.ToInt32(drop[0]);

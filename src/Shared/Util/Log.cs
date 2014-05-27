@@ -71,7 +71,7 @@ namespace Aura.Shared.Util
 							if (!Directory.Exists(archive))
 								Directory.CreateDirectory(archive);
 
-							if(File.Exists(archiveFilePath))
+							if (File.Exists(archiveFilePath))
 								File.Delete(archiveFilePath);
 
 							File.Move(value, archiveFilePath);
@@ -126,7 +126,7 @@ namespace Aura.Shared.Util
 			}
 
 			WriteLine(LogLevel.Exception, "{2} : {0} in {1}", ex.Source, ex.TargetSite, ex.GetType());
-			WriteLine(LogLevel.Exception, ex.Message + Environment.NewLine + ex.StackTrace);
+			WriteLine(LogLevel.Exception, "{0}", ex.Message + Environment.NewLine + ex.StackTrace);
 		}
 
 		public static void Unimplemented(string format, params object[] args)

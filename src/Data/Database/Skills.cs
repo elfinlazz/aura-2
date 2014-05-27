@@ -78,7 +78,7 @@ namespace Aura.Data.Database
 			}
 
 			if (info.RankData == null)
-				throw new DatabaseWarningException("No rank data found for skill '{0}'.", info.Id);
+				throw new CsvDatabaseWarningException("No rank data found for skill '{0}'.", info.Id);
 
 			this.Entries[info.Id] = info;
 		}

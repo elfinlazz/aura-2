@@ -7,16 +7,36 @@ namespace Aura.Data
 {
 	public class DatabaseWarningException : Exception
 	{
+		public DatabaseWarningException(string msg)
+			: base(msg)
+		{ }
+
+		public DatabaseWarningException(string msg, params object[] args)
+			: base(string.Format(msg, args))
+		{ }
+
+		public override string ToString()
+		{
+			return this.Source + ": " + this.Message;
+		}
+	}
+
+	public class CsvDatabaseWarningException : DatabaseWarningException
+	{
 		public int Line { get; set; }
 
-		public DatabaseWarningException(string source, int line, string msg, params object[] args)
+		public CsvDatabaseWarningException(string source, int line, string msg, params object[] args)
 			: base(string.Format(msg, args))
 		{
 			this.Source = source;
 			this.Line = line;
 		}
 
-		public DatabaseWarningException(string msg, params object[] args)
+		public CsvDatabaseWarningException(string msg)
+			: base(msg)
+		{ }
+
+		public CsvDatabaseWarningException(string msg, params object[] args)
 			: base(string.Format(msg, args))
 		{ }
 
@@ -26,7 +46,7 @@ namespace Aura.Data
 		}
 	}
 
-	public class FieldCountException : DatabaseWarningException
+	public class FieldCountException : CsvDatabaseWarningException
 	{
 		public FieldCountException(int expectedAmount, int amount)
 			: base("Expected at least {0} fields, found {1}.", expectedAmount, amount)
