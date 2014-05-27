@@ -18,7 +18,7 @@ namespace Aura.Data.Database
 		public uint Color3 { get; set; }
 	}
 
-	public class CharCardSetDb : DatabaseCSVIndexed<int, Dictionary<int, List<CharCardSetData>>>
+	public class CharCardSetDb : DatabaseCsvIndexed<int, Dictionary<int, List<CharCardSetData>>>
 	{
 		public List<CharCardSetData> Find(int setId, int raceId)
 		{
@@ -34,7 +34,7 @@ namespace Aura.Data.Database
 		}
 
 		[MinFieldCount(7)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new CharCardSetData();
 			info.SetId = entry.ReadInt();

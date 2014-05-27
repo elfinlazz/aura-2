@@ -17,10 +17,10 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by region.
 	/// </summary>
-	public class WeatherDb : DatabaseCSVIndexed<int, WeatherData>
+	public class WeatherDb : DatabaseCsvIndexed<int, WeatherData>
 	{
 		[MinFieldCount(3)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			// Read everything first, we might need it for multiple regions.
 			var regions = entry.ReadStringList();

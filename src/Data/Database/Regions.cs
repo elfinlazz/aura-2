@@ -16,7 +16,7 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by map name.
 	/// </summary>
-	public class RegionDb : DatabaseCSVIndexed<string, MapData>
+	public class RegionDb : DatabaseCsvIndexed<string, MapData>
 	{
 		public MapData Find(uint id)
 		{
@@ -37,7 +37,7 @@ namespace Aura.Data.Database
 		}
 
 		[MinFieldCount(2)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new MapData();
 			info.Id = entry.ReadInt();

@@ -17,10 +17,10 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by item id.
 	/// </summary>
-	public class ChairDb : DatabaseCSVIndexed<int, ChairData>
+	public class ChairDb : DatabaseCsvIndexed<int, ChairData>
 	{
 		[MinFieldCount(5)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new ChairData();
 			info.ItemId = entry.ReadInt();

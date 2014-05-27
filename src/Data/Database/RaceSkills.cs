@@ -15,7 +15,7 @@ namespace Aura.Data.Database
 		public byte Rank { get; set; }
 	}
 
-	public class RaceSkillDb : DatabaseCSVIndexed<int, List<RaceSkillData>>
+	public class RaceSkillDb : DatabaseCsvIndexed<int, List<RaceSkillData>>
 	{
 		public List<RaceSkillData> FindAll(int raceId)
 		{
@@ -25,7 +25,7 @@ namespace Aura.Data.Database
 		}
 
 		[MinFieldCount(3)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new RaceSkillData();
 			info.RaceId = entry.ReadInt();

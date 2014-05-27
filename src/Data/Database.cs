@@ -139,14 +139,4 @@ namespace Aura.Data
 
 		protected abstract void LoadFromFile(string path);
 	}
-
-	public class MinFieldCountAttribute : Attribute
-	{
-		public int Count { get; protected set; }
-
-		public MinFieldCountAttribute(int count)
-		{
-			this.Count = count;
-		}
-	}
 }

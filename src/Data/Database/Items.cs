@@ -59,7 +59,7 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Item database, indexed by item id.
 	/// </summary>
-	public class ItemDb : DatabaseCSVIndexed<int, ItemData>
+	public class ItemDb : DatabaseCsvIndexed<int, ItemData>
 	{
 		public ItemData Find(string name)
 		{
@@ -74,7 +74,7 @@ namespace Aura.Data.Database
 		}
 
 		[MinFieldCount(31)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new ItemData();
 			info.Id = entry.ReadInt();

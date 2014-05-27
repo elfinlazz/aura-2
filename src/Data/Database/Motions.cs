@@ -17,10 +17,10 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by motion name.
 	/// </summary>
-	public class MotionDb : DatabaseCSVIndexed<string, MotionData>
+	public class MotionDb : DatabaseCsvIndexed<string, MotionData>
 	{
 		[MinFieldCount(4)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new MotionData();
 			info.Name = entry.ReadString();

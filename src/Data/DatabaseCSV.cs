@@ -16,13 +16,13 @@ namespace Aura.Data
 	/// </summary>
 	/// <typeparam name="TList">Type of the list managed by this database</typeparam>
 	/// <typeparam name="TInfo">Data type</typeparam>
-	public abstract class DatabaseCSVBase<TList, TInfo> : DatabaseBase<TList, TInfo>
+	public abstract class DatabaseCsvBase<TList, TInfo> : DatabaseBase<TList, TInfo>
 		where TInfo : class, new()
 		where TList : ICollection, new()
 	{
 		private int _min;
 
-		public DatabaseCSVBase()
+		public DatabaseCsvBase()
 		{
 			var attr = this.GetType().GetMethod("ReadEntry", BindingFlags.NonPublic | BindingFlags.Instance).GetCustomAttributes(typeof(MinFieldCountAttribute), true);
 			if (attr.Length > 0)
@@ -31,7 +31,7 @@ namespace Aura.Data
 
 		protected override void LoadFromFile(string path)
 		{
-			using (var csv = new CSVReader(path))
+			using (var csv = new CsvReader(path))
 			{
 				foreach (var entry in csv.Next())
 				{
@@ -63,14 +63,14 @@ namespace Aura.Data
 			}
 		}
 
-		protected abstract void ReadEntry(CSVEntry entry);
+		protected abstract void ReadEntry(CsvEntry entry);
 	}
 
 	/// <summary>
 	/// CSV database holding a data list
 	/// </summary>
 	/// <typeparam name="TInfo">Data type</typeparam>
-	public abstract class DatabaseCSV<TInfo> : DatabaseCSVBase<List<TInfo>, TInfo> where TInfo : class, new()
+	public abstract class DatabaseCsv<TInfo> : DatabaseCsvBase<List<TInfo>, TInfo> where TInfo : class, new()
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
 		{
@@ -89,7 +89,7 @@ namespace Aura.Data
 	/// </summary>
 	/// <typeparam name="TIndex">Type of the dictionary key</typeparam>
 	/// <typeparam name="TInfo">Data type</typeparam>
-	public abstract class DatabaseCSVIndexed<TIndex, TInfo> : DatabaseCSVBase<Dictionary<TIndex, TInfo>, TInfo> where TInfo : class, new()
+	public abstract class DatabaseCsvIndexed<TIndex, TInfo> : DatabaseCsvBase<Dictionary<TIndex, TInfo>, TInfo> where TInfo : class, new()
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
 		{
@@ -110,6 +110,16 @@ namespace Aura.Data
 		public override void Clear()
 		{
 			this.Entries.Clear();
+		}
+	}
+
+	public class MinFieldCountAttribute : Attribute
+	{
+		public int Count { get; protected set; }
+
+		public MinFieldCountAttribute(int count)
+		{
+			this.Count = count;
 		}
 	}
 }

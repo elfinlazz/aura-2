@@ -28,10 +28,10 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by char card id.
 	/// </summary>
-	public class CharCardDb : DatabaseCSVIndexed<int, CharCardData>
+	public class CharCardDb : DatabaseCsvIndexed<int, CharCardData>
 	{
 		[MinFieldCount(3)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new CharCardData();
 			info.Id = entry.ReadInt();

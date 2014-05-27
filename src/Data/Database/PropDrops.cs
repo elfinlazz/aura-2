@@ -52,10 +52,10 @@ namespace Aura.Data.Database
 		public float Chance { get; set; }
 	}
 
-	public class PropDropDb : DatabaseCSVIndexed<int, PropDropData>
+	public class PropDropDb : DatabaseCsvIndexed<int, PropDropData>
 	{
 		[MinFieldCount(3)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new PropDropItemInfo();
 			info.Type = entry.ReadInt();

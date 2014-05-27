@@ -14,7 +14,7 @@ namespace Aura.Data.Database
 		public int Exp { get; set; }
 	}
 
-	public class ExpDb : DatabaseCSV<ExpData>
+	public class ExpDb : DatabaseCsv<ExpData>
 	{
 		public int MaxLevel { get; private set; }
 		public long MaxExp { get; private set; }
@@ -66,7 +66,7 @@ namespace Aura.Data.Database
 			return this.GetForLevel(currentLv) - (this.GetTotalForNextLevel(currentLv) - totalExp) + this.GetForLevel((short)(currentLv - 1));
 		}
 
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			// Replace previous values if there is more than 1 line.
 			this.Entries = new List<ExpData>(entry.Count);

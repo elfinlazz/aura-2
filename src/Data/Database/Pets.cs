@@ -33,10 +33,10 @@ namespace Aura.Data.Database
 		public uint Color3 { get; set; }
 	}
 
-	public class PetDb : DatabaseCSVIndexed<int, PetData>
+	public class PetDb : DatabaseCsvIndexed<int, PetData>
 	{
 		[MinFieldCount(20)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new PetData();
 			info.RaceId = entry.ReadInt();

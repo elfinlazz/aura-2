@@ -77,7 +77,7 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by skill id, race id, and rank.
 	/// </summary>
-	public class SkillRankDb : DatabaseCSVIndexed<int, Dictionary<int, Dictionary<int, SkillRankData>>>
+	public class SkillRankDb : DatabaseCsvIndexed<int, Dictionary<int, Dictionary<int, SkillRankData>>>
 	{
 		public override int Load(string path, bool clear)
 		{
@@ -117,7 +117,7 @@ namespace Aura.Data.Database
 		}
 
 		[MinFieldCount(45)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new SkillRankData();
 			info.SkillId = entry.ReadUShort();

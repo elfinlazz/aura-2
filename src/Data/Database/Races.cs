@@ -96,7 +96,7 @@ namespace Aura.Data.Database
 	/// Indexed by race id.
 	/// Depends on: SpeedDb, FlightDb, RaceSkillDb
 	/// </summary>
-	public class RaceDb : DatabaseCSVIndexed<int, RaceData>
+	public class RaceDb : DatabaseCsvIndexed<int, RaceData>
 	{
 		public List<RaceData> FindAll(string name)
 		{
@@ -105,7 +105,7 @@ namespace Aura.Data.Database
 		}
 
 		[MinFieldCount(33)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new RaceData();
 			info.Id = entry.ReadInt();

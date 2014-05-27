@@ -54,7 +54,7 @@ namespace Aura.Data.Database
 	/// Indexed by skill id.
 	/// Depends on: SkillRankDb
 	/// </summary>
-	public class SkillDb : DatabaseCSVIndexed<int, SkillData>
+	public class SkillDb : DatabaseCsvIndexed<int, SkillData>
 	{
 		public List<SkillData> FindAll(string name)
 		{
@@ -63,7 +63,7 @@ namespace Aura.Data.Database
 		}
 
 		[MinFieldCount(3)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new SkillData();
 			info.Id = entry.ReadUShort();

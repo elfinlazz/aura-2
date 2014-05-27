@@ -24,7 +24,7 @@ namespace Aura.Data.Database
 		public byte Luck { get; set; }
 	}
 
-	public class StatsBaseDb : DatabaseCSVIndexed<int, Dictionary<int, StatsBaseData>>
+	public class StatsBaseDb : DatabaseCsvIndexed<int, Dictionary<int, StatsBaseData>>
 	{
 		/// <summary>
 		/// Returns the age info (base stats) for the given race
@@ -45,7 +45,7 @@ namespace Aura.Data.Database
 		}
 
 		[MinFieldCount(11)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new StatsBaseData();
 			info.Age = entry.ReadByte();

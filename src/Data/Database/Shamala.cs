@@ -45,10 +45,10 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by transformation id.
 	/// </summary>
-	public class ShamalaDb : DatabaseCSVIndexed<int, ShamalaData>
+	public class ShamalaDb : DatabaseCsvIndexed<int, ShamalaData>
 	{
 		[MinFieldCount(11)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new ShamalaData();
 			info.Id = entry.ReadInt();

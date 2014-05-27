@@ -18,10 +18,10 @@ namespace Aura.Data.Database
 	/// the speed would require client modifications.
 	/// Indexed by group identification.
 	/// </summary>
-	public class SpeedDb : DatabaseCSVIndexed<string, SpeedData>
+	public class SpeedDb : DatabaseCsvIndexed<string, SpeedData>
 	{
 		[MinFieldCount(2)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new SpeedData();
 			info.Ident = entry.ReadString();

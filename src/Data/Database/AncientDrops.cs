@@ -3,10 +3,10 @@
 
 namespace Aura.Data.Database
 {
-	public class AncientDropDb : DatabaseCSV<DropData>
+	public class AncientDropDb : DatabaseCsv<DropData>
 	{
 		[MinFieldCount(2)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var info = new DropData();
 

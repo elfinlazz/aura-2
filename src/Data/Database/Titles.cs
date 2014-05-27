@@ -18,10 +18,10 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by title id.
 	/// </summary>
-	public class TitleDb : DatabaseCSVIndexed<int, TitleData>
+	public class TitleDb : DatabaseCsvIndexed<int, TitleData>
 	{
 		[MinFieldCount(2)]
-		protected override void ReadEntry(CSVEntry entry)
+		protected override void ReadEntry(CsvEntry entry)
 		{
 			var data = new TitleData();
 			data.Id = entry.ReadUShort();

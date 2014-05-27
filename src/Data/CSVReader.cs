@@ -8,18 +8,18 @@ using System.IO;
 
 namespace Aura.Data
 {
-	public class CSVReader : IDisposable
+	public class CsvReader : IDisposable
 	{
 		public string Path { get; set; }
 		public char Seperator { get; set; }
 
-		public CSVReader(string path)
+		public CsvReader(string path)
 		{
 			this.Path = path;
 			this.Seperator = ',';
 		}
 
-		public IEnumerable<CSVEntry> Next()
+		public IEnumerable<CsvEntry> Next()
 		{
 			using (var fs = new FileStream(this.Path, FileMode.Open, FileAccess.Read, FileShare.Read))
 			using (var reader = new StreamReader(fs))
@@ -39,9 +39,9 @@ namespace Aura.Data
 			yield break;
 		}
 
-		protected CSVEntry GetEntry(string csv)
+		protected CsvEntry GetEntry(string csv)
 		{
-			var result = new CSVEntry();
+			var result = new CsvEntry();
 
 			csv = csv.Trim();
 
@@ -103,7 +103,7 @@ namespace Aura.Data
 		{ }
 	}
 
-	public class CSVEntry
+	public class CsvEntry
 	{
 		public List<string> Fields { get; set; }
 		public int Pointer { get; set; }
@@ -121,12 +121,12 @@ namespace Aura.Data
 			get { return (this.Fields.Count - this.Pointer - 1); }
 		}
 
-		public CSVEntry()
+		public CsvEntry()
 		{
 			this.Fields = new List<string>();
 		}
 
-		public CSVEntry(List<string> fields)
+		public CsvEntry(List<string> fields)
 		{
 			this.Fields = fields;
 		}
