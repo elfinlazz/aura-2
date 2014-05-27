@@ -28,12 +28,12 @@ namespace Aura.Data.Database
 
 		protected override void ReadEntry(JObject entry)
 		{
+			if (entry.Count < 2)
+				throw new DatabaseWarningException("Missing mandatory data");
+
 			var info = new KeywordData();
 			info.Id = entry.ReadUShort("id");
 			info.Name = entry.ReadString("name");
-
-			if (info.Id == 0 || string.IsNullOrWhiteSpace(info.Name))
-				throw new DatabaseWarningException("Missing mandatory data");
 
 			this.Entries[info.Name] = info;
 			this.IdEntries[info.Id] = info;

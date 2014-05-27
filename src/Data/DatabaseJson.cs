@@ -53,8 +53,8 @@ namespace Aura.Data
 				}
 				catch (JsonReaderException ex)
 				{
-					//this.Warnings.Add(new DatabaseWarningException(ex.Message, path));
-					//return;
+					// Throw to stop the server, databases depend on each
+					// other, skipping one could lead to problems.
 					throw new DatabaseWarningException(ex.Message, path);
 				}
 			}
