@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
+	[Serializable]
 	public class PropDropData
 	{
 		public int Type { get; internal set; }
@@ -42,6 +43,7 @@ namespace Aura.Data.Database
 		}
 	}
 
+	[Serializable]
 	public class PropDropItemInfo
 	{
 		public int Type { get; internal set; }

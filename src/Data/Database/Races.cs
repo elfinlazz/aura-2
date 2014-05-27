@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Aura.Data.Database
 {
+	[Serializable]
 	public class RaceData : TaggableData
 	{
 		public int Id { get; internal set; }
@@ -68,10 +69,11 @@ namespace Aura.Data.Database
 		}
 	}
 
+	[Serializable]
 	public class DropData
 	{
-		public int ItemId;
-		public float Chance;
+		public int ItemId { get; internal set; }
+		public float Chance { get; internal set; }
 
 		public DropData()
 		{

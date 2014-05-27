@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
+	[Serializable]
 	public class WeatherData
 	{
 		public int Region { get; internal set; }

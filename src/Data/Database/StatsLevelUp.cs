@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace Aura.Data.Database
 {
+	[Serializable]
 	public class StatsLevelUpData
 	{
 		public ushort Race { get; internal set; }

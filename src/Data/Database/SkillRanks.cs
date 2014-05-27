@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
 namespace Aura.Data.Database
 {
+	[Serializable]
 	public class SkillRankData
 	{
 		public ushort SkillId { get; internal set; }
@@ -64,6 +66,7 @@ namespace Aura.Data.Database
 		public List<TrainingsConditionData> Conditions { get; internal set; }
 	}
 
+	[Serializable]
 	public class TrainingsConditionData
 	{
 		public float Exp { get; internal set; }

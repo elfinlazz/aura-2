@@ -3,9 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Aura.Data.Database
 {
+	[Serializable]
 	public class ShamalaData
 	{
 		public int Id { get; internal set; }
@@ -33,13 +35,10 @@ namespace Aura.Data.Database
 		/// <summary>
 		/// Returns a random race id from this transformation's races list.
 		/// </summary>
-		public int Race
+		public int GetRandomRace()
 		{
-			get
-			{
-				var rnd = new Random(Environment.TickCount);
-				return this.Races[rnd.Next(Races.Count)];
-			}
+			var rnd = new Random(Environment.TickCount);
+			return this.Races[rnd.Next(Races.Count)];
 		}
 	}
 

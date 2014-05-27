@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using System.Collections.Generic;
 
 namespace Aura.Data.Database
 {
+	[Serializable]
 	public class ExpData
 	{
 		//public uint Race;

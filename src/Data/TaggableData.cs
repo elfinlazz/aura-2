@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using System.Text.RegularExpressions;
 
 namespace Aura.Data
 {
+	[Serializable]
 	public abstract class TaggableData
 	{
 		public string Tags { get; internal set; }

@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Data.Database
 {
+	[Serializable]
 	public class SpeedData
 	{
 		public string Ident { get; internal set; }

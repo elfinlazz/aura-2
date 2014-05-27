@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using System.Linq;
 
 namespace Aura.Data.Database
 {
+	[Serializable]
 	public class MapData
 	{
 		public int Id { get; internal set; }
