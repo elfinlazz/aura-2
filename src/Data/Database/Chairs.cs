@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using Newtonsoft.Json.Linq;
 
 namespace Aura.Data.Database
 {
@@ -17,17 +18,16 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by item id.
 	/// </summary>
-	public class ChairDb : DatabaseCsvIndexed<int, ChairData>
+	public class ChairDb : DatabaseJsonIndexed<int, ChairData>
 	{
-		[MinFieldCount(5)]
-		protected override void ReadEntry(CsvEntry entry)
+		[Mandatory("itemId", "propId", "giantPropId")]
+		protected override void ReadEntry(JObject entry)
 		{
 			var info = new ChairData();
-			info.ItemId = entry.ReadInt();
-			entry.ReadString();
-			info.PropId = entry.ReadInt();
-			info.GiantPropId = entry.ReadInt();
-			info.Effect = entry.ReadInt();
+			info.ItemId = entry.ReadInt("itemId");
+			info.PropId = entry.ReadInt("propId");
+			info.GiantPropId = entry.ReadInt("giantPropId");
+			info.Effect = entry.ReadInt("effect");
 
 			this.Entries[info.ItemId] = info;
 		}

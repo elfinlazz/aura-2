@@ -1,18 +1,19 @@
 // Aura
 // Database file
 // 
-// Structure:
-// ItemId  Name  PropId  GiantPropId  Effect
+// Values: itemId, [name], propId, giantPropId, [effect]
 //---------------------------------------------------------------------------
 
-50087,"School Chair",42598,42819,0
-50088,"Living Room Chair",42599,42820,0
-50089,"Reading Chair",42600,42821,0
-50091,"Fishing Chair",43158,43159,0
-50092,"Fishing Chair for 2",43160,43161,0
-50095,"Shroom Buddy Chair",44266,44267,0
-50096,"Loyal Royal Yeti Chair",44260,44261,0
-50097,"King Pepe Chair",44258,44259,0
-50098,"Rainy Fox Chair",44262,44263,345
-50099,"Single Sunbed",44323,44325,0
-50100,"Double Sunbed",44324,44326,0
+[
+{ itemId: 50087, name: "School Chair", propId: 42598, giantPropId: 42819 },
+{ itemId: 50088, name: "Living Room Chair", propId: 42599, giantPropId: 42820 },
+{ itemId: 50089, name: "Reading Chair", propId: 42600, giantPropId: 42821 },
+{ itemId: 50091, name: "Fishing Chair", propId: 43158, giantPropId: 43159 },
+{ itemId: 50092, name: "Fishing Chair for 2", propId: 43160, giantPropId: 43161 },
+{ itemId: 50095, name: "Shroom Buddy Chair", propId: 44266, giantPropId: 44267 },
+{ itemId: 50096, name: "Loyal Royal Yeti Chair", propId: 44260, giantPropId: 44261 },
+{ itemId: 50097, name: "King Pepe Chair", propId: 44258, giantPropId: 44259 },
+{ itemId: 50098, name: "Rainy Fox Chair", propId: 44262, giantPropId: 44263, effect: 345 },
+{ itemId: 50099, name: "Single Sunbed", propId: 44323, giantPropId: 44325 },
+{ itemId: 50100, name: "Double Sunbed", propId: 44324, giantPropId: 44326 },
+]
