@@ -1,294 +1,295 @@
 // Aura
 // Database file
 // 
-// Structure:
-// RaceId  Name  TimeLimit  Exp  Height  Upper  Lower  Life  Mana  Stamina  Str  Int  Dex  Will  Luck  Defense  Protection  Color1-3
+// Values: raceId, [name], timeLimit, exp, height, upper, lower, life, mana, stamina, str, int, dex, will, luck, defense, protection, [color1], [color2], [color3]
 //---------------------------------------------------------------------------
 
+[
 // Normal
 //---------------------------------------------------------------------------
-200001,"Yellow Jindo",116,1.5, 0.5,1.4,1.4, 48,37,40, 21,16,22,26,24, 0,2, 0x00B08048,0x00808080,0x00A0A0A0
-200002,"White Jindo",118,1.5, 0.5,1.4,1.4, 49,38,41, 22,16,22,26,25, 0,2, 0x00FFFFFF,0x00808080,0x00A0A0A0
-200003,"Yellow Jindo",116,1.5, 0.5,1.4,1.4, 48,37,40, 21,16,22,26,24, 0,2, 0x00B08048,0x00808080,0x00A0A0A0
-200011,"Mini Cockerspaniel",115,1.5, 0.35,1.09,1.5, 42,32,56, 22,20,20,26,18, 0,2, 0x00808080,0x00808080,0x00A0A0A0
-200012,"Dapple Thunderspaniel",103,1.5, 0.35,1.09,1.5, 44,66,44, 22,34,20,14,14, 0,2, 0x00808080,0x00808081,0x00A0A0A0
-200013,"White Thunderspaniel",103,1.5, 0.35,1.09,1.5, 40,66,46, 24,30,22,12,14, 0,2, 0x00808080,0x00808082,0x00A0A0A0
-200014,"Thunder Spaniel Dapple",55,1.5, 0.35,1.09,1.5, 91,66,85, 22,34,20,14,14, 11,6, 0x00808080,0x00808081,0x00A0A0A0
-200015,"Thunder Spaniel Dapple",55,1.5, 0.35,1.09,1.5, 91,66,85, 22,34,20,14,14, 11,6, 0x00808080,0x00808081,0x00A0A0A0
-200016,"Thunder Spaniel Dapple",55,1.5, 0.35,1.09,1.5, 91,66,85, 22,34,20,14,14, 11,6, 0x00808080,0x00808081,0x00A0A0A0
-200021,"Afghan Hound",120,1.5, 0.6,1.4,1.4, 55,29,42, 22,18,22,22,17, 0,2, 0x00808080,0x00808080,0x00808080
-200031,"White Poodle",117,1.5, 0.4,1.43,1.45, 66,30,63, 31,16,24,22,16, 0,2, 0x00F5FAFF,0x00808080,0x00808080
-200032,"Brown Poodle",117,1.5, 0.4,1.43,1.45, 61,32,66, 33,18,22,20,16, 0,2, 0x00734E23,0x00808080,0x00808080
-200101,"Golden Retriever",124,1.5, 0.6,1.4,1.4, 50,35,41, 21,16,20,27,24, 0,2, 0x00908060,0x00404040,0x00808080
-200102,"Labrador Retriever",131,1.5, 0.6,1.4,1.4, 75,35,40, 23,16,20,27,24, 0,2, 0x00000000,0x00404040,0x00C0C0C0
-200201,"Dalmatian",115,1.5, 0.6,1.4,1.4, 52,39,44, 22,18,24,28,25, 0,2, 0x00808080,0x00404040,0x00808080
-200301,"Border Collie",92,1.5, 0.48,1.45,1.45, 52,37,40, 24,18,24,27,24, 0,2, 0x00808080,0x00808080,0x00808080
-200401,"Samoyed",108,1.5, 0.52,1.4,1.4, 48,36,44, 22,14,22,28,25, 0,2, 0x00808080,0x00808080,0x00808080
-200402,"Samoyed",52,1.5, 0.52,1.4,1.4, 95,36,82, 22,14,22,28,25, 11,6, 0x00808080,0x00808080,0x00808080
-200403,"Samoyed",52,1.5, 0.52,1.4,1.4, 95,36,82, 22,14,22,28,25, 11,6, 0x00808080,0x00808080,0x00808080
-200404,"Samoyed",52,1.5, 0.52,1.4,1.4, 95,36,82, 22,14,22,28,25, 11,6, 0x00808080,0x00808080,0x00808080
-200501,"Miniature Pinscher",117,1.5, 0.4,1.43,1.45, 46,38,48, 20,20,22,25,25, 0,2, 0x00808080,0x00808080,0x00808080
-200601,"Greyhound",112,1.5, 0.5,1.6,1.5, 64,39,53, 30,24,25,28,22, 0,2, 0x00808080,0x00808080,0x00808080
-200701,"Borzoi",109,1.5, 0.6,1.6,1.4, 57,43,56, 27,26,23,30,25, 0,2, 0x00808080,0x00808080,0x00808080
-200801,"Siberian Husky",107,1.5, 0.5,1.5,1.5, 60,36,58, 33,22,21,34,20, 0,2, 0x00808080,0x00808080,0x00808080
-201001,"Orange Pixie",102,1.8, 0.6,1.4,1.4, 34,38,32, 27,22,25,20,16, 0,2, 0x00808080,0x00808080,0x00808080
-201002,"Brown Pixie",131,1.8, 0.6,1.4,1.4, 66,42,59, 27,25,25,20,16, 0,2, 0x00808080,0x00808080,0x00808080
-201003,"Brown Pixie",131,1.8, 0.6,1.4,1.4, 66,42,59, 27,25,25,20,16, 0,2, 0x00808080,0x00808080,0x00808080
-201101,"Japanese Bobtail",113,1.8, 0.6,1.4,1.4, 36,41,32, 26,21,26,19,16, 0,2, 0x00808080,0x00FFD060,0x00FFD060
-201201,"Light Russian Blue",115,1.8, 0.6,1.4,1.4, 38,41,31, 26,24,27,21,17, 0,2, 0x00708878,0x0080B080,0x0080B080
-201202,"Dark Russian Blue",113,1.8, 0.6,1.4,1.4, 37,39,31, 26,22,26,21,15, 0,2, 0x00506860,0x0080B080,0x0080B080
-201301,"Bombay",124,1.8, 0.7,1.5,1.5, 58,42,62, 30,22,28,28,16, 0,2, 0x00808080,0x00FEC030,0x00FEC030
-201401,"Bengal",102,1.8, 0.8,1.5,1.4, 64,32,60, 35,19,20,36,16, 0,2, 0x00808080,0x00808948,0x00808948
-201501,"Siamese",106,1.8, 0.5,1.5,1.5, 60,48,58, 26,30,22,30,18, 0,2, 0x00808080,0x0077A6D4,0x0077A6D4
-201601,"Persian",112,1.8, 0.6,1.4,1.4, 36,43,32, 25,27,24,20,15, 0,2, 0x00808080,0x00FED699,0x00C87B4E
-201602,"Persian",112,1.8, 0.45,1.6,1.5, 36,43,32, 25,27,24,20,15, 0,2, 0x00808080,0x00FED699,0x00C87B4E
-201901,"Himalayan",108,1.7, 0.6,1.3,1.4, 68,38,38, 31,26,20,34,24, 0,2, 0x00808080,0x00808080,0x00808080
-201902,"Scottish Fold",94,1.5, 0.6,1.3,1.4, 53,36,36, 29,24,20,35,31, 0,2, 0x00808080,0x00808080,0x00808080
-202001,"Brown Fox",92,1.6, 0.5,1.5,1.4, 42,38,41, 27,26,23,17,17, 0,2, 0x00A07070,0x00404040,0x00808080
-202101,"Silver Fox",99,1.6, 0.5,1.5,1.4, 51,39,83, 27,29,23,17,17, 0,2, 0x00FFFFFF,0x00808080,0x00808080
-202201,"Nine-Tailed Fox",180,1.5, 1.0,1.0,1.0, 200,100,100, 70,50,40,30,30, 20,20, 0x00808080,0x00808080,0x00808080
-202202,"Nine-Tailed Fox",180,1.5, 1.0,1.0,1.0, 200,100,100, 70,50,40,30,30, 20,20, 0x00808080,0x00808080,0x00808080
-203001,"Gray Wolf",95,1.7, 0.6,1.3,1.4, 44,30,48, 31,11,17,21,17, 0,2, 0x008A8275,0x00000000,0x00B0B0B0
-203101,"Black Wolf",109,1.7, 0.6,1.3,1.4, 52,28,45, 36,17,20,23,17, 0,2, 0x00808080,0x007D766A,0x005E6A4F
-203102,"Black Wolf",109,1.7, 0.5,1.6,1.5, 52,28,45, 36,17,20,23,17, 0,2, 0x00808080,0x007D766A,0x005E6A4F
-204001,"Cow",90,1.3, 0.45,1.5,1.2, 76,15,56, 21,11,17,18,12, 0,2, 0x00808080,0x00633C31,0x00FF9900
-204002,"Bull",90,1.3, 1.0,1.0,1.0, 76,15,56, 21,11,17,18,12, 0,2, 0x00808080,0x00808080,0x00808080
-204101,"Clover Gnu",93,1.3, 0.45,1.2,1.2, 66,35,56, 24,12,16,12,14, 0,2, 0x00808080,0x00808080,0x00808080
-205001,"White Sheep",95,1.2, 0.6,1.4,1.4, 42,30,32, 14,12,22,12,17, 0,2, 0x00808080,0x00FF9900,0x00808080
-205002,"Black Sheep",95,1.2, 0.6,1.4,1.4, 42,30,32, 14,12,22,12,17, 0,2, 0x00808080,0x00808080,0x00808080
-206001,"White Flame Spider",102,1.6, 0.3,1.4,1.4, 62,25,40, 21,11,20,23,16, 0,2, 0x00808080,0x00404040,0x00C0C0C0
-206101,"Laghodessa",107,1.6, 0.6,1.6,1.4, 66,23,45, 32,15,18,26,16, 0,2, 0x00808080,0x00404040,0x00C0C0C0
-206201,"Guardian Spider",104,1.5, 0.5,1.4,1.3, 88,35,57, 40,21,30,33,26, 0,2, 0x00808080,0x00323232,0x00808080
-207001,"Herb Pig",98,1.4, 0.5,1.4,1.6, 56,45,53, 18,18,25,17,20, 0,2, 0x00808080,0x00808080,0x00808080
-207101,"Clover Pig",104,1.4, 0.5,1.4,1.6, 51,44,48, 16,18,22,20,22, 0,2, 0x00808080,0x00808080,0x00808080
-207201,"Baby Pig",121,1.4, 0.5,1.6,1.5, 53,35,38, 27,22,23,25,22, 0,2, 0x00808080,0x00808080,0x00808080
-207301,"Golden Pig",113,1.4, 0.5,1.4,1.6, 46,43,47, 17,20,17,26,30, 0,2, 0x00B6A379,0x00808080,0x00808080
-208001,"Albino King Snake",105,1.8, 0.4,1.43,1.45, 53,55,72, 24,37,27,15,10, 0,2, 0x00808080,0x00808080,0x00808080
-208101,"Desert Cobra",98,1.8, 0.6,1.43,1.45, 55,34,58, 28,26,28,12,10, 0,2, 0x00808080,0x00808080,0x00808080
-208102,"Coral Cobra",107,1.8, 0.6,1.43,1.45, 48,42,52, 22,32,22,14,12, 0,2, 0x00808080,0x00808080,0x00808080
-210001,"Mini Bear",96,1.6, 0.2,1.33,1.45, 84,21,74, 42,10,25,27,18, 0,2, 0x0067544C,0x00808080,0x00808080
-210002,"Beyaya",96,1.6, 0.2,1.33,1.0, 84,21,74, 42,10,25,27,18, 0,2, 0x008C6133,0x00808080,0x00808080
-210003,"Panda",96,1.6, 0.28,1.3,1.45, 84,21,74, 42,10,25,27,18, 0,2, 0x00808080,0x00808080,0x00808080
-210004,"Red Panda",104,1.6, 0.2,1.33,1.45, 64,42,56, 38,12,26,28,15, 0,2, 0x00808080,0x00808080,0x00808080
-210005,"Polar Bear",104,1.6, 0.2,1.33,1.45, 64,42,56, 38,12,26,28,15, 0,2, 0x00808080,0x00808080,0x00808080
-210006,"Holiday Mini Bear",96,1.6, 0.2,1.33,1.45, 84,21,74, 42,10,25,27,18, 0,2, 0x00808080,0x00808080,0x00808080
-210007,"Beyaya",96,1.6, 0.2,1.33,1.0, 84,21,74, 42,10,25,27,18, 0,2, 0x00808080,0x00808080,0x00808080
-210101,"Lesser Panda",102,1.6, 0.5,1.5,1.4, 45,42,34, 26,31,29,15,18, 0,2, 0x00808080,0x00808080,0x00808080
-210102,"Lesser Panda",120,1.6, 0.5,1.5,1.4, 54,57,45, 27,36,33,24,22, 0,2, 0x00808080,0x00808080,0x00808080
-220001,"White Hedgehog",117,1.6, 0.6,1.35,1.7, 66,30,63, 31,16,24,22,16, 0,2, 0x00A2A2A2,0x00353535,0x00808080
-220002,"Black Hedgehog",117,1.6, 0.6,1.35,1.7, 61,32,66, 33,18,22,20,16, 0,2, 0x00A2A2A2,0x00353535,0x00808080
-230001,"White Ferret",109,1.8, 0.3,1.6,1.6, 52,46,46, 25,36,20,14,14, 0,2, 0x00808080,0x00808080,0x00808080
-230002,"Black Ferret",109,1.8, 0.3,1.6,1.6, 50,46,48, 27,34,22,12,14, 0,2, 0x00808080,0x00808080,0x00808080
-240001,"Bluebird",108,1.2, 0.3,2.0,2.0, 34,42,34, 20,18,26,20,25, 0,2, 0x00808080,0x00808080,0x00808080
-240002,"Crow",124,1.2, 0.6,1.5,1.4, 36,32,48, 22,22,20,22,20, 0,2, 0x00808080,0x00808080,0x00808080
-240003,"Falcon",98,1.2, 0.8,1.5,1.4, 48,27,44, 24,15,18,25,14, 0,2, 0x00808080,0x00808080,0x00808080
-240004,"Goldfinch",106,1.2, 0.8,1.5,1.4, 39,27,46, 22,20,22,27,20, 0,2, 0x00808080,0x00808080,0x00808080
-240005,"Pitta",127,1.2, 0.8,1.5,1.4, 36,42,30, 20,24,23,23,24, 0,2, 0x00808080,0x00808080,0x00808080
-240006,"Kingfisher",112,1.2, 0.8,1.5,1.4, 43,25,37, 26,18,25,25,18, 0,2, 0x00808080,0x00808080,0x00808080
-240007,"Yellow Sprite",102,1.4, 0.6,1.2,1.15, 43,46,47, 24,38,30,26,26, 0,2, 0x00373737,0x00AEA15D,0x00808080
-240008,"Lime Sprite",114,1.25, 0.6,1.2,1.15, 45,51,41, 28,40,28,29,25, 0,2, 0x00373737,0x0087AE5D,0x00808080
-240009,"Rainbow Sprite",114,1.25, 0.6,1.2,1.15, 45,51,41, 28,40,28,29,25, 0,2, 0x00373737,0x0079B8D8,0x00808080
-240010,"Blue Bird",59,1.2, 0.3,2.0,2.0, 75,42,68, 20,18,26,20,25, 10,5, 0x00808080,0x00808080,0x00808080
-240011,"Pitta",58,1.2, 0.3,2.0,2.0, 73,42,65, 20,24,23,23,24, 10,5, 0x00808080,0x00808080,0x00808080
-240012,"Snowy Owl",52,1.6, 0.3,2.0,2.0, 86,46,77, 29,34,29,22,29, 10,5, 0x00808080,0x00808080,0x00808080
-240013,"Pitta",58,1.2, 0.8,1.5,1.4, 73,42,65, 20,24,23,23,24, 10,5, 0x00808080,0x00808080,0x00808080
-240014,"Pitta",58,1.2, 0.8,1.5,1.4, 73,42,65, 20,24,23,23,24, 10,5, 0x00808080,0x00808080,0x00808080
-240015,"Pitta",58,1.2, 0.8,1.5,1.4, 73,42,65, 20,24,23,23,24, 10,5, 0x00808080,0x00808080,0x00808080
-240016,"Snowy Owl",52,1.6, 0.8,1.5,1.4, 86,46,77, 29,34,29,22,29, 10,5, 0x00808080,0x00808080,0x00808080
-240017,"Snowy Owl",52,1.6, 0.8,1.5,1.4, 86,46,77, 29,34,29,22,29, 10,5, 0x00808080,0x00808080,0x00808080
-240018,"Snowy Owl",52,1.6, 0.8,1.5,1.4, 86,46,77, 29,34,29,22,29, 10,5, 0x00808080,0x00808080,0x00808080
-251002,"Green Gecko",104,1.6, 0.28,1.09,1.5, 45,43,38, 18,19,22,21,20, 0,2, 0x00808080,0x00808082,0x00A0A0A0
-251003,"Short Horned Lizard",118,1.6, 0.28,1.09,1.5, 47,41,40, 20,18,22,23,22, 0,2, 0x00808080,0x00808082,0x00A0A0A0
-260014,"Mini Unicorn",103,1.5, 0.4,1.0,1.0, 62,42,41, 28,25,28,31,35, 5,5, 0x00808080,0x00808080,0x00808080
-270601,"Alpaca",180,1.8, 1.0,1.0,1.0, 90,70,80, 40,50,36,46,30, 0,2, 0x00808080,0x00808080,0x00808080
-270602,"Christmas Alpaca",180,1.8, 1.0,1.0,1.0, 90,70,80, 40,50,36,46,30, 0,2, 0x00808080,0x00808080,0x00808080
-270701,"Little Hopper",180,1.1, 1.0,1.0,1.0, 200,50,150, 70,20,40,30,30, 20,25, 0x00808080,0x00808080,0x00808080
-270702,"Little Hopper",180,1.1, 1.0,1.0,1.0, 200,50,150, 70,20,40,30,30, 20,25, 0x00808080,0x00808080,0x00808080
-270801,"Gorilla",180,1.1, 1.0,1.0,1.0, 200,50,150, 70,20,40,30,30, 20,25, 0x00808080,0x00808080,0x00808080
-270802,"Gorilla",180,1.1, 1.0,1.0,1.0, 200,50,150, 70,20,40,30,30, 20,25, 0x00808080,0x00808080,0x00808080
-271001,"Lovely Boston Terrier",150,1.5, 0.6,1.3,1.4, 48,37,40, 21,20,22,26,35, 0,2, 0x00B08048,0x00808080,0x00A0A0A0
-271101,"Lovely Siamese",150,1.5, 0.6,1.3,1.4, 48,37,40, 21,20,22,26,35, 0,2, 0x00B08048,0x00808080,0x00A0A0A0
-271201,"Lovely Scottish Fold",150,1.5, 0.6,1.3,1.4, 48,37,40, 21,20,22,26,35, 0,2, 0x00B08048,0x00808080,0x00A0A0A0
-271301,"Lovely Labrador Retriever",150,1.5, 0.6,1.3,1.4, 48,37,40, 21,20,22,26,35, 0,2, 0x00B08048,0x00808080,0x00A0A0A0
-290001,"Kangaroo Rat",108,1.8, 0.37,1.09,1.5, 42,52,32, 15,22,20,18,24, 0,2, 0x00808080,0x00808082,0x00A0A0A0
-290002,"Golden Rat",108,1.8, 0.37,1.09,1.5, 42,52,32, 15,22,20,18,24, 0,2, 0x00808080,0x00808082,0x00A0A0A0
-290101,"Hamster",117,1.8, 0.45,1.2,1.5, 45,36,36, 22,21,25,27,19, 0,2, 0x00808080,0x00706B78,0x007C7168
-290102,"Hamster",117,1.8, 0.5,1.5,1.5, 45,36,36, 22,21,25,27,19, 0,2, 0x00808080,0x00706B78,0x007C7168
-290103,"Rat Man",117,1.8, 0.5,1.5,1.5, 45,36,36, 22,21,25,27,19, 0,2, 0x00808080,0x00808080,0x007C7168
-340201,"Emperor Penguin",106,1.2, 0.8,1.4,1.2, 42,38,32, 28,22,20,18,16, 0,2, 0x00808080,0x00808080,0x00808080
-340202,"Adelie Penguin",112,1.2, 0.5,1.6,1.2, 36,30,52, 24,20,28,26,16, 0,2, 0x00808080,0x00808080,0x00808080
-440401,"Yellow Tiger Cub",107,1.5, 0.6,1.4,1.4, 84,29,60, 42,15,25,30,19, 0,2, 0x00808080,0x00808080,0x00808080
-440402,"White Tiger Cub",117,1.6, 0.6,1.4,1.4, 85,35,66, 42,21,28,30,20, 0,2, 0x00808080,0x00808080,0x00808080
-450101,"Spotted Deer",112,1.5, 0.5,1.4,1.6, 45,46,36, 20,27,27,22,21, 0,2, 0x00808080,0x00808080,0x00808080
-450201,"Short Horned Antelope",130,1.5, 0.5,1.4,1.6, 53,32,44, 24,20,22,25,21, 0,2, 0x00808080,0x00808080,0x00808080
-470001,"Mini Skeleton",117,1.8, 0.46,1.7,0.8, 68,32,68, 38,10,22,18,2, 0,2, 0x00808080,0x00808080,0x00808080
-470002,"Arctic Skeleton",117,1.8, 0.46,1.7,0.8, 68,32,68, 38,10,22,18,2, 0,2, 0x00808080,0x00808080,0x00808080
-470003,"Mini Skeleton",117,1.8, 0.46,1.7,0.8, 68,32,68, 38,10,22,18,2, 0,2, 0x00808080,0x00808080,0x00808080
-470101,"Little Ghost",107,1.55, 1.0,1.0,1.0, 52,40,44, 22,30,22,19,7, 0,2, 0x00808080,0x00808080,0x00808080
-470102,"Little Ghost",107,1.55, 1.0,1.0,1.0, 52,40,44, 22,30,22,19,7, 0,2, 0x00808080,0x00808080,0x00808080
-471001,"Skeleton Maid",117,1.8, 0.46,1.7,0.8, 10,10,10, 10,10,10,10,2, 0,2, 0x00808080,0x00808080,0x00808080
-471002,"Brown Explorer Cat",117,1.8, 0.6,1.4,1.4, 10,10,10, 10,10,10,10,2, 0,2, 0x00808080,0x00808080,0x00808080
-471003,"Petal Collar Dog",117,1.8, 0.4,1.43,1.45, 10,10,10, 10,10,10,10,2, 0,2, 0x00808080,0x00808080,0x00808080
-471005,"Shark Robe Seal",105,1.7, 0.4,1.43,1.45, 10,10,10, 10,10,10,10,2, 0,2, 0x00808080,0x00808080,0x00808080
-471006,"Skeleton Maid",117,1.8, 0.46,1.7,0.8, 68,32,68, 38,10,22,18,2, 0,2, 0x00808080,0x00808080,0x00808080
-471007,"Shark Robe Seal",92,1.8, 0.6,1.1,1.0, 55,43,32, 18,34,22,32,25, 0,2, 0x00808080,0x00808080,0x00808080
-490025,"Warp Imp",112,1.7, 0.2,3.6,1.5, 72,38,43, 24,31,26,23,29, 0,2, 0x00808080,0x00808080,0x00808080
-500001,"Black Mud Crab",90,1.6, 0.75,1.0,1.0, 50,33,34, 33,40,27,27,28, 0,2, 0x00808080,0x00808080,0x00808080
-500002,"Red Rock Crab",111,1.7, 0.75,1.0,1.0, 45,40,39, 27,38,24,30,29, 0,2, 0x00808080,0x00808080,0x00808080
-511001,"Monkey",105,1.5, 0.26,1.37,1.3, 66,51,44, 28,30,31,14,17, 0,2, 0x00808080,0x00808080,0x00808080
-550001,"White Elephant",82,1.25, 0.7,1.0,1.0, 58,32,52, 30,25,27,29,17, 0,2, 0x00808080,0x00808080,0x00808080
-550002,"Blue Elephant",94,1.1, 0.7,1.0,1.0, 62,26,56, 38,18,26,28,22, 0,2, 0x00808080,0x00808080,0x00808080
-570001,"Eagle Owl",88,1.6, 0.6,1.0,1.0, 58,39,70, 28,23,24,32,17, 0,2, 0x00808080,0x00808080,0x00808080
-570002,"Snowy Owl",97,1.6, 0.6,1.0,1.0, 47,46,54, 29,34,29,22,29, 0,2, 0x00808080,0x00808080,0x00808080
-580001,"Black Seal",105,1.7, 0.6,1.1,1.0, 61,37,38, 26,22,26,30,31, 0,2, 0x00808080,0x00808080,0x00808080
-580002,"White Seal",92,1.8, 0.6,1.1,1.0, 55,43,32, 18,34,22,32,25, 0,2, 0x00808080,0x00808080,0x00808080
-580003,"Black Seal with Mini Pet",105,1.7, 0.6,1.1,1.0, 61,37,38, 26,22,26,30,31, 0,2, 0x00808080,0x00808080,0x00808080
-580004,"White Seal with Mini Pet",92,1.8, 0.6,1.1,1.0, 55,43,32, 18,34,22,32,25, 0,2, 0x00808080,0x00808080,0x00808080
-640101,"Jungle Scout Imp",112,1.7, 0.25,3.2,1.5, 72,38,43, 24,31,26,23,29, 0,2, 0x00808080,0x00808080,0x00808080
-640102,"Lava Walker Imp",112,1.7, 0.25,3.2,1.5, 72,38,43, 24,31,26,23,29, 0,2, 0x00808080,0x00808080,0x00808080
-640103,"Warp Imp",112,1.7, 0.2,3.6,1.5, 72,38,43, 24,31,26,23,29, 0,2, 0x00808080,0x00808080,0x00808080
-640104,"Warp Imp",78,1.7, 0.2,3.6,1.5, 72,38,43, 24,31,26,23,29, 0,2, 0x00808080,0x00808080,0x00808080
-640105,"Teleport Magician Imp",78,1.7, 0.2,3.6,1.5, 72,38,43, 24,31,26,23,29, 0,2, 0x00808080,0x00808080,0x00808080
-650101,"Treat Pumpkin",94,1.6, 0.8,1.0,1.0, 52,46,48, 24,38,32,26,22, 0,2, 0x00808080,0x00808080,0x00808080
-650102,"Trick Pumpkin",102,1.5, 0.8,1.0,1.0, 43,56,47, 22,40,30,27,25, 0,2, 0x00808080,0x00808080,0x00808080
+{ raceId: 200001, name: "Yellow Jindo", timeLimit: 116, exp: 1.5, height: 0.5, upper: 1.4, lower: 1.4, life: 48, mana: 37, stamina: 40, str: 21, int: 16, dex: 22, will: 26, luck: 24, defense: 0, protection: 2, color1: 0x00B08048, color3: 0x00A0A0A0 },
+{ raceId: 200002, name: "White Jindo", timeLimit: 118, exp: 1.5, height: 0.5, upper: 1.4, lower: 1.4, life: 49, mana: 38, stamina: 41, str: 22, int: 16, dex: 22, will: 26, luck: 25, defense: 0, protection: 2, color1: 0x00FFFFFF, color3: 0x00A0A0A0 },
+{ raceId: 200003, name: "Yellow Jindo", timeLimit: 116, exp: 1.5, height: 0.5, upper: 1.4, lower: 1.4, life: 48, mana: 37, stamina: 40, str: 21, int: 16, dex: 22, will: 26, luck: 24, defense: 0, protection: 2, color1: 0x00B08048, color3: 0x00A0A0A0 },
+{ raceId: 200011, name: "Mini Cockerspaniel", timeLimit: 115, exp: 1.5, height: 0.35, upper: 1.09, lower: 1.5, life: 42, mana: 32, stamina: 56, str: 22, int: 20, dex: 20, will: 26, luck: 18, defense: 0, protection: 2, color3: 0x00A0A0A0 },
+{ raceId: 200012, name: "Dapple Thunderspaniel", timeLimit: 103, exp: 1.5, height: 0.35, upper: 1.09, lower: 1.5, life: 44, mana: 66, stamina: 44, str: 22, int: 34, dex: 20, will: 14, luck: 14, defense: 0, protection: 2, color2: 0x00808081, color3: 0x00A0A0A0 },
+{ raceId: 200013, name: "White Thunderspaniel", timeLimit: 103, exp: 1.5, height: 0.35, upper: 1.09, lower: 1.5, life: 40, mana: 66, stamina: 46, str: 24, int: 30, dex: 22, will: 12, luck: 14, defense: 0, protection: 2, color2: 0x00808082, color3: 0x00A0A0A0 },
+{ raceId: 200014, name: "Thunder Spaniel Dapple", timeLimit: 55, exp: 1.5, height: 0.35, upper: 1.09, lower: 1.5, life: 91, mana: 66, stamina: 85, str: 22, int: 34, dex: 20, will: 14, luck: 14, defense: 11, protection: 6, color2: 0x00808081, color3: 0x00A0A0A0 },
+{ raceId: 200015, name: "Thunder Spaniel Dapple", timeLimit: 55, exp: 1.5, height: 0.35, upper: 1.09, lower: 1.5, life: 91, mana: 66, stamina: 85, str: 22, int: 34, dex: 20, will: 14, luck: 14, defense: 11, protection: 6, color2: 0x00808081, color3: 0x00A0A0A0 },
+{ raceId: 200016, name: "Thunder Spaniel Dapple", timeLimit: 55, exp: 1.5, height: 0.35, upper: 1.09, lower: 1.5, life: 91, mana: 66, stamina: 85, str: 22, int: 34, dex: 20, will: 14, luck: 14, defense: 11, protection: 6, color2: 0x00808081, color3: 0x00A0A0A0 },
+{ raceId: 200021, name: "Afghan Hound", timeLimit: 120, exp: 1.5, height: 0.6, upper: 1.4, lower: 1.4, life: 55, mana: 29, stamina: 42, str: 22, int: 18, dex: 22, will: 22, luck: 17, defense: 0, protection: 2 },
+{ raceId: 200031, name: "White Poodle", timeLimit: 117, exp: 1.5, height: 0.4, upper: 1.43, lower: 1.45, life: 66, mana: 30, stamina: 63, str: 31, int: 16, dex: 24, will: 22, luck: 16, defense: 0, protection: 2, color1: 0x00F5FAFF },
+{ raceId: 200032, name: "Brown Poodle", timeLimit: 117, exp: 1.5, height: 0.4, upper: 1.43, lower: 1.45, life: 61, mana: 32, stamina: 66, str: 33, int: 18, dex: 22, will: 20, luck: 16, defense: 0, protection: 2, color1: 0x00734E23 },
+{ raceId: 200101, name: "Golden Retriever", timeLimit: 124, exp: 1.5, height: 0.6, upper: 1.4, lower: 1.4, life: 50, mana: 35, stamina: 41, str: 21, int: 16, dex: 20, will: 27, luck: 24, defense: 0, protection: 2, color1: 0x00908060, color2: 0x00404040 },
+{ raceId: 200102, name: "Labrador Retriever", timeLimit: 131, exp: 1.5, height: 0.6, upper: 1.4, lower: 1.4, life: 75, mana: 35, stamina: 40, str: 23, int: 16, dex: 20, will: 27, luck: 24, defense: 0, protection: 2, color1: 0x00000000, color2: 0x00404040, color3: 0x00C0C0C0 },
+{ raceId: 200201, name: "Dalmatian", timeLimit: 115, exp: 1.5, height: 0.6, upper: 1.4, lower: 1.4, life: 52, mana: 39, stamina: 44, str: 22, int: 18, dex: 24, will: 28, luck: 25, defense: 0, protection: 2, color2: 0x00404040 },
+{ raceId: 200301, name: "Border Collie", timeLimit: 92, exp: 1.5, height: 0.48, upper: 1.45, lower: 1.45, life: 52, mana: 37, stamina: 40, str: 24, int: 18, dex: 24, will: 27, luck: 24, defense: 0, protection: 2 },
+{ raceId: 200401, name: "Samoyed", timeLimit: 108, exp: 1.5, height: 0.52, upper: 1.4, lower: 1.4, life: 48, mana: 36, stamina: 44, str: 22, int: 14, dex: 22, will: 28, luck: 25, defense: 0, protection: 2 },
+{ raceId: 200402, name: "Samoyed", timeLimit: 52, exp: 1.5, height: 0.52, upper: 1.4, lower: 1.4, life: 95, mana: 36, stamina: 82, str: 22, int: 14, dex: 22, will: 28, luck: 25, defense: 11, protection: 6 },
+{ raceId: 200403, name: "Samoyed", timeLimit: 52, exp: 1.5, height: 0.52, upper: 1.4, lower: 1.4, life: 95, mana: 36, stamina: 82, str: 22, int: 14, dex: 22, will: 28, luck: 25, defense: 11, protection: 6 },
+{ raceId: 200404, name: "Samoyed", timeLimit: 52, exp: 1.5, height: 0.52, upper: 1.4, lower: 1.4, life: 95, mana: 36, stamina: 82, str: 22, int: 14, dex: 22, will: 28, luck: 25, defense: 11, protection: 6 },
+{ raceId: 200501, name: "Miniature Pinscher", timeLimit: 117, exp: 1.5, height: 0.4, upper: 1.43, lower: 1.45, life: 46, mana: 38, stamina: 48, str: 20, int: 20, dex: 22, will: 25, luck: 25, defense: 0, protection: 2 },
+{ raceId: 200601, name: "Greyhound", timeLimit: 112, exp: 1.5, height: 0.5, upper: 1.6, lower: 1.5, life: 64, mana: 39, stamina: 53, str: 30, int: 24, dex: 25, will: 28, luck: 22, defense: 0, protection: 2 },
+{ raceId: 200701, name: "Borzoi", timeLimit: 109, exp: 1.5, height: 0.6, upper: 1.6, lower: 1.4, life: 57, mana: 43, stamina: 56, str: 27, int: 26, dex: 23, will: 30, luck: 25, defense: 0, protection: 2 },
+{ raceId: 200801, name: "Siberian Husky", timeLimit: 107, exp: 1.5, height: 0.5, upper: 1.5, lower: 1.5, life: 60, mana: 36, stamina: 58, str: 33, int: 22, dex: 21, will: 34, luck: 20, defense: 0, protection: 2 },
+{ raceId: 201001, name: "Orange Pixie", timeLimit: 102, exp: 1.8, height: 0.6, upper: 1.4, lower: 1.4, life: 34, mana: 38, stamina: 32, str: 27, int: 22, dex: 25, will: 20, luck: 16, defense: 0, protection: 2 },
+{ raceId: 201002, name: "Brown Pixie", timeLimit: 131, exp: 1.8, height: 0.6, upper: 1.4, lower: 1.4, life: 66, mana: 42, stamina: 59, str: 27, int: 25, dex: 25, will: 20, luck: 16, defense: 0, protection: 2 },
+{ raceId: 201003, name: "Brown Pixie", timeLimit: 131, exp: 1.8, height: 0.6, upper: 1.4, lower: 1.4, life: 66, mana: 42, stamina: 59, str: 27, int: 25, dex: 25, will: 20, luck: 16, defense: 0, protection: 2 },
+{ raceId: 201101, name: "Japanese Bobtail", timeLimit: 113, exp: 1.8, height: 0.6, upper: 1.4, lower: 1.4, life: 36, mana: 41, stamina: 32, str: 26, int: 21, dex: 26, will: 19, luck: 16, defense: 0, protection: 2, color2: 0x00FFD060, color3: 0x00FFD060 },
+{ raceId: 201201, name: "Light Russian Blue", timeLimit: 115, exp: 1.8, height: 0.6, upper: 1.4, lower: 1.4, life: 38, mana: 41, stamina: 31, str: 26, int: 24, dex: 27, will: 21, luck: 17, defense: 0, protection: 2, color1: 0x00708878, color2: 0x0080B080, color3: 0x0080B080 },
+{ raceId: 201202, name: "Dark Russian Blue", timeLimit: 113, exp: 1.8, height: 0.6, upper: 1.4, lower: 1.4, life: 37, mana: 39, stamina: 31, str: 26, int: 22, dex: 26, will: 21, luck: 15, defense: 0, protection: 2, color1: 0x00506860, color2: 0x0080B080, color3: 0x0080B080 },
+{ raceId: 201301, name: "Bombay", timeLimit: 124, exp: 1.8, height: 0.7, upper: 1.5, lower: 1.5, life: 58, mana: 42, stamina: 62, str: 30, int: 22, dex: 28, will: 28, luck: 16, defense: 0, protection: 2, color2: 0x00FEC030, color3: 0x00FEC030 },
+{ raceId: 201401, name: "Bengal", timeLimit: 102, exp: 1.8, height: 0.8, upper: 1.5, lower: 1.4, life: 64, mana: 32, stamina: 60, str: 35, int: 19, dex: 20, will: 36, luck: 16, defense: 0, protection: 2, color2: 0x00808948, color3: 0x00808948 },
+{ raceId: 201501, name: "Siamese", timeLimit: 106, exp: 1.8, height: 0.5, upper: 1.5, lower: 1.5, life: 60, mana: 48, stamina: 58, str: 26, int: 30, dex: 22, will: 30, luck: 18, defense: 0, protection: 2, color2: 0x0077A6D4, color3: 0x0077A6D4 },
+{ raceId: 201601, name: "Persian", timeLimit: 112, exp: 1.8, height: 0.6, upper: 1.4, lower: 1.4, life: 36, mana: 43, stamina: 32, str: 25, int: 27, dex: 24, will: 20, luck: 15, defense: 0, protection: 2, color2: 0x00FED699, color3: 0x00C87B4E },
+{ raceId: 201602, name: "Persian", timeLimit: 112, exp: 1.8, height: 0.45, upper: 1.6, lower: 1.5, life: 36, mana: 43, stamina: 32, str: 25, int: 27, dex: 24, will: 20, luck: 15, defense: 0, protection: 2, color2: 0x00FED699, color3: 0x00C87B4E },
+{ raceId: 201901, name: "Himalayan", timeLimit: 108, exp: 1.7, height: 0.6, upper: 1.3, lower: 1.4, life: 68, mana: 38, stamina: 38, str: 31, int: 26, dex: 20, will: 34, luck: 24, defense: 0, protection: 2 },
+{ raceId: 201902, name: "Scottish Fold", timeLimit: 94, exp: 1.5, height: 0.6, upper: 1.3, lower: 1.4, life: 53, mana: 36, stamina: 36, str: 29, int: 24, dex: 20, will: 35, luck: 31, defense: 0, protection: 2 },
+{ raceId: 202001, name: "Brown Fox", timeLimit: 92, exp: 1.6, height: 0.5, upper: 1.5, lower: 1.4, life: 42, mana: 38, stamina: 41, str: 27, int: 26, dex: 23, will: 17, luck: 17, defense: 0, protection: 2, color1: 0x00A07070, color2: 0x00404040 },
+{ raceId: 202101, name: "Silver Fox", timeLimit: 99, exp: 1.6, height: 0.5, upper: 1.5, lower: 1.4, life: 51, mana: 39, stamina: 83, str: 27, int: 29, dex: 23, will: 17, luck: 17, defense: 0, protection: 2, color1: 0x00FFFFFF },
+{ raceId: 202201, name: "Nine-Tailed Fox", timeLimit: 180, exp: 1.5, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 100, stamina: 100, str: 70, int: 50, dex: 40, will: 30, luck: 30, defense: 20, protection: 20 },
+{ raceId: 202202, name: "Nine-Tailed Fox", timeLimit: 180, exp: 1.5, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 100, stamina: 100, str: 70, int: 50, dex: 40, will: 30, luck: 30, defense: 20, protection: 20 },
+{ raceId: 203001, name: "Gray Wolf", timeLimit: 95, exp: 1.7, height: 0.6, upper: 1.3, lower: 1.4, life: 44, mana: 30, stamina: 48, str: 31, int: 11, dex: 17, will: 21, luck: 17, defense: 0, protection: 2, color1: 0x008A8275, color2: 0x00000000, color3: 0x00B0B0B0 },
+{ raceId: 203101, name: "Black Wolf", timeLimit: 109, exp: 1.7, height: 0.6, upper: 1.3, lower: 1.4, life: 52, mana: 28, stamina: 45, str: 36, int: 17, dex: 20, will: 23, luck: 17, defense: 0, protection: 2, color2: 0x007D766A, color3: 0x005E6A4F },
+{ raceId: 203102, name: "Black Wolf", timeLimit: 109, exp: 1.7, height: 0.5, upper: 1.6, lower: 1.5, life: 52, mana: 28, stamina: 45, str: 36, int: 17, dex: 20, will: 23, luck: 17, defense: 0, protection: 2, color2: 0x007D766A, color3: 0x005E6A4F },
+{ raceId: 204001, name: "Cow", timeLimit: 90, exp: 1.3, height: 0.45, upper: 1.5, lower: 1.2, life: 76, mana: 15, stamina: 56, str: 21, int: 11, dex: 17, will: 18, luck: 12, defense: 0, protection: 2, color2: 0x00633C31, color3: 0x00FF9900 },
+{ raceId: 204002, name: "Bull", timeLimit: 90, exp: 1.3, height: 1.0, upper: 1.0, lower: 1.0, life: 76, mana: 15, stamina: 56, str: 21, int: 11, dex: 17, will: 18, luck: 12, defense: 0, protection: 2 },
+{ raceId: 204101, name: "Clover Gnu", timeLimit: 93, exp: 1.3, height: 0.45, upper: 1.2, lower: 1.2, life: 66, mana: 35, stamina: 56, str: 24, int: 12, dex: 16, will: 12, luck: 14, defense: 0, protection: 2 },
+{ raceId: 205001, name: "White Sheep", timeLimit: 95, exp: 1.2, height: 0.6, upper: 1.4, lower: 1.4, life: 42, mana: 30, stamina: 32, str: 14, int: 12, dex: 22, will: 12, luck: 17, defense: 0, protection: 2, color2: 0x00FF9900 },
+{ raceId: 205002, name: "Black Sheep", timeLimit: 95, exp: 1.2, height: 0.6, upper: 1.4, lower: 1.4, life: 42, mana: 30, stamina: 32, str: 14, int: 12, dex: 22, will: 12, luck: 17, defense: 0, protection: 2 },
+{ raceId: 206001, name: "White Flame Spider", timeLimit: 102, exp: 1.6, height: 0.3, upper: 1.4, lower: 1.4, life: 62, mana: 25, stamina: 40, str: 21, int: 11, dex: 20, will: 23, luck: 16, defense: 0, protection: 2, color2: 0x00404040, color3: 0x00C0C0C0 },
+{ raceId: 206101, name: "Laghodessa", timeLimit: 107, exp: 1.6, height: 0.6, upper: 1.6, lower: 1.4, life: 66, mana: 23, stamina: 45, str: 32, int: 15, dex: 18, will: 26, luck: 16, defense: 0, protection: 2, color2: 0x00404040, color3: 0x00C0C0C0 },
+{ raceId: 206201, name: "Guardian Spider", timeLimit: 104, exp: 1.5, height: 0.5, upper: 1.4, lower: 1.3, life: 88, mana: 35, stamina: 57, str: 40, int: 21, dex: 30, will: 33, luck: 26, defense: 0, protection: 2, color2: 0x00323232 },
+{ raceId: 207001, name: "Herb Pig", timeLimit: 98, exp: 1.4, height: 0.5, upper: 1.4, lower: 1.6, life: 56, mana: 45, stamina: 53, str: 18, int: 18, dex: 25, will: 17, luck: 20, defense: 0, protection: 2 },
+{ raceId: 207101, name: "Clover Pig", timeLimit: 104, exp: 1.4, height: 0.5, upper: 1.4, lower: 1.6, life: 51, mana: 44, stamina: 48, str: 16, int: 18, dex: 22, will: 20, luck: 22, defense: 0, protection: 2 },
+{ raceId: 207201, name: "Baby Pig", timeLimit: 121, exp: 1.4, height: 0.5, upper: 1.6, lower: 1.5, life: 53, mana: 35, stamina: 38, str: 27, int: 22, dex: 23, will: 25, luck: 22, defense: 0, protection: 2 },
+{ raceId: 207301, name: "Golden Pig", timeLimit: 113, exp: 1.4, height: 0.5, upper: 1.4, lower: 1.6, life: 46, mana: 43, stamina: 47, str: 17, int: 20, dex: 17, will: 26, luck: 30, defense: 0, protection: 2, color1: 0x00B6A379 },
+{ raceId: 208001, name: "Albino King Snake", timeLimit: 105, exp: 1.8, height: 0.4, upper: 1.43, lower: 1.45, life: 53, mana: 55, stamina: 72, str: 24, int: 37, dex: 27, will: 15, luck: 10, defense: 0, protection: 2 },
+{ raceId: 208101, name: "Desert Cobra", timeLimit: 98, exp: 1.8, height: 0.6, upper: 1.43, lower: 1.45, life: 55, mana: 34, stamina: 58, str: 28, int: 26, dex: 28, will: 12, luck: 10, defense: 0, protection: 2 },
+{ raceId: 208102, name: "Coral Cobra", timeLimit: 107, exp: 1.8, height: 0.6, upper: 1.43, lower: 1.45, life: 48, mana: 42, stamina: 52, str: 22, int: 32, dex: 22, will: 14, luck: 12, defense: 0, protection: 2 },
+{ raceId: 210001, name: "Mini Bear", timeLimit: 96, exp: 1.6, height: 0.2, upper: 1.33, lower: 1.45, life: 84, mana: 21, stamina: 74, str: 42, int: 10, dex: 25, will: 27, luck: 18, defense: 0, protection: 2, color1: 0x0067544C },
+{ raceId: 210002, name: "Beyaya", timeLimit: 96, exp: 1.6, height: 0.2, upper: 1.33, lower: 1.0, life: 84, mana: 21, stamina: 74, str: 42, int: 10, dex: 25, will: 27, luck: 18, defense: 0, protection: 2, color1: 0x008C6133 },
+{ raceId: 210003, name: "Panda", timeLimit: 96, exp: 1.6, height: 0.28, upper: 1.3, lower: 1.45, life: 84, mana: 21, stamina: 74, str: 42, int: 10, dex: 25, will: 27, luck: 18, defense: 0, protection: 2 },
+{ raceId: 210004, name: "Red Panda", timeLimit: 104, exp: 1.6, height: 0.2, upper: 1.33, lower: 1.45, life: 64, mana: 42, stamina: 56, str: 38, int: 12, dex: 26, will: 28, luck: 15, defense: 0, protection: 2 },
+{ raceId: 210005, name: "Polar Bear", timeLimit: 104, exp: 1.6, height: 0.2, upper: 1.33, lower: 1.45, life: 64, mana: 42, stamina: 56, str: 38, int: 12, dex: 26, will: 28, luck: 15, defense: 0, protection: 2 },
+{ raceId: 210006, name: "Holiday Mini Bear", timeLimit: 96, exp: 1.6, height: 0.2, upper: 1.33, lower: 1.45, life: 84, mana: 21, stamina: 74, str: 42, int: 10, dex: 25, will: 27, luck: 18, defense: 0, protection: 2 },
+{ raceId: 210007, name: "Beyaya", timeLimit: 96, exp: 1.6, height: 0.2, upper: 1.33, lower: 1.0, life: 84, mana: 21, stamina: 74, str: 42, int: 10, dex: 25, will: 27, luck: 18, defense: 0, protection: 2 },
+{ raceId: 210101, name: "Lesser Panda", timeLimit: 102, exp: 1.6, height: 0.5, upper: 1.5, lower: 1.4, life: 45, mana: 42, stamina: 34, str: 26, int: 31, dex: 29, will: 15, luck: 18, defense: 0, protection: 2 },
+{ raceId: 210102, name: "Lesser Panda", timeLimit: 120, exp: 1.6, height: 0.5, upper: 1.5, lower: 1.4, life: 54, mana: 57, stamina: 45, str: 27, int: 36, dex: 33, will: 24, luck: 22, defense: 0, protection: 2 },
+{ raceId: 220001, name: "White Hedgehog", timeLimit: 117, exp: 1.6, height: 0.6, upper: 1.35, lower: 1.7, life: 66, mana: 30, stamina: 63, str: 31, int: 16, dex: 24, will: 22, luck: 16, defense: 0, protection: 2, color1: 0x00A2A2A2, color2: 0x00353535 },
+{ raceId: 220002, name: "Black Hedgehog", timeLimit: 117, exp: 1.6, height: 0.6, upper: 1.35, lower: 1.7, life: 61, mana: 32, stamina: 66, str: 33, int: 18, dex: 22, will: 20, luck: 16, defense: 0, protection: 2, color1: 0x00A2A2A2, color2: 0x00353535 },
+{ raceId: 230001, name: "White Ferret", timeLimit: 109, exp: 1.8, height: 0.3, upper: 1.6, lower: 1.6, life: 52, mana: 46, stamina: 46, str: 25, int: 36, dex: 20, will: 14, luck: 14, defense: 0, protection: 2 },
+{ raceId: 230002, name: "Black Ferret", timeLimit: 109, exp: 1.8, height: 0.3, upper: 1.6, lower: 1.6, life: 50, mana: 46, stamina: 48, str: 27, int: 34, dex: 22, will: 12, luck: 14, defense: 0, protection: 2 },
+{ raceId: 240001, name: "Bluebird", timeLimit: 108, exp: 1.2, height: 0.3, upper: 2.0, lower: 2.0, life: 34, mana: 42, stamina: 34, str: 20, int: 18, dex: 26, will: 20, luck: 25, defense: 0, protection: 2 },
+{ raceId: 240002, name: "Crow", timeLimit: 124, exp: 1.2, height: 0.6, upper: 1.5, lower: 1.4, life: 36, mana: 32, stamina: 48, str: 22, int: 22, dex: 20, will: 22, luck: 20, defense: 0, protection: 2 },
+{ raceId: 240003, name: "Falcon", timeLimit: 98, exp: 1.2, height: 0.8, upper: 1.5, lower: 1.4, life: 48, mana: 27, stamina: 44, str: 24, int: 15, dex: 18, will: 25, luck: 14, defense: 0, protection: 2 },
+{ raceId: 240004, name: "Goldfinch", timeLimit: 106, exp: 1.2, height: 0.8, upper: 1.5, lower: 1.4, life: 39, mana: 27, stamina: 46, str: 22, int: 20, dex: 22, will: 27, luck: 20, defense: 0, protection: 2 },
+{ raceId: 240005, name: "Pitta", timeLimit: 127, exp: 1.2, height: 0.8, upper: 1.5, lower: 1.4, life: 36, mana: 42, stamina: 30, str: 20, int: 24, dex: 23, will: 23, luck: 24, defense: 0, protection: 2 },
+{ raceId: 240006, name: "Kingfisher", timeLimit: 112, exp: 1.2, height: 0.8, upper: 1.5, lower: 1.4, life: 43, mana: 25, stamina: 37, str: 26, int: 18, dex: 25, will: 25, luck: 18, defense: 0, protection: 2 },
+{ raceId: 240007, name: "Yellow Sprite", timeLimit: 102, exp: 1.4, height: 0.6, upper: 1.2, lower: 1.15, life: 43, mana: 46, stamina: 47, str: 24, int: 38, dex: 30, will: 26, luck: 26, defense: 0, protection: 2, color1: 0x00373737, color2: 0x00AEA15D },
+{ raceId: 240008, name: "Lime Sprite", timeLimit: 114, exp: 1.25, height: 0.6, upper: 1.2, lower: 1.15, life: 45, mana: 51, stamina: 41, str: 28, int: 40, dex: 28, will: 29, luck: 25, defense: 0, protection: 2, color1: 0x00373737, color2: 0x0087AE5D },
+{ raceId: 240009, name: "Rainbow Sprite", timeLimit: 114, exp: 1.25, height: 0.6, upper: 1.2, lower: 1.15, life: 45, mana: 51, stamina: 41, str: 28, int: 40, dex: 28, will: 29, luck: 25, defense: 0, protection: 2, color1: 0x00373737, color2: 0x0079B8D8 },
+{ raceId: 240010, name: "Blue Bird", timeLimit: 59, exp: 1.2, height: 0.3, upper: 2.0, lower: 2.0, life: 75, mana: 42, stamina: 68, str: 20, int: 18, dex: 26, will: 20, luck: 25, defense: 10, protection: 5 },
+{ raceId: 240011, name: "Pitta", timeLimit: 58, exp: 1.2, height: 0.3, upper: 2.0, lower: 2.0, life: 73, mana: 42, stamina: 65, str: 20, int: 24, dex: 23, will: 23, luck: 24, defense: 10, protection: 5 },
+{ raceId: 240012, name: "Snowy Owl", timeLimit: 52, exp: 1.6, height: 0.3, upper: 2.0, lower: 2.0, life: 86, mana: 46, stamina: 77, str: 29, int: 34, dex: 29, will: 22, luck: 29, defense: 10, protection: 5 },
+{ raceId: 240013, name: "Pitta", timeLimit: 58, exp: 1.2, height: 0.8, upper: 1.5, lower: 1.4, life: 73, mana: 42, stamina: 65, str: 20, int: 24, dex: 23, will: 23, luck: 24, defense: 10, protection: 5 },
+{ raceId: 240014, name: "Pitta", timeLimit: 58, exp: 1.2, height: 0.8, upper: 1.5, lower: 1.4, life: 73, mana: 42, stamina: 65, str: 20, int: 24, dex: 23, will: 23, luck: 24, defense: 10, protection: 5 },
+{ raceId: 240015, name: "Pitta", timeLimit: 58, exp: 1.2, height: 0.8, upper: 1.5, lower: 1.4, life: 73, mana: 42, stamina: 65, str: 20, int: 24, dex: 23, will: 23, luck: 24, defense: 10, protection: 5 },
+{ raceId: 240016, name: "Snowy Owl", timeLimit: 52, exp: 1.6, height: 0.8, upper: 1.5, lower: 1.4, life: 86, mana: 46, stamina: 77, str: 29, int: 34, dex: 29, will: 22, luck: 29, defense: 10, protection: 5 },
+{ raceId: 240017, name: "Snowy Owl", timeLimit: 52, exp: 1.6, height: 0.8, upper: 1.5, lower: 1.4, life: 86, mana: 46, stamina: 77, str: 29, int: 34, dex: 29, will: 22, luck: 29, defense: 10, protection: 5 },
+{ raceId: 240018, name: "Snowy Owl", timeLimit: 52, exp: 1.6, height: 0.8, upper: 1.5, lower: 1.4, life: 86, mana: 46, stamina: 77, str: 29, int: 34, dex: 29, will: 22, luck: 29, defense: 10, protection: 5 },
+{ raceId: 251002, name: "Green Gecko", timeLimit: 104, exp: 1.6, height: 0.28, upper: 1.09, lower: 1.5, life: 45, mana: 43, stamina: 38, str: 18, int: 19, dex: 22, will: 21, luck: 20, defense: 0, protection: 2, color2: 0x00808082, color3: 0x00A0A0A0 },
+{ raceId: 251003, name: "Short Horned Lizard", timeLimit: 118, exp: 1.6, height: 0.28, upper: 1.09, lower: 1.5, life: 47, mana: 41, stamina: 40, str: 20, int: 18, dex: 22, will: 23, luck: 22, defense: 0, protection: 2, color2: 0x00808082, color3: 0x00A0A0A0 },
+{ raceId: 260014, name: "Mini Unicorn", timeLimit: 103, exp: 1.5, height: 0.4, upper: 1.0, lower: 1.0, life: 62, mana: 42, stamina: 41, str: 28, int: 25, dex: 28, will: 31, luck: 35, defense: 5, protection: 5 },
+{ raceId: 270601, name: "Alpaca", timeLimit: 180, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 70, stamina: 80, str: 40, int: 50, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 270602, name: "Christmas Alpaca", timeLimit: 180, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 70, stamina: 80, str: 40, int: 50, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 270701, name: "Little Hopper", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 50, stamina: 150, str: 70, int: 20, dex: 40, will: 30, luck: 30, defense: 20, protection: 25 },
+{ raceId: 270702, name: "Little Hopper", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 50, stamina: 150, str: 70, int: 20, dex: 40, will: 30, luck: 30, defense: 20, protection: 25 },
+{ raceId: 270801, name: "Gorilla", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 50, stamina: 150, str: 70, int: 20, dex: 40, will: 30, luck: 30, defense: 20, protection: 25 },
+{ raceId: 270802, name: "Gorilla", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 50, stamina: 150, str: 70, int: 20, dex: 40, will: 30, luck: 30, defense: 20, protection: 25 },
+{ raceId: 271001, name: "Lovely Boston Terrier", timeLimit: 150, exp: 1.5, height: 0.6, upper: 1.3, lower: 1.4, life: 48, mana: 37, stamina: 40, str: 21, int: 20, dex: 22, will: 26, luck: 35, defense: 0, protection: 2, color1: 0x00B08048, color3: 0x00A0A0A0 },
+{ raceId: 271101, name: "Lovely Siamese", timeLimit: 150, exp: 1.5, height: 0.6, upper: 1.3, lower: 1.4, life: 48, mana: 37, stamina: 40, str: 21, int: 20, dex: 22, will: 26, luck: 35, defense: 0, protection: 2, color1: 0x00B08048, color3: 0x00A0A0A0 },
+{ raceId: 271201, name: "Lovely Scottish Fold", timeLimit: 150, exp: 1.5, height: 0.6, upper: 1.3, lower: 1.4, life: 48, mana: 37, stamina: 40, str: 21, int: 20, dex: 22, will: 26, luck: 35, defense: 0, protection: 2, color1: 0x00B08048, color3: 0x00A0A0A0 },
+{ raceId: 271301, name: "Lovely Labrador Retriever", timeLimit: 150, exp: 1.5, height: 0.6, upper: 1.3, lower: 1.4, life: 48, mana: 37, stamina: 40, str: 21, int: 20, dex: 22, will: 26, luck: 35, defense: 0, protection: 2, color1: 0x00B08048, color3: 0x00A0A0A0 },
+{ raceId: 290001, name: "Kangaroo Rat", timeLimit: 108, exp: 1.8, height: 0.37, upper: 1.09, lower: 1.5, life: 42, mana: 52, stamina: 32, str: 15, int: 22, dex: 20, will: 18, luck: 24, defense: 0, protection: 2, color2: 0x00808082, color3: 0x00A0A0A0 },
+{ raceId: 290002, name: "Golden Rat", timeLimit: 108, exp: 1.8, height: 0.37, upper: 1.09, lower: 1.5, life: 42, mana: 52, stamina: 32, str: 15, int: 22, dex: 20, will: 18, luck: 24, defense: 0, protection: 2, color2: 0x00808082, color3: 0x00A0A0A0 },
+{ raceId: 290101, name: "Hamster", timeLimit: 117, exp: 1.8, height: 0.45, upper: 1.2, lower: 1.5, life: 45, mana: 36, stamina: 36, str: 22, int: 21, dex: 25, will: 27, luck: 19, defense: 0, protection: 2, color2: 0x00706B78, color3: 0x007C7168 },
+{ raceId: 290102, name: "Hamster", timeLimit: 117, exp: 1.8, height: 0.5, upper: 1.5, lower: 1.5, life: 45, mana: 36, stamina: 36, str: 22, int: 21, dex: 25, will: 27, luck: 19, defense: 0, protection: 2, color2: 0x00706B78, color3: 0x007C7168 },
+{ raceId: 290103, name: "Rat Man", timeLimit: 117, exp: 1.8, height: 0.5, upper: 1.5, lower: 1.5, life: 45, mana: 36, stamina: 36, str: 22, int: 21, dex: 25, will: 27, luck: 19, defense: 0, protection: 2, color3: 0x007C7168 },
+{ raceId: 340201, name: "Emperor Penguin", timeLimit: 106, exp: 1.2, height: 0.8, upper: 1.4, lower: 1.2, life: 42, mana: 38, stamina: 32, str: 28, int: 22, dex: 20, will: 18, luck: 16, defense: 0, protection: 2 },
+{ raceId: 340202, name: "Adelie Penguin", timeLimit: 112, exp: 1.2, height: 0.5, upper: 1.6, lower: 1.2, life: 36, mana: 30, stamina: 52, str: 24, int: 20, dex: 28, will: 26, luck: 16, defense: 0, protection: 2 },
+{ raceId: 440401, name: "Yellow Tiger Cub", timeLimit: 107, exp: 1.5, height: 0.6, upper: 1.4, lower: 1.4, life: 84, mana: 29, stamina: 60, str: 42, int: 15, dex: 25, will: 30, luck: 19, defense: 0, protection: 2 },
+{ raceId: 440402, name: "White Tiger Cub", timeLimit: 117, exp: 1.6, height: 0.6, upper: 1.4, lower: 1.4, life: 85, mana: 35, stamina: 66, str: 42, int: 21, dex: 28, will: 30, luck: 20, defense: 0, protection: 2 },
+{ raceId: 450101, name: "Spotted Deer", timeLimit: 112, exp: 1.5, height: 0.5, upper: 1.4, lower: 1.6, life: 45, mana: 46, stamina: 36, str: 20, int: 27, dex: 27, will: 22, luck: 21, defense: 0, protection: 2 },
+{ raceId: 450201, name: "Short Horned Antelope", timeLimit: 130, exp: 1.5, height: 0.5, upper: 1.4, lower: 1.6, life: 53, mana: 32, stamina: 44, str: 24, int: 20, dex: 22, will: 25, luck: 21, defense: 0, protection: 2 },
+{ raceId: 470001, name: "Mini Skeleton", timeLimit: 117, exp: 1.8, height: 0.46, upper: 1.7, lower: 0.8, life: 68, mana: 32, stamina: 68, str: 38, int: 10, dex: 22, will: 18, luck: 2, defense: 0, protection: 2 },
+{ raceId: 470002, name: "Arctic Skeleton", timeLimit: 117, exp: 1.8, height: 0.46, upper: 1.7, lower: 0.8, life: 68, mana: 32, stamina: 68, str: 38, int: 10, dex: 22, will: 18, luck: 2, defense: 0, protection: 2 },
+{ raceId: 470003, name: "Mini Skeleton", timeLimit: 117, exp: 1.8, height: 0.46, upper: 1.7, lower: 0.8, life: 68, mana: 32, stamina: 68, str: 38, int: 10, dex: 22, will: 18, luck: 2, defense: 0, protection: 2 },
+{ raceId: 470101, name: "Little Ghost", timeLimit: 107, exp: 1.55, height: 1.0, upper: 1.0, lower: 1.0, life: 52, mana: 40, stamina: 44, str: 22, int: 30, dex: 22, will: 19, luck: 7, defense: 0, protection: 2 },
+{ raceId: 470102, name: "Little Ghost", timeLimit: 107, exp: 1.55, height: 1.0, upper: 1.0, lower: 1.0, life: 52, mana: 40, stamina: 44, str: 22, int: 30, dex: 22, will: 19, luck: 7, defense: 0, protection: 2 },
+{ raceId: 471001, name: "Skeleton Maid", timeLimit: 117, exp: 1.8, height: 0.46, upper: 1.7, lower: 0.8, life: 10, mana: 10, stamina: 10, str: 10, int: 10, dex: 10, will: 10, luck: 2, defense: 0, protection: 2 },
+{ raceId: 471002, name: "Brown Explorer Cat", timeLimit: 117, exp: 1.8, height: 0.6, upper: 1.4, lower: 1.4, life: 10, mana: 10, stamina: 10, str: 10, int: 10, dex: 10, will: 10, luck: 2, defense: 0, protection: 2 },
+{ raceId: 471003, name: "Petal Collar Dog", timeLimit: 117, exp: 1.8, height: 0.4, upper: 1.43, lower: 1.45, life: 10, mana: 10, stamina: 10, str: 10, int: 10, dex: 10, will: 10, luck: 2, defense: 0, protection: 2 },
+{ raceId: 471005, name: "Shark Robe Seal", timeLimit: 105, exp: 1.7, height: 0.4, upper: 1.43, lower: 1.45, life: 10, mana: 10, stamina: 10, str: 10, int: 10, dex: 10, will: 10, luck: 2, defense: 0, protection: 2 },
+{ raceId: 471006, name: "Skeleton Maid", timeLimit: 117, exp: 1.8, height: 0.46, upper: 1.7, lower: 0.8, life: 68, mana: 32, stamina: 68, str: 38, int: 10, dex: 22, will: 18, luck: 2, defense: 0, protection: 2 },
+{ raceId: 471007, name: "Shark Robe Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
+{ raceId: 490025, name: "Warp Imp", timeLimit: 112, exp: 1.7, height: 0.2, upper: 3.6, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
+{ raceId: 500001, name: "Black Mud Crab", timeLimit: 90, exp: 1.6, height: 0.75, upper: 1.0, lower: 1.0, life: 50, mana: 33, stamina: 34, str: 33, int: 40, dex: 27, will: 27, luck: 28, defense: 0, protection: 2 },
+{ raceId: 500002, name: "Red Rock Crab", timeLimit: 111, exp: 1.7, height: 0.75, upper: 1.0, lower: 1.0, life: 45, mana: 40, stamina: 39, str: 27, int: 38, dex: 24, will: 30, luck: 29, defense: 0, protection: 2 },
+{ raceId: 511001, name: "Monkey", timeLimit: 105, exp: 1.5, height: 0.26, upper: 1.37, lower: 1.3, life: 66, mana: 51, stamina: 44, str: 28, int: 30, dex: 31, will: 14, luck: 17, defense: 0, protection: 2 },
+{ raceId: 550001, name: "White Elephant", timeLimit: 82, exp: 1.25, height: 0.7, upper: 1.0, lower: 1.0, life: 58, mana: 32, stamina: 52, str: 30, int: 25, dex: 27, will: 29, luck: 17, defense: 0, protection: 2 },
+{ raceId: 550002, name: "Blue Elephant", timeLimit: 94, exp: 1.1, height: 0.7, upper: 1.0, lower: 1.0, life: 62, mana: 26, stamina: 56, str: 38, int: 18, dex: 26, will: 28, luck: 22, defense: 0, protection: 2 },
+{ raceId: 570001, name: "Eagle Owl", timeLimit: 88, exp: 1.6, height: 0.6, upper: 1.0, lower: 1.0, life: 58, mana: 39, stamina: 70, str: 28, int: 23, dex: 24, will: 32, luck: 17, defense: 0, protection: 2 },
+{ raceId: 570002, name: "Snowy Owl", timeLimit: 97, exp: 1.6, height: 0.6, upper: 1.0, lower: 1.0, life: 47, mana: 46, stamina: 54, str: 29, int: 34, dex: 29, will: 22, luck: 29, defense: 0, protection: 2 },
+{ raceId: 580001, name: "Black Seal", timeLimit: 105, exp: 1.7, height: 0.6, upper: 1.1, lower: 1.0, life: 61, mana: 37, stamina: 38, str: 26, int: 22, dex: 26, will: 30, luck: 31, defense: 0, protection: 2 },
+{ raceId: 580002, name: "White Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
+{ raceId: 580003, name: "Black Seal with Mini Pet", timeLimit: 105, exp: 1.7, height: 0.6, upper: 1.1, lower: 1.0, life: 61, mana: 37, stamina: 38, str: 26, int: 22, dex: 26, will: 30, luck: 31, defense: 0, protection: 2 },
+{ raceId: 580004, name: "White Seal with Mini Pet", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
+{ raceId: 640101, name: "Jungle Scout Imp", timeLimit: 112, exp: 1.7, height: 0.25, upper: 3.2, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
+{ raceId: 640102, name: "Lava Walker Imp", timeLimit: 112, exp: 1.7, height: 0.25, upper: 3.2, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
+{ raceId: 640103, name: "Warp Imp", timeLimit: 112, exp: 1.7, height: 0.2, upper: 3.6, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
+{ raceId: 640104, name: "Warp Imp", timeLimit: 78, exp: 1.7, height: 0.2, upper: 3.6, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
+{ raceId: 640105, name: "Teleport Magician Imp", timeLimit: 78, exp: 1.7, height: 0.2, upper: 3.6, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
+{ raceId: 650101, name: "Treat Pumpkin", timeLimit: 94, exp: 1.6, height: 0.8, upper: 1.0, lower: 1.0, life: 52, mana: 46, stamina: 48, str: 24, int: 38, dex: 32, will: 26, luck: 22, defense: 0, protection: 2 },
+{ raceId: 650102, name: "Trick Pumpkin", timeLimit: 102, exp: 1.5, height: 0.8, upper: 1.0, lower: 1.0, life: 43, mana: 56, stamina: 47, str: 22, int: 40, dex: 30, will: 27, luck: 25, defense: 0, protection: 2 },
 
 // Mounts
 //---------------------------------------------------------------------------
-260001,"Haflinger",87,1.3, 0.77,1.14,1.3, 66,42,78, 26,32,26,30,14, 0,2, 0x00808080,0x00808080,0x00808080
-260002,"Thoroughbred",92,1.3, 0.77,1.14,1.3, 60,32,74, 34,24,22,24,12, 0,2, 0x00808080,0x00808080,0x00808080
-260003,"Shire",90,1.3, 0.77,1.14,1.3, 72,36,72, 30,28,24,26,16, 0,2, 0x00808080,0x00808080,0x00808080
-260004,"Unicorn",90,1.3, 0.77,1.14,1.3, 72,36,72, 30,28,24,26,16, 0,2, 0x00808080,0x00808080,0x00808080
-260005,"Black Unicorn",90,1.3, 0.77,1.14,1.3, 72,36,72, 30,28,24,26,16, 0,2, 0x00808080,0x00808080,0x00808080
-260011,"Thoroughbred (Color Selectable)",92,1.3, 0.77,1.14,1.3, 60,32,74, 34,24,22,24,12, 0,2, 0x00808080,0x00808080,0x00808080
-260012,"Shire (Color Selectable)",90,1.3, 0.77,1.14,1.3, 72,36,72, 30,28,24,26,16, 0,2, 0x00808080,0x00808080,0x00808080
-260013,"Unicorn (Color Selectable)",90,1.3, 0.77,1.14,1.3, 72,36,72, 30,28,24,26,16, 0,2, 0x00808080,0x00808080,0x00808080
-260015,"Thoroughbred",92,1.3, 0.77,1.14,1.3, 60,32,74, 34,24,22,24,12, 0,2, 0x00808080,0x00808080,0x00808080
-260016,"Free Thoroughbred (7-day)",92,1.3, 0.77,1.14,1.3, 60,32,74, 34,24,22,24,12, 0,2, 0x00808080,0x00808080,0x00808080
-260017,"Beginner's Horse",92,1.3, 0.77,1.14,1.3, 60,32,74, 34,24,22,24,12, 0,2, 0x00808080,0x00808080,0x00808080
-260114,"Event Unicorn (Color Selected)",90,1.3, 0.77,1.14,1.3, 72,36,72, 30,28,24,26,16, 0,2, 0x00808080,0x00808080,0x00808080
-270513,"Sunburst Shire",124,1.8, 1.0,1.0,1.0, 90,40,62, 40,25,36,46,30, 0,2, 0x00808080,0x00808080,0x00808080
-270519,"Nightshade Mustang",124,1.8, 1.0,1.0,1.0, 90,40,62, 40,25,36,46,30, 0,2, 0x00808080,0x00808080,0x00808080
-270520,"Ethereal Mist War Horse",124,1.8, 1.0,1.0,1.0, 90,40,62, 40,25,36,46,30, 0,2, 0x00808080,0x00808080,0x00808080
-270521,"Black Flamemare",124,1.8, 1.0,1.0,1.0, 90,40,62, 40,25,36,46,30, 0,2, 0x00808080,0x00808080,0x00808080
-270522,"Black Flamemare",124,1.8, 1.0,1.0,1.0, 90,40,62, 40,25,36,46,30, 0,2, 0x00808080,0x00808080,0x00808080
-270523,"Black Flamemare",124,1.8, 1.0,1.0,1.0, 90,40,62, 40,25,36,46,30, 0,2, 0x00808080,0x00808080,0x00808080
-271401,"Cosmic Stallion",130,1.8, 0.88,1.06,1.1, 300,60,150, 50,60,48,46,30, 15,20, 0x00808080,0x00808080,0x00808080
-271402,"Cosmic Stallion",130,1.8, 0.88,1.06,1.1, 300,60,150, 50,60,48,46,30, 15,20, 0x00808080,0x00808080,0x00808080
-390001,"Brown Ostrich",97,1.3, 0.9,1.2,1.15, 59,39,67, 26,27,24,31,17, 0,2, 0x00808080,0x00808080,0x00808080
-390002,"Black Ostrich",101,1.3, 0.9,1.2,1.15, 70,33,75, 32,25,23,27,15, 0,2, 0x00808080,0x00808080,0x00808080
-390003,"White Cotton Ostrich",78,1.3, 0.9,1.2,1.15, 70,33,75, 32,25,23,27,15, 0,2, 0x00808080,0x00808080,0x00808080
-390004,"Black Cotton Ostrich",83,1.3, 0.9,1.2,1.15, 59,39,67, 26,27,24,31,17, 0,2, 0x00808080,0x00808080,0x00808080
-450601,"Crystal Deer",92,1.8, 0.65,1.2,1.2, 70,45,77, 38,40,36,40,29, 0,2, 0x00808080,0x00808080,0x00808080
-490023,"White Flamemare",124,1.8, 1.0,1.0,1.0, 90,40,62, 40,25,36,46,30, 0,2, 0x00808080,0x00808080,0x00808080
-490024,"Crystal Rudolph",92,1.8, 0.65,1.2,1.2, 70,45,77, 38,40,36,40,29, 0,2, 0x00808080,0x00808080,0x00808080
+{ raceId: 260001, name: "Haflinger", timeLimit: 87, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 66, mana: 42, stamina: 78, str: 26, int: 32, dex: 26, will: 30, luck: 14, defense: 0, protection: 2 },
+{ raceId: 260002, name: "Thoroughbred", timeLimit: 92, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 60, mana: 32, stamina: 74, str: 34, int: 24, dex: 22, will: 24, luck: 12, defense: 0, protection: 2 },
+{ raceId: 260003, name: "Shire", timeLimit: 90, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 72, mana: 36, stamina: 72, str: 30, int: 28, dex: 24, will: 26, luck: 16, defense: 0, protection: 2 },
+{ raceId: 260004, name: "Unicorn", timeLimit: 90, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 72, mana: 36, stamina: 72, str: 30, int: 28, dex: 24, will: 26, luck: 16, defense: 0, protection: 2 },
+{ raceId: 260005, name: "Black Unicorn", timeLimit: 90, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 72, mana: 36, stamina: 72, str: 30, int: 28, dex: 24, will: 26, luck: 16, defense: 0, protection: 2 },
+{ raceId: 260011, name: "Thoroughbred (Color Selectable)", timeLimit: 92, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 60, mana: 32, stamina: 74, str: 34, int: 24, dex: 22, will: 24, luck: 12, defense: 0, protection: 2 },
+{ raceId: 260012, name: "Shire (Color Selectable)", timeLimit: 90, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 72, mana: 36, stamina: 72, str: 30, int: 28, dex: 24, will: 26, luck: 16, defense: 0, protection: 2 },
+{ raceId: 260013, name: "Unicorn (Color Selectable)", timeLimit: 90, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 72, mana: 36, stamina: 72, str: 30, int: 28, dex: 24, will: 26, luck: 16, defense: 0, protection: 2 },
+{ raceId: 260015, name: "Thoroughbred", timeLimit: 92, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 60, mana: 32, stamina: 74, str: 34, int: 24, dex: 22, will: 24, luck: 12, defense: 0, protection: 2 },
+{ raceId: 260016, name: "Free Thoroughbred (7-day)", timeLimit: 92, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 60, mana: 32, stamina: 74, str: 34, int: 24, dex: 22, will: 24, luck: 12, defense: 0, protection: 2 },
+{ raceId: 260017, name: "Beginner's Horse", timeLimit: 92, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 60, mana: 32, stamina: 74, str: 34, int: 24, dex: 22, will: 24, luck: 12, defense: 0, protection: 2 },
+{ raceId: 260114, name: "Event Unicorn (Color Selected)", timeLimit: 90, exp: 1.3, height: 0.77, upper: 1.14, lower: 1.3, life: 72, mana: 36, stamina: 72, str: 30, int: 28, dex: 24, will: 26, luck: 16, defense: 0, protection: 2 },
+{ raceId: 270513, name: "Sunburst Shire", timeLimit: 124, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 40, stamina: 62, str: 40, int: 25, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 270519, name: "Nightshade Mustang", timeLimit: 124, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 40, stamina: 62, str: 40, int: 25, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 270520, name: "Ethereal Mist War Horse", timeLimit: 124, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 40, stamina: 62, str: 40, int: 25, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 270521, name: "Black Flamemare", timeLimit: 124, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 40, stamina: 62, str: 40, int: 25, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 270522, name: "Black Flamemare", timeLimit: 124, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 40, stamina: 62, str: 40, int: 25, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 270523, name: "Black Flamemare", timeLimit: 124, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 40, stamina: 62, str: 40, int: 25, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 271401, name: "Cosmic Stallion", timeLimit: 130, exp: 1.8, height: 0.88, upper: 1.06, lower: 1.1, life: 300, mana: 60, stamina: 150, str: 50, int: 60, dex: 48, will: 46, luck: 30, defense: 15, protection: 20 },
+{ raceId: 271402, name: "Cosmic Stallion", timeLimit: 130, exp: 1.8, height: 0.88, upper: 1.06, lower: 1.1, life: 300, mana: 60, stamina: 150, str: 50, int: 60, dex: 48, will: 46, luck: 30, defense: 15, protection: 20 },
+{ raceId: 390001, name: "Brown Ostrich", timeLimit: 97, exp: 1.3, height: 0.9, upper: 1.2, lower: 1.15, life: 59, mana: 39, stamina: 67, str: 26, int: 27, dex: 24, will: 31, luck: 17, defense: 0, protection: 2 },
+{ raceId: 390002, name: "Black Ostrich", timeLimit: 101, exp: 1.3, height: 0.9, upper: 1.2, lower: 1.15, life: 70, mana: 33, stamina: 75, str: 32, int: 25, dex: 23, will: 27, luck: 15, defense: 0, protection: 2 },
+{ raceId: 390003, name: "White Cotton Ostrich", timeLimit: 78, exp: 1.3, height: 0.9, upper: 1.2, lower: 1.15, life: 70, mana: 33, stamina: 75, str: 32, int: 25, dex: 23, will: 27, luck: 15, defense: 0, protection: 2 },
+{ raceId: 390004, name: "Black Cotton Ostrich", timeLimit: 83, exp: 1.3, height: 0.9, upper: 1.2, lower: 1.15, life: 59, mana: 39, stamina: 67, str: 26, int: 27, dex: 24, will: 31, luck: 17, defense: 0, protection: 2 },
+{ raceId: 450601, name: "Crystal Deer", timeLimit: 92, exp: 1.8, height: 0.65, upper: 1.2, lower: 1.2, life: 70, mana: 45, stamina: 77, str: 38, int: 40, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490023, name: "White Flamemare", timeLimit: 124, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 40, stamina: 62, str: 40, int: 25, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 490024, name: "Crystal Rudolph", timeLimit: 92, exp: 1.8, height: 0.65, upper: 1.2, lower: 1.2, life: 70, mana: 45, stamina: 77, str: 38, int: 40, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
 
 // Snow Mounts
 //---------------------------------------------------------------------------
-110801,"Reindeer",105,1.5, 0.45,1.5,1.2, 58,37,52, 30,22,27,29,25, 0,2, 0x00808080,0x00808080,0x00808080
-200802,"Alaskan Husky",122,1.5, 0.6,1.4,1.4, 71,27,58, 35,18,17,36,22, 0,2, 0x00808080,0x00808080,0x00808080
-200803,"Malamute",105,1.5, 0.6,1.3,1.4, 58,37,52, 30,22,27,29,25, 0,2, 0x00808080,0x00808080,0x00808080
-200804,"Malamute",49,1.5, 0.6,1.3,1.4, 106,37,79, 30,22,27,29,25, 11,6, 0x00808080,0x00808080,0x00808080
-200805,"Malamute",49,1.5, 0.6,1.3,1.4, 106,37,79, 30,22,27,29,25, 11,6, 0x00808080,0x00808080,0x00808080
-200806,"Malamute",49,1.5, 0.6,1.3,1.4, 106,37,79, 30,22,27,29,25, 11,6, 0x00808080,0x00808080,0x00808080
+{ raceId: 110801, name: "Reindeer", timeLimit: 105, exp: 1.5, height: 0.45, upper: 1.5, lower: 1.2, life: 58, mana: 37, stamina: 52, str: 30, int: 22, dex: 27, will: 29, luck: 25, defense: 0, protection: 2 },
+{ raceId: 200802, name: "Alaskan Husky", timeLimit: 122, exp: 1.5, height: 0.6, upper: 1.4, lower: 1.4, life: 71, mana: 27, stamina: 58, str: 35, int: 18, dex: 17, will: 36, luck: 22, defense: 0, protection: 2 },
+{ raceId: 200803, name: "Malamute", timeLimit: 105, exp: 1.5, height: 0.6, upper: 1.3, lower: 1.4, life: 58, mana: 37, stamina: 52, str: 30, int: 22, dex: 27, will: 29, luck: 25, defense: 0, protection: 2 },
+{ raceId: 200804, name: "Malamute", timeLimit: 49, exp: 1.5, height: 0.6, upper: 1.3, lower: 1.4, life: 106, mana: 37, stamina: 79, str: 30, int: 22, dex: 27, will: 29, luck: 25, defense: 11, protection: 6 },
+{ raceId: 200805, name: "Malamute", timeLimit: 49, exp: 1.5, height: 0.6, upper: 1.3, lower: 1.4, life: 106, mana: 37, stamina: 79, str: 30, int: 22, dex: 27, will: 29, luck: 25, defense: 11, protection: 6 },
+{ raceId: 200806, name: "Malamute", timeLimit: 49, exp: 1.5, height: 0.6, upper: 1.3, lower: 1.4, life: 106, mana: 37, stamina: 79, str: 30, int: 22, dex: 27, will: 29, luck: 25, defense: 11, protection: 6 },
 
 // Mimics
 //---------------------------------------------------------------------------
-370001,"Wooden Mimic",92,1.1, 0.01,1.6,1.2, 52,24,43, 21,14,27,31,20, 0,2, 0x00808080,0x00808080,0x00808080
-370002,"Antique Mimic",121,1.1, 0.05,1.6,1.2, 67,28,30, 27,17,18,24,20, 0,2, 0x00808080,0x00808080,0x00808080
+{ raceId: 370001, name: "Wooden Mimic", timeLimit: 92, exp: 1.1, height: 0.01, upper: 1.6, lower: 1.2, life: 52, mana: 24, stamina: 43, str: 21, int: 14, dex: 27, will: 31, luck: 20, defense: 0, protection: 2 },
+{ raceId: 370002, name: "Antique Mimic", timeLimit: 121, exp: 1.1, height: 0.05, upper: 1.6, lower: 1.2, life: 67, mana: 28, stamina: 30, str: 27, int: 17, dex: 18, will: 24, luck: 20, defense: 0, protection: 2 },
 
 // Flying Mounts
 //---------------------------------------------------------------------------
-260115,"Event Griffin",95,1.5, 0.8,1.25,1.4, 70,21,61, 38,14,22,25,15, 0,2, 0x00808080,0x00808080,0x00808080
-430001,"Thunderbird",88,1.1, 0.8,1.2,1.4, 48,37,55, 29,27,35,27,10, 0,2, 0x00808080,0x00808080,0x00808080
-430003,"7th_Thunderbird",88,1.1, 0.2,2.5,1.4, 48,37,55, 29,27,35,27,10, 0,2, 0x00808080,0x00808080,0x00808080
-430004,"Mini_Thunderbird",88,1.1, 0.2,2.5,1.4, 48,37,55, 29,27,35,27,10, 0,2, 0x00808080,0x00808080,0x00808080
-430005,"Mini_Thunderbird2",88,1.1, 0.2,2.5,1.4, 48,37,55, 29,27,35,27,10, 0,2, 0x00808080,0x00808080,0x00808080
-430101,"Eagle",76,1.1, 0.8,1.2,1.4, 57,25,62, 33,23,31,35,10, 0,2, 0x00808080,0x00808080,0x00808080
-430103,"Beginner's Eagle",76,1.1, 0.8,1.2,1.4, 57,25,62, 33,23,31,35,10, 0,2, 0x00808080,0x00808080,0x00808080
-430201,"Pelican",88,1.1, 0.9,0.85,1.0, 48,37,55, 29,27,35,27,10, 0,2, 0x00808080,0x00808080,0x00808080
-430301,"Griffin",95,1.5, 0.8,1.25,1.4, 70,21,61, 38,14,22,25,15, 0,2, 0x00808080,0x00808080,0x00808080
-490001,"Flying Star",94,1.1, 1.0,1.0,1.0, 44,45,43, 29,34,32,22,29, 0,2, 0x00808080,0x00808080,0x00808080
-490002,"Oak Magic Broom",94,1.1, 1.0,1.0,1.0, 44,45,43, 29,34,32,22,29, 0,2, 0x00808080,0x00808080,0x00808080
-490003,"Straw Magic Broom",72,1.1, 1.0,1.0,1.0, 50,41,44, 33,30,31,27,26, 0,2, 0x00808080,0x00808080,0x00808080
-490004,"Magic Carpet",87,1.1, 1.0,1.0,1.0, 50,41,44, 31,30,31,27,26, 0,2, 0x00808080,0x00808080,0x00808080
-490005,"Magic Carpet",87,1.1, 1.0,1.0,1.0, 50,41,44, 31,30,31,27,26, 0,2, 0x00808080,0x00808080,0x00808080
-490006,"Royal Magic Carpet",96,1.1, 1.0,1.0,1.0, 48,45,43, 30,34,32,24,29, 0,2, 0x00808080,0x00808080,0x00808080
-490007,"Royal Magic Carpet",96,1.1, 1.0,1.0,1.0, 48,45,43, 30,34,32,24,29, 0,2, 0x00808080,0x00808080,0x00808080
-490008,"Magic Carpet",87,1.1, 1.0,1.0,1.0, 50,41,44, 31,30,31,27,26, 0,2, 0x00808080,0x00808080,0x00808080
-490009,"Magic Carpet",87,1.1, 1.0,1.0,1.0, 50,41,44, 31,30,31,27,26, 0,2, 0x00808080,0x00808080,0x00808080
-490010,"Premium Magic Carpet",96,1.1, 1.0,1.0,1.0, 48,45,43, 30,34,32,24,29, 0,2, 0x00808080,0x00808080,0x00808080
-490011,"Premium Magic Carpet",96,1.1, 1.0,1.0,1.0, 48,45,43, 30,34,32,24,29, 0,2, 0x00808080,0x00808080,0x00808080
-490012,"Leek",102,1.1, 1.0,1.0,1.0, 44,45,43, 29,34,32,22,29, 0,2, 0x00808080,0x00808080,0x00808080
-490015,"Pegasus",120,1.75, 0.88,1.06,1.1, 280,62,100, 50,60,48,46,30, 10,5, 0x00808080,0x00808080,0x00808080
-490016,"Perseus",120,1.75, 0.88,1.06,1.1, 300,42,100, 50,60,48,46,30, 10,5, 0x00808080,0x00808080,0x00808080
-490019,"Onion",102,1.1, 1.0,1.0,1.0, 44,45,43, 29,34,32,22,29, 0,2, 0x00808080,0x00808080,0x00808080
-490022,"Combat Pegasus",120,1.75, 0.88,1.06,1.1, 300,42,100, 50,60,48,46,30, 10,5, 0x00808080,0x00808080,0x00808080
+{ raceId: 260115, name: "Event Griffin", timeLimit: 95, exp: 1.5, height: 0.8, upper: 1.25, lower: 1.4, life: 70, mana: 21, stamina: 61, str: 38, int: 14, dex: 22, will: 25, luck: 15, defense: 0, protection: 2 },
+{ raceId: 430001, name: "Thunderbird", timeLimit: 88, exp: 1.1, height: 0.8, upper: 1.2, lower: 1.4, life: 48, mana: 37, stamina: 55, str: 29, int: 27, dex: 35, will: 27, luck: 10, defense: 0, protection: 2 },
+{ raceId: 430003, name: "7th_Thunderbird", timeLimit: 88, exp: 1.1, height: 0.2, upper: 2.5, lower: 1.4, life: 48, mana: 37, stamina: 55, str: 29, int: 27, dex: 35, will: 27, luck: 10, defense: 0, protection: 2 },
+{ raceId: 430004, name: "Mini_Thunderbird", timeLimit: 88, exp: 1.1, height: 0.2, upper: 2.5, lower: 1.4, life: 48, mana: 37, stamina: 55, str: 29, int: 27, dex: 35, will: 27, luck: 10, defense: 0, protection: 2 },
+{ raceId: 430005, name: "Mini_Thunderbird2", timeLimit: 88, exp: 1.1, height: 0.2, upper: 2.5, lower: 1.4, life: 48, mana: 37, stamina: 55, str: 29, int: 27, dex: 35, will: 27, luck: 10, defense: 0, protection: 2 },
+{ raceId: 430101, name: "Eagle", timeLimit: 76, exp: 1.1, height: 0.8, upper: 1.2, lower: 1.4, life: 57, mana: 25, stamina: 62, str: 33, int: 23, dex: 31, will: 35, luck: 10, defense: 0, protection: 2 },
+{ raceId: 430103, name: "Beginner's Eagle", timeLimit: 76, exp: 1.1, height: 0.8, upper: 1.2, lower: 1.4, life: 57, mana: 25, stamina: 62, str: 33, int: 23, dex: 31, will: 35, luck: 10, defense: 0, protection: 2 },
+{ raceId: 430201, name: "Pelican", timeLimit: 88, exp: 1.1, height: 0.9, upper: 0.85, lower: 1.0, life: 48, mana: 37, stamina: 55, str: 29, int: 27, dex: 35, will: 27, luck: 10, defense: 0, protection: 2 },
+{ raceId: 430301, name: "Griffin", timeLimit: 95, exp: 1.5, height: 0.8, upper: 1.25, lower: 1.4, life: 70, mana: 21, stamina: 61, str: 38, int: 14, dex: 22, will: 25, luck: 15, defense: 0, protection: 2 },
+{ raceId: 490001, name: "Flying Star", timeLimit: 94, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490002, name: "Oak Magic Broom", timeLimit: 94, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490003, name: "Straw Magic Broom", timeLimit: 72, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 50, mana: 41, stamina: 44, str: 33, int: 30, dex: 31, will: 27, luck: 26, defense: 0, protection: 2 },
+{ raceId: 490004, name: "Magic Carpet", timeLimit: 87, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 50, mana: 41, stamina: 44, str: 31, int: 30, dex: 31, will: 27, luck: 26, defense: 0, protection: 2 },
+{ raceId: 490005, name: "Magic Carpet", timeLimit: 87, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 50, mana: 41, stamina: 44, str: 31, int: 30, dex: 31, will: 27, luck: 26, defense: 0, protection: 2 },
+{ raceId: 490006, name: "Royal Magic Carpet", timeLimit: 96, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 48, mana: 45, stamina: 43, str: 30, int: 34, dex: 32, will: 24, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490007, name: "Royal Magic Carpet", timeLimit: 96, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 48, mana: 45, stamina: 43, str: 30, int: 34, dex: 32, will: 24, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490008, name: "Magic Carpet", timeLimit: 87, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 50, mana: 41, stamina: 44, str: 31, int: 30, dex: 31, will: 27, luck: 26, defense: 0, protection: 2 },
+{ raceId: 490009, name: "Magic Carpet", timeLimit: 87, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 50, mana: 41, stamina: 44, str: 31, int: 30, dex: 31, will: 27, luck: 26, defense: 0, protection: 2 },
+{ raceId: 490010, name: "Premium Magic Carpet", timeLimit: 96, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 48, mana: 45, stamina: 43, str: 30, int: 34, dex: 32, will: 24, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490011, name: "Premium Magic Carpet", timeLimit: 96, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 48, mana: 45, stamina: 43, str: 30, int: 34, dex: 32, will: 24, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490012, name: "Leek", timeLimit: 102, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490015, name: "Pegasus", timeLimit: 120, exp: 1.75, height: 0.88, upper: 1.06, lower: 1.1, life: 280, mana: 62, stamina: 100, str: 50, int: 60, dex: 48, will: 46, luck: 30, defense: 10, protection: 5 },
+{ raceId: 490016, name: "Perseus", timeLimit: 120, exp: 1.75, height: 0.88, upper: 1.06, lower: 1.1, life: 300, mana: 42, stamina: 100, str: 50, int: 60, dex: 48, will: 46, luck: 30, defense: 10, protection: 5 },
+{ raceId: 490019, name: "Onion", timeLimit: 102, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490022, name: "Combat Pegasus", timeLimit: 120, exp: 1.75, height: 0.88, upper: 1.06, lower: 1.1, life: 300, mana: 42, stamina: 100, str: 50, int: 60, dex: 48, will: 46, luck: 30, defense: 10, protection: 5 },
 
 // Wild Cats
 //---------------------------------------------------------------------------
-440501,"Bengal Tiger",78,1.5, 1.2,1.23,1.5, 70,24,70, 38,17,23,26,17, 0,2, 0x00808080,0x00808080,0x00808080
-440502,"Snow Tiger",83,1.5, 1.2,1.23,1.5, 82,24,70, 38,17,23,26,17, 0,2, 0x00808080,0x00808080,0x00808080
-440505,"Wild tiger",41,1.5, 1.2,1.23,1.5, 147,24,93, 38,17,23,26,17, 15,8, 0x00808080,0x00808080,0x00808080
-440506,"Wild White tiger",41,1.5, 1.2,1.23,1.5, 155,24,93, 38,17,23,26,17, 15,8, 0x00808080,0x00808080,0x00808080
-440507,"Cheetah",90,1.5, 1.2,1.23,1.5, 155,24,93, 38,17,23,26,17, 15,8, 0x00808080,0x00808080,0x00808080
-440508,"Cheetah",39,1.5, 1.2,1.23,1.5, 155,24,93, 38,17,23,26,17, 15,8, 0x00808080,0x00808080,0x00808080
-440509,"Wild White tiger",41,1.5, 1.2,1.23,1.5, 155,24,93, 38,17,23,26,17, 15,8, 0x00808080,0x00808080,0x00808080
-440510,"Wild White tiger",41,1.5, 1.2,1.23,1.5, 155,24,93, 38,17,23,26,17, 15,8, 0x00808080,0x00808080,0x00808080
-440511,"Cheetah",39,1.5, 1.2,1.23,1.5, 155,24,93, 38,17,23,26,17, 15,8, 0x00808080,0x00808080,0x00808080
-440512,"Cheetah",39,1.5, 1.2,1.23,1.5, 155,24,93, 38,17,23,26,17, 15,8, 0x00808080,0x00808080,0x00808080
-440513,"Cheetah",39,1.5, 1.2,1.23,1.5, 155,24,93, 38,17,23,26,17, 15,8, 0x00808080,0x00808080,0x00808080
-471008,"Pink Cheetah",90,1.5, 1.2,1.23,1.5, 155,24,93, 38,17,23,26,17, 15,8, 0x00EA7F9D,0x00646E76,0x0083329D
+{ raceId: 440501, name: "Bengal Tiger", timeLimit: 78, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 70, mana: 24, stamina: 70, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 0, protection: 2 },
+{ raceId: 440502, name: "Snow Tiger", timeLimit: 83, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 82, mana: 24, stamina: 70, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 0, protection: 2 },
+{ raceId: 440505, name: "Wild tiger", timeLimit: 41, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 147, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
+{ raceId: 440506, name: "Wild White tiger", timeLimit: 41, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
+{ raceId: 440507, name: "Cheetah", timeLimit: 90, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
+{ raceId: 440508, name: "Cheetah", timeLimit: 39, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
+{ raceId: 440509, name: "Wild White tiger", timeLimit: 41, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
+{ raceId: 440510, name: "Wild White tiger", timeLimit: 41, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
+{ raceId: 440511, name: "Cheetah", timeLimit: 39, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
+{ raceId: 440512, name: "Cheetah", timeLimit: 39, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
+{ raceId: 440513, name: "Cheetah", timeLimit: 39, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
+{ raceId: 471008, name: "Pink Cheetah", timeLimit: 90, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8, color1: 0x00EA7F9D, color2: 0x00646E76, color3: 0x0083329D },
 
 // Dragons
 //---------------------------------------------------------------------------
-430501,"Thunder Dragon (Dragon Rider Set)",117,1.8, 0.6,1.2,1.3, 80,39,77, 47,32,36,40,29, 0,2, 0x00808080,0x00808080,0x00808080
-430502,"Fire Dragon (Dragon Rider Set)",95,1.65, 0.6,1.1,1.4, 70,29,47, 37,22,26,30,19, 0,2, 0x00808080,0x00808080,0x00808080
-430503,"Thunder Dragon",117,1.8, 0.6,1.2,1.3, 80,39,77, 47,32,36,40,29, 0,2, 0x00808080,0x00808080,0x00808080
-430504,"Fire Dragon",95,1.65, 0.6,1.1,1.4, 70,29,47, 37,22,26,30,19, 0,2, 0x00808080,0x00808080,0x00808080
-430505,"Ice Dragon",107,1.75, 0.6,1.1,1.3, 75,52,70, 41,50,38,32,30, 0,2, 0x00808080,0x00808080,0x00808080
-430506,"Ice Dragon",107,1.75, 0.6,1.1,1.3, 75,52,70, 41,50,38,32,30, 0,2, 0x00808080,0x00808080,0x00808080
-430510,"Thunder Dragon (For 2)",120,1.8, 0.7,1.15,1.24, 80,39,77, 47,32,36,40,29, 0,2, 0x00808080,0x00808080,0x00808080
-430511,"Thunder Dragon",120,1.8, 0.7,1.15,1.24, 80,39,77, 47,32,36,40,29, 0,2, 0x00808080,0x00808080,0x00808080
-430512,"Bone Dragon",120,1.75, 0.6,1.1,1.3, 350,100,300, 150,100,45,45,30, 15,8, 0x00808080,0x00808080,0x00808080
-430513,"Ice Dragon (Event)",107,1.75, 0.6,1.1,1.3, 75,52,70, 41,50,38,32,30, 0,2, 0x00FFCC00,0x00CC3366,0x00808080
-430514,"Fire Dragon",117,1.8, 0.6,1.1,1.4, 80,39,77, 47,32,36,40,29, 0,2, 0x00FFFFFF,0x00808080,0x00808080
-430515,"Thunder Dragon",95,1.65, 0.6,1.2,1.3, 70,29,47, 37,22,26,30,19, 0,2, 0x00A6180E,0x00808080,0x00808080
-430516,"Ice Dragon (Event)",107,1.75, 0.6,1.1,1.3, 75,52,70, 41,50,38,32,30, 0,2, 0x00FFCC00,0x00CC3366,0x00808080
-430517,"Fire Dragon",117,1.8, 0.6,1.1,1.4, 80,39,77, 47,32,36,40,29, 0,2, 0x00FFFFFF,0x00808080,0x00808080
-430518,"Thunder Dragon",95,1.65, 0.6,1.2,1.3, 70,29,47, 37,22,26,30,19, 0,2, 0x00A6180E,0x00808080,0x00808080
-430519,"Bone Dragon",120,1.75, 0.6,1.1,1.3, 350,100,300, 150,100,45,45,30, 15,8, 0x00808080,0x00808080,0x00808080
-430520,"Bone Dragon",120,1.75, 0.6,1.1,1.3, 350,100,300, 150,100,45,45,30, 15,8, 0x00808080,0x00808080,0x00808080
+{ raceId: 430501, name: "Thunder Dragon (Dragon Rider Set)", timeLimit: 117, exp: 1.8, height: 0.6, upper: 1.2, lower: 1.3, life: 80, mana: 39, stamina: 77, str: 47, int: 32, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
+{ raceId: 430502, name: "Fire Dragon (Dragon Rider Set)", timeLimit: 95, exp: 1.65, height: 0.6, upper: 1.1, lower: 1.4, life: 70, mana: 29, stamina: 47, str: 37, int: 22, dex: 26, will: 30, luck: 19, defense: 0, protection: 2 },
+{ raceId: 430503, name: "Thunder Dragon", timeLimit: 117, exp: 1.8, height: 0.6, upper: 1.2, lower: 1.3, life: 80, mana: 39, stamina: 77, str: 47, int: 32, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
+{ raceId: 430504, name: "Fire Dragon", timeLimit: 95, exp: 1.65, height: 0.6, upper: 1.1, lower: 1.4, life: 70, mana: 29, stamina: 47, str: 37, int: 22, dex: 26, will: 30, luck: 19, defense: 0, protection: 2 },
+{ raceId: 430505, name: "Ice Dragon", timeLimit: 107, exp: 1.75, height: 0.6, upper: 1.1, lower: 1.3, life: 75, mana: 52, stamina: 70, str: 41, int: 50, dex: 38, will: 32, luck: 30, defense: 0, protection: 2 },
+{ raceId: 430506, name: "Ice Dragon", timeLimit: 107, exp: 1.75, height: 0.6, upper: 1.1, lower: 1.3, life: 75, mana: 52, stamina: 70, str: 41, int: 50, dex: 38, will: 32, luck: 30, defense: 0, protection: 2 },
+{ raceId: 430510, name: "Thunder Dragon (For 2)", timeLimit: 120, exp: 1.8, height: 0.7, upper: 1.15, lower: 1.24, life: 80, mana: 39, stamina: 77, str: 47, int: 32, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
+{ raceId: 430511, name: "Thunder Dragon", timeLimit: 120, exp: 1.8, height: 0.7, upper: 1.15, lower: 1.24, life: 80, mana: 39, stamina: 77, str: 47, int: 32, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
+{ raceId: 430512, name: "Bone Dragon", timeLimit: 120, exp: 1.75, height: 0.6, upper: 1.1, lower: 1.3, life: 350, mana: 100, stamina: 300, str: 150, int: 100, dex: 45, will: 45, luck: 30, defense: 15, protection: 8 },
+{ raceId: 430513, name: "Ice Dragon (Event)", timeLimit: 107, exp: 1.75, height: 0.6, upper: 1.1, lower: 1.3, life: 75, mana: 52, stamina: 70, str: 41, int: 50, dex: 38, will: 32, luck: 30, defense: 0, protection: 2, color1: 0x00FFCC00, color2: 0x00CC3366 },
+{ raceId: 430514, name: "Fire Dragon", timeLimit: 117, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.4, life: 80, mana: 39, stamina: 77, str: 47, int: 32, dex: 36, will: 40, luck: 29, defense: 0, protection: 2, color1: 0x00FFFFFF },
+{ raceId: 430515, name: "Thunder Dragon", timeLimit: 95, exp: 1.65, height: 0.6, upper: 1.2, lower: 1.3, life: 70, mana: 29, stamina: 47, str: 37, int: 22, dex: 26, will: 30, luck: 19, defense: 0, protection: 2, color1: 0x00A6180E },
+{ raceId: 430516, name: "Ice Dragon (Event)", timeLimit: 107, exp: 1.75, height: 0.6, upper: 1.1, lower: 1.3, life: 75, mana: 52, stamina: 70, str: 41, int: 50, dex: 38, will: 32, luck: 30, defense: 0, protection: 2, color1: 0x00FFCC00, color2: 0x00CC3366 },
+{ raceId: 430517, name: "Fire Dragon", timeLimit: 117, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.4, life: 80, mana: 39, stamina: 77, str: 47, int: 32, dex: 36, will: 40, luck: 29, defense: 0, protection: 2, color1: 0x00FFFFFF },
+{ raceId: 430518, name: "Thunder Dragon", timeLimit: 95, exp: 1.65, height: 0.6, upper: 1.2, lower: 1.3, life: 70, mana: 29, stamina: 47, str: 37, int: 22, dex: 26, will: 30, luck: 19, defense: 0, protection: 2, color1: 0x00A6180E },
+{ raceId: 430519, name: "Bone Dragon", timeLimit: 120, exp: 1.75, height: 0.6, upper: 1.1, lower: 1.3, life: 350, mana: 100, stamina: 300, str: 150, int: 100, dex: 45, will: 45, luck: 30, defense: 15, protection: 8 },
+{ raceId: 430520, name: "Bone Dragon", timeLimit: 120, exp: 1.75, height: 0.6, upper: 1.1, lower: 1.3, life: 350, mana: 100, stamina: 300, str: 150, int: 100, dex: 45, will: 45, luck: 30, defense: 15, protection: 8 },
 
 // Phoenix
 //---------------------------------------------------------------------------
-440514,"Phoenix",120,1.1, 0.8,1.2,1.4, 400,300,90, 10,100,60,20,25, 5,50, 0x00D78149,0x00808080,0x00808080
-440515,"Blue Phoenix",120,1.1, 0.8,1.2,1.4, 400,300,90, 10,100,60,20,25, 5,50, 0x0052EAFF,0x00808080,0x00808080
-440516,"White Phoenix",120,1.1, 0.8,1.2,1.4, 400,300,90, 10,100,60,20,25, 5,50, 0x00FFFFFF,0x00808080,0x00808080
-440517,"White Phoenix (Limited Duration)",120,1.1, 0.8,1.2,1.4, 400,300,90, 10,100,60,20,25, 5,50, 0x00FFFFFF,0x00808080,0x00808080
-440518,"Blue Phoenix (Limited Duration)",120,1.1, 0.8,1.2,1.4, 400,300,90, 10,100,60,20,25, 5,50, 0x0052EAFF,0x00808080,0x00808080
-490026,"Phoenix",120,1.1, 0.8,1.2,1.4, 400,300,90, 10,100,60,20,25, 5,50, 0x00808080,0x00808080,0x00808080
+{ raceId: 440514, name: "Phoenix", timeLimit: 120, exp: 1.1, height: 0.8, upper: 1.2, lower: 1.4, life: 400, mana: 300, stamina: 90, str: 10, int: 100, dex: 60, will: 20, luck: 25, defense: 5, protection: 50, color1: 0x00D78149 },
+{ raceId: 440515, name: "Blue Phoenix", timeLimit: 120, exp: 1.1, height: 0.8, upper: 1.2, lower: 1.4, life: 400, mana: 300, stamina: 90, str: 10, int: 100, dex: 60, will: 20, luck: 25, defense: 5, protection: 50, color1: 0x0052EAFF },
+{ raceId: 440516, name: "White Phoenix", timeLimit: 120, exp: 1.1, height: 0.8, upper: 1.2, lower: 1.4, life: 400, mana: 300, stamina: 90, str: 10, int: 100, dex: 60, will: 20, luck: 25, defense: 5, protection: 50, color1: 0x00FFFFFF },
+{ raceId: 440517, name: "White Phoenix (Limited Duration)", timeLimit: 120, exp: 1.1, height: 0.8, upper: 1.2, lower: 1.4, life: 400, mana: 300, stamina: 90, str: 10, int: 100, dex: 60, will: 20, luck: 25, defense: 5, protection: 50, color1: 0x00FFFFFF },
+{ raceId: 440518, name: "Blue Phoenix (Limited Duration)", timeLimit: 120, exp: 1.1, height: 0.8, upper: 1.2, lower: 1.4, life: 400, mana: 300, stamina: 90, str: 10, int: 100, dex: 60, will: 20, luck: 25, defense: 5, protection: 50, color1: 0x0052EAFF },
+{ raceId: 490026, name: "Phoenix", timeLimit: 120, exp: 1.1, height: 0.8, upper: 1.2, lower: 1.4, life: 400, mana: 300, stamina: 90, str: 10, int: 100, dex: 60, will: 20, luck: 25, defense: 5, protection: 50 },
 
 // Clouds
 //---------------------------------------------------------------------------
-471009,"Rainbow Nimbus",120,1.1, 1.0,1.0,1.0, 0,300,44, 5,5,5,5,10, 15,50, 0x00808080,0x00808080,0x00808080
-490013,"Nimbus",120,1.1, 1.0,1.0,1.0, 0,300,44, 5,5,5,5,10, 15,50, 0x00808080,0x00808080,0x00808080
-490014,"Dark Cloud",120,1.1, 1.0,1.0,1.0, 0,300,44, 5,5,5,5,10, 15,50, 0x00808080,0x00808080,0x00808080
-490017,"Nimbus",120,1.1, 1.0,1.0,1.0, 0,300,44, 5,5,5,5,10, 15,95, 0x00808080,0x00808080,0x00808080
-490020,"Cloud Pet",120,1.1, 1.0,1.0,1.0, 0,300,44, 5,5,5,5,10, 15,50, 0x00808080,0x00808080,0x00808080
+{ raceId: 471009, name: "Rainbow Nimbus", timeLimit: 120, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 0, mana: 300, stamina: 44, str: 5, int: 5, dex: 5, will: 5, luck: 10, defense: 15, protection: 50 },
+{ raceId: 490013, name: "Nimbus", timeLimit: 120, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 0, mana: 300, stamina: 44, str: 5, int: 5, dex: 5, will: 5, luck: 10, defense: 15, protection: 50 },
+{ raceId: 490014, name: "Dark Cloud", timeLimit: 120, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 0, mana: 300, stamina: 44, str: 5, int: 5, dex: 5, will: 5, luck: 10, defense: 15, protection: 50 },
+{ raceId: 490017, name: "Nimbus", timeLimit: 120, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 0, mana: 300, stamina: 44, str: 5, int: 5, dex: 5, will: 5, luck: 10, defense: 15, protection: 95 },
+{ raceId: 490020, name: "Cloud Pet", timeLimit: 120, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 0, mana: 300, stamina: 44, str: 5, int: 5, dex: 5, will: 5, luck: 10, defense: 15, protection: 50 },
 
 // Scooters >_>
 //---------------------------------------------------------------------------
-490018,"Scooter",180,1.5, 1.0,1.0,1.0, 200,24,300, 38,5,60,5,25, 5,50, 0x00808080,0x00808080,0x00808080
-490021,"Bike Pet",180,1.5, 1.0,1.0,1.0, 200,24,300, 38,5,60,5,25, 5,50, 0x00808080,0x00808080,0x00808080
+{ raceId: 490018, name: "Scooter", timeLimit: 180, exp: 1.5, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 24, stamina: 300, str: 38, int: 5, dex: 60, will: 5, luck: 25, defense: 5, protection: 50 },
+{ raceId: 490021, name: "Bike Pet", timeLimit: 180, exp: 1.5, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 24, stamina: 300, str: 38, int: 5, dex: 60, will: 5, luck: 25, defense: 5, protection: 50 },
 
 // Chef Carriage
 //---------------------------------------------------------------------------
-270902,"Flying Food Truck",180,1.1, 1.0,1.0,1.0, 150,24,120, 80,40,20,20,35, 15,8, 0x00808080,0x00808080,0x00808080
+{ raceId: 270902, name: "Flying Food Truck", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 24, stamina: 120, str: 80, int: 40, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 
 // Partners
 //---------------------------------------------------------------------------
-730201,"Partner [Maid]",180,0.05, 1.0,1.0,1.0, 100,80,90, 60,80,60,50,40, 0,2, 0x00808080,0x00808080,0x00808080
-730202,"Partner [Butler]",180,0.05, 1.0,1.0,1.0, 120,60,90, 80,40,40,70,40, 0,2, 0x00808080,0x00808080,0x00808080
-730204,"Maid Partner",180,0.05, 1.0,1.0,1.0, 300,60,90, 60,80,60,60,40, 0,2, 0x00808080,0x00808080,0x00808080
-730205,"Butler Partner",180,0.05, 1.0,1.0,1.0, 350,40,90, 80,60,60,60,40, 0,2, 0x00808080,0x00808080,0x00808080
-730206,"Commerce Partner",180,0.05, 1.0,1.0,1.0, 320,300,90, 80,90,50,80,80, 2,2, 0x00808080,0x00808080,0x00808080
+{ raceId: 730201, name: "Partner [Maid]", timeLimit: 180, exp: 0.05, height: 1.0, upper: 1.0, lower: 1.0, life: 100, mana: 80, stamina: 90, str: 60, int: 80, dex: 60, will: 50, luck: 40, defense: 0, protection: 2 },
+{ raceId: 730202, name: "Partner [Butler]", timeLimit: 180, exp: 0.05, height: 1.0, upper: 1.0, lower: 1.0, life: 120, mana: 60, stamina: 90, str: 80, int: 40, dex: 40, will: 70, luck: 40, defense: 0, protection: 2 },
+{ raceId: 730204, name: "Maid Partner", timeLimit: 180, exp: 0.05, height: 1.0, upper: 1.0, lower: 1.0, life: 300, mana: 60, stamina: 90, str: 60, int: 80, dex: 60, will: 60, luck: 40, defense: 0, protection: 2 },
+{ raceId: 730205, name: "Butler Partner", timeLimit: 180, exp: 0.05, height: 1.0, upper: 1.0, lower: 1.0, life: 350, mana: 40, stamina: 90, str: 80, int: 60, dex: 60, will: 60, luck: 40, defense: 0, protection: 2 },
+{ raceId: 730206, name: "Commerce Partner", timeLimit: 180, exp: 0.05, height: 1.0, upper: 1.0, lower: 1.0, life: 320, mana: 300, stamina: 90, str: 80, int: 90, dex: 50, will: 80, luck: 80, defense: 2, protection: 2 },
+]

@@ -52,7 +52,7 @@ namespace Aura.Data
 								foreach (var key in _mandatoryKeys)
 								{
 									if (obj[key] == null)
-										throw new DatabaseErrorException("Missing mandatory key '" + key + "', in " + Environment.NewLine + obj.ToString(), path);
+										throw new DatabaseErrorException("Missing mandatory value '" + key + "', in " + Environment.NewLine + obj.ToString(), path);
 								}
 							}
 

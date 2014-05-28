@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using Newtonsoft.Json.Linq;
 namespace Aura.Data.Database
 {
 	[Serializable]
@@ -33,36 +34,35 @@ namespace Aura.Data.Database
 		public uint Color3 { get; set; }
 	}
 
-	public class PetDb : DatabaseCsvIndexed<int, PetData>
+	public class PetDb : DatabaseJsonIndexed<int, PetData>
 	{
-		[MinFieldCount(20)]
-		protected override void ReadEntry(CsvEntry entry)
+		[Mandatory("raceId", "timeLimit", "exp", "height", "upper", "lower", "life", "mana", "stamina", "str", "int", "dex", "will", "luck", "defense", "protection")]
+		protected override void ReadEntry(JObject entry)
 		{
 			var info = new PetData();
-			info.RaceId = entry.ReadInt();
-			entry.ReadString(); // Name
-			info.TimeLimit = entry.ReadShort();
-			info.ExpMultiplicator = entry.ReadFloat();
+			info.RaceId = entry.ReadInt("raceId");
+			info.TimeLimit = entry.ReadShort("timeLimit");
+			info.ExpMultiplicator = entry.ReadFloat("exp");
 
-			info.Height = entry.ReadFloat();
-			info.Upper = entry.ReadFloat();
-			info.Lower = entry.ReadFloat();
+			info.Height = entry.ReadFloat("height");
+			info.Upper = entry.ReadFloat("upper");
+			info.Lower = entry.ReadFloat("lower");
 
-			info.Life = entry.ReadFloat();
-			info.Mana = entry.ReadFloat();
-			info.Stamina = entry.ReadFloat();
-			info.Str = entry.ReadFloat();
-			info.Int = entry.ReadFloat();
-			info.Dex = entry.ReadFloat();
-			info.Will = entry.ReadFloat();
-			info.Luck = entry.ReadFloat();
+			info.Life = entry.ReadFloat("life");
+			info.Mana = entry.ReadFloat("mana");
+			info.Stamina = entry.ReadFloat("stamina");
+			info.Str = entry.ReadFloat("str");
+			info.Int = entry.ReadFloat("int");
+			info.Dex = entry.ReadFloat("dex");
+			info.Will = entry.ReadFloat("will");
+			info.Luck = entry.ReadFloat("luck");
 
-			info.Defense = entry.ReadShort();
-			info.Protection = entry.ReadFloat();
+			info.Defense = entry.ReadShort("defense");
+			info.Protection = entry.ReadFloat("protection");
 
-			info.Color1 = entry.ReadUIntHex();
-			info.Color2 = entry.ReadUIntHex();
-			info.Color3 = entry.ReadUIntHex();
+			info.Color1 = entry.ReadUInt("color1", 0x808080);
+			info.Color2 = entry.ReadUInt("color2", 0x808080);
+			info.Color3 = entry.ReadUInt("color3", 0x808080);
 
 			this.Entries[info.RaceId] = info;
 		}
