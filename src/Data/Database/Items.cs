@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Aura.Data.Database
 {
@@ -59,7 +60,7 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Item database, indexed by item id.
 	/// </summary>
-	public class ItemDb : DatabaseCsvIndexed<int, ItemData>
+	public class ItemDb : DatabaseJsonIndexed<int, ItemData>
 	{
 		public ItemData Find(string name)
 		{
@@ -73,56 +74,53 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
-		[MinFieldCount(31)]
-		protected override void ReadEntry(CsvEntry entry)
+		[Mandatory("id", "name", "originalName", "tags", "type", "width", "height", "price")]
+		protected override void ReadEntry(JObject entry)
 		{
 			var info = new ItemData();
-			info.Id = entry.ReadInt();
+			info.Id = entry.ReadInt("id");
 
-			info.Name = entry.ReadString();
-			info.KorName = entry.ReadString();
-			info.Tags = entry.ReadString();
-			info.Type = (ItemType)entry.ReadInt();
-			info.StackType = (StackType)entry.ReadInt();
-			info.StackMax = entry.ReadUShort();
+			info.Name = entry.ReadString("name");
+			info.KorName = entry.ReadString("originalName");
+			info.Tags = entry.ReadString("tags");
+			info.Type = (ItemType)entry.ReadInt("type");
+			info.StackType = (StackType)entry.ReadInt("stackType");
+			info.StackMax = entry.ReadUShort("stackMax", 1);
 
 			if (info.StackMax < 1)
 				info.StackMax = 1;
 
-			info.StackItem = entry.ReadInt();
+			info.StackItem = entry.ReadInt("stackItem");
 
-			info.Consumed = entry.ReadBool();
-			info.Width = entry.ReadByte();
-			info.Height = entry.ReadByte();
-			info.ColorMap1 = entry.ReadByte();
-			info.ColorMap2 = entry.ReadByte();
-			info.ColorMap3 = entry.ReadByte();
-			info.Price = entry.ReadInt();
+			info.Consumed = entry.ReadBool("consumed");
+			info.Width = entry.ReadByte("width");
+			info.Height = entry.ReadByte("height");
+			info.ColorMap1 = entry.ReadByte("colorMap1");
+			info.ColorMap2 = entry.ReadByte("colorMap2");
+			info.ColorMap3 = entry.ReadByte("colorMap3");
+			info.Price = entry.ReadInt("price");
 			info.SellingPrice = (info.Id != 2000 ? (int)(info.Price * 0.1f) : 1000);
-			info.Durability = entry.ReadInt();
-			info.Defense = entry.ReadInt();
-			info.Protection = entry.ReadShort();
-			info.InstrumentType = (InstrumentType)entry.ReadInt();
-			info.WeaponType = entry.ReadByte();
-			if (info.WeaponType == 0)
+			info.Durability = entry.ReadInt("durability");
+			info.Defense = entry.ReadInt("defense");
+			info.Protection = entry.ReadShort("protection");
+			info.InstrumentType = (InstrumentType)entry.ReadInt("instrumentType");
+
+			info.WeaponType = entry.ReadByte("weaponType");
+			if (info.WeaponType != 0)
 			{
-				entry.Skip(7);
-			}
-			else
-			{
-				info.Range = entry.ReadShort();
-				info.AttackMin = entry.ReadUShort();
-				info.AttackMax = entry.ReadUShort();
-				info.Critical = entry.ReadByte();
-				info.Balance = entry.ReadByte();
-				info.AttackSpeed = entry.ReadByte();
-				info.KnockCount = entry.ReadByte();
+				info.Range = entry.ReadShort("range");
+				info.AttackMin = entry.ReadUShort("attackMin");
+				info.AttackMax = entry.ReadUShort("attackMax");
+				info.Critical = entry.ReadByte("critical");
+				info.Balance = entry.ReadByte("balance");
+				info.AttackSpeed = entry.ReadByte("attackSpeed");
+				info.KnockCount = entry.ReadByte("knockCount");
 			}
 
-			info.OnUse = entry.ReadString();
-			info.OnEquip = entry.ReadString();
-			info.OnUnequip = entry.ReadString();
-			info.OnCreation = entry.ReadString();
+			info.OnUse = entry.ReadString("onUse");
+			info.OnEquip = entry.ReadString("onEquip");
+			info.OnUnequip = entry.ReadString("onUnequip");
+			info.OnCreation = entry.ReadString("onCreation");
 
 			this.Entries[info.Id] = info;
 		}

@@ -49,11 +49,18 @@ namespace Aura.Data
 						{
 							if (_mandatoryKeys != null)
 							{
+								var missing = false;
 								foreach (var key in _mandatoryKeys)
 								{
 									if (obj[key] == null)
-										throw new DatabaseErrorException("Missing mandatory value '" + key + "', in " + Environment.NewLine + obj.ToString(), path);
+									{
+										this.Warnings.Add(new DatabaseWarningException("Missing mandatory value '" + key + "', in " + Environment.NewLine + obj.ToString(), path));
+										missing = true;
+										continue;
+									}
 								}
+								if (missing)
+									continue;
 							}
 
 							this.ReadEntry(obj);
