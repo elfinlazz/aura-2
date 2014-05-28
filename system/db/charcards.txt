@@ -1,39 +1,42 @@
 // Aura
 // Database file
 // 
-// Races: Bitmask
-//        0x01  Humans F | 0x02  Humans M | 0x03  Humans
-//        0x04  Elves  F | 0x08  Elves  M | 0x0C  Elves
-//        0x10  Giants F | 0x20  Giants M | 0x30  Giants
-//        0x33  Humans + Giants
-//        0x3C  Elves  + Giants
-//        0xFF  Everybody
+// Values: id, [name], set, allowed
 // 
-// Structure:
-// Id  ItemSet  Races
+// set: Set of items added on creation (see charcardsets)
+// 
+// allowed: Races allowed to be created with the card (bitmask).
+//     0x01  Humans F | 0x02  Humans M | 0x03  Humans
+//     0x04  Elves  F | 0x08  Elves  M | 0x0C  Elves
+//     0x10  Giants F | 0x20  Giants M | 0x30  Giants
+//     0x33  Humans + Giants
+//     0x3C  Elves  + Giants
+//     0xFF  Everybody
 //---------------------------------------------------------------------------
 
+[
 // Basic
 //---------------------------------------------------------------------------
-0,   1,  0x03   // Basic Human Card
-16,  1,  0x0C   // Basic Elf Card
-30,  1,  0x30   // Basic Giant Card
+{ id: 0,  name: "Basic Human Card",     set: 1, allowed: 0x03 },
+{ id: 16, name: "Basic Elf Card",       set: 1, allowed: 0x0C },
+{ id: 30, name: "Basic Giant Card",     set: 1, allowed: 0x30 },
 
 // Premium
 //---------------------------------------------------------------------------
-1,   2,  0x03   // Premium Human Card
-17,  2,  0x0C   // Premium Elf Card
-31,  2,  0x30   // Premium Giant Card
+{ id: 1,  name: "Premium Human Card",   set: 2, allowed: 0x03 },
+{ id: 17, name: "Premium Elf Card",     set: 2, allowed: 0x0C },
+{ id: 31, name: "Premium Giant Card",   set: 2, allowed: 0x30 },
 
 // Assist
 //---------------------------------------------------------------------------
-18,  1,  0x0C   // Elf Assistant Card
-32,  1,  0x30   // Giant Assistant Card
+{ id: 18, name: "Elf Assistant Card",   set: 1, allowed: 0x0C },
+{ id: 32, name: "Giant Assistant Card", set: 1, allowed: 0x30 },
 
 // Free
 //---------------------------------------------------------------------------
-147, 1,  0xFF   // Free Card
+{ id: 147, name: "Free Card",           set: 1, allowed: 0xFF },
 
 // Special
 //---------------------------------------------------------------------------
-
+// { ... }
+]

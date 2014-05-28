@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Aura.Data.Database
 {
@@ -18,32 +19,30 @@ namespace Aura.Data.Database
 		public uint Color3 { get; set; }
 	}
 
-	public class CharCardSetDb : DatabaseCsvIndexed<int, Dictionary<int, List<CharCardSetData>>>
+	public class CharCardSetDb : DatabaseJsonIndexed<int, Dictionary<int, List<CharCardSetData>>>
 	{
 		public List<CharCardSetData> Find(int setId, int raceId)
 		{
 			var set = this.Entries.GetValueOrDefault(setId);
-			if (set == null)
-				return null;
+			if (set == null) return null;
 
 			var raceSet = set.GetValueOrDefault(raceId);
-			if (raceSet == null)
-				return null;
+			if (raceSet == null) return null;
 
 			return raceSet;
 		}
 
-		[MinFieldCount(7)]
-		protected override void ReadEntry(CsvEntry entry)
+		[Mandatory("id", "race", "itemId", "pocket")]
+		protected override void ReadEntry(JObject entry)
 		{
 			var info = new CharCardSetData();
-			info.SetId = entry.ReadInt();
-			info.Race = entry.ReadInt();
-			info.Class = entry.ReadInt();
-			info.Pocket = entry.ReadByte();
-			info.Color1 = entry.ReadUIntHex();
-			info.Color2 = entry.ReadUIntHex();
-			info.Color3 = entry.ReadUIntHex();
+			info.SetId = entry.ReadInt("id");
+			info.Race = entry.ReadInt("race");
+			info.Class = entry.ReadInt("itemId");
+			info.Pocket = entry.ReadByte("pocket");
+			info.Color1 = entry.ReadUInt("color1");
+			info.Color3 = entry.ReadUInt("color2");
+			info.Color2 = entry.ReadUInt("color3");
 
 			if (!this.Entries.ContainsKey(info.SetId))
 				this.Entries[info.SetId] = new Dictionary<int, List<CharCardSetData>>();

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Aura.Data.Database
 {
@@ -28,16 +29,16 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by char card id.
 	/// </summary>
-	public class CharCardDb : DatabaseCsvIndexed<int, CharCardData>
+	public class CharCardDb : DatabaseJsonIndexed<int, CharCardData>
 	{
-		[MinFieldCount(3)]
-		protected override void ReadEntry(CsvEntry entry)
+		[Mandatory("id", "set", "allowed")]
+		protected override void ReadEntry(JObject entry)
 		{
 			var info = new CharCardData();
-			info.Id = entry.ReadInt();
-			info.SetId = entry.ReadInt();
+			info.Id = entry.ReadInt("id");
+			info.SetId = entry.ReadInt("set");
 
-			var races = entry.ReadUIntHex();
+			var races = entry.ReadInt("allowed");
 			if ((races & 0x01) != 0) info.Races.Add(10001);
 			if ((races & 0x02) != 0) info.Races.Add(10002);
 			if ((races & 0x04) != 0) info.Races.Add(9001);
