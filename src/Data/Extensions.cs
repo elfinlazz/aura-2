@@ -29,6 +29,7 @@ namespace Aura.Data
 			return result;
 		}
 
+		internal static bool ReadBool(this JObject obj, string key, bool def = false) { return (bool)(obj[key] ?? def); }
 		internal static byte ReadByte(this JObject obj, string key, byte def = 0) { return (byte)(obj[key] ?? def); }
 		internal static sbyte ReadSByte(this JObject obj, string key, sbyte def = 0) { return (sbyte)(obj[key] ?? def); }
 		internal static short ReadShort(this JObject obj, string key, short def = 0) { return (short)(obj[key] ?? def); }

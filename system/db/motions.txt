@@ -1,61 +1,62 @@
 // Aura
 // Database file
 // 
-// Structure:
-// Name  Category  Type  Loop
+// Values: name, category, type, [loop]
 //---------------------------------------------------------------------------
 
-salute,53,30,no
-courtesy,53,31,no
-dance1,53,33,no
-dance2,53,32,no
-dance3,53,34,no
-dance4,53,35,no
-greet,53,0,no
-laugh,53,1,no
-cry,53,2,no
-clap,53,3,no
-positive,53,4,no
-negative,53,5,no
-angry,53,9,no
-question,53,6,no
-surprise,53,7,no
-frustrate,53,8,no
-kiss,53,10,no
-beg,53,11,no
-listen_music,53,13,yes
-raise_hand,53,15,no
-hurrah,53,16,no
-provoke,53,17,no
-shy,53,18,no
-charge,53,19,no
-boast_costume,53,20,no
-boast_strength,53,21,no
-boast_shape,53,22,no
-hungry,53,23,no
-follow_me,53,24,no
-joke,53,25,no
-smell,53,26,no
-yes,53,27,no
-painful,53,28,no
-provoke2,53,29,no
-disregard,14,14,no
-victory,82,0,no
-proposal1,53,46,no
-proposal2,53,47,no
-rare_1,53,48,no
-rare_2,53,49,no
-rare_3,53,50,no
-rare_4,53,51,no
-rare_5,53,52,no
-rare_6,53,53,no
-rare_7,53,54,no
-rare_8,53,55,no
-rare_9,53,56,no
-rare_10,53,57,no
-rare_11,53,58,no
-rare_12,53,59,no
-rare_13,53,60,no
-rare_14,53,61,no
-psy_motion,53,62,no
-motionnewyearsbow,53,63,no
+[
+{ name: "salute", category: 53, type: 30, loop: false },
+{ name: "courtesy", category: 53, type: 31, loop: false },
+{ name: "dance1", category: 53, type: 33, loop: false },
+{ name: "dance2", category: 53, type: 32, loop: false },
+{ name: "dance3", category: 53, type: 34, loop: false },
+{ name: "dance4", category: 53, type: 35, loop: false },
+{ name: "greet", category: 53, type: 0, loop: false },
+{ name: "laugh", category: 53, type: 1, loop: false },
+{ name: "cry", category: 53, type: 2, loop: false },
+{ name: "clap", category: 53, type: 3, loop: false },
+{ name: "positive", category: 53, type: 4, loop: false },
+{ name: "negative", category: 53, type: 5, loop: false },
+{ name: "angry", category: 53, type: 9, loop: false },
+{ name: "question", category: 53, type: 6, loop: false },
+{ name: "surprise", category: 53, type: 7, loop: false },
+{ name: "frustrate", category: 53, type: 8, loop: false },
+{ name: "kiss", category: 53, type: 10, loop: false },
+{ name: "beg", category: 53, type: 11, loop: false },
+{ name: "listen_music", category: 53, type: 13, loop: true },
+{ name: "raise_hand", category: 53, type: 15, loop: false },
+{ name: "hurrah", category: 53, type: 16, loop: false },
+{ name: "provoke", category: 53, type: 17, loop: false },
+{ name: "shy", category: 53, type: 18, loop: false },
+{ name: "charge", category: 53, type: 19, loop: false },
+{ name: "boast_costume", category: 53, type: 20, loop: false },
+{ name: "boast_strength", category: 53, type: 21, loop: false },
+{ name: "boast_shape", category: 53, type: 22, loop: false },
+{ name: "hungry", category: 53, type: 23, loop: false },
+{ name: "follow_me", category: 53, type: 24, loop: false },
+{ name: "joke", category: 53, type: 25, loop: false },
+{ name: "smell", category: 53, type: 26, loop: false },
+{ name: "yes", category: 53, type: 27, loop: false },
+{ name: "painful", category: 53, type: 28, loop: false },
+{ name: "provoke2", category: 53, type: 29, loop: false },
+{ name: "disregard", category: 14, type: 14, loop: false },
+{ name: "victory", category: 82, type: 0, loop: false },
+{ name: "proposal1", category: 53, type: 46, loop: false },
+{ name: "proposal2", category: 53, type: 47, loop: false },
+{ name: "rare_1", category: 53, type: 48, loop: false },
+{ name: "rare_2", category: 53, type: 49, loop: false },
+{ name: "rare_3", category: 53, type: 50, loop: false },
+{ name: "rare_4", category: 53, type: 51, loop: false },
+{ name: "rare_5", category: 53, type: 52, loop: false },
+{ name: "rare_6", category: 53, type: 53, loop: false },
+{ name: "rare_7", category: 53, type: 54, loop: false },
+{ name: "rare_8", category: 53, type: 55, loop: false },
+{ name: "rare_9", category: 53, type: 56, loop: false },
+{ name: "rare_10", category: 53, type: 57, loop: false },
+{ name: "rare_11", category: 53, type: 58, loop: false },
+{ name: "rare_12", category: 53, type: 59, loop: false },
+{ name: "rare_13", category: 53, type: 60, loop: false },
+{ name: "rare_14", category: 53, type: 61, loop: false },
+{ name: "psy_motion", category: 53, type: 62, loop: false },
+{ name: "motionnewyearsbow", category: 53, type: 63, loop: false },
+]

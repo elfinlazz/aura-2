@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using Newtonsoft.Json.Linq;
 
 namespace Aura.Data.Database
 {
@@ -17,16 +18,16 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Indexed by motion name.
 	/// </summary>
-	public class MotionDb : DatabaseCsvIndexed<string, MotionData>
+	public class MotionDb : DatabaseJsonIndexed<string, MotionData>
 	{
-		[MinFieldCount(4)]
-		protected override void ReadEntry(CsvEntry entry)
+		[Mandatory("name", "category", "type")]
+		protected override void ReadEntry(JObject entry)
 		{
 			var info = new MotionData();
-			info.Name = entry.ReadString();
-			info.Category = entry.ReadShort();
-			info.Type = entry.ReadShort();
-			info.Loop = entry.ReadBool();
+			info.Name = entry.ReadString("name");
+			info.Category = entry.ReadShort("category");
+			info.Type = entry.ReadShort("type");
+			info.Loop = entry.ReadBool("loop");
 
 			this.Entries[info.Name] = info;
 		}
