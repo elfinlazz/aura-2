@@ -70,7 +70,6 @@
     <Compile Include="Database\RegionInfo.cs" />
     <Compile Include="Database\Regions.cs" />
     <Compile Include="Database\Shamala.cs" />
-    <Compile Include="Database\SkillRanks.cs" />
     <Compile Include="Database\Skills.cs" />
     <Compile Include="Database\Speeds.cs" />
     <Compile Include="Database\StatsBase.cs" />

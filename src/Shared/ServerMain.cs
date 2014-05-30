@@ -126,7 +126,6 @@ namespace Aura.Shared.Util
 
 				if ((toLoad & DataLoad.Skills) != 0)
 				{
-					this.LoadDb(AuraData.SkillRankDb, "db/skill_ranks.txt", reload, false);
 					this.LoadDb(AuraData.SkillDb, "db/skills.txt", reload);
 				}
 
