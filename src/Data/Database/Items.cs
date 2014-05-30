@@ -74,9 +74,10 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
-		[Mandatory("id", "name", "originalName", "tags", "type", "width", "height", "price")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("id", "name", "originalName", "tags", "type", "width", "height", "price");
+
 			var info = new ItemData();
 			info.Id = entry.ReadInt("id");
 

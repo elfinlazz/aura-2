@@ -115,9 +115,10 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
-		[Mandatory("id", "name", "group", "tags", "gender", "vehicleType", "runSpeedFactor", "state", "invWidth", "invHeight", "attackMin", "attackMax", "range", "attackSpeed", "knockCount", "critical", "criticalRate", "splashRadius", "splashAngle", "splashDamage", "stand", "ai", "color1", "color2", "color3", "size", "cp", "life", "defense", "protection", "element")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("id", "name", "group", "tags", "gender", "vehicleType", "runSpeedFactor", "state", "invWidth", "invHeight", "attackMin", "attackMax", "range", "attackSpeed", "knockCount", "critical", "criticalRate", "splashRadius", "splashAngle", "splashDamage", "stand", "ai", "color1", "color2", "color3", "size", "cp", "life", "defense", "protection", "element");
+
 			var raceData = new RaceData();
 			raceData.Id = entry.ReadInt("id");
 			raceData.Name = entry.ReadString("name");

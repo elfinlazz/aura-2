@@ -32,9 +32,10 @@ namespace Aura.Data.Database
 			return raceSet;
 		}
 
-		[Mandatory("id", "race", "itemId", "pocket")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("id", "race", "itemId", "pocket");
+
 			var info = new CharCardSetData();
 			info.SetId = entry.ReadInt("id");
 			info.Race = entry.ReadInt("race");

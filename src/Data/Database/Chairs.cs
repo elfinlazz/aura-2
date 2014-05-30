@@ -20,9 +20,10 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class ChairDb : DatabaseJsonIndexed<int, ChairData>
 	{
-		[Mandatory("itemId", "propId", "giantPropId")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("itemId", "propId", "giantPropId");
+
 			var info = new ChairData();
 			info.ItemId = entry.ReadInt("itemId");
 			info.PropId = entry.ReadInt("propId");

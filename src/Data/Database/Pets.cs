@@ -36,9 +36,10 @@ namespace Aura.Data.Database
 
 	public class PetDb : DatabaseJsonIndexed<int, PetData>
 	{
-		[Mandatory("raceId", "timeLimit", "exp", "height", "upper", "lower", "life", "mana", "stamina", "str", "int", "dex", "will", "luck", "defense", "protection")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("raceId", "timeLimit", "exp", "height", "upper", "lower", "life", "mana", "stamina", "str", "int", "dex", "will", "luck", "defense", "protection");
+
 			var info = new PetData();
 			info.RaceId = entry.ReadInt("raceId");
 			info.TimeLimit = entry.ReadShort("timeLimit");

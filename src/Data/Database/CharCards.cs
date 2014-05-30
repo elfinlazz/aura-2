@@ -31,9 +31,10 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class CharCardDb : DatabaseJsonIndexed<int, CharCardData>
 	{
-		[Mandatory("id", "set", "allowed")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("id", "set", "allowed");
+
 			var info = new CharCardData();
 			info.Id = entry.ReadInt("id");
 			info.SetId = entry.ReadInt("set");

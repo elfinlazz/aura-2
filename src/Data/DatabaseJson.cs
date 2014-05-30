@@ -22,15 +22,6 @@ namespace Aura.Data
 		where TInfo : class, new()
 		where TList : ICollection, new()
 	{
-		private string[] _mandatoryKeys;
-
-		public DatabaseJsonBase()
-		{
-			var attr = this.GetType().GetMethod("ReadEntry", BindingFlags.NonPublic | BindingFlags.Instance).GetCustomAttributes(typeof(MandatoryAttribute), true);
-			if (attr.Length > 0)
-				_mandatoryKeys = (attr[0] as MandatoryAttribute).Keys;
-		}
-
 		protected override void LoadFromFile(string path)
 		{
 			using (var fs = new StreamReader(path))
@@ -47,22 +38,6 @@ namespace Aura.Data
 
 						try
 						{
-							if (_mandatoryKeys != null)
-							{
-								var missing = false;
-								foreach (var key in _mandatoryKeys)
-								{
-									if (obj[key] == null)
-									{
-										this.Warnings.Add(new MandatoryValueException(path, key, obj));
-										missing = true;
-										continue;
-									}
-								}
-								if (missing)
-									continue;
-							}
-
 							this.ReadEntry(obj);
 						}
 						catch (MandatoryValueException ex)
@@ -138,16 +113,6 @@ namespace Aura.Data
 		public override void Clear()
 		{
 			this.Entries.Clear();
-		}
-	}
-
-	public class MandatoryAttribute : Attribute
-	{
-		public string[] Keys { get; protected set; }
-
-		public MandatoryAttribute(params string[] keys)
-		{
-			this.Keys = keys;
 		}
 	}
 

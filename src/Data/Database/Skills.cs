@@ -129,9 +129,10 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
-		[Mandatory("id", "name", "masterTitle", "ranks")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("id", "name", "masterTitle", "ranks");
+
 			var skillInfo = new SkillData();
 			skillInfo.Id = entry.ReadUShort("id");
 			skillInfo.Name = entry.ReadString("name");

@@ -26,9 +26,10 @@ namespace Aura.Data.Database
 			return this.IdEntries.GetValueOrDefault(id);
 		}
 
-		[Mandatory("id", "name")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("id", "name");
+
 			var info = new KeywordData();
 			info.Id = entry.ReadUShort("id");
 			info.Name = entry.ReadString("name");

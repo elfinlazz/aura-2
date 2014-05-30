@@ -20,9 +20,10 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class MotionDb : DatabaseJsonIndexed<string, MotionData>
 	{
-		[Mandatory("name", "category", "type")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("name", "category", "type");
+
 			var info = new MotionData();
 			info.Name = entry.ReadString("name");
 			info.Category = entry.ReadShort("category");

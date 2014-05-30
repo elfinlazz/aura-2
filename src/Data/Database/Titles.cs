@@ -26,9 +26,10 @@ namespace Aura.Data.Database
 	/// </summary>
 	public class TitleDb : DatabaseJsonIndexed<int, TitleData>
 	{
-		[Mandatory("id", "name")]
 		protected override void ReadEntry(JObject entry)
 		{
+			entry.AssertNotMissing("id", "name");
+
 			var data = new TitleData();
 			data.Id = entry.ReadUShort("id");
 			data.Name = entry.ReadString("name");
