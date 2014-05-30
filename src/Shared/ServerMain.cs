@@ -87,7 +87,6 @@ namespace Aura.Shared.Util
 				if ((toLoad & DataLoad.Races) != 0)
 				{
 					this.LoadDb(AuraData.AncientDropDb, "db/ancient_drops.txt", reload);
-					this.LoadDb(AuraData.RaceSkillDb, "db/race_skills.txt", reload);
 					this.LoadDb(AuraData.SpeedDb, "db/speed.txt", reload, false);
 					this.LoadDb(AuraData.RaceDb, "db/races.txt", reload);
 				}

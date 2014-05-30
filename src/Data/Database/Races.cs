@@ -2,9 +2,11 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace Aura.Data.Database
 {
@@ -16,7 +18,7 @@ namespace Aura.Data.Database
 		public string Group { get; set; }
 		public Gender Gender { get; set; }
 
-		public int DefaultState { get; set; }
+		public uint DefaultState { get; set; }
 		public int VehicleType { get; set; }
 		public float RunSpeedFactor { get; set; }
 		public Element Element { get; set; }
@@ -39,6 +41,7 @@ namespace Aura.Data.Database
 		public int AttackSpeed { get; set; }
 		public int KnockCount { get; set; }
 		public int Critical { get; set; }
+		public int CriticalRate { get; set; }
 		public int SplashRadius { get; set; }
 		public int SplashAngle { get; set; }
 		public float SplashDamage { get; set; }
@@ -86,6 +89,14 @@ namespace Aura.Data.Database
 		}
 	}
 
+	[Serializable]
+	public class RaceSkillData
+	{
+		public int RaceId { get; set; }
+		public ushort SkillId { get; set; }
+		public byte Rank { get; set; }
+	}
+
 	public enum RaceStands : int
 	{
 		KnockBackable = 0x01,
@@ -96,7 +107,7 @@ namespace Aura.Data.Database
 	/// Indexed by race id.
 	/// Depends on: SpeedDb, FlightDb, RaceSkillDb
 	/// </summary>
-	public class RaceDb : DatabaseCsvIndexed<int, RaceData>
+	public class RaceDb : DatabaseJsonIndexed<int, RaceData>
 	{
 		public List<RaceData> FindAll(string name)
 		{
@@ -104,95 +115,112 @@ namespace Aura.Data.Database
 			return this.Entries.FindAll(a => a.Value.Name.ToLower().Contains(name));
 		}
 
-		[MinFieldCount(33)]
-		protected override void ReadEntry(CsvEntry entry)
+		[Mandatory("id", "name", "group", "tags", "gender", "vehicleType", "runSpeedFactor", "state", "invWidth", "invHeight", "attackMin", "attackMax", "range", "attackSpeed", "knockCount", "critical", "criticalRate", "splashRadius", "splashAngle", "splashDamage", "stand", "ai", "color1", "color2", "color3", "size", "cp", "life", "defense", "protection", "element", "exp", "goldMin", "goldMax")]
+		protected override void ReadEntry(JObject entry)
 		{
-			var info = new RaceData();
-			info.Id = entry.ReadInt();
-			info.Name = entry.ReadString();
-			info.Group = entry.ReadString();
-			info.Tags = entry.ReadString();
-			info.Gender = (Gender)entry.ReadByte();
-			info.VehicleType = entry.ReadInt();
-			info.RunSpeedFactor = entry.ReadFloat();
-			info.DefaultState = entry.ReadIntHex();
-			info.InventoryWidth = entry.ReadInt();
-			info.InventoryHeight = entry.ReadInt();
-			info.AttackSkill = 23002; // Combat Mastery, they all use this anyway.
-			info.AttackMin = entry.ReadInt();
-			info.AttackMax = entry.ReadInt();
-			info.AttackRange = entry.ReadInt();
-			info.AttackSpeed = entry.ReadInt();
-			info.KnockCount = entry.ReadInt();
-			info.Critical = entry.ReadInt();
-			info.SplashRadius = entry.ReadInt();
-			info.SplashAngle = entry.ReadInt();
-			info.SplashDamage = entry.ReadFloat();
-			info.Stand = (RaceStands)entry.ReadIntHex();
+			var raceData = new RaceData();
+			raceData.Id = entry.ReadInt("id");
+			raceData.Name = entry.ReadString("name");
+			raceData.Group = entry.ReadString("group");
+			raceData.Tags = entry.ReadString("tags");
+			raceData.Gender = (Gender)entry.ReadByte("gender");
+			raceData.VehicleType = entry.ReadInt("vehicleType");
+			raceData.RunSpeedFactor = entry.ReadFloat("runSpeedFactor");
+			raceData.DefaultState = entry.ReadUInt("state");
+			raceData.InventoryWidth = entry.ReadInt("invWidth");
+			raceData.InventoryHeight = entry.ReadInt("invHheight");
+			raceData.AttackSkill = 23002; // Combat Mastery, they all use this anyway.
+			raceData.AttackMin = entry.ReadInt("attackMin");
+			raceData.AttackMax = entry.ReadInt("attackMax");
+			raceData.AttackRange = entry.ReadInt("range");
+			raceData.AttackSpeed = entry.ReadInt("attackSpeed");
+			raceData.KnockCount = entry.ReadInt("knockCount");
+			raceData.Critical = entry.ReadInt("critical");
+			raceData.CriticalRate = entry.ReadInt("criticalRate");
+			raceData.SplashRadius = entry.ReadInt("splashRadius");
+			raceData.SplashAngle = entry.ReadInt("splashAngle");
+			raceData.SplashDamage = entry.ReadFloat("splashDamage");
+			raceData.Stand = (RaceStands)entry.ReadInt("stand");
 
 			// Stat Info
-			info.AI = entry.ReadString();
-			info.Color1 = entry.ReadUIntHex();
-			info.Color2 = entry.ReadUIntHex();
-			info.Color3 = entry.ReadUIntHex();
-			info.Size = entry.ReadFloat();
-			info.CombatPower = entry.ReadFloat();
-			info.Life = entry.ReadFloat();
-			info.Defense = entry.ReadInt();
-			info.Protection = (int)entry.ReadFloat();
-			info.Element = (Element)entry.ReadByte();
-			info.Exp = entry.ReadInt();
-			info.GoldMin = entry.ReadInt();
-			info.GoldMax = entry.ReadInt();
+			raceData.AI = entry.ReadString("ai");
+			raceData.Color1 = entry.ReadUInt("color1");
+			raceData.Color2 = entry.ReadUInt("color2");
+			raceData.Color3 = entry.ReadUInt("color3");
+			raceData.Size = entry.ReadFloat("size");
+			raceData.CombatPower = entry.ReadFloat("cp");
+			raceData.Life = entry.ReadFloat("life");
+			raceData.Defense = entry.ReadInt("defense");
+			raceData.Protection = (int)entry.ReadFloat("protection");
+			raceData.Element = (Element)entry.ReadByte("element");
+			raceData.Exp = entry.ReadInt("exp");
+			raceData.GoldMin = entry.ReadInt("goldMin");
+			raceData.GoldMax = entry.ReadInt("goldMax");
 
-			// Optional drop information
-			while (!entry.End)
+			// Drops
+			if (entry.ContainsKeys("drops"))
 			{
-				// Drop format: <itemId>:<chance>, skip this drop if incorrect.
-				var drop = entry.ReadString().Split(':');
-				if (drop.Length != 2)
-					throw new CsvDatabaseWarningException("Incomplete drop information.");
+				foreach (JObject drop in entry["drops"].Where(a => a.Type == JTokenType.Object))
+				{
+					drop.AssertNotMissing("itemId", "chance");
 
-				var di = new DropData();
-				di.ItemId = Convert.ToInt32(drop[0]);
-				di.Chance = float.Parse(drop[1], NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"));
+					var dropData = new DropData();
+					dropData.ItemId = drop.ReadInt("itemId");
+					dropData.Chance = drop.ReadFloat("chance");
 
-				di.Chance /= 100;
-				if (di.Chance > 1)
-					di.Chance = 1;
-				else if (di.Chance < 0)
-					di.Chance = 0;
+					dropData.Chance /= 100;
+					if (dropData.Chance > 1)
+						dropData.Chance = 1;
+					else if (dropData.Chance < 0)
+						dropData.Chance = 0;
 
-				info.Drops.Add(di);
+					raceData.Drops.Add(dropData);
+				}
 			}
 
-			// External information from other dbs
+			// Skills
+			if (entry.ContainsKeys("skills"))
+			{
+				foreach (JObject skill in entry["skills"].Where(a => a.Type == JTokenType.Object))
+				{
+					skill.AssertNotMissing("skillId", "rank");
+
+					var skillData = new RaceSkillData();
+					skillData.SkillId = skill.ReadUShort("skillId");
+
+					var rank = skill.ReadString("rank");
+					if (rank == "N") skillData.Rank = 0;
+					else skillData.Rank = (byte)(16 - int.Parse(rank, NumberStyles.HexNumber));
+
+					raceData.Skills.Add(skillData);
+				}
+			}
+
+			// Speed
 			SpeedData actionInfo;
-			if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/walk")) != null)
-				info.WalkingSpeed = actionInfo.Speed;
-			else if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/*")) != null)
-				info.WalkingSpeed = actionInfo.Speed;
-			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/walk")) != null)
-				info.WalkingSpeed = actionInfo.Speed;
-			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/*")) != null)
-				info.WalkingSpeed = actionInfo.Speed;
+			if ((actionInfo = AuraData.SpeedDb.Find(raceData.Group + "/walk")) != null)
+				raceData.WalkingSpeed = actionInfo.Speed;
+			else if ((actionInfo = AuraData.SpeedDb.Find(raceData.Group + "/*")) != null)
+				raceData.WalkingSpeed = actionInfo.Speed;
+			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(raceData.Group, "/.*$", "") + "/*/walk")) != null)
+				raceData.WalkingSpeed = actionInfo.Speed;
+			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(raceData.Group, "/.*$", "") + "/*/*")) != null)
+				raceData.WalkingSpeed = actionInfo.Speed;
 			else
-				info.WalkingSpeed = 207.6892f;
+				raceData.WalkingSpeed = 207.6892f;
 
-			if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/run")) != null)
-				info.RunningSpeed = actionInfo.Speed;
-			else if ((actionInfo = AuraData.SpeedDb.Find(info.Group + "/*")) != null)
-				info.RunningSpeed = actionInfo.Speed;
-			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/run")) != null)
-				info.RunningSpeed = actionInfo.Speed;
-			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(info.Group, "/.*$", "") + "/*/*")) != null)
-				info.RunningSpeed = actionInfo.Speed;
+			if ((actionInfo = AuraData.SpeedDb.Find(raceData.Group + "/run")) != null)
+				raceData.RunningSpeed = actionInfo.Speed;
+			else if ((actionInfo = AuraData.SpeedDb.Find(raceData.Group + "/*")) != null)
+				raceData.RunningSpeed = actionInfo.Speed;
+			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(raceData.Group, "/.*$", "") + "/*/run")) != null)
+				raceData.RunningSpeed = actionInfo.Speed;
+			else if ((actionInfo = AuraData.SpeedDb.Find(Regex.Replace(raceData.Group, "/.*$", "") + "/*/*")) != null)
+				raceData.RunningSpeed = actionInfo.Speed;
 			else
-				info.RunningSpeed = 373.850647f;
+				raceData.RunningSpeed = 373.850647f;
 
-			info.Skills = AuraData.RaceSkillDb.FindAll(info.Id);
-
-			this.Entries[info.Id] = info;
+			this.Entries[raceData.Id] = raceData;
 		}
 	}
 
