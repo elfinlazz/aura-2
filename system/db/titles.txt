@@ -1,754 +1,755 @@
 // Aura
 // Database file
 // 
-// Structure:
-// Id  Name  Effects...
+// Values: id, name, [effects]
 //---------------------------------------------------------------------------
 
+[
 // Various
 //---------------------------------------------------------------------------
-1, "none"
-2, "none"
-3, "none"
-4, "none"
-5, "none"
-6, "none"
-7, "none"
-8, "the Crystal Collector", Str:-10, Int:+20, Dex:-10, Will:-10, Luck:+20
-9, "who saw the library ghost", Life:-20, Mana:+20, Int:+10, Will:-10, Luck:-10
-10, "the Horse and Ostrich Rider", Life:-10, Mana:-10, Stamina:-10, Dex:+10, Will:+10, Luck:+10
-11, "the Archaeologist", Life:-20, Mana:-20, Stamina:-20, Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
-12, "the Explorer", Life:+5, Will:+5
-13, "the Child Explorer", Life:+20, Will:+15
-14, "the Friend of Hippos", Life:+30, Mana:-10, Stamina:-10, Str:+20, Int:-5, Dex:-5, Will:-5, Luck:-5
-15, "the Ancient Artifact Appraiser", Str:-5, Int:+15, Dex:-5, Will:-5, Luck:+15
-16, "the Wild Animal Tamer", Life:-5, Mana:-10, Stamina:-10, Dex:+15, Will:+10, Luck:+10
-17, "a friend of Monkeys", Life:-10, Mana:-10, Stamina:+15, Dex:+15, Will:+15
-18, "the Mine Expert", Stamina:+15, Str:-10, Int:-10, Dex:+20, Will:-10, Defense:+2
-19, "the Fishing Legend", Life:-20, Mana:-20, Stamina:-20, Will:+20, Luck:+20, Protection:+3
-20, "the Butterfingers", Dex:-20, Luck:-20, Protection:+5
-21, "the Chief Mate", Life:+10, Mana:-25, Stamina:+10, Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+2
-22, "the Ambidextrous", Stamina:-50, Dex:+20, Luck:+20
-23, "the Lucky", Luck:+20
-24, "the Daring Hot-Air Balloon Pilot", Stamina:-30, Int:+5, Dex:+10, Will:+10, Luck:+5, Protection:+3
-25, "the Christmas Spirit", Luck:+10
-26, "the Beginner Alchemist", Stamina:+20
-27, "none"
-28, "the Elemental Apprentice", Mana:+10
-29, "the Master of Fire"
-30, "the Master of Ice"
-31, "the Master of Lightning"
-32, "the Elemental Master", Mana:+20, Str:-10, Int:+20, Dex:-10, Defense:+3
-33, "the Diligent", Will:+25
-34, "the Lazy", Stamina:+15, Will:-10
-35, "the Super Diligent", Life:-20, Stamina:+50, Str:-20, Will:+20, Luck:+20
-36, "the Aspiring Sailor", Life:-20, Mana:-20, Stamina:-20, Str:+10, Will:+10
-37, "who experienced Death", Life:+5, Stamina:-5, Int:-30, Dex:-30, Defense:+5
-38, "who transcended Death", Life:+6, Stamina:-10, Int:-20, Dex:-20, Defense:+6
-39, "the Reborn", Str:+6, Int:+6, Dex:+6, Will:+6, Luck:+6
-40, "the Sulfer-poisoned Explorer", Life:-20, Mana:-10, Stamina:+20, Will:+20
-41, "none"
-42, "none"
-43, "the Married"
-44, "the Adult", Dex:+3, Will:+15, Luck:-5
-45, "the All-Knowing", Life:-5, Mana:-5, Int:+20, Dex:+20, Will:-30
-46, "the Old", Life:-10, Mana:-10, Str:-5, Int:+35, Dex:+10, Will:-40
-47, "none"
-48, "none"
-49, "none"
-50, "none"
-51, "none"
-52, "the Wise", Str:-15, Int:+20, Dex:+10
-53, "the Strong", Str:+20, Int:-20, Dex:-5
-54, "the Skillful", Int:-5, Dex:+20
-55, "the Experienced", Life:-10, Dex:+10, Will:+10, Defense:-2
-56, "none"
-57, "the Tank", Life:+20, Mana:-20, Int:-20, Dex:-20
-58, "the Luxurious", Life:-5, Mana:-5, Stamina:-5, Will:+10, Luck:+5
-59, "the Hungry", Life:+10, Mana:+10, Stamina:+10, Will:-10, Luck:-10
-60, "the Ice Warrior", Life:+5, Mana:+5, Stamina:+5, Luck:+5
-61, "none"
-62, "즐거운 설날", Luck:+10
-63, "none"
-64, "none"
-65, "Outlaw Hunter", MaxAttack:+3, Speed:+1
-66, "the Wolf Hunter", Will:-10
-67, "the Bear Hunter", Str:+20, Will:-10
-68, "the Explorer of Rano", Mana:+20, Str:-10, Int:+20, Will:-10, Luck:+10
-69, "the Connous Explorer", Mana:+15, Int:+15, Dex:+15, Will:-10, Luck:-10
-70, "the Explorer of Physis", Life:+10, Stamina:+20, Str:+10, Int:-10, Will:-10, Luck:-10
-71, "the Courcle Explorer", Life:+10, Mana:+10, Stamina:+10, Str:-5, Int:-5, Dex:-5, Will:+5, Luck:+5
-72, "the Zardine Explorer", Life:-20, Stamina:-40, Defense:+4, Protection:+2
-73, "the Lightshedder", Life:+15, Mana:-15, Str:+15, Will:+10, Luck:-10
-74, "Shadow Expeditionary Force", Str:+20, Dex:+10, Will:-10, Luck:-10
-75, "who Paddled at the Age of 10", Stamina:+15, Str:+5, Int:-15, Dex:+10, Will:+10, Luck:-15
-76, "who reached level 50 at the age of 10", Stamina:-10, Str:+20, Int:-20, Dex:-20, Will:+10, Luck:+10
-77, "who was Defeated by a Fox at 17", Int:-10, Will:-10, Protection:+3
-78, "who Almost Slew a Bear at age 10", Life:+3, Mana:+3, Str:+3, Int:+3, Dex:+3, Will:+3, Luck:+3
-79, "the Bear Slayer with Bare Hands", Str:+10, Int:-20, Will:+5
-80, "who slew a Bear at age 10", Life:+5, Mana:+5, Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5
-81, "the Bear Slayer with a Single Blow", Life:+5, Str:+30, Int:-20, Luck:-20
-82, "the Golem Slayer with a Single Blow", Life:+10, Mana:+10, Stamina:+10, Str:+30, Dex:-10, Luck:-20
-83, "the Golem Slayer", Life:+5, Mana:-15, Str:+10, Dex:+10
-84, "the Succubus Slayer", Life:-10, Mana:+8, Stamina:-2, Int:+7
-85, "the Ogre Slayer", Life:+15, Mana:-10, Dex:+10
-86, "the One Who Removed Siren's Mask", Life:+10, Dex:+10, Luck:+10, Defense:-5
-87, "who Seduced a Succubus", Mana:+10, Int:+20, Dex:+20, Luck:+20, Defense:-5, Protection:-5
-88, "the Fire Arrow", Mana:-5, Stamina:+5, Str:-5, Int:+5, Dex:+5
-89, "the Gladiator", Stamina:-50, Str:+30, Dex:+10
-90, "the Wyvern Hunter", Life:+10, Mana:+20, Stamina:-10, Str:+20, Dex:+20, Will:-15, Luck:-15
-91, "none"
-92, "none"
-93, "is a friend of Ferghus", Stamina:+10, Str:+10, Will:+30, Luck:-30
-94, "the Epicure", Mana:+15, Int:+15, Will:+15, Luck:+15
-95, "the Conqueror of the Wild", Life:+15, Str:+15, Will:+15, Luck:+15
-96, "the Master Angler", Stamina:+15, Dex:+15, Will:+15, Luck:+15
-97, "none"
-98, "none"
-99, "none"
-100, "none"
+{ id: 1, name: "none" }, 
+{ id: 2, name: "none" }, 
+{ id: 3, name: "none" }, 
+{ id: 4, name: "none" }, 
+{ id: 5, name: "none" }, 
+{ id: 6, name: "none" }, 
+{ id: 7, name: "none" }, 
+{ id: 8, name: "the Crystal Collector", effects: { "Str":-10, "Int":20, "Dex":-10, "Will":-10, "Luck":20 } }, 
+{ id: 9, name: "who saw the library ghost", effects: { "Life":-20, "Mana":20, "Int":10, "Will":-10, "Luck":-10 } }, 
+{ id: 10, name: "the Horse and Ostrich Rider", effects: { "Life":-10, "Mana":-10, "Stamina":-10, "Dex":10, "Will":10, "Luck":10 } }, 
+{ id: 11, name: "the Archaeologist", effects: { "Life":-20, "Mana":-20, "Stamina":-20, "Str":10, "Int":10, "Dex":10, "Will":10, "Luck":10 } }, 
+{ id: 12, name: "the Explorer", effects: { "Life":5, "Will":5 } }, 
+{ id: 13, name: "the Child Explorer", effects: { "Life":20, "Will":15 } }, 
+{ id: 14, name: "the Friend of Hippos", effects: { "Life":30, "Mana":-10, "Stamina":-10, "Str":20, "Int":-5, "Dex":-5, "Will":-5, "Luck":-5 } }, 
+{ id: 15, name: "the Ancient Artifact Appraiser", effects: { "Str":-5, "Int":15, "Dex":-5, "Will":-5, "Luck":15 } }, 
+{ id: 16, name: "the Wild Animal Tamer", effects: { "Life":-5, "Mana":-10, "Stamina":-10, "Dex":15, "Will":10, "Luck":10 } }, 
+{ id: 17, name: "a friend of Monkeys", effects: { "Life":-10, "Mana":-10, "Stamina":15, "Dex":15, "Will":15 } }, 
+{ id: 18, name: "the Mine Expert", effects: { "Stamina":15, "Str":-10, "Int":-10, "Dex":20, "Will":-10, "Defense":2 } }, 
+{ id: 19, name: "the Fishing Legend", effects: { "Life":-20, "Mana":-20, "Stamina":-20, "Will":20, "Luck":20, "Protection":3 } }, 
+{ id: 20, name: "the Butterfingers", effects: { "Dex":-20, "Luck":-20, "Protection":5 } }, 
+{ id: 21, name: "the Chief Mate", effects: { "Life":10, "Mana":-25, "Stamina":10, "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":2 } }, 
+{ id: 22, name: "the Ambidextrous", effects: { "Stamina":-50, "Dex":20, "Luck":20 } }, 
+{ id: 23, name: "the Lucky", effects: { "Luck":20 } }, 
+{ id: 24, name: "the Daring Hot-Air Balloon Pilot", effects: { "Stamina":-30, "Int":5, "Dex":10, "Will":10, "Luck":5, "Protection":3 } }, 
+{ id: 25, name: "the Christmas Spirit", effects: { "Luck":10 } }, 
+{ id: 26, name: "the Beginner Alchemist", effects: { "Stamina":20 } }, 
+{ id: 27, name: "none" }, 
+{ id: 28, name: "the Elemental Apprentice", effects: { "Mana":10 } }, 
+{ id: 29, name: "the Master of Fire" }, 
+{ id: 30, name: "the Master of Ice" }, 
+{ id: 31, name: "the Master of Lightning" }, 
+{ id: 32, name: "the Elemental Master", effects: { "Mana":20, "Str":-10, "Int":20, "Dex":-10, "Defense":3 } }, 
+{ id: 33, name: "the Diligent", effects: { "Will":25 } }, 
+{ id: 34, name: "the Lazy", effects: { "Stamina":15, "Will":-10 } }, 
+{ id: 35, name: "the Super Diligent", effects: { "Life":-20, "Stamina":50, "Str":-20, "Will":20, "Luck":20 } }, 
+{ id: 36, name: "the Aspiring Sailor", effects: { "Life":-20, "Mana":-20, "Stamina":-20, "Str":10, "Will":10 } }, 
+{ id: 37, name: "who experienced Death", effects: { "Life":5, "Stamina":-5, "Int":-30, "Dex":-30, "Defense":5 } }, 
+{ id: 38, name: "who transcended Death", effects: { "Life":6, "Stamina":-10, "Int":-20, "Dex":-20, "Defense":6 } }, 
+{ id: 39, name: "the Reborn", effects: { "Str":6, "Int":6, "Dex":6, "Will":6, "Luck":6 } }, 
+{ id: 40, name: "the Sulfer-poisoned Explorer", effects: { "Life":-20, "Mana":-10, "Stamina":20, "Will":20 } }, 
+{ id: 41, name: "none" }, 
+{ id: 42, name: "none" }, 
+{ id: 43, name: "the Married" }, 
+{ id: 44, name: "the Adult", effects: { "Dex":3, "Will":15, "Luck":-5 } }, 
+{ id: 45, name: "the All-Knowing", effects: { "Life":-5, "Mana":-5, "Int":20, "Dex":20, "Will":-30 } }, 
+{ id: 46, name: "the Old", effects: { "Life":-10, "Mana":-10, "Str":-5, "Int":35, "Dex":10, "Will":-40 } }, 
+{ id: 47, name: "none" }, 
+{ id: 48, name: "none" }, 
+{ id: 49, name: "none" }, 
+{ id: 50, name: "none" }, 
+{ id: 51, name: "none" }, 
+{ id: 52, name: "the Wise", effects: { "Str":-15, "Int":20, "Dex":10 } }, 
+{ id: 53, name: "the Strong", effects: { "Str":20, "Int":-20, "Dex":-5 } }, 
+{ id: 54, name: "the Skillful", effects: { "Int":-5, "Dex":20 } }, 
+{ id: 55, name: "the Experienced", effects: { "Life":-10, "Dex":10, "Will":10, "Defense":-2 } }, 
+{ id: 56, name: "none" }, 
+{ id: 57, name: "the Tank", effects: { "Life":20, "Mana":-20, "Int":-20, "Dex":-20 } }, 
+{ id: 58, name: "the Luxurious", effects: { "Life":-5, "Mana":-5, "Stamina":-5, "Will":10, "Luck":5 } }, 
+{ id: 59, name: "the Hungry", effects: { "Life":10, "Mana":10, "Stamina":10, "Will":-10, "Luck":-10 } }, 
+{ id: 60, name: "the Ice Warrior", effects: { "Life":5, "Mana":5, "Stamina":5, "Luck":5 } }, 
+{ id: 61, name: "none" }, 
+{ id: 62, name: "즐거운 설날", effects: { "Luck":10 } }, 
+{ id: 63, name: "none" }, 
+{ id: 64, name: "none" }, 
+{ id: 65, name: "Outlaw Hunter", effects: { "MaxAttack":3, "Speed":1 } }, 
+{ id: 66, name: "the Wolf Hunter", effects: { "Will":-10 } }, 
+{ id: 67, name: "the Bear Hunter", effects: { "Str":20, "Will":-10 } }, 
+{ id: 68, name: "the Explorer of Rano", effects: { "Mana":20, "Str":-10, "Int":20, "Will":-10, "Luck":10 } }, 
+{ id: 69, name: "the Connous Explorer", effects: { "Mana":15, "Int":15, "Dex":15, "Will":-10, "Luck":-10 } }, 
+{ id: 70, name: "the Explorer of Physis", effects: { "Life":10, "Stamina":20, "Str":10, "Int":-10, "Will":-10, "Luck":-10 } }, 
+{ id: 71, name: "the Courcle Explorer", effects: { "Life":10, "Mana":10, "Stamina":10, "Str":-5, "Int":-5, "Dex":-5, "Will":5, "Luck":5 } }, 
+{ id: 72, name: "the Zardine Explorer", effects: { "Life":-20, "Stamina":-40, "Defense":4, "Protection":2 } }, 
+{ id: 73, name: "the Lightshedder", effects: { "Life":15, "Mana":-15, "Str":15, "Will":10, "Luck":-10 } }, 
+{ id: 74, name: "Shadow Expeditionary Force", effects: { "Str":20, "Dex":10, "Will":-10, "Luck":-10 } }, 
+{ id: 75, name: "who Paddled at the Age of 10", effects: { "Stamina":15, "Str":5, "Int":-15, "Dex":10, "Will":10, "Luck":-15 } }, 
+{ id: 76, name: "who reached level 50 at the age of 10", effects: { "Stamina":-10, "Str":20, "Int":-20, "Dex":-20, "Will":10, "Luck":10 } }, 
+{ id: 77, name: "who was Defeated by a Fox at 17", effects: { "Int":-10, "Will":-10, "Protection":3 } }, 
+{ id: 78, name: "who Almost Slew a Bear at age 10", effects: { "Life":3, "Mana":3, "Str":3, "Int":3, "Dex":3, "Will":3, "Luck":3 } }, 
+{ id: 79, name: "the Bear Slayer with Bare Hands", effects: { "Str":10, "Int":-20, "Will":5 } }, 
+{ id: 80, name: "who slew a Bear at age 10", effects: { "Life":5, "Mana":5, "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5 } }, 
+{ id: 81, name: "the Bear Slayer with a Single Blow", effects: { "Life":5, "Str":30, "Int":-20, "Luck":-20 } }, 
+{ id: 82, name: "the Golem Slayer with a Single Blow", effects: { "Life":10, "Mana":10, "Stamina":10, "Str":30, "Dex":-10, "Luck":-20 } }, 
+{ id: 83, name: "the Golem Slayer", effects: { "Life":5, "Mana":-15, "Str":10, "Dex":10 } }, 
+{ id: 84, name: "the Succubus Slayer", effects: { "Life":-10, "Mana":8, "Stamina":-2, "Int":7 } }, 
+{ id: 85, name: "the Ogre Slayer", effects: { "Life":15, "Mana":-10, "Dex":10 } }, 
+{ id: 86, name: "the One Who Removed Siren's Mask", effects: { "Life":10, "Dex":10, "Luck":10, "Defense":-5 } }, 
+{ id: 87, name: "who Seduced a Succubus", effects: { "Mana":10, "Int":20, "Dex":20, "Luck":20, "Defense":-5, "Protection":-5 } }, 
+{ id: 88, name: "the Fire Arrow", effects: { "Mana":-5, "Stamina":5, "Str":-5, "Int":5, "Dex":5 } }, 
+{ id: 89, name: "the Gladiator", effects: { "Stamina":-50, "Str":30, "Dex":10 } }, 
+{ id: 90, name: "the Wyvern Hunter", effects: { "Life":10, "Mana":20, "Stamina":-10, "Str":20, "Dex":20, "Will":-15, "Luck":-15 } }, 
+{ id: 91, name: "none" }, 
+{ id: 92, name: "none" }, 
+{ id: 93, name: "is a friend of Ferghus", effects: { "Stamina":10, "Str":10, "Will":30, "Luck":-30 } }, 
+{ id: 94, name: "the Epicure", effects: { "Mana":15, "Int":15, "Will":15, "Luck":15 } }, 
+{ id: 95, name: "the Conqueror of the Wild", effects: { "Life":15, "Str":15, "Will":15, "Luck":15 } }, 
+{ id: 96, name: "the Master Angler", effects: { "Stamina":15, "Dex":15, "Will":15, "Luck":15 } }, 
+{ id: 97, name: "none" }, 
+{ id: 98, name: "none" }, 
+{ id: 99, name: "none" }, 
+{ id: 100, name: "none" }, 
 
 // Part-time
 //---------------------------------------------------------------------------
-20000, "the Neighboring Part-Timer", Life:+5, Stamina:+20, Will:+5
-20001, "the Grocery Store Part-Timer", Life:+5, Stamina:+10
-20002, "the Church Volunteer", Stamina:+10
-20003, "the Part-Timer"
-20004, "the Part-Timer"
-20005, "the Healer's House Part-Timer", Stamina:+15
-20006, "the Bank Part-Timer", Stamina:+15
-20007, "the Blacksmith Shop Part-Timer", Life:+10, Will:+10
-20008, "the General Shop Part-Timer", Stamina:+5, Dex:+10
-20009, "the Adventurers Association Part-Timer", Life:+3, Stamina:+12
-20010, "the Clothing Shop Part-Timer", Dex:+12
-20011, "the Bookstore Part-Timer", Int:+8, Will:+5
-20012, "the Weapon Shop Part-Timer", Life:+12, Will:+8
-20013, "the Inn Part-Timer", Life:+5, Stamina:+10
-20014, "the Mine Part-Timer", Stamina:+25, Will:+3
-20015, "the Part-Timer at the Pub"
-20016, "a Part-Timer at the Music Store", Stamina:+25, Int:+3
-20017, "a Part-Timer at the Flower Shop", Stamina:+25, Will:+3
-20018, "a Participant of The Amazing Race of Mabinogi"
-20019, "a Part-Timer at the Library", Int:+5, Dex:+5
-20020, "근면어린이뽑기 경주 참가자"
-20021, "the Civil Militia's Secret Part-Timer", Will:+8
-20022, "the Guards' Secret Part-Timer", Life:+7
-20023, "the Martial Arts Instructor's Secret Part-Timer", Stamina:+8
-20024, "the Magic Instructor's Secret Part-Timer", Luck:+6
-20025, "the Flower Shop's Secret Part-Timer", Dex:+6
-20026, "the Alchemist House Part-Timer", Stamina:+15
-20027, "the Street Artist Part-Timer", Mana:+10
-20028, "the Jousting Arena Part-Timer", Stamina:+20
-20029, "타티스 알바생", Stamina:+20
-20030, "멘텀 알바생", Stamina:+20
-20031, "바스텟 알바생", Stamina:+20
-20032, "데이곤 알바생", Stamina:+20
-20033, "the Pontiff's Court Volunteer", Life:+5, Mana:+10
-20034, "the Lighthouse Handyman", Stamina:+5, Dex:+15
-20035, "the Alchemist Part-Timer", Stamina:+20
-20036, "the Puppet Shop Part-Timer", Stamina:+20
+{ id: 20000, name: "the Neighboring Part-Timer", effects: { "Life":5, "Stamina":20, "Will":5 } }, 
+{ id: 20001, name: "the Grocery Store Part-Timer", effects: { "Life":5, "Stamina":10 } }, 
+{ id: 20002, name: "the Church Volunteer", effects: { "Stamina":10 } }, 
+{ id: 20003, name: "the Part-Timer" }, 
+{ id: 20004, name: "the Part-Timer" }, 
+{ id: 20005, name: "the Healer's House Part-Timer", effects: { "Stamina":15 } }, 
+{ id: 20006, name: "the Bank Part-Timer", effects: { "Stamina":15 } }, 
+{ id: 20007, name: "the Blacksmith Shop Part-Timer", effects: { "Life":10, "Will":10 } }, 
+{ id: 20008, name: "the General Shop Part-Timer", effects: { "Stamina":5, "Dex":10 } }, 
+{ id: 20009, name: "the Adventurers Association Part-Timer", effects: { "Life":3, "Stamina":12 } }, 
+{ id: 20010, name: "the Clothing Shop Part-Timer", effects: { "Dex":12 } }, 
+{ id: 20011, name: "the Bookstore Part-Timer", effects: { "Int":8, "Will":5 } }, 
+{ id: 20012, name: "the Weapon Shop Part-Timer", effects: { "Life":12, "Will":8 } }, 
+{ id: 20013, name: "the Inn Part-Timer", effects: { "Life":5, "Stamina":10 } }, 
+{ id: 20014, name: "the Mine Part-Timer", effects: { "Stamina":25, "Will":3 } }, 
+{ id: 20015, name: "the Part-Timer at the Pub" }, 
+{ id: 20016, name: "a Part-Timer at the Music Store", effects: { "Stamina":25, "Int":3 } }, 
+{ id: 20017, name: "a Part-Timer at the Flower Shop", effects: { "Stamina":25, "Will":3 } }, 
+{ id: 20018, name: "a Participant of The Amazing Race of Mabinogi" }, 
+{ id: 20019, name: "a Part-Timer at the Library", effects: { "Int":5, "Dex":5 } }, 
+{ id: 20020, name: "근면어린이뽑기 경주 참가자" }, 
+{ id: 20021, name: "the Civil Militia's Secret Part-Timer", effects: { "Will":8 } }, 
+{ id: 20022, name: "the Guards' Secret Part-Timer", effects: { "Life":7 } }, 
+{ id: 20023, name: "the Martial Arts Instructor's Secret Part-Timer", effects: { "Stamina":8 } }, 
+{ id: 20024, name: "the Magic Instructor's Secret Part-Timer", effects: { "Luck":6 } }, 
+{ id: 20025, name: "the Flower Shop's Secret Part-Timer", effects: { "Dex":6 } }, 
+{ id: 20026, name: "the Alchemist House Part-Timer", effects: { "Stamina":15 } }, 
+{ id: 20027, name: "the Street Artist Part-Timer", effects: { "Mana":10 } }, 
+{ id: 20028, name: "the Jousting Arena Part-Timer", effects: { "Stamina":20 } }, 
+{ id: 20029, name: "타티스 알바생", effects: { "Stamina":20 } }, 
+{ id: 20030, name: "멘텀 알바생", effects: { "Stamina":20 } }, 
+{ id: 20031, name: "바스텟 알바생", effects: { "Stamina":20 } }, 
+{ id: 20032, name: "데이곤 알바생", effects: { "Stamina":20 } }, 
+{ id: 20033, name: "the Pontiff's Court Volunteer", effects: { "Life":5, "Mana":10 } }, 
+{ id: 20034, name: "the Lighthouse Handyman", effects: { "Stamina":5, "Dex":15 } }, 
+{ id: 20035, name: "the Alchemist Part-Timer", effects: { "Stamina":20 } }, 
+{ id: 20036, name: "the Puppet Shop Part-Timer", effects: { "Stamina":20 } }, 
 
 // Achievements
 //---------------------------------------------------------------------------
-10001, "the Beta Tester", Stamina:+10, Luck:+20
-10002, "the Dugald Aisle Seal Breaker", Str:+10, Int:+5, Dex:+10, Will:+40, Crit:+10
-10003, "the Ciar Seal Breaker", MaxAttack:+10
-10004, "the Rabbie Seal Breaker", Life:+20, Mana:+20, Stamina:+20
-10005, "the Math Seal Breaker", Dex:+10, Luck:+10, MinAttack:+5, MaxAttack:+5
-10006, "the Bangor Seal Breaker", Life:+10, Mana:-5, Stamina:+10, Dex:+30, Will:+20
-10007, "the Seal-Breaker of the Other World", Life:+10, Mana:+10, Stamina:+10, Str:-5, Int:-5, Dex:-5, Will:+10
-10008, "the Fiodh Seal Breaker", Life:+30, Str:+20, Dex:-5, Will:+10, Luck:+5
-10009, "the South Emain Macha Seal Breaker", Mana:+25, Str:-5, Int:+15, Dex:+30, Will:+10
-10010, "the Master of Defense", Life:+10, Stamina:+10, Int:-10, Luck:-10, Defense:+5
-10011, "the Master of Smash", Stamina:+20, Str:+20, Dex:-20, Luck:+20, Protection:-10
-10012, "the Master of Counter", Mana:-30, Stamina:+30, Str:-20, Int:+20, Dex:+20
-10013, "the Master of Windmill", Life:-20, Str:-10, Will:+10, Luck:+10, Protection:+3
-10014, "the Master of Arrow Revolver", Life:+20, Str:-10, Dex:+20, Will:+20, Luck:-10, Defense:-5
-10015, "the Master of Lightning Bolt", Life:-10, Mana:+30, Str:+10, Int:+10, Luck:-10
-10016, "the Master of Firebolt", Mana:+30, Str:-10, Int:+10, Dex:+10, Luck:-10
-10017, "the Master of Icebolt", Mana:+20, Str:-20, Int:+15, Dex:+15
-10018, "the Master of Healing", Mana:+30, Stamina:-20, Str:+10, Int:+10, Will:-10
-10019, "the Master of Fireball", Mana:+50, Stamina:-10, Int:+20, Will:+20, Luck:-30
-10020, "the Master of Thunder", Life:-20, Mana:+40, Str:-20, Int:+30, Dex:+20
-10021, "the Master of Combat", Life:+20, Stamina:+20, Str:+10, Int:-10, Luck:-20
-10022, "the Master of Range", Life:+20, Stamina:+30, Str:-20, Dex:+20, Will:-20
-10023, "the Master of Critical Hit", Life:+30, Stamina:+20, Will:+20, Defense:-5, Protection:-5
-10024, "the Master of Magnum Shot", Life:+20, Str:-10, Dex:+20, Will:-10, Luck:+20, Protection:-10
-10025, "the North Emain Macha Seal Breaker", Mana:+30, Str:-10, Int:+20, Dex:+25, Will:+10
-10026, "the Master of Weaving", Stamina:+20, Str:+10, Dex:+20, Will:-20, Luck:-20
-10027, "the Master of Refining", Stamina:+30, Str:+10, Dex:-10, Will:+20, Luck:-20
-10028, "the Master of Herbalism", Str:+20, Dex:-10, Luck:-10, Defense:+2, Protection:+2
-10029, "the Master of Tailoring", Str:-20, Int:-20, Dex:+30, Will:+20
-10030, "the Master Blacksmith", Life:-30, Mana:-30, Dex:+30, Will:+10, Luck:+10
-10031, "the Master of Potion", Mana:+30, Str:-10, Luck:-10, Defense:+3, Protection:+3
-10032, "the Master of Fishing", Life:-20, Stamina:-20, Int:+10, Dex:+20, Luck:+10
-10033, "the Master Instrumentalist", Mana:-20, Stamina:-20, Int:+20, Dex:+10, Will:+20
-10034, "the Master of Enchantment", Life:-10, Mana:+20, Int:+20, Will:-10, Luck:+10
-10035, "the One Who Discovered Karu Forest Ruins", Life:-50, Mana:+20, Stamina:+20, Int:+20, Luck:+20
-10036, "the Explorer of Karu Forest Ruins", Life:+30, Mana:+30, Stamina:+30, Str:-5, Int:-5, Dex:-5, Will:-5, Luck:-5, Defense:+5
-10037, "the Partner of the Male Sword Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10038, "the Partner of the Female Sword Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10039, "the Master of the Male Blunt Weapon Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10040, "the Master of the Female Blunt Weapon Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10041, "the Friend of the Male Bow Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10042, "the Friend of the Female Bow Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10043, "the Relative of the Male Wand Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10044, "the Relative of the Female Wand Spirit", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10045, "the One Who Discovered the Maiz Prairie Ruins", Life:-30, Mana:-30, Stamina:-30, Str:+30, Will:+10, Luck:+10
-10046, "the Master of Ice Spear", Life:-20, Mana:+30, Stamina:-20, Int:+20, Luck:+20
-10047, "the One that Connected Rano and Connous", Str:+10, Int:+10, Will:+30, Crit:+5
-10048, "the Master of Final Hit", Life:+20, Mana:-30, Stamina:+20, Str:+15, Dex:+5, Will:+15, Protection:-5
-10049, "the Master of Mirage Missile", Mana:+20, Str:-10, Int:+15, Dex:+15, Will:-10
-10050, "the Discoverer of Longa Desert Ruins", Mana:+10, Stamina:+10, Str:-20, Int:+20, Dex:+20, Will:-5, Luck:-5
-10051, "who Placed in the Cooking Contest", Life:+20, Stamina:+20, Int:+10, Dex:+10, Will:-20, Luck:-10
-10052, "초보자", Life:+5, Stamina:+5, Defense:+2
-10053, "a Descendant of the Elves", Life:+5, Mana:+5, Stamina:+5, Dex:+5
-10054, "a Friend of Elves", Stamina:+15, Int:-10, Dex:+15, Luck:-10
-10055, "a Descendant of the Giants", Life:+5, Stamina:+5, Str:+5, Will:+5
-10056, "a Friend of Giants", Str:+20, Dex:+10, Will:-10, Luck:-10
-10057, "초보자", Life:+10, Stamina:+5, Defense:+2
-10058, "the Master of Production", Life:-10, Dex:+20, Will:-10, Luck:+20
-10059, "is a friend of Trefor", Life:+5, Stamina:+10, Str:+5
-10060, "is a friend of Deian", Life:+5, Stamina:+10, Dex:+5
-10061, "is a friend of Malcolm", Life:+5, Stamina:+10, Int:+5
-10062, "is a friend of Nora", Life:+5, Stamina:+10, Will:+5
-10063, "the Master of Mana Crystallization", Life:-10, Mana:+60, Stamina:-10
-10064, "the Master of Water Cannon", Life:-10, Mana:-10, Stamina:+40
-10065, "the Master of Golems", Life:+50, Str:-30, Int:-30, Dex:-30, Defense:+10
-10066, "the Master of Barrier Spikes", Will:-40, Luck:-20, Protection:+12
-10067, "the Sliab Cuilin Seal Breaker", Life:+30, Str:+25, Dex:-20, Will:+10, Luck:-20, MinAttack:+5
-10068, "the Abb Neagh Seal Breaker", Mana:+35, Int:+30
-10069, "a Friend of Pierrick", Life:+10, Will:+20, Luck:+10
-10070, "the Master of Rain", Life:-20, Stamina:+30, Luck:+20
-10071, "the Master of Frozen Blast", Stamina:+20, Will:+20
-10072, "the Master of Flame Burst", Life:+15, Stamina:+20, Int:+20
-10073, "the Master of Stomp", Stamina:+15, Str:+40, Luck:-30
-10074, "the Master of Metallurgy", Mana:-10, Str:-20, Dex:+10, Luck:+25
-10075, "the Master of Wind Guard", Life:+10, Str:-20, Dex:-20, Defense:+7, Protection:+5
-10076, "the Master of Final Shot", Life:-15, Str:-10, Dex:+30, Will:+15
-10077, "the Tara Seal Breaker", Str:+20, Int:+20, Dex:+20, Will:+20, Luck:+20
-10078, "the Master of Metal Conversion", Str:+10, Dex:+20, Will:-20
-10079, "the Fashionable"
-10080, "the Master of Blaze", Str:+20, Int:+20
-10081, "the Goddess Water Maker", Mana:+15, Int:+15, Dex:+15
-10082, "the Wine Hero", Str:+15, Luck:+15, Defense:+1, Protection:+1
-10083, "네코지마 명예 주민", Life:+30, Stamina:+10, Defense:+5, Protection:+2
-10084, "the Master of Shock", MaxAttack:+15
-10085, "the Master of Alchemy"
-10086, "the Master of Life Drain", Life:+50, Mana:+20
-10087, "대단한 테스터", Mana:-10, Stamina:+10, Will:+10, Luck:+20
-10088, "the Master of Magic", Mana:+20, MagicAttack:+20
-10089, "the Master of Party Healing", Mana:+40, Str:-10, Will:-10
-10091, "the Master of Carpentry", Stamina:-10, Str:+30, Int:-15, Will:-15
-10092, "the Master of Heat Buster", Mana:-20, Stamina:+20, Dex:+20, Will:+20
-10093, "the Chain Cylinder Master", Mana:-20, Stamina:+40
-10094, "the Master of Atlatl", Life:+20, Stamina:+20, Str:+20, Dex:-25
-10095, "the Master of Taunt", Stamina:+30, Int:-20, Dex:-10
-10096, "the Master of Support Shot", Str:-20, Dex:+20, Will:-10
-10097, "the Master of Crash Shot", Mana:+20, Stamina:+20, Str:-25, Dex:+10
-10098, "the Fire Alchemist", Mana:+5, Stamina:+15, Str:-10
-10099, "the Water Alchemist", Mana:+15, Stamina:+10, Int:-10, Dex:-10
-10100, "the Clay Alchemist", Life:+15, Dex:-15
-10101, "the Wind Alchemist", Int:-10, Dex:+10, Will:+15
-10103, "the Master of Transmutation"
-10104, "the Master of Fire", Mana:+5, Stamina:+15, Str:-10
-10105, "the Master of Ice", Mana:+15, Stamina:+10, Str:-15, Int:+10
-10106, "the Master of Lightning", Int:+20, Dex:-15
-10107, "the Master of Bolt Magic", Mana:+15
-10111, "the Master of Enthralling Performance", Stamina:+8, Dex:+12
-10112, "the Master of Swords", Life:+10, Int:-15
-10113, "the Master of Axes", Life:+10, Mana:-15
-10114, "the Master of Blunt Weapons", Life:+10, Mana:-15
-10115, "the Master of Shields", Defense:+10, Protection:+10
-10116, "the Master of Heavy Stander", Mana:-20
-10117, "the Master of Bows", Stamina:+10, Str:-15
-10118, "the Master of Crossbows", Stamina:+10, Str:-15
-10119, "the Master of Fusion Bolt", Life:-10, Mana:+5, Int:+10
-10120, "the Master Berserker", Life:-20, Str:+10, Will:+10
-10121, "the Master of Assault Slash", Str:+10, Int:-15
-10122, "the Master of Hail Storm", Mana:+20, Int:+20, Luck:+15
-10123, "the Master Doppleganger", Life:+10, Stamina:+30, Will:-20
-10124, "강철의 연금술사"
-10125, "화염의 연금술사"
-10127, "오토메일 정비사"
-10128, "주부", Life:-20, Dex:+15, MaxAttack:+15
-10129, "호완의 연금술사", MaxAttack:+12
-10130, "매의 눈", Dex:+30, Crit:+3
-10131, "the Master of Lances", Mana:-15, Int:-10
-10132, "the Master of Lance Counter", Crit:+5
-10133, "the Master of Lance Charge"
-10134, "the Master of Charge", Defense:+3
-10135, "the Master of Ice Shield", Mana:+10, Int:+10, Will:+10
-10136, "the Master of Fire Shield", Mana:+10, Int:+20
-10137, "the Master of Lightning Shield", Int:+10, Will:+20
-10138, "the Master of Natural Shield", Mana:+20, Will:+10
-10139, "the Master of Handicraft", Dex:+8
-10140, "the Master of Animal Taming", Str:+12, Dex:+10
-10141, "the Master of Sand Burst", Life:+10, Stamina:+10
-10142, "the Master of Wind Blast", Stamina:+15
-10143, "the Master of Synthesis", Stamina:+10, Str:-25
-10144, "the Master of Fragmentation", Stamina:+15
-10145, "National Representative", Luck:+15
-10146, "the Aspiring Warrior", Life:+10, Str:+25
-10147, "the Aspiring Archer", Life:+10, Dex:+20
-10148, "the Aspiring Mage", Mana:+20
-10149, "the Aspiring Alchemist", Stamina:+20
-10150, "of the Victorious Expeditionary Force", Str:+10, Int:+20, Dex:+20, Will:+10, Luck:+10, MaxAttack:+10
-10151, "in Wonderland", Dex:+10, Luck:+30, Defense:+3, Protection:+1, Crit:+3
-10152, "the Sharer of Joy", Will:+20, Luck:+10
-10153, "the Lone Wolf", Stamina:+10, Defense:+5
-10154, "the Busy", Stamina:+10, Speed:+1
-10155, "the Sniper", Dex:+50, Crit:+10
-10156, "에린메이트", Str:+15, Int:+15, Will:+15, Luck:+15
-10157, "에린메이트였던", Life:+10, Stamina:+15, Int:+5, Dex:+5
-10158, "판타지 파티 참석자", Luck:+30
-10159, "Someone who celebrated Kristell's Birthday", Will:+30
-10160, "the Celebrator of Eavan's Birth", Int:+10
-10161, "the Millionaire Striver", Stamina:+10, Luck:+25
-10162, "the Master of Gold Strike", Stamina:+10, Luck:+25
-10163, "6주년을 기념하는", Stamina:+10, Dex:+10, Luck:+20
-10164, "기다릴 줄 아는", Luck:+55
-10165, "보이트의 생일을 축하한", Life:+20, Stamina:+20
-10166, "초평화버스터즈", Dex:+12, Luck:-5, MinAttack:+10, MaxAttack:+10
-10167, "유령", Defense:+5, Protection:+5
-10168, "성불한", Mana:+30, MagicAttack:+12
-10169, "Male Cylinder Spirit's Confidant", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10170, "Female Cylinder Spirit's Confidant", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, Defense:+1, Protection:+1
-10171, "강철의 연금술사"
-10172, "화염의 연금술사"
-10173, "오토메일 정비사"
-10174, "주부", Life:-20, Dex:+15, MaxAttack:+7
-10175, "호완의 연금술사", MaxAttack:+7
-10176, "매의 눈", Dex:+15, Crit:+1
-10178, "안드라스의 생일을 축하한", Str:+15
-10179, "the Aspiring Fighter", Stamina:+10, Str:+10, Will:+20
-10180, "Snowman's Friend", Life:+30, Defense:+3, Protection:+1
-10181, "the Crouching Dragon", Will:+70
-10182, "길모어의 생일을 축하한", Will:+10, Luck:+10
-10184, "Sabina's Valentine", Mana:+30, Int:+30, Protection:+5
-10185, "My Valentine", Will:+30, Luck:+30, MaxAttack:+13
-10190, "The Phoenix's Witness", Life:+50
-10192, "the Silencer", MaxAttack:+5
-10193, "the Aspiring Maestro", Life:+10, Stamina:+10, Str:+20
-10195, "Is Gone with the Wind", MaxAttack:+15, Protection:+1, Crit:+2, Speed:+1
-10196, "에린 생활을 즐기는", Luck:+55
-10197, "Is Gone with the Wind", MaxAttack:+8, Protection:+1, Crit:+2, Speed:+1
-10198, "the Nutcracker", Life:+20, Luck:+20, MaxAttack:+7, Crit:+5
-10199, "the Nutcracker", Life:+20, MaxAttack:+7, Crit:+5
-10204, "겨울 여행자", MaxAttack:+6, Defense:+5, Protection:+1, Crit:+5
-10205, "세배하는", Luck:+10, MaxAttack:+8, Protection:+1, Crit:+2
-10206, "내가 딱히 도와달라는 건 아니야! : 유아형"
-10207, "내가 딱히 도와달라는 건 아니야! : 성장형", Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
-10208, "내가 딱히 도와달라는 건 아니야! : 완성형", Str:+15, Int:+15, Dex:+15, Will:+15, Luck:+15
-10209, "내가 딱히 도와달라는 건 아니야! : 완전체형", Str:+20, Int:+20, Dex:+20, Will:+20, Luck:+20, MaxAttack:+8, MagicAttack:+32
-10210, "내가 딱히 도와주겠다는 건 아니야! : 유아형"
-10211, "내가 딱히 도와주겠다는 건 아니야! : 성장형", MaxAttack:+5, MagicAttack:+4
-10212, "내가 딱히 도와주겠다는 건 아니야! : 완성형", MaxAttack:+8, MagicAttack:+20
-10213, "내가 딱히 도와주겠다는 건 아니야! : 완전체형", MaxAttack:+15, MagicAttack:+32
-10214, "에린에서 만나 결혼한", Life:+20, Stamina:+20, Luck:+20, MaxAttack:+10
-10215, "Scissor Hand", Dex:+20
-10216, "Rock Fist", Will:+20
-10217, "Paper Palm", Str:+20
-10218, "Cut Down", Dex:-20
-10219, "Crushed", Will:-20
-10220, "Slashed", Str:-20
-10221, "Rock Paper Scissors Beginner", MaxAttack:+6
-10222, "Rock Paper Scissors Novice", MaxAttack:+8, Crit:+1
-10223, "Rock Paper Scissors Expert", MaxAttack:+10, Crit:+2
-10224, "Rock Paper Scissors Master", MaxAttack:+12, Crit:+3
-10225, "Elemental Wave Master", Life:+30, Mana:+30, Stamina:+30
-10226, "Golden Time Master", Crit:+3
-10227, "Hydra Transmutation Master", Crit:+3
-10228, "Guard Cylinder Master", Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
-10229, "the Memory Walker", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10230, "10살에 탐험 레벨 50이 되다", Str:-10, Int:+10, Dex:-10, Will:+10, Luck:+20, Protection:-5
-10231, "새 옷을 입은", Luck:+10, MaxAttack:+8, Protection:+1, Crit:+2
-10232, "개근상", Life:+14, Str:+14, Dex:+14
-10233, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10234, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10235, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10236, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10237, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10238, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10239, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10240, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10241, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10242, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10243, "Unknown", Str:+9, Int:+9, Dex:+9, Will:+9, Luck:+9
-10304, "출석왕", Stamina:+15, Luck:+15
-10305, "사막에서도 바늘을 찾을"
-10306, "믿는 도끼에 발등 찍힐"
-10307, "뒤로 넘어져도 코가 깨질"
-10308, "등산하다 산삼을 볼"
-10501, "the Aspiring Adventurer", Life:+10, Mana:+10, Stamina:+10, Will:+10
-10502, "the Aspiring Warrior", Life:+10, Str:+25
-10503, "the Aspiring Mage", Mana:+20
-10504, "the Aspiring Archer", Life:+10, Dex:+20
-10505, "the Millionaire Striver", Stamina:+10, Luck:+25
-10506, "the Aspiring Battle Alchemist", Stamina:+20
-10507, "the Aspiring Fighter", Stamina:+10, Str:+10, Will:+20
-10508, "the Aspiring Maestro", Life:+10, Stamina:+10, Str:+20
-10509, "the Aspiring Puppeteer", Stamina:+10, Str:+10, Dex:+10
-10510, "the Aspiring Knight", Life:+20, Str:+20
-10511, "the Aspiring Cleric", Mana:+25, Int:+5
-10512, "the Aspiring Construct Alchemist", Stamina:+20
-10513, "the Aspiring Chef", Stamina:+10, Dex:+20
-10514, "the Aspiring Blacksmith", Stamina:+10, Dex:+20
-10515, "the Aspiring Tailor", Stamina:+10, Dex:+20
-10516, "the Aspiring Apothecary", Mana:+20, Stamina:+25
-10517, "the Aspiring Carpenter", Life:+20, Str:+20
-10518, "Aspiring Marksman", Life:+10
-10519, "Legendary Lumberjack", Life:+20, Stamina:+10, MaxAttack:+10, Crit:+5
-10520, "Blood Master", Life:+25, Str:+10, MaxAttack:+12, Crit:+5
-10521, "로나판 라디오 리스너", Luck:+1
-10522, "새가족", Stamina:+1, Str:+1, Int:+1, Dex:+1, Luck:+1
-10523, "던컨을 만난지 1년된", Luck:+1
-10524, "2년째 수련중인", Luck:+2
-10525, "3년째 낚시에재미들린", Luck:+3
-10526, "4년째 요리중인", Luck:+4
-10527, "나오만난지 5년", Luck:+5
-10528, "6년째 윈드밀 수련중인", Luck:+6
-10529, "7년째 동안인", Luck:+7
-10530, "8년째 환생중인", Luck:+8
-10531, "던컨과 함께한지 9년된", Luck:+9
-10532, "10년을 한결같은", Luck:+10
-10533, "딸기농사를 11년째 하는", Luck:+11
-10534, "12년째 곰만 잡는", Luck:+12
-10535, "13년지기 친구", Luck:+13
-10536, "마비노기 Forever", Luck:+14
-10537, "불로장생", Luck:+15
-10538, "닌자왕을 꿈꾸는", Life:+10
-10539, "the Strange Dreamer", Str:+6, Int:+6, Dex:+6, Will:+6, Luck:+6
-10680, "Avid Collector", Dex:+7, Will:+7
-10681, "King Collector", Str:+8, Int:+8, Dex:+8, MaxAttack:+10, Defense:+6, Protection:+6
-10700, "the Master of Battlefield Overture"
-10701, "the Master of Lullaby"
-10702, "the Master of Enduring Melody"
-10703, "the Master of Vivace"
-10704, "the Master of Harvest Song"
-10705, "the Master of March Song"
-10706, "the Master of Dischord"
-10707, "the Maestro"
-10708, "the Encore Master"
-10709, "the Song Master"
-10710, "the Fantastic Chorus Master"
-10711, "the Master of Tasting"
-10712, "the Master of Ingredient Hunting"
-10713, "the Master of Catering"
-10714, "the Master of Exploration"
-10715, "the Master of Artifact Investigation"
-10716, "the Master of Crisis Escape"
-10801, "the Shearer of Sheep", Dex:+25, Luck:+20
-10802, "the Master of Mining", Stamina:+25, Str:+25
-10803, "the Gatherer of Eggs", Dex:+35
-10804, "the Mushroom Picker", Stamina:+15, Int:+20
-10805, "the Milking Master", Stamina:+25
-10806, "the Harvester", Dex:+20, Will:+25
-10807, "the Master of Hoeing", Will:+30, Luck:+15
-10808, "the Master of Commerce", Str:-30, Int:-30, Dex:-30, Defense:+15, Protection:+5
-10809, "the Master of Transformation"
-10901, "the Master of Control Marionette", Stamina:+10
-10902, "the Master of Colossus", Life:+10, Protection:+2
-10903, "the Master of Pierrot", Stamina:+15, Crit:+2
-10904, "the Master of Threshold Cutter", Dex:+15
-10905, "the Master of Inciting Incident", Dex:+15
-10906, "the Master of Rising Action", Dex:+15
-10907, "the Master of Crisis", Dex:+15
-10908, "the Master of Climactic Crash", Dex:+15
-10909, "the Master of Invigorating Encore", Will:+15
-10910, "the Master of Wire Pull", Stamina:+10, Str:+10, Dex:+8
-10911, "the Master of Puppet Snare", Str:+8, Dex:+13
-10912, "the Dual Gun Master", Life:+15
-10913, "the Master of Reload", Stamina:+30
-10914, "the Master of Flash Launcher"
-10915, "the Master of Grapple Shot", Defense:+10
-10916, "the Master of Bullet Slide", Speed:+1
-10917, "the Master of Shooting Rush", Mana:+10, Stamina:+10
-10918, "the Master of Bullet Storm", Mana:+20, Stamina:+20
-10919, "the Way of the Gun Master"
-10920, "the Expert Engineer"
-10921, "the Magic Artisan"
-10922, "the Mineral Expert"
-10923, "the Ecologist"
-10924, "Heavy Armor Master", Defense:+10, Protection:+5
-10925, "Light Armor Master", Defense:+6, Protection:+2
-10926, "수리검 마스터", Life:+15
-10927, "수리검 돌진 마스터", Str:+10, Will:+10
-10928, "수리검 폭풍 마스터", Str:+10, Will:+10
-10929, "그림자 속박 마스터", Str:+10, Will:+10
-10930, "그림자 은신 마스터", Str:+10, Will:+10
-10931, "수리검 폭쇄 마스터", Str:+10, Will:+10
-10932, "잿빛 연막술 마스터", Str:+10, Will:+10, Defense:+10
-10933, "심연의 소환술 마스터", Str:+10, Will:+10
-11001, "who Saved the Goddess", Mana:+10, Will:+20, Luck:+20, MinAttack:+1, MaxAttack:+1
-11002, "the Savior of Erinn", Life:+10, Mana:+10, Stamina:+10, Int:+15, Dex:+15
-11003, "the Dragon Knight", Life:+30, Mana:+10, Stamina:+10, Defense:+2, Protection:+2
-11004, "the Scoring Master", Stamina:+10, Str:+10, Dex:+10
-11005, "the Defending Master", Int:+15, Dex:+15
-11006, "the Stealing Master", Str:+15, Will:+15
-11008, "the Winner of the Guild Battle", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
-11009, "프리미엄 PC방 사용자", Str:+5, Int:+5, Dex:+5, Will:+5, Luck:+5, MaxAttack:+10
-11010, "the Shadow Hero", Will:+10, MinAttack:+3, MaxAttack:+3, Defense:+2, Protection:+2
-11011, "the Summer Reveler", Stamina:+10, Str:+5, Dex:+5
-11012, "The Royal Alchemist"
-11013, "the Family Oriented"
-11014, "the Winner of the Guild Battle", Life:+30, Mana:+30, Stamina:+30, Str:+15, Int:+15, Dex:+15, Will:+15, Luck:+15, MaxAttack:+30, Exp:+1
-13000, "the Master of Knuckles", Life:+10
-13001, "the Master of Chain Attack", Stamina:+10, Will:+30
-13002, "the Master of Tumble", Mana:+10, Stamina:+15, Protection:+2
-13003, "the Master of Respite", Life:+20, Stamina:+20
-13004, "the Master of Charging Strike", Str:+15, Will:+15
-13005, "the Master of Focused Fist", Str:+15, Will:+15
-13006, "the Master of Spinning Uppercut", Str:+15, Will:+15
-13007, "the Master of Somersault Kick", Str:+15, Will:+15
-13008, "the Master of Pummel", Str:+15, Will:+15
-13009, "the Master of Drop Kick", Str:+15, Will:+15
-14000, "the Master of Shockwave", Life:+20, Mana:+20, Str:-15, Int:+15, Dex:-10
-14001, "the Master of Counter Punch", Stamina:+30, Str:+20, Will:+20
-14002, "the Master of Spider Trap", Dex:+15, Luck:-10, Crit:+10
-14003, "the Master Berserker", Life:-50, Str:+25, Luck:-20, Crit:+10
-14004, "the Toxicologist", Life:+20, Mana:+20, Stamina:+20
-14005, "Meteor Strike Master", MagicAttack:+50
-14006, "Spellwalk Master"
-14007, "Snap Cast Master"
-14008, "Magic Weapon Master", Dex:-30, MaxAttack:+8, MagicAttack:+25
-15010, "그린노기 운동가", MaxAttack:+10, MagicAttack:+6, MagicDefense:+3, MagicProtection:+3
-15011, "봄의 시작을 함께 한", Life:+10, Str:+10, Dex:+10, Luck:+15
-15012, "Unknown", Life:+5, Will:+15, Luck:+5
-30001, "the Tough-looking", MaxAttackRate:+100, MinAttackRate:+100
-30002, "the Very Tough-looking", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100
-30003, "who Looks Dangerous", MinWAttack:-100, MaxWAttack:+100, MaxAttackRate:+100, MinAttackRate:+100
-30004, "who Gambles on a Single Blow", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, CritRate:+100
-30005, "who Has Piercing Eyes", CritRate:+100
-30006, "who Knocked Out a Person at 10", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100
-30007, "the Tank", Defense:+5, LifeRate:+100
-30008, "the Diligent", Defense:+1, LifeRate:+100, StaminaRate:+100
-30009, "the Head Figure", Defense:+3, Protection:+5, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30010, "the Weak", StaminaRate:+100, LifeRate:+100
-30011, "소환된"
-30012, "the Event"
-30013, "the Cursed", MaxAttackRate:+100, MinAttackRate:+100
-30014, "the Resurrected", MaxAttackRate:+100, MinAttackRate:+100
-30015, "the Desiring", MaxAttackRate:+100, MinAttackRate:+100
-30016, "the Lost", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30017, "the Hungry", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30018, "the One with Sharp Teeth", MinWAttack:+20, MaxWAttack:+20, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30019, "the One with Sharp Horn", MinWAttack:+30, MaxWAttack:+30, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30020, "the Angry", MinWAttack:+40, MaxWAttack:+40, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30021, "the Motherless", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30022, "the Curious", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30023, "the Holy", Defense:+10, Protection:+30, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30024, "the Soon to be Extinct", Defense:+20, Protection:+20, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30025, "the Playing Dead", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30026, "the Dubious", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30027, "the Suspicious", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30028, "the Unconfirmed", Protection:+20, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30029, "the One that Awoke", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30030, "the Awakened", MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30031, "the Recovered", Protection:+20, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30032, "the Unexpected", MinWAttack:+20, MaxWAttack:+40, Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30033, "the Unknown", Protection:+30, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30034, "the Ferocious", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30035, "the Wary", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30036, "the Sharp Clawed", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30037, "the Agitated", Protection:+10, MaxAttackRate:+100, MinAttackRate:+100, LifeRate:+100, ManaRate:+100, StaminaRate:+100
-30038, "the Ancient", Defense:+10, Protection:+10, MaxAttackRate:+200, MinAttackRate:+200, LifeRate:+1000, ManaRate:+200, StaminaRate:+200, HeightRate:+200
-30039, "the Rookie"
-30040, "the Trained"
-30041, "the Hardened"
-30042, "the Veteran"
-30043, "the Top Gun"
-30044, "the Intermediate Merc Summoner", Defense:+10, Protection:+5, Crit:+5, MaxAttackRate:+160, MinAttackRate:+160, LifeRate:+160
-30045, "the Advanced Merc Summoner", Defense:+30, Protection:+14, Crit:+10, MaxAttackRate:+270, MinAttackRate:+270, LifeRate:+270
-30046, "the Hard Merc Summoner", Defense:+40, Protection:+19, Crit:+15, MaxAttackRate:+420, MinAttackRate:+420, LifeRate:+420
-30047, "the Elite Merc Summoner", Defense:+60, Protection:+25, Crit:+25, MaxAttackRate:+600, MinAttackRate:+600, LifeRate:+600
-50000, "Erinn Expeditionary Force", Mana:+10, Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10, Defense:+1, Protection:+1
-50012, "the Sommelier", Int:+15, Dex:-7, Defense:-4, Protection:+2
-50013, "the Senior Sommelier", Int:+17, Dex:-9, Defense:-6, Protection:+3
-50014, "the Sommelier Sage", Int:+19, Dex:-11, Defense:-9, Protection:+4
-50015, "the Master Sommelier", Int:+20, Protection:+5
-50016, "the Wine Lover", Int:+10, Dex:-5, Defense:-3, Protection:+1
-50017, "유희킹", Str:+10, Luck:+10
-50018, "the Truth Seeker", Will:+5
-50019, "the Ambiguous", Luck:+5
-50020, "the Liar", Int:+5
-50021, "조금 약해보이는", CP:-250
-60000, "GM", Str:+200, Defense:+10, Protection:+10
-60001, "devCAT"
-60002, "devDOG"
-65535, "Example"
+{ id: 10001, name: "the Beta Tester", effects: { "Stamina":10, "Luck":20 } }, 
+{ id: 10002, name: "the Dugald Aisle Seal Breaker", effects: { "Str":10, "Int":5, "Dex":10, "Will":40, "Crit":10 } }, 
+{ id: 10003, name: "the Ciar Seal Breaker", effects: { "MaxAttack":10 } }, 
+{ id: 10004, name: "the Rabbie Seal Breaker", effects: { "Life":20, "Mana":20, "Stamina":20 } }, 
+{ id: 10005, name: "the Math Seal Breaker", effects: { "Dex":10, "Luck":10, "MinAttack":5, "MaxAttack":5 } }, 
+{ id: 10006, name: "the Bangor Seal Breaker", effects: { "Life":10, "Mana":-5, "Stamina":10, "Dex":30, "Will":20 } }, 
+{ id: 10007, name: "the Seal-Breaker of the Other World", effects: { "Life":10, "Mana":10, "Stamina":10, "Str":-5, "Int":-5, "Dex":-5, "Will":10 } }, 
+{ id: 10008, name: "the Fiodh Seal Breaker", effects: { "Life":30, "Str":20, "Dex":-5, "Will":10, "Luck":5 } }, 
+{ id: 10009, name: "the South Emain Macha Seal Breaker", effects: { "Mana":25, "Str":-5, "Int":15, "Dex":30, "Will":10 } }, 
+{ id: 10010, name: "the Master of Defense", effects: { "Life":10, "Stamina":10, "Int":-10, "Luck":-10, "Defense":5 } }, 
+{ id: 10011, name: "the Master of Smash", effects: { "Stamina":20, "Str":20, "Dex":-20, "Luck":20, "Protection":-10 } }, 
+{ id: 10012, name: "the Master of Counter", effects: { "Mana":-30, "Stamina":30, "Str":-20, "Int":20, "Dex":20 } }, 
+{ id: 10013, name: "the Master of Windmill", effects: { "Life":-20, "Str":-10, "Will":10, "Luck":10, "Protection":3 } }, 
+{ id: 10014, name: "the Master of Arrow Revolver", effects: { "Life":20, "Str":-10, "Dex":20, "Will":20, "Luck":-10, "Defense":-5 } }, 
+{ id: 10015, name: "the Master of Lightning Bolt", effects: { "Life":-10, "Mana":30, "Str":10, "Int":10, "Luck":-10 } }, 
+{ id: 10016, name: "the Master of Firebolt", effects: { "Mana":30, "Str":-10, "Int":10, "Dex":10, "Luck":-10 } }, 
+{ id: 10017, name: "the Master of Icebolt", effects: { "Mana":20, "Str":-20, "Int":15, "Dex":15 } }, 
+{ id: 10018, name: "the Master of Healing", effects: { "Mana":30, "Stamina":-20, "Str":10, "Int":10, "Will":-10 } }, 
+{ id: 10019, name: "the Master of Fireball", effects: { "Mana":50, "Stamina":-10, "Int":20, "Will":20, "Luck":-30 } }, 
+{ id: 10020, name: "the Master of Thunder", effects: { "Life":-20, "Mana":40, "Str":-20, "Int":30, "Dex":20 } }, 
+{ id: 10021, name: "the Master of Combat", effects: { "Life":20, "Stamina":20, "Str":10, "Int":-10, "Luck":-20 } }, 
+{ id: 10022, name: "the Master of Range", effects: { "Life":20, "Stamina":30, "Str":-20, "Dex":20, "Will":-20 } }, 
+{ id: 10023, name: "the Master of Critical Hit", effects: { "Life":30, "Stamina":20, "Will":20, "Defense":-5, "Protection":-5 } }, 
+{ id: 10024, name: "the Master of Magnum Shot", effects: { "Life":20, "Str":-10, "Dex":20, "Will":-10, "Luck":20, "Protection":-10 } }, 
+{ id: 10025, name: "the North Emain Macha Seal Breaker", effects: { "Mana":30, "Str":-10, "Int":20, "Dex":25, "Will":10 } }, 
+{ id: 10026, name: "the Master of Weaving", effects: { "Stamina":20, "Str":10, "Dex":20, "Will":-20, "Luck":-20 } }, 
+{ id: 10027, name: "the Master of Refining", effects: { "Stamina":30, "Str":10, "Dex":-10, "Will":20, "Luck":-20 } }, 
+{ id: 10028, name: "the Master of Herbalism", effects: { "Str":20, "Dex":-10, "Luck":-10, "Defense":2, "Protection":2 } }, 
+{ id: 10029, name: "the Master of Tailoring", effects: { "Str":-20, "Int":-20, "Dex":30, "Will":20 } }, 
+{ id: 10030, name: "the Master Blacksmith", effects: { "Life":-30, "Mana":-30, "Dex":30, "Will":10, "Luck":10 } }, 
+{ id: 10031, name: "the Master of Potion", effects: { "Mana":30, "Str":-10, "Luck":-10, "Defense":3, "Protection":3 } }, 
+{ id: 10032, name: "the Master of Fishing", effects: { "Life":-20, "Stamina":-20, "Int":10, "Dex":20, "Luck":10 } }, 
+{ id: 10033, name: "the Master Instrumentalist", effects: { "Mana":-20, "Stamina":-20, "Int":20, "Dex":10, "Will":20 } }, 
+{ id: 10034, name: "the Master of Enchantment", effects: { "Life":-10, "Mana":20, "Int":20, "Will":-10, "Luck":10 } }, 
+{ id: 10035, name: "the One Who Discovered Karu Forest Ruins", effects: { "Life":-50, "Mana":20, "Stamina":20, "Int":20, "Luck":20 } }, 
+{ id: 10036, name: "the Explorer of Karu Forest Ruins", effects: { "Life":30, "Mana":30, "Stamina":30, "Str":-5, "Int":-5, "Dex":-5, "Will":-5, "Luck":-5, "Defense":5 } }, 
+{ id: 10037, name: "the Partner of the Male Sword Spirit", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10038, name: "the Partner of the Female Sword Spirit", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10039, name: "the Master of the Male Blunt Weapon Spirit", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10040, name: "the Master of the Female Blunt Weapon Spirit", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10041, name: "the Friend of the Male Bow Spirit", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10042, name: "the Friend of the Female Bow Spirit", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10043, name: "the Relative of the Male Wand Spirit", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10044, name: "the Relative of the Female Wand Spirit", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10045, name: "the One Who Discovered the Maiz Prairie Ruins", effects: { "Life":-30, "Mana":-30, "Stamina":-30, "Str":30, "Will":10, "Luck":10 } }, 
+{ id: 10046, name: "the Master of Ice Spear", effects: { "Life":-20, "Mana":30, "Stamina":-20, "Int":20, "Luck":20 } }, 
+{ id: 10047, name: "the One that Connected Rano and Connous", effects: { "Str":10, "Int":10, "Will":30, "Crit":5 } }, 
+{ id: 10048, name: "the Master of Final Hit", effects: { "Life":20, "Mana":-30, "Stamina":20, "Str":15, "Dex":5, "Will":15, "Protection":-5 } }, 
+{ id: 10049, name: "the Master of Mirage Missile", effects: { "Mana":20, "Str":-10, "Int":15, "Dex":15, "Will":-10 } }, 
+{ id: 10050, name: "the Discoverer of Longa Desert Ruins", effects: { "Mana":10, "Stamina":10, "Str":-20, "Int":20, "Dex":20, "Will":-5, "Luck":-5 } }, 
+{ id: 10051, name: "who Placed in the Cooking Contest", effects: { "Life":20, "Stamina":20, "Int":10, "Dex":10, "Will":-20, "Luck":-10 } }, 
+{ id: 10052, name: "초보자", effects: { "Life":5, "Stamina":5, "Defense":2 } }, 
+{ id: 10053, name: "a Descendant of the Elves", effects: { "Life":5, "Mana":5, "Stamina":5, "Dex":5 } }, 
+{ id: 10054, name: "a Friend of Elves", effects: { "Stamina":15, "Int":-10, "Dex":15, "Luck":-10 } }, 
+{ id: 10055, name: "a Descendant of the Giants", effects: { "Life":5, "Stamina":5, "Str":5, "Will":5 } }, 
+{ id: 10056, name: "a Friend of Giants", effects: { "Str":20, "Dex":10, "Will":-10, "Luck":-10 } }, 
+{ id: 10057, name: "초보자", effects: { "Life":10, "Stamina":5, "Defense":2 } }, 
+{ id: 10058, name: "the Master of Production", effects: { "Life":-10, "Dex":20, "Will":-10, "Luck":20 } }, 
+{ id: 10059, name: "is a friend of Trefor", effects: { "Life":5, "Stamina":10, "Str":5 } }, 
+{ id: 10060, name: "is a friend of Deian", effects: { "Life":5, "Stamina":10, "Dex":5 } }, 
+{ id: 10061, name: "is a friend of Malcolm", effects: { "Life":5, "Stamina":10, "Int":5 } }, 
+{ id: 10062, name: "is a friend of Nora", effects: { "Life":5, "Stamina":10, "Will":5 } }, 
+{ id: 10063, name: "the Master of Mana Crystallization", effects: { "Life":-10, "Mana":60, "Stamina":-10 } }, 
+{ id: 10064, name: "the Master of Water Cannon", effects: { "Life":-10, "Mana":-10, "Stamina":40 } }, 
+{ id: 10065, name: "the Master of Golems", effects: { "Life":50, "Str":-30, "Int":-30, "Dex":-30, "Defense":10 } }, 
+{ id: 10066, name: "the Master of Barrier Spikes", effects: { "Will":-40, "Luck":-20, "Protection":12 } }, 
+{ id: 10067, name: "the Sliab Cuilin Seal Breaker", effects: { "Life":30, "Str":25, "Dex":-20, "Will":10, "Luck":-20, "MinAttack":5 } }, 
+{ id: 10068, name: "the Abb Neagh Seal Breaker", effects: { "Mana":35, "Int":30 } }, 
+{ id: 10069, name: "a Friend of Pierrick", effects: { "Life":10, "Will":20, "Luck":10 } }, 
+{ id: 10070, name: "the Master of Rain", effects: { "Life":-20, "Stamina":30, "Luck":20 } }, 
+{ id: 10071, name: "the Master of Frozen Blast", effects: { "Stamina":20, "Will":20 } }, 
+{ id: 10072, name: "the Master of Flame Burst", effects: { "Life":15, "Stamina":20, "Int":20 } }, 
+{ id: 10073, name: "the Master of Stomp", effects: { "Stamina":15, "Str":40, "Luck":-30 } }, 
+{ id: 10074, name: "the Master of Metallurgy", effects: { "Mana":-10, "Str":-20, "Dex":10, "Luck":25 } }, 
+{ id: 10075, name: "the Master of Wind Guard", effects: { "Life":10, "Str":-20, "Dex":-20, "Defense":7, "Protection":5 } }, 
+{ id: 10076, name: "the Master of Final Shot", effects: { "Life":-15, "Str":-10, "Dex":30, "Will":15 } }, 
+{ id: 10077, name: "the Tara Seal Breaker", effects: { "Str":20, "Int":20, "Dex":20, "Will":20, "Luck":20 } }, 
+{ id: 10078, name: "the Master of Metal Conversion", effects: { "Str":10, "Dex":20, "Will":-20 } }, 
+{ id: 10079, name: "the Fashionable" }, 
+{ id: 10080, name: "the Master of Blaze", effects: { "Str":20, "Int":20 } }, 
+{ id: 10081, name: "the Goddess Water Maker", effects: { "Mana":15, "Int":15, "Dex":15 } }, 
+{ id: 10082, name: "the Wine Hero", effects: { "Str":15, "Luck":15, "Defense":1, "Protection":1 } }, 
+{ id: 10083, name: "네코지마 명예 주민", effects: { "Life":30, "Stamina":10, "Defense":5, "Protection":2 } }, 
+{ id: 10084, name: "the Master of Shock", effects: { "MaxAttack":15 } }, 
+{ id: 10085, name: "the Master of Alchemy" }, 
+{ id: 10086, name: "the Master of Life Drain", effects: { "Life":50, "Mana":20 } }, 
+{ id: 10087, name: "대단한 테스터", effects: { "Mana":-10, "Stamina":10, "Will":10, "Luck":20 } }, 
+{ id: 10088, name: "the Master of Magic", effects: { "Mana":20, "MagicAttack":20 } }, 
+{ id: 10089, name: "the Master of Party Healing", effects: { "Mana":40, "Str":-10, "Will":-10 } }, 
+{ id: 10091, name: "the Master of Carpentry", effects: { "Stamina":-10, "Str":30, "Int":-15, "Will":-15 } }, 
+{ id: 10092, name: "the Master of Heat Buster", effects: { "Mana":-20, "Stamina":20, "Dex":20, "Will":20 } }, 
+{ id: 10093, name: "the Chain Cylinder Master", effects: { "Mana":-20, "Stamina":40 } }, 
+{ id: 10094, name: "the Master of Atlatl", effects: { "Life":20, "Stamina":20, "Str":20, "Dex":-25 } }, 
+{ id: 10095, name: "the Master of Taunt", effects: { "Stamina":30, "Int":-20, "Dex":-10 } }, 
+{ id: 10096, name: "the Master of Support Shot", effects: { "Str":-20, "Dex":20, "Will":-10 } }, 
+{ id: 10097, name: "the Master of Crash Shot", effects: { "Mana":20, "Stamina":20, "Str":-25, "Dex":10 } }, 
+{ id: 10098, name: "the Fire Alchemist", effects: { "Mana":5, "Stamina":15, "Str":-10 } }, 
+{ id: 10099, name: "the Water Alchemist", effects: { "Mana":15, "Stamina":10, "Int":-10, "Dex":-10 } }, 
+{ id: 10100, name: "the Clay Alchemist", effects: { "Life":15, "Dex":-15 } }, 
+{ id: 10101, name: "the Wind Alchemist", effects: { "Int":-10, "Dex":10, "Will":15 } }, 
+{ id: 10103, name: "the Master of Transmutation" }, 
+{ id: 10104, name: "the Master of Fire", effects: { "Mana":5, "Stamina":15, "Str":-10 } }, 
+{ id: 10105, name: "the Master of Ice", effects: { "Mana":15, "Stamina":10, "Str":-15, "Int":10 } }, 
+{ id: 10106, name: "the Master of Lightning", effects: { "Int":20, "Dex":-15 } }, 
+{ id: 10107, name: "the Master of Bolt Magic", effects: { "Mana":15 } }, 
+{ id: 10111, name: "the Master of Enthralling Performance", effects: { "Stamina":8, "Dex":12 } }, 
+{ id: 10112, name: "the Master of Swords", effects: { "Life":10, "Int":-15 } }, 
+{ id: 10113, name: "the Master of Axes", effects: { "Life":10, "Mana":-15 } }, 
+{ id: 10114, name: "the Master of Blunt Weapons", effects: { "Life":10, "Mana":-15 } }, 
+{ id: 10115, name: "the Master of Shields", effects: { "Defense":10, "Protection":10 } }, 
+{ id: 10116, name: "the Master of Heavy Stander", effects: { "Mana":-20 } }, 
+{ id: 10117, name: "the Master of Bows", effects: { "Stamina":10, "Str":-15 } }, 
+{ id: 10118, name: "the Master of Crossbows", effects: { "Stamina":10, "Str":-15 } }, 
+{ id: 10119, name: "the Master of Fusion Bolt", effects: { "Life":-10, "Mana":5, "Int":10 } }, 
+{ id: 10120, name: "the Master Berserker", effects: { "Life":-20, "Str":10, "Will":10 } }, 
+{ id: 10121, name: "the Master of Assault Slash", effects: { "Str":10, "Int":-15 } }, 
+{ id: 10122, name: "the Master of Hail Storm", effects: { "Mana":20, "Int":20, "Luck":15 } }, 
+{ id: 10123, name: "the Master Doppleganger", effects: { "Life":10, "Stamina":30, "Will":-20 } }, 
+{ id: 10124, name: "강철의 연금술사" }, 
+{ id: 10125, name: "화염의 연금술사" }, 
+{ id: 10127, name: "오토메일 정비사" }, 
+{ id: 10128, name: "주부", effects: { "Life":-20, "Dex":15, "MaxAttack":15 } }, 
+{ id: 10129, name: "호완의 연금술사", effects: { "MaxAttack":12 } }, 
+{ id: 10130, name: "매의 눈", effects: { "Dex":30, "Crit":3 } }, 
+{ id: 10131, name: "the Master of Lances", effects: { "Mana":-15, "Int":-10 } }, 
+{ id: 10132, name: "the Master of Lance Counter", effects: { "Crit":5 } }, 
+{ id: 10133, name: "the Master of Lance Charge" }, 
+{ id: 10134, name: "the Master of Charge", effects: { "Defense":3 } }, 
+{ id: 10135, name: "the Master of Ice Shield", effects: { "Mana":10, "Int":10, "Will":10 } }, 
+{ id: 10136, name: "the Master of Fire Shield", effects: { "Mana":10, "Int":20 } }, 
+{ id: 10137, name: "the Master of Lightning Shield", effects: { "Int":10, "Will":20 } }, 
+{ id: 10138, name: "the Master of Natural Shield", effects: { "Mana":20, "Will":10 } }, 
+{ id: 10139, name: "the Master of Handicraft", effects: { "Dex":8 } }, 
+{ id: 10140, name: "the Master of Animal Taming", effects: { "Str":12, "Dex":10 } }, 
+{ id: 10141, name: "the Master of Sand Burst", effects: { "Life":10, "Stamina":10 } }, 
+{ id: 10142, name: "the Master of Wind Blast", effects: { "Stamina":15 } }, 
+{ id: 10143, name: "the Master of Synthesis", effects: { "Stamina":10, "Str":-25 } }, 
+{ id: 10144, name: "the Master of Fragmentation", effects: { "Stamina":15 } }, 
+{ id: 10145, name: "National Representative", effects: { "Luck":15 } }, 
+{ id: 10146, name: "the Aspiring Warrior", effects: { "Life":10, "Str":25 } }, 
+{ id: 10147, name: "the Aspiring Archer", effects: { "Life":10, "Dex":20 } }, 
+{ id: 10148, name: "the Aspiring Mage", effects: { "Mana":20 } }, 
+{ id: 10149, name: "the Aspiring Alchemist", effects: { "Stamina":20 } }, 
+{ id: 10150, name: "of the Victorious Expeditionary Force", effects: { "Str":10, "Int":20, "Dex":20, "Will":10, "Luck":10, "MaxAttack":10 } }, 
+{ id: 10151, name: "in Wonderland", effects: { "Dex":10, "Luck":30, "Defense":3, "Protection":1, "Crit":3 } }, 
+{ id: 10152, name: "the Sharer of Joy", effects: { "Will":20, "Luck":10 } }, 
+{ id: 10153, name: "the Lone Wolf", effects: { "Stamina":10, "Defense":5 } }, 
+{ id: 10154, name: "the Busy", effects: { "Stamina":10, "Speed":1 } }, 
+{ id: 10155, name: "the Sniper", effects: { "Dex":50, "Crit":10 } }, 
+{ id: 10156, name: "에린메이트", effects: { "Str":15, "Int":15, "Will":15, "Luck":15 } }, 
+{ id: 10157, name: "에린메이트였던", effects: { "Life":10, "Stamina":15, "Int":5, "Dex":5 } }, 
+{ id: 10158, name: "판타지 파티 참석자", effects: { "Luck":30 } }, 
+{ id: 10159, name: "Someone who celebrated Kristell's Birthday", effects: { "Will":30 } }, 
+{ id: 10160, name: "the Celebrator of Eavan's Birth", effects: { "Int":10 } }, 
+{ id: 10161, name: "the Millionaire Striver", effects: { "Stamina":10, "Luck":25 } }, 
+{ id: 10162, name: "the Master of Gold Strike", effects: { "Stamina":10, "Luck":25 } }, 
+{ id: 10163, name: "6주년을 기념하는", effects: { "Stamina":10, "Dex":10, "Luck":20 } }, 
+{ id: 10164, name: "기다릴 줄 아는", effects: { "Luck":55 } }, 
+{ id: 10165, name: "보이트의 생일을 축하한", effects: { "Life":20, "Stamina":20 } }, 
+{ id: 10166, name: "초평화버스터즈", effects: { "Dex":12, "Luck":-5, "MinAttack":10, "MaxAttack":10 } }, 
+{ id: 10167, name: "유령", effects: { "Defense":5, "Protection":5 } }, 
+{ id: 10168, name: "성불한", effects: { "Mana":30, "MagicAttack":12 } }, 
+{ id: 10169, name: "Male Cylinder Spirit's Confidant", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10170, name: "Female Cylinder Spirit's Confidant", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "Defense":1, "Protection":1 } }, 
+{ id: 10171, name: "강철의 연금술사" }, 
+{ id: 10172, name: "화염의 연금술사" }, 
+{ id: 10173, name: "오토메일 정비사" }, 
+{ id: 10174, name: "주부", effects: { "Life":-20, "Dex":15, "MaxAttack":7 } }, 
+{ id: 10175, name: "호완의 연금술사", effects: { "MaxAttack":7 } }, 
+{ id: 10176, name: "매의 눈", effects: { "Dex":15, "Crit":1 } }, 
+{ id: 10178, name: "안드라스의 생일을 축하한", effects: { "Str":15 } }, 
+{ id: 10179, name: "the Aspiring Fighter", effects: { "Stamina":10, "Str":10, "Will":20 } }, 
+{ id: 10180, name: "Snowman's Friend", effects: { "Life":30, "Defense":3, "Protection":1 } }, 
+{ id: 10181, name: "the Crouching Dragon", effects: { "Will":70 } }, 
+{ id: 10182, name: "길모어의 생일을 축하한", effects: { "Will":10, "Luck":10 } }, 
+{ id: 10184, name: "Sabina's Valentine", effects: { "Mana":30, "Int":30, "Protection":5 } }, 
+{ id: 10185, name: "My Valentine", effects: { "Will":30, "Luck":30, "MaxAttack":13 } }, 
+{ id: 10190, name: "The Phoenix's Witness", effects: { "Life":50 } }, 
+{ id: 10192, name: "the Silencer", effects: { "MaxAttack":5 } }, 
+{ id: 10193, name: "the Aspiring Maestro", effects: { "Life":10, "Stamina":10, "Str":20 } }, 
+{ id: 10195, name: "Is Gone with the Wind", effects: { "MaxAttack":15, "Protection":1, "Crit":2, "Speed":1 } }, 
+{ id: 10196, name: "에린 생활을 즐기는", effects: { "Luck":55 } }, 
+{ id: 10197, name: "Is Gone with the Wind", effects: { "MaxAttack":8, "Protection":1, "Crit":2, "Speed":1 } }, 
+{ id: 10198, name: "the Nutcracker", effects: { "Life":20, "Luck":20, "MaxAttack":7, "Crit":5 } }, 
+{ id: 10199, name: "the Nutcracker", effects: { "Life":20, "MaxAttack":7, "Crit":5 } }, 
+{ id: 10204, name: "겨울 여행자", effects: { "MaxAttack":6, "Defense":5, "Protection":1, "Crit":5 } }, 
+{ id: 10205, name: "세배하는", effects: { "Luck":10, "MaxAttack":8, "Protection":1, "Crit":2 } }, 
+{ id: 10206, name: "내가 딱히 도와달라는 건 아니야! : 유아형" }, 
+{ id: 10207, name: "내가 딱히 도와달라는 건 아니야! : 성장형", effects: { "Str":10, "Int":10, "Dex":10, "Will":10, "Luck":10 } }, 
+{ id: 10208, name: "내가 딱히 도와달라는 건 아니야! : 완성형", effects: { "Str":15, "Int":15, "Dex":15, "Will":15, "Luck":15 } }, 
+{ id: 10209, name: "내가 딱히 도와달라는 건 아니야! : 완전체형", effects: { "Str":20, "Int":20, "Dex":20, "Will":20, "Luck":20, "MaxAttack":8, "MagicAttack":32 } }, 
+{ id: 10210, name: "내가 딱히 도와주겠다는 건 아니야! : 유아형" }, 
+{ id: 10211, name: "내가 딱히 도와주겠다는 건 아니야! : 성장형", effects: { "MaxAttack":5, "MagicAttack":4 } }, 
+{ id: 10212, name: "내가 딱히 도와주겠다는 건 아니야! : 완성형", effects: { "MaxAttack":8, "MagicAttack":20 } }, 
+{ id: 10213, name: "내가 딱히 도와주겠다는 건 아니야! : 완전체형", effects: { "MaxAttack":15, "MagicAttack":32 } }, 
+{ id: 10214, name: "에린에서 만나 결혼한", effects: { "Life":20, "Stamina":20, "Luck":20, "MaxAttack":10 } }, 
+{ id: 10215, name: "Scissor Hand", effects: { "Dex":20 } }, 
+{ id: 10216, name: "Rock Fist", effects: { "Will":20 } }, 
+{ id: 10217, name: "Paper Palm", effects: { "Str":20 } }, 
+{ id: 10218, name: "Cut Down", effects: { "Dex":-20 } }, 
+{ id: 10219, name: "Crushed", effects: { "Will":-20 } }, 
+{ id: 10220, name: "Slashed", effects: { "Str":-20 } }, 
+{ id: 10221, name: "Rock Paper Scissors Beginner", effects: { "MaxAttack":6 } }, 
+{ id: 10222, name: "Rock Paper Scissors Novice", effects: { "MaxAttack":8, "Crit":1 } }, 
+{ id: 10223, name: "Rock Paper Scissors Expert", effects: { "MaxAttack":10, "Crit":2 } }, 
+{ id: 10224, name: "Rock Paper Scissors Master", effects: { "MaxAttack":12, "Crit":3 } }, 
+{ id: 10225, name: "Elemental Wave Master", effects: { "Life":30, "Mana":30, "Stamina":30 } }, 
+{ id: 10226, name: "Golden Time Master", effects: { "Crit":3 } }, 
+{ id: 10227, name: "Hydra Transmutation Master", effects: { "Crit":3 } }, 
+{ id: 10228, name: "Guard Cylinder Master", effects: { "Str":10, "Int":10, "Dex":10, "Will":10, "Luck":10 } }, 
+{ id: 10229, name: "the Memory Walker", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10230, name: "10살에 탐험 레벨 50이 되다", effects: { "Str":-10, "Int":10, "Dex":-10, "Will":10, "Luck":20, "Protection":-5 } }, 
+{ id: 10231, name: "새 옷을 입은", effects: { "Luck":10, "MaxAttack":8, "Protection":1, "Crit":2 } }, 
+{ id: 10232, name: "개근상", effects: { "Life":14, "Str":14, "Dex":14 } }, 
+{ id: 10233, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10234, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10235, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10236, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10237, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10238, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10239, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10240, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10241, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10242, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10243, name: "Unknown", effects: { "Str":9, "Int":9, "Dex":9, "Will":9, "Luck":9 } }, 
+{ id: 10304, name: "출석왕", effects: { "Stamina":15, "Luck":15 } }, 
+{ id: 10305, name: "사막에서도 바늘을 찾을" }, 
+{ id: 10306, name: "믿는 도끼에 발등 찍힐" }, 
+{ id: 10307, name: "뒤로 넘어져도 코가 깨질" }, 
+{ id: 10308, name: "등산하다 산삼을 볼" }, 
+{ id: 10501, name: "the Aspiring Adventurer", effects: { "Life":10, "Mana":10, "Stamina":10, "Will":10 } }, 
+{ id: 10502, name: "the Aspiring Warrior", effects: { "Life":10, "Str":25 } }, 
+{ id: 10503, name: "the Aspiring Mage", effects: { "Mana":20 } }, 
+{ id: 10504, name: "the Aspiring Archer", effects: { "Life":10, "Dex":20 } }, 
+{ id: 10505, name: "the Millionaire Striver", effects: { "Stamina":10, "Luck":25 } }, 
+{ id: 10506, name: "the Aspiring Battle Alchemist", effects: { "Stamina":20 } }, 
+{ id: 10507, name: "the Aspiring Fighter", effects: { "Stamina":10, "Str":10, "Will":20 } }, 
+{ id: 10508, name: "the Aspiring Maestro", effects: { "Life":10, "Stamina":10, "Str":20 } }, 
+{ id: 10509, name: "the Aspiring Puppeteer", effects: { "Stamina":10, "Str":10, "Dex":10 } }, 
+{ id: 10510, name: "the Aspiring Knight", effects: { "Life":20, "Str":20 } }, 
+{ id: 10511, name: "the Aspiring Cleric", effects: { "Mana":25, "Int":5 } }, 
+{ id: 10512, name: "the Aspiring Construct Alchemist", effects: { "Stamina":20 } }, 
+{ id: 10513, name: "the Aspiring Chef", effects: { "Stamina":10, "Dex":20 } }, 
+{ id: 10514, name: "the Aspiring Blacksmith", effects: { "Stamina":10, "Dex":20 } }, 
+{ id: 10515, name: "the Aspiring Tailor", effects: { "Stamina":10, "Dex":20 } }, 
+{ id: 10516, name: "the Aspiring Apothecary", effects: { "Mana":20, "Stamina":25 } }, 
+{ id: 10517, name: "the Aspiring Carpenter", effects: { "Life":20, "Str":20 } }, 
+{ id: 10518, name: "Aspiring Marksman", effects: { "Life":10 } }, 
+{ id: 10519, name: "Legendary Lumberjack", effects: { "Life":20, "Stamina":10, "MaxAttack":10, "Crit":5 } }, 
+{ id: 10520, name: "Blood Master", effects: { "Life":25, "Str":10, "MaxAttack":12, "Crit":5 } }, 
+{ id: 10521, name: "로나판 라디오 리스너", effects: { "Luck":1 } }, 
+{ id: 10522, name: "새가족", effects: { "Stamina":1, "Str":1, "Int":1, "Dex":1, "Luck":1 } }, 
+{ id: 10523, name: "던컨을 만난지 1년된", effects: { "Luck":1 } }, 
+{ id: 10524, name: "2년째 수련중인", effects: { "Luck":2 } }, 
+{ id: 10525, name: "3년째 낚시에재미들린", effects: { "Luck":3 } }, 
+{ id: 10526, name: "4년째 요리중인", effects: { "Luck":4 } }, 
+{ id: 10527, name: "나오만난지 5년", effects: { "Luck":5 } }, 
+{ id: 10528, name: "6년째 윈드밀 수련중인", effects: { "Luck":6 } }, 
+{ id: 10529, name: "7년째 동안인", effects: { "Luck":7 } }, 
+{ id: 10530, name: "8년째 환생중인", effects: { "Luck":8 } }, 
+{ id: 10531, name: "던컨과 함께한지 9년된", effects: { "Luck":9 } }, 
+{ id: 10532, name: "10년을 한결같은", effects: { "Luck":10 } }, 
+{ id: 10533, name: "딸기농사를 11년째 하는", effects: { "Luck":11 } }, 
+{ id: 10534, name: "12년째 곰만 잡는", effects: { "Luck":12 } }, 
+{ id: 10535, name: "13년지기 친구", effects: { "Luck":13 } }, 
+{ id: 10536, name: "마비노기 Forever", effects: { "Luck":14 } }, 
+{ id: 10537, name: "불로장생", effects: { "Luck":15 } }, 
+{ id: 10538, name: "닌자왕을 꿈꾸는", effects: { "Life":10 } }, 
+{ id: 10539, name: "the Strange Dreamer", effects: { "Str":6, "Int":6, "Dex":6, "Will":6, "Luck":6 } }, 
+{ id: 10680, name: "Avid Collector", effects: { "Dex":7, "Will":7 } }, 
+{ id: 10681, name: "King Collector", effects: { "Str":8, "Int":8, "Dex":8, "MaxAttack":10, "Defense":6, "Protection":6 } }, 
+{ id: 10700, name: "the Master of Battlefield Overture" }, 
+{ id: 10701, name: "the Master of Lullaby" }, 
+{ id: 10702, name: "the Master of Enduring Melody" }, 
+{ id: 10703, name: "the Master of Vivace" }, 
+{ id: 10704, name: "the Master of Harvest Song" }, 
+{ id: 10705, name: "the Master of March Song" }, 
+{ id: 10706, name: "the Master of Dischord" }, 
+{ id: 10707, name: "the Maestro" }, 
+{ id: 10708, name: "the Encore Master" }, 
+{ id: 10709, name: "the Song Master" }, 
+{ id: 10710, name: "the Fantastic Chorus Master" }, 
+{ id: 10711, name: "the Master of Tasting" }, 
+{ id: 10712, name: "the Master of Ingredient Hunting" }, 
+{ id: 10713, name: "the Master of Catering" }, 
+{ id: 10714, name: "the Master of Exploration" }, 
+{ id: 10715, name: "the Master of Artifact Investigation" }, 
+{ id: 10716, name: "the Master of Crisis Escape" }, 
+{ id: 10801, name: "the Shearer of Sheep", effects: { "Dex":25, "Luck":20 } }, 
+{ id: 10802, name: "the Master of Mining", effects: { "Stamina":25, "Str":25 } }, 
+{ id: 10803, name: "the Gatherer of Eggs", effects: { "Dex":35 } }, 
+{ id: 10804, name: "the Mushroom Picker", effects: { "Stamina":15, "Int":20 } }, 
+{ id: 10805, name: "the Milking Master", effects: { "Stamina":25 } }, 
+{ id: 10806, name: "the Harvester", effects: { "Dex":20, "Will":25 } }, 
+{ id: 10807, name: "the Master of Hoeing", effects: { "Will":30, "Luck":15 } }, 
+{ id: 10808, name: "the Master of Commerce", effects: { "Str":-30, "Int":-30, "Dex":-30, "Defense":15, "Protection":5 } }, 
+{ id: 10809, name: "the Master of Transformation" }, 
+{ id: 10901, name: "the Master of Control Marionette", effects: { "Stamina":10 } }, 
+{ id: 10902, name: "the Master of Colossus", effects: { "Life":10, "Protection":2 } }, 
+{ id: 10903, name: "the Master of Pierrot", effects: { "Stamina":15, "Crit":2 } }, 
+{ id: 10904, name: "the Master of Threshold Cutter", effects: { "Dex":15 } }, 
+{ id: 10905, name: "the Master of Inciting Incident", effects: { "Dex":15 } }, 
+{ id: 10906, name: "the Master of Rising Action", effects: { "Dex":15 } }, 
+{ id: 10907, name: "the Master of Crisis", effects: { "Dex":15 } }, 
+{ id: 10908, name: "the Master of Climactic Crash", effects: { "Dex":15 } }, 
+{ id: 10909, name: "the Master of Invigorating Encore", effects: { "Will":15 } }, 
+{ id: 10910, name: "the Master of Wire Pull", effects: { "Stamina":10, "Str":10, "Dex":8 } }, 
+{ id: 10911, name: "the Master of Puppet Snare", effects: { "Str":8, "Dex":13 } }, 
+{ id: 10912, name: "the Dual Gun Master", effects: { "Life":15 } }, 
+{ id: 10913, name: "the Master of Reload", effects: { "Stamina":30 } }, 
+{ id: 10914, name: "the Master of Flash Launcher" }, 
+{ id: 10915, name: "the Master of Grapple Shot", effects: { "Defense":10 } }, 
+{ id: 10916, name: "the Master of Bullet Slide", effects: { "Speed":1 } }, 
+{ id: 10917, name: "the Master of Shooting Rush", effects: { "Mana":10, "Stamina":10 } }, 
+{ id: 10918, name: "the Master of Bullet Storm", effects: { "Mana":20, "Stamina":20 } }, 
+{ id: 10919, name: "the Way of the Gun Master" }, 
+{ id: 10920, name: "the Expert Engineer" }, 
+{ id: 10921, name: "the Magic Artisan" }, 
+{ id: 10922, name: "the Mineral Expert" }, 
+{ id: 10923, name: "the Ecologist" }, 
+{ id: 10924, name: "Heavy Armor Master", effects: { "Defense":10, "Protection":5 } }, 
+{ id: 10925, name: "Light Armor Master", effects: { "Defense":6, "Protection":2 } }, 
+{ id: 10926, name: "수리검 마스터", effects: { "Life":15 } }, 
+{ id: 10927, name: "수리검 돌진 마스터", effects: { "Str":10, "Will":10 } }, 
+{ id: 10928, name: "수리검 폭풍 마스터", effects: { "Str":10, "Will":10 } }, 
+{ id: 10929, name: "그림자 속박 마스터", effects: { "Str":10, "Will":10 } }, 
+{ id: 10930, name: "그림자 은신 마스터", effects: { "Str":10, "Will":10 } }, 
+{ id: 10931, name: "수리검 폭쇄 마스터", effects: { "Str":10, "Will":10 } }, 
+{ id: 10932, name: "잿빛 연막술 마스터", effects: { "Str":10, "Will":10, "Defense":10 } }, 
+{ id: 10933, name: "심연의 소환술 마스터", effects: { "Str":10, "Will":10 } }, 
+{ id: 11001, name: "who Saved the Goddess", effects: { "Mana":10, "Will":20, "Luck":20, "MinAttack":1, "MaxAttack":1 } }, 
+{ id: 11002, name: "the Savior of Erinn", effects: { "Life":10, "Mana":10, "Stamina":10, "Int":15, "Dex":15 } }, 
+{ id: 11003, name: "the Dragon Knight", effects: { "Life":30, "Mana":10, "Stamina":10, "Defense":2, "Protection":2 } }, 
+{ id: 11004, name: "the Scoring Master", effects: { "Stamina":10, "Str":10, "Dex":10 } }, 
+{ id: 11005, name: "the Defending Master", effects: { "Int":15, "Dex":15 } }, 
+{ id: 11006, name: "the Stealing Master", effects: { "Str":15, "Will":15 } }, 
+{ id: 11008, name: "the Winner of the Guild Battle", effects: { "Life":-5, "Mana":5, "Stamina":5, "Str":15, "Int":15, "Dex":15, "Will":-15, "Luck":-15, "Exp":1 } }, 
+{ id: 11009, name: "프리미엄 PC방 사용자", effects: { "Str":5, "Int":5, "Dex":5, "Will":5, "Luck":5, "MaxAttack":10 } }, 
+{ id: 11010, name: "the Shadow Hero", effects: { "Will":10, "MinAttack":3, "MaxAttack":3, "Defense":2, "Protection":2 } }, 
+{ id: 11011, name: "the Summer Reveler", effects: { "Stamina":10, "Str":5, "Dex":5 } }, 
+{ id: 11012, name: "The Royal Alchemist" }, 
+{ id: 11013, name: "the Family Oriented" }, 
+{ id: 11014, name: "the Winner of the Guild Battle", effects: { "Life":30, "Mana":30, "Stamina":30, "Str":15, "Int":15, "Dex":15, "Will":15, "Luck":15, "MaxAttack":30, "Exp":1 } }, 
+{ id: 13000, name: "the Master of Knuckles", effects: { "Life":10 } }, 
+{ id: 13001, name: "the Master of Chain Attack", effects: { "Stamina":10, "Will":30 } }, 
+{ id: 13002, name: "the Master of Tumble", effects: { "Mana":10, "Stamina":15, "Protection":2 } }, 
+{ id: 13003, name: "the Master of Respite", effects: { "Life":20, "Stamina":20 } }, 
+{ id: 13004, name: "the Master of Charging Strike", effects: { "Str":15, "Will":15 } }, 
+{ id: 13005, name: "the Master of Focused Fist", effects: { "Str":15, "Will":15 } }, 
+{ id: 13006, name: "the Master of Spinning Uppercut", effects: { "Str":15, "Will":15 } }, 
+{ id: 13007, name: "the Master of Somersault Kick", effects: { "Str":15, "Will":15 } }, 
+{ id: 13008, name: "the Master of Pummel", effects: { "Str":15, "Will":15 } }, 
+{ id: 13009, name: "the Master of Drop Kick", effects: { "Str":15, "Will":15 } }, 
+{ id: 14000, name: "the Master of Shockwave", effects: { "Life":20, "Mana":20, "Str":-15, "Int":15, "Dex":-10 } }, 
+{ id: 14001, name: "the Master of Counter Punch", effects: { "Stamina":30, "Str":20, "Will":20 } }, 
+{ id: 14002, name: "the Master of Spider Trap", effects: { "Dex":15, "Luck":-10, "Crit":10 } }, 
+{ id: 14003, name: "the Master Berserker", effects: { "Life":-50, "Str":25, "Luck":-20, "Crit":10 } }, 
+{ id: 14004, name: "the Toxicologist", effects: { "Life":20, "Mana":20, "Stamina":20 } }, 
+{ id: 14005, name: "Meteor Strike Master", effects: { "MagicAttack":50 } }, 
+{ id: 14006, name: "Spellwalk Master" }, 
+{ id: 14007, name: "Snap Cast Master" }, 
+{ id: 14008, name: "Magic Weapon Master", effects: { "Dex":-30, "MaxAttack":8, "MagicAttack":25 } }, 
+{ id: 15010, name: "그린노기 운동가", effects: { "MaxAttack":10, "MagicAttack":6, "MagicDefense":3, "MagicProtection":3 } }, 
+{ id: 15011, name: "봄의 시작을 함께 한", effects: { "Life":10, "Str":10, "Dex":10, "Luck":15 } }, 
+{ id: 15012, name: "Unknown", effects: { "Life":5, "Will":15, "Luck":5 } }, 
+{ id: 30001, name: "the Tough-looking", effects: { "MaxAttackRate":100, "MinAttackRate":100 } }, 
+{ id: 30002, name: "the Very Tough-looking", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100 } }, 
+{ id: 30003, name: "who Looks Dangerous", effects: { "MinWAttack":-100, "MaxWAttack":100, "MaxAttackRate":100, "MinAttackRate":100 } }, 
+{ id: 30004, name: "who Gambles on a Single Blow", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "CritRate":100 } }, 
+{ id: 30005, name: "who Has Piercing Eyes", effects: { "CritRate":100 } }, 
+{ id: 30006, name: "who Knocked Out a Person at 10", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100 } }, 
+{ id: 30007, name: "the Tank", effects: { "Defense":5, "LifeRate":100 } }, 
+{ id: 30008, name: "the Diligent", effects: { "Defense":1, "LifeRate":100, "StaminaRate":100 } }, 
+{ id: 30009, name: "the Head Figure", effects: { "Defense":3, "Protection":5, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30010, name: "the Weak", effects: { "StaminaRate":100, "LifeRate":100 } }, 
+{ id: 30011, name: "소환된" }, 
+{ id: 30012, name: "the Event" }, 
+{ id: 30013, name: "the Cursed", effects: { "MaxAttackRate":100, "MinAttackRate":100 } }, 
+{ id: 30014, name: "the Resurrected", effects: { "MaxAttackRate":100, "MinAttackRate":100 } }, 
+{ id: 30015, name: "the Desiring", effects: { "MaxAttackRate":100, "MinAttackRate":100 } }, 
+{ id: 30016, name: "the Lost", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30017, name: "the Hungry", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30018, name: "the One with Sharp Teeth", effects: { "MinWAttack":20, "MaxWAttack":20, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30019, name: "the One with Sharp Horn", effects: { "MinWAttack":30, "MaxWAttack":30, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30020, name: "the Angry", effects: { "MinWAttack":40, "MaxWAttack":40, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30021, name: "the Motherless", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30022, name: "the Curious", effects: { "Protection":10, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30023, name: "the Holy", effects: { "Defense":10, "Protection":30, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30024, name: "the Soon to be Extinct", effects: { "Defense":20, "Protection":20, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30025, name: "the Playing Dead", effects: { "Protection":10, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30026, name: "the Dubious", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30027, name: "the Suspicious", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30028, name: "the Unconfirmed", effects: { "Protection":20, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30029, name: "the One that Awoke", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30030, name: "the Awakened", effects: { "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30031, name: "the Recovered", effects: { "Protection":20, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30032, name: "the Unexpected", effects: { "MinWAttack":20, "MaxWAttack":40, "Protection":10, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30033, name: "the Unknown", effects: { "Protection":30, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30034, name: "the Ferocious", effects: { "Protection":10, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30035, name: "the Wary", effects: { "Protection":10, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30036, name: "the Sharp Clawed", effects: { "Protection":10, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30037, name: "the Agitated", effects: { "Protection":10, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
+{ id: 30038, name: "the Ancient", effects: { "Defense":10, "Protection":10, "MaxAttackRate":200, "MinAttackRate":200, "LifeRate":1000, "ManaRate":200, "StaminaRate":200, "HeightRate":200 } }, 
+{ id: 30039, name: "the Rookie" }, 
+{ id: 30040, name: "the Trained" }, 
+{ id: 30041, name: "the Hardened" }, 
+{ id: 30042, name: "the Veteran" }, 
+{ id: 30043, name: "the Top Gun" }, 
+{ id: 30044, name: "the Intermediate Merc Summoner", effects: { "Defense":10, "Protection":5, "Crit":5, "MaxAttackRate":160, "MinAttackRate":160, "LifeRate":160 } }, 
+{ id: 30045, name: "the Advanced Merc Summoner", effects: { "Defense":30, "Protection":14, "Crit":10, "MaxAttackRate":270, "MinAttackRate":270, "LifeRate":270 } }, 
+{ id: 30046, name: "the Hard Merc Summoner", effects: { "Defense":40, "Protection":19, "Crit":15, "MaxAttackRate":420, "MinAttackRate":420, "LifeRate":420 } }, 
+{ id: 30047, name: "the Elite Merc Summoner", effects: { "Defense":60, "Protection":25, "Crit":25, "MaxAttackRate":600, "MinAttackRate":600, "LifeRate":600 } }, 
+{ id: 50000, name: "Erinn Expeditionary Force", effects: { "Mana":10, "Str":10, "Int":10, "Dex":10, "Will":10, "Luck":10, "Defense":1, "Protection":1 } }, 
+{ id: 50012, name: "the Sommelier", effects: { "Int":15, "Dex":-7, "Defense":-4, "Protection":2 } }, 
+{ id: 50013, name: "the Senior Sommelier", effects: { "Int":17, "Dex":-9, "Defense":-6, "Protection":3 } }, 
+{ id: 50014, name: "the Sommelier Sage", effects: { "Int":19, "Dex":-11, "Defense":-9, "Protection":4 } }, 
+{ id: 50015, name: "the Master Sommelier", effects: { "Int":20, "Protection":5 } }, 
+{ id: 50016, name: "the Wine Lover", effects: { "Int":10, "Dex":-5, "Defense":-3, "Protection":1 } }, 
+{ id: 50017, name: "유희킹", effects: { "Str":10, "Luck":10 } }, 
+{ id: 50018, name: "the Truth Seeker", effects: { "Will":5 } }, 
+{ id: 50019, name: "the Ambiguous", effects: { "Luck":5 } }, 
+{ id: 50020, name: "the Liar", effects: { "Int":5 } }, 
+{ id: 50021, name: "조금 약해보이는", effects: { "CP":-250 } }, 
+{ id: 60000, name: "GM", effects: { "Str":200, "Defense":10, "Protection":10 } }, 
+{ id: 60001, name: "devCAT" }, 
+{ id: 60002, name: "devDOG" }, 
+{ id: 65535, name: "Example" }, 
 
 // Transformations
 //---------------------------------------------------------------------------
-11007, "the Giant", Life:+1500, MinAttack:+120, MaxAttack:+130, Defense:+20, Protection:+20
-40001, "the Paladin"
-40002, "the White Knight"
-40003, "the Holy Knight"
-40004, "the Champion"
-41001, "the Dark Knight"
-41002, "the Black Knight"
-41003, "the Chaos Knight"
-41004, "the Infra Black"
-42001, "the Falcon"
-42002, "the Falcon Justice"
-42003, "the Falcon Wave"
-42004, "the Falcon Sage"
-43001, "the Savage Beast"
-43002, "the Beast Slugger"
-43003, "the Iron Beast"
-43004, "the Beast Lord"
+{ id: 11007, name: "the Giant", effects: { "Life":1500, "MinAttack":120, "MaxAttack":130, "Defense":20, "Protection":20 } }, 
+{ id: 40001, name: "the Paladin" }, 
+{ id: 40002, name: "the White Knight" }, 
+{ id: 40003, name: "the Holy Knight" }, 
+{ id: 40004, name: "the Champion" }, 
+{ id: 41001, name: "the Dark Knight" }, 
+{ id: 41002, name: "the Black Knight" }, 
+{ id: 41003, name: "the Chaos Knight" }, 
+{ id: 41004, name: "the Infra Black" }, 
+{ id: 42001, name: "the Falcon" }, 
+{ id: 42002, name: "the Falcon Justice" }, 
+{ id: 42003, name: "the Falcon Wave" }, 
+{ id: 42004, name: "the Falcon Sage" }, 
+{ id: 43001, name: "the Savage Beast" }, 
+{ id: 43002, name: "the Beast Slugger" }, 
+{ id: 43003, name: "the Iron Beast" }, 
+{ id: 43004, name: "the Beast Lord" }, 
 
 // Pets
 //---------------------------------------------------------------------------
-50001, "the Attention Hog"
-50002, "the Money in the Bank"
-50003, "the Almost Healer"
-50004, "the Fashionista"
-50005, "the Precious"
-50006, "the Weakling"
-50007, "the Mobile ER"
-50008, "the Designated Healer"
-50009, "the Lucky Charm"
-50010, "the Boss Slayer"
-50011, "the Ghost Hunter"
+{ id: 50001, name: "the Attention Hog" }, 
+{ id: 50002, name: "the Money in the Bank" }, 
+{ id: 50003, name: "the Almost Healer" }, 
+{ id: 50004, name: "the Fashionista" }, 
+{ id: 50005, name: "the Precious" }, 
+{ id: 50006, name: "the Weakling" }, 
+{ id: 50007, name: "the Mobile ER" }, 
+{ id: 50008, name: "the Designated Healer" }, 
+{ id: 50009, name: "the Lucky Charm" }, 
+{ id: 50010, name: "the Boss Slayer" }, 
+{ id: 50011, name: "the Ghost Hunter" }, 
 
 // Show-off
 //---------------------------------------------------------------------------
-12001, "the Master of Iceball"
-12002, "the Final Heart Master"
-12003, "the Ducky"
-12004, "the Ball Slayer with a Single Blow"
-12005, "the Savor of Erinn"
-12006, "the Elemental Miser"
-12007, "the Impra Black"
-12008, "the Rabbie Seal Faker"
+{ id: 12001, name: "the Master of Iceball" }, 
+{ id: 12002, name: "the Final Heart Master" }, 
+{ id: 12003, name: "the Ducky" }, 
+{ id: 12004, name: "the Ball Slayer with a Single Blow" }, 
+{ id: 12005, name: "the Savor of Erinn" }, 
+{ id: 12006, name: "the Elemental Miser" }, 
+{ id: 12007, name: "the Impra Black" }, 
+{ id: 12008, name: "the Rabbie Seal Faker" }, 
 
 // NPC
 //---------------------------------------------------------------------------
-10183, "the Black Dragon's Honor Guard", Luck:+5
-10186, "Unknown", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
-10187, "Unknown", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
-10188, "Unknown", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
-10189, "Unknown", Life:-5, Mana:+5, Stamina:+5, Str:+15, Int:+15, Dex:+15, Will:-15, Luck:-15, Exp:+1
-10191, "the Love Soldier", Will:+7
-10194, "7년간 사랑한", Str:+7, Int:+7, Dex:+7, Will:+7, Luck:+7
-10200, "the Furious"
-10201, "the Lightning Quick"
-10202, "the Steadfast"
-10203, "the Fiery"
-10300, "the Wise"
-10301, "the Mysterious"
-10302, "the Well-Acquainted"
-10303, "the Mystic"
-10400, "the Meticulous"
-10401, "the Celebrity"
-10402, "the Precise"
-10403, "the Top Gun"
-10500, "the Courteous"
-10601, "Fashionogi Leader", MaxAttack:+5
-10602, "Unknown", Str:+8, Int:+8, Dex:+8, Will:+8, Luck:+8
-10603, "Pierrot", Dex:+7
-10604, "Colossus"
-10605, "Huw", Life:+10, Str:+12, Dex:+12
-10606, "항마", Life:+10, MaxAttack:+4, Protection:+2
-10607, "Bell Fox", Life:+10, MaxAttack:+8
-10608, "Shamala", Life:+20, Stamina:+10
-10609, "the Halloween Haunter", Mana:+15, MagicAttack:+12
-10610, "Hatsune Miku", MaxAttack:+5
-10611, "Kagamine Len", Crit:+2
-10612, "Kagamine Rin", Protection:+3
-10613, "Kaito", MagicAttack:+8
-10614, "Millia", Str:+10, Int:+10, Dex:+10, Will:+10, Luck:+10
-10615, "Homestead", Luck:+10, Speed:+1
-10616, "Merchant Imp", Life:+30, Mana:+20
-10617, "God's Feather"
-10618, "Pan", Defense:+6, Protection:+6
-10619, "Ruwai", Mana:+20, Speed:+1
-10620, "Romeo", MaxAttack:+15, Crit:+12
-10621, "Hamlet", Life:+10, MaxAttack:+15
-10622, "Juliet", Mana:+10, MagicAttack:+24
-10623, "Fleta", MagicAttack:+32
-10624, "Shop Brownie", Stamina:+30, MaxAttack:+8
-10625, "Tarlach", Life:+10, Mana:+20, MagicAttack:+32
-10626, "Claudius", Life:+10, Defense:+6, Protection:+6
-10627, "Castanea", Mana:+20, Stamina:+10, MagicAttack:+28
-10628, "Carasek", Life:+30, Defense:+5, Protection:+5
-10629, "Eabha"
-10630, "Ailla", Defense:+6, Protection:+7
-10631, "Hamelin", Life:+30, Mana:+30
-10632, "Yvona"
-10633, "Effie", MaxAttack:+8
-10634, "Kristell", Mana:+40, MagicAttack:+20
-10635, "Nessa", Stamina:+30, Defense:+5, Protection:+5
-10636, "Endelyon", Mana:+40, Defense:+6, Protection:+6
-10637, "Alissa", Life:+40, Stamina:+30
-10638, "Portia", Stamina:+20, MaxAttack:+12
-10639, "Edern", Stamina:+60
-10640, "Tupai"
-10641, "Eavan", Stamina:+40, Defense:+6, Protection:+6
-10642, "Aer", MagicAttack:+24
-10643, "Succubus Kristell", MagicAttack:+32
-10644, "Duncan", Defense:+8, Protection:+8, Crit:+3
-10645, "Ferghus", Stamina:+40, MaxAttack:+10
-10646, "Andras", Defense:+7, Protection:+7, Crit:+3
-10647, "Mabinogi", MaxAttack:+10, MagicAttack:+20, Crit:+15
-10648, "Ruairi", MaxAttack:+15, Crit:+10
-10649, "Redire", Defense:+8, Protection:+8, Crit:+5
-10650, "Nuadha", Crit:+30
-10651, "Mari", MaxAttack:+15, Crit:+5
-10652, "Dark Lord", Mana:+10, Defense:+9, Protection:+9
-10653, "Dark Ruairi", Life:+10, MaxAttack:+18, Crit:+10
-10654, "Morrighan", Life:+120, Crit:+15
-10655, "Transport Helper Ogre", Stamina:+30, Speed:+1
-10656, "Lileas", Mana:+30, MaxAttack:+9
-10657, "Fomor Token", Life:+40, MaxAttack:+10
-10658, "Ibbie", Life:+40, Defense:+6, Protection:+6
-10659, "Shena", Life:+30, MagicAttack:+12
-10660, "Adniel", MagicAttack:+28, Crit:+10
-10661, "Legatus", MaxAttack:+14, Crit:+10
-10662, "Master Tin", MaxAttack:+10, MagicAttack:+20
-10663, "Scathach", MagicAttack:+40
-10664, "Cichol", Mana:+120, Crit:+15
-10665, "Nao", MaxAttack:+20
-10666, "Neamhain", Stamina:+120, Crit:+15
-10667, "Pierrick", MagicAttack:+12
-10668, "Rua", MagicAttack:+28, Crit:+10
-10669, "Del", Life:+10, Mana:+10, MaxAttack:+10
-10670, "Lassar", Stamina:+40, MagicAttack:+24
-10671, "Bebhinn", Mana:+30, Defense:+5, Protection:+5
-10672, "Emain Macha Beggar", MaxAttack:+12, Crit:+10
-10673, "실장(미적용)"
-10674, "Eirawen", Stamina:+10, Defense:+8, Protection:+8
-10675, "Kusina", MaxAttack:+15, MagicAttack:+12
-10676, "the Lucky Snake", Luck:+30
-10677, "Lucky Bunny", Stamina:+25, Int:+5, Luck:+10
-10678, "아라드 전기", Luck:+30, MaxAttack:+5
-10679, "MapleStory", Luck:+30, Crit:+5
-10682, "8주년을 기념하는", Str:+8, Int:+8, Dex:+8, Will:+8, Luck:+8, MaxAttack:+8, Speed:+8
-10683, "판타지스타", MaxAttack:+20, MagicAttack:+12, MagicDefense:+6, MagicProtection:+6
-10684, "Unknown", Defense:+10, Protection:+10
-10685, "Unknown", MaxAttack:+8, Crit:+5, Speed:+3
-10686, "Unknown", MaxAttack:+10, Defense:+5, Protection:+5
-10687, "Unknown"
-10688, "Unknown"
-10689, "Unknown"
-10690, "Unknown", Str:+10, MaxAttack:+7, Speed:+2
-10691, "Unknown", MagicAttack:+10
-10692, "Unknown", Will:+10, Luck:+15
-10693, "Unknown", Mana:+10, MagicAttack:+24
-10694, "Halloween Party", MagicAttack:+12, MagicDefense:+6, MagicProtection:+6
-10695, "Santa Claus", Str:+10, MaxAttack:+10, Crit:+5
-10696, "Gift Sack", Dex:+10, MinAttack:+5, MaxAttack:+5, Crit:+5
-10697, "Christmas Tree", Will:+10, MinAttack:+10, Crit:+5
-10698, "Red-Nosed", Int:+10, MagicAttack:+10, Crit:+5
-10699, "성전의 영웅", Int:+20, Defense:+6
-15000, "겨울 천사", Mana:+35, MagicAttack:+28
-15001, "크리스마스에 눈이 내리면", Life:+35, MaxAttack:+15, Crit:+10
-15002, "크리스마스에 비나 왔으면", Dex:+12, Will:+20, Luck:+12, MaxAttack:+12
-15003, "빙판길 조심", Stamina:+35, MaxAttack:+10
-15004, "Unknown", MaxAttack:+20, MagicAttack:+18, MagicDefense:+10, MagicProtection:+6
-15005, "Unknown", MaxAttack:+10, MagicDefense:+10, MagicProtection:+6
-15006, "Unknown", MaxAttack:+20, MagicDefense:+12, MagicProtection:+8
-15007, "Unknown", MaxAttack:+10, MagicDefense:+10, MagicProtection:+6
-15008, "Unknown", MaxAttack:+15, MagicDefense:+10, MagicProtection:+6
-15009, "커플 브레이커", Stamina:+50, Str:+15, Will:+30
+{ id: 10183, name: "the Black Dragon's Honor Guard", effects: { "Luck":5 } }, 
+{ id: 10186, name: "Unknown", effects: { "Life":-5, "Mana":5, "Stamina":5, "Str":15, "Int":15, "Dex":15, "Will":-15, "Luck":-15, "Exp":1 } }, 
+{ id: 10187, name: "Unknown", effects: { "Life":-5, "Mana":5, "Stamina":5, "Str":15, "Int":15, "Dex":15, "Will":-15, "Luck":-15, "Exp":1 } }, 
+{ id: 10188, name: "Unknown", effects: { "Life":-5, "Mana":5, "Stamina":5, "Str":15, "Int":15, "Dex":15, "Will":-15, "Luck":-15, "Exp":1 } }, 
+{ id: 10189, name: "Unknown", effects: { "Life":-5, "Mana":5, "Stamina":5, "Str":15, "Int":15, "Dex":15, "Will":-15, "Luck":-15, "Exp":1 } }, 
+{ id: 10191, name: "the Love Soldier", effects: { "Will":7 } }, 
+{ id: 10194, name: "7년간 사랑한", effects: { "Str":7, "Int":7, "Dex":7, "Will":7, "Luck":7 } }, 
+{ id: 10200, name: "the Furious" }, 
+{ id: 10201, name: "the Lightning Quick" }, 
+{ id: 10202, name: "the Steadfast" }, 
+{ id: 10203, name: "the Fiery" }, 
+{ id: 10300, name: "the Wise" }, 
+{ id: 10301, name: "the Mysterious" }, 
+{ id: 10302, name: "the Well-Acquainted" }, 
+{ id: 10303, name: "the Mystic" }, 
+{ id: 10400, name: "the Meticulous" }, 
+{ id: 10401, name: "the Celebrity" }, 
+{ id: 10402, name: "the Precise" }, 
+{ id: 10403, name: "the Top Gun" }, 
+{ id: 10500, name: "the Courteous" }, 
+{ id: 10601, name: "Fashionogi Leader", effects: { "MaxAttack":5 } }, 
+{ id: 10602, name: "Unknown", effects: { "Str":8, "Int":8, "Dex":8, "Will":8, "Luck":8 } }, 
+{ id: 10603, name: "Pierrot", effects: { "Dex":7 } }, 
+{ id: 10604, name: "Colossus" }, 
+{ id: 10605, name: "Huw", effects: { "Life":10, "Str":12, "Dex":12 } }, 
+{ id: 10606, name: "항마", effects: { "Life":10, "MaxAttack":4, "Protection":2 } }, 
+{ id: 10607, name: "Bell Fox", effects: { "Life":10, "MaxAttack":8 } }, 
+{ id: 10608, name: "Shamala", effects: { "Life":20, "Stamina":10 } }, 
+{ id: 10609, name: "the Halloween Haunter", effects: { "Mana":15, "MagicAttack":12 } }, 
+{ id: 10610, name: "Hatsune Miku", effects: { "MaxAttack":5 } }, 
+{ id: 10611, name: "Kagamine Len", effects: { "Crit":2 } }, 
+{ id: 10612, name: "Kagamine Rin", effects: { "Protection":3 } }, 
+{ id: 10613, name: "Kaito", effects: { "MagicAttack":8 } }, 
+{ id: 10614, name: "Millia", effects: { "Str":10, "Int":10, "Dex":10, "Will":10, "Luck":10 } }, 
+{ id: 10615, name: "Homestead", effects: { "Luck":10, "Speed":1 } }, 
+{ id: 10616, name: "Merchant Imp", effects: { "Life":30, "Mana":20 } }, 
+{ id: 10617, name: "God's Feather" }, 
+{ id: 10618, name: "Pan", effects: { "Defense":6, "Protection":6 } }, 
+{ id: 10619, name: "Ruwai", effects: { "Mana":20, "Speed":1 } }, 
+{ id: 10620, name: "Romeo", effects: { "MaxAttack":15, "Crit":12 } }, 
+{ id: 10621, name: "Hamlet", effects: { "Life":10, "MaxAttack":15 } }, 
+{ id: 10622, name: "Juliet", effects: { "Mana":10, "MagicAttack":24 } }, 
+{ id: 10623, name: "Fleta", effects: { "MagicAttack":32 } }, 
+{ id: 10624, name: "Shop Brownie", effects: { "Stamina":30, "MaxAttack":8 } }, 
+{ id: 10625, name: "Tarlach", effects: { "Life":10, "Mana":20, "MagicAttack":32 } }, 
+{ id: 10626, name: "Claudius", effects: { "Life":10, "Defense":6, "Protection":6 } }, 
+{ id: 10627, name: "Castanea", effects: { "Mana":20, "Stamina":10, "MagicAttack":28 } }, 
+{ id: 10628, name: "Carasek", effects: { "Life":30, "Defense":5, "Protection":5 } }, 
+{ id: 10629, name: "Eabha" }, 
+{ id: 10630, name: "Ailla", effects: { "Defense":6, "Protection":7 } }, 
+{ id: 10631, name: "Hamelin", effects: { "Life":30, "Mana":30 } }, 
+{ id: 10632, name: "Yvona" }, 
+{ id: 10633, name: "Effie", effects: { "MaxAttack":8 } }, 
+{ id: 10634, name: "Kristell", effects: { "Mana":40, "MagicAttack":20 } }, 
+{ id: 10635, name: "Nessa", effects: { "Stamina":30, "Defense":5, "Protection":5 } }, 
+{ id: 10636, name: "Endelyon", effects: { "Mana":40, "Defense":6, "Protection":6 } }, 
+{ id: 10637, name: "Alissa", effects: { "Life":40, "Stamina":30 } }, 
+{ id: 10638, name: "Portia", effects: { "Stamina":20, "MaxAttack":12 } }, 
+{ id: 10639, name: "Edern", effects: { "Stamina":60 } }, 
+{ id: 10640, name: "Tupai" }, 
+{ id: 10641, name: "Eavan", effects: { "Stamina":40, "Defense":6, "Protection":6 } }, 
+{ id: 10642, name: "Aer", effects: { "MagicAttack":24 } }, 
+{ id: 10643, name: "Succubus Kristell", effects: { "MagicAttack":32 } }, 
+{ id: 10644, name: "Duncan", effects: { "Defense":8, "Protection":8, "Crit":3 } }, 
+{ id: 10645, name: "Ferghus", effects: { "Stamina":40, "MaxAttack":10 } }, 
+{ id: 10646, name: "Andras", effects: { "Defense":7, "Protection":7, "Crit":3 } }, 
+{ id: 10647, name: "Mabinogi", effects: { "MaxAttack":10, "MagicAttack":20, "Crit":15 } }, 
+{ id: 10648, name: "Ruairi", effects: { "MaxAttack":15, "Crit":10 } }, 
+{ id: 10649, name: "Redire", effects: { "Defense":8, "Protection":8, "Crit":5 } }, 
+{ id: 10650, name: "Nuadha", effects: { "Crit":30 } }, 
+{ id: 10651, name: "Mari", effects: { "MaxAttack":15, "Crit":5 } }, 
+{ id: 10652, name: "Dark Lord", effects: { "Mana":10, "Defense":9, "Protection":9 } }, 
+{ id: 10653, name: "Dark Ruairi", effects: { "Life":10, "MaxAttack":18, "Crit":10 } }, 
+{ id: 10654, name: "Morrighan", effects: { "Life":120, "Crit":15 } }, 
+{ id: 10655, name: "Transport Helper Ogre", effects: { "Stamina":30, "Speed":1 } }, 
+{ id: 10656, name: "Lileas", effects: { "Mana":30, "MaxAttack":9 } }, 
+{ id: 10657, name: "Fomor Token", effects: { "Life":40, "MaxAttack":10 } }, 
+{ id: 10658, name: "Ibbie", effects: { "Life":40, "Defense":6, "Protection":6 } }, 
+{ id: 10659, name: "Shena", effects: { "Life":30, "MagicAttack":12 } }, 
+{ id: 10660, name: "Adniel", effects: { "MagicAttack":28, "Crit":10 } }, 
+{ id: 10661, name: "Legatus", effects: { "MaxAttack":14, "Crit":10 } }, 
+{ id: 10662, name: "Master Tin", effects: { "MaxAttack":10, "MagicAttack":20 } }, 
+{ id: 10663, name: "Scathach", effects: { "MagicAttack":40 } }, 
+{ id: 10664, name: "Cichol", effects: { "Mana":120, "Crit":15 } }, 
+{ id: 10665, name: "Nao", effects: { "MaxAttack":20 } }, 
+{ id: 10666, name: "Neamhain", effects: { "Stamina":120, "Crit":15 } }, 
+{ id: 10667, name: "Pierrick", effects: { "MagicAttack":12 } }, 
+{ id: 10668, name: "Rua", effects: { "MagicAttack":28, "Crit":10 } }, 
+{ id: 10669, name: "Del", effects: { "Life":10, "Mana":10, "MaxAttack":10 } }, 
+{ id: 10670, name: "Lassar", effects: { "Stamina":40, "MagicAttack":24 } }, 
+{ id: 10671, name: "Bebhinn", effects: { "Mana":30, "Defense":5, "Protection":5 } }, 
+{ id: 10672, name: "Emain Macha Beggar", effects: { "MaxAttack":12, "Crit":10 } }, 
+{ id: 10673, name: "실장(미적용)" }, 
+{ id: 10674, name: "Eirawen", effects: { "Stamina":10, "Defense":8, "Protection":8 } }, 
+{ id: 10675, name: "Kusina", effects: { "MaxAttack":15, "MagicAttack":12 } }, 
+{ id: 10676, name: "the Lucky Snake", effects: { "Luck":30 } }, 
+{ id: 10677, name: "Lucky Bunny", effects: { "Stamina":25, "Int":5, "Luck":10 } }, 
+{ id: 10678, name: "아라드 전기", effects: { "Luck":30, "MaxAttack":5 } }, 
+{ id: 10679, name: "MapleStory", effects: { "Luck":30, "Crit":5 } }, 
+{ id: 10682, name: "8주년을 기념하는", effects: { "Str":8, "Int":8, "Dex":8, "Will":8, "Luck":8, "MaxAttack":8, "Speed":8 } }, 
+{ id: 10683, name: "판타지스타", effects: { "MaxAttack":20, "MagicAttack":12, "MagicDefense":6, "MagicProtection":6 } }, 
+{ id: 10684, name: "Unknown", effects: { "Defense":10, "Protection":10 } }, 
+{ id: 10685, name: "Unknown", effects: { "MaxAttack":8, "Crit":5, "Speed":3 } }, 
+{ id: 10686, name: "Unknown", effects: { "MaxAttack":10, "Defense":5, "Protection":5 } }, 
+{ id: 10687, name: "Unknown" }, 
+{ id: 10688, name: "Unknown" }, 
+{ id: 10689, name: "Unknown" }, 
+{ id: 10690, name: "Unknown", effects: { "Str":10, "MaxAttack":7, "Speed":2 } }, 
+{ id: 10691, name: "Unknown", effects: { "MagicAttack":10 } }, 
+{ id: 10692, name: "Unknown", effects: { "Will":10, "Luck":15 } }, 
+{ id: 10693, name: "Unknown", effects: { "Mana":10, "MagicAttack":24 } }, 
+{ id: 10694, name: "Halloween Party", effects: { "MagicAttack":12, "MagicDefense":6, "MagicProtection":6 } }, 
+{ id: 10695, name: "Santa Claus", effects: { "Str":10, "MaxAttack":10, "Crit":5 } }, 
+{ id: 10696, name: "Gift Sack", effects: { "Dex":10, "MinAttack":5, "MaxAttack":5, "Crit":5 } }, 
+{ id: 10697, name: "Christmas Tree", effects: { "Will":10, "MinAttack":10, "Crit":5 } }, 
+{ id: 10698, name: "Red-Nosed", effects: { "Int":10, "MagicAttack":10, "Crit":5 } }, 
+{ id: 10699, name: "성전의 영웅", effects: { "Int":20, "Defense":6 } }, 
+{ id: 15000, name: "겨울 천사", effects: { "Mana":35, "MagicAttack":28 } }, 
+{ id: 15001, name: "크리스마스에 눈이 내리면", effects: { "Life":35, "MaxAttack":15, "Crit":10 } }, 
+{ id: 15002, name: "크리스마스에 비나 왔으면", effects: { "Dex":12, "Will":20, "Luck":12, "MaxAttack":12 } }, 
+{ id: 15003, name: "빙판길 조심", effects: { "Stamina":35, "MaxAttack":10 } }, 
+{ id: 15004, name: "Unknown", effects: { "MaxAttack":20, "MagicAttack":18, "MagicDefense":10, "MagicProtection":6 } }, 
+{ id: 15005, name: "Unknown", effects: { "MaxAttack":10, "MagicDefense":10, "MagicProtection":6 } }, 
+{ id: 15006, name: "Unknown", effects: { "MaxAttack":20, "MagicDefense":12, "MagicProtection":8 } }, 
+{ id: 15007, name: "Unknown", effects: { "MaxAttack":10, "MagicDefense":10, "MagicProtection":6 } }, 
+{ id: 15008, name: "Unknown", effects: { "MaxAttack":15, "MagicDefense":10, "MagicProtection":6 } }, 
+{ id: 15009, name: "커플 브레이커", effects: { "Stamina":50, "Str":15, "Will":30 } }, 
+]

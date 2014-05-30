@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
 
 namespace Aura.Data.Database
 {
@@ -13,33 +14,30 @@ namespace Aura.Data.Database
 		public ushort Id { get; set; }
 		public string Name { get; set; }
 		public Dictionary<string, float> Effects { get; set; }
+
+		public TitleData()
+		{
+			this.Effects = new Dictionary<string, float>();
+		}
 	}
 
 	/// <summary>
 	/// Indexed by title id.
 	/// </summary>
-	public class TitleDb : DatabaseCsvIndexed<int, TitleData>
+	public class TitleDb : DatabaseJsonIndexed<int, TitleData>
 	{
-		[MinFieldCount(2)]
-		protected override void ReadEntry(CsvEntry entry)
+		[Mandatory("id", "name")]
+		protected override void ReadEntry(JObject entry)
 		{
 			var data = new TitleData();
-			data.Id = entry.ReadUShort();
-			data.Name = entry.ReadString();
-			data.Effects = new Dictionary<string, float>();
+			data.Id = entry.ReadUShort("id");
+			data.Name = entry.ReadString("name");
 
-			while (!entry.End)
+			// Effects
+			if (entry["effects"] != null)
 			{
-				var sEffects = entry.ReadString().Trim();
-				var splitted = sEffects.Split(':');
-				if (splitted.Length != 2)
-					throw new CsvDatabaseWarningException("Invalid effect format: " + sEffects);
-
-				float val;
-				if (!float.TryParse(splitted[1], NumberStyles.Float, CultureInfo.InvariantCulture, out val))
-					throw new CsvDatabaseWarningException("Invalid effect value: " + splitted[1].Trim());
-
-				data.Effects[splitted[0].Trim()] = val;
+				foreach (var effect in (IDictionary<string, JToken>)entry["effects"])
+					data.Effects[effect.Key] = (float)effect.Value;
 			}
 
 			this.Entries[data.Id] = data;
