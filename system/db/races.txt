@@ -1,10 +1,10 @@
 // Aura
 // Database file
 // 
-// Values: id, name, group, tags, gender, vehicleType, runSpeedFactor, state, invWidth, invHheight, attackMin, attackMax, range, attackSpeed, knockCount, critical, criticalRate, splashRadius, splashAngle, splashDamage, stand, ai, color1, color2, color3, size, cp, life, defense, protection, element, exp, goldMin, goldMax, [drops], [skills], [items]
+// Values: id, name, group, tags, gender, vehicleType, runSpeedFactor, state, invWidth, invHheight, attackMin, attackMax, range, attackSpeed, knockCount, critical, criticalRate, splashRadius, splashAngle, splashDamage, stand, ai, color1, color2, color3, size, [eyeColor], [eyeType], [mouthType], [skinColor], cp, life, defense, protection, element, exp, goldMin, goldMax, [drops], [skills], [equip]
 //   Drop Values: itemId, chance
 //   Skill Values: skillId, rank
-//   Item Values: itemId, [pocket], [color1], [color2], [color3]
+//   Equip Values: itemId, pocket, [color1], [color2], [color3]
 // 
 // gender: 0 None, 1 Female, 2 Male, 3 Universal
 // 
