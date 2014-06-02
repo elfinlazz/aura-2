@@ -53,10 +53,11 @@ namespace Aura.Channel.World.Entities
 		{
 			base.LoadDefault(fullyFunctional);
 
+			var rnd = RandomProvider.Get();
+
+			// Equipment
 			foreach (var itemData in this.RaceData.Equip)
 			{
-				var rnd = RandomProvider.Get();
-
 				var item = new Item(itemData.GetRandomId(rnd));
 				if (itemData.Color1s.Count > 0) item.Info.Color1 = itemData.GetRandomColor1(rnd);
 				if (itemData.Color2s.Count > 0) item.Info.Color2 = itemData.GetRandomColor2(rnd);
@@ -66,6 +67,12 @@ namespace Aura.Channel.World.Entities
 				if (pocket != Pocket.None)
 					this.Inventory.Add(item, pocket);
 			}
+
+			// Face
+			if (this.RaceData.Face.EyeColors.Count > 0) this.EyeColor = (byte)this.RaceData.Face.GetRandomEyeColor(rnd);
+			if (this.RaceData.Face.EyeTypes.Count > 0) this.EyeType = (byte)this.RaceData.Face.GetRandomEyeType(rnd);
+			if (this.RaceData.Face.MouthTypes.Count > 0) this.MouthType = (byte)this.RaceData.Face.GetRandomMouthType(rnd);
+			if (this.RaceData.Face.SkinColors.Count > 0) this.SkinColor = (byte)this.RaceData.Face.GetRandomSkinColor(rnd);
 		}
 
 		/// <summary>

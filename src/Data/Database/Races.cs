@@ -27,6 +27,7 @@ namespace Aura.Data.Database
 		public uint Color1 { get; set; }
 		public uint Color2 { get; set; }
 		public uint Color3 { get; set; }
+		public RaceFaceData Face { get; set; }
 
 		public float RunningSpeed { get; set; }
 		public float WalkingSpeed { get; set; }
@@ -66,6 +67,7 @@ namespace Aura.Data.Database
 			this.Drops = new List<DropData>();
 			this.Skills = new List<RaceSkillData>();
 			this.Equip = new List<RaceItemData>();
+			this.Face = new RaceFaceData();
 		}
 
 		public bool Is(RaceStands stand)
@@ -146,6 +148,55 @@ namespace Aura.Data.Database
 		}
 	}
 
+	[Serializable]
+	public class RaceFaceData
+	{
+		public List<int> EyeColors { get; set; }
+		public List<int> EyeTypes { get; set; }
+		public List<int> MouthTypes { get; set; }
+		public List<int> SkinColors { get; set; }
+
+		public RaceFaceData()
+		{
+			this.EyeColors = new List<int>();
+			this.EyeTypes = new List<int>();
+			this.MouthTypes = new List<int>();
+			this.SkinColors = new List<int>();
+		}
+
+		public int GetRandomEyeColor(Random rnd)
+		{
+			if (this.EyeColors.Count == 0)
+				return 0;
+
+			return this.EyeColors[rnd.Next(this.EyeColors.Count)];
+		}
+
+		public int GetRandomEyeType(Random rnd)
+		{
+			if (this.EyeTypes.Count == 0)
+				return 0;
+
+			return this.EyeTypes[rnd.Next(this.EyeTypes.Count)];
+		}
+
+		public int GetRandomMouthType(Random rnd)
+		{
+			if (this.MouthTypes.Count == 0)
+				return 0;
+
+			return this.MouthTypes[rnd.Next(this.MouthTypes.Count)];
+		}
+
+		public int GetRandomSkinColor(Random rnd)
+		{
+			if (this.SkinColors.Count == 0)
+				return 0;
+
+			return this.SkinColors[rnd.Next(this.SkinColors.Count)];
+		}
+	}
+
 	public enum RaceStands : int
 	{
 		KnockBackable = 0x01,
@@ -191,13 +242,37 @@ namespace Aura.Data.Database
 			raceData.SplashAngle = entry.ReadInt("splashAngle");
 			raceData.SplashDamage = entry.ReadFloat("splashDamage");
 			raceData.Stand = (RaceStands)entry.ReadInt("stand");
-
-			// Stat Info
 			raceData.AI = entry.ReadString("ai");
+
+			// Looks
+			raceData.Size = entry.ReadFloat("size");
 			raceData.Color1 = entry.ReadUInt("color1");
 			raceData.Color2 = entry.ReadUInt("color2");
 			raceData.Color3 = entry.ReadUInt("color3");
-			raceData.Size = entry.ReadFloat("size");
+
+			// Face
+			Action<string, JObject, List<int>> readArrOrIntCol = (col, obj, list) =>
+			{
+				if (obj[col] != null)
+				{
+					if (obj[col].Type == JTokenType.Integer)
+					{
+						list.Add(obj.ReadInt(col));
+					}
+					else if (obj[col].Type == JTokenType.Array)
+					{
+						foreach (var id in obj[col])
+							list.Add((int)id);
+					}
+				}
+			};
+
+			readArrOrIntCol("eyeColor", entry, raceData.Face.EyeColors);
+			readArrOrIntCol("eyeType", entry, raceData.Face.EyeTypes);
+			readArrOrIntCol("mouthType", entry, raceData.Face.MouthTypes);
+			readArrOrIntCol("skinColor", entry, raceData.Face.SkinColors);
+
+			// Stat Info
 			raceData.CombatPower = entry.ReadFloat("cp");
 			raceData.Life = entry.ReadFloat("life");
 			raceData.Defense = entry.ReadInt("defense");
