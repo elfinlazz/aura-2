@@ -65,59 +65,84 @@ namespace Aura.Channel.Database
 
 				// Characters
 				// ----------------------------------------------------------
-				using (var mc = new MySqlCommand("SELECT * FROM `characters` WHERE `accountId` = @accountId", conn))
+				var creatureId = 0L;
+				try
 				{
-					mc.Parameters.AddWithValue("@accountId", accountId);
-
-					using (var reader = mc.ExecuteReader())
+					using (var mc = new MySqlCommand("SELECT * FROM `characters` WHERE `accountId` = @accountId", conn))
 					{
-						while (reader.Read())
-						{
-							var character = this.GetCharacter<Character>(account, reader.GetInt64("entityId"), "characters");
-							if (character == null)
-								continue;
+						mc.Parameters.AddWithValue("@accountId", accountId);
 
-							account.Characters.Add(character);
+						using (var reader = mc.ExecuteReader())
+						{
+							while (reader.Read())
+							{
+								creatureId = reader.GetInt64("entityId");
+								var character = this.GetCharacter<Character>(account, creatureId, "characters");
+								if (character == null)
+									continue;
+
+								account.Characters.Add(character);
+							}
 						}
 					}
+				}
+				catch (Exception ex)
+				{
+					Log.Exception(ex, "Problem while loading character '{0}'.", creatureId);
 				}
 
 				// Pets
 				// ----------------------------------------------------------
-				using (var mc = new MySqlCommand("SELECT * FROM `pets` WHERE `accountId` = @accountId", conn))
+				creatureId = 0L;
+				try
 				{
-					mc.Parameters.AddWithValue("@accountId", accountId);
-
-					using (var reader = mc.ExecuteReader())
+					using (var mc = new MySqlCommand("SELECT * FROM `pets` WHERE `accountId` = @accountId", conn))
 					{
-						while (reader.Read())
-						{
-							var character = this.GetCharacter<Pet>(account, reader.GetInt64("entityId"), "pets");
-							if (character == null)
-								continue;
+						mc.Parameters.AddWithValue("@accountId", accountId);
 
-							account.Pets.Add(character);
+						using (var reader = mc.ExecuteReader())
+						{
+							while (reader.Read())
+							{
+								var character = this.GetCharacter<Pet>(account, reader.GetInt64("entityId"), "pets");
+								if (character == null)
+									continue;
+
+								account.Pets.Add(character);
+							}
 						}
 					}
+				}
+				catch (Exception ex)
+				{
+					Log.Exception(ex, "Problem while loading pet '{0}'.", creatureId);
 				}
 
 				// Partners
 				// ----------------------------------------------------------
-				using (var mc = new MySqlCommand("SELECT * FROM `partners` WHERE `accountId` = @accountId", conn))
+				creatureId = 0L;
+				try
 				{
-					mc.Parameters.AddWithValue("@accountId", accountId);
-
-					using (var reader = mc.ExecuteReader())
+					using (var mc = new MySqlCommand("SELECT * FROM `partners` WHERE `accountId` = @accountId", conn))
 					{
-						while (reader.Read())
-						{
-							var character = this.GetCharacter<Pet>(account, reader.GetInt64("entityId"), "partners");
-							if (character == null)
-								continue;
+						mc.Parameters.AddWithValue("@accountId", accountId);
 
-							account.Pets.Add(character);
+						using (var reader = mc.ExecuteReader())
+						{
+							while (reader.Read())
+							{
+								var character = this.GetCharacter<Pet>(account, reader.GetInt64("entityId"), "partners");
+								if (character == null)
+									continue;
+
+								account.Pets.Add(character);
+							}
 						}
 					}
+				}
+				catch (Exception ex)
+				{
+					Log.Exception(ex, "Problem while loading partner '{0}'.", creatureId);
 				}
 			}
 

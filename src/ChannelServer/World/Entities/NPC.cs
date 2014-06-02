@@ -49,6 +49,25 @@ namespace Aura.Channel.World.Entities
 				this.AI.Dispose();
 		}
 
+		public override void LoadDefault(bool fullyFunctional = true)
+		{
+			base.LoadDefault(fullyFunctional);
+
+			foreach (var itemData in this.RaceData.Equip)
+			{
+				var rnd = RandomProvider.Get();
+
+				var item = new Item(itemData.GetRandomId(rnd));
+				if (itemData.Color1s.Count > 0) item.Info.Color1 = itemData.GetRandomColor1(rnd);
+				if (itemData.Color2s.Count > 0) item.Info.Color2 = itemData.GetRandomColor2(rnd);
+				if (itemData.Color3s.Count > 0) item.Info.Color3 = itemData.GetRandomColor3(rnd);
+
+				var pocket = (Pocket)itemData.Pocket;
+				if (pocket != Pocket.None)
+					this.Inventory.Add(item, pocket);
+			}
+		}
+
 		/// <summary>
 		/// Moves NPC to target location and adds it to the region.
 		/// Returns false if region doesn't exist.

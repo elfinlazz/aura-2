@@ -556,7 +556,7 @@ namespace Aura.Channel.World.Entities
 		/// Loads race and handles some basic stuff, like adding regens.
 		/// </summary>
 		/// <param name="fullyFunctional">Fully functional creatures have an inv, regens, etc.</param>
-		public void LoadDefault(bool fullyFunctional = true)
+		public virtual void LoadDefault(bool fullyFunctional = true)
 		{
 			if (this.Race == 0)
 				throw new Exception("Set race before calling LoadDefault.");

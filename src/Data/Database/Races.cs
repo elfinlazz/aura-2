@@ -56,14 +56,16 @@ namespace Aura.Data.Database
 
 		public int GoldMin { get; set; }
 		public int GoldMax { get; set; }
-		public List<DropData> Drops { get; set; }
 
+		public List<DropData> Drops { get; set; }
 		public List<RaceSkillData> Skills { get; set; }
+		public List<RaceItemData> Equip { get; set; }
 
 		public RaceData()
 		{
 			this.Drops = new List<DropData>();
 			this.Skills = new List<RaceSkillData>();
+			this.Equip = new List<RaceItemData>();
 		}
 
 		public bool Is(RaceStands stand)
@@ -95,6 +97,53 @@ namespace Aura.Data.Database
 		public int RaceId { get; set; }
 		public ushort SkillId { get; set; }
 		public byte Rank { get; set; }
+	}
+
+	[Serializable]
+	public class RaceItemData
+	{
+		public List<int> ItemIds { get; set; }
+		public int Pocket { get; set; }
+		public List<uint> Color1s { get; set; }
+		public List<uint> Color2s { get; set; }
+		public List<uint> Color3s { get; set; }
+
+		public RaceItemData()
+		{
+			this.ItemIds = new List<int>();
+			this.Color1s = new List<uint>();
+			this.Color2s = new List<uint>();
+			this.Color3s = new List<uint>();
+		}
+
+		public int GetRandomId(Random rnd)
+		{
+			return this.ItemIds[rnd.Next(this.ItemIds.Count)];
+		}
+
+		public uint GetRandomColor1(Random rnd)
+		{
+			if (this.Color1s.Count == 0)
+				return uint.MaxValue;
+
+			return this.Color1s[rnd.Next(this.Color1s.Count)];
+		}
+
+		public uint GetRandomColor2(Random rnd)
+		{
+			if (this.Color2s.Count == 0)
+				return uint.MaxValue;
+
+			return this.Color2s[rnd.Next(this.Color2s.Count)];
+		}
+
+		public uint GetRandomColor3(Random rnd)
+		{
+			if (this.Color3s.Count == 0)
+				return uint.MaxValue;
+
+			return this.Color3s[rnd.Next(this.Color3s.Count)];
+		}
 	}
 
 	public enum RaceStands : int
@@ -129,7 +178,7 @@ namespace Aura.Data.Database
 			raceData.RunSpeedFactor = entry.ReadFloat("runSpeedFactor");
 			raceData.DefaultState = entry.ReadUInt("state");
 			raceData.InventoryWidth = entry.ReadInt("invWidth");
-			raceData.InventoryHeight = entry.ReadInt("invHheight");
+			raceData.InventoryHeight = entry.ReadInt("invHeight");
 			raceData.AttackSkill = 23002; // Combat Mastery, they all use this anyway.
 			raceData.AttackMin = entry.ReadInt("attackMin");
 			raceData.AttackMax = entry.ReadInt("attackMax");
@@ -194,6 +243,79 @@ namespace Aura.Data.Database
 					else skillData.Rank = (byte)(16 - int.Parse(rank, NumberStyles.HexNumber));
 
 					raceData.Skills.Add(skillData);
+				}
+			}
+
+			// Items
+			if (entry.ContainsKeys("equip"))
+			{
+				foreach (JObject item in entry["equip"].Where(a => a.Type == JTokenType.Object))
+				{
+					item.AssertNotMissing("itemId", "pocket");
+
+					var itemData = new RaceItemData();
+
+					// Item ids
+					if (item["itemId"].Type == JTokenType.Integer)
+					{
+						itemData.ItemIds.Add(item.ReadInt("itemId"));
+					}
+					else if (item["itemId"].Type == JTokenType.Array)
+					{
+						foreach (var id in item["itemId"])
+							itemData.ItemIds.Add((int)id);
+					}
+
+					// Check that we got ids
+					if (itemData.ItemIds.Count == 0)
+						throw new MandatoryValueException(null, "itemId", item);
+
+					// Color 1
+					if (item["color1"] != null)
+					{
+						if (item["color1"].Type == JTokenType.Integer)
+						{
+							itemData.Color1s.Add(item.ReadUInt("color1"));
+						}
+						else if (item["color1"].Type == JTokenType.Array)
+						{
+							foreach (var id in item["color1"])
+								itemData.Color1s.Add((uint)id);
+						}
+					}
+
+					// Color 2
+					if (item["color2"] != null)
+					{
+						if (item["color2"].Type == JTokenType.Integer)
+						{
+							itemData.Color2s.Add(item.ReadUInt("color2"));
+						}
+						else if (item["color2"].Type == JTokenType.Array)
+						{
+							foreach (var id in item["color2"])
+								itemData.Color2s.Add((uint)id);
+						}
+					}
+
+					// Color 3
+					if (item["color3"] != null)
+					{
+						if (item["color3"].Type == JTokenType.Integer)
+						{
+							itemData.Color3s.Add(item.ReadUInt("color3"));
+						}
+						else if (item["color3"].Type == JTokenType.Array)
+						{
+							foreach (var id in item["color3"])
+								itemData.Color3s.Add((uint)id);
+						}
+					}
+
+					// Pocket
+					itemData.Pocket = item.ReadInt("pocket");
+
+					raceData.Equip.Add(itemData);
 				}
 			}
 
