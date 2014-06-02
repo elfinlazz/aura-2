@@ -111,30 +111,66 @@ namespace Aura.Data
 
 			if (!fromFiles)
 			{
-				using (var stream = new FileStream(cache, FileMode.OpenOrCreate))
+				if (!this.LoadFromCache(cache))
+					this.LoadFromFiles(files);
+			}
+			else
+			{
+				this.LoadFromFiles(files);
+				this.CreateCache(cache);
+			}
+
+			return this.Entries.Count;
+		}
+
+		protected void LoadFromFiles(string[] paths)
+		{
+			foreach (var path in paths.Where(a => File.Exists(a)))
+				this.LoadFromFile(path);
+		}
+
+		protected bool LoadFromCache(string path)
+		{
+			try
+			{
+				using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
 				{
 					var serializer = MessagePackSerializer.Create<TList>();
 					this.Entries = serializer.Unpack(stream);
 				}
 			}
-			else
+			catch (IOException)
 			{
-				foreach (var path in files.Where(a => File.Exists(a)))
-					this.LoadFromFile(path);
+				// One server trying to read while the other one is still
+				// creating the cache.
+				return false;
+			}
 
-				// Only create cache, that would be used on the next run,
-				// if everything went smoothly.
-				if (this.Entries.Count > 0 && this.Warnings.Count == 0)
+			return true;
+		}
+
+		protected bool CreateCache(string path)
+		{
+			// Only create cache if everything went smoothly.
+			if (this.Entries.Count > 0 && this.Warnings.Count == 0)
+			{
+				try
 				{
-					using (var stream = new FileStream(cache, FileMode.OpenOrCreate))
+					using (var stream = new FileStream(path, FileMode.OpenOrCreate))
 					{
 						var serializer = MessagePackSerializer.Create<TList>();
 						serializer.Pack(stream, this.Entries);
 					}
+
+					return true;
+				}
+				catch (IOException)
+				{
+					// Multiple servers trying to create the cache, doesn't matter if one fails.
 				}
 			}
 
-			return this.Entries.Count;
+			return false;
 		}
 
 		protected abstract void LoadFromFile(string path);
