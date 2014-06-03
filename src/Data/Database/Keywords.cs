@@ -35,7 +35,12 @@ namespace Aura.Data.Database
 			info.Name = entry.ReadString("name");
 
 			this.Entries[info.Name] = info;
-			this.IdEntries[info.Id] = info;
+		}
+
+		protected override void AfterLoad()
+		{
+			foreach (var entry in this.Entries.Values)
+				this.IdEntries[entry.Id] = entry;
 		}
 	}
 }
