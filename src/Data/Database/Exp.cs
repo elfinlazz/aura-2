@@ -79,7 +79,10 @@ namespace Aura.Data.Database
 
 				this.Entries.Add(info);
 			}
+		}
 
+		protected override void AfterLoad()
+		{
 			this.MaxLevel = this.Entries.Count;
 			this.MaxExp = this.GetTotalForNextLevel(this.MaxLevel);
 		}

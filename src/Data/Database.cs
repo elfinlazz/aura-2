@@ -120,6 +120,8 @@ namespace Aura.Data
 				this.CreateCache(cache);
 			}
 
+			this.AfterLoad();
+
 			return this.Entries.Count;
 		}
 
@@ -174,5 +176,7 @@ namespace Aura.Data
 		}
 
 		protected abstract void LoadFromFile(string path);
+
+		protected virtual void AfterLoad() { }
 	}
 }
