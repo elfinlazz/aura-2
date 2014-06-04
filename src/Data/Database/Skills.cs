@@ -138,6 +138,7 @@ namespace Aura.Data.Database
 			skillInfo.Name = entry.ReadString("name");
 			skillInfo.MasterTitle = entry.ReadUShort("masterTitle");
 
+			// Ranks
 			skillInfo.RankData = new Dictionary<int, Dictionary<int, SkillRankData>>();
 			foreach (JObject rank in entry["ranks"].Where(a => a.Type == JTokenType.Object))
 			{
@@ -200,7 +201,45 @@ namespace Aura.Data.Database
 				skillInfo.RankData[rankInfo.Race][rankInfo.Rank] = rankInfo;
 			}
 
+			// Max Rank
+			if (skillInfo.RankData.Count > 0)
+			{
+				// Rank list for first race
+				var rankList = skillInfo.RankData.Values.First();
+				// Last rank is the max
+				skillInfo.MaxRank = rankList.Values.Last().Rank;
+			}
+
 			this.Entries[skillInfo.Id] = skillInfo;
+		}
+
+		protected override void AfterLoad()
+		{
+			// Total bonuses for all ranks of all skills
+			foreach (var skillList in this.Entries.Values.Select(a => a.RankData))
+			{
+				foreach (var raceList in skillList.Values)
+				{
+					float lifeT = 0, manaT = 0, staminaT = 0, strT = 0, intT = 0, dexT = 0, willT = 0, luckT = 0;
+
+					for (byte i = 0; i <= 18; i++) // Novice -> D3
+					{
+						var sInfo = raceList.GetValueOrDefault(i);
+
+						if (sInfo != null)
+						{
+							sInfo.DexTotal = (dexT += sInfo.Dex);
+							sInfo.IntTotal = (intT += sInfo.Int);
+							sInfo.LifeTotal = (lifeT += sInfo.Life);
+							sInfo.LuckTotal = (luckT += sInfo.Luck);
+							sInfo.ManaTotal = (manaT += sInfo.Mana);
+							sInfo.StaminaTotal = (staminaT += sInfo.Stamina);
+							sInfo.StrTotal = (strT += sInfo.Str);
+							sInfo.WillTotal = (willT += sInfo.Will);
+						}
+					}
+				}
+			}
 		}
 	}
 }
