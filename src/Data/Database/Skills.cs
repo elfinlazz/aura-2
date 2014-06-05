@@ -142,7 +142,7 @@ namespace Aura.Data.Database
 			skillInfo.RankData = new Dictionary<int, Dictionary<int, SkillRankData>>();
 			foreach (JObject rank in entry["ranks"].Where(a => a.Type == JTokenType.Object))
 			{
-				rank.AssertNotMissing("rank", "ap", "cp", "range", "stack", "maxStack", "loadTime", "newLoadTime", "coolDown", "staminaCost", "staminaPrepare", "staminaWait", "staminaActive", "manaCost", "manaPrepare", "manaWait", "manaActive", "life", "mana", "stamina", "str", "int", "dex", "will", "luck", "var1", "var2", "var3", "var4", "var5", "var6", "var7", "var8", "var9", "training");
+				rank.AssertNotMissing("rank", "ap", "cp", "range", "stack", "stackMax", "loadTime", "newLoadTime", "coolDown", "staminaCost", "staminaPrepare", "staminaWait", "staminaActive", "manaCost", "manaPrepare", "manaWait", "manaActive", "life", "mana", "stamina", "str", "int", "dex", "will", "luck", "var1", "var2", "var3", "var4", "var5", "var6", "var7", "var8", "var9", "training");
 
 				var rankInfo = new SkillRankData();
 				rankInfo.SkillId = skillInfo.Id;
