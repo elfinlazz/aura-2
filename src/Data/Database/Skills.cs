@@ -152,7 +152,7 @@ namespace Aura.Data.Database
 				rankInfo.CP = rank.ReadFloat("cp");
 				rankInfo.Range = rank.ReadInt("range");
 				rankInfo.Stack = rank.ReadByte("stack");
-				rankInfo.StackMax = rank.ReadByte("stackMax");
+				rankInfo.StackMax = rank.ReadByte("maxStack");
 				rankInfo.LoadTime = rank.ReadInt("loadTime");
 				rankInfo.NewLoadTime = rank.ReadInt("newLoadTime");
 				rankInfo.CoolDown = rank.ReadInt("coolDown");
