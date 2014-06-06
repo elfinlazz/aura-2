@@ -93,7 +93,7 @@ namespace Aura.Channel.Skills.Hidden
 
 			// TODO: Get the distort formula for regulars
 
-			Send.ServerMessage(creature, Localization.Get("aura.unimplemented_skill2"));
+			Send.ServerMessage(creature, Localization.Get("This skill isn't implemented completely yet."));
 			Send.SkillCompleteDye(creature, skill.Info.Id, part);
 		}
 

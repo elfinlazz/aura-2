@@ -74,7 +74,7 @@ namespace Aura.Channel.Skills.Music
 			if (ChannelServer.Instance.Conf.World.PerfectPlay)
 			{
 				effectQuality = PlayingQuality.VeryGood;
-				Send.ServerMessage(creature, Localization.Get("skills.perfect_play"));
+				Send.ServerMessage(creature, Localization.Get("Perfect play is enabled, your performance will sound perfect."));
 			}
 
 			// Reduce scroll's durability.
@@ -164,11 +164,34 @@ namespace Aura.Channel.Skills.Music
 			string[] msgs = null;
 			switch (quality)
 			{
-				// Messages are stored in one line per quality, seperated by semicolons.
-				case PlayingQuality.VeryGood: msgs = Localization.Get("skills.quality_verygood").Split(';'); break;
-				case PlayingQuality.Good: msgs = Localization.Get("skills.quality_good").Split(';'); break;
-				case PlayingQuality.Bad: msgs = Localization.Get("skills.quality_bad").Split(';'); break;
-				case PlayingQuality.VeryBad: msgs = Localization.Get("skills.quality_verybad").Split(';'); break;
+				case PlayingQuality.VeryGood:
+					msgs = new string[] {
+						Localization.Get("It seemed as if the God of Music had descended"),
+						Localization.Get("A perfect performance"),
+					};
+					break;
+				case PlayingQuality.Good:
+					msgs = new string[] {
+						Localization.Get("The performance was quite alright"),
+						Localization.Get("Not a bad performance"),
+						Localization.Get("I'm slowly gaining confidence in playing instruments."),
+					};
+					break;
+				case PlayingQuality.Bad:
+					msgs = new string[] {
+						Localization.Get("Lots of mistakes, although most didn't notice"),
+						Localization.Get("An embarrassing performance"),
+						Localization.Get("The song is still too difficult for me."),
+						Localization.Get("I need more practice to play this song well."),
+					};
+					break;
+				case PlayingQuality.VeryBad:
+					msgs = new string[] {
+						Localization.Get("A disastrous performance"),
+						Localization.Get("That was a total mess..."),
+						Localization.Get("That was a difficult song for me to play."),
+					};
+					break;
 			}
 
 			if (msgs == null || msgs.Length < 1)

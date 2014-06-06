@@ -40,23 +40,23 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth) // You're not authorized to use the GMCP.
+			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
-				Send.ServerMessage(creature, Localization.Get("gm.gmcp_auth"));
+				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
 				return;
 			}
 
 			var target = ChannelServer.Instance.World.GetPlayer(targetName);
 			if (target == null)
 			{
-				Send.MsgBox(creature, Localization.Get("gm.gmcp_nochar"), targetName); // Character '{0}' couldn't be found.
+				Send.MsgBox(creature, Localization.Get("Character '{0}' couldn't be found."), targetName);
 				return;
 			}
 
 			var pos = creature.GetPosition();
 			target.Warp(creature.RegionId, pos.X, pos.Y);
 
-			Send.ServerMessage(target, Localization.Get("gm.gmcp_summon"), creature.Name); // You've been summoned by '{0}'.
+			Send.ServerMessage(target, Localization.Get("You've been summoned by '{0}'."), creature.Name);
 		}
 
 		/// <summary>
@@ -73,16 +73,16 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth) // You're not authorized to use the GMCP.
+			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
-				Send.ServerMessage(creature, Localization.Get("gm.gmcp_auth"));
+				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
 				return;
 			}
 
 			var target = ChannelServer.Instance.World.GetCreature(targetName);
 			if (target == null)
 			{
-				Send.MsgBox(creature, Localization.Get("gm.gmcp_nochar"), targetName); // Character '{0}' couldn't be found.
+				Send.MsgBox(creature, Localization.Get("Character '{0}' couldn't be found."), targetName);
 				return;
 			}
 
@@ -108,7 +108,7 @@ namespace Aura.Channel.Network.Handlers
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
-				Send.ServerMessage(creature, Localization.Get("gm.gmcp_auth")); // You're not authorized to use the GMCP.
+				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
 				return;
 			}
 
@@ -129,7 +129,7 @@ namespace Aura.Channel.Network.Handlers
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
-				Send.ServerMessage(creature, Localization.Get("gm.gmcp_auth")); // You're not authorized to use the GMCP.
+				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
 				return;
 			}
 
@@ -153,7 +153,7 @@ namespace Aura.Channel.Network.Handlers
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
-				Send.ServerMessage(creature, Localization.Get("gm.gmcp_auth")); // You're not authorized to use the GMCP.
+				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
 				return;
 			}
 
@@ -179,23 +179,23 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth) // You're not authorized to use the GMCP.
+			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
-				Send.ServerMessage(creature, Localization.Get("gm.gmcp_auth"));
+				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
 				return;
 			}
 
 			var target = ChannelServer.Instance.World.GetPlayer(targetName);
 			if (target == null)
 			{
-				Send.MsgBox(creature, Localization.Get("gm.gmcp_nochar"), targetName); // Character '{0}' couldn't be found.
+				Send.MsgBox(creature, Localization.Get("Character '{0}' couldn't be found."), targetName);
 				return;
 			}
 
 			// Better kill the connection, modders could bypass a dc request.
 			target.Client.Kill();
 
-			Send.MsgBox(creature, Localization.Get("gm.gmcp_kicked"), targetName); // '{0}' has been kicked.
+			Send.MsgBox(creature, Localization.Get("'{0}' has been kicked."), targetName);
 		}
 
 		/// <summary>
@@ -214,16 +214,16 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth) // You're not authorized to use the GMCP.
+			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
-				Send.ServerMessage(creature, Localization.Get("gm.gmcp_auth"));
+				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
 				return;
 			}
 
 			var target = ChannelServer.Instance.World.GetPlayer(targetName);
 			if (target == null)
 			{
-				Send.MsgBox(creature, Localization.Get("gm.gmcp_nochar"), targetName); // Character '{0}' couldn't be found.
+				Send.MsgBox(creature, Localization.Get("Character '{0}' couldn't be found."), targetName);
 				return;
 			}
 
@@ -234,7 +234,7 @@ namespace Aura.Channel.Network.Handlers
 			// Better kill the connection, modders could bypass a dc request.
 			target.Client.Kill();
 
-			Send.MsgBox(creature, Localization.Get("gm.gmcp_banned"), targetName, end); // '{0}' has been banned till '{1}'.
+			Send.MsgBox(creature, Localization.Get("'{0}' has been banned till '{1}'."), targetName, end);
 		}
 
 		/// <summary>
@@ -254,9 +254,9 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null) return;
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth) // You're not authorized to use the GMCP.
+			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
-				Send.ServerMessage(creature, Localization.Get("gm.gmcp_auth"));
+				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
 				return;
 			}
 

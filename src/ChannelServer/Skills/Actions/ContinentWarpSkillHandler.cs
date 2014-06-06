@@ -49,7 +49,7 @@ namespace Aura.Channel.Skills.Actions
 		{
 			if (!ChannelServer.Instance.Conf.World.EnableContinentWarp)
 			{
-				Send.ServerMessage(creature, Localization.Get("aura.continent_disabled")); // Continent Warp has been disabled by the Admin.
+				Send.ServerMessage(creature, Localization.Get("Continent Warp has been disabled by the Admin."));
 				Send.SkillPrepareSilentCancel(creature, skill.Info.Id);
 				return;
 			}

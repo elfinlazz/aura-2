@@ -77,11 +77,27 @@ namespace Aura.Channel.Skills.Music
 			string[] msgs = null;
 			switch (quality)
 			{
-				// Messages are stored in one line per quality, seperated by semicolons.
-				case PlayingQuality.VeryGood: msgs = Localization.Get("skills.quality_song_verygood").Split(';'); break;
-				case PlayingQuality.Good: msgs = Localization.Get("skills.quality_song_good").Split(';'); break;
+				case PlayingQuality.VeryGood:
+					msgs = new string[] {
+						Localization.Get("It seemed as if the God of Music had descended"),
+						Localization.Get("A perfect performance"),
+					};
+					break;
+				case PlayingQuality.Good:
+					msgs = new string[] {
+						Localization.Get("The performance was quite alright"),
+						Localization.Get("Not a bad performance"),
+						Localization.Get("I'm slowly gaining confidence in playing instruments."),
+					};
+					break;
 				case PlayingQuality.Bad:
-				case PlayingQuality.VeryBad: msgs = Localization.Get("skills.quality_song_bad").Split(';'); break;
+				case PlayingQuality.VeryBad:
+					msgs = new string[] {
+						Localization.Get("A disastrous performance"),
+						Localization.Get("That was a total mess..."),
+						Localization.Get("That was a difficult song for me to play."),
+					};
+					break;
 			}
 
 			if (msgs == null || msgs.Length < 1)

@@ -161,7 +161,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void AddGesture(Creature creature, string keyword, string name)
 		{
 			creature.Keywords.Give(keyword);
-			Send.Notice(creature, Localization.Get("items.gesture_added"), name); // The {0} Gesture has been added. Check your gestures window.
+			Send.Notice(creature, Localization.Get("The {0} Gesture has been added. Check your gestures window."), name);
 		}
 
 		/// <summary>

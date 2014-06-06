@@ -49,7 +49,7 @@ namespace Aura.Channel.Network.Handlers
 				}
 				else
 				{
-					Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("world.too_far")); // You're too far away.
+					Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("You're too far away."));
 					Log.Warning("HitProp: Player '{0}' tried to hit prop out of range.", creature.Name);
 				}
 			}
@@ -98,7 +98,7 @@ namespace Aura.Channel.Network.Handlers
 				}
 				else
 				{
-					Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("world.too_far")); // You're too far away.
+					Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("You're too far away."));
 					Log.Warning("TouchProp: Player '{0}' tried to touch prop out of range.", creature.Name);
 				}
 			}

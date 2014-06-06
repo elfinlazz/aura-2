@@ -125,7 +125,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var success = creature.Inventory.PickUp(item);
 			if (!success)
-				Send.SystemMessage(creature, Localization.Get("world.insufficient_space")); // Not enough space.
+				Send.SystemMessage(creature, Localization.Get("Not enough space."));
 
 			Send.ItemPickUpR(creature, success);
 		}
@@ -335,7 +335,7 @@ namespace Aura.Channel.Network.Handlers
 					catch (Exception ex)
 					{
 						Log.Exception(ex, "Problem while running magic words script '{0}'", magicWords);
-						Send.ServerMessage(creature, Localization.Get("aura.unimplemented_item")); // Unimplemented item.
+						Send.ServerMessage(creature, Localization.Get("Unimplemented item."));
 						goto L_Fail;
 					}
 				}
@@ -349,7 +349,7 @@ namespace Aura.Channel.Network.Handlers
 				if (script == null)
 				{
 					Log.Unimplemented("Item script for '{0}' not found.", item.Info.Id);
-					Send.ServerMessage(creature, Localization.Get("aura.unimplemented_item")); // This item isn't implemented yet.
+					Send.ServerMessage(creature, Localization.Get("This item isn't implemented yet."));
 					goto L_Fail;
 				}
 
@@ -361,7 +361,7 @@ namespace Aura.Channel.Network.Handlers
 				catch (NotImplementedException)
 				{
 					Log.Unimplemented("UseItem: Item OnUse method for '{0}'.", item.Info.Id);
-					Send.ServerMessage(creature, Localization.Get("aura.unimplemented_item2")); // This item isn't implemented completely yet.
+					Send.ServerMessage(creature, Localization.Get("This item isn't implemented completely yet."));
 					goto L_Fail;
 				}
 			}

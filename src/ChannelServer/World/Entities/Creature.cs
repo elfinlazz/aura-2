@@ -774,21 +774,21 @@ namespace Aura.Channel.World.Entities
 			{
 				changes = true;
 				this.Weight += weight;
-				sb.Append(Localization.Get(weight > 0 ? "world.weight_plus" : "world.weight_minus") + "\r\n");
+				sb.Append(weight > 0 ? Localization.Get("You gained some weight.") : Localization.Get("You lost some weight.") + "\r\n");
 			}
 
 			if (upper != 0)
 			{
 				changes = true;
 				this.Upper += upper;
-				sb.Append(Localization.Get(upper > 0 ? "world.upper_plus" : "world.upper_minus") + "\r\n");
+				sb.Append(upper > 0 ? Localization.Get("Your upper body got bigger.") : Localization.Get("Your upper body got slimmer.") + "\r\n");
 			}
 
 			if (lower != 0)
 			{
 				changes = true;
 				this.Lower += lower;
-				sb.Append(Localization.Get(lower > 0 ? "world.lower_plus" : "world.lower_minus") + "\r\n");
+				sb.Append(lower > 0 ? Localization.Get("Your legs got bigger.") : Localization.Get("Your legs got slimmer.") + "\r\n");
 			}
 
 			if (life != 0)
@@ -1058,8 +1058,8 @@ namespace Aura.Channel.World.Entities
 
 						if (amount >= 2000) killer.Titles.Enable(23); // the Lucky
 
-						Send.CombatMessage(killer, Localization.Get("world.huge_lucky_finish"));
-						Send.Notice(killer, Localization.Get("world.huge_lucky_finish"));
+						Send.CombatMessage(killer, Localization.Get("Huge Lucky Finish!!"));
+						Send.Notice(killer, Localization.Get("Huge Lucky Finish!!"));
 					}
 					else if (luckyChance < ChannelServer.Instance.Conf.World.BigLuckyFinishChance)
 					{
@@ -1067,8 +1067,8 @@ namespace Aura.Channel.World.Entities
 
 						if (amount >= 2000) killer.Titles.Enable(23); // the Lucky
 
-						Send.CombatMessage(killer, Localization.Get("world.big_lucky_finish"));
-						Send.Notice(killer, Localization.Get("world.big_lucky_finish"));
+						Send.CombatMessage(killer, Localization.Get("Big Lucky Finish!!"));
+						Send.Notice(killer, Localization.Get("Big Lucky Finish!!"));
 					}
 					else if (luckyChance < ChannelServer.Instance.Conf.World.LuckyFinishChance)
 					{
@@ -1076,8 +1076,8 @@ namespace Aura.Channel.World.Entities
 
 						if (amount >= 2000) killer.Titles.Enable(23); // the Lucky
 
-						Send.CombatMessage(killer, Localization.Get("world.lucky_finish"));
-						Send.Notice(killer, Localization.Get("world.lucky_finish"));
+						Send.CombatMessage(killer, Localization.Get("Lucky Finish!!"));
+						Send.Notice(killer, Localization.Get("Lucky Finish!!"));
 					}
 
 					// Drop rate muliplicator

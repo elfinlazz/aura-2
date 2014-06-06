@@ -169,8 +169,8 @@ namespace Aura.Channel.World
 		private void OnErinnDaytimeTick(ErinnTime now)
 		{
 			var notice = now.IsNight
-				? Localization.Get("world.eweca_night") // Eweca is rising.\nMana is starting to fill the air all around.
-				: Localization.Get("world.eweca_day");  // Eweca has disappeared.\nThe surrounding Mana is starting to fade away.
+				? Localization.Get("Eweca is rising.\nMana is starting to fill the air all around.")
+				: Localization.Get("Eweca has disappeared.\nThe surrounding Mana is starting to fade away.");
 			Send.Notice(NoticeType.MiddleTop, notice);
 		}
 

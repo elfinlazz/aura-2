@@ -76,7 +76,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check distance
 			if (!bypassDistanceCheck && (creature.RegionId != target.RegionId || target.GetPosition().GetDistance(creature.GetPosition()) > 1000))
 			{
-				Send.MsgBox(creature, Localization.Get("world.too_far")); // You're too far away.
+				Send.MsgBox(creature, Localization.Get("You're too far away."));
 				Send.NpcTalkStartR_Fail(creature);
 
 				Log.Warning("NpcTalkStart: Creature '{0}' tried to talk to NPC '{1}' out of range.", creature.Name, target.Name);
@@ -277,7 +277,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check gold
 			if (creature.Inventory.Gold < price)
 			{
-				Send.MsgBox(creature, Localization.Get("world.shop_gold")); // Insufficient amount of gold.
+				Send.MsgBox(creature, Localization.Get("Insufficient amount of gold."));
 				goto L_Fail;
 			}
 

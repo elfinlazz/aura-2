@@ -148,8 +148,9 @@ namespace Aura.Login.Network.Handlers
 				// Unsupported NX hash
 				case LoginType.NewHash:
 
-					Send.LoginR_Msg(client, Localization.Get("login.new_hash")); // Please don't use your official login information.
-
+					// Triggered by people using their official accounts?
+					// Are those information cached somewhere?
+					Send.LoginR_Msg(client, Localization.Get("Please don't use your official login information."));
 					return;
 			}
 
@@ -176,7 +177,7 @@ namespace Aura.Login.Network.Handlers
 			// Check bans
 			if (account.BannedExpiration > DateTime.Now)
 			{
-				Send.LoginR_Msg(client, Localization.Get("login.banned"), account.BannedExpiration, account.BannedReason); // You've been banned till {0}.\r\nReason: {1}
+				Send.LoginR_Msg(client, Localization.Get("You've been banned till {0}.\r\nReason: {1}"), account.BannedExpiration, account.BannedReason);
 				return;
 			}
 
