@@ -1,6 +1,0 @@
-﻿// Aura
-// Localization file
-// --------------------------------------------------------------------------
-
-new_hash	Please don't use your official login information.
-banned		You've been banned till {0}.\r\nReason: {1}
