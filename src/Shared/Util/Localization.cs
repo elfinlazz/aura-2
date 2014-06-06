@@ -19,13 +19,10 @@ namespace Aura.Shared.Util
 		/// </summary>
 		/// <remarks>
 		/// If path is a file, it simply reads the file. If path is a directory,
-		/// it starts parsing all files recursively, using the folder structure
-		/// to make up the prefixes.
+		/// it starts parsing all files recursively.
 		/// </remarks>
 		/// <param name="path">What to parse</param>
-		/// <param name="root">On root level? (base folder?)</param>
-		/// <param name="prefix">Dot prefix for the keys</param>
-		public static void Parse(string path, bool root = true, string prefix = "")
+		public static void Parse(string path)
 		{
 			if (File.Exists(path))
 			{
@@ -35,24 +32,13 @@ namespace Aura.Shared.Util
 			{
 				var di = new DirectoryInfo(path);
 
-				if (!root)
-				{
-					if (prefix != "")
-						prefix += ".";
-					prefix += di.Name;
-				}
-
 				var files = Directory.EnumerateFiles(path);
 				foreach (var file in files)
-				{
-					LoadFile(file, prefix);
-				}
+					LoadFile(file);
 
 				var dirs = Directory.EnumerateDirectories(path);
 				foreach (var dir in dirs)
-				{
-					Parse(dir, false, prefix);
-				}
+					Parse(dir);
 			}
 			else
 			{
@@ -64,17 +50,12 @@ namespace Aura.Shared.Util
 		/// Adds strings in file to collection.
 		/// </summary>
 		/// <param name="path"></param>
-		/// <param name="prefix"></param>
-		private static void LoadFile(string path, string prefix = "")
+		private static void LoadFile(string path)
 		{
 			using (var sr = new StreamReader(path, Encoding.UTF8))
 			{
 				if (!File.Exists(path))
 					return;
-
-				if (prefix != "")
-					prefix += ".";
-				prefix += Path.GetFileNameWithoutExtension(path);
 
 				while (!sr.EndOfStream)
 				{
@@ -82,10 +63,11 @@ namespace Aura.Shared.Util
 					if (line.Length < 3 || line.StartsWith("//"))
 						continue;
 
+					// Next line if not tab found
 					var pos = line.IndexOf('\t');
-					if (pos < 0)
-						continue;
+					if (pos < 0) continue;
 
+					var key = line.Substring(0, pos).Trim();
 					var val = line.Substring(pos + 1).Trim();
 
 					// Replace \t and [\r]\n
@@ -93,7 +75,7 @@ namespace Aura.Shared.Util
 					val = val.Replace("\\r\\n", "\n");
 					val = val.Replace("\\n", "\n");
 
-					_storage[prefix + "." + line.Substring(0, pos).Trim()] = val;
+					_storage[key] = val;
 				}
 			}
 		}
