@@ -62,7 +62,10 @@ namespace Aura.Login.Network.Handlers
 			var hair = packet.GetInt();
 			var hairColor = packet.GetByte();
 			var age = packet.GetByte();
-			var eye = packet.GetByte();
+
+			// [180600, NA187 (25.06.2014)] Changed from byte to short
+			var eye = packet.GetShort();
+
 			var eyeColor = packet.GetByte();
 			var mouth = packet.GetByte();
 			var face = packet.GetInt();

@@ -61,7 +61,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutString("");				 // Eng Title
 			packet.PutInt(creature.Race);
 			packet.PutByte(creature.SkinColor);
-			packet.PutByte(creature.EyeType);
+			packet.PutShort(creature.EyeType);
 			packet.PutByte(creature.EyeColor);
 			packet.PutByte(creature.MouthType);
 			packet.PutUInt((uint)creature.State);
