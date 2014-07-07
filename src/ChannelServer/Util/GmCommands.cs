@@ -851,6 +851,10 @@ namespace Aura.Channel.Util
 		{
 			target.FullHeal();
 
+			Send.ServerMessage(sender, Localization.Get("Healed."));
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("You've been healed by '{0}'."), sender.Name);
+
 			return CommandResult.Okay;
 		}
 	}
