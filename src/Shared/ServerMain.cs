@@ -223,7 +223,7 @@ namespace Aura.Shared.Util
 			// System
 			try
 			{
-				Localization.Parse(string.Format("system/localization/{0}", conf.Localization.Language));
+				Localization.Parse("system/localization/" + conf.Localization.Language);
 			}
 			catch (FileNotFoundException ex)
 			{
@@ -233,7 +233,7 @@ namespace Aura.Shared.Util
 			// User
 			try
 			{
-				Localization.Parse(string.Format("user/localization/{0}", conf.Localization.Language));
+				Localization.Parse("user/localization/" + conf.Localization.Language);
 			}
 			catch (FileNotFoundException)
 			{
