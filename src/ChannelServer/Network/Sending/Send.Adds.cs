@@ -37,15 +37,6 @@ namespace Aura.Channel.Network.Sending
 			if (type == CreaturePacketType.Private && character == null)
 				throw new Exception("PlayerCreature required for private creature packet.");
 
-			// Get incomplete quests only once, if we need them.
-			//IEnumerable<MabiQuest> incompleteQuests = null;
-			//int incompleteQuestsCount = 0;
-			//if (type == CreaturePacketType.Private && character != null)
-			//{
-			//    incompleteQuests = character.Quests.Values.Where(quest => quest.State < MabiQuestState.Complete);
-			//    incompleteQuestsCount = incompleteQuests.Count();
-			//}
-
 			var pos = creature.GetPosition();
 
 			// Start
@@ -61,7 +52,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutString("");				 // Eng Title
 			packet.PutInt(creature.Race);
 			packet.PutByte(creature.SkinColor);
-			packet.PutByte(creature.EyeType);
+			packet.PutShort(creature.EyeType); // [180600, NA187 (25.06.2014)] Changed from byte to short
 			packet.PutByte(creature.EyeColor);
 			packet.PutByte(creature.MouthType);
 			packet.PutUInt((uint)creature.State);
@@ -933,6 +924,10 @@ namespace Aura.Channel.Network.Sending
 
 			// Premium stuff
 			// --------------------------------------------------------------
+			// [180600, NA187 (25.06.2014)] ?
+			{
+				packet.PutByte(0);
+			}
 			packet.PutByte(0);                   // IsUsingExtraStorage (old service)
 			packet.PutByte(1);                   // IsUsingNaosSupport (old service) (Style tab in 1803?)
 			packet.PutByte(0);                   // IsUsingAdvancedPlay (old service)
@@ -1377,6 +1372,10 @@ namespace Aura.Channel.Network.Sending
 
 				// Progress
 				packet.PutInt(progress.Count);
+				// [180600, NA187 (25.06.2014)] ?
+				{
+					packet.PutFloat(0);
+				}
 				packet.PutByte(progress.Done);
 				packet.PutByte(progress.Unlocked);
 

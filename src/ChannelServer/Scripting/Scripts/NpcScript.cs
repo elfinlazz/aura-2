@@ -251,7 +251,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="eyeType"></param>
 		/// <param name="eyeColor"></param>
 		/// <param name="mouthType"></param>
-		protected void SetFace(byte skinColor = 0, byte eyeType = 0, byte eyeColor = 0, byte mouthType = 0)
+		protected void SetFace(byte skinColor = 0, short eyeType = 0, byte eyeColor = 0, byte mouthType = 0)
 		{
 			this.NPC.SkinColor = skinColor;
 			this.NPC.EyeType = eyeType;

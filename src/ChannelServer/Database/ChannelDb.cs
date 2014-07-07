@@ -104,7 +104,8 @@ namespace Aura.Channel.Database
 						{
 							while (reader.Read())
 							{
-								var character = this.GetCharacter<Pet>(account, reader.GetInt64("entityId"), "pets");
+								creatureId = reader.GetInt64("entityId");
+								var character = this.GetCharacter<Pet>(account, creatureId, "pets");
 								if (character == null)
 									continue;
 
@@ -131,7 +132,8 @@ namespace Aura.Channel.Database
 						{
 							while (reader.Read())
 							{
-								var character = this.GetCharacter<Pet>(account, reader.GetInt64("entityId"), "partners");
+								creatureId = reader.GetInt64("entityId");
+								var character = this.GetCharacter<Pet>(account, creatureId, "partners");
 								if (character == null)
 									continue;
 
@@ -178,7 +180,7 @@ namespace Aura.Channel.Database
 					character.Race = reader.GetInt32("race");
 					character.DeletionTime = reader.GetDateTimeSafe("deletionTime");
 					character.SkinColor = reader.GetByte("skinColor");
-					character.EyeType = reader.GetByte("eyeType");
+					character.EyeType = reader.GetInt16("eyeType");
 					character.EyeColor = reader.GetByte("eyeColor");
 					character.MouthType = reader.GetByte("mouthType");
 					character.Height = reader.GetFloat("height");

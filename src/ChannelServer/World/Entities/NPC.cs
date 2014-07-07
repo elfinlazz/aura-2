@@ -70,7 +70,7 @@ namespace Aura.Channel.World.Entities
 
 			// Face
 			if (this.RaceData.Face.EyeColors.Count > 0) this.EyeColor = (byte)this.RaceData.Face.GetRandomEyeColor(rnd);
-			if (this.RaceData.Face.EyeTypes.Count > 0) this.EyeType = (byte)this.RaceData.Face.GetRandomEyeType(rnd);
+			if (this.RaceData.Face.EyeTypes.Count > 0) this.EyeType = (short)this.RaceData.Face.GetRandomEyeType(rnd);
 			if (this.RaceData.Face.MouthTypes.Count > 0) this.MouthType = (byte)this.RaceData.Face.GetRandomMouthType(rnd);
 			if (this.RaceData.Face.SkinColors.Count > 0) this.SkinColor = (byte)this.RaceData.Face.GetRandomSkinColor(rnd);
 		}

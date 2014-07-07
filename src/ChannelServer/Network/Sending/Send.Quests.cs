@@ -43,6 +43,10 @@ namespace Aura.Channel.Network.Sending
 			foreach (var p in progress)
 			{
 				packet.PutInt(p.Count);
+				// [180600, NA187 (25.06.2014)] ?
+				{
+					packet.PutFloat(0);
+				}
 				packet.PutByte(p.Done);
 				packet.PutByte(p.Unlocked);
 			}

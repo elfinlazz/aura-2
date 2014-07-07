@@ -147,7 +147,7 @@ namespace Aura.Login.Network
 				packet.PutString("");
 				packet.PutInt(character.Race);
 				packet.PutByte(character.SkinColor);
-				packet.PutByte(character.EyeType);
+				packet.PutShort(character.EyeType);
 				packet.PutByte(character.EyeColor);
 				packet.PutByte(character.MouthType);
 				packet.PutInt(0);

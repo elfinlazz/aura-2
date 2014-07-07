@@ -83,7 +83,7 @@ namespace Aura.Channel.World.Entities
 		// ------------------------------------------------------------------
 
 		public byte SkinColor { get; set; }
-		public byte EyeType { get; set; }
+		public short EyeType { get; set; }
 		public byte EyeColor { get; set; }
 		public byte MouthType { get; set; }
 
