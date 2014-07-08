@@ -528,6 +528,26 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns a list of all items on the floor.
+		/// </summary>
+		public List<Item> GetAllItems()
+		{
+			List<Item> result;
+
+			_itemsRWLS.EnterReadLock();
+			try
+			{
+				result = new List<Item>(_items.Values);
+			}
+			finally
+			{
+				_itemsRWLS.ExitReadLock();
+			}
+
+			return result;
+		}
+
+		/// <summary>
 		/// Drops item into region and makes it disappear after x seconds.
 		/// Sends EntityAppears.
 		/// </summary>

@@ -55,6 +55,7 @@ namespace Aura.Channel.Util
 			Add(50, 99, "card", "<id>", HandleCard);
 			Add(50, 99, "petcard", "<race>", HandleCard);
 			Add(50, 50, "heal", "", HandleHeal);
+			Add(50, 50, "clean", "", HandleClean);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -854,6 +855,17 @@ namespace Aura.Channel.Util
 			Send.ServerMessage(sender, Localization.Get("Healed."));
 			if (target != sender)
 				Send.ServerMessage(target, Localization.Get("You've been healed by '{0}'."), sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleClean(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			var items = target.Region.GetAllItems();
+			foreach (var item in items)
+				item.DisappearTime = DateTime.Now;
+
+			Send.ServerMessage(sender, Localization.Get("Marked all items on the floor to disappear now."));
 
 			return CommandResult.Okay;
 		}
