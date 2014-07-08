@@ -56,6 +56,7 @@ namespace Aura.Channel.Util
 			Add(50, 99, "petcard", "<race>", HandleCard);
 			Add(50, 50, "heal", "", HandleHeal);
 			Add(50, 50, "clean", "", HandleClean);
+			Add(50, 50, "condition", "[a] [b] [c] [d] [e]", HandleCondition);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -866,6 +867,41 @@ namespace Aura.Channel.Util
 				item.DisappearTime = DateTime.Now;
 
 			Send.ServerMessage(sender, Localization.Get("Marked all items on the floor to disappear now."));
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleCondition(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			var conditions = new ulong[5];
+
+			// Read arguments
+			for (int i = 1; i < 6; ++i)
+			{
+				if (i > args.Length - 1)
+					break;
+
+				if (!ulong.TryParse(args[i].Replace("0x", ""), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out conditions[i - 1]))
+				{
+					Send.ServerMessage(sender, Localization.Get("Invalid condition number."));
+					return CommandResult.InvalidArgument;
+				}
+			}
+
+			// Apply conditions
+			target.Conditions.Deactivate(ConditionsA.All); target.Conditions.Activate((ConditionsA)conditions[0]);
+			target.Conditions.Deactivate(ConditionsB.All); target.Conditions.Activate((ConditionsB)conditions[1]);
+			target.Conditions.Deactivate(ConditionsC.All); target.Conditions.Activate((ConditionsC)conditions[2]);
+			target.Conditions.Deactivate(ConditionsD.All); target.Conditions.Activate((ConditionsD)conditions[3]);
+			target.Conditions.Deactivate(ConditionsE.All); target.Conditions.Activate((ConditionsE)conditions[4]);
+
+			if (args.Length > 1)
+				Send.ServerMessage(sender, Localization.Get("Applied condition."));
+			else
+				Send.ServerMessage(sender, Localization.Get("Cleared condition."));
+
+			if (target != sender)
+				Send.ServerMessage(sender, Localization.Get("Your condition has been changed by {0}."), sender.Name);
 
 			return CommandResult.Okay;
 		}

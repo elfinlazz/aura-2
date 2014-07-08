@@ -72,6 +72,7 @@ namespace Aura.Shared.Mabi.Const
 		Boose = 0x2000000000000000,
 		FastCasting2 = 0x4000000000000000,
 		WeaponAttackBoost = 0x8000000000000000,
+		All = 0xFFFFFFFFFFFFFFFF,
 	}
 
 	[Flags]
@@ -141,6 +142,7 @@ namespace Aura.Shared.Mabi.Const
 		FishDropInc = 0x2000000000000000,
 		FishDropInc2 = 0x4000000000000000,
 		ChatColorChange = 0x8000000000000000,
+		All = 0xFFFFFFFFFFFFFFFF,
 	}
 
 	[Flags]
@@ -210,6 +212,7 @@ namespace Aura.Shared.Mabi.Const
 		FighterSkillTrainingBoost = 0x2000000000000000,
 		DekalFollow = 0x4000000000000000,
 		BomberMan = 0x8000000000000000,
+		All = 0xFFFFFFFFFFFFFFFF,
 	}
 
 	[Flags]
@@ -278,6 +281,7 @@ namespace Aura.Shared.Mabi.Const
 		Clocking = 0x2000000000000000,
 		BeginnerPetBonus = 0x4000000000000000,
 		GhostVoice = 0x8000000000000000,
+		All = 0xFFFFFFFFFFFFFFFF,
 	}
 
 	[Flags]
@@ -296,5 +300,6 @@ namespace Aura.Shared.Mabi.Const
 		Stun = 0x0000000000000400,
 		IriaSkyRacingWindBoost = 0x0000000000000800,
 		FreezeUsableItem = 0x0000000000001000,
+		All = 0xFFFFFFFFFFFFFFFF,
 	}
 }
