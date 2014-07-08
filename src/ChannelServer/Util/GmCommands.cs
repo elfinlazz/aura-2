@@ -57,6 +57,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "heal", "", HandleHeal);
 			Add(50, 50, "clean", "", HandleClean);
 			Add(50, 50, "condition", "[a] [b] [c] [d] [e]", HandleCondition);
+			Add(50, 50, "effect", "<id> [(b|i|s:parameter)|me]", HandleEffect);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -876,11 +877,8 @@ namespace Aura.Channel.Util
 			var conditions = new ulong[5];
 
 			// Read arguments
-			for (int i = 1; i < 6; ++i)
+			for (int i = 1; i < args.Length; ++i)
 			{
-				if (i > args.Length - 1)
-					break;
-
 				if (!ulong.TryParse(args[i].Replace("0x", ""), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out conditions[i - 1]))
 				{
 					Send.ServerMessage(sender, Localization.Get("Invalid condition number."));
@@ -902,6 +900,81 @@ namespace Aura.Channel.Util
 
 			if (target != sender)
 				Send.ServerMessage(sender, Localization.Get("Your condition has been changed by {0}."), sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleEffect(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			// Requirement: command + effect id
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			var packet = new Packet(Op.Effect, target.EntityId);
+
+			// Get effect id
+			uint effectId;
+			if (!uint.TryParse(args[1], out effectId))
+				return CommandResult.InvalidArgument;
+
+			packet.PutUInt(effectId);
+
+			// Parse arguments
+			for (int i = 2; i < args.Length; ++i)
+			{
+				// type:value
+				var splitted = args[i].Split(':');
+
+				// "me" = target's entity id (long)
+				if (splitted[0] == "me")
+				{
+					packet.PutLong(target.EntityId);
+					continue;
+				}
+
+				// Everything but the above arguments require
+				// a type and a value.
+				if (splitted.Length < 2)
+					continue;
+
+				splitted[0] = splitted[0].Trim();
+				splitted[1] = splitted[1].Trim();
+
+				switch (splitted[0])
+				{
+					// Byte
+					case "b":
+						{
+							byte val;
+							if (!byte.TryParse(splitted[1], out val))
+								return CommandResult.InvalidArgument;
+							packet.PutByte(val);
+							break;
+						}
+					// Int
+					case "i":
+						{
+							uint val;
+							if (!uint.TryParse(splitted[1], out val))
+								return CommandResult.InvalidArgument;
+							packet.PutUInt(val);
+							break;
+						}
+					// String
+					case "s":
+						{
+							packet.PutString(splitted[1]);
+							break;
+						}
+				}
+			}
+
+			// Broadcast effect
+			target.Region.Broadcast(packet, target);
+
+			Send.ServerMessage(sender, Localization.Get("Applied effect."));
+			if (target != sender)
+				Send.ServerMessage(sender, Localization.Get("{0} has applied an effect to you."), sender.Name);
 
 			return CommandResult.Okay;
 		}
