@@ -19,6 +19,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
+using Aura.Shared.Mabi;
 
 namespace Aura.Channel.Util
 {
@@ -58,6 +59,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "clean", "", HandleClean);
 			Add(50, 50, "condition", "[a] [b] [c] [d] [e]", HandleCondition);
 			Add(50, 50, "effect", "<id> [(b|i|s:parameter)|me]", HandleEffect);
+			Add(50, 50, "prop", "<id>", HandleProp);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -868,6 +870,8 @@ namespace Aura.Channel.Util
 				item.DisappearTime = DateTime.Now;
 
 			Send.ServerMessage(sender, Localization.Get("Marked all items on the floor to disappear now."));
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("{0} removed all items in your region."), sender.Name);
 
 			return CommandResult.Okay;
 		}
@@ -899,7 +903,7 @@ namespace Aura.Channel.Util
 				Send.ServerMessage(sender, Localization.Get("Cleared condition."));
 
 			if (target != sender)
-				Send.ServerMessage(sender, Localization.Get("Your condition has been changed by {0}."), sender.Name);
+				Send.ServerMessage(target, Localization.Get("Your condition has been changed by {0}."), sender.Name);
 
 			return CommandResult.Okay;
 		}
@@ -974,7 +978,26 @@ namespace Aura.Channel.Util
 
 			Send.ServerMessage(sender, Localization.Get("Applied effect."));
 			if (target != sender)
-				Send.ServerMessage(sender, Localization.Get("{0} has applied an effect to you."), sender.Name);
+				Send.ServerMessage(target, Localization.Get("{0} has applied an effect to you."), sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleProp(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			int propId;
+			if (!int.TryParse(args[1], out propId))
+				return CommandResult.InvalidArgument;
+
+			var pos = target.GetPosition();
+			var prop = new Prop(propId, target.RegionId, pos.X, pos.Y, MabiMath.ByteToRadian(target.Direction));
+
+			target.Region.AddProp(prop);
+
+			Send.ServerMessage(sender, Localization.Get("Spawned prop."));
 
 			return CommandResult.Okay;
 		}
