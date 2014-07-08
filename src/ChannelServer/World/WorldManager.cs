@@ -263,6 +263,20 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns all players in all regions.
+		/// </summary>
+		/// <returns></returns>
+		public List<Creature> GetAllPlayers()
+		{
+			var result = new List<Creature>();
+
+			foreach (var region in _regions.Values)
+				result.AddRange(region.GetAllPlayers());
+
+			return result;
+		}
+
+		/// <summary>
 		/// Returns creature from any region by id, or null.
 		/// </summary>
 		/// <param name="entityId"></param>

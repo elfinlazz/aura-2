@@ -20,6 +20,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
 using Aura.Shared.Mabi;
+using System.Text;
 
 namespace Aura.Channel.Util
 {
@@ -42,6 +43,7 @@ namespace Aura.Channel.Util
 			Add(01, 50, "lower", "<lower>", HandleBody);
 			Add(01, 50, "haircolor", "<hex color>", HandleHairColor);
 			Add(01, 50, "die", "", HandleDie);
+			Add(01, 50, "who", "", HandleWho);
 
 			// GMs
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
@@ -998,6 +1000,42 @@ namespace Aura.Channel.Util
 			target.Region.AddProp(prop);
 
 			Send.ServerMessage(sender, Localization.Get("Spawned prop."));
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleWho(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			int regionId = 0;
+			if (args.Length > 1 && !int.TryParse(args[1], out regionId))
+				return CommandResult.InvalidArgument;
+
+			List<Creature> players;
+			if (regionId != 0)
+			{
+				var region = ChannelServer.Instance.World.GetRegion(regionId);
+				if (region == null)
+				{
+					Send.ServerMessage(sender, Localization.Get("Unknown region."));
+					return CommandResult.Fail;
+				}
+
+				players = region.GetAllPlayers();
+
+				Send.ServerMessage(sender, Localization.Get("Players online in region {0} ({1}):"), regionId, players.Count);
+			}
+			else
+			{
+				players = ChannelServer.Instance.World.GetAllPlayers();
+
+				Send.ServerMessage(sender, Localization.Get("Players online ({0}):"), players.Count);
+			}
+
+			Send.ServerMessage(sender,
+				players.Count == 0
+				? Localization.Get("None")
+				: string.Join(", ", players.Select(a => a.Name))
+			);
 
 			return CommandResult.Okay;
 		}

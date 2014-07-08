@@ -383,6 +383,23 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns all player creatures in region.
+		/// </summary>
+		/// <returns></returns>
+		public List<Creature> GetAllPlayers()
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				return _creatures.Values.Where(a => a.IsPlayer).ToList();
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
 		/// Returns all visible creatures in range of entity, excluding itself.
 		/// </summary>
 		/// <param name="range"></param>
