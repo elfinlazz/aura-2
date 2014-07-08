@@ -44,6 +44,7 @@ namespace Aura.Channel.Util
 			Add(01, 50, "haircolor", "<hex color>", HandleHairColor);
 			Add(01, 50, "die", "", HandleDie);
 			Add(01, 50, "who", "", HandleWho);
+			Add(01, 50, "motion", "<category> <motion>", HandleMotion);
 
 			// GMs
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
@@ -1036,6 +1037,24 @@ namespace Aura.Channel.Util
 				? Localization.Get("None")
 				: string.Join(", ", players.Select(a => a.Name))
 			);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleMotion(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 3)
+				return CommandResult.InvalidArgument;
+
+			int category, motion;
+			if (!int.TryParse(args[1], out category) || !int.TryParse(args[2], out motion))
+				return CommandResult.InvalidArgument;
+
+			Send.UseMotion(target, category, motion, false, true);
+
+			Send.ServerMessage(sender, Localization.Get("Applied motion."));
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("{0} has applied a motion to you."), sender.Name);
 
 			return CommandResult.Okay;
 		}
