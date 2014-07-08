@@ -45,6 +45,7 @@ namespace Aura.Channel.Util
 			Add(01, 50, "die", "", HandleDie);
 			Add(01, 50, "who", "", HandleWho);
 			Add(01, 50, "motion", "<category> <motion>", HandleMotion);
+			Add(01, 50, "gesture", "<gesture>", HandleGesture);
 
 			// GMs
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
@@ -1055,6 +1056,27 @@ namespace Aura.Channel.Util
 			Send.ServerMessage(sender, Localization.Get("Applied motion."));
 			if (target != sender)
 				Send.ServerMessage(target, Localization.Get("{0} has applied a motion to you."), sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleGesture(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			var gesture = AuraData.MotionDb.Find(args[1]);
+			if (gesture == null)
+			{
+				Send.ServerMessage(sender, Localization.Get("Unknown gesture."));
+				return CommandResult.Fail;
+			}
+
+			Send.UseMotion(target, gesture.Category, gesture.Type, gesture.Loop, true);
+
+			Send.ServerMessage(sender, Localization.Get("Gestured '{0}'."), args[1]);
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("{0} made you gesture '{1}'."), sender.Name, args[1]);
 
 			return CommandResult.Okay;
 		}
