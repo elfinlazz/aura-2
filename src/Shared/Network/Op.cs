@@ -464,7 +464,10 @@ namespace Aura.Shared.Network
 		{
 			public const int ServerIdentify = 0x42420001;
 			public const int ServerIdentifyR = 0x42420002;
+
 			public const int ChannelStatus = 0x42420101;
+
+			public const int BroadcastNotice = 0x42420201;
 		}
 	}
 

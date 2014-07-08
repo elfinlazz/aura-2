@@ -38,5 +38,16 @@ namespace Aura.Channel.Network.Sending
 
 			ChannelServer.Instance.LoginServer.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends Internal.Broadcast to login server.
+		/// </summary>
+		public static void Internal_Broadcast(string message)
+		{
+			var packet = new Packet(Op.Internal.BroadcastNotice, 0);
+			packet.PutString(message);
+
+			ChannelServer.Instance.LoginServer.Send(packet);
+		}
 	}
 }

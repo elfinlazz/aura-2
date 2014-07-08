@@ -124,5 +124,16 @@ namespace Aura.Login
 				}
 			}
 		}
+
+		public void BroadcastChannels(Packet packet)
+		{
+			lock (this.Server.Clients)
+			{
+				foreach (var client in this.Server.Clients.Where(a => a.State == ClientState.LoggedIn && this.ChannelClients.Contains(a)))
+				{
+					client.Send(packet);
+				}
+			}
+		}
 	}
 }

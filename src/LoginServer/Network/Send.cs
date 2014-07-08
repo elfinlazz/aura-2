@@ -449,6 +449,17 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
+		/// Sends Internal.Broadcast to all channel servers.
+		/// </summary>
+		public static void Internal_Broadcast(string message)
+		{
+			var packet = new Packet(Op.Internal.BroadcastNotice, 0);
+			packet.PutString(message);
+
+			LoginServer.Instance.BroadcastChannels(packet);
+		}
+
+		/// <summary>
 		/// Adds server and channel information to packet.
 		/// </summary>
 		/// <param name="packet"></param>

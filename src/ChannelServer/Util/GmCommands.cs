@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using Aura.Channel.Database;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
@@ -20,7 +21,6 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
 using Aura.Shared.Mabi;
-using System.Text;
 
 namespace Aura.Channel.Util
 {
@@ -64,6 +64,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "condition", "[a] [b] [c] [d] [e]", HandleCondition);
 			Add(50, 50, "effect", "<id> [(b|i|s:parameter)|me]", HandleEffect);
 			Add(50, 50, "prop", "<id>", HandleProp);
+			Add(50, 50, "broadcast", "<message>", HandleBroadcast);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -77,6 +78,7 @@ namespace Aura.Channel.Util
 			AddAlias("iteminfo", "ii");
 			AddAlias("skillinfo", "si");
 			AddAlias("raceinfo", "ri");
+			AddAlias("broadcast", "bc");
 		}
 
 		// ------------------------------------------------------------------
@@ -1077,6 +1079,18 @@ namespace Aura.Channel.Util
 			Send.ServerMessage(sender, Localization.Get("Gestured '{0}'."), args[1]);
 			if (target != sender)
 				Send.ServerMessage(target, Localization.Get("{0} made you gesture '{1}'."), sender.Name, args[1]);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleBroadcast(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			if (args.Length < 2)
+				return CommandResult.InvalidArgument;
+
+			var notice = sender.Name + ": " + message.Substring(message.IndexOf(" "));
+
+			Send.Internal_Broadcast(notice);
 
 			return CommandResult.Okay;
 		}

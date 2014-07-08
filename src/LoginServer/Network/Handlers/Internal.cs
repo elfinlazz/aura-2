@@ -86,5 +86,22 @@ namespace Aura.Login.Network.Handlers
 
 			Send.ChannelUpdate();
 		}
+
+		/// <summary>
+		/// Sent from channels to forward it to all others,
+		/// message to broadcast
+		/// </summary>
+		/// <example>
+		/// 001 [................] String : test
+		/// </example>
+		[PacketHandler(Op.Internal.BroadcastNotice)]
+		public void Broadcast(LoginClient client, Packet packet)
+		{
+			// TODO: Forward packet once Packet class is cleaned up.
+
+			var notice = packet.GetString();
+
+			Send.Internal_Broadcast(notice);
+		}
 	}
 }

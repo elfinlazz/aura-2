@@ -4,6 +4,7 @@
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using System;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -46,6 +47,21 @@ namespace Aura.Channel.Network.Handlers
 		public void ChannelStatus(ChannelClient client, Packet packet)
 		{
 			// Read servers and channels
+		}
+
+		/// <summary>
+		/// Sent to all connected clients by the login server,
+		/// message to broadcast
+		/// </summary>
+		/// <example>
+		/// 001 [................] String : test
+		/// </example>
+		[PacketHandler(Op.Internal.BroadcastNotice)]
+		public void Broadcast(ChannelClient client, Packet packet)
+		{
+			var notice = packet.GetString();
+
+			Send.Notice(NoticeType.TopRed, Math.Max(20000, notice.Length * 350), notice);
 		}
 	}
 }
