@@ -201,7 +201,7 @@ namespace Aura.Channel.Network.Sending
 			{
 				var subPacket = Packet.Empty();
 				subPacket.AddCreatureInfo(actor.Value, CreaturePacketType.Public);
-				var bArr = subPacket.Build(false);
+				var bArr = subPacket.Build();
 
 				packet.PutString(actor.Key);
 				packet.PutShort((short)bArr.Length);

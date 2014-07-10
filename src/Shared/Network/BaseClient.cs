@@ -86,7 +86,23 @@ namespace Aura.Shared.Network
 			//if (packet.Op < Op.Internal.ServerIdentify)
 			//    Log.Debug("S: " + packet);
 
-			this.Send(packet.Build());
+			this.Send(this.BuildPacket(packet));
+		}
+
+		/// <summary>
+		/// Builds packet, appending the overall header and checksum.
+		/// </summary>
+		/// <param name="packet"></param>
+		/// <returns></returns>
+		protected virtual byte[] BuildPacket(Packet packet)
+		{
+			var size = packet.GetSize();
+			var result = new byte[6 + size + 4]; // header + packet + checksum
+			result[0] = 0x88;
+			System.Buffer.BlockCopy(BitConverter.GetBytes(result.Length), 0, result, 1, sizeof(int));
+			packet.Build(ref result, 6);
+
+			return result;
 		}
 
 		/// <summary>

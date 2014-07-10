@@ -74,7 +74,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutShort(count);
 			foreach (var entity in entities)
 			{
-				var data = Packet.Empty().AddPublicEntityInfo(entity).Build(false);
+				var data = Packet.Empty().AddPublicEntityInfo(entity).Build();
 
 				packet.PutShort((short)entity.DataType);
 				packet.PutInt(data.Length);
