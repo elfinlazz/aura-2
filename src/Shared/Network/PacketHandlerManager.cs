@@ -11,7 +11,7 @@ namespace Aura.Shared.Network
 	/// Packet handler manager base class.
 	/// </summary>
 	/// <typeparam name="TClient"></typeparam>
-	public abstract class PacketHandlerManager<TClient> where TClient : Client
+	public abstract class PacketHandlerManager<TClient> where TClient : BaseClient
 	{
 		public delegate void PacketHandlerFunc(TClient client, Packet packet);
 

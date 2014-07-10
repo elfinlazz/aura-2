@@ -10,7 +10,7 @@ namespace Aura.Shared.Network
 	/// <summary>
 	/// Base client, for specialized client classes in the servers.
 	/// </summary>
-	public class Client
+	public abstract class BaseClient
 	{
 		// Largest known packet is composing on R1, up to ~3700 bytes.
 		private const int BufferDefaultSize = 4096;
@@ -41,7 +41,7 @@ namespace Aura.Shared.Network
 			}
 		}
 
-		public Client()
+		public BaseClient()
 		{
 			this.Buffer = new byte[BufferDefaultSize];
 			this.Crypto = new MabiCrypto(0x41757261); // 0xAura
@@ -61,8 +61,7 @@ namespace Aura.Shared.Network
 			if (this.State == ClientState.Dead)
 				return;
 
-			// Set raw flag
-			buffer[5] = 0x03;
+			this.EncodeBuffer(ref buffer);
 
 			//Log.Debug("out: " + BitConverter.ToString(buffer));
 
@@ -90,20 +89,17 @@ namespace Aura.Shared.Network
 		}
 
 		/// <summary>
+		/// Encodes buffer.
+		/// </summary>
+		/// <param name="buffer"></param>
+		protected abstract void EncodeBuffer(ref byte[] buffer);
+
+		/// <summary>
 		/// Builds packet, appending the overall header and checksum.
 		/// </summary>
 		/// <param name="packet"></param>
 		/// <returns></returns>
-		protected virtual byte[] BuildPacket(Packet packet)
-		{
-			var size = packet.GetSize();
-			var result = new byte[6 + size + 4]; // header + packet + checksum
-			result[0] = 0x88;
-			System.Buffer.BlockCopy(BitConverter.GetBytes(result.Length), 0, result, 1, sizeof(int));
-			packet.Build(ref result, 6);
-
-			return result;
-		}
+		protected abstract byte[] BuildPacket(Packet packet);
 
 		/// <summary>
 		/// Kills client connection.

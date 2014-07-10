@@ -10,7 +10,7 @@ using Aura.Shared.Network;
 
 namespace Aura.Channel.Network
 {
-	public class ChannelClient : Client
+	public class ChannelClient : DefaultClient
 	{
 		public Account Account { get; set; }
 

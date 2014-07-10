@@ -6,10 +6,10 @@ using System;
 namespace Aura.Shared.Network
 {
 	/// <summary>
-	/// Normal Mabi server (Login, World).
+	/// Normal Mabi server (Login, Channel).
 	/// </summary>
 	/// <typeparam name="TClient"></typeparam>
-	public class DefaultServer<TClient> : BaseServer<TClient> where TClient : Client, new()
+	public class DefaultServer<TClient> : BaseServer<TClient> where TClient : BaseClient, new()
 	{
 		protected override int GetPacketLength(byte[] buffer, int ptr)
 		{
