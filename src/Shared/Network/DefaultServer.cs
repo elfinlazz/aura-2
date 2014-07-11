@@ -55,7 +55,9 @@ namespace Aura.Shared.Network
 				// Actual packets
 				else
 				{
-					var packet = new Packet(buffer);
+					// Start reading after the protocol header
+					var packet = new Packet(buffer, 6);
+
 					//Logger.Debug(packet);
 					this.Handlers.Handle(client, packet);
 				}

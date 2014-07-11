@@ -59,10 +59,10 @@ namespace Aura.Shared.Network
 			_buffer = new byte[DefaultSize];
 		}
 
-		public Packet(byte[] buffer)
+		public Packet(byte[] buffer, int offset)
 		{
 			_buffer = buffer;
-			_ptr = 6;
+			_ptr = offset;
 
 			var length = buffer.Length;
 
