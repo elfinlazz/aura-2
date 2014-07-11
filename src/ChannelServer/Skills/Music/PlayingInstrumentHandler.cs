@@ -33,7 +33,7 @@ namespace Aura.Channel.Skills.Music
 			ChannelServer.Instance.Events.CreatureAttackedByPlayer += this.OnCreatureAttackedByPlayer;
 		}
 
-		public void Prepare(Creature creature, Skill skill, Packet packet)
+		public void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{
 			var rnd = RandomProvider.Get();
 

@@ -34,7 +34,7 @@ namespace Aura.Channel.Skills.Base
 	/// </summary>
 	public interface IPreparable : ISkillHandler
 	{
-		void Prepare(Creature creature, Skill skill, Packet packet);
+		void Prepare(Creature creature, Skill skill, int castTime, Packet packet);
 	}
 
 	/// <summary>

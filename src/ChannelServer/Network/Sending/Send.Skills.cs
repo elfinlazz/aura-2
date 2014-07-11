@@ -398,5 +398,21 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends SkillPrepare to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="castTime"></param>
+		public static void SkillPrepare(Creature creature, SkillId skillId, int castTime)
+		{
+			var packet = new Packet(Op.SkillPrepare, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			if (skillId != SkillId.None)
+				packet.PutInt(castTime);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

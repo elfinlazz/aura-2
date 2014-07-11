@@ -202,7 +202,7 @@ namespace Aura.Channel.Network.Handlers
 
 			try
 			{
-				handler.Prepare(creature, skill, packet);
+				handler.Prepare(creature, skill, skill.RankData.NewLoadTime, packet);
 			}
 			catch (NotImplementedException)
 			{
