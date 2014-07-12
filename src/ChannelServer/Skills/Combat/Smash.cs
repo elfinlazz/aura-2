@@ -2,25 +2,19 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.Network.Sending;
-using Aura.Channel.Skills.Base;
-using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
-using Aura.Shared.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aura.Channel.Skills.Combat
 {
 	[Skill(SkillId.Smash)]
-	public class Smash : CombatSkillHandler
+	public class Smash : DefaultCombatSkill
 	{
 		private const int AfterUseStun = 600;
+		private const float TwoHandBonusDamage = 1.20f;
+		private const float TwoHandBonusCritChance = 1.05f;
 
 		public override void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{
@@ -40,122 +34,77 @@ namespace Aura.Channel.Skills.Combat
 			Send.SkillComplete(creature, skill.Info.Id);
 		}
 
-		public override CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId)
-		{
-			// Check target
-			var target = attacker.Region.GetCreature(targetEntityId);
-			if (target == null)
-				return CombatSkillResult.InvalidTarget;
-
-			// Check range
-			var targetPosition = target.GetPosition();
-			if (!attacker.GetPosition().InRange(targetPosition, attacker.AttackRangeFor(target)))
-				return CombatSkillResult.OutOfRange;
-
-			// Preapare random
-			var rnd = RandomProvider.Get();
-
-			// Stop movement
-			attacker.StopMove();
-			target.StopMove();
-
-			// Prepare combat actions
-			var aAction = new AttackerAction(CombatActionType.HardHit, attacker, skill.Info.Id, targetEntityId);
-			aAction.Set(AttackerOptions.Result | AttackerOptions.KnockBackHit2);
-
-			var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
-			tAction.Set(TargetOptions.Result | TargetOptions.Smash);
-
-			var cap = new CombatActionPack(attacker, skill.Info.Id, aAction, tAction);
-
-			// Calculate damage
-			var damage = this.GetDamage(attacker, skill);
-			var critChance = this.GetCritChance(attacker, target, skill);
-
-			// Add crit
-			if (rnd.NextDouble() <= critChance)
-			{
-				damage *= 1.5f;
-				tAction.Set(TargetOptions.Critical);
-			}
-
-			// Subtract target def/prot
-			damage = Math.Max(1, damage - target.Defense);
-			if (damage > 1)
-				damage = Math.Max(1, damage - (damage * target.Protection));
-
-			// Mana Shield...
-
-			// Apply damage
-			target.TakeDamage(tAction.Damage = damage, attacker);
-
-			if (target.IsDead)
-				tAction.Set(TargetOptions.FinishingHit | TargetOptions.Finished);
-
-			// Set Stun/Knockback
-			attacker.Stun = aAction.Stun = this.GetAttackerStunTime();
-			target.Stun = tAction.Stun = this.GetTargetStunTime();
-			target.KnockBack = this.GetKnockBack();
-
-			// Check collissions
-			Position intersection;
-			var knockbackPos = attacker.GetPosition().GetRelative(targetPosition, this.GetKnockBackDistance());
-			if (target.Region.Collissions.Find(targetPosition, knockbackPos, out intersection))
-				knockbackPos = targetPosition.GetRelative(intersection, -50);
-
-			// Set knockbacked position
-			target.SetPosition(knockbackPos.X, knockbackPos.Y);
-
-			// Action!
-			cap.Handle();
-
-			// Response
-			Send.SkillUseStun(attacker, skill.Info.Id, AfterUseStun, 1);
-
-			return CombatSkillResult.Okay;
-		}
-
-		protected float GetDamage(Creature attacker, Skill skill)
+		protected override float GetDamage(Creature attacker, Skill skill)
 		{
 			var result = attacker.GetRndTotalDamage();
 			result *= skill.RankData.Var1 / 100f;
 
-			// +20% dmg for 2H
+			// +dmg for 2H
 			if (attacker.RightHand != null && attacker.RightHand.Data.Type == ItemType.Weapon2H)
-				result *= 1.20f;
+				result *= TwoHandBonusDamage;
 
 			return result;
 		}
 
-		protected float GetCritChance(Creature attacker, Creature target, Skill skill)
+		protected override float GetCritChance(Creature attacker, Creature target, Skill skill)
 		{
-			var result = (attacker.CriticalBase - target.Protection);
+			var result = base.GetCritChance(attacker, target, skill);
 
-			// +5% crit for 2H
+			// +crit for 2H
 			if (attacker.RightHand != null && attacker.RightHand.Data.Type == ItemType.Weapon2H)
-				result *= 1.05f;
+				result *= TwoHandBonusCritChance;
 
 			return result;
 		}
 
-		protected short GetAttackerStunTime()
+		protected override short GetAttackerStunTime()
 		{
 			return 3000;
 		}
 
-		protected short GetTargetStunTime()
+		protected override short GetTargetStunTime()
 		{
 			return 3000;
 		}
 
-		protected float GetKnockBack()
+		protected override float GetKnockBack()
 		{
 			return 120f;
 		}
 
-		protected int GetKnockBackDistance()
+		protected override int GetKnockBackDistance()
 		{
 			return 450;
+		}
+
+		protected override void Response(Creature attacker, Skill skill)
+		{
+			Send.SkillUseStun(attacker, skill.Info.Id, AfterUseStun, 1);
+		}
+
+		protected override void SetAttackerOptions(AttackerAction aAction)
+		{
+			aAction.Set(AttackerOptions.Result | AttackerOptions.KnockBackHit2);
+		}
+
+		protected override void SetTargetOptions(TargetAction tAction)
+		{
+			tAction.Set(TargetOptions.Result | TargetOptions.Smash);
+		}
+
+		protected override CombatActionType GetAttackerActionType()
+		{
+			return CombatActionType.HardHit;
+		}
+
+		protected override CombatActionType GetTargetActionType()
+		{
+			return CombatActionType.TakeHit;
+		}
+
+		protected override TargetOptions GetTargetDeathOptions()
+		{
+			return TargetOptions.Finished | TargetOptions.FinishingHit;
 		}
 	}
 }

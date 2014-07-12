@@ -144,6 +144,7 @@
     <Compile Include="Skills\Base\StartStopSkillHandler.cs" />
     <Compile Include="Skills\CombatAction.cs" />
     <Compile Include="Skills\Combat\CombatMastery.cs" />
+    <Compile Include="Skills\Combat\DefaultCombatSkill.cs" />
     <Compile Include="Skills\Combat\Smash.cs" />
     <Compile Include="Skills\Hidden\DyeSkillHandler.cs" />
     <Compile Include="Skills\Life\RestSkillHandler.cs" />
