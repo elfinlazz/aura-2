@@ -78,6 +78,12 @@ namespace Aura.Channel.Skills
 			this.SkillId = skillId;
 		}
 
+		public CombatActionPack(Creature attacker, SkillId skillId, params CombatAction[] actions)
+			: this(attacker, skillId)
+		{
+			this.Add(actions);
+		}
+
 		/// <summary>
 		/// Adds combat actions.
 		/// </summary>

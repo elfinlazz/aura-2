@@ -75,7 +75,6 @@ namespace Aura.Shared.Mabi.Const
 		/// <remarks>
 		/// This alone removes any delays between dmg and animation.
 		/// </remarks>
-		/// 
 		Finished = 0x10,
 
 		/// <summary>

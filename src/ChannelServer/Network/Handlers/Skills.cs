@@ -353,6 +353,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 		L_End:
+			// Always set active skill to null after complete.
 			creature.Skills.ActiveSkill = null;
 		}
 

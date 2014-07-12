@@ -50,5 +50,5 @@ namespace Aura.Channel.Skills.Base
 		CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId);
 	}
 
-	public enum CombatSkillResult { Okay, OutOfRange }
+	public enum CombatSkillResult { Okay, OutOfRange, InvalidTarget }
 }
