@@ -145,7 +145,7 @@ namespace Aura.Channel.Network.Handlers
 				if (result == CombatSkillResult.OutOfRange)
 					Send.CombatAttackR(creature, target);
 				else
-					Send.CombatAttackR(creature, true);
+					Send.CombatAttackR(creature, result == CombatSkillResult.Okay);
 				return;
 			}
 			catch (NotImplementedException)
