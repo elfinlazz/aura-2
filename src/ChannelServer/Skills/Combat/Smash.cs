@@ -18,12 +18,17 @@ using System.Threading.Tasks;
 namespace Aura.Channel.Skills.Combat
 {
 	[Skill(SkillId.Smash)]
-	public class Smash : CombatSkillHandler
+	public class Smash : CombatSkillHandler, IInitiableSkillHandler
 	{
 		private const int StunTime = 3000;
 		private const int AfterUseStun = 600;
 		private const float Knockback = 120;
 		private const int KnockbackDistance = 450;
+
+		public void Init()
+		{
+			ChannelServer.Instance.Events.CreatureAttackedByPlayer += this.OnCreatureAttackedByPlayer;
+		}
 
 		public override void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{
@@ -135,6 +140,50 @@ namespace Aura.Channel.Skills.Combat
 				result *= 1.05f;
 
 			return result;
+		}
+
+		/// <summary>
+		/// Training, called when someone attacks something.
+		/// </summary>
+		/// <param name="action"></param>
+		public void OnCreatureAttackedByPlayer(TargetAction action)
+		{
+			// Get skill
+			var attackerSkill = action.Attacker.Skills.Get(SkillId.Smash);
+			if (attackerSkill == null) return; // Should be impossible.
+
+			// Learning by attacking
+			switch (attackerSkill.Info.Rank)
+			{
+				case SkillRank.RF:
+				case SkillRank.RE:
+					attackerSkill.Train(1); // Use the skill successfully.
+					if (action.Has(TargetOptions.Critical)) attackerSkill.Train(2); // Critical Hit with Smash.
+					if (action.Creature.IsDead) attackerSkill.Train(3); // Finishing blow with Smash.
+					break;
+
+				case SkillRank.RD:
+				case SkillRank.RC:
+				case SkillRank.RB:
+				case SkillRank.RA:
+				case SkillRank.R9:
+				case SkillRank.R8:
+				case SkillRank.R7:
+					if (action.Has(TargetOptions.Critical) && action.Creature.IsDead)
+						attackerSkill.Train(4); // Finishing blow with Critical Hit.
+					goto case SkillRank.RF;
+
+				case SkillRank.R6:
+				case SkillRank.R5:
+				case SkillRank.R4:
+				case SkillRank.R3:
+				case SkillRank.R2:
+				case SkillRank.R1:
+					if (action.Has(TargetOptions.Critical)) attackerSkill.Train(1); // Critical Hit with Smash.
+					if (action.Creature.IsDead) attackerSkill.Train(2); // Finishing blow with Smash.
+					if (action.Has(TargetOptions.Critical) && action.Creature.IsDead) attackerSkill.Train(3); // Finishing blow with Critical Hit.
+					break;
+			}
 		}
 	}
 }
