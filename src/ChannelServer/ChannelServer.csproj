@@ -152,6 +152,7 @@
     <Compile Include="Skills\Music\PlayingInstrumentHandler.cs" />
     <Compile Include="Skills\Music\SongSkillHandler.cs" />
     <Compile Include="Skills\Skill.cs" />
+    <Compile Include="Skills\SkillHelper.cs" />
     <Compile Include="Skills\SkillManager.cs" />
     <Compile Include="Util\Configuration\ChannelConf.cs" />
     <Compile Include="Util\ChannelConsoleCommands.cs" />

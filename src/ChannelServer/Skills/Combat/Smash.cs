@@ -87,7 +87,8 @@ namespace Aura.Channel.Skills.Combat
 			if (damage > 1)
 				damage = Math.Max(1, damage - (damage * target.Protection));
 
-			// Mana Shield...
+			// Mana Shield
+			SkillHelper.HandleManaShield(target, ref damage, tAction);
 
 			// Counter...
 

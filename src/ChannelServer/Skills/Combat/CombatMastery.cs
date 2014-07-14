@@ -58,11 +58,10 @@ namespace Aura.Channel.Skills.Combat
 			{
 				var weapon = (i == 1 ? rightWeapon : leftWeapon);
 
-				var cap = new CombatActionPack(attacker, skill.Info.Id);
 				var aAction = new AttackerAction(CombatActionType.Hit, attacker, skill.Info.Id, targetEntityId);
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
-				cap.Add(aAction, tAction);
 
+				var cap = new CombatActionPack(attacker, skill.Info.Id, aAction, tAction);
 				cap.Hit = i;
 				cap.MaxHits = maxHits;
 				cap.PrevId = prevId;
@@ -81,29 +80,7 @@ namespace Aura.Channel.Skills.Combat
 				// Defense...
 
 				// Mana Shield
-				if (target.Conditions.Has(ConditionsA.ManaShield))
-				{
-					var manaShield = target.Skills.Get(SkillId.ManaShield);
-					if (manaShield != null) // Checks for things that should never ever happen, yay.
-					{
-						// Var 1 = Efficiency
-						var manaDamage = damage / manaShield.RankData.Var1;
-						if (target.Mana >= manaDamage)
-							damage = 0;
-						else
-						{
-							damage -= (manaDamage - target.Mana) * manaShield.RankData.Var1;
-							manaDamage = target.Mana;
-						}
-
-						target.Mana -= manaDamage;
-
-						if (target.Mana <= 0)
-							ChannelServer.Instance.SkillManager.GetHandler<StartStopSkillHandler>(SkillId.ManaShield).Stop(target, manaShield);
-
-						tAction.ManaDamage = manaDamage;
-					}
-				}
+				SkillHelper.HandleManaShield(target, ref damage, tAction);
 
 				// Deal with it!
 				if (damage > 0)
