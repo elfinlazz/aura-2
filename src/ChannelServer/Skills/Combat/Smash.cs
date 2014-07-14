@@ -20,7 +20,10 @@ namespace Aura.Channel.Skills.Combat
 	[Skill(SkillId.Smash)]
 	public class Smash : CombatSkillHandler
 	{
+		private const int StunTime = 3000;
 		private const int AfterUseStun = 600;
+		private const float Knockback = 120;
+		private const int KnockbackDistance = 450;
 
 		public override void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{
@@ -86,6 +89,8 @@ namespace Aura.Channel.Skills.Combat
 
 			// Mana Shield...
 
+			// Counter...
+
 			// Apply damage
 			target.TakeDamage(tAction.Damage = damage, attacker);
 
@@ -93,24 +98,24 @@ namespace Aura.Channel.Skills.Combat
 				tAction.Set(TargetOptions.FinishingHit | TargetOptions.Finished);
 
 			// Set Stun/Knockback
-			attacker.Stun = aAction.Stun = this.GetAttackerStunTime();
-			target.Stun = tAction.Stun = this.GetTargetStunTime();
-			target.KnockBack = this.GetKnockBack();
+			attacker.Stun = aAction.Stun = StunTime;
+			target.Stun = tAction.Stun = StunTime;
+			target.KnockBack = Knockback;
 
 			// Check collissions
 			Position intersection;
-			var knockbackPos = attacker.GetPosition().GetRelative(targetPosition, this.GetKnockBackDistance());
+			var knockbackPos = attacker.GetPosition().GetRelative(targetPosition, KnockbackDistance);
 			if (target.Region.Collissions.Find(targetPosition, knockbackPos, out intersection))
 				knockbackPos = targetPosition.GetRelative(intersection, -50);
 
 			// Set knockbacked position
 			target.SetPosition(knockbackPos.X, knockbackPos.Y);
 
-			// Action!
-			cap.Handle();
-
 			// Response
 			Send.SkillUseStun(attacker, skill.Info.Id, AfterUseStun, 1);
+
+			// Action!
+			cap.Handle();
 
 			return CombatSkillResult.Okay;
 		}
@@ -136,26 +141,6 @@ namespace Aura.Channel.Skills.Combat
 				result *= 1.05f;
 
 			return result;
-		}
-
-		protected short GetAttackerStunTime()
-		{
-			return 3000;
-		}
-
-		protected short GetTargetStunTime()
-		{
-			return 3000;
-		}
-
-		protected float GetKnockBack()
-		{
-			return 120f;
-		}
-
-		protected int GetKnockBackDistance()
-		{
-			return 450;
 		}
 	}
 }
