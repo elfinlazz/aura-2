@@ -240,6 +240,22 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
+		/// <param name="unkByte"></param>
+		public static void SkillUseStun(Creature creature, SkillId skillId, int stun, int unk)
+		{
+			var packet = new Packet(Op.SkillUse, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutInt(stun);
+			packet.PutInt(unk);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillUse to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
 		/// <param name="part"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
@@ -395,6 +411,22 @@ namespace Aura.Channel.Network.Sending
 			var packet = new Packet(Op.SkillComplete, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
 			packet.PutLong(entityId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillPrepare to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="castTime"></param>
+		public static void SkillPrepare(Creature creature, SkillId skillId, int castTime)
+		{
+			var packet = new Packet(Op.SkillPrepare, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			if (skillId != SkillId.None)
+				packet.PutInt(castTime);
 
 			creature.Client.Send(packet);
 		}

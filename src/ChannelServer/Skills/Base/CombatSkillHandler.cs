@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Aura.Channel.World.Entities;
+using Aura.Shared.Network;
 
 namespace Aura.Channel.Skills.Base
 {
@@ -18,17 +19,17 @@ namespace Aura.Channel.Skills.Base
 	/// </remarks>
 	public abstract class CombatSkillHandler : IPreparable, IReadyable, ICompletable, ICancelable, ICombatSkill
 	{
-		public virtual void Prepare(Creature creature, Skill skill, Shared.Network.Packet packet)
+		public virtual void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{
 			throw new NotImplementedException();
 		}
 
-		public virtual void Ready(Creature creature, Skill skill, Shared.Network.Packet packet)
+		public virtual void Ready(Creature creature, Skill skill, Packet packet)
 		{
 			throw new NotImplementedException();
 		}
 
-		public virtual void Complete(Creature creature, Skill skill, Shared.Network.Packet packet)
+		public virtual void Complete(Creature creature, Skill skill, Packet packet)
 		{
 			throw new NotImplementedException();
 		}
@@ -49,5 +50,5 @@ namespace Aura.Channel.Skills.Base
 		CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId);
 	}
 
-	public enum CombatSkillResult { Okay, OutOfRange }
+	public enum CombatSkillResult { Okay, OutOfRange, InvalidTarget }
 }

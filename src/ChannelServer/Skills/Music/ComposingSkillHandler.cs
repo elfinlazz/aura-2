@@ -31,7 +31,7 @@ namespace Aura.Channel.Skills.Music
 	{
 		private const int MMLMaxLength = 10000;
 
-		public void Prepare(Creature creature, Skill skill, Packet packet)
+		public void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{
 			var scrollId = packet.GetLong();
 			var title = packet.GetString();

@@ -27,7 +27,7 @@ namespace Aura.Channel.Skills.Hidden
 	[Skill(SkillId.Dye)]
 	public class DyeSkillHandler : IPreparable, IUseable, ICompletable, ICancelable
 	{
-		public void Prepare(Creature creature, Skill skill, Packet packet)
+		public void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{
 			var itemEntityId = packet.GetLong();
 			var dyeEntityId = packet.GetLong();

@@ -202,7 +202,7 @@ namespace Aura.Channel.Network.Handlers
 
 			try
 			{
-				handler.Prepare(creature, skill, packet);
+				handler.Prepare(creature, skill, skill.RankData.NewLoadTime, packet);
 			}
 			catch (NotImplementedException)
 			{
@@ -329,7 +329,7 @@ namespace Aura.Channel.Network.Handlers
 			{
 				Log.Warning("SkillComplete: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
 				// Cancel?
-				return;
+				goto L_End;
 			}
 
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<ICompletable>(skillId);
@@ -338,7 +338,7 @@ namespace Aura.Channel.Network.Handlers
 				Log.Unimplemented("SkillComplete: Skill handler or interface for '{0}'.", skillId);
 				Send.ServerMessage(creature, Localization.Get("This skill isn't implemented yet."));
 				// Cancel?
-				return;
+				goto L_End;
 			}
 
 			try
@@ -351,6 +351,10 @@ namespace Aura.Channel.Network.Handlers
 				Send.ServerMessage(creature, Localization.Get("This skill isn't implemented completely yet."));
 				// Cancel?
 			}
+
+		L_End:
+			// Always set active skill to null after complete.
+			creature.Skills.ActiveSkill = null;
 		}
 
 		/// <summary>

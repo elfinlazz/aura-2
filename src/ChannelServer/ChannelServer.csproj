@@ -144,6 +144,7 @@
     <Compile Include="Skills\Base\StartStopSkillHandler.cs" />
     <Compile Include="Skills\CombatAction.cs" />
     <Compile Include="Skills\Combat\CombatMastery.cs" />
+    <Compile Include="Skills\Combat\Smash.cs" />
     <Compile Include="Skills\Hidden\DyeSkillHandler.cs" />
     <Compile Include="Skills\Life\RestSkillHandler.cs" />
     <Compile Include="Skills\Magic\ManaShieldSkillHandler.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Skills\Music\PlayingInstrumentHandler.cs" />
     <Compile Include="Skills\Music\SongSkillHandler.cs" />
     <Compile Include="Skills\Skill.cs" />
+    <Compile Include="Skills\SkillHelper.cs" />
     <Compile Include="Skills\SkillManager.cs" />
     <Compile Include="Util\Configuration\ChannelConf.cs" />
     <Compile Include="Util\ChannelConsoleCommands.cs" />
