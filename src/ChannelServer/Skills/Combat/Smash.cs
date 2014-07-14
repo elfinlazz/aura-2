@@ -55,9 +55,6 @@ namespace Aura.Channel.Skills.Combat
 			if (!attacker.GetPosition().InRange(targetPosition, attacker.AttackRangeFor(target)))
 				return CombatSkillResult.OutOfRange;
 
-			// Preapare random
-			var rnd = RandomProvider.Get();
-
 			// Stop movement
 			attacker.StopMove();
 			target.StopMove();
@@ -75,12 +72,8 @@ namespace Aura.Channel.Skills.Combat
 			var damage = this.GetDamage(attacker, skill);
 			var critChance = this.GetCritChance(attacker, target, skill);
 
-			// Add crit
-			if (rnd.NextDouble() <= critChance)
-			{
-				damage *= 1.5f;
-				tAction.Set(TargetOptions.Critical);
-			}
+			// Critical Hit
+			SkillHelper.HandleCritical(attacker, critChance, ref damage, tAction);
 
 			// Subtract target def/prot
 			damage = Math.Max(1, damage - target.Defense);
@@ -135,7 +128,7 @@ namespace Aura.Channel.Skills.Combat
 
 		protected float GetCritChance(Creature attacker, Creature target, Skill skill)
 		{
-			var result = (attacker.CriticalBase - target.Protection);
+			var result = attacker.GetCritChanceFor(target);
 
 			// +5% crit for 2H
 			if (attacker.RightHand != null && attacker.RightHand.Data.Type == ItemType.Weapon2H)

@@ -303,6 +303,8 @@ namespace Aura.Channel.World.Entities
 					}
 				}
 
+				// TODO: Stat bonuses?
+
 				return result;
 			}
 		}
@@ -1279,6 +1281,17 @@ namespace Aura.Channel.World.Entities
 			if (otherCp < cp * 2.0f) return PowerRating.Strong;
 			if (otherCp < cp * 3.0f) return PowerRating.Awful;
 			return PowerRating.Boss;
+		}
+
+		/// <summary>
+		/// Returns CriticalBase - target protection, the base
+		/// critical hit chance.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public float GetCritChanceFor(Creature target)
+		{
+			return (this.CriticalBase - target.Protection);
 		}
 	}
 }

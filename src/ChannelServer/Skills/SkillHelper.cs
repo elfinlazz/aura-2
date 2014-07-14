@@ -4,6 +4,7 @@
 using Aura.Channel.Skills.Base;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,34 @@ namespace Aura.Channel.Skills
 				ChannelServer.Instance.SkillManager.GetHandler<StartStopSkillHandler>(SkillId.ManaShield).Stop(target, manaShield);
 
 			tAction.ManaDamage = manaDamage;
+		}
+
+		/// <summary>
+		/// Checks if attacker has Critical Hit and applies crit bonus
+		/// by chance. Also sets the target action's critical option if a
+		/// crit happens.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="critChance"></param>
+		/// <param name="damage"></param>
+		/// <param name="tAction"></param>
+		public static void HandleCritical(Creature attacker, float critChance, ref float damage, TargetAction tAction)
+		{
+			// Check if attacker actually has critical hit
+			var critSkill = attacker.Skills.Get(SkillId.CriticalHit);
+			if (critSkill == null)
+				return;
+
+			// Does the crit happen?
+			if (RandomProvider.Get().NextDouble() > critChance)
+				return;
+
+			// Add crit bonus
+			var bonus = critSkill.RankData.Var1 / 100f;
+			damage = damage + (damage * bonus);
+
+			// Set target option
+			tAction.Set(TargetOptions.Critical);
 		}
 	}
 }

@@ -75,7 +75,8 @@ namespace Aura.Channel.Skills.Combat
 				// Base damage
 				var damage = attacker.GetRndDamage(weapon);
 
-				// Crit...
+				// Critical Hit
+				SkillHelper.HandleCritical(attacker, attacker.GetCritChanceFor(target), ref damage, tAction);
 
 				// Defense...
 
