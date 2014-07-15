@@ -153,6 +153,11 @@ namespace Aura.Data
 
 		protected bool CreateCache(string path)
 		{
+			// Mono currently has a problem with MsgPack
+#if __MonoCS__
+			return false;
+#endif
+
 			// Only create cache if everything went smoothly.
 			if (this.Entries.Count > 0 && this.Warnings.Count == 0)
 			{
