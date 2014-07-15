@@ -1041,6 +1041,9 @@ namespace Aura.Channel.World.Entities
 				ChannelServer.Instance.Events.OnCreatureKilledByPlayer(this, killer);
 			this.Death.Raise(this, killer);
 
+			if (this.Skills.ActiveSkill != null)
+				this.Skills.CancelActiveSkill();
+
 			var rnd = RandomProvider.Get();
 			var pos = this.GetPosition();
 
