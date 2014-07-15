@@ -143,8 +143,14 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		protected override bool ShouldSurvive(float damage, Creature from, float lifeBefore)
 		{
-			// Actual formula unknown.
-			return ((this.Will * 10) + RandomProvider.Get().Next(1001)) > 999;
+			// No surviving once you're in deadly
+			if (lifeBefore < 0)
+				return false;
+
+			// Chance = Will/10, capped at 50%
+			// Actual formula unknown
+			var chance = Math.Min(50, this.Will / 10);
+			return (RandomProvider.Get().Next(101) < chance);
 		}
 
 		/// <summary>
