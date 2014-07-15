@@ -148,6 +148,10 @@ namespace Aura.Channel.Skills.Combat
 		/// <param name="action"></param>
 		public void OnCreatureAttackedByPlayer(TargetAction action)
 		{
+			// Only train if used skill was Smash
+			if (action.SkillId != SkillId.Smash)
+				return;
+
 			// Get skill
 			var attackerSkill = action.Attacker.Skills.Get(SkillId.Smash);
 			if (attackerSkill == null) return; // Should be impossible.
