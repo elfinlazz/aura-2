@@ -38,7 +38,6 @@ namespace Aura.Shared.Network
 
 		protected byte[] _buffer;
 		protected int _ptr;
-		protected bool _built;
 		protected int _bodyStart;
 		private int _elements, _bodyLen;
 
@@ -60,11 +59,10 @@ namespace Aura.Shared.Network
 			_buffer = new byte[DefaultSize];
 		}
 
-		public Packet(byte[] buffer)
+		public Packet(byte[] buffer, int offset)
 		{
-			_built = true;
 			_buffer = buffer;
-			_ptr = 6;
+			_ptr = offset;
 
 			var length = buffer.Length;
 
@@ -72,8 +70,9 @@ namespace Aura.Shared.Network
 			this.Id = IPAddress.NetworkToHostOrder(BitConverter.ToInt64(_buffer, _ptr + sizeof(int)));
 			_ptr += 12;
 
-			while (_ptr < length)
-			{ if (_buffer[++_ptr - 1] == 0) break; }
+			_bodyLen = this.ReadVarInt(_buffer, ref _ptr);
+			_elements = this.ReadVarInt(_buffer, ref _ptr);
+			_ptr++; // 0x00
 
 			_bodyStart = _ptr;
 		}
@@ -91,7 +90,6 @@ namespace Aura.Shared.Network
 
 			Array.Clear(_buffer, 0, _buffer.Length);
 			_ptr = 0;
-			_built = false;
 			_bodyStart = 0;
 			_elements = 0;
 			_bodyLen = 0;
@@ -138,8 +136,6 @@ namespace Aura.Shared.Network
 		/// <returns></returns>
 		protected Packet PutSimple(PacketElementType type, params byte[] val)
 		{
-			this.EnsureEditable();
-
 			var len = 1 + val.Length;
 			this.EnsureSize(len);
 
@@ -162,8 +158,6 @@ namespace Aura.Shared.Network
 		/// <returns></returns>
 		protected Packet PutWithLength(PacketElementType type, byte[] val)
 		{
-			this.EnsureEditable();
-
 			var len = 1 + sizeof(short) + val.Length;
 			this.EnsureSize(len);
 
@@ -245,7 +239,7 @@ namespace Aura.Shared.Network
 		/// <summary>Writes packet as bin and the length of it as int to buffer.</summary>
 		public Packet PutBin(Packet packet)
 		{
-			var val = packet.Build(false);
+			var val = packet.Build();
 			return this.PutInt(val.Length).PutBin(val);
 		}
 
@@ -258,15 +252,6 @@ namespace Aura.Shared.Network
 		{
 			if (_ptr + required >= _buffer.Length)
 				Array.Resize(ref _buffer, _buffer.Length + Math.Max(AddSize, required * 2));
-		}
-
-		/// <summary>
-		/// Throws exception if packet is locked (after being built).
-		/// </summary>
-		protected void EnsureEditable()
-		{
-			if (_built)
-				throw new Exception("Packet can't be modified once it was built.");
 		}
 
 		// Read
@@ -414,72 +399,96 @@ namespace Aura.Shared.Network
 
 		// ------------------------------------------------------------------
 
+		private int ReadVarInt(byte[] buffer, ref int ptr)
+		{
+			int result = 0;
+
+			for (int i = 0; ; ++i)
+			{
+				result |= (buffer[ptr] & 0x7f) << (i * 7);
+
+				if ((buffer[ptr++] & 0x80) == 0)
+					break;
+			}
+
+			return result;
+		}
+
+		private void WriteVarInt(int value, byte[] buffer, ref int ptr)
+		{
+			do
+			{
+				buffer[ptr++] = (byte)(value > 0x7F ? (0x80 | (value & 0xFF)) : value & 0xFF);
+			}
+			while ((value >>= 7) != 0);
+		}
+
+		// ------------------------------------------------------------------
+
+		/// <summary>
+		/// Returns size of the whole packet, incl header.
+		/// </summary>
+		/// <returns></returns>
+		public int GetSize()
+		{
+			var i = 4 + 8; // op + id + body
+
+			int n = _bodyLen; // + body len
+			do { i++; n >>= 7; } while (n != 0);
+
+			n = _elements; // + number of elements
+			do { i++; n >>= 7; } while (n != 0);
+
+			++i; // + zero
+			i += _bodyLen; // + body
+
+			return i;
+		}
+
 		/// <summary>
 		/// Returns complete packet as byte array.
 		/// </summary>
-		/// <param name="includeProtocolHeader">If true, the length of the packet and the encryption flag are added.</param>
 		/// <returns></returns>
-		public byte[] Build(bool includeProtocolHeader = true)
+		public byte[] Build()
 		{
-			if (_built)
-				return _buffer;
+			var result = new byte[this.GetSize()];
+			this.Build(ref result, 0);
 
-			var ptr = includeProtocolHeader ? 6 : 0;
-			var result = new byte[ptr + 30 + _bodyLen]; // protocol+header+body
+			return result;
+		}
+
+		/// <summary>
+		/// Returns complete packet as byte array.
+		/// </summary>
+		/// <returns></returns>
+		public void Build(ref byte[] buffer, int offset)
+		{
+			if (buffer.Length < offset + this.GetSize())
+				throw new Exception("Buffer too small for packet, use GetSize().");
+
 			var length = _bodyLen;
 
-			// Packet header
+			// Header
 			{
 				// Op + Id
-				Buffer.BlockCopy(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(this.Op)), 0, result, ptr, sizeof(int));
-				Buffer.BlockCopy(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(this.Id)), 0, result, ptr + sizeof(int), sizeof(long));
-				ptr += 12;
+				Buffer.BlockCopy(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(this.Op)), 0, buffer, offset, sizeof(int));
+				Buffer.BlockCopy(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(this.Id)), 0, buffer, offset + sizeof(int), sizeof(long));
+				offset += 12;
 
 				// Body len
-				int n = _bodyLen;
-				do
-				{
-					result[ptr++] = (byte)(n > 0x7F ? (0x80 | (n & 0xFF)) : n & 0xFF);
-					n >>= 7;
-				}
-				while (n != 0);
+				this.WriteVarInt(_bodyLen, buffer, ref offset);
 
 				// Element amount
-				n = _elements;
-				do
-				{
-					result[ptr++] = (byte)(n > 0x7F ? (0x80 | (n & 0xFF)) : n & 0xFF);
-					n >>= 7;
-				}
-				while (n != 0);
+				this.WriteVarInt(_elements, buffer, ref offset);
 
-				result[ptr++] = 0;
+				buffer[offset++] = 0;
 
-				length += ptr;
+				length += offset;
 			}
 
 			// Body
-			_bodyStart = ptr;
-			Buffer.BlockCopy(_buffer, 0, result, ptr, _bodyLen);
-
-			// Append dummy space for checksum... not really needed, is it?
-			if (includeProtocolHeader)
-				length += 4;
-
-			// Protocol header
-			if (includeProtocolHeader)
-			{
-				result[0] = 0x88;
-				Buffer.BlockCopy(BitConverter.GetBytes(length), 0, result, 1, sizeof(int));
-			}
-
-			// Cut off remaining bytes
-			Array.Resize(ref result, length);
-
-			_buffer = result;
-			_built = true;
-
-			return result;
+			//_bodyStart = offset;
+			Buffer.BlockCopy(_buffer, _bodyStart, buffer, offset, _bodyLen);
 		}
 
 		public override string ToString()

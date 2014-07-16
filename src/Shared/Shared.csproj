@@ -74,6 +74,7 @@
     <Compile Include="Mabi\Structs\Skills.cs" />
     <Compile Include="Network\BaseClient.cs" />
     <Compile Include="Network\BaseServer.cs" />
+    <Compile Include="Network\DefaultClient.cs" />
     <Compile Include="Network\MabiCrypto.cs" />
     <Compile Include="Network\DefaultServer.cs" />
     <Compile Include="Network\Packet.cs" />
