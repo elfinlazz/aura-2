@@ -463,6 +463,16 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Returns true if quest was completed.
+		/// </summary>
+		/// <param name="questId"></param>
+		/// <returns></returns>
+		public bool QuestCompleted(int questId)
+		{
+			return this.Player.Quests.IsComplete(questId);
+		}
+
+		/// <summary>
 		/// Finishes objective in quest.
 		/// </summary>
 		/// <param name="questId"></param>
@@ -499,6 +509,15 @@ namespace Aura.Channel.Scripting.Scripts
 		public void StartQuest(int questId)
 		{
 			this.Player.Quests.Start(questId);
+		}
+
+		/// <summary>
+		/// Completes quest (incl rewards).
+		/// </summary>
+		/// <param name="questId"></param>
+		public void CompleteQuest(int questId)
+		{
+			this.Player.Quests.Complete(questId);
 		}
 
 		/// <summary>
