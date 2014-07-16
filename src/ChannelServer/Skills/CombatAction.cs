@@ -106,10 +106,6 @@ namespace Aura.Channel.Skills
 				Send.StatUpdate(action.Creature, StatUpdateType.Private, Stat.Life, Stat.LifeInjured, Stat.Mana);
 				Send.StatUpdate(action.Creature, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
 
-				// Cancel defense if applicable
-				if (action.Is(CombatActionType.Defended))
-					action.Creature.Skills.CancelActiveSkill();
-
 				// If target action
 				if (action.Category == CombatActionCategory.Target)
 				{
@@ -117,9 +113,10 @@ namespace Aura.Channel.Skills
 
 					// Mana Shield flag
 					if (tAction.ManaDamage > 0 && tAction.Damage == 0)
-						tAction.Options |= TargetOptions.ManaShield;
+						tAction.Set(TargetOptions.ManaShield);
 
-					// CreatureAttackedByPlayer event
+					// On attack events
+					ChannelServer.Instance.Events.OnCreatureAttack(tAction);
 					if (this.Attacker.IsPlayer)
 						ChannelServer.Instance.Events.OnCreatureAttackedByPlayer(tAction);
 
@@ -130,6 +127,10 @@ namespace Aura.Channel.Skills
 						npc.AI.OnHit(tAction);
 					}
 				}
+
+				// Cancel defense if applicable
+				if (action.Is(CombatActionType.Defended))
+					action.Creature.Skills.CancelActiveSkill();
 			}
 
 			// Send combat action
@@ -163,6 +164,11 @@ namespace Aura.Channel.Skills
 		/// Used skill
 		/// </summary>
 		public SkillId SkillId { get; set; }
+
+		/// <summary>
+		/// Skill used by the attacker
+		/// </summary>
+		public SkillId AttackerSkillId { get; set; }
 
 		/// <summary>
 		/// Returns true if action is a knock back/down.
@@ -292,6 +298,7 @@ namespace Aura.Channel.Skills
 			this.Creature = creature;
 			this.Attacker = attacker;
 			this.SkillId = skillId;
+			this.AttackerSkillId = skillId;
 		}
 
 		/// <summary>
