@@ -166,11 +166,6 @@ namespace Aura.Channel.Skills
 		public SkillId SkillId { get; set; }
 
 		/// <summary>
-		/// Skill used by the attacker
-		/// </summary>
-		public SkillId AttackerSkillId { get; set; }
-
-		/// <summary>
 		/// Returns true if action is a knock back/down.
 		/// </summary>
 		public abstract bool IsKnockBack { get; }
@@ -280,6 +275,15 @@ namespace Aura.Channel.Skills
 		/// Mana damage (Mana Shield, blue)
 		/// </summary>
 		public float ManaDamage { get; set; }
+
+		/// <summary>
+		/// Skill used by the attacker
+		/// </summary>
+		/// <remarks>
+		/// SkillId might be changed during skill handling (e.g. because of
+		/// Defense). In that case we need a "backup".
+		/// </remarks>
+		public SkillId AttackerSkillId { get; set; }
 
 		/// <summary>
 		/// Returns true if any option involving knocking back/down is
