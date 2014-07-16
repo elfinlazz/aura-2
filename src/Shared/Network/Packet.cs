@@ -70,8 +70,9 @@ namespace Aura.Shared.Network
 			this.Id = IPAddress.NetworkToHostOrder(BitConverter.ToInt64(_buffer, _ptr + sizeof(int)));
 			_ptr += 12;
 
-			while (_ptr < length)
-			{ if (_buffer[++_ptr - 1] == 0) break; }
+			_bodyLen = this.ReadVarInt(_buffer, ref _ptr);
+			_elements = this.ReadVarInt(_buffer, ref _ptr);
+			_ptr++; // 0x00
 
 			_bodyStart = _ptr;
 		}
@@ -398,6 +399,32 @@ namespace Aura.Shared.Network
 
 		// ------------------------------------------------------------------
 
+		private int ReadVarInt(byte[] buffer, ref int ptr)
+		{
+			int result = 0;
+
+			for (int i = 0; ; ++i)
+			{
+				result |= (buffer[ptr] & 0x7f) << (i * 7);
+
+				if ((buffer[ptr++] & 0x80) == 0)
+					break;
+			}
+
+			return result;
+		}
+
+		private void WriteVarInt(int value, byte[] buffer, ref int ptr)
+		{
+			do
+			{
+				buffer[ptr++] = (byte)(value > 0x7F ? (0x80 | (value & 0xFF)) : value & 0xFF);
+			}
+			while ((value >>= 7) != 0);
+		}
+
+		// ------------------------------------------------------------------
+
 		/// <summary>
 		/// Returns size of the whole packet, incl header.
 		/// </summary>
@@ -449,22 +476,10 @@ namespace Aura.Shared.Network
 				offset += 12;
 
 				// Body len
-				int n = _bodyLen;
-				do
-				{
-					buffer[offset++] = (byte)(n > 0x7F ? (0x80 | (n & 0xFF)) : n & 0xFF);
-					n >>= 7;
-				}
-				while (n != 0);
+				this.WriteVarInt(_bodyLen, buffer, ref offset);
 
 				// Element amount
-				n = _elements;
-				do
-				{
-					buffer[offset++] = (byte)(n > 0x7F ? (0x80 | (n & 0xFF)) : n & 0xFF);
-					n >>= 7;
-				}
-				while (n != 0);
+				this.WriteVarInt(_elements, buffer, ref offset);
 
 				buffer[offset++] = 0;
 
@@ -472,8 +487,8 @@ namespace Aura.Shared.Network
 			}
 
 			// Body
-			_bodyStart = offset;
-			Buffer.BlockCopy(_buffer, 0, buffer, offset, _bodyLen);
+			//_bodyStart = offset;
+			Buffer.BlockCopy(_buffer, _bodyStart, buffer, offset, _bodyLen);
 		}
 
 		public override string ToString()

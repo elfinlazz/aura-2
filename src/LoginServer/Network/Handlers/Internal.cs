@@ -97,11 +97,7 @@ namespace Aura.Login.Network.Handlers
 		[PacketHandler(Op.Internal.BroadcastNotice)]
 		public void Broadcast(LoginClient client, Packet packet)
 		{
-			// TODO: Forward packet once Packet class is cleaned up.
-
-			var notice = packet.GetString();
-
-			Send.Internal_Broadcast(notice);
+			LoginServer.Instance.BroadcastChannels(packet);
 		}
 	}
 }
