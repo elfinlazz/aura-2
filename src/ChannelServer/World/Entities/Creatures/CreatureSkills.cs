@@ -384,5 +384,16 @@ namespace Aura.Channel.World.Entities.Creatures
 				_callbacks[skillId] = null;
 			}
 		}
+
+		/// <summary>
+		/// Returns true if the specified skill is active (somewhere
+		/// between Prepare and Complete/Cancel).
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <returns></returns>
+		public bool IsActive(SkillId skillId)
+		{
+			return (this.ActiveSkill != null && this.ActiveSkill.Info.Id == skillId);
+		}
 	}
 }

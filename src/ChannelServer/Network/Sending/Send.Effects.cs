@@ -45,6 +45,20 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Broadcasts skill init effect (Effect, SkillInit, "flashing")
+		/// in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void SkillFlashEffect(Creature creature)
+		{
+			var packet = new Packet(Op.Effect, creature.EntityId);
+			packet.PutInt(E.SkillInit);
+			packet.PutString("flashing");
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
 		/// Broadcasts spawn effect (Effect, Spawn) in range of sendFrom.
 		/// </summary>
 		/// <param name="spawnEffect"></param>

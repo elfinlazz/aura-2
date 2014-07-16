@@ -422,8 +422,6 @@ namespace Aura.Channel.World.Entities
 				// Str defense is displayed automatically on the client side
 				result += (int)Math.Max(0, (this.Str - 10f) / 10f);
 
-				// TODO: Add from active skills
-
 				return result;
 			}
 		}
@@ -436,8 +434,6 @@ namespace Aura.Channel.World.Entities
 			get
 			{
 				var result = this.ProtectionBase + this.ProtectionBaseMod + this.ProtectionMod;
-
-				// TODO: Add from active skills
 
 				return (result / 100f);
 			}

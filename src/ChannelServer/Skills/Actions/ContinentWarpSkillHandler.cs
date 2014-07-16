@@ -55,7 +55,7 @@ namespace Aura.Channel.Skills.Actions
 			}
 
 			creature.Skills.ActiveSkill = skill;
-			Send.SkillReady(creature, skill.Info.Id, "");
+			Send.SkillReady(creature, skill.Info.Id);
 		}
 
 		public void Use(Creature creature, Skill skill, Packet packet)

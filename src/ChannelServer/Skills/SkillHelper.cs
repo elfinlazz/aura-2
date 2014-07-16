@@ -15,6 +15,9 @@ namespace Aura.Channel.Skills
 {
 	public static class SkillHelper
 	{
+		private const int DefenseAttackerStun = 2500;
+		private const int DefenseTargetStun = 1000;
+
 		/// <summary>
 		/// Checks if target's Mana Shield is active, calculates mana
 		/// damage, and sets target action's Mana Damage property if applicable.
@@ -83,6 +86,46 @@ namespace Aura.Channel.Skills
 
 			// Set target option
 			tAction.Set(TargetOptions.Critical);
+		}
+
+		/// <summary>
+		/// Checks if target has Defense skill activated and makes the necessary
+		/// changes to the actions, stun times, and damage.
+		/// </summary>
+		/// <param name="aAction"></param>
+		/// <param name="tAction"></param>
+		/// <returns></returns>
+		public static bool HandleDefense(AttackerAction aAction, TargetAction tAction, ref float damage)
+		{
+			// Defense
+			if (!tAction.Creature.Skills.IsActive(SkillId.Defense))
+				return false;
+
+			// Update actions
+			tAction.Type = CombatActionType.Defended;
+			tAction.SkillId = SkillId.Defense;
+			tAction.Creature.Stun = tAction.Stun = DefenseTargetStun;
+			aAction.Creature.Stun = aAction.Stun = DefenseAttackerStun;
+
+			// Reduce damage
+			var defenseSkill = tAction.Creature.Skills.Get(SkillId.Defense);
+			if (defenseSkill != null)
+				damage -= defenseSkill.RankData.Var3;
+
+			return true;
+		}
+
+		/// <summary>
+		/// Reduces damage by target's defense and protection.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="damage"></param>
+		public static void HandleDefenseProtection(Creature target, ref float damage, bool defense = true, bool protection = true)
+		{
+			if (defense)
+				damage = Math.Max(1, damage - target.Defense);
+			if (protection && damage > 1)
+				damage = Math.Max(1, damage - (damage * target.Protection));
 		}
 	}
 }

@@ -32,7 +32,7 @@ namespace Aura.Channel.Skills.Combat
 
 		public override void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{
-			Send.Effect(creature, Effect.SkillInit, "flashing");
+			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, castTime);
 
 			creature.Skills.ActiveSkill = skill;
@@ -40,7 +40,7 @@ namespace Aura.Channel.Skills.Combat
 
 		public override void Ready(Creature creature, Skill skill, Packet packet)
 		{
-			Send.SkillReady(creature, skill.Info.Id, "");
+			Send.SkillReady(creature, skill.Info.Id);
 		}
 
 		public override void Complete(Creature creature, Skill skill, Packet packet)
@@ -81,9 +81,7 @@ namespace Aura.Channel.Skills.Combat
 			SkillHelper.HandleCritical(attacker, critChance, ref damage, tAction);
 
 			// Subtract target def/prot
-			damage = Math.Max(1, damage - target.Defense);
-			if (damage > 1)
-				damage = Math.Max(1, damage - (damage * target.Protection));
+			SkillHelper.HandleDefenseProtection(target, ref damage);
 
 			// Mana Shield
 			SkillHelper.HandleManaShield(target, ref damage, tAction);

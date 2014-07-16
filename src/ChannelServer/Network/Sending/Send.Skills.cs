@@ -194,7 +194,7 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
 		/// <param name="extra"></param>
-		public static void SkillReady(Creature creature, SkillId skillId, string extra)
+		public static void SkillReady(Creature creature, SkillId skillId, string extra = "")
 		{
 			var packet = new Packet(Op.SkillReady, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
