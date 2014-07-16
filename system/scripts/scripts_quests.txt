@@ -7,5 +7,6 @@
 quests/beginner_uladh/1_naos_letter.cs
 quests/beginner_uladh/2_rescue_resident.cs
 quests/beginner_uladh/skills_rest.cs
+quests/beginner_uladh/school_1.cs
 
 include "/user/scripts/scripts_quests.txt"
