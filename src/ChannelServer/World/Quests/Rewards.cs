@@ -61,7 +61,7 @@ namespace Aura.Channel.World.Quests
 
 		public QuestRewardSkill(SkillId id, SkillRank rank)
 		{
-			this.SkillId = SkillId;
+			this.SkillId = id;
 			this.Rank = rank;
 		}
 
