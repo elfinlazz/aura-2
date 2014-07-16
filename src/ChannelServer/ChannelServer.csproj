@@ -141,9 +141,11 @@
     <Compile Include="Skills\Actions\ContinentWarpSkillHandler.cs" />
     <Compile Include="Skills\Base\CombatSkillHandler.cs" />
     <Compile Include="Skills\Base\Interfaces.cs" />
+    <Compile Include="Skills\Base\StandardPrepareHandler.cs" />
     <Compile Include="Skills\Base\StartStopSkillHandler.cs" />
     <Compile Include="Skills\CombatAction.cs" />
     <Compile Include="Skills\Combat\CombatMastery.cs" />
+    <Compile Include="Skills\Combat\Defense.cs" />
     <Compile Include="Skills\Combat\Smash.cs" />
     <Compile Include="Skills\Hidden\DyeSkillHandler.cs" />
     <Compile Include="Skills\Life\RestSkillHandler.cs" />
