@@ -202,7 +202,11 @@ namespace Aura.Channel.Network.Handlers
 
 			try
 			{
-				handler.Prepare(creature, skill, skill.RankData.NewLoadTime, packet);
+				var loadtime = ChannelServer.Instance.Conf.World.CombatSystem == Util.Configuration.Files.CombatSystem.Dynamic
+					? skill.RankData.NewLoadTime
+					: skill.RankData.LoadTime;
+
+				handler.Prepare(creature, skill, loadtime, packet);
 			}
 			catch (NotImplementedException)
 			{

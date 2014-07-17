@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Shared.Util.Configuration;
+using System;
 
 namespace Aura.Channel.Util.Configuration.Files
 {
@@ -22,6 +23,7 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public int GmcpMinAuth { get; protected set; }
 
+		public CombatSystem CombatSystem { get; protected set; }
 		public bool PerfectPlay { get; protected set; }
 
 		public void Load()
@@ -44,6 +46,9 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.GmcpMinAuth = this.GetInt("gmcp_min_auth", 50);
 
 			this.PerfectPlay = this.GetBool("perfect_play", false);
+			this.CombatSystem = (this.GetString("combat_system", "dynamic") == "classic" ? CombatSystem.Classic : CombatSystem.Dynamic);
 		}
 	}
+
+	public enum CombatSystem { Dynamic, Classic }
 }
