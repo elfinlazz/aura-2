@@ -183,6 +183,15 @@ namespace Aura.Channel.Network.Handlers
 			if (creature == null)
 				return;
 
+			// Don't start another while one is active. If you cast another
+			// skill with one already active the client sends Cancel first.
+			// This should prevent a simultaneous Prepare.
+			if (creature.Skills.SkillInProgress)
+			{
+				Send.SkillPrepareSilentCancel(creature, skillId);
+				return;
+			}
+
 			var skill = creature.Skills.Get(skillId);
 			if (skill == null)
 			{
@@ -207,6 +216,8 @@ namespace Aura.Channel.Network.Handlers
 					: skill.RankData.LoadTime;
 
 				handler.Prepare(creature, skill, loadtime, packet);
+
+				creature.Skills.SkillInProgress = true;
 			}
 			catch (NotImplementedException)
 			{
@@ -359,6 +370,7 @@ namespace Aura.Channel.Network.Handlers
 		L_End:
 			// Always set active skill to null after complete.
 			creature.Skills.ActiveSkill = null;
+			creature.Skills.SkillInProgress = false;
 		}
 
 		/// <summary>
