@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
@@ -111,6 +112,8 @@ namespace Aura.Channel.Skills
 			var defenseSkill = tAction.Creature.Skills.Get(SkillId.Defense);
 			if (defenseSkill != null)
 				damage -= defenseSkill.RankData.Var3;
+
+			Send.SkillUseStun(tAction.Creature, SkillId.Defense, 1000, 0);
 
 			return true;
 		}
