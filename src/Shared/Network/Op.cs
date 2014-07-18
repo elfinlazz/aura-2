@@ -54,6 +54,8 @@ namespace Aura.Shared.Network
 		public const int PartnerCreationOptionsRequestR = 0x56;
 		public const int LoginUnk = 0x5A;  // Sent on login
 		public const int LoginUnkR = 0x5B; // ^ Response, only known parameter: 0 byte.
+		public const int TradeCard = 0x5C;
+		public const int TradeCardR = 0x5D;
 
 		// Channel Server
 		// ------------------------------------------------------------------

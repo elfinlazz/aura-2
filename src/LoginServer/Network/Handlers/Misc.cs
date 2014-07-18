@@ -24,5 +24,36 @@ namespace Aura.Login.Network.Handlers
 		{
 			Send.LoginUnkR(client, 0);
 		}
+
+		/// <summary>
+		/// Sent when player chooses to trade a character card for
+		/// the items and pons.
+		/// </summary>
+		/// <remarks>
+		/// New in NA188.
+		/// </remarks>
+		/// <example>
+		/// 001 [................] String : Zerono
+		/// 002 [................] String : Aura
+		/// 003 [........00000001] Int    : 1
+		/// 004 [0000000000000005] Long   : 5
+		/// </example>
+		/// <param name="client"></param>
+		/// <param name="packet"></param>
+		[PacketHandler(Op.TradeCard)]
+		public void TradeCard(LoginClient client, Packet packet)
+		{
+			var name = packet.GetString();
+			var server = packet.GetString();
+			var cardType = packet.GetInt();
+			var cardId = packet.GetLong();
+
+			//var card = client.Account.GetCharacterCard(cardId);
+			//if (card == null) return;
+
+			//client.Account.DeleteCharacterCard(card);
+
+			Send.TradeCardR(client, false);
+		}
 	}
 }
