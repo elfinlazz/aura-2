@@ -20,6 +20,7 @@ namespace Aura.Channel.Util.Configuration.Files
 		public float PropDropChance { get; protected set; }
 
 		public bool EnableContinentWarp { get; protected set; }
+		public bool DeadlyNpcs { get; protected set; }
 
 		public int GmcpMinAuth { get; protected set; }
 
@@ -42,6 +43,7 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.PropDropChance = this.GetFloat("prop_drop_chance", 30) / 100.0f;
 
 			this.EnableContinentWarp = this.GetBool("enable_continent_warp", true);
+			this.DeadlyNpcs = this.GetBool("deadly_npcs", true);
 
 			this.GmcpMinAuth = this.GetInt("gmcp_min_auth", 50);
 
