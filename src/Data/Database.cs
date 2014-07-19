@@ -147,17 +147,24 @@ namespace Aura.Data
 				// creating the cache.
 				return false;
 			}
+			catch (TypeInitializationException)
+			{
+				// Hotfix for issue #20
+
+				// TODO: Log this
+				System.Diagnostics.Debug.WriteLine("Logme: Warning: MsgPack failed to deserialize cache. " +
+				"This is usually caused by an incorrect version of the MsgPack library. " +
+				"Please download and compile the latest version of MsgPack, then place the " +
+				"generated dll in Aura's Lib folder. Lastly, recompile Aura.");
+
+				return false;
+			}
 
 			return true;
 		}
 
 		protected bool CreateCache(string path)
 		{
-			// Mono currently has a problem with MsgPack
-#if __MonoCS__
-			return false;
-#endif
-
 			// Only create cache if everything went smoothly.
 			if (this.Entries.Count > 0 && this.Warnings.Count == 0)
 			{
