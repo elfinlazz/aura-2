@@ -272,10 +272,17 @@ namespace Aura.Channel.Database
 			var items = this.GetItems(character.CreatureId);
 			foreach (var item in items)
 			{
+				// Add pocket for bag
+				if (item.OptionInfo.LinkedPocketId != Pocket.None)
+					character.Inventory.Add(new InventoryPocketNormal(item.OptionInfo.LinkedPocketId, item.Data.BagWidth, item.Data.BagHeight));
+
+				// Ignore items that were in bags that don't exist anymore.
+				if (item.Info.Pocket >= Pocket.ItemBags && item.Info.Pocket <= Pocket.ItemBagsMax && !character.Inventory.Has(item.Info.Pocket))
+					continue;
+
+				// Try to add item
 				if (!character.Inventory.InitAdd(item))
-				{
 					Log.Error("GetCharacterItems: Unable to add item '{0}' ({1}) to inventory.", item.Info.Id, item.EntityId);
-				}
 			}
 		}
 
@@ -289,7 +296,9 @@ namespace Aura.Channel.Database
 			var result = new List<Item>();
 
 			using (var conn = AuraDb.Instance.Connection)
-			using (var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId", conn))
+			// Sort descending by linkedPocket to get bags first, they have
+			// to be created before the items can be added.
+			using (var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId ORDER BY `linkedPocket` DESC", conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", creatureId);
 
@@ -325,6 +334,7 @@ namespace Aura.Channel.Database
 						item.OptionInfo.Experience = reader.GetInt16("experience");
 						item.MetaData1.Parse(reader.GetStringSafe("meta1"));
 						item.MetaData2.Parse(reader.GetStringSafe("meta2"));
+						item.OptionInfo.LinkedPocketId = (Pocket)reader.GetByte("linkedPocket");
 
 						result.Add(item);
 					}
