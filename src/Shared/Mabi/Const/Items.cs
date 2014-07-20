@@ -57,9 +57,8 @@ namespace Aura.Shared.Mabi.Const
 		PersonalInventory = 49,
 		VIPInventory = 50,
 		FarmStone = 81,
-		Inventory2 = 100,
-
-		Max,
+		ItemBags = 100,
+		ItemBagsMax = 199,
 	}
 
 	/// <summary>

@@ -222,6 +222,39 @@ namespace Aura.Channel.World
 			return _pockets[pocket].GetItemAt(x, y);
 		}
 
+		/// <summary>
+		/// Returns a free pocket id to be used for item bags.
+		/// </summary>
+		/// <returns></returns>
+		public Pocket GetFreePocketId()
+		{
+			for (var i = Pocket.ItemBags; i < Pocket.ItemBagsMax; ++i)
+			{
+				if (!_pockets.ContainsKey(i))
+					return i;
+			}
+
+			return Pocket.None;
+		}
+
+		/// <summary>
+		/// Adds pocket for item and updates item's linked pocket.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public bool AddBagPocket(Item item)
+		{
+			var freePocket = this.GetFreePocketId();
+			if (freePocket == Pocket.None)
+				return false;
+
+			item.OptionInfo.LinkedPocketId = freePocket;
+
+			this.Add(new InventoryPocketNormal(freePocket, item.Data.BagWidth, item.Data.BagHeight));
+
+			return true;
+		}
+
 		// Handlers
 		// ------------------------------------------------------------------
 

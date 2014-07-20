@@ -427,6 +427,16 @@ namespace Aura.Channel.Util
 				}
 			}
 
+			// Create new pockets for bags
+			if (item.Data.HasTag("/pouch/bag/"))
+			{
+				if (!target.Inventory.AddBagPocket(item))
+				{
+					// TODO: Handle somehow? Without linked pocket the bag
+					//  won't open.
+				}
+			}
+
 			// Spawn item
 			var success = true;
 			if (!drop)
