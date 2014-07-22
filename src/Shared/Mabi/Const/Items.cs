@@ -61,6 +61,27 @@ namespace Aura.Shared.Mabi.Const
 		ItemBagsMax = 199,
 	}
 
+	public enum BagTags
+	{
+		Equipment = 0x01,
+		RecoveryPotion = 0x02,
+		Artifact = 0x04,
+		AlchemyCrystal = 0x08,
+		Herb = 0x10,
+		ThreadBall = 0x20,
+		Cloth = 0x40,
+		Ore = 0x80,
+		Gem = 0x100,
+		CullinStone = 0x200,
+		Firewood = 0x400,
+		Fish = 0x800,
+		Food = 0x1000,
+		Enchants = 0x2000,
+		Pass = 0x4000,
+		FomorScroll = 0x8000,
+		AncientBook = 0x10000,
+	}
+
 	/// <summary>
 	/// Extensions for Pocket enum.
 	/// </summary>

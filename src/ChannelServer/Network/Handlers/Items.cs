@@ -451,5 +451,40 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.DyePickColorR(creature, true);
 		}
+
+		/// <summary>
+		/// Sent when unequipping a filled bag.
+		/// </summary>
+		/// <example>
+		/// 001 [0050000000000066] Long   : 22517998136852582
+		/// </example>
+		[PacketHandler(Op.UnequipBag)]
+		public void UnequipBag(ChannelClient client, Packet packet)
+		{
+			var entityId = packet.GetLong();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null) return;
+
+			// Check bag
+			var bag = creature.Inventory.GetItem(entityId);
+			if (bag == null || !bag.IsBag || bag.OptionInfo.LinkedPocketId == Pocket.None)
+			{
+				Log.Warning("Player '{0}' ({1}) tried to unequip invalid bag.", creature.Name, creature.EntityIdHex);
+				Send.UnequipBagR(creature, false);
+				return;
+			}
+
+			// Remove and re-add all items
+			var items = creature.Inventory.GetAllItemsFrom(bag.OptionInfo.LinkedPocketId);
+			foreach (var item in items)
+			{
+				creature.Inventory.Remove(item);
+				creature.Inventory.Add(item, true);
+			}
+
+			// Success
+			Send.UnequipBagR(creature, true);
+		}
 	}
 }

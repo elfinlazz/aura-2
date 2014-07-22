@@ -255,6 +255,20 @@ namespace Aura.Channel.World
 			return true;
 		}
 
+		/// <summary>
+		/// Returns list of all items in pocket. Returns null if the pocket
+		/// doesn't exist.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		public List<Item> GetAllItemsFrom(Pocket pocket)
+		{
+			if (!_pockets.ContainsKey(pocket))
+				return null;
+
+			return _pockets[pocket].Items.Where(a => a != null).ToList();
+		}
+
 		// Handlers
 		// ------------------------------------------------------------------
 
