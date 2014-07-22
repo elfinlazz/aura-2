@@ -462,12 +462,14 @@ namespace Aura.Login.Network
 		/// <summary>
 		/// Sends negative TradeCardR to client (temp).
 		/// </summary>
-		public static void TradeCardR(LoginClient client, bool success)
+		/// <param name="client"></param>
+		/// <param name="cardId">Negative response if 0.</param>
+		public static void TradeCardR(LoginClient client, long cardId)
 		{
 			var packet = new Packet(Op.TradeCardR, MabiId.Login);
-			packet.PutByte(success);
-
-			// "success = true" is not enough to make the card disappear.
+			packet.PutByte(cardId != 0);
+			if (cardId != 0)
+				packet.PutLong(cardId);
 
 			client.Send(packet);
 		}
