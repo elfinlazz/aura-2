@@ -53,7 +53,7 @@ namespace Aura.Channel.World
 
 		/// <summary>
 		/// Fills stacks that take this item. Returns true if item has been
-		/// was completely added to stacks/sacs.
+		/// completely added to stacks/sacs.
 		/// </summary>
 		/// <param name="item"></param>
 		/// <param name="changed"></param>
