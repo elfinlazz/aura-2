@@ -9,6 +9,7 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
+using Aura.Data.Database;
 
 namespace Aura.Login.Database
 {
@@ -588,6 +589,30 @@ namespace Aura.Login.Database
 
 				return (cmd.Execute() > 0);
 			}
+		}
+
+		/// <summary>
+		/// Adds trade item and points of card to character.
+		/// </summary>
+		/// <param name="targetName"></param>
+		/// <param name="serverName"></param>
+		/// <param name="charCard"></param>
+		public void TradeCard(Character targetCharacter, CharCardData charCard)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new InsertCommand("INSERT INTO `items` {0}", conn))
+			{
+				cmd.Set("creatureId", targetCharacter.CreatureId);
+				cmd.Set("itemId", charCard.TradeItem);
+				cmd.Set("pocket", Pocket.Temporary);
+				cmd.Set("color1", 0x808080);
+				cmd.Set("color2", 0x808080);
+				cmd.Set("color3", 0x808080);
+
+				cmd.Execute();
+			}
+
+			// TODO: Add points (pons)...
 		}
 	}
 }
