@@ -125,8 +125,7 @@ namespace Aura.Shared.Util
 				WriteLine(LogLevel.Error, description, args);
 			}
 
-			WriteLine(LogLevel.Exception, "{2} : {0} in {1}", ex.Source, ex.TargetSite, ex.GetType());
-			WriteLine(LogLevel.Exception, "{0}", ex.Message + Environment.NewLine + ex.StackTrace);
+			WriteLine(LogLevel.Exception, ex.ToString());
 		}
 
 		public static void Unimplemented(string format, params object[] args)
