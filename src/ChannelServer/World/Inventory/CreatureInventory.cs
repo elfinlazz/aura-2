@@ -755,9 +755,23 @@ namespace Aura.Channel.World
 
 			lock (_pockets)
 				foreach (var pocket in _pockets.Values)
-					result += pocket.Count(itemId);
+					result += pocket.CountItem(itemId);
 
 			return result;
+		}
+
+		/// <summary>
+		/// Returns the number of items in the given pocket.
+		/// Returns -1 if the pocket doesn't exist.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		public int CountItemsInPocket(Pocket pocket)
+		{
+			if (!_pockets.ContainsKey(pocket))
+				return -1;
+
+			return _pockets[pocket].Count;
 		}
 
 		/// <summary>

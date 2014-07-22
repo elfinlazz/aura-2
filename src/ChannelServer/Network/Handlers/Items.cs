@@ -77,6 +77,7 @@ namespace Aura.Channel.Network.Handlers
 			if (creature == null || creature.Region == null)
 				return;
 
+			// Check item
 			var item = creature.Inventory.GetItem(entityId);
 			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
 			{
@@ -85,6 +86,15 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Check for filled bags
+			if (item.IsBag && item.OptionInfo.LinkedPocketId != Pocket.None && creature.Inventory.CountItemsInPocket(item.OptionInfo.LinkedPocketId) > 0)
+			{
+				Log.Warning("Player '{0}' ({1}) tried to drop filled item bag.", creature.Name, creature.EntityIdHex);
+				Send.ItemDropR(creature, false);
+				return;
+			}
+
+			// Try to remove item
 			if (!creature.Inventory.Remove(item))
 			{
 				Send.ItemDropR(creature, false);
