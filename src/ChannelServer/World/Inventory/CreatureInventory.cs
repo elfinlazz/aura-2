@@ -269,6 +269,21 @@ namespace Aura.Channel.World
 			return _pockets[pocket].Items.Where(a => a != null).ToList();
 		}
 
+		/// <summary>
+		/// Removes pocket from inventory.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		public bool Remove(Pocket pocket)
+		{
+			if (!_pockets.ContainsKey(pocket))
+				return false;
+
+			_pockets.Remove(pocket);
+
+			return true;
+		}
+
 		// Handlers
 		// ------------------------------------------------------------------
 
@@ -477,6 +492,10 @@ namespace Aura.Channel.World
 		// Adding
 		// ------------------------------------------------------------------
 
+		// TODO: Add central "Add" method that all others use, for central stuff
+		//   like adding bag pockets. This wil require a GetFreePosition
+		//   method in the pockets.
+
 		/// <summary>
 		/// Tries to add item to pocket. Returns false if the pocket
 		/// doesn't exist or there was no space.
@@ -491,6 +510,10 @@ namespace Aura.Channel.World
 			{
 				Send.ItemNew(_creature, item);
 				this.UpdateEquipReferences(pocket);
+
+				// Add bag pocket if it doesn't already exist.
+				if (item.OptionInfo.LinkedPocketId != Pocket.None && !this.Has(item.OptionInfo.LinkedPocketId))
+					this.AddBagPocket(item);
 			}
 
 			return success;
@@ -522,6 +545,7 @@ namespace Aura.Channel.World
 
 			_pockets[item.Info.Pocket].AddUnsafe(item);
 			this.UpdateEquipReferences(item.Info.Pocket);
+
 			return true;
 		}
 
@@ -536,7 +560,13 @@ namespace Aura.Channel.World
 
 			// Inform about new item
 			if (success)
+			{
 				Send.ItemNew(_creature, item);
+
+				// Add bag pocket if it doesn't already exist.
+				if (item.OptionInfo.LinkedPocketId != Pocket.None && !this.Has(item.OptionInfo.LinkedPocketId))
+					this.AddBagPocket(item);
+			}
 
 			return success;
 		}
@@ -716,6 +746,10 @@ namespace Aura.Channel.World
 						Send.ItemRemove(_creature, item);
 
 						this.UpdateInventory(item, item.Info.Pocket, Pocket.None);
+
+						// Remove bag pocket
+						if (item.OptionInfo.LinkedPocketId != Pocket.None)
+							this.Remove(item.OptionInfo.LinkedPocketId);
 
 						return true;
 					}
