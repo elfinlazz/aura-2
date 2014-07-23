@@ -270,15 +270,19 @@ namespace Aura.Channel.Database
 		private void GetCharacterItems(PlayerCreature character)
 		{
 			var items = this.GetItems(character.CreatureId);
+
+			// Create bag pockets
+			foreach (var item in items.Where(a => a.OptionInfo.LinkedPocketId != Pocket.None))
+				character.Inventory.Add(new InventoryPocketNormal(item.OptionInfo.LinkedPocketId, item.Data.BagWidth, item.Data.BagHeight));
+
 			foreach (var item in items)
 			{
-				// Add pocket for bag
-				if (item.OptionInfo.LinkedPocketId != Pocket.None)
-					character.Inventory.Add(new InventoryPocketNormal(item.OptionInfo.LinkedPocketId, item.Data.BagWidth, item.Data.BagHeight));
-
 				// Ignore items that were in bags that don't exist anymore.
 				if (item.Info.Pocket >= Pocket.ItemBags && item.Info.Pocket <= Pocket.ItemBagsMax && !character.Inventory.Has(item.Info.Pocket))
+				{
+					Log.Debug("GetCharacterItems: Item '{0}' ({1}) is inside a bag that hasn't been loaded yet.", item.Info.Id, item.EntityIdHex);
 					continue;
+				}
 
 				// Try to add item
 				if (!character.Inventory.InitAdd(item))
