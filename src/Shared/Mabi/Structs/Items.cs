@@ -52,7 +52,7 @@ namespace Aura.Shared.Mabi.Structs
 		private byte __unknown17;
 		public int Price;
 		public int SellingPrice;
-		public int LinkedPocketId;
+		public Pocket LinkedPocketId;
 		public int Durability;
 		public int DurabilityMax;
 		public int DurabilityOriginal;

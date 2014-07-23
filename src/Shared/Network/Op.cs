@@ -125,6 +125,8 @@ namespace Aura.Shared.Network
 		public const int ItemAmount = 0x59EA;
 		public const int UseItem = 0x59EB;
 		public const int UseItemR = 0x59EC;
+		public const int UnequipBag = 0x59F4;
+		public const int UnequipBagR = 0x59F5;
 
 		// [180300, NA166 (18.09.2013)] 2 new ops
 		//public const int ? = 0x59F8; // Request for that --v ?

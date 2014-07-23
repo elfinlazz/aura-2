@@ -51,6 +51,9 @@ namespace Aura.Data.Database
 		public byte AttackSpeed { get; set; }
 		public byte KnockCount { get; set; }
 
+		public int BagWidth { get; set; }
+		public int BagHeight { get; set; }
+
 		public string OnUse { get; set; }
 		public string OnEquip { get; set; }
 		public string OnUnequip { get; set; }
@@ -117,6 +120,9 @@ namespace Aura.Data.Database
 				info.AttackSpeed = entry.ReadByte("attackSpeed");
 				info.KnockCount = entry.ReadByte("knockCount");
 			}
+
+			info.BagWidth = entry.ReadInt("bagWidth");
+			info.BagHeight = entry.ReadInt("bagHeight");
 
 			info.OnUse = entry.ReadString("onUse");
 			info.OnEquip = entry.ReadString("onEquip");
