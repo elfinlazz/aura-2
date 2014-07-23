@@ -27,6 +27,8 @@ namespace Aura.Channel.Util.Configuration.Files
 		public CombatSystem CombatSystem { get; protected set; }
 		public bool PerfectPlay { get; protected set; }
 
+		public bool Bagception { get; protected set; }
+
 		public void Load()
 		{
 			this.Require("system/conf/world.conf");
@@ -49,6 +51,8 @@ namespace Aura.Channel.Util.Configuration.Files
 
 			this.PerfectPlay = this.GetBool("perfect_play", false);
 			this.CombatSystem = (this.GetString("combat_system", "dynamic") == "classic" ? CombatSystem.Classic : CombatSystem.Dynamic);
+
+			this.Bagception = this.GetBool("bagception", false);
 		}
 	}
 

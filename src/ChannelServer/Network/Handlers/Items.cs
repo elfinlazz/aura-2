@@ -36,15 +36,20 @@ namespace Aura.Channel.Network.Handlers
 			var targetX = packet.GetByte();
 			var targetY = packet.GetByte();
 
+			// Get creature
 			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			if (creature == null) return;
 
+			// Check item
 			var item = creature.Inventory.GetItem(entityId);
 			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
+				goto L_Fail;
+
+			// Check bag
+			if (item.IsBag && target.IsBag() && !ChannelServer.Instance.Conf.World.Bagception)
 			{
-				Send.ItemMoveR(creature, false);
-				return;
+				Send.ServerMessage(creature, Localization.Get("Item bags can't be stored inside other bags."));
+				goto L_Fail;
 			}
 
 			// Stop moving when changing weapons
@@ -53,12 +58,13 @@ namespace Aura.Channel.Network.Handlers
 
 			// Try to move item
 			if (!creature.Inventory.Move(item, target, targetX, targetY))
-			{
-				Send.ItemMoveR(creature, false);
-				return;
-			}
+				goto L_Fail;
 
 			Send.ItemMoveR(creature, true);
+			return;
+
+		L_Fail:
+			Send.ItemMoveR(creature, false);
 		}
 
 		/// <summary>

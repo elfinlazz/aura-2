@@ -98,6 +98,16 @@ namespace Aura.Shared.Mabi.Const
 				return true;
 			return false;
 		}
+
+		/// <summary>
+		/// Returns true if pocket is between min and max bag.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		public static bool IsBag(this Pocket pocket)
+		{
+			return (pocket >= Pocket.ItemBags && pocket <= Pocket.ItemBagsMax);
+		}
 	}
 
 	/// <summary>
