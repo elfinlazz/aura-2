@@ -71,23 +71,27 @@ namespace Aura.Shared.Util
 					var fileName = line.Substring(line.IndexOf(' ')).Trim(' ', '"');
 					var includeFilePath = Path.Combine((!fileName.StartsWith("/") ? _relativePath : ""), fileName.TrimStart('/'));
 
-					// Silently ignore failed includes, only raise an
-					// exception on require.
-					if (File.Exists(includeFilePath))
+					// Prevent rekursive including
+					if (includeFilePath != _filePath)
 					{
-						using (var fr = new FileReader(includeFilePath))
+						// Silently ignore failed includes, only raise an
+						// exception on require.
+						if (File.Exists(includeFilePath))
 						{
-							foreach (var incLine in fr)
-								yield return incLine;
-						}
+							using (var fr = new FileReader(includeFilePath))
+							{
+								foreach (var incLine in fr)
+									yield return incLine;
+							}
 
-						// Stop reading current file if noname was successful
-						if (divert)
-							yield break;
-					}
-					else if (require)
-					{
-						throw new FileNotFoundException("Required file '" + includeFilePath + "' not found.");
+							// Stop reading current file if divert was successful
+							if (divert)
+								yield break;
+						}
+						else if (require)
+						{
+							throw new FileNotFoundException("Required file '" + includeFilePath + "' not found.");
+						}
 					}
 
 					continue;
