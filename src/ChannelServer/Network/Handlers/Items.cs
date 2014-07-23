@@ -475,13 +475,17 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
-			// Remove and re-add all items
+			// Remove items
 			var items = creature.Inventory.GetAllItemsFrom(bag.OptionInfo.LinkedPocketId);
 			foreach (var item in items)
-			{
 				creature.Inventory.Remove(item);
+
+			// Add items, temporarily remove bag pocket,
+			// so items aren't readded in there
+			creature.Inventory.Remove(bag.OptionInfo.LinkedPocketId);
+			foreach (var item in items)
 				creature.Inventory.Add(item, true);
-			}
+			creature.Inventory.AddBagPocket(bag);
 
 			// Success
 			Send.UnequipBagR(creature, true);
