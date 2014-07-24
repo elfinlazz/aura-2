@@ -139,9 +139,24 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Add bag
+			if (item.IsBag)
+			{
+				if (item.Data.BagWidth == 0)
+					Send.ServerMessage(creature, Localization.Get("Beware, shaped bags aren't supported yet."));
+				else if (!creature.Inventory.AddBagPocket(item))
+				{
+					// TODO: Handle somehow? Without linked pocket the bag
+					//   won't open.
+				}
+			}
+
 			var success = creature.Inventory.PickUp(item);
 			if (!success)
+			{
 				Send.SystemMessage(creature, Localization.Get("Not enough space."));
+				creature.Inventory.Remove(item.OptionInfo.LinkedPocketId);
+			}
 
 			Send.ItemPickUpR(creature, success);
 		}
