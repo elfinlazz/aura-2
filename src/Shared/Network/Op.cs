@@ -190,6 +190,7 @@ namespace Aura.Shared.Network
 		public const int SkillStackSet = 0x6991;
 		public const int SkillStackUpdate = 0x6992;
 		public const int UseMotion = 0x6D62;
+		public const int PlayAnimation = 0x6D63; // s:data/.../anim/..., 1:0, 2:0, 1:0
 		public const int CancelMotion = 0x6D65;
 		public const int MotionCancel2 = 0x6D66; // Delayed?
 		public const int LevelUp = 0x6D69;
