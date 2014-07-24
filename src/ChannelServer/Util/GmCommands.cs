@@ -428,7 +428,7 @@ namespace Aura.Channel.Util
 			}
 
 			// Create new pockets for bags
-			if (item.Data.HasTag("/pouch/bag/"))
+			if (item.Data.HasTag("/pouch/bag/") && !drop)
 			{
 				if (item.Data.BagWidth == 0)
 				{
@@ -437,7 +437,7 @@ namespace Aura.Channel.Util
 				else if (!target.Inventory.AddBagPocket(item))
 				{
 					// TODO: Handle somehow? Without linked pocket the bag
-					//  won't open.
+					//   won't open.
 				}
 			}
 
