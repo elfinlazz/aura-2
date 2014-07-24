@@ -276,7 +276,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public bool Remove(Pocket pocket)
 		{
-			if (!_pockets.ContainsKey(pocket))
+			if (pocket == Pocket.None || !_pockets.ContainsKey(pocket))
 				return false;
 
 			_pockets.Remove(pocket);
@@ -749,7 +749,10 @@ namespace Aura.Channel.World
 
 						// Remove bag pocket
 						if (item.OptionInfo.LinkedPocketId != Pocket.None)
+						{
 							this.Remove(item.OptionInfo.LinkedPocketId);
+							item.OptionInfo.LinkedPocketId = Pocket.None;
+						}
 
 						return true;
 					}
