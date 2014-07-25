@@ -225,7 +225,7 @@ namespace Aura.Channel.Util
 			int regionId = 0;
 			if (warp)
 			{
-				if (!int.TryParse(args[1], out regionId))
+				if (!int.TryParse(args[1].Replace("r:", ""), out regionId))
 				{
 					Send.ServerMessage(sender, Localization.Get("Invalid region id."));
 					return CommandResult.InvalidArgument;
@@ -244,14 +244,14 @@ namespace Aura.Channel.Util
 			int x = -1, y = -1;
 
 			// Parse X
-			if (args.Length > 1 + offset && !int.TryParse(args[1 + offset], out x))
+			if (args.Length > 1 + offset && !int.TryParse(args[1 + offset].Replace("x:", ""), out x))
 			{
 				Send.ServerMessage(sender, Localization.Get("Invalid X coordinate."));
 				return CommandResult.InvalidArgument;
 			}
 
 			// Parse Y
-			if (args.Length > 2 + offset && !int.TryParse(args[2 + offset], out y))
+			if (args.Length > 2 + offset && !int.TryParse(args[2 + offset].Replace("y:", ""), out y))
 			{
 				Send.ServerMessage(sender, Localization.Get("Invalid Y coordinate."));
 				return CommandResult.InvalidArgument;
