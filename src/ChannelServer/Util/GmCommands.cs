@@ -279,7 +279,7 @@ namespace Aura.Channel.Util
 			{
 				Send.ServerMessage(sender,
 					Localization.Get("Destinations:") +
-					" Tir Chonaill, Dugald Isle, Dunbarton, Gairech, Bangor, Emain Macha, Taillteann, Nekojima, GM Island"
+					" Tir Chonaill, Dugald Isle, Dunbarton, Gairech, Bangor, Emain Macha, Taillteann, Tara, Cobh, Ceo Island, Nekojima, GM Island"
 				);
 				return CommandResult.InvalidArgument;
 			}
@@ -294,6 +294,9 @@ namespace Aura.Channel.Util
 			else if (destination.StartsWith("bangor")) { regionId = 31; x = 12904; y = 12200; }
 			else if (destination.StartsWith("emain")) { regionId = 52; x = 39818; y = 41621; }
 			else if (destination.StartsWith("tail")) { regionId = 300; x = 212749; y = 192720; }
+			else if (destination.StartsWith("tara")) { regionId = 401; x = 99793; y = 91209; }
+			else if (destination.StartsWith("cobh")) { regionId = 23; x = 28559; y = 37693; }
+			else if (destination.StartsWith("ceo")) { regionId = 56; x = 8987; y = 9611; }
 			else if (destination.StartsWith("neko")) { regionId = 600; x = 114430; y = 79085; }
 			else if (destination.StartsWith("gm")) { regionId = 22; x = 2500; y = 2500; }
 			else
