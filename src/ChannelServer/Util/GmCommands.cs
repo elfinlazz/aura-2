@@ -65,6 +65,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "effect", "<id> [(b|i|s:parameter)|me]", HandleEffect);
 			Add(50, 50, "prop", "<id>", HandleProp);
 			Add(50, 50, "broadcast", "<message>", HandleBroadcast);
+			Add(50, 50, "allskills", "", HandleAllSkills);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -1108,6 +1109,33 @@ namespace Aura.Channel.Util
 			var notice = sender.Name + ": " + message.Substring(message.IndexOf(" "));
 
 			Send.Internal_Broadcast(notice);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleAllSkills(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			// List of "working" skills
+			var listOfSkills = new SkillId[] {
+				SkillId.Smash, SkillId.Defense,
+				SkillId.Rest,
+				SkillId.ManaShield, 
+				SkillId.Composing, SkillId.PlayingInstrument, SkillId.Song,
+			};
+
+			// Add all skills
+			foreach (var sid in listOfSkills)
+			{
+				var skill = AuraData.SkillDb.Find((int)sid);
+				if (skill == null) continue;
+
+				target.Skills.Give(sid, (SkillRank)skill.MaxRank);
+			}
+
+			// Success
+			Send.ServerMessage(sender, Localization.Get("Added all skills the server supports on their max rank."), args[1]);
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("{0} gave you all skills the server supports on their max rank."), sender.Name, args[1]);
 
 			return CommandResult.Okay;
 		}
