@@ -22,6 +22,7 @@ namespace Aura.Channel.Util.Configuration.Files
 		public bool EnableContinentWarp { get; protected set; }
 		public bool DeadlyNpcs { get; protected set; }
 		public bool EnableHunger { get; protected set; }
+		public bool YouAreWhatYouEat { get; protected set; }
 
 		public int GmcpMinAuth { get; protected set; }
 
@@ -48,6 +49,7 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.EnableContinentWarp = this.GetBool("enable_continent_warp", true);
 			this.DeadlyNpcs = this.GetBool("deadly_npcs", true);
 			this.EnableHunger = this.GetBool("enable_hunger", true);
+			this.YouAreWhatYouEat = this.GetBool("you_are_what_you_eat", true);
 
 			this.GmcpMinAuth = this.GetInt("gmcp_min_auth", 50);
 

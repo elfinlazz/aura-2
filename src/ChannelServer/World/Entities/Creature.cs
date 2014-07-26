@@ -769,25 +769,28 @@ namespace Aura.Channel.World.Entities
 
 			var sb = new StringBuilder();
 
-			if (weight != 0)
+			if (ChannelServer.Instance.Conf.World.YouAreWhatYouEat)
 			{
-				changes = true;
-				this.Weight += weight;
-				sb.Append(weight > 0 ? Localization.Get("You gained some weight.") : Localization.Get("You lost some weight.") + "\r\n");
-			}
+				if (weight != 0)
+				{
+					changes = true;
+					this.Weight += weight;
+					sb.Append(weight > 0 ? Localization.Get("You gained some weight.") : Localization.Get("You lost some weight.") + "\r\n");
+				}
 
-			if (upper != 0)
-			{
-				changes = true;
-				this.Upper += upper;
-				sb.Append(upper > 0 ? Localization.Get("Your upper body got bigger.") : Localization.Get("Your upper body got slimmer.") + "\r\n");
-			}
+				if (upper != 0)
+				{
+					changes = true;
+					this.Upper += upper;
+					sb.Append(upper > 0 ? Localization.Get("Your upper body got bigger.") : Localization.Get("Your upper body got slimmer.") + "\r\n");
+				}
 
-			if (lower != 0)
-			{
-				changes = true;
-				this.Lower += lower;
-				sb.Append(lower > 0 ? Localization.Get("Your legs got bigger.") : Localization.Get("Your legs got slimmer.") + "\r\n");
+				if (lower != 0)
+				{
+					changes = true;
+					this.Lower += lower;
+					sb.Append(lower > 0 ? Localization.Get("Your legs got bigger.") : Localization.Get("Your legs got slimmer.") + "\r\n");
+				}
 			}
 
 			if (life != 0)
