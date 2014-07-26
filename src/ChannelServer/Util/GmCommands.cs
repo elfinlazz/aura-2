@@ -1152,7 +1152,7 @@ namespace Aura.Channel.Util
 			// Success
 			Send.ServerMessage(sender, Localization.Get("Enabled all available titles, please relog to use them."));
 			if (target != sender)
-				Send.ServerMessage(target, Localization.Get("{0} enabled all available titles, please relog to use them."), sender.Name);
+				Send.ServerMessage(target, Localization.Get("{0} enabled all available titles for you, please relog to use them."), sender.Name);
 
 			return CommandResult.Okay;
 		}

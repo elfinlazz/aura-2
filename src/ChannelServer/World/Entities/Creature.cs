@@ -581,7 +581,8 @@ namespace Aura.Channel.World.Entities
 				this.Regens.Add(Stat.Life, 0.12f, this.LifeMax);
 				this.Regens.Add(Stat.Mana, 0.05f, this.ManaMax);
 				this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
-				this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
+				if (ChannelServer.Instance.Conf.World.EnableHunger)
+					this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
 				this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
 
 				ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
