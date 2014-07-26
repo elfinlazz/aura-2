@@ -270,12 +270,23 @@ namespace Aura.Channel.Database
 		private void GetCharacterItems(PlayerCreature character)
 		{
 			var items = this.GetItems(character.CreatureId);
+
+			// Create bag pockets
+			foreach (var item in items.Where(a => a.OptionInfo.LinkedPocketId != Pocket.None))
+				character.Inventory.Add(new InventoryPocketNormal(item.OptionInfo.LinkedPocketId, item.Data.BagWidth, item.Data.BagHeight));
+
 			foreach (var item in items)
 			{
-				if (!character.Inventory.InitAdd(item))
+				// Ignore items that were in bags that don't exist anymore.
+				if (item.Info.Pocket >= Pocket.ItemBags && item.Info.Pocket <= Pocket.ItemBagsMax && !character.Inventory.Has(item.Info.Pocket))
 				{
-					Log.Error("GetCharacterItems: Unable to add item '{0}' ({1}) to inventory.", item.Info.Id, item.EntityId);
+					Log.Debug("GetCharacterItems: Item '{0}' ({1}) is inside a bag that hasn't been loaded yet.", item.Info.Id, item.EntityIdHex);
+					continue;
 				}
+
+				// Try to add item
+				if (!character.Inventory.InitAdd(item))
+					Log.Error("GetCharacterItems: Unable to add item '{0}' ({1}) to inventory.", item.Info.Id, item.EntityId);
 			}
 		}
 
@@ -289,7 +300,9 @@ namespace Aura.Channel.Database
 			var result = new List<Item>();
 
 			using (var conn = AuraDb.Instance.Connection)
-			using (var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId", conn))
+			// Sort descending by linkedPocket to get bags first, they have
+			// to be created before the items can be added.
+			using (var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId ORDER BY `linkedPocket` DESC", conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", creatureId);
 
@@ -325,6 +338,7 @@ namespace Aura.Channel.Database
 						item.OptionInfo.Experience = reader.GetInt16("experience");
 						item.MetaData1.Parse(reader.GetStringSafe("meta1"));
 						item.MetaData2.Parse(reader.GetStringSafe("meta2"));
+						item.OptionInfo.LinkedPocketId = (Pocket)reader.GetByte("linkedPocket");
 
 						result.Add(item);
 					}

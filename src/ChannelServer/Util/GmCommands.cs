@@ -21,6 +21,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
 using Aura.Shared.Mabi;
+using Aura.Channel.World.Entities.Creatures;
 
 namespace Aura.Channel.Util
 {
@@ -65,6 +66,8 @@ namespace Aura.Channel.Util
 			Add(50, 50, "effect", "<id> [(b|i|s:parameter)|me]", HandleEffect);
 			Add(50, 50, "prop", "<id>", HandleProp);
 			Add(50, 50, "broadcast", "<message>", HandleBroadcast);
+			Add(50, 50, "allskills", "", HandleAllSkills);
+			Add(50, 50, "alltitles", "", HandleAllTitles);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -225,7 +228,7 @@ namespace Aura.Channel.Util
 			int regionId = 0;
 			if (warp)
 			{
-				if (!int.TryParse(args[1], out regionId))
+				if (!int.TryParse(args[1].Replace("r:", ""), out regionId))
 				{
 					Send.ServerMessage(sender, Localization.Get("Invalid region id."));
 					return CommandResult.InvalidArgument;
@@ -244,14 +247,14 @@ namespace Aura.Channel.Util
 			int x = -1, y = -1;
 
 			// Parse X
-			if (args.Length > 1 + offset && !int.TryParse(args[1 + offset], out x))
+			if (args.Length > 1 + offset && !int.TryParse(args[1 + offset].Replace("x:", ""), out x))
 			{
 				Send.ServerMessage(sender, Localization.Get("Invalid X coordinate."));
 				return CommandResult.InvalidArgument;
 			}
 
 			// Parse Y
-			if (args.Length > 2 + offset && !int.TryParse(args[2 + offset], out y))
+			if (args.Length > 2 + offset && !int.TryParse(args[2 + offset].Replace("y:", ""), out y))
 			{
 				Send.ServerMessage(sender, Localization.Get("Invalid Y coordinate."));
 				return CommandResult.InvalidArgument;
@@ -279,7 +282,7 @@ namespace Aura.Channel.Util
 			{
 				Send.ServerMessage(sender,
 					Localization.Get("Destinations:") +
-					" Tir Chonaill, Dugald Isle, Dunbarton, Gairech, Bangor, Emain Macha, Taillteann, Nekojima, GM Island"
+					" Tir Chonaill, Dugald Isle, Dunbarton, Gairech, Bangor, Emain Macha, Taillteann, Tara, Cobh, Ceo Island, Nekojima, GM Island"
 				);
 				return CommandResult.InvalidArgument;
 			}
@@ -294,6 +297,9 @@ namespace Aura.Channel.Util
 			else if (destination.StartsWith("bangor")) { regionId = 31; x = 12904; y = 12200; }
 			else if (destination.StartsWith("emain")) { regionId = 52; x = 39818; y = 41621; }
 			else if (destination.StartsWith("tail")) { regionId = 300; x = 212749; y = 192720; }
+			else if (destination.StartsWith("tara")) { regionId = 401; x = 99793; y = 91209; }
+			else if (destination.StartsWith("cobh")) { regionId = 23; x = 28559; y = 37693; }
+			else if (destination.StartsWith("ceo")) { regionId = 56; x = 8987; y = 9611; }
 			else if (destination.StartsWith("neko")) { regionId = 600; x = 114430; y = 79085; }
 			else if (destination.StartsWith("gm")) { regionId = 22; x = 2500; y = 2500; }
 			else
@@ -424,6 +430,20 @@ namespace Aura.Channel.Util
 						case 1: item.Info.Color2 = color; break;
 						case 2: item.Info.Color3 = color; break;
 					}
+				}
+			}
+
+			// Create new pockets for bags
+			if (item.Data.HasTag("/pouch/bag/") && !drop)
+			{
+				if (item.Data.BagWidth == 0)
+				{
+					Send.ServerMessage(sender, Localization.Get("Beware, shaped bags aren't supported yet."));
+				}
+				else if (!target.Inventory.AddBagPocket(item))
+				{
+					// TODO: Handle somehow? Without linked pocket the bag
+					//   won't open.
 				}
 			}
 
@@ -1091,6 +1111,48 @@ namespace Aura.Channel.Util
 			var notice = sender.Name + ": " + message.Substring(message.IndexOf(" "));
 
 			Send.Internal_Broadcast(notice);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleAllSkills(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			// List of "working" skills
+			var listOfSkills = new SkillId[] {
+				SkillId.Smash, SkillId.Defense,
+				SkillId.Rest,
+				SkillId.ManaShield, 
+				SkillId.Composing, SkillId.PlayingInstrument, SkillId.Song,
+			};
+
+			// Add all skills
+			foreach (var sid in listOfSkills)
+			{
+				var skill = AuraData.SkillDb.Find((int)sid);
+				if (skill == null) continue;
+
+				target.Skills.Give(sid, (SkillRank)skill.MaxRank);
+			}
+
+			// Success
+			Send.ServerMessage(sender, Localization.Get("Added all skills the server supports on their max rank."));
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("{0} gave you all skills the server supports on their max rank."), sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleAllTitles(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			// Add all titles. Using Enable to send an enable packet for
+			// every title crashes the client.
+			foreach (var title in AuraData.TitleDb.Entries.Values)
+				target.Titles.Add(title.Id, TitleState.Usable);
+
+			// Success
+			Send.ServerMessage(sender, Localization.Get("Enabled all available titles, please relog to use them."));
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("{0} enabled all available titles for you, please relog to use them."), sender.Name);
 
 			return CommandResult.Okay;
 		}

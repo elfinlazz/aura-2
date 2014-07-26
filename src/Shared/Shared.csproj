@@ -105,9 +105,6 @@
     <Compile Include="Util\String.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{2DEA473E-6FD9-4875-926E-8A1CF3E89703}</Project>
       <Name>Data</Name>

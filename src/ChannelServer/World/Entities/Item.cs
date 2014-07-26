@@ -77,6 +77,14 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns true if tag contains "/pounch/bag/".
+		/// </summary>
+		public bool IsBag
+		{
+			get { return this.Data.HasTag("/pouch/bag/"); }
+		}
+
+		/// <summary>
 		/// New item based on item id.
 		/// </summary>
 		/// <param name="itemId"></param>

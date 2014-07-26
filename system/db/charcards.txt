@@ -17,15 +17,15 @@
 [
 // Basic
 //---------------------------------------------------------------------------
-{ id: 0,  name: "Basic Human Card",     set: 1, allowed: 0x03 },
-{ id: 16, name: "Basic Elf Card",       set: 1, allowed: 0x0C },
-{ id: 30, name: "Basic Giant Card",     set: 1, allowed: 0x30 },
+{ id: 0,  name: "Basic Human Card",     set: 1, allowed: 0x03, tradeItem: 92041, tradePoints: 70 },
+{ id: 16, name: "Basic Elf Card",       set: 1, allowed: 0x0C, tradeItem: 92057, tradePoints: 70 },
+{ id: 30, name: "Basic Giant Card",     set: 1, allowed: 0x30, tradeItem: 92071, tradePoints: 70 },
 
 // Premium
 //---------------------------------------------------------------------------
-{ id: 1,  name: "Premium Human Card",   set: 2, allowed: 0x03 },
-{ id: 17, name: "Premium Elf Card",     set: 2, allowed: 0x0C },
-{ id: 31, name: "Premium Giant Card",   set: 2, allowed: 0x30 },
+{ id: 1,  name: "Premium Human Card",   set: 2, allowed: 0x03, tradeItem: 92042, tradePoints: 90 },
+{ id: 17, name: "Premium Elf Card",     set: 2, allowed: 0x0C, tradeItem: 92058, tradePoints: 90 },
+{ id: 31, name: "Premium Giant Card",   set: 2, allowed: 0x30, tradeItem: 92072, tradePoints: 90 },
 
 // Assist
 //---------------------------------------------------------------------------

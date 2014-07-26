@@ -190,7 +190,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creates prop and spawns it.
 		/// </summary>
-		protected Prop SpawnProp(int id, int regionId, int x, int y, float direction, PropFunc behavior = null)
+		protected Prop SpawnProp(int id, int regionId, int x, int y, float direction, float scale, PropFunc behavior = null)
 		{
 			var region = ChannelServer.Instance.World.GetRegion(regionId);
 			if (region == null)
@@ -199,12 +199,20 @@ namespace Aura.Channel.Scripting.Scripts
 				return null;
 			}
 
-			var prop = new Prop(id, regionId, x, y, direction);
+			var prop = new Prop(id, regionId, x, y, direction, scale);
 			prop.Behavior = behavior;
 
 			region.AddProp(prop);
 
 			return prop;
+		}
+
+		/// <summary>
+		/// Creates prop and spawns it.
+		/// </summary>
+		protected Prop SpawnProp(int id, int regionId, int x, int y, float direction, PropFunc behavior = null)
+		{
+			return this.SpawnProp(id, regionId, x, y, direction, 1, behavior);
 		}
 
 		/// <summary>

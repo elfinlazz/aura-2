@@ -222,6 +222,68 @@ namespace Aura.Channel.World
 			return _pockets[pocket].GetItemAt(x, y);
 		}
 
+		/// <summary>
+		/// Returns a free pocket id to be used for item bags.
+		/// </summary>
+		/// <returns></returns>
+		public Pocket GetFreePocketId()
+		{
+			for (var i = Pocket.ItemBags; i < Pocket.ItemBagsMax; ++i)
+			{
+				if (!_pockets.ContainsKey(i))
+					return i;
+			}
+
+			return Pocket.None;
+		}
+
+		/// <summary>
+		/// Adds pocket for item and updates item's linked pocket.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public bool AddBagPocket(Item item)
+		{
+			var freePocket = this.GetFreePocketId();
+			if (freePocket == Pocket.None)
+				return false;
+
+			item.OptionInfo.LinkedPocketId = freePocket;
+
+			this.Add(new InventoryPocketNormal(freePocket, item.Data.BagWidth, item.Data.BagHeight));
+
+			return true;
+		}
+
+		/// <summary>
+		/// Returns list of all items in pocket. Returns null if the pocket
+		/// doesn't exist.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		public List<Item> GetAllItemsFrom(Pocket pocket)
+		{
+			if (!_pockets.ContainsKey(pocket))
+				return null;
+
+			return _pockets[pocket].Items.Where(a => a != null).ToList();
+		}
+
+		/// <summary>
+		/// Removes pocket from inventory.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		public bool Remove(Pocket pocket)
+		{
+			if (pocket == Pocket.None || !_pockets.ContainsKey(pocket))
+				return false;
+
+			_pockets.Remove(pocket);
+
+			return true;
+		}
+
 		// Handlers
 		// ------------------------------------------------------------------
 
@@ -366,18 +428,35 @@ namespace Aura.Channel.World
 		{
 			var originalAmount = item.Info.Amount;
 
+			// TODO: Couldn't this method use Insert?
+
 			// Try stacks/sacs first
 			if (item.Data.StackType == StackType.Stackable)
 			{
 				List<Item> changed;
+
+				// Main inv
 				_pockets[Pocket.Inventory].FillStacks(item, out changed);
 				this.UpdateChangedItems(changed);
+
+				// Bags
+				for (var i = Pocket.ItemBags; i <= Pocket.ItemBagsMax; ++i)
+				{
+					if (item.Info.Amount == 0)
+						break;
+
+					if (_pockets.ContainsKey(i))
+					{
+						_pockets[i].FillStacks(item, out changed);
+						this.UpdateChangedItems(changed);
+					}
+				}
 			}
 
 			// Add new items as long as needed
 			while (item.Info.Amount > 0)
 			{
-				// Making a copy of the item, and generating a new temp id,
+				// Making a copy of the item and generating a new temp id
 				// ensures that we can still remove the item from the ground
 				// after moving it (region, x, y) to the pocket.
 				// (TODO: Remove takes an id parameter, this can be solved
@@ -389,7 +468,7 @@ namespace Aura.Channel.World
 				newStackItem.Info.Amount = Math.Min(item.Info.Amount, item.Data.StackMax);
 
 				// Stop if no new items can be added (no space left)
-				if (!_pockets[Pocket.Inventory].Add(newStackItem))
+				if (!this.TryAutoAdd(newStackItem, false))
 					break;
 
 				Send.ItemNew(_creature, newStackItem);
@@ -413,6 +492,10 @@ namespace Aura.Channel.World
 		// Adding
 		// ------------------------------------------------------------------
 
+		// TODO: Add central "Add" method that all others use, for central stuff
+		//   like adding bag pockets. This wil require a GetFreePosition
+		//   method in the pockets.
+
 		/// <summary>
 		/// Tries to add item to pocket. Returns false if the pocket
 		/// doesn't exist or there was no space.
@@ -427,6 +510,10 @@ namespace Aura.Channel.World
 			{
 				Send.ItemNew(_creature, item);
 				this.UpdateEquipReferences(pocket);
+
+				// Add bag pocket if it doesn't already exist.
+				if (item.OptionInfo.LinkedPocketId != Pocket.None && !this.Has(item.OptionInfo.LinkedPocketId))
+					this.AddBagPocket(item);
 			}
 
 			return success;
@@ -458,6 +545,7 @@ namespace Aura.Channel.World
 
 			_pockets[item.Info.Pocket].AddUnsafe(item);
 			this.UpdateEquipReferences(item.Info.Pocket);
+
 			return true;
 		}
 
@@ -468,21 +556,17 @@ namespace Aura.Channel.World
 		/// </summary>
 		public bool Add(Item item, bool tempFallback)
 		{
-			bool success;
-
-			lock (_pockets)
-			{
-				// Try inv
-				success = _pockets[Pocket.Inventory].Add(item);
-
-				// Try temp
-				if (!success && tempFallback)
-					success = _pockets[Pocket.Temporary].Add(item);
-			}
+			var success = this.TryAutoAdd(item, tempFallback);
 
 			// Inform about new item
 			if (success)
+			{
 				Send.ItemNew(_creature, item);
+
+				// Add bag pocket if it doesn't already exist.
+				if (item.OptionInfo.LinkedPocketId != Pocket.None && !this.Has(item.OptionInfo.LinkedPocketId))
+					this.AddBagPocket(item);
+			}
 
 			return success;
 		}
@@ -503,8 +587,22 @@ namespace Aura.Channel.World
 				List<Item> changed;
 				lock (_pockets)
 				{
+					// Main inv
 					_pockets[Pocket.Inventory].FillStacks(item, out changed);
 					this.UpdateChangedItems(changed);
+
+					// Bags
+					for (var i = Pocket.ItemBags; i <= Pocket.ItemBagsMax; ++i)
+					{
+						if (item.Info.Amount == 0)
+							break;
+
+						if (_pockets.ContainsKey(i))
+						{
+							_pockets[i].FillStacks(item, out changed);
+							this.UpdateChangedItems(changed);
+						}
+					}
 
 					// Add new item stacks as long as needed.
 					while (item.Info.Amount > item.Data.StackMax)
@@ -513,7 +611,7 @@ namespace Aura.Channel.World
 						newStackItem.Info.Amount = item.Data.StackMax;
 
 						// Break if no new items can be added (no space left)
-						if (!_pockets[Pocket.Inventory].Add(newStackItem))
+						if (!this.TryAutoAdd(newStackItem, false))
 							break;
 
 						Send.ItemNew(_creature, newStackItem);
@@ -594,6 +692,41 @@ namespace Aura.Channel.World
 			return this.Add(GoldItemId, amount);
 		}
 
+		/// <summary>
+		/// Tries to add item to one of the main invs or bags,
+		/// wherever free space is available. Returns whether it was successful.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="tempFallback">Use temp inventory if all others are full?</param>
+		/// <returns></returns>
+		public bool TryAutoAdd(Item item, bool tempFallback)
+		{
+			var success = false;
+
+			lock (_pockets)
+			{
+				// Try main inv
+				if (_pockets.ContainsKey(Pocket.Inventory))
+					success = _pockets[Pocket.Inventory].Add(item);
+
+				// Try bags
+				for (var i = Pocket.ItemBags; i <= Pocket.ItemBagsMax; ++i)
+				{
+					if (success)
+						break;
+
+					if (_pockets.ContainsKey(i))
+						success = _pockets[i].Add(item);
+				}
+
+				// Try temp
+				if (!success && tempFallback)
+					success = _pockets[Pocket.Temporary].Add(item);
+			}
+
+			return success;
+		}
+
 		// Removing
 		// ------------------------------------------------------------------
 
@@ -613,6 +746,13 @@ namespace Aura.Channel.World
 						Send.ItemRemove(_creature, item);
 
 						this.UpdateInventory(item, item.Info.Pocket, Pocket.None);
+
+						// Remove bag pocket
+						if (item.OptionInfo.LinkedPocketId != Pocket.None)
+						{
+							this.Remove(item.OptionInfo.LinkedPocketId);
+							item.OptionInfo.LinkedPocketId = Pocket.None;
+						}
 
 						return true;
 					}
@@ -722,9 +862,23 @@ namespace Aura.Channel.World
 
 			lock (_pockets)
 				foreach (var pocket in _pockets.Values)
-					result += pocket.Count(itemId);
+					result += pocket.CountItem(itemId);
 
 			return result;
+		}
+
+		/// <summary>
+		/// Returns the number of items in the given pocket.
+		/// Returns -1 if the pocket doesn't exist.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		public int CountItemsInPocket(Pocket pocket)
+		{
+			if (!_pockets.ContainsKey(pocket))
+				return -1;
+
+			return _pockets[pocket].Count;
 		}
 
 		/// <summary>

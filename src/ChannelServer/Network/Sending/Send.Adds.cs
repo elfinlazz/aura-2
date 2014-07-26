@@ -194,6 +194,13 @@ namespace Aura.Channel.Network.Sending
 					packet.PutShort(0);			     // DualgunWAttackMinBaseMod
 					packet.PutShort(0);			     // DualgunWAttackMaxBaseMod
 				}
+				// [180800, NA189 - 2014-07-23] Ninja?
+				{
+					packet.PutShort(0);			     // ? AttackMinBaseMod
+					packet.PutShort(0);			     // ? AttackMaxBaseMod
+					packet.PutShort(0);			     // ? WAttackMinBaseMod
+					packet.PutShort(0);			     // ? WAttackMaxBaseMod
+				}
 				packet.PutShort(0);			         // PoisonBase
 				packet.PutShort(0);			         // PoisonMod
 				packet.PutShort(67);		         // PoisonImmuneBase
@@ -1069,6 +1076,10 @@ namespace Aura.Channel.Network.Sending
 			//packet.PutInt(creature.Talents.GetExp(TalentId.Medicine));
 			//packet.PutInt(creature.Talents.GetExp(TalentId.Carpentry));
 			// [180100] Zero Talent
+			{
+				packet.PutInt(0);
+			}
+			// [180800, NA189 - 2014-07-23] Ninja?
 			{
 				packet.PutInt(0);
 			}
