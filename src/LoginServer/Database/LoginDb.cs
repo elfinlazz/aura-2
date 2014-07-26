@@ -9,6 +9,7 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
+using System.IO;
 using Aura.Data.Database;
 
 namespace Aura.Login.Database
@@ -19,6 +20,59 @@ namespace Aura.Login.Database
 
 		private LoginDb()
 		{
+		}
+
+		/// <summary>
+		/// Checks whether the SQL update file has been run already.
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
+		public bool CheckUpdate(string filePath)
+		{
+			var name = Path.GetFileName(filePath);
+
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `updates` WHERE `path` = @path", conn))
+			{
+				mc.Parameters.AddWithValue("@path", name);
+
+				using (var reader = mc.ExecuteReader())
+					return reader.Read();
+			}
+		}
+
+		/// <summary>
+		/// Executes SQL update file.
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
+		public bool RunUpdate(string filePath)
+		{
+			var name = Path.GetFileName(filePath);
+
+			try
+			{
+				using (var conn = AuraDb.Instance.Connection)
+				{
+					// Run update
+					using (var cmd = new MySqlCommand(File.ReadAllText(filePath), conn))
+						cmd.ExecuteNonQuery();
+
+					// Log update
+					using (var cmd = new InsertCommand("INSERT INTO `updates` {0}", conn))
+					{
+						cmd.Set("path", name);
+						cmd.Execute();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Log.Error("RunUpdate: Failed to run '{0}': {1}", name, ex.Message);
+				return false;
+			}
+
+			return true;
 		}
 
 		/// <summary>
