@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Aura.Login.Network;
 using Aura.Login.Network.Handlers;
 using Aura.Login.Util;
+using Aura.Login.Updater;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 
@@ -68,6 +69,9 @@ namespace Aura.Login
 
 			// Database
 			this.InitDatabase(this.Conf);
+
+			// Check if there are any updates
+			UpdaterUtil.Instance.CheckUpdates();
 
 			// Data
 			this.LoadData(DataLoad.LoginServer, false);

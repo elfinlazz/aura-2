@@ -9,6 +9,7 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
+using System.IO;
 
 namespace Aura.Login.Database
 {
@@ -18,6 +19,58 @@ namespace Aura.Login.Database
 
 		private LoginDb()
 		{
+		}
+
+		/// <summary>
+		/// Check if update has been successful.
+		/// </summary>
+		public bool CheckUpdate(string filePath)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("SELECT * FROM `updates` WHERE `path` = @path", conn))
+			{
+				mc.Parameters.AddWithValue("@path", filePath);
+
+				using (var reader = mc.ExecuteReader())
+				{
+					if (!reader.Read())
+						return false;
+				}
+				return true;
+			}
+		}
+
+		public bool RunUpdate(string filePath)
+		{
+			try
+			{
+				using (StreamReader sr = new StreamReader(Directory.GetCurrentDirectory() + "/sql/" + filePath))
+				{
+					String update = sr.ReadToEnd();
+
+					using (var conn = AuraDb.Instance.Connection)
+					using (var cmd = new MySqlCommand(update, conn))
+					{
+						cmd.ExecuteNonQuery();
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("The update could not be ran:");
+				Console.WriteLine(e.Message);
+
+				return false;
+			}
+
+			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new InsertCommand("INSERT INTO `updates` {0}", conn))
+			{
+				cmd.Set("path", filePath);
+				cmd.Execute();
+			}
+
+			return true;
 		}
 
 		/// <summary>
