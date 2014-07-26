@@ -72,7 +72,7 @@ namespace Aura.Login
 			this.InitDatabase(this.Conf);
 
 			// Check if there are any updates
-			this.CheckUpdates();
+			this.CheckDatabaseUpdates();
 
 			// Data
 			this.LoadData(DataLoad.LoginServer, false);
@@ -119,41 +119,36 @@ namespace Aura.Login
 			}
 		}
 
-		public void CheckUpdates()
+		private void CheckDatabaseUpdates()
 		{
-			Log.Info("Checking for updates..");
+			Log.Info("Checking for updates...");
 
 			try
 			{
-				string[] fileEntries = Directory.GetFiles(Directory.GetCurrentDirectory() + "/sql");
-				foreach (string fileName in fileEntries)
-				{
-					if (Path.GetExtension(fileName).Equals(".sql"))
-					{
-						this.RunUpdate(Path.GetFileName(fileName));
-					}
-				}
-				//Log.Info("Done checking updates.");
+				var files = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "sql"));
+				foreach (var filePath in files.Where(a => Path.GetExtension(a) == ".sql"))
+					this.RunUpdate(filePath);
 			}
 			catch (Exception ex)
 			{
-				Log.Exception(ex, "Error while running update files.");
+				Log.Error("Error while updating database: {0}", ex.Message);
 				CliUtil.Exit(1);
 			}
 		}
 
-		public void RunUpdate(string fileName)
+		private void RunUpdate(string filePath)
 		{
-			if (!LoginDb.Instance.CheckUpdate(fileName))
-			{
-				Log.Info("Update " + fileName + " found.");
-				Log.Status("Running update...");
+			if (LoginDb.Instance.CheckUpdate(filePath))
+				return;
 
-				if (!LoginDb.Instance.RunUpdate(fileName))
-					Log.Error("Update " + fileName + " failed.");
-				else
-					Log.Info("Update " + fileName + " has been successful.");
-			}
+			var name = Path.GetFileName(filePath);
+
+			Log.Info("Update '{0}' found, executing...", name);
+
+			if (!LoginDb.Instance.RunUpdate(filePath))
+				Log.Error("Update '{0}' failed.", name);
+			else
+				Log.Info("Update '{0}' successful.", name);
 		}
 
 		public void Broadcast(Packet packet)

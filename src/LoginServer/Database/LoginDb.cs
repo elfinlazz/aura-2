@@ -23,50 +23,53 @@ namespace Aura.Login.Database
 		}
 
 		/// <summary>
-		/// Check if update has been successful.
+		/// Checks whether the SQL update file has been run already.
 		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
 		public bool CheckUpdate(string filePath)
 		{
+			var name = Path.GetFileName(filePath);
+
 			using (var conn = AuraDb.Instance.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `updates` WHERE `path` = @path", conn))
 			{
-				mc.Parameters.AddWithValue("@path", filePath);
+				mc.Parameters.AddWithValue("@path", name);
 
 				using (var reader = mc.ExecuteReader())
-				{
-					if (!reader.Read())
-						return false;
-				}
-				return true;
+					return reader.Read();
 			}
 		}
 
+		/// <summary>
+		/// Executes SQL update file.
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
 		public bool RunUpdate(string filePath)
 		{
+			var name = Path.GetFileName(filePath);
+
 			try
 			{
-				using (StreamReader sr = new StreamReader(Directory.GetCurrentDirectory() + "/sql/" + filePath))
+				using (var conn = AuraDb.Instance.Connection)
 				{
-					String update = sr.ReadToEnd();
-
-					using (var conn = AuraDb.Instance.Connection)
-					using (var cmd = new MySqlCommand(update, conn))
-					{
+					// Run update
+					using (var cmd = new MySqlCommand(File.ReadAllText(filePath), conn))
 						cmd.ExecuteNonQuery();
+
+					// Log update
+					using (var cmd = new InsertCommand("INSERT INTO `updates` {0}", conn))
+					{
+						cmd.Set("path", name);
+						cmd.Execute();
 					}
 				}
 			}
-			catch (Exception e)
+			catch (Exception ex)
 			{
-				Log.Exception(e, "The update could not be ran:");
+				Log.Error("RunUpdate: Failed to run '{0}': {1}", name, ex.Message);
 				return false;
-			}
-
-			using (var conn = AuraDb.Instance.Connection)
-			using (var cmd = new InsertCommand("INSERT INTO `updates` {0}", conn))
-			{
-				cmd.Set("path", filePath);
-				cmd.Execute();
 			}
 
 			return true;
