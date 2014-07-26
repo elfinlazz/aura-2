@@ -58,9 +58,7 @@ namespace Aura.Login.Database
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("The update could not be ran:");
-				Console.WriteLine(e.Message);
-
+				Log.Exception(e, "The update could not be ran:");
 				return false;
 			}
 
