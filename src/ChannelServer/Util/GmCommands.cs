@@ -21,6 +21,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
 using Aura.Shared.Mabi;
+using Aura.Channel.World.Entities.Creatures;
 
 namespace Aura.Channel.Util
 {
@@ -66,6 +67,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "prop", "<id>", HandleProp);
 			Add(50, 50, "broadcast", "<message>", HandleBroadcast);
 			Add(50, 50, "allskills", "", HandleAllSkills);
+			Add(50, 50, "alltitles", "", HandleAllTitles);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -1133,9 +1135,24 @@ namespace Aura.Channel.Util
 			}
 
 			// Success
-			Send.ServerMessage(sender, Localization.Get("Added all skills the server supports on their max rank."), args[1]);
+			Send.ServerMessage(sender, Localization.Get("Added all skills the server supports on their max rank."));
 			if (target != sender)
-				Send.ServerMessage(target, Localization.Get("{0} gave you all skills the server supports on their max rank."), sender.Name, args[1]);
+				Send.ServerMessage(target, Localization.Get("{0} gave you all skills the server supports on their max rank."), sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		public CommandResult HandleAllTitles(ChannelClient client, Creature sender, Creature target, string message, string[] args)
+		{
+			// Add all titles. Using Enable to send an enable packet for
+			// every title crashes the client.
+			foreach (var title in AuraData.TitleDb.Entries.Values)
+				target.Titles.Add(title.Id, TitleState.Usable);
+
+			// Success
+			Send.ServerMessage(sender, Localization.Get("Enabled all available titles, please relog to use them."));
+			if (target != sender)
+				Send.ServerMessage(target, Localization.Get("{0} enabled all available titles, please relog to use them."), sender.Name);
 
 			return CommandResult.Okay;
 		}
