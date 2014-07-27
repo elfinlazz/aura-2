@@ -338,7 +338,7 @@ namespace Aura.Login.Database
 						character.Race = reader.GetInt32("race");
 						character.DeletionTime = reader.GetDateTimeSafe("deletionTime");
 						character.SkinColor = reader.GetByte("skinColor");
-						character.EyeType = reader.GetByte("eyeType");
+						character.EyeType = reader.GetInt16("eyeType");
 						character.EyeColor = reader.GetByte("eyeColor");
 						character.MouthType = reader.GetByte("mouthType");
 						character.Height = reader.GetFloat("height");
