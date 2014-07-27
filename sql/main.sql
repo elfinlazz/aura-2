@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `creatures` (
   `name` varchar(50) NOT NULL,
   `race` int(11) NOT NULL,
   `skinColor` tinyint(3) unsigned NOT NULL,
-  `eyeType` tinyint(3) unsigned NOT NULL,
+  `eyeType` smallint(6) NOT NULL,
   `eyeColor` tinyint(3) unsigned NOT NULL,
   `mouthType` tinyint(3) unsigned NOT NULL,
   `height` float NOT NULL DEFAULT '1',
