@@ -93,8 +93,8 @@ public class TreforBaseScript : NpcScript
 			case "about_skill":
 				Player.Keywords.Give("skill_range");
 				Msg("I've been observing your combat style for some time now.<br/>If you want to be a warrior, you shouldn't limit yourself to just melee attacks.<p/>I'm sure Ranald at the School can teach you some things about ranged attacks<br/>which will allow you to attack monsters from a distance.");
+				//Msg("Since you've learned the Support Shot skill now,<br/>why don't you start your training by going back to Alby Dungeon.<br/>You can hone your archery skills there.<p/>If you form a party,<br/>you'll be able to learn how archers assist warriors engaged in melee combat.<br/>I guarantee it, in the name of the number one town guard of Tir Chonaill.");
 				/* Check archery skill... Requirement unknown (Ranged Attack Rank E?)
-				Msg("Since you've learned the Support Shot skill now,<br/>why don't you start your training by going back to Alby Dungeon.<br/>You can hone your archery skills there.<p/>If you form a party,<br/>you'll be able to learn how archers assist warriors engaged in melee combat.<br/>I guarantee it, in the name of the number one town guard of Tir Chonaill.");
 				Msg("Ah! <username/>. Haha. Has your archery skills improved since I last saw you?<br/>Hmm...It seems like you improved quite a bit, even though you're not as skilled as I am.");
 				Msg("Are you interested in learning the Support Shot skill?<br/>It's a skill that will help<br/>other members when you're in a party.", Button("I am interested!", "@yes"), Button("Can... I trust you?", "@no"));
 				switch(await Select())

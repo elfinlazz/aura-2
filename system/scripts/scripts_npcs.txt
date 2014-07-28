@@ -8,6 +8,7 @@ npcs/nao.cs
 npcs/tin.cs
 
 npcs/tir/bebhinn.cs
+npcs/tir/dilys.cs
 npcs/tir/duncan.cs
 npcs/tir/malcolm.cs
 npcs/tir/nora.cs
