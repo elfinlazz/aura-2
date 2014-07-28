@@ -135,6 +135,10 @@ public class TreforBaseScript : NpcScript
 			case "shop_bank":
 				Msg("Bebhinn? Sure, she's cute... But I think she gossips way too much.<br/>Definitely not my style.");
 				break;
+
+			case "shop_healing":
+				Msg("I owe her a lot.<br/>Don't you think the healer lady is really gorgeous?<br/>Her name is... Dilys.<p/>My heart pounds just by saying her name.");
+				break;
 				
 			case "shop_smith":
 				Msg("You can only repair metal items at the Blacksmith's Shop.<br/>It would not be right to try to repair anything else.");
@@ -155,6 +159,11 @@ public class TreforBaseScript : NpcScript
 				Msg("Your legs are all tensed up. You can't react in time like that.<br/>Loosen your left leg to make sure you can absorb your enemy's strength...<br/>Yes. That's it. Now you look like you're ready.");
 				Msg("Now all you need to do is actually pull it off in the heat of the battle!<br/>Please don't try it on other villagers, though.");
 				break;
+
+			case "skill_smash":
+				Player.Keywords.Give("school");
+				Msg("Hmm... Lassar teaches Magic at the School,<br/>and yet she seems to be very interested in the Smash skill.<p/>Isn't it funny that a magic teacher is interested in a melee skill?<br/>She is a friend of Dilys, yet they are so different when it comes to their femininity.");
+				break;
 				
 			case "square":
 				Msg("Are you talking about the Square?<br/>The Square is just down there.<p/>Hmm... <username/>, <br/>if you were asking such a silly question to test my patience,<br/>I'd be very annoyed and disappointed.");
@@ -167,6 +176,14 @@ public class TreforBaseScript : NpcScript
 				
 			case "farmland":
 				Msg("The farmland?<br/>Isn't there a small garden by Caitin's Grocery Store?<br/>Hmm... I think there is one in front of the School.<p/>Do not just walk in there to gather the wheat.<br/>You might easily ruin a year's effort.");
+				break;
+
+			case "windmill":
+				Msg("Are you looking for the Windmill?<br/>Head down south, and you'll easily find the Windmill near the Inn.<br/>Go to the bridge where the barrels are stacked.<p/>Make sure not to get too close,<br/>as the blades and the mill can be very dangerous.<p/>And if Alissa says anything about me...<br/>Well, just ignore it.");
+				break;
+
+			case "brook"
+				Msg("Adelia Stream runs by the Inn.<br/>It's not far from here. Just head straight down.<br/>I don't know why you'd want to go there, though.");
 				break;
 				
 			case "shop_headman":
@@ -181,6 +198,10 @@ public class TreforBaseScript : NpcScript
 				Player.Keywords.Give("temple");
 				Msg("The School... Hmm... Go right from the Bank,<br/>then straight down past the Church.<p/>You can find my mentor Ranald at School.<br/>He's a really tough combat instructor.<br/>If you ask him about combat in general,<br/>he'll be able to teach you a lot about it.<p/>If you go to the back,<br/>there is another teacher named Lassar.<br/>She's really beautiful, but not as much as Dilys.<p/>Um... Don't tell Lassar that, though.<br/>She might cast a Firebolt on me if she finds out.");
 				break;
+
+			case "skill_windmill":
+				Msg("Windmill skill? Wow, you already know it?<br/>It's a very difficult skill, you know. Even I can't use it very well.<p/>What did Ranald tell you?<br/>Ahhhh... He must have suggested you learn it from Aranwen at Dunbarton.<br/>Okay, you should hurry and make your way to Dunbarton?<p/>I hope you master the skill and demonstrate for me later.");
+				break;
 				
 			case "skill_campfire":
 				Msg("You want to know what the Campfire skill is?<br/>It's a skill that all adventurers should learn.<p/>If you use the Campfire skill, you can rest more comfortably<br/>while recovering your health faster.<p/>Piaras traveled to a lot of places, so he would definitely know about this skill.<br/>However, I'm afraid that he might not be willing to teach you, since he runs the Inn now.<p/>Aha!!! Last time I saw Deian, he was trying to start a campfire.<br/>How about asking him?");
@@ -193,6 +214,11 @@ public class TreforBaseScript : NpcScript
 			case "shop_armory":
 				Msg("You are looking for the Weapons Shop?<br/>Hahaha. You should go to the Blacksmith's Shop.<br/>Go and get a bunch of arrows!<p/>Hmm... You don't have a bow?");
 				break;
+
+			case "shop_bookstore":
+				Player.Keywords.Give("shop_misc");
+				Msg("You need a book?<br/>Malcolm at the General Shop is an avid reader with a collection of books at his shop.<br/>It looks like he's selling some of them, too.<p/>Why don't you go there and talk to him about it?<br/>He's not selling too many books and chances are, you might have read them all...<p/>Just so you know, Malcolm absolutely HATES lending his stuff.<br/>If you want one of his books, you'll probably have to pay for it.");
+				break;
 				
 			case "shop_cloth":
 				Msg("If you need some clothes, you can go to the General Shop,<br/>but if you want an armor like mine, then you must go to the Blacksmith's Shop.");
@@ -200,6 +226,10 @@ public class TreforBaseScript : NpcScript
 				
 			case "shop_goverment_office":
 				Msg("Tir Chonaill was founded by the descendents of Ulaid,<br/>inheritors of the proud bloodline of Partholon.<br/>It's worthy to note that it's not governed by the Aliech Kingdom.<p/>If you wish to find any items you might have lost in a dungeon,<br/>you will need to see Chief Duncan near the Square.<br/>He's aware of everything that goes on around here.<p/>If you are looking for a town office,<br/>you should head all the way down south into the Kingdom's territory.");
+				break;
+
+			case "graveyard":
+				Msg("Looking for the graveyard?<br/>It's not far from Dily's place.<p/>You might know this already, but there are lots of giant spiders near the graveyard.<br/>The place was built in memory of the fallen that sacrificed their lives for this town,<br/>but it's rarely visited these days because of the spiders.<p/>They are not that strong, but can be pretty annoying.<br/>They will sometimes attack people nearby.<br/>Please be careful when you make your way there.");
 				break;
 				
 			default:
