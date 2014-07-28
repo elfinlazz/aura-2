@@ -12,6 +12,7 @@ npcs/tir/devcat.cs
 npcs/tir/dilys.cs
 npcs/tir/duncan.cs
 npcs/tir/malcolm.cs
+npcs/tir/meven.cs
 npcs/tir/nora.cs
 npcs/tir/trefor.cs
 npcs/tir/ranald.cs
