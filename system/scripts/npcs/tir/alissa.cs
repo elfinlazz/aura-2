@@ -4,8 +4,13 @@
 // 
 //---------------------------------------------------------------------------
 
+using System.Timers;
+
 public class AlissaBaseScript : NpcScript
 {
+	static bool active;
+	static Timer timer;
+	
 	public override void Load()
 	{
 		SetName("_alissa");
@@ -20,7 +25,7 @@ public class AlissaBaseScript : NpcScript
 		EquipItem(Pocket.Armor, 15654, 0x00DECDB0, 0x006C7553, 0x009B9E7B);
 		EquipItem(Pocket.Shoe, 17012, 0x00693F1E, 0x00000000, 0x00000000);
 		EquipItem(Pocket.Head, 18406, 0x00DECDB0, 0x00000000, 0x00000000);
-		
+
 		AddPhrase("Hmm... Ferghus must have made another mistake.");
 		AddPhrase("How are you going to make flour without any wheat?");
 		AddPhrase("La la la la.");
@@ -29,13 +34,16 @@ public class AlissaBaseScript : NpcScript
 		AddPhrase("There's a guard at the wheat field, and I'm watching the Windmill.");
 		AddPhrase("When is Caitin going to teach me how to bake bread?");
 		AddPhrase("You can gather wheat at the wheat field.");
-		
+
+		active = false;
+		timer = new Timer();
+		timer.Elapsed+=new ElapsedEventHandler(DeactivateWindmill);
 	}
-	
+
 	protected override async Task Talk()
 	{
 		SetBgm("NPC_Alissa.mp3");
-	
+
 		await Intro(
 			"A young girl stands with her hands on her hips like she's a person of great importance.",
 			"She wears a worn out hat that frames her soft hair, round face, and button nose.",
@@ -45,7 +53,7 @@ public class AlissaBaseScript : NpcScript
 
 		Msg("So, what can I do for you?", Button("Start a Conversation", "@talk"), Button("Operate the Windmill", "@windmill"));
 
-		switch(await Select())
+		switch (await Select())
 		{
 			case "@talk":
 				Msg("Hello, we've never met before. My name is Alissa. You have such a pretty name.<br/>How did I know that?<br/>Haha, it's written above your head. Don't tell me you don't see it?");
@@ -53,55 +61,80 @@ public class AlissaBaseScript : NpcScript
 				//Msg("You come here pretty often.<br/>It's 'cause you like me huh? Hehe!");
 				await StartConversation();
 				return;
-			
+
 			case "@windmill":
-				Msg("How long do you want to use the Mill?<br/>It's 100 Gold for one minute and 450 Gold for 5 minutes.<br/>Once it starts working, anyone can use the Mill.", Button("1 Minute", "@1minute"), Button("5 Minutes", "@5minute"), Button("Forget It", "@quit"));
-				switch(await Select())
+				if (active)
+				{
+					Msg("The Mill is already working.");
+					return;
+				}
+				else
+					Msg("How long do you want to use the Mill?<br/>It's 100 Gold for one minute and 450 Gold for 5 minutes.<br/>Once it starts working, anyone can use the Mill.", Button("1 Minute", "@1minute"), Button("5 Minutes", "@5minute"), Button("Forget It", "@quit"));
+
+				switch (await Select())
 				{
 					case "@1minute":
-						//TODO: Add a check for gold in player's inventory. (preferably (item, stack amount)), and windmill operation.
-						
-						/* TakeItem(2000, 100) //Currently, this feature isn't working. :(
-						If( Amount < 100)
+						if (!active)
 						{
-							Msg("You don't have enough money. I'm sorry, you can't use it for free.");
-							Msg("(Unimplemented)");
-							Close2("(You ended your conversation with Alissa.)");
-						} */
-						//Msg("Anyone can use the Mill now for the next 1 minute.");
-						//Msg("Yay. I got some pocket money for myself!");
-						Msg("(Unimplemented)");
+							if (Player.Inventory.HasGold(100))
+							{
+								Player.Inventory.RemoveGold(100);
+								ActivateWindmill(1);
+								Msg("Yay. I got some pocket money for myself!");
+								return;
+							}
+							else
+							{
+								Msg("You don't have enough money. I'm sorry, you can't use it for free.");
+								return;
+							}
+						}
+						else
+						{
+							Msg("The Mill is already working.");
+							return;
+						}
 						break;
-						
+
 					case "@5minute":
-						/* TakeItem(2000, 450) //Currently, this feature isn't working. :(
-						If( Amount < 100)
+						if (!active)
 						{
-							Msg("You don't have enough money. I'm sorry, you can't use it for free.");
-							Msg("(Unimplemented)");
-							Close2("(You ended your conversation with Alissa.)");
-						}*/
-						//Msg("Anyone can use the Mill now for the next 1 minute.");
-						//Msg("Yay. I got some pocket money for myself!");
-						Msg("(Unimplemented)");
+							if (Player.Inventory.HasGold(450))
+							{
+								Player.Inventory.RemoveGold(450);
+								ActivateWindmill(5);
+								Msg("Okay!<br/>Anyone can use the Mill now for the next 5 minutes.<br/>I'm counting, haha.");
+								return;
+							}
+							else
+							{
+								Msg("You don't have enough money. I'm sorry, you can't use it for free.");
+								return;
+							}
+						}
+						else
+						{
+							Msg("The Mill is already working.");
+							return;
+						}
 						break;
-						
+
 					case "@quit":
 						Msg("Whatever, it's your choice...<br/>Just remember that this is the only place where you can grind your crops into flour.");
 						break;
 						
 					default:
 						Msg("...");
-						break;
+						return;	
 				}
 				break;
-				
+
 			default:
 				Msg("...");
 				return;
 		}
 	}
-		
+
 	protected override async Task Keywords(string keyword)
 	{
 		switch (keyword)
@@ -109,83 +142,84 @@ public class AlissaBaseScript : NpcScript
 			case "personal_info":
 				Msg("My name? I am Alissa.<br/>I work here at the mill, helping around with chores.<br/>Have you seen my sister? She's at the School.<br/>If you happen to go there, go inside the left building.<br/>She'll be in the magic class.");
 				break;
-				
+
 			case "rumor":
 				Player.Keywords.Give("shop_smith");
 				Msg("Ferghus?<br/>I don't know if he's a good blacksmith, but he's a nice person.<br/>Usually, when you ask him a question, he kindly answers everything...<br/>Go find out for yourself.");
 				break;
-				
+
 			case "about_skill":
 				Msg("Um... I only know about Production Mastery,<br/>you know.");
 				break;
-				
+
 			case "shop_misc":
 				Msg("Are you looking for Malcolm's General Shop?<br/>Take the bridge from here and go up the hill.<br/>I would take you, but I have to stay here and work...");
 				break;
-			
+
 			case "shop_healing":
 				Msg("Dilys's place? Go straight up the hill and follow the road.<br/>If you can't find it, ask someone nearby.<br/>Ahh, I think she's so pretty.<br/>I don't know why she's with Trefor.");
 				break;
-			
+
 			case "shop_bank":
 				Msg("You mean Bebhinn's Bank?<br/>...<br/>You have that much money?  You sure don't look it...");
 				break;
-				
+
 			case "shop_smith":
 				Msg("Ferghus? He's right in front of you. Can't you see?<br/>You should get glasses, thick ones...<br/>But, his beard smells...like alcohol, so get nose plugs too.");
 				break;
-				
+
 			case "skill_rest":
 				Msg("I want to learn that, too.<br/>It's tiring to stand all day.<br/>I heard Nora uses hotkeys to make it easier.<br/>I wonder why she doesn't teach it to me...");
 				break;
-				
-			case "skill_instrument":				
+
+			case "skill_instrument":
+
 				Msg("You can practice if you have a lute.<br/>Were you planning to learn the skill without an instrument?");
 				break;
-				
+
 			case "skill_counter_attack":
 				Msg("It's so annoying to see all these 10 year olds bragging about how they hunted a bear.<br/>Why would they kill animals for fun?<br/>I admit it's tough...<br/>But it's such a senseless act...<br/>A very childish thing to be proud of.");
 				break;
-				
+
 			case "square":
 				Msg("You will see a big dip when you go up the hill.<br/>There will also be lots of people.<br/>You can't miss it.");
 				break;
-				
+
 			case "shop_headman":
 				Msg("Chief Duncan's beard feels very soft and nice.<br/>Even better than wool.<br/>Try feeling it next time. I always do!");
 				break;
-				
+
 			case "temple":
 				Msg("Priest Meven is boring because he doesn't have a beard.<br/>You don't really care about him?<br/>I know...it's Priestess Endelyon you're after, right?");
 				break;
-			
+
 			case "school":
 				Msg("By the way, did I tell you?<br/>My sister teaches magic at the School.<br/>I don't know if she's any good though...hehe...");
 				Msg("You know what else? She is crazy about school uniforms.<br/>Her wardrobe is full of them!");
 				Msg("Why does a teacher need to wear a uniform?");
 				break;
-				
+
 			case "shop_armory":
 				Msg("If you're looking for weapons, Ferghus at the Blacksmith's Shop sells them...<br/>...<br/>As long as it's brand new, it should be okay...");
 				break;
-			
+
 			case "shop_cloth":
 				Msg("Talking about the Clothing Shop makes me want to go shopping...<br/>My sister is so cheap.<br/>I spent all my money to help her with her tuition...<br/>and she won't even buy me a single dress!<br/>Look at me. Even my apron is worn out...");
 				Msg("I don't even know where she spends all the money she earns from her lessons and textbooks.<br/>What about me...?");
 				break;
-				
+
 			case "shop_bookstore":
 				Msg("The Bookstore? Ah, you're looking for a place to buy books?<br/>Well, I don't know if we have one in town.<br/>My sister sells some books at the School...<br/>But it's not exactly a bookstore...");
 				break;
-				
+
 			case "shop_goverment_office":
 				Msg("It's so weird. We don't have anything like that here.<br/>But everyone always asks about the Town Office.<br/>Maybe I am the only one who doesn't know about it.<br/>Is it just me?");
 				break;
-				
+
 			case "skill_magic_shield":
 				Msg("Eh... It feels like you're treating me like a child.");
 				break;
-				
+
 			default:
 				RndMsg(
 					"You're expecting too much from me.",
@@ -193,9 +227,34 @@ public class AlissaBaseScript : NpcScript
 					"You're not testing me, are you?",
 					"Eh... It feels like you're treating me like a child.",
 					"Hmm... I think Ferghus would be able to explain it better. He's across the stream.",
-					"Perhaps Caitin might know. Well... Anyway..."			
+					"Perhaps Caitin might know. Well... Anyway..."
 				);
 				break;
 		}
+	}
+
+	public void ActivateWindmill(int minutes)
+	{
+		Prop windmill = NPC.Region.GetProp(45036000569263147);
+		windmill.State = "on";
+		windmill.XML = "<xml EventText=\"" + Player.Name + " has activated the Windmill. Anybody can use it now to grind crops into flour.\"/>";
+		Send.PropUpdate(windmill);
+		
+		active = true;
+		
+		timer.Interval=minutes * 1000 * 60;
+		timer.Start();
+	}
+
+	public void DeactivateWindmill(object source, ElapsedEventArgs e)
+	{
+		Prop windmill = NPC.Region.GetProp(45036000569263147);
+		windmill.State = "off";
+		windmill.XML = "<xml EventText=\"The Mill is currently not in operation.Once you operate it, you can grind the crops into flour.\"/>";
+		Send.PropUpdate(windmill);
+		
+		active = false;
+		
+		timer.Stop();
 	}
 }

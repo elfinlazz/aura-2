@@ -1198,23 +1198,19 @@ namespace Aura.Channel.Network.Sending
 		{
 			// Client side props (A0 range, instead of A1)
 			// look a bit different.
-			if (prop.ServerSide)
-			{
-				packet.PutString(prop.State);
-				packet.PutLong(DateTime.Now);
-				packet.PutByte(true);
-				packet.PutString(prop.XML);
-				packet.PutFloat(prop.Info.Direction);
-				packet.PutShort(0);
-			}
-			else
-			{
-				packet.PutString(prop.State);
-				packet.PutLong(DateTime.Now);
-				packet.PutByte(false);
-				packet.PutFloat(prop.Info.Direction);
-				packet.PutShort(0);
-			}
+			
+			packet.PutString(prop.State);
+			packet.PutLong(DateTime.Now);
+            if (string.IsNullOrWhiteSpace(prop.XML))
+                packet.PutByte(false);
+            else
+            {
+                packet.PutByte(false);
+                packet.PutString(prop.XML);
+            }
+			packet.PutFloat(prop.Info.Direction);
+			packet.PutShort(0);
+			
 
 			return packet;
 		}
