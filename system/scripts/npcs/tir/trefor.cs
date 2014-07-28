@@ -91,8 +91,33 @@ public class TreforBaseScript : NpcScript
 				break;
 				
 			case "about_skill":
+				Player.Keywords.Give("skill_range");
 				Msg("I've been observing your combat style for some time now.<br/>If you want to be a warrior, you shouldn't limit yourself to just melee attacks.<p/>I'm sure Ranald at the School can teach you some things about ranged attacks<br/>which will allow you to attack monsters from a distance.");
-				//Msg("Since you've learned the Support Shot skill now,<br/>why don't you start your training by going back to Alby Dungeon.<br/>You can hone your archery skills there.<p/>If you form a party,<br/>you'll be able to learn how archers assist warriors engaged in melee combat.<br/>I guarantee it, in the name of the number one town guard of Tir Chonaill.");
+				/* Check archery skill... Requirement unknown (Ranged Attack Rank E?)
+				Msg("Since you've learned the Support Shot skill now,<br/>why don't you start your training by going back to Alby Dungeon.<br/>You can hone your archery skills there.<p/>If you form a party,<br/>you'll be able to learn how archers assist warriors engaged in melee combat.<br/>I guarantee it, in the name of the number one town guard of Tir Chonaill.");
+				Msg("Ah! <username/>. Haha. Has your archery skills improved since I last saw you?<br/>Hmm...It seems like you improved quite a bit, even though you're not as skilled as I am.");
+				Msg("Are you interested in learning the Support Shot skill?<br/>It's a skill that will help<br/>other members when you're in a party.", Button("I am interested!", "@yes"), Button("Can... I trust you?", "@no"));
+				switch(await Select())
+				{
+					case "@yes:"
+						Msg("I knew you'd be interested. Hahaha.<br/>Then, as a special courtesy, I'll teach you.<br/>Listen carefully and do as I instruct.<p/>Now, close your eyes and imagine yourself holding a bow.<br/>In front of you, your friend is struggling with a big sword against an enemy.<br/>Your friend calculates the right timing to hit the enemy<br/>while causing steady damage.");
+						Msg("...In this case, how would you shoot your arrows?<br/>How can you shoot so that<br/>you won't interrupt your friend, while still injuring the enemy?<br/>Why don't you close your eyes and visualize it?", Button("I visualized it.", "@yes"));
+						switch(await Select())
+						{
+							case "@yes:"
+							//Teach support shot skill
+							Msg("I'm not certain how well you followed<br/>my instructions with your eyes closed, but it's all good.<br/>I gave you an easy-to-follow guide,<br/>so you shouldn't have any difficulties using Support Shot.<p/>I pray in the name of Morrighan the Goddess<br/>that you, whose arrows fly with bravery, will always be surrounded by glory.<p/>Also, don't forget to drop by the Blacksmith's Shop when you run out of arrows.");
+							break;
+						}
+						break;
+					case "@no:"
+						Msg("Are you saying that you won't travel with other people?<br/>You're pretty confident.<p/>But you see <username/>,<br/>there are limits to how much you can accomplish all by yourself.<br/>I hope you don't end up regretting not taking my advice, <username/>.<p/>...Come by anytime if you change your mind.<br/>I'll show you the true art of archery.");
+						break;
+					default:
+						Msg("...");
+						break;
+				}
+				*/
 				break;
 				
 			case "about_arbeit":
@@ -114,6 +139,11 @@ public class TreforBaseScript : NpcScript
 			case "shop_smith":
 				Msg("You can only repair metal items at the Blacksmith's Shop.<br/>It would not be right to try to repair anything else.");
 				break;
+
+			case "skill_range":
+				Player.Keywords.Give("school");
+				Msg("Well, I'm quite busy right now.<br/>Why don't you ask Ranald at the School?<br/>I CAN say that Ranged Attack is really useful, though.<br/>I strongly recommend you master it... It's THAT useful.");
+				break;
 				
 			case "skill_counter_attack":
 				Player.Keywords.Remove("skill_counter_attack");
@@ -129,6 +159,11 @@ public class TreforBaseScript : NpcScript
 			case "square":
 				Msg("Are you talking about the Square?<br/>The Square is just down there.<p/>Hmm... <username/>, <br/>if you were asking such a silly question to test my patience,<br/>I'd be very annoyed and disappointed.");
 				break;
+
+			case "pool":
+				Player.Keywords.Give("shop_bank");
+				Msg("Looking for the reservoir?<br/>The reservoir will be on your left when you go down the path near the Bank.");
+				break;
 				
 			case "farmland":
 				Msg("The farmland?<br/>Isn't there a small garden by Caitin's Grocery Store?<br/>Hmm... I think there is one in front of the School.<p/>Do not just walk in there to gather the wheat.<br/>You might easily ruin a year's effort.");
@@ -140,6 +175,11 @@ public class TreforBaseScript : NpcScript
 				
 			case "temple":
 				Msg("The Church is located down south, following the road behind the Bank.<br/>The people there are really nice. They will treat you well.");
+				break;
+
+			case "school":
+				Player.Keywords.Give("temple");
+				Msg("The School... Hmm... Go right from the Bank,<br/>then straight down past the Church.<p/>You can find my mentor Ranald at School.<br/>He's a really tough combat instructor.<br/>If you ask him about combat in general,<br/>he'll be able to teach you a lot about it.<p/>If you go to the back,<br/>there is another teacher named Lassar.<br/>She's really beautiful, but not as much as Dilys.<p/>Um... Don't tell Lassar that, though.<br/>She might cast a Firebolt on me if she finds out.");
 				break;
 				
 			case "skill_campfire":
