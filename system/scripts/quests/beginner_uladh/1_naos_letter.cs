@@ -26,22 +26,26 @@ public class BeginnerUladh1QuestScript : QuestScript
 		{
 			npc.FinishQuest(this.Id, "talk_duncan");
 			
-			npc.Msg("(Duncan reads over Nao's letter.)<br/>Another Milletian! I'm always glad to meet a friend of Nao's.");
-			npc.Msg("(Duncan folds the letter in half and puts it in his pocket.)<br/>So, you're <username/>?<br/>I'm Duncan, the chief of this town.<br/>Welcome to Tir Chonaill.");
-			npc.Msg("Ah, it appears you've got a quest that needs to be completed.<br/>Let me show you how.");
+			npc.Msg(Hide.Name, "(You hand Nao's Letter of Introduction to Duncan.)");
+			npc.Msg("Ah, a letter from Nao.<br/>Hard to believe that little<br/>tomboy's all grown up...");
+			npc.Msg(Hide.Name, "(Duncan folds the letter in half and puts it in his pocket.)");
+			npc.Msg("So, you're <username/>.<br/>I'm Duncan, the chief of this town.<br/>Welcome to Tir Chonaill.");
+			npc.Msg("Would you like to learn how to complete quests?");
 			npc.Msg(npc.Image("npctalk_questwindow", true, 272, 235), npc.Text("Press the "), npc.Hotkey("QuestView"), npc.Text(" key or<br/>press the Quest button at the bottom of your screen.<br>The quest window will appear and display your current quests."));
 
 			while (true)
 			{
-				npc.Msg(npc.Text("Press the "), npc.Hotkey("QuestView"), npc.Text(" key or the button that looks like a scroll<br/>at the bottom of your screen. This will bring up the main Quest window."), npc.Button("I pressed the Quest button", "@pressed"), npc.Button("$hidden", "@quest_btn_clicked", "autoclick_QuestView"));
+				npc.Msg(npc.Text("Press the "), npc.Hotkey("QuestView"), npc.Text(" key or<br/>press the Quest button at the bottom of your screen."), npc.Button("I pressed the Quest button", "@pressed"), npc.Button("$hidden", "@quest_btn_clicked", "autoclick_QuestView"));
 				if (await npc.Select() != "@pressed")
 					break;
 				npc.Msg("Hmm... Are you sure you pressed the Quest button?<br/>It's possible that the Quest Window was already open, so<br/>try pressing it again.");
 			}
 
-            npc.Msg("There we are! THis window lets you check your progress and view<br/>the details on any quests you've accepted."); //Should show image of quest window, but I was having trouble finding it
-			npc.Msg("When you complete a quest, you need to press the Complete button<br/>to receive your rewards.<p/>You must do this for every quest! Otherwise, it'll sit in your Quest window forever.");
-			npc.Msg("Now go on, press the Complete button for the quest you have!");
+			npc.Msg("Well done. See the list of quests?<br/>Clicking on a quest brings up the quest's details.<br/>Quests will show a yellow Complete button<br/>next to their names when you finish them.");
+			npc.Msg("Try pressing the Complete button now.<br/>As important as it is to complete quests,<br/>it's just as important to press the \"Complete\" button<br/>afterwards to recieve your rewards.");
+			npc.Msg("(Duncan looks at you with his benevolent hazel eyes.)");
+			npc.Msg("You've just learned one very basic skill<br/>to survive in Erinn.");
+			npc.Msg("Soon, you will recieve a quest from an owl.<br/>Then, you will be able to start your training for real.");
 
 			return HookResult.Break;
 		}
