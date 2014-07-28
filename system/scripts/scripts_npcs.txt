@@ -7,8 +7,11 @@
 npcs/nao.cs
 npcs/tin.cs
 
+npcs/tir/alissa.cs
+npcs/tir/Anzu.cs
 npcs/tir/bebhinn.cs
 npcs/tir/duncan.cs
+npcs/tir/Hagi.cs
 npcs/tir/nora.cs
 npcs/tir/trefor.cs
 npcs/tir/ranald.cs
