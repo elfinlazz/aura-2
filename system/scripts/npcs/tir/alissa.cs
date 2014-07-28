@@ -89,6 +89,10 @@ public class AlissaBaseScript : NpcScript
 					case "@quit":
 						Msg("Whatever, it's your choice...<br/>Just remember that this is the only place where you can grind your crops into flour.");
 						break;
+						
+					default:
+						Msg("...");
+						break;
 				}
 				break;
 				
