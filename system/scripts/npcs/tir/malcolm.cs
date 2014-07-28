@@ -10,16 +10,17 @@ public class MalcolmBaseScript : NpcScript
 	{
 		SetName("_malcolm");
 		SetRace(10002);
-		SetBody(upper: 1.1f); //not updated
-		SetFace(skinColor: 20); //not updated
+		SetBody(height: 1.22f);
+        SetFace(skinColor: 16, eyeType: 26, eyeColor: 162);
 		SetStand("human/male/anim/male_natural_stand_npc_malcolm_retake", "human/male/anim/male_natural_stand_npc_malcolm_talk");
-		SetLocation(8, 1235, 1656, 60); //not exact values
+		SetLocation(8, 1238, 1655, 59);
 
-		EquipItem(Pocket.Face, 4900, 0xF88B4A); //not updated
-		EquipItem(Pocket.Hair, 4154, 0x4D4B53); //not updated
-		EquipItem(Pocket.Armor, 15652, 0xAC9271, 0x4D4F48, 0x7C6144); //not updated
-		EquipItem(Pocket.Shoe, 17012, 0x9C7D6C, 0xFFC9A3, 0xF7941D); //not updated
-		EquipItem(Pocket.LeftHand1, 40012, 0xDCDCDC, 0xC08B48, 0x808080); //not updated
+        EquipItem(Pocket.Face, 4900, 0x00FFB859, 0x003C6274, 0x00505968);
+        EquipItem(Pocket.Hair, 4155, 0x00ECBC58, 0x00ECBC58, 0x00ECBC58);
+        EquipItem(Pocket.Armor, 15655, 0x00D8C9B7, 0x00112A13, 0x00131313);
+        EquipItem(Pocket.Shoe, 17287, 0x00544838, 0x00000000, 0x00000000);
+        EquipItem(Pocket.RightHand1, 40491, 0x00808080, 0x00000000, 0x00000000);
+        EquipItem(Pocket.LeftHand1, 40017, 0x003F7246, 0x00C0B584, 0x003F4B40);
 
         AddPhrase("Maybe I should wrap it up and call it a day...");
         AddPhrase("Aww! My legs hurt. My feet are all swollen from standing all day long.");
@@ -46,7 +47,8 @@ public class MalcolmBaseScript : NpcScript
                 //Msg("Welcome to the General Shop. This must be your first visit here.");
 				Msg("Thank you for coming again.");
                 //Msg("Thank you for visiting again, <username/>.<br/>If you come and shop here regularly,<br/>I will treat you as a VIP customer. Ha ha.");
-                //Alternate message as you talk to him more? Apparently it logs your visits at least to this shop
+                //Msg("Ah, my VIP customer, <username/>! Welcome.");
+                //Alternate messages as you talk to him more? Apparently it logs your visits at least to this shop
                 await StartConversation();
 				return;
 				
