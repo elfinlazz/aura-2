@@ -173,7 +173,6 @@ public class AlissaBaseScript : NpcScript
 				break;
 
 			case "skill_instrument":
-
 				Msg("You can practice if you have a lute.<br/>Were you planning to learn the skill without an instrument?");
 				break;
 
