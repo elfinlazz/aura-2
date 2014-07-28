@@ -96,7 +96,7 @@ public class AlissaBaseScript : NpcScript
 				Msg("...");
 				return;
 		}
-}
+	}
 		
 	protected override async Task Keywords(string keyword)
 	{
@@ -135,8 +135,7 @@ public class AlissaBaseScript : NpcScript
 				Msg("I want to learn that, too.<br/>It's tiring to stand all day.<br/>I heard Nora uses hotkeys to make it easier.<br/>I wonder why she doesn't teach it to me...");
 				break;
 				
-			case "skill_instrument":
-				
+			case "skill_instrument":				
 				Msg("You can practice if you have a lute.<br/>Were you planning to learn the skill without an instrument?");
 				break;
 				
