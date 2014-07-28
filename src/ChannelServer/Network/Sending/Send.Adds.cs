@@ -1201,13 +1201,13 @@ namespace Aura.Channel.Network.Sending
 			
 			packet.PutString(prop.State);
 			packet.PutLong(DateTime.Now);
-            if (string.IsNullOrWhiteSpace(prop.XML))
-                packet.PutByte(false);
-            else
-            {
-                packet.PutByte(true);
-                packet.PutString(prop.XML);
-            }
+			if (string.IsNullOrWhiteSpace(prop.XML))
+				packet.PutByte(false);
+			else
+			{
+				packet.PutByte(true);
+				packet.PutString(prop.XML);
+			}
 			packet.PutFloat(prop.Info.Direction);
 			packet.PutShort(0);
 			
