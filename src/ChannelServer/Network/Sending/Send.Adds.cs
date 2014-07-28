@@ -1205,7 +1205,7 @@ namespace Aura.Channel.Network.Sending
                 packet.PutByte(false);
             else
             {
-                packet.PutByte(false);
+                packet.PutByte(true);
                 packet.PutString(prop.XML);
             }
 			packet.PutFloat(prop.Info.Direction);
