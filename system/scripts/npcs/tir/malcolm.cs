@@ -75,6 +75,7 @@ public class MalcolmBaseScript : NpcScript
 		switch (keyword)
 		{
             case "personal_info":
+                Player.Keywords.Give("shop_misc");
                 Msg("I run this General Shop. I sell various goods.");
                 break;
 
@@ -84,6 +85,8 @@ public class MalcolmBaseScript : NpcScript
 
             case "about_skill":
                 Msg("If you are interested in music skills,<br/>why don't you buy the 'Introduction to Composing Tunes' in my shop?<p/>I try to have as many as possible in stock,<br/>but it's not easy to bring books to a rural town.<p/>There is a Bookstore in Dunbarton.<br/>So if you're looking for books on music, go there.");
+                //Msg("Have you heard of the Weaving skill?<br/>It is a skill of spinning yarn from natural materials and making fabric.<p/>Do you want to learn the Weaving skill?<br/>Actually, I'm out of thick yarn and can't meet all the orders for fabric...<br/>If you get me some wool, I'll teach you the Weaving skill in return.<br/>An owl will deliver you a note on how to find wool if you wait outside.");
+                //Event Flag for quest "Gathering Wool" is activated after weaving msg
                 break;
 
             case "about_arbeit":
@@ -115,6 +118,11 @@ public class MalcolmBaseScript : NpcScript
                 Msg("...<br/>Are you joking?<br/>You ask me where the Square is when it's just out the door?<p/>Um... Do I look so naive?<br/>Maybe I should change my hairstyle...");
                 break;
 
+            case "pool":
+                Player.Keywords.Give("shop_grocery");
+                Msg("Go down the road behind Caitin's Grocery Store and you'll find it soon.<br/>If it weren't for the reservoir,<br/>the crops wouldn't grow.<br/>It sure does play a vital role in our town's agriculture.");
+                break;
+
             case "farmland":
                 Msg("The farmland is near the School.<br/>How come so many travelers are interested in it?<br/>There's nothing special about it.<p/>What's more, their careless strolls through the farmland<br/>are damaging the crops...");
                 break;
@@ -125,6 +133,11 @@ public class MalcolmBaseScript : NpcScript
 
             case "temple":
                 Msg("So, you want to go to the Church?<br/>Let's see... Go down a bit from the Bank over there,<br/>and you can't miss it.<p/>Could you tell Priest Meven that I have lots of high-quality candlesticks when you get there?<br/>You can tell Priestess Endelyon instead<br/>if he's not there.");
+                break;
+
+            case "school":
+                Player.Keywords.Give("pool");
+                Msg("The School?<br/>You can get there by going down the road towards the Bank and to the reservoir.<br/>If you still can't find it, right-click your mouse and look around.<br/>Scrolling the mouse wheel would help too.<p/>By the way, are you a student?");
                 break;
 
             case "skill_campfire":

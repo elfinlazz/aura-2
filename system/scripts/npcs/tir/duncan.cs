@@ -48,6 +48,7 @@ public class DuncanBaseScript : NpcScript
         {
             case "@talk":
                 Msg("What did you say your name was?<br/>Anyway, welcome.");
+                //Msg("As a matter of fact, I was just thinking to myself, '<username/> is probably on the way to see me...");
                 await StartConversation();
                 return;
 
@@ -78,10 +79,10 @@ public class DuncanBaseScript : NpcScript
                 return;
 
             case "@controls":
-                Msg("First, let me show you the basic mouse controls.<br/>Take your time and get to know them well.", Movie("movement_camera_guide_us.wmv", 500, 300, true));
-                Msg("The keyboard controls are a little harder to grasp, but you'll<br/>get it down. The most important thing to take away is that<br/>you can change your Hotkey settings in the Options menu.", Image("us/guide_keybord", 744, 344));
-                Msg("Now that you know the basic controls, let me teach you<br/>a few other things.", Image("us/guide_keybord", 744, 344));
-                Msg("This is an example of a keyboard shortcut. You'll find them<br/>very useful in accomplishing common tasks quickly.<br/>Get to know your controls, and let me know if you have any questions.", Image("us/guide_keylook", 744, 344));
+                Msg("<movie name='movement_camera_guide_us.wmv' height='274' width='468' />First, let me show you the basic mouse controls.<br/>Take your time and get to know them well.");
+                Msg("<moviestop/><image local='true' name='Guide_keybord' width='744' height='344' lessPositionYFromBottom='225' />The keyboard controls are a little harder to grasp, but you'll<br/>get it down. The most important thing to take away is that<br/>you can change your Hotkey settings in the Options menu.");
+                Msg("<image local='true' name='Guide_keybord' width='744' height='344' lessPositionYFromBottom='225' />Now that you know the basic controls, let me teach you<br/>a few other things.");
+                Msg("<image local='true' name='Guide_Keylook' width='744' height='344' lessPositionYFromBottom='225' />This is an example of a keyboard shortcut. You'll find them<br/>very useful in accomplishing common tasks quickly.<br/>Get to know your controls, and let me know if you have any questions.");
                 return;
 
             default:
@@ -92,34 +93,39 @@ public class DuncanBaseScript : NpcScript
 
     protected override async Task Keywords(string keyword)
     {
+        //NOTE: Duncan's text varies depending on your progression and/or how many times you've talked to him. Uncommented are the most important/useful pieces of information
         switch (keyword)
         {
             case "personal_info":
+                Player.Keywords.Give("shop_headman");
                 Msg("I'm the chief of this town...");
                 //Msg("Once again, welcome to Tir Chonaill.");
                 // MoodChange
                 break;
 
             case "rumor":
-                Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?");
-                //Msg("Talk to the good people in Tir Chonaill as much as you can, and pay close attention to what they say.<br/>Once you become friends with them, they will help you in many ways.<br/>Why don't you start off by visiting the buildings around the Square?");
+                Player.Keywords.Give("square");
+                Msg("Talk to the good people in Tir Chonaill as much as you can, and pay close attention to what they say.<br/>Once you become friends with them, they will help you in many ways.<br/>Why don't you start off by visiting the buildings around the Square?");
+                //Msg("I heard a rumor that this is just a copy of the world of Erinn. Trippy, huh?");
                 //Msg("Have you heard of field bosses?<br/>They are very powerful monsters that appear randomly in places outside dungeons, like open fields.<br/>Field bosses are either a Fomor or an animal affected by the forces of evil and transformed into a huge, savage creature.<p/>Field bosses usually show up with several monsters with them,<br/>so they pose a big threat to travelers.<br/>If you want to face a field boss, the people in town will tell you about them<br/>if you ask about nearby rumors a few times.");
                 // MoodChange
                 break;
 
             case "about_skill":
-                Msg("I don't know of any skills... Why don't you ask Malcom?");
+                Msg("Whatever you do, skills will be an essential part of your life.<br/>There are various ways to learn skills,<br/>but the best way is to talk to people in town using the 'Skills' keyword.<p/>First, go and meet the people of Tir Chonaill, and use this keyword to ask them questions.<br/>They will tell you everything about the skills they know,<br/>but that doesn't mean they will tell you everything YOU want to know.<br/>The town residents aren't experts.<p/>So my advice is to not get frustrated.<br/>Even if you don't learn a skill right away, if you follow their guidance,<br/>you'll eventually find someone who can teach you the skill.<br/>If I were you, I would listen carefully to what people say.");
+                //Msg("I don't know of any skills... Why don't you ask Malcom?");
                 //Msg("You know about the Combat Mastery skill?<br/>It's one of the basic skills needed to protect yourself in combat.<br/>It may look simple, but never underestimate its efficiency.<br/>Continue training the skill diligently and you will soon reap the rewards. That's a promise.");
                 break;
 
             case "about_arbeit":
-                Msg("I don't have any jobs for you, but you can get a part time job in town.");
-                //Msg("Are you interested in a part-time job?<br/>It's great to see young people eager to work!<br/>To get one, talk to the people in town with the 'Part-Time Jobs' keyword.<br/>If you go at the right time, you'll be offered a job.<p/>If you do a good job, you will be duly rewarded.<br/>Just make sure to return to the person who gave you the job and report the results before the deadline.<br/>If you miss the deadline, you will not be rewarded regardless of how hard you worked.<p/>Part-time jobs aren't available 24 hours a day.<br/>You have to get there at the right time.<p/>The sign-up period usually begins between 7:00 am and 9:00 am.<br/>Since there are only a limited number of jobs available,<br/>others may take them all if you're too late.<br/>Also, you can do only one part-time job per day.<p/>It looks like Nora and Caitin could use your help,<br/>so head to the Grocery Store or the Inn and talk to them.<br/>Start the conversation with them with the keyword 'Part-Time Jobs' and make sure it's between 7 and 9 am.<br/>Good luck!");
+                Msg("Are you interested in a part-time job?<br/>It's great to see young people eager to work!<br/>To get one, talk to the people in town with the 'Part-Time Jobs' keyword.<br/>If you go at the right time, you'll be offered a job.<p/>If you do a good job, you will be duly rewarded.<br/>Just make sure to return to the person who gave you the job and report the results before the deadline.<br/>If you miss the deadline, you will not be rewarded regardless of how hard you worked.<p/>Part-time jobs aren't available 24 hours a day.<br/>You have to get there at the right time.<p/>The sign-up period usually begins between 7:00 am and 9:00 am.<br/>Since there are only a limited number of jobs available,<br/>others may take them all if you're too late.<br/>Also, you can do only one part-time job per day.<p/>It looks like Nora and Caitin could use your help,<br/>so head to the Grocery Store or the Inn and talk to them.<br/>Start the conversation with them with the keyword 'Part-Time Jobs' and make sure it's between 7 and 9 am.<br/>Good luck!");
+                //Msg("I don't have any jobs for you, but you can get a part time job in town.");
                 break;
 
             case "about_study":
-                Msg("You can study different magic down at the school!");
-                //Msg("Ah, you'll need to go to the School for that.<br/>Talk to one of the teachers with that keyword.<br/>That should get you started with classes.<p/>Find the guidepost near the Bank down the street.<br/>Once you do, it should be easy to locate the School.<br/>Keep in mind that the guideposts around town are there to help you out.");
+                Player.Keywords.Give("school");
+                Msg("Ah, you'll need to go to the School for that.<br/>Talk to one of the teachers with that keyword.<br/>That should get you started with classes.<p/>Find the guidepost near the Bank down the street.<br/>Once you do, it should be easy to locate the School.<br/>Keep in mind that the guideposts around town are there to help you out.");
+                //Msg("You can study different magic down at the school!");
                 break;
 
             case "shop_misc":
@@ -146,12 +152,22 @@ public class DuncanBaseScript : NpcScript
                 Msg("The Square is perhaps the liveliest area in town.<br/>Many people use it as a meeting place.");
                 break;
 
+            case "pool":
+                Player.Keywords.Give("shop_grocery");
+                Msg("To get to the reservoir, go down the hill and walk around the Grocery Store.");
+                break;
+
             case "farmland":
                 Msg("Head south, and you'll find farmland spread across the fields.<br/>I'm concerned, though. Travelers walk through the fields as they please,<br/>and end up damaging our crops.<p/>Now I don't think they have bad intentions...<br/>But it's so hard to maintain viable farmland<br/>in such an inhospitable location at the foot of a mountain.<br/>And that farmland is essential to the well-being of my town.<p/>Hey, I'm not pointing any fingers, I'm just saying you should be careful, okay?<br/>Knowledge is power, right? And now you know...");
                 break;
 
             case "shop_headman":
                 Msg("That's right. This is my house.<br/>A strange cat appeared one day and made himself at home.<br/>I think it might even have some special powers.<br/>If you're curious, try talking to it.");
+                break;
+
+            case "school":
+                Player.Keywords.Give("temple");
+                Msg("The School? It's near the Church.<br/>Walk down the path by the Bank and head past the Church to get to the School.<br/>Lassar and Ranald, the teachers there, should be of great help for you.<br/>They'll be more than willing to answer questions.");
                 break;
 
             case "temple":
