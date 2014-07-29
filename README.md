@@ -93,3 +93,4 @@ Links
 * Forums: http://dev.mabinoger.com
 * Wiki: http://dev.mabinoger.com/wiki
 * Trello: https://trello.com/b/qnLaezQf/aura
+* [![Gitter chat](https://badges.gitter.im/aura-project/aura.png)](https://gitter.im/aura-project/aura)
