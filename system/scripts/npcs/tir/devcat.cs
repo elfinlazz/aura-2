@@ -18,13 +18,10 @@ public class devCATScript : NpcScript
     {
         SetBgm("NPC_devCAT.mp3");
 
-        Msg("Meeeoow.", Button("End Conversation", "@end"));
+        Msg("Meeeoow.");
 
         switch (await Select())
         {
-            case "@end":
-                return;
-
             default:
                 Msg("...");
                 return;

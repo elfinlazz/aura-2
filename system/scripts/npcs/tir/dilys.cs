@@ -61,7 +61,7 @@ public class DilysScript : NpcScript
 				}
 				else
 				{
-					Msg("Goodness, <username/>! Are you hurt? I must treat your wounds immediately.<br/>I can't understand why everyone gets injured so much around here...<br/>The fee is 90 Gold but don't think about money right now. What's important is that you get treated.", Button("Receive Treatment", "@gethealing"), Button("Decline", "@cancel"));
+					Msg("Goodness, <username/>! Are you hurt? I must treat your wounds immediately.<br/>I can't understand why everyone gets injured so much around here...<br/>The fee is 90 Gold but don't think about money right now. What's important is that you get treated.", Button("Receive Treatment", "@gethealing"), Button("Decline", "@end"));
 					switch (await Select())
 					{
 						case "@gethealing":
@@ -83,8 +83,7 @@ public class DilysScript : NpcScript
 							}
 							break;
 
-						case "@cancel":
-							// Apparently it freezes without a message?
+						default:
 							Msg("...");
 							break;
 					}
