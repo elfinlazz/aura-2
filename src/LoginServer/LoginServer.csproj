@@ -82,6 +82,7 @@
     <Compile Include="Util\LoginConf.cs" />
     <Compile Include="Util\LoginConsoleCommands.cs" />
     <Compile Include="Web\BroadcastController.cs" />
+    <Compile Include="Web\CheckUserController.cs" />
     <Compile Include="Web\StatusController.cs" />
   </ItemGroup>
   <ItemGroup>

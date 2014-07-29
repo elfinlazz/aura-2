@@ -191,6 +191,7 @@ namespace Aura.Login
 
 			this.WebApp.Get(@"/status", new StatusController());
 			this.WebApp.All(@"/broadcast", new BroadcastController());
+			this.WebApp.All(@"/check-user", new CheckUserController());
 
 			try
 			{
