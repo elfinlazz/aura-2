@@ -11,6 +11,7 @@ npcs/tir/bebhinn.cs
 npcs/tir/devcat.cs
 npcs/tir/dilys.cs
 npcs/tir/duncan.cs
+npcs/tir/endelyon.cs
 npcs/tir/malcolm.cs
 npcs/tir/meven.cs
 npcs/tir/nora.cs
