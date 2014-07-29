@@ -9,7 +9,10 @@ using System.Timers;
 public class AlissaBaseScript : NpcScript
 {
 	static bool active;
-	static Timer timer;
+	static readonly Timer millTimer = new Timer();
+	private static Prop _windmillProp = null;
+
+	public Prop WindmillProp { get { return _windmillProp ?? (_windmillProp = NPC.Region.GetProp(45036000569263147)); } }
 	
 	public override void Load()
 	{
@@ -36,8 +39,7 @@ public class AlissaBaseScript : NpcScript
 		AddPhrase("You can gather wheat at the wheat field.");
 
 		active = false;
-		timer = new Timer();
-		timer.Elapsed+=new ElapsedEventHandler(DeactivateWindmill);
+		millTimer.Elapsed+=new ElapsedEventHandler(DeactivateWindmill);
 	}
 
 	protected override async Task Talk()
@@ -74,58 +76,20 @@ public class AlissaBaseScript : NpcScript
 				switch (await Select())
 				{
 					case "@1minute":
-						if (!active)
-						{
-							if (Player.Inventory.HasGold(100))
-							{
-								Player.Inventory.RemoveGold(100);
-								ActivateWindmill(1);
-								Msg("Yay. I got some pocket money for myself!");
-								return;
-							}
-							else
-							{
-								Msg("You don't have enough money. I'm sorry, you can't use it for free.");
-								return;
-							}
-						}
-						else
-						{
-							Msg("The Mill is already working.");
-							return;
-						}
-						break;
+						BuyWindmill(100, 1);
+						return;
 
 					case "@5minute":
-						if (!active)
-						{
-							if (Player.Inventory.HasGold(450))
-							{
-								Player.Inventory.RemoveGold(450);
-								ActivateWindmill(5);
-								Msg("Okay!<br/>Anyone can use the Mill now for the next 5 minutes.<br/>I'm counting, haha.");
-								return;
-							}
-							else
-							{
-								Msg("You don't have enough money. I'm sorry, you can't use it for free.");
-								return;
-							}
-						}
-						else
-						{
-							Msg("The Mill is already working.");
-							return;
-						}
-						break;
+						BuyWindmill(450, 5);
+						return;
 
 					case "@quit":
 						Msg("Whatever, it's your choice...<br/>Just remember that this is the only place where you can grind your crops into flour.");
 						break;
-						
+					
 					default:
-						Msg("...");
-						return;	
+						Msg("U wot m8?");
+						break;
 				}
 				break;
 
@@ -215,10 +179,6 @@ public class AlissaBaseScript : NpcScript
 				Msg("It's so weird. We don't have anything like that here.<br/>But everyone always asks about the Town Office.<br/>Maybe I am the only one who doesn't know about it.<br/>Is it just me?");
 				break;
 
-			case "skill_magic_shield":
-				Msg("Eh... It feels like you're treating me like a child.");
-				break;
-
 			default:
 				RndMsg(
 					"You're expecting too much from me.",
@@ -231,29 +191,52 @@ public class AlissaBaseScript : NpcScript
 				break;
 		}
 	}
-
+	
+	private void BuyWindmill(int gold, int minutes)
+	{
+		if (!active)
+		{
+			if (Player.Inventory.HasGold(gold))
+			{
+				Player.Inventory.RemoveGold(gold);
+				ActivateWindmill(minutes);
+				RndMsg("Okay!<br/>Anyone can use the Mill now for the next " + minutes + " minutes.<br/>I'm counting, haha.",
+					"Yay! I got some pocket money!");
+			}
+			else
+			{
+				Msg("You don't have enough money. I'm sorry, you can't use it for free.");
+			}
+		}
+		else
+		{
+			Msg("The Mill is already working.");
+		}
+	}
+			
 	public void ActivateWindmill(int minutes)
 	{
-		Prop windmill = NPC.Region.GetProp(45036000569263147);
-		windmill.State = "on";
-		windmill.XML = "<xml EventText=\"" + Player.Name + " has activated the Windmill. Anybody can use it now to grind crops into flour.\"/>";
-		Send.PropUpdate(windmill);
+		if (active)
+			return;
+			
+		WindmillProp.State = "on";
+		WindmillProp.XML = "<xml EventText=\"" + Player.Name + " has activated the Windmill. Anybody can use it now to grind crops into flour.\"/>";
+		Send.PropUpdate(_windmillProp);
 		
 		active = true;
 		
-		timer.Interval=minutes * 1000 * 60;
-		timer.Start();
+		millTimer.Interval=minutes * 1000 * 60;
+		millTimer.Start();
 	}
 
 	public void DeactivateWindmill(object source, ElapsedEventArgs e)
 	{
-		Prop windmill = NPC.Region.GetProp(45036000569263147);
-		windmill.State = "off";
-		windmill.XML = "<xml EventText=\"The Mill is currently not in operation.Once you operate it, you can grind the crops into flour.\"/>";
-		Send.PropUpdate(windmill);
+		WindmillProp.State = "off";
+		WindmillProp.XML = "<xml EventText=\"The Mill is currently not in operation.Once you operate it, you can grind the crops into flour.\"/>";
+		Send.PropUpdate(_windmillProp);
 		
 		active = false;
 		
-		timer.Stop();
+		millTimer.Stop();
 	}
 }
