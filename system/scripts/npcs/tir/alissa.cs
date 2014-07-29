@@ -8,8 +8,9 @@ using System.Timers;
 
 public class AlissaBaseScript : NpcScript
 {
-	static bool active;
 	static readonly Timer millTimer = new Timer();
+	
+	public bool WindmillActive { get { return millTimer.Enabled; } }
 	private static Prop _windmillProp = null;
 
 	public Prop WindmillProp { get { return _windmillProp ?? (_windmillProp = NPC.Region.GetProp(45036000569263147)); } }
@@ -38,8 +39,7 @@ public class AlissaBaseScript : NpcScript
 		AddPhrase("When is Caitin going to teach me how to bake bread?");
 		AddPhrase("You can gather wheat at the wheat field.");
 
-		active = false;
-		millTimer.Elapsed+=new ElapsedEventHandler(DeactivateWindmill);
+		millTimer.Elapsed += new ElapsedEventHandler(DeactivateWindmill);
 	}
 
 	protected override async Task Talk()
@@ -65,7 +65,7 @@ public class AlissaBaseScript : NpcScript
 				return;
 
 			case "@windmill":
-				if (active)
+				if (WindmillActive)
 				{
 					Msg("The Mill is already working.");
 					return;
@@ -194,7 +194,7 @@ public class AlissaBaseScript : NpcScript
 	
 	private void BuyWindmill(int gold, int minutes)
 	{
-		if (!active)
+		if (!WindmillActive)
 		{
 			if (Player.Inventory.HasGold(gold))
 			{
@@ -216,14 +216,12 @@ public class AlissaBaseScript : NpcScript
 			
 	public void ActivateWindmill(int minutes)
 	{
-		if (active)
+		if (WindmillActive)
 			return;
 			
 		WindmillProp.State = "on";
 		WindmillProp.XML = "<xml EventText=\"" + Player.Name + " has activated the Windmill. Anybody can use it now to grind crops into flour.\"/>";
-		Send.PropUpdate(_windmillProp);
-		
-		active = true;
+		Send.PropUpdate(WindmillProp);
 		
 		millTimer.Interval=minutes * 1000 * 60;
 		millTimer.Start();
@@ -231,11 +229,10 @@ public class AlissaBaseScript : NpcScript
 
 	public void DeactivateWindmill(object source, ElapsedEventArgs e)
 	{
+	
 		WindmillProp.State = "off";
-		WindmillProp.XML = "<xml EventText=\"The Mill is currently not in operation.Once you operate it, you can grind the crops into flour.\"/>";
-		Send.PropUpdate(_windmillProp);
-		
-		active = false;
+		WindmillProp.XML = "<xml EventText=\"The Mill is currently not in operation.<br/>Once you operate it, you can grind the crops into flour.\"/>";
+		Send.PropUpdate(WindmillProp);
 		
 		millTimer.Stop();
 	}
