@@ -193,7 +193,7 @@ namespace Aura.Login
 
 			try
 			{
-				this.WebApp.Listen(this.Conf.Login.Port - 1);
+				this.WebApp.Listen(this.Conf.Login.WebPort);
 			}
 			catch (HttpListenerException)
 			{

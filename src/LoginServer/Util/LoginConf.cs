@@ -40,6 +40,8 @@ namespace Aura.Login.Util
 
 		public int DeletionWait { get; protected set; }
 
+		public int WebPort { get; protected set; }
+
 		public void Load()
 		{
 			this.Require("system/conf/login.conf");
@@ -53,6 +55,8 @@ namespace Aura.Login.Util
 			this.ConsumePartnerCards = this.GetBool("consume_partner_cards", true);
 
 			this.DeletionWait = this.GetInt("deletion_wait", 107);
+
+			this.WebPort = this.GetInt("web_port", 10999);
 		}
 	}
 }
