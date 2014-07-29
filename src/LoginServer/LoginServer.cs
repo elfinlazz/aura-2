@@ -190,6 +190,7 @@ namespace Aura.Login
 			this.WebApp = new WebApplication();
 
 			this.WebApp.Get(@"/status", new StatusController());
+			this.WebApp.All(@"/broadcast", new BroadcastController());
 
 			try
 			{
