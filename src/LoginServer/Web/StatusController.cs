@@ -4,6 +4,7 @@
 using Newtonsoft.Json;
 using SharpExpress;
 using System.IO;
+using System.Net.Mime;
 
 namespace Aura.Login.Web
 {
@@ -13,7 +14,7 @@ namespace Aura.Login.Web
 		{
 			var status = this.CreateStatusText();
 
-			res.ContentType = "text/plain";
+			res.ContentType = MediaTypeNames.Text.Plain;
 			res.Send(status);
 		}
 
