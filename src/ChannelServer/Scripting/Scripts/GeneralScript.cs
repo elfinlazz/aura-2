@@ -475,6 +475,15 @@ namespace Aura.Channel.Scripting.Scripts
 			return timer;
 		}
 
+		/// <summary>
+		/// Stops timer by changing due time and period.
+		/// </summary>
+		/// <param name="timer"></param>
+		protected void StopTimer(Timer timer)
+		{
+			timer.Change(Timeout.Infinite, Timeout.Infinite);
+		}
+
 		#endregion Timers
 	}
 
