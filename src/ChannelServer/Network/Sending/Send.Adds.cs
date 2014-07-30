@@ -1196,9 +1196,6 @@ namespace Aura.Channel.Network.Sending
 
 		private static Packet AddPropUpdateInfo(this Packet packet, Prop prop)
 		{
-			// Client side props (A0 range, instead of A1)
-			// look a bit different.
-			
 			packet.PutString(prop.State);
 			packet.PutLong(DateTime.Now);
 			if (string.IsNullOrWhiteSpace(prop.XML))
@@ -1210,7 +1207,6 @@ namespace Aura.Channel.Network.Sending
 			}
 			packet.PutFloat(prop.Info.Direction);
 			packet.PutShort(0);
-			
 
 			return packet;
 		}

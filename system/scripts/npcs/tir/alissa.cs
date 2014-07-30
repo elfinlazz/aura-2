@@ -9,10 +9,10 @@ using System.Timers;
 public class AlissaBaseScript : NpcScript
 {
 	static readonly Timer millTimer = new Timer();
+	private static Prop _windmillProp = null;
 	
 	public bool WindmillActive { get { return millTimer.Enabled; } }
-	private static Prop _windmillProp = null;
-
+	
 	public Prop WindmillProp { get { return _windmillProp ?? (_windmillProp = NPC.Region.GetProp(45036000569263147)); } }
 	
 	public override void Load()
@@ -194,24 +194,24 @@ public class AlissaBaseScript : NpcScript
 	
 	private void BuyWindmill(int gold, int minutes)
 	{
-		if (!WindmillActive)
-		{
-			if (Player.Inventory.HasGold(gold))
-			{
-				Player.Inventory.RemoveGold(gold);
-				ActivateWindmill(minutes);
-				RndMsg("Okay!<br/>Anyone can use the Mill now for the next " + minutes + " minutes.<br/>I'm counting, haha.",
-					"Yay! I got some pocket money!");
-			}
-			else
-			{
-				Msg("You don't have enough money. I'm sorry, you can't use it for free.");
-			}
-		}
-		else
+		if (WindmillActive)
 		{
 			Msg("The Mill is already working.");
+			return;
 		}
+		
+		if (!Player.Inventory.HasGold(gold))
+		{
+			Msg("You don't have enough money. I'm sorry, you can't use it for free.");
+			return;
+		{
+		
+		Player.Inventory.RemoveGold(gold);
+		ActivateWindmill(minutes);
+		RndMsg(
+			"Okay!<br/>Anyone can use the Mill now for the next " + minutes + " minutes.<br/>I'm counting, haha.",
+			"Yay! I got some pocket money!"
+		);
 	}
 			
 	public void ActivateWindmill(int minutes)
@@ -221,19 +221,20 @@ public class AlissaBaseScript : NpcScript
 			
 		WindmillProp.State = "on";
 		WindmillProp.XML = "<xml EventText=\"" + Player.Name + " has activated the Windmill. Anybody can use it now to grind crops into flour.\"/>";
-		Send.PropUpdate(WindmillProp);
 		
 		millTimer.Interval=minutes * 1000 * 60;
 		millTimer.Start();
+		
+		Send.PropUpdate(WindmillProp);
 	}
 
 	public void DeactivateWindmill(object source, ElapsedEventArgs e)
 	{
-	
 		WindmillProp.State = "off";
 		WindmillProp.XML = "<xml EventText=\"The Mill is currently not in operation.<br/>Once you operate it, you can grind the crops into flour.\"/>";
-		Send.PropUpdate(WindmillProp);
 		
 		millTimer.Stop();
+		
+		Send.PropUpdate(WindmillProp);
 	}
 }
