@@ -70,6 +70,7 @@ namespace Aura.Web
 
 			this.App.Get("/", new MainController());
 			this.App.Post("/ui", new UiStorageController());
+			this.App.Post("/visual-chat", new VisualChatController());
 
 			try
 			{
