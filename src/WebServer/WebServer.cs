@@ -3,6 +3,7 @@
 
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
+using Aura.Web.Util;
 using SharpExpress;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,17 @@ namespace Aura.Web
 	{
 		public static readonly WebServer Instance = new WebServer();
 
-		public WebApplication App;
-
 		private bool _running = false;
+
+		/// <summary>
+		/// Actual web server
+		/// </summary>
+		public WebApplication App { get; private set; }
+
+		/// <summary>
+		/// Configuration
+		/// </summary>
+		public WebConf Conf { get; private set; }
 
 		/// <summary>
 		/// Loads all necessary components and starts the server.
@@ -31,6 +40,15 @@ namespace Aura.Web
 			CliUtil.WriteHeader("Web Server", ConsoleColor.DarkRed);
 			CliUtil.LoadingTitle();
 
+			this.NavigateToRoot();
+
+			// Conf
+			this.LoadConf(this.Conf = new WebConf());
+
+			// Database
+			this.InitDatabase(this.Conf);
+
+			// Server
 			this.StartWebServer();
 
 			CliUtil.RunningTitle();
@@ -51,13 +69,14 @@ namespace Aura.Web
 
 			try
 			{
-				this.App.Listen(8080);
+				this.App.Listen(this.Conf.Web.Port);
 
-				Log.Status("Server ready, listening on *:{0}.", 8080);
+				Log.Status("Server ready, listening on *:{0}.", this.Conf.Web.Port);
 			}
 			catch (HttpListenerException)
 			{
-				Log.Error("Failed to start web server, port already in use?");
+				Log.Error("Failed to start web server.");
+				Log.Info("The port might already be in use, make sure no other application, like other web servers or Skype, are using it or set a different port in web.conf.");
 				CliUtil.Exit(1);
 			}
 		}
