@@ -68,6 +68,9 @@ namespace Aura.Web.Controllers
 			}
 
 			Log.Info("Character '{0}' uploaded his UI settings.", charId);
+
+			// Success
+			res.Send("1");
 		}
 	}
 }
