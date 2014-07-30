@@ -19,12 +19,5 @@ public class devCATScript : NpcScript
         SetBgm("NPC_devCAT.mp3");
 
         Msg("Meeeoow.");
-
-        switch (await Select())
-        {
-            default:
-                Msg("...");
-                return;
-        }
     }
 }
