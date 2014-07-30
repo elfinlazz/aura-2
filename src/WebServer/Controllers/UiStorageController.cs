@@ -60,7 +60,7 @@ namespace Aura.Web.Controllers
 			// Move file
 			try
 			{
-				file.MoveTo("web/ui_storage/" + serverName + "/" + group + "/" + file.FileName);
+				file.MoveTo("user/save/ui/" + serverName + "/" + group + "/" + file.FileName);
 			}
 			catch (Exception ex)
 			{

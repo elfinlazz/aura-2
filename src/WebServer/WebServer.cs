@@ -66,7 +66,7 @@ namespace Aura.Web
 
 			this.App = new WebApplication();
 
-			this.App.Static("web/ui_storage/");
+			this.App.Static("user/save/");
 
 			this.App.Get("/", new MainController());
 			this.App.Post("/ui", new UiStorageController());
