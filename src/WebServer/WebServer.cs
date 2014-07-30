@@ -3,6 +3,7 @@
 
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
+using Aura.Web.Controllers;
 using Aura.Web.Util;
 using SharpExpress;
 using System;
@@ -65,13 +66,16 @@ namespace Aura.Web
 
 			this.App = new WebApplication();
 
-			this.App.Get("/", (req, res) => { res.Send("Aura Web Server"); });
+			this.App.Static("web/ui_storage/");
+
+			this.App.Get("/", new MainController());
+			this.App.Post("/ui", new UiStorageController());
 
 			try
 			{
 				this.App.Listen(this.Conf.Web.Port);
 
-				Log.Status("Server ready, listening on *:{0}.", this.Conf.Web.Port);
+				Log.Status("Server ready, listening on 0.0.0.0:{0}.", this.Conf.Web.Port);
 			}
 			catch (HttpListenerException)
 			{

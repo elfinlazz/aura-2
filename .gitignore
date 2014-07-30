@@ -15,6 +15,7 @@
 !/user/scripts/scripts_custom-example.txt
 
 /web/ui/storage/*
+/web/ui_storage/*
 
 #################
 ## Visual Studio
