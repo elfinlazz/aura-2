@@ -86,7 +86,7 @@ namespace Aura.Web
 			catch (HttpListenerException)
 			{
 				Log.Error("Failed to start web server.");
-				Log.Info("The port might already be in use, make sure no other application, like other web servers or Skype, are using it or set a different port in web.conf.");
+				Log.Info("The port might already be in use or you don't have enough rights, make sure no other application, like other web servers or Skype, are using it or set a different port in web.conf and run the web-server as an admin.");
 				CliUtil.Exit(1);
 			}
 		}
