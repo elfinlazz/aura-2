@@ -10,6 +10,7 @@ using Aura.Channel.World;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.World.Entities;
 using System;
+using Aura.Shared.Mabi;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -65,9 +66,6 @@ namespace Aura.Channel.Network.Handlers
 			client.State = ClientState.LoggedIn;
 
 			Send.ChannelLoginR(client, character.EntityId);
-
-			// Update last login
-			character.LastLogin = DateTime.Now;
 
 			// Log into world
 			if (character.Has(CreatureStates.EverEnteredWorld) || character.IsPet)
@@ -205,6 +203,21 @@ namespace Aura.Channel.Network.Handlers
 				// Send vehicle info to make mounts mountable
 				if (creature.RaceData.VehicleType > 0)
 					Send.VehicleInfo(creature);
+			}
+
+			var playerCreature = creature as PlayerCreature;
+			if (playerCreature != null)
+			{
+				// Update last login
+				playerCreature.LastLogin = DateTime.Now;
+
+				// Age check
+				var lastSaturday = ErinnTime.Now.GetLastSaturday();
+				var lastAging = playerCreature.LastAging;
+				var diff = (lastSaturday - lastAging).TotalDays;
+
+				if (lastAging < lastSaturday)
+					playerCreature.AgeUp((short)(1 + diff / 7));
 			}
 		}
 
