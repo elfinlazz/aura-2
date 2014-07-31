@@ -8,8 +8,8 @@ public class GroceryShop : NpcShopScript
 {
 	public override void Setup()
 	{
-		Add("Grocery", 50004);      // Bread
-		Add("Grocery", 50002);      // Slice of Cheese
+		Add("Grocery", 50004);      	// Bread
+		Add("Grocery", 50002);      	// Slice of Cheese
 		Add("Grocery", 50220);		// Corn Powder
 		Add("Grocery", 50206);		// Chocolate
 		Add("Grocery", 50217);		// Celery
@@ -39,38 +39,38 @@ public class GroceryShop : NpcShopScript
 		Add("Grocery", 50127, 5);	// Shrimp x5
 		Add("Grocery", 50127, 10);	// Shrimp x10
 		Add("Grocery", 50127, 20);	// Shrimp x20
-		Add("Grocery", 50131);      // Sugar
+		Add("Grocery", 50131);      	// Sugar
 		Add("Grocery", 50131, 5);	// Sugar x5
-		Add("Grocery", 50131, 10);  // Sugar x10
+		Add("Grocery", 50131, 10);  	// Sugar x10
 		Add("Grocery", 50131, 20);	// Sugar x20
-		Add("Grocery", 50132);      // Salt
+		Add("Grocery", 50132);      	// Salt
 		Add("Grocery", 50132, 5);	// Salt x5
-		Add("Grocery", 50132, 10);  // Salt x10
+		Add("Grocery", 50132, 10);  	// Salt x10
 		Add("Grocery", 50132, 20);	// Salt x20
-		Add("Grocery", 50148);      // Yeast
+		Add("Grocery", 50148);      	// Yeast
 		Add("Grocery", 50148, 5);	// Yeast x5
-		Add("Grocery", 50148, 10);  // Yeast x10
+		Add("Grocery", 50148, 10);  	// Yeast x10
 		Add("Grocery", 50148, 20);	// Yeast x20
-		Add("Grocery", 50153);      // Deep Frying batter
+		Add("Grocery", 50153);      	// Deep Frying batter
 		Add("Grocery", 50153, 5);	// Deep Frying batter x5
 		Add("Grocery", 50153, 10); 	// Deep Frying batter x10
 		Add("Grocery", 50153, 20);	// Deep Frying batter x20
-		Add("Grocery", 50156);      // Pepper
+		Add("Grocery", 50156);      	// Pepper
 		Add("Grocery", 50156, 5);	// Pepper x5
-		Add("Grocery", 50156, 10);  // Pepper x10
+		Add("Grocery", 50156, 10);  	// Pepper x10
 		Add("Grocery", 50156, 20);	// Pepper x20
 		Add("Grocery", 50046);		// Juniper Berry		
-		Add("Grocery", 50112);      // Strawberry
+		Add("Grocery", 50112);      	// Strawberry
 		Add("Grocery", 50112, 5);	// Strawberry x5
-		Add("Grocery", 50112, 10);  // Strawberry x10
+		Add("Grocery", 50112, 10);  	// Strawberry x10
 		Add("Grocery", 50112, 20);	// Strawberry x20
-		Add("Grocery", 50121);      // Butter
+		Add("Grocery", 50121);      	// Butter
 		Add("Grocery", 50121, 5);	// Butter x5
-		Add("Grocery", 50121, 10);  // Butter x10
+		Add("Grocery", 50121, 10);  	// Butter x10
 		Add("Grocery", 50121, 20);	// Butter x20
-		Add("Grocery", 50142);      // Onion
+		Add("Grocery", 50142);      	// Onion
 		Add("Grocery", 50142, 5);	// Onion x5
-		Add("Grocery", 50142, 10);  // Onion x10
+		Add("Grocery", 50142, 10);  	// Onion x10
 		Add("Grocery", 50142, 20);	// Onion x20
 		Add("Grocery", 50108);		// Chicken Wings x
 		Add("Grocery", 50108, 5);	// Chicken Wings x5
@@ -88,8 +88,8 @@ public class GroceryShop : NpcShopScript
 		Add("Grocery", 50186, 5);	// Red Pepper Powder x5
 		Add("Grocery", 50186, 10);	// Red Pepper Powder x10
 		Add("Grocery", 50186, 20);	// Red Pepper Powder x20
-		Add("Grocery", 50005);      // Large Meat
-		Add("Grocery", 50001);      // Big Lump of Cheese
+		Add("Grocery", 50005);      	// Large Meat
+		Add("Grocery", 50001);      	// Big Lump of Cheese
 		Add("Grocery", 50135);		// Rice
 		Add("Grocery", 50135, 5);	// Rice x5
 		Add("Grocery", 50135, 10);	// Rice x10
@@ -102,9 +102,9 @@ public class GroceryShop : NpcShopScript
 		Add("Grocery", 50139, 5);	// Button Mushroom x5
 		Add("Grocery", 50139, 10);	// Button Mushroom x10
 		Add("Grocery", 50139, 20);	// Button Mushroom x20
-		Add("Grocery", 50145);      // Olive Oil
+		Add("Grocery", 50145);      	// Olive Oil
 		Add("Grocery", 50145, 5);	// Olive Oil x5
-		Add("Grocery", 50145, 10);  // Olive Oil x10
+		Add("Grocery", 50145, 10);  	// Olive Oil x10
 		Add("Grocery", 50145, 20);	// Olive Oil x20
 		Add("Grocery", 50187);		// Lemon
 		Add("Grocery", 50187, 5);	// Lemon x5
@@ -144,16 +144,16 @@ public class GroceryShop : NpcShopScript
 		Add("Grocery", 50431, 10);	// Pumpkin x10
 		Add("Grocery", 50431, 20);	// Pumpkin x20
 		Add("Grocery", 50006);		// Slice of meat
-		Add("Grocery", 50006, 5);   // Slice of Meat x5
+		Add("Grocery", 50006, 5);   	// Slice of Meat x5
 		Add("Grocery", 50006, 10);	// Slice of Meat x10
 		Add("Grocery", 50006, 20);	// Slice of Meat x20
-		Add("Grocery", 50104);      // Egg Salad
+		Add("Grocery", 50104);      	// Egg Salad
 		Add("Grocery", 50101);		// Potato Egg Salad
 
-		Add("Gift", 52010);         // Ramen
-		Add("Gift", 52021);         // Slice of Cake
-		Add("Gift", 52019);         // Heart Cake
-		Add("Gift", 52022);         // Wine
-		Add("Gift", 52023);         // Wild Ginseng
+		Add("Gift", 52010);         	// Ramen
+		Add("Gift", 52021);         	// Slice of Cake
+		Add("Gift", 52019);         	// Heart Cake
+		Add("Gift", 52022);         	// Wine
+		Add("Gift", 52023);         	// Wild Ginseng
 	}
 }
