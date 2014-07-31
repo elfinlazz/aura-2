@@ -44,7 +44,7 @@ public class DeianScript : NpcScript
 			"Though he's young, he peers at you with so much confidence it almost seems like arrogance."
 		);
 
-		Msg("What can I do for you?.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
+		Msg("What can I do for you?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
 		
 		switch(await Select())
 		{
