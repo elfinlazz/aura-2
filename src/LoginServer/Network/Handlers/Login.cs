@@ -110,7 +110,7 @@ namespace Aura.Login.Network.Handlers
 
 						if (!AuraDb.Instance.AccountExists(accountId) && password != "")
 						{
-							LoginDb.Instance.CreateAccount(accountId, password);
+							AuraDb.Instance.CreateAccount(accountId, password);
 							Log.Info("New account '{0}' was created.", accountId);
 						}
 					}

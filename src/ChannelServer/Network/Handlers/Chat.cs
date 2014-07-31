@@ -29,5 +29,19 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.Chat(creature, message);
 		}
+
+		[PacketHandler(Op.VisualChat)]
+		public void VisualChat(ChannelClient client, Packet packet)
+		{
+			var url = packet.GetString();
+			var width = packet.GetShort();
+			var height = packet.GetShort();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null)
+				return;
+
+			Send.VisualChat(creature, url, width, height);
+		}
 	}
 }

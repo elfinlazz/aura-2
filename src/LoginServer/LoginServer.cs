@@ -11,6 +11,9 @@ using Aura.Login.Network.Handlers;
 using Aura.Login.Util;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using SharpExpress;
+using System.Net;
+using Aura.Login.Web;
 
 namespace Aura.Login
 {
@@ -39,6 +42,11 @@ namespace Aura.Login
 		/// List of connected channel clients.
 		/// </summary>
 		public List<LoginClient> ChannelClients { get; private set; }
+
+		/// <summary>
+		/// Web API server
+		/// </summary>
+		public WebApplication WebApp { get; private set; }
 
 		private LoginServer()
 		{
@@ -79,6 +87,8 @@ namespace Aura.Login
 
 			// Localization
 			this.LoadLocalization(this.Conf);
+
+			this.LoadWebApi();
 
 			// Start
 			this.Server.Start(this.Conf.Login.Port);
@@ -170,6 +180,26 @@ namespace Aura.Login
 				{
 					client.Send(packet);
 				}
+			}
+		}
+
+		private void LoadWebApi()
+		{
+			Log.Info("Loading Web API...");
+
+			this.WebApp = new WebApplication();
+
+			this.WebApp.Get(@"/status", new StatusController());
+			this.WebApp.All(@"/broadcast", new BroadcastController());
+			this.WebApp.All(@"/check-user", new CheckUserController());
+
+			try
+			{
+				this.WebApp.Listen(this.Conf.Login.WebPort);
+			}
+			catch (HttpListenerException)
+			{
+				Log.Error("Failed to load Web API, port already in use?");
 			}
 		}
 	}
