@@ -6,6 +6,7 @@ using Aura.Shared.Util.Commands;
 using Aura.Web.Controllers;
 using Aura.Web.Util;
 using SharpExpress;
+using SharpExpress.Engines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,11 +67,15 @@ namespace Aura.Web
 
 			this.App = new WebApplication();
 
+			this.App.Engine("htm", new HandlebarsEngine());
+
 			this.App.Static("user/save/");
+			this.App.Static("web/public/");
 
 			this.App.Get("/", new MainController());
 			this.App.Post("/ui", new UiStorageController());
 			this.App.Post("/visual-chat", new VisualChatController());
+			this.App.All("/register", new RegisterController());
 
 			try
 			{
