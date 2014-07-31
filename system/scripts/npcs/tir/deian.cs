@@ -68,6 +68,7 @@ public class DeianScript : NpcScript
 				switch (await Select())
 				{
 					case "@end":
+					case "@reject":
 					Msg("Come and see me again.<br/>I just discovered I have a new talent. Thanks to you!<br/><upgrade hide='true'/>");
 					break;
 				}
