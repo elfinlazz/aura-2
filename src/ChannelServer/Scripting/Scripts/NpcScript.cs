@@ -392,6 +392,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var shop = ChannelServer.Instance.ScriptManager.GetShop(shopType);
 			if (shop == null)
 			{
+				Log.Unimplemented("Missing shop: {0}", shopType);
 				this.Close("(Missing shop.)");
 				return;
 			}
