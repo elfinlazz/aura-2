@@ -39,6 +39,12 @@ namespace Aura.Web.Controllers
 					goto L_Send;
 				}
 
+				if (pass1.Length < 6)
+				{
+					error = "Password too short (min. 6 characters).";
+					goto L_Send;
+				}
+
 				if (!Regex.IsMatch(name, @"^[0-9A-Za-z]+$"))
 				{
 					error = "Username contains invalid characters.";
