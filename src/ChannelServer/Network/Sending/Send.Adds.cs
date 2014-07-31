@@ -1177,8 +1177,8 @@ namespace Aura.Channel.Network.Sending
 				packet.PutString(prop.State);
 				packet.PutLong(0);
 
-				packet.PutByte(true); // Extra data?
-				packet.PutString(prop.XML);
+				packet.PutByte(true); // Extra data
+				packet.PutString(prop.Xml.ToString());
 
 				packet.PutInt(0);
 				packet.PutShort(0);
@@ -1198,12 +1198,12 @@ namespace Aura.Channel.Network.Sending
 		{
 			packet.PutString(prop.State);
 			packet.PutLong(DateTime.Now);
-			if (string.IsNullOrWhiteSpace(prop.XML))
+			if (prop.HasXml)
 				packet.PutByte(false);
 			else
 			{
 				packet.PutByte(true);
-				packet.PutString(prop.XML);
+				packet.PutString(prop.Xml.ToString());
 			}
 			packet.PutFloat(prop.Info.Direction);
 			packet.PutShort(0);

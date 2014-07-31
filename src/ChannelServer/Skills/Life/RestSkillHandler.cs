@@ -96,7 +96,9 @@ namespace Aura.Channel.Skills.Life
 			Send.AssignSittingProp(creature, sittingProp.EntityId, 1);
 
 			// Update chair
-			sittingProp.XML = string.Format("<xml OWNER='{0}' SITCHAR='{0}'/>", creature.EntityId);
+			sittingProp.Xml.SetAttributeValue("OWNER", creature.EntityId);
+			sittingProp.Xml.SetAttributeValue("SITCHAR", creature.EntityId);
+			
 			Send.PropUpdate(sittingProp);
 
 			creature.Temp.CurrentChairData = chairData;
@@ -113,7 +115,9 @@ namespace Aura.Channel.Skills.Life
 				Send.Effect(creature, Effect.CherryBlossoms, false);
 
 			// Update chair
-			creature.Temp.SittingProp.XML = string.Format("<xml OWNER='0' SITCHAR='0'/>");
+			creature.Temp.SittingProp.Xml.SetAttributeValue("OWNER", 0);
+			creature.Temp.SittingProp.Xml.SetAttributeValue("SITCHAR", 0);
+			
 			Send.PropUpdate(creature.Temp.SittingProp);
 
 			Send.AssignSittingProp(creature, 0, 0);

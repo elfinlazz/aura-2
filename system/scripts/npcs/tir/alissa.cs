@@ -60,13 +60,13 @@ public class AlissaBaseScript : NpcScript
 				//Msg("Hey, what brings you back? Wait...did you change your name?<br/>It's already hard enough trying to memorize everyone's name...");
 				//Msg("You come here pretty often.<br/>It's 'cause you like me huh? Hehe!");
 				await StartConversation();
-				return;
+				break;
 
 			case "@windmill":
 				if (WindmillActive)
 				{
 					Msg("The Mill is already working.");
-					return;
+					break;
 				}
 				
 				Msg("How long do you want to use the Mill?<br/>It's 100 Gold for one minute and 450 Gold for 5 minutes.<br/>Once it starts working, anyone can use the Mill.",
@@ -94,7 +94,7 @@ public class AlissaBaseScript : NpcScript
 
 			default:
 				Msg("...");
-				return;
+				break;
 		}
 	}
 
@@ -216,7 +216,7 @@ public class AlissaBaseScript : NpcScript
 		WindmillActive = true;
 			
 		WindmillProp.State = "on";
-		WindmillProp.XML = "<xml EventText=\"" + Player.Name + " has activated the Windmill. Anybody can use it now to grind crops into flour.\"/>";
+		WindmillProp.Xml.SetAttributeValue("EventText", Player.Name + " has activated the Windmill. Anybody can use it now to grind crops into flour.");
 		
 		SetTimeout(minutes * 60 * 1000, DeactivateWindmill);
 		
@@ -228,7 +228,7 @@ public class AlissaBaseScript : NpcScript
 		WindmillActive = false;
 		
 		WindmillProp.State = "off";
-		WindmillProp.XML = "<xml EventText=\"The Mill is currently not in operation.<br/>Once you operate it, you can grind the crops into flour.\"/>";
+		WindmillProp.Xml.SetAttributeValue("EventText", "The Mill is currently not in operation.\nOnce you operate it, you can grind the crops into flour.");
 		
 		Send.PropUpdate(WindmillProp);
 	}

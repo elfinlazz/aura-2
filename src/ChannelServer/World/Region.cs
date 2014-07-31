@@ -80,7 +80,7 @@ namespace Aura.Channel.World
 			{
 				foreach (var prop in area.Props.Values)
 				{
-					var add = new Prop(prop.EntityId, "", "", "", prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0);
+					var add = new Prop(prop.EntityId, "", "", prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0);
 
 					// Add drop behaviour if drop type exists
 					var dropType = prop.GetDropType();

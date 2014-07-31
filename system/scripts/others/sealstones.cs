@@ -390,7 +390,8 @@ public abstract class _SealStoneScript : GeneralScript
 	private void SetBreaker(Prop prop, long entityId, string characterName)
 	{
 		prop.State = "state3";
-		prop.XML = string.Format("<xml breaker_id=\"{0}\" breaker_name=\"{1}\"/>", entityId, characterName);
+		prop.Xml.SetAttributeValue("breaker_id", entityId);
+		prop.Xml.SetAttributeValue("breaker_name", characterName);
 		_hits = _required;
 	}
 
