@@ -22,17 +22,16 @@ public class DeianScript : NpcScript
 		EquipItem(Pocket.Shoe, 17287, 0x004C392A, 0x00000000, 0x00000000);
 		EquipItem(Pocket.Head, 18407, 0x00343F2D, 0x00000000, 0x00000000);
 		EquipItem(Pocket.RightHand1, 40001, 0x00755748, 0x005E9A49, 0x005E9A49);
-
-		AddPhrase("Geez, these sheep are a pain in the neck.");
-		AddPhrase("What the... Now there's one missing!");
-		AddPhrase("Hey, this way!");
-		AddPhrase("I'm so bored. There's just nothing exciting around here.");
+		
 		AddPhrase("Another day... another boring day in the countryside.");
-		AddPhrase("I don't understand. I have one extra...");
-		AddPhrase("Geez, these sheep are a pain in the neck.");
 		AddPhrase("Baa! Baa!");
+		AddPhrase("Geez, these sheep are a pain in the neck.");
+		AddPhrase("Hey, this way!");
+		AddPhrase("I don't understand. I have one extra...");
+		AddPhrase("I'm so bored. There's just nothing exciting around here.");
 		AddPhrase("It's amazing how fast they grow feeding on grass.");
 		AddPhrase("I wonder if I could buy a house with my savings yet...");
+		AddPhrase("What the... Now there's one missing!");
 	}
 	
 	protected override async Task Talk()
@@ -48,7 +47,6 @@ public class DeianScript : NpcScript
 		
 		switch(await Select())
 		{
-			
 			case "@talk":
 				Msg("Nice to meet you, I am Deian.<br/>You don't look that old, maybe a couple of years older than I am?<br/>Let's just say we're the same age. You don't mind do ya?<br/>");
 				//Msg("Welcome, <username />");
@@ -200,12 +198,12 @@ public class DeianScript : NpcScript
 				
 			default:
 				RndMsg(
-					"Hold up, I feel like I'm being interrogated.",
-					"Sometimes, I'm just not in the mood to answer questions.",
 					"Ask all you want, I'm not telling you.",
-					"So many questions, at least give me a small gift...",
+					"Hold up, I feel like I'm being interrogated.",
+					"Meh, I don't want to tell you.",
 					"Pry all you like. You'll get nothing from me.",
-					"Meh, I don't want to tell you."
+					"So many questions, at least give me a small gift...",
+					"Sometimes, I'm just not in the mood to answer questions."
 				);
 				break;
 		}
