@@ -1,7 +1,7 @@
 //--- Aura Script -----------------------------------------------------------
-// Dilys in Tir Chonaill
+// Deian in Tir Chonaill
 //--- Description -----------------------------------------------------------
-// Healer
+// Shepard Boy.
 //---------------------------------------------------------------------------
 
 public class DeianScript : NpcScript
