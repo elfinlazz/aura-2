@@ -9,6 +9,7 @@ using Aura.Shared.Util;
 using Aura.Channel.World;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.World.Entities;
+using System;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -64,6 +65,9 @@ namespace Aura.Channel.Network.Handlers
 			client.State = ClientState.LoggedIn;
 
 			Send.ChannelLoginR(client, character.EntityId);
+
+			// Update last login
+			character.LastLogin = DateTime.Now;
 
 			// Log into world
 			if (character.Has(CreatureStates.EverEnteredWorld) || character.IsPet)
