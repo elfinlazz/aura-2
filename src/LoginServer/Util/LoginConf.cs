@@ -3,6 +3,7 @@
 
 using Aura.Shared.Util;
 using Aura.Shared.Util.Configuration;
+using System.Collections.Generic;
 
 namespace Aura.Login.Util
 {
@@ -40,6 +41,9 @@ namespace Aura.Login.Util
 
 		public int DeletionWait { get; protected set; }
 
+		public int WebPort { get; protected set; }
+		public HashSet<string> TrustedSources { get; protected set; }
+
 		public void Load()
 		{
 			this.Require("system/conf/login.conf");
@@ -53,6 +57,23 @@ namespace Aura.Login.Util
 			this.ConsumePartnerCards = this.GetBool("consume_partner_cards", true);
 
 			this.DeletionWait = this.GetInt("deletion_wait", 107);
+
+			this.WebPort = this.GetInt("web_port", 10999);
+
+			this.TrustedSources = new HashSet<string>();
+			var trusted = this.GetString("trusted_sources", "127.0.0.1").Split(',');
+			foreach (var source in trusted)
+				this.TrustedSources.Add(source.Trim());
+		}
+
+		/// <summary>
+		/// Returns true if source is listed in trusted sources.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		public bool IsTrustedSource(string source)
+		{
+			return this.TrustedSources.Contains(source);
 		}
 	}
 }

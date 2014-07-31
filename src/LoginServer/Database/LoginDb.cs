@@ -76,26 +76,6 @@ namespace Aura.Login.Database
 		}
 
 		/// <summary>
-		/// Adds new account to the database.
-		/// </summary>
-		/// <param name="accountId"></param>
-		/// <param name="password"></param>
-		public void CreateAccount(string accountId, string password)
-		{
-			password = Password.Hash(password);
-
-			using (var conn = AuraDb.Instance.Connection)
-			using (var cmd = new InsertCommand("INSERT INTO `accounts` {0}", conn))
-			{
-				cmd.Set("accountId", accountId);
-				cmd.Set("password", password);
-				cmd.Set("creation", DateTime.Now);
-
-				cmd.Execute();
-			}
-		}
-
-		/// <summary>
 		/// Returns account or null if account doesn't exist.
 		/// </summary>
 		/// <param name="accountId"></param>
