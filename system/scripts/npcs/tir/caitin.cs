@@ -4,7 +4,6 @@
 // 
 //---------------------------------------------------------------------------
 
-
 public class CaitinBaseScript : NpcScript
 {
 	public override void Load()
