@@ -86,16 +86,8 @@ public class NoraBaseScript : NpcScript
 				break;
 
 			case "about_skill":
-				if (!QuestActive(204002)) // Gathering Eggs
-				{
-					//StartQuest(204002);
-					Msg("Skills? I don't know if I can call it a skill, but you can gather eggs from hens.<br/>Some of the less fortunate among the faithful come to the Church seeking the blessings of Lymilark.<br/>To relieve their hunger, we prepare boiled eggs for them.<p/>If you bring me eggs, I'll reward you for your work.<br/>This will be a good time for you to learn how to collect eggs, too.");
-				}
-				else
-				{
-					Player.Keywords.Give("skill_tailoring");
-					Msg("I'm sorry, but I don't know much about skills.<br/>The only skill I know is tailoring.<br/>If you want to know more about making clothes,<br/>talk with Caitin at the Grocery Store.<br/>She's the best tailor in town.<br/>");
-				}
+				Player.Keywords.Give("skill_tailoring");
+				Msg("I'm sorry, but I don't know much about skills.<br/>The only skill I know is tailoring.<br/>If you want to know more about making clothes,<br/>talk with Caitin at the Grocery Store.<br/>She's the best tailor in town.<br/>");
 				break;
 
 			case "about_arbeit":
