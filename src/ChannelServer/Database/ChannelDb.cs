@@ -732,6 +732,7 @@ namespace Aura.Channel.Database
 				cmd.Set("title", creature.Titles.SelectedTitle);
 				cmd.Set("optionTitle", creature.Titles.SelectedOptionTitle);
 				cmd.Set("state", (uint)creature.State);
+				cmd.Set("age", creature.Age);
 
 				cmd.Set("lastAging", creature.LastAging);
 				if (creature.LastRebirth != DateTime.MinValue)
