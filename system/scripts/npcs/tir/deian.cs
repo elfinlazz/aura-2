@@ -61,7 +61,7 @@ public class DeianScript : NpcScript
 
 			case "@upgrade":
 				Msg("Upgrades! Who else would know more about that than the great Deian? Hehe...<br/>Now, what do you want to upgrade?<br/>Don't forget to check how many times you can upgrade that tiem and what type of upgrade it is before you give it to me... <upgrade />",
-				Button("End Conversation", "@end"));
+					Button("End Conversation", "@end"));
 
 				switch (await Select())
 				{
