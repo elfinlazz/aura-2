@@ -103,7 +103,7 @@ namespace Aura.Web
 			if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
 			{
 				Log.Error("The Web Server requires admin permissions, please restart it as admin. See the Wiki for more information.");
-				CliUtil.Exit(1);
+				CliUtil.Exit(740);
 			}
 		}
 	}
