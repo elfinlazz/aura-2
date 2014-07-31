@@ -93,6 +93,25 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Broadcasts VisualChat to creatures in range.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="url"></param>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		public static void VisualChat(Creature creature, string url, short width, short height)
+		{
+			var packet = new Packet(Op.VisualChat, creature.EntityId);
+			packet.PutString(creature.Name);
+			packet.PutString(url);
+			packet.PutShort(width);
+			packet.PutShort(height);
+			packet.PutByte(0);
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
 		/// Sends MsgBox to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>

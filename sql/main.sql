@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `creatures` (
   `name` varchar(50) NOT NULL,
   `race` int(11) NOT NULL,
   `skinColor` tinyint(3) unsigned NOT NULL,
-  `eyeType` tinyint(3) unsigned NOT NULL,
+  `eyeType` smallint(6) NOT NULL,
   `eyeColor` tinyint(3) unsigned NOT NULL,
   `mouthType` tinyint(3) unsigned NOT NULL,
   `height` float NOT NULL DEFAULT '1',
@@ -205,6 +205,19 @@ CREATE TABLE IF NOT EXISTS `quests` (
 INSERT INTO `quests` (`questIdUnique`, `creatureId`, `questId`, `state`, `itemEntityId`) VALUES
 (27022628556374017, 1, 0, 1, 0);
 
+CREATE TABLE IF NOT EXISTS `updates` (
+  `path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `updates` (`path`) VALUES
+('main.sql'),
+('update_2014-02-26.sql'),
+('update_2014-02-27.sql'),
+('update_2014-07-26.sql');
+
+ALTER TABLE `updates`
+ ADD PRIMARY KEY (`path`);
+ 
 CREATE TABLE IF NOT EXISTS `skills` (
   `skillId` smallint(5) unsigned NOT NULL,
   `creatureId` bigint(20) NOT NULL,

@@ -54,6 +54,8 @@ namespace Aura.Shared.Network
 		public const int PartnerCreationOptionsRequestR = 0x56;
 		public const int LoginUnk = 0x5A;  // Sent on login
 		public const int LoginUnkR = 0x5B; // ^ Response, only known parameter: 0 byte.
+		public const int TradeCard = 0x5C;
+		public const int TradeCardR = 0x5D;
 
 		// Channel Server
 		// ------------------------------------------------------------------
@@ -125,6 +127,8 @@ namespace Aura.Shared.Network
 		public const int ItemAmount = 0x59EA;
 		public const int UseItem = 0x59EB;
 		public const int UseItemR = 0x59EC;
+		public const int UnequipBag = 0x59F4;
+		public const int UnequipBagR = 0x59F5;
 
 		// [180300, NA166 (18.09.2013)] 2 new ops
 		//public const int ? = 0x59F8; // Request for that --v ?
@@ -188,6 +192,7 @@ namespace Aura.Shared.Network
 		public const int SkillStackSet = 0x6991;
 		public const int SkillStackUpdate = 0x6992;
 		public const int UseMotion = 0x6D62;
+		public const int PlayAnimation = 0x6D63; // s:data/.../anim/..., 1:0, 2:0, 1:0
 		public const int CancelMotion = 0x6D65;
 		public const int MotionCancel2 = 0x6D66; // Delayed?
 		public const int LevelUp = 0x6D69;

@@ -36,15 +36,20 @@ namespace Aura.Channel.Network.Handlers
 			var targetX = packet.GetByte();
 			var targetY = packet.GetByte();
 
+			// Get creature
 			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			if (creature == null) return;
 
+			// Check item
 			var item = creature.Inventory.GetItem(entityId);
 			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
+				goto L_Fail;
+
+			// Check bag
+			if (item.IsBag && target.IsBag() && !ChannelServer.Instance.Conf.World.Bagception)
 			{
-				Send.ItemMoveR(creature, false);
-				return;
+				Send.ServerMessage(creature, Localization.Get("Item bags can't be stored inside other bags."));
+				goto L_Fail;
 			}
 
 			// Stop moving when changing weapons
@@ -53,12 +58,13 @@ namespace Aura.Channel.Network.Handlers
 
 			// Try to move item
 			if (!creature.Inventory.Move(item, target, targetX, targetY))
-			{
-				Send.ItemMoveR(creature, false);
-				return;
-			}
+				goto L_Fail;
 
 			Send.ItemMoveR(creature, true);
+			return;
+
+		L_Fail:
+			Send.ItemMoveR(creature, false);
 		}
 
 		/// <summary>
@@ -77,6 +83,7 @@ namespace Aura.Channel.Network.Handlers
 			if (creature == null || creature.Region == null)
 				return;
 
+			// Check item
 			var item = creature.Inventory.GetItem(entityId);
 			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
 			{
@@ -85,6 +92,15 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Check for filled bags
+			if (item.IsBag && item.OptionInfo.LinkedPocketId != Pocket.None && creature.Inventory.CountItemsInPocket(item.OptionInfo.LinkedPocketId) > 0)
+			{
+				Log.Warning("Player '{0}' ({1}) tried to drop filled item bag.", creature.Name, creature.EntityIdHex);
+				Send.ItemDropR(creature, false);
+				return;
+			}
+
+			// Try to remove item
 			if (!creature.Inventory.Remove(item))
 			{
 				Send.ItemDropR(creature, false);
@@ -123,9 +139,24 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Add bag
+			if (item.IsBag)
+			{
+				if (item.Data.BagWidth == 0)
+					Send.ServerMessage(creature, Localization.Get("Beware, shaped bags aren't supported yet."));
+				else if (!creature.Inventory.AddBagPocket(item))
+				{
+					// TODO: Handle somehow? Without linked pocket the bag
+					//   won't open.
+				}
+			}
+
 			var success = creature.Inventory.PickUp(item);
 			if (!success)
+			{
 				Send.SystemMessage(creature, Localization.Get("Not enough space."));
+				creature.Inventory.Remove(item.OptionInfo.LinkedPocketId);
+			}
 
 			Send.ItemPickUpR(creature, success);
 		}
@@ -440,6 +471,45 @@ namespace Aura.Channel.Network.Handlers
 			creature.Temp.RegularDyePickers = pickers;
 
 			Send.DyePickColorR(creature, true);
+		}
+
+		/// <summary>
+		/// Sent when unequipping a filled bag.
+		/// </summary>
+		/// <example>
+		/// 001 [0050000000000066] Long   : 22517998136852582
+		/// </example>
+		[PacketHandler(Op.UnequipBag)]
+		public void UnequipBag(ChannelClient client, Packet packet)
+		{
+			var entityId = packet.GetLong();
+
+			var creature = client.GetCreature(packet.Id);
+			if (creature == null) return;
+
+			// Check bag
+			var bag = creature.Inventory.GetItem(entityId);
+			if (bag == null || !bag.IsBag || bag.OptionInfo.LinkedPocketId == Pocket.None)
+			{
+				Log.Warning("Player '{0}' ({1}) tried to unequip invalid bag.", creature.Name, creature.EntityIdHex);
+				Send.UnequipBagR(creature, false);
+				return;
+			}
+
+			// Remove items
+			var items = creature.Inventory.GetAllItemsFrom(bag.OptionInfo.LinkedPocketId);
+			foreach (var item in items)
+				creature.Inventory.Remove(item);
+
+			// Add items, temporarily remove bag pocket,
+			// so items aren't readded in there
+			creature.Inventory.Remove(bag.OptionInfo.LinkedPocketId);
+			foreach (var item in items)
+				creature.Inventory.Add(item, true);
+			creature.Inventory.AddBagPocket(bag);
+
+			// Success
+			Send.UnequipBagR(creature, true);
 		}
 	}
 }

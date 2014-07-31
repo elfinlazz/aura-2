@@ -12,6 +12,7 @@ using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using System.Threading;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -190,7 +191,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creates prop and spawns it.
 		/// </summary>
-		protected Prop SpawnProp(int id, int regionId, int x, int y, float direction, PropFunc behavior = null)
+		protected Prop SpawnProp(int id, int regionId, int x, int y, float direction, float scale, PropFunc behavior = null)
 		{
 			var region = ChannelServer.Instance.World.GetRegion(regionId);
 			if (region == null)
@@ -199,12 +200,20 @@ namespace Aura.Channel.Scripting.Scripts
 				return null;
 			}
 
-			var prop = new Prop(id, regionId, x, y, direction);
+			var prop = new Prop(id, regionId, x, y, direction, scale);
 			prop.Behavior = behavior;
 
 			region.AddProp(prop);
 
 			return prop;
+		}
+
+		/// <summary>
+		/// Creates prop and spawns it.
+		/// </summary>
+		protected Prop SpawnProp(int id, int regionId, int x, int y, float direction, PropFunc behavior = null)
+		{
+			return this.SpawnProp(id, regionId, x, y, direction, 1, behavior);
 		}
 
 		/// <summary>
@@ -425,6 +434,57 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		#endregion Client Events
+
+		#region Timers
+
+		/// <summary>
+		/// Creates timer that runs action once, after x milliseconds.
+		/// </summary>
+		/// <param name="ms"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		protected Timer SetTimeout(int ms, Action action)
+		{
+			Timer timer = null;
+			timer = new Timer(_ =>
+			{
+				action();
+				GC.KeepAlive(timer);
+			}
+			, null, ms, Timeout.Infinite);
+
+			return timer;
+		}
+
+		/// <summary>
+		/// Creates timer that runs action repeatedly, every x milliseconds.
+		/// </summary>
+		/// <param name="ms"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		protected Timer SetInterval(int ms, Action action)
+		{
+			Timer timer = null;
+			timer = new Timer(_ =>
+			{
+				action();
+				GC.KeepAlive(timer);
+			}
+			, null, ms, ms);
+
+			return timer;
+		}
+
+		/// <summary>
+		/// Stops timer by changing due time and period.
+		/// </summary>
+		/// <param name="timer"></param>
+		protected void StopTimer(Timer timer)
+		{
+			timer.Change(Timeout.Infinite, Timeout.Infinite);
+		}
+
+		#endregion Timers
 	}
 
 	public class OnAttribute : Attribute

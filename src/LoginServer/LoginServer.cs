@@ -2,13 +2,18 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using Aura.Login.Database;
 using Aura.Login.Network;
 using Aura.Login.Network.Handlers;
 using Aura.Login.Util;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using SharpExpress;
+using System.Net;
+using Aura.Login.Web;
 
 namespace Aura.Login
 {
@@ -37,6 +42,11 @@ namespace Aura.Login
 		/// List of connected channel clients.
 		/// </summary>
 		public List<LoginClient> ChannelClients { get; private set; }
+
+		/// <summary>
+		/// Web API server
+		/// </summary>
+		public WebApplication WebApp { get; private set; }
 
 		private LoginServer()
 		{
@@ -69,11 +79,16 @@ namespace Aura.Login
 			// Database
 			this.InitDatabase(this.Conf);
 
+			// Check if there are any updates
+			this.CheckDatabaseUpdates();
+
 			// Data
 			this.LoadData(DataLoad.LoginServer, false);
 
 			// Localization
 			this.LoadLocalization(this.Conf);
+
+			this.LoadWebApi();
 
 			// Start
 			this.Server.Start(this.Conf.Login.Port);
@@ -114,6 +129,38 @@ namespace Aura.Login
 			}
 		}
 
+		private void CheckDatabaseUpdates()
+		{
+			Log.Info("Checking for updates...");
+
+			try
+			{
+				var files = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "sql"));
+				foreach (var filePath in files.Where(a => Path.GetExtension(a) == ".sql"))
+					this.RunUpdate(filePath);
+			}
+			catch (Exception ex)
+			{
+				Log.Error("Error while updating database: {0}", ex.Message);
+				CliUtil.Exit(1);
+			}
+		}
+
+		private void RunUpdate(string filePath)
+		{
+			if (LoginDb.Instance.CheckUpdate(filePath))
+				return;
+
+			var name = Path.GetFileName(filePath);
+
+			Log.Info("Update '{0}' found, executing...", name);
+
+			if (!LoginDb.Instance.RunUpdate(filePath))
+				Log.Error("Update '{0}' failed.", name);
+			else
+				Log.Info("Update '{0}' successful.", name);
+		}
+
 		public void Broadcast(Packet packet)
 		{
 			lock (this.Server.Clients)
@@ -133,6 +180,26 @@ namespace Aura.Login
 				{
 					client.Send(packet);
 				}
+			}
+		}
+
+		private void LoadWebApi()
+		{
+			Log.Info("Loading Web API...");
+
+			this.WebApp = new WebApplication();
+
+			this.WebApp.Get(@"/status", new StatusController());
+			this.WebApp.All(@"/broadcast", new BroadcastController());
+			this.WebApp.All(@"/check-user", new CheckUserController());
+
+			try
+			{
+				this.WebApp.Listen(this.Conf.Login.WebPort);
+			}
+			catch (HttpListenerException)
+			{
+				Log.Error("Failed to load Web API, port already in use?");
 			}
 		}
 	}

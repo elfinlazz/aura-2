@@ -15,6 +15,11 @@ namespace Aura.Channel.World
 		public Pocket Pocket { get; protected set; }
 		public abstract IEnumerable<Item> Items { get; }
 
+		/// <summary>
+		/// Returns amount of items.
+		/// </summary>
+		public abstract int Count { get; }
+
 		public InventoryPocket(Pocket pocket)
 		{
 			this.Pocket = pocket;
@@ -48,7 +53,7 @@ namespace Aura.Channel.World
 
 		/// <summary>
 		/// Fills stacks that take this item. Returns true if item has been
-		/// was completely added to stacks/sacs.
+		/// completely added to stacks/sacs.
 		/// </summary>
 		/// <param name="item"></param>
 		/// <param name="changed"></param>
@@ -94,11 +99,11 @@ namespace Aura.Channel.World
 		public abstract int Remove(int itemId, int amount, ref List<Item> changed);
 
 		/// <summary>
-		/// Returns amount if items by item id.
+		/// Returns amount of items by item id.
 		/// </summary>
 		/// <param name="itemId"></param>
 		/// <returns></returns>
-		public abstract int Count(int itemId);
+		public abstract int CountItem(int itemId);
 	}
 
 	/// <summary>
@@ -392,7 +397,7 @@ namespace Aura.Channel.World
 			return result;
 		}
 
-		public override int Count(int itemId)
+		public override int CountItem(int itemId)
 		{
 			var result = 0;
 
@@ -408,6 +413,11 @@ namespace Aura.Channel.World
 			Item item;
 			_items.TryGetValue(id, out item);
 			return item;
+		}
+
+		public override int Count
+		{
+			get { return _items.Count; }
 		}
 	}
 
@@ -493,7 +503,7 @@ namespace Aura.Channel.World
 			return 0;
 		}
 
-		public override int Count(int itemId)
+		public override int CountItem(int itemId)
 		{
 			if (_item != null && _item.Info.Id == itemId)
 				return _item.Info.Amount;
@@ -505,6 +515,11 @@ namespace Aura.Channel.World
 			if (_item != null && _item.EntityId == id)
 				return _item;
 			return null;
+		}
+
+		public override int Count
+		{
+			get { return (_item != null ? 1 : 0); }
 		}
 	}
 
@@ -575,7 +590,7 @@ namespace Aura.Channel.World
 			return 0;
 		}
 
-		public override int Count(int itemId)
+		public override int CountItem(int itemId)
 		{
 			var result = 0;
 
@@ -589,6 +604,11 @@ namespace Aura.Channel.World
 		public override Item GetItem(long id)
 		{
 			return _items.FirstOrDefault(a => a.EntityId == id);
+		}
+
+		public override int Count
+		{
+			get { return _items.Count; }
 		}
 	}
 }

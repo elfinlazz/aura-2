@@ -194,6 +194,13 @@ namespace Aura.Channel.Network.Sending
 					packet.PutShort(0);			     // DualgunWAttackMinBaseMod
 					packet.PutShort(0);			     // DualgunWAttackMaxBaseMod
 				}
+				// [180800, NA189 - 2014-07-23] Ninja?
+				{
+					packet.PutShort(0);			     // ? AttackMinBaseMod
+					packet.PutShort(0);			     // ? AttackMaxBaseMod
+					packet.PutShort(0);			     // ? WAttackMinBaseMod
+					packet.PutShort(0);			     // ? WAttackMaxBaseMod
+				}
 				packet.PutShort(0);			         // PoisonBase
 				packet.PutShort(0);			         // PoisonMod
 				packet.PutShort(67);		         // PoisonImmuneBase
@@ -1072,6 +1079,10 @@ namespace Aura.Channel.Network.Sending
 			{
 				packet.PutInt(0);
 			}
+			// [180800, NA189 - 2014-07-23] Ninja?
+			{
+				packet.PutInt(0);
+			}
 
 			// Talent titles
 			// ----------------------------------------------------------
@@ -1185,25 +1196,17 @@ namespace Aura.Channel.Network.Sending
 
 		private static Packet AddPropUpdateInfo(this Packet packet, Prop prop)
 		{
-			// Client side props (A0 range, instead of A1)
-			// look a bit different.
-			if (prop.ServerSide)
-			{
-				packet.PutString(prop.State);
-				packet.PutLong(DateTime.Now);
-				packet.PutByte(true);
-				packet.PutString(prop.XML);
-				packet.PutFloat(prop.Info.Direction);
-				packet.PutShort(0);
-			}
+			packet.PutString(prop.State);
+			packet.PutLong(DateTime.Now);
+			if (string.IsNullOrWhiteSpace(prop.XML))
+				packet.PutByte(false);
 			else
 			{
-				packet.PutString(prop.State);
-				packet.PutLong(DateTime.Now);
-				packet.PutByte(false);
-				packet.PutFloat(prop.Info.Direction);
-				packet.PutShort(0);
+				packet.PutByte(true);
+				packet.PutString(prop.XML);
 			}
+			packet.PutFloat(prop.Info.Direction);
+			packet.PutShort(0);
 
 			return packet;
 		}

@@ -47,3 +47,4 @@ exit
 :NO_ARGS
 start start-login
 start start-channel
+start start-web

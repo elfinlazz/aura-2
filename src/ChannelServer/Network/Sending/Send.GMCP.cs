@@ -47,10 +47,12 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(npcs.Count);
 			foreach (var npc in npcs)
 			{
-				packet.PutInt(npc.Race); // RaceId
+				var pos = npc.GetPosition();
+
+				packet.PutInt(npc.RegionId);
 				packet.PutString(npc.Name); // Name
 				packet.PutString(npc.Name); // Local Name
-				packet.PutString(npc.RegionId.ToString()); // Location
+				packet.PutString("{0} @ {1}/{2}", npc.RegionId, pos.X, pos.Y); // Location
 			}
 
 			creature.Client.Send(packet);

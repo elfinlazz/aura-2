@@ -4,6 +4,7 @@
 using System;
 using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
+using Aura.Shared.Mabi;
 
 namespace Aura.Shared.Database
 {
@@ -81,6 +82,26 @@ namespace Aura.Shared.Database
 
 				using (var reader = mc.ExecuteReader())
 					return reader.HasRows;
+			}
+		}
+
+		/// <summary>
+		/// Adds new account to the database.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="password"></param>
+		public void CreateAccount(string accountId, string password)
+		{
+			password = Password.Hash(password);
+
+			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new InsertCommand("INSERT INTO `accounts` {0}", conn))
+			{
+				cmd.Set("accountId", accountId);
+				cmd.Set("password", password);
+				cmd.Set("creation", DateTime.Now);
+
+				cmd.Execute();
 			}
 		}
 

@@ -1,0 +1,33 @@
+body {
+	background: #508abf;
+	color: #fff; }
+
+input {
+	color: #111; }
+
+input[type=text],
+input[type=password] {
+	padding: 3px;
+	width: 200px;
+	border: 1px solid #999; }
+
+#main {
+	width: 350px;
+	margin: 40px auto 0;
+	text-align: center;}
+
+#notice {
+	margin: 10px 0; }
+	
+#main table {
+	width: 100%;
+	margin: 10px 0; }
+
+#main table tr td {
+	padding-bottom: 5px; }
+
+#main table tr td:nth-child(odd) {
+	text-align: left; }
+
+#main table tr td:nth-child(even) {
+	text-align: right; }
