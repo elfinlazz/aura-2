@@ -189,6 +189,12 @@ namespace Aura.Login
 
 			this.WebApp = new WebApplication();
 
+			if (!CliUtil.CheckAdmin())
+			{
+				Log.Error("The Web API requires admin permissions, please restart the login server as admin. See the Wiki for more information, on the Web Server page.");
+				return;
+			}
+
 			this.WebApp.Get(@"/status", new StatusController());
 			this.WebApp.All(@"/broadcast", new BroadcastController());
 			this.WebApp.All(@"/check-user", new CheckUserController());

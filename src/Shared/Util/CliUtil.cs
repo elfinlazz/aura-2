@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 
 namespace Aura.Shared.Util
@@ -61,6 +62,17 @@ namespace Aura.Shared.Util
 			}
 			Log.Info("Exiting...");
 			Environment.Exit(exitCode);
+		}
+
+		/// <summary>
+		/// Returns whether the application runs with admin rights or not.
+		/// </summary>
+		public static bool CheckAdmin()
+		{
+			var id = WindowsIdentity.GetCurrent();
+			var principal = new WindowsPrincipal(id);
+
+			return principal.IsInRole(WindowsBuiltInRole.Administrator);
 		}
 	}
 }
