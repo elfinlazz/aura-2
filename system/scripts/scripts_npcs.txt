@@ -19,5 +19,6 @@ npcs/tir/meven.cs
 npcs/tir/nora.cs
 npcs/tir/trefor.cs
 npcs/tir/ranald.cs
+npcs/tir/deian.cs
 
 include "/user/scripts/scripts_npcs.txt"
