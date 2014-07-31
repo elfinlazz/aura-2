@@ -339,5 +339,21 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends AgeUpEffect to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Notice + Light effect.
+		/// Effect is only played for ages 1~25.
+		/// </remarks>
+		/// <param name="creature"></param>
+		public static void AgeUpEffect(Creature creature, short age)
+		{
+			var packet = new Packet(Op.AgeUpEffect, creature.EntityId);
+			packet.PutShort(age);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

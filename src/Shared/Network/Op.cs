@@ -346,6 +346,7 @@ namespace Aura.Shared.Network
 		public const int DungeonInfo = 0x9470;
 		public const int ArenaRoundInfo = 0x9667;
 		public const int ArenaRoundInfoCancel = 0x9668;
+		public const int AgeUpEffect = 0x9858;
 
 		public const int ConditionUpdate = 0xA028;
 		public const int DyePaletteReq = 0xA418;
