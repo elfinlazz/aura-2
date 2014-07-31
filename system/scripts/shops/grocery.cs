@@ -21,12 +21,12 @@ public class GroceryShop : NpcShopScript
 		Add("Grocery", 50218, 5);	// Tomato x5
 		Add("Grocery", 50218, 10);	// Tomato x10
 		Add("Grocery", 50218, 20);	// Tomato x20
+		Add("Grocery", 50045);		// Pine Nut
+		Add("Grocery", 50047);		// Camellia Seeds	
 		Add("Grocery", 50018);		// Baking Chocolate
 		Add("Grocery", 50018, 5);	// Baking Chocolate x5
 		Add("Grocery", 50018, 10);	// Baking Chocolate x10
-		Add("Grocery", 50018, 20);	// Baking Chocolate x20
-		Add("Grocery", 50045);		// Pine Nut
-		Add("Grocery", 50047);		// Camellia Seeds
+		Add("Grocery", 50018, 20);	// Baking Chocolate x20	
 		Add("Grocery", 50111);		// Carrot
 		Add("Grocery", 50111, 5);	// Carrot x5
 		Add("Grocery", 50111, 10); 	// Carrot x10
@@ -106,6 +106,10 @@ public class GroceryShop : NpcShopScript
 		Add("Grocery", 50145, 5);	// Olive Oil x5
 		Add("Grocery", 50145, 10);  // Olive Oil x10
 		Add("Grocery", 50145, 20);	// Olive Oil x20
+		Add("Grocery", 50187);		// Lemon
+		Add("Grocery", 50187, 5);	// Lemon x5
+		Add("Grocery", 50187, 10);	// Lemon x10
+		Add("Grocery", 50187, 20);	// Lemon x20
 		Add("Grocery", 50188);		// Orange 
 		Add("Grocery", 50188, 5);	// Orange x5
 		Add("Grocery", 50188, 10);	// Orange x10
