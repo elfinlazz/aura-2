@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Text;
 
 namespace Aura.Web
@@ -43,6 +44,9 @@ namespace Aura.Web
 			CliUtil.LoadingTitle();
 
 			this.NavigateToRoot();
+
+			// Check rights
+			this.CheckAdmin();
 
 			// Conf
 			this.LoadConf(this.Conf = new WebConf());
@@ -87,6 +91,18 @@ namespace Aura.Web
 			{
 				Log.Error("Failed to start web server.");
 				Log.Info("The port might already be in use, make sure no other application, like other web servers or Skype, are using it or set a different port in web.conf.");
+				CliUtil.Exit(1);
+			}
+		}
+
+		public void CheckAdmin()
+		{
+			var id = WindowsIdentity.GetCurrent();
+			var principal = new WindowsPrincipal(id);
+
+			if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+			{
+				Log.Error("The Web Server requires admin permissions, please restart it as admin. See the Wiki for more information.");
 				CliUtil.Exit(1);
 			}
 		}

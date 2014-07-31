@@ -12,6 +12,7 @@ using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using System.Threading;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -433,6 +434,57 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		#endregion Client Events
+
+		#region Timers
+
+		/// <summary>
+		/// Creates timer that runs action once, after x milliseconds.
+		/// </summary>
+		/// <param name="ms"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		protected Timer SetTimeout(int ms, Action action)
+		{
+			Timer timer = null;
+			timer = new Timer(_ =>
+			{
+				action();
+				GC.KeepAlive(timer);
+			}
+			, null, ms, Timeout.Infinite);
+
+			return timer;
+		}
+
+		/// <summary>
+		/// Creates timer that runs action repeatedly, every x milliseconds.
+		/// </summary>
+		/// <param name="ms"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		protected Timer SetInterval(int ms, Action action)
+		{
+			Timer timer = null;
+			timer = new Timer(_ =>
+			{
+				action();
+				GC.KeepAlive(timer);
+			}
+			, null, ms, ms);
+
+			return timer;
+		}
+
+		/// <summary>
+		/// Stops timer by changing due time and period.
+		/// </summary>
+		/// <param name="timer"></param>
+		protected void StopTimer(Timer timer)
+		{
+			timer.Change(Timeout.Infinite, Timeout.Infinite);
+		}
+
+		#endregion Timers
 	}
 
 	public class OnAttribute : Attribute

@@ -8,12 +8,12 @@ using System.Timers;
 
 public class AlissaBaseScript : NpcScript
 {
-	static readonly Timer millTimer = new Timer();
-	private static Prop _windmillProp = null;
+	const long WindmillPropId = 0xA000010009042B;
 	
-	public bool WindmillActive { get { return millTimer.Enabled; } }
+	static bool WindmillActive { get; set; }
 	
-	public Prop WindmillProp { get { return _windmillProp ?? (_windmillProp = NPC.Region.GetProp(45036000569263147)); } }
+	static Prop _windmillProp = null;
+	Prop WindmillProp { get { return _windmillProp ?? (_windmillProp = NPC.Region.GetProp(WindmillPropId)); } }
 	
 	public override void Load()
 	{
@@ -38,8 +38,6 @@ public class AlissaBaseScript : NpcScript
 		AddPhrase("There's a guard at the wheat field, and I'm watching the Windmill.");
 		AddPhrase("When is Caitin going to teach me how to bake bread?");
 		AddPhrase("You can gather wheat at the wheat field.");
-
-		millTimer.Elapsed += new ElapsedEventHandler(DeactivateWindmill);
 	}
 
 	protected override async Task Talk()
@@ -70,25 +68,26 @@ public class AlissaBaseScript : NpcScript
 					Msg("The Mill is already working.");
 					return;
 				}
-				else
-					Msg("How long do you want to use the Mill?<br/>It's 100 Gold for one minute and 450 Gold for 5 minutes.<br/>Once it starts working, anyone can use the Mill.", Button("1 Minute", "@1minute"), Button("5 Minutes", "@5minute"), Button("Forget It", "@quit"));
+				
+				Msg("How long do you want to use the Mill?<br/>It's 100 Gold for one minute and 450 Gold for 5 minutes.<br/>Once it starts working, anyone can use the Mill.",
+					Button("1 Minute", "@1minute"), Button("5 Minutes", "@5minute"), Button("Forget It", "@quit"));
 
 				switch (await Select())
 				{
 					case "@1minute":
 						BuyWindmill(100, 1);
-						return;
+						break;
 
 					case "@5minute":
 						BuyWindmill(450, 5);
-						return;
+						break;
 
 					case "@quit":
 						Msg("Whatever, it's your choice...<br/>Just remember that this is the only place where you can grind your crops into flour.");
 						break;
 					
 					default:
-						Msg("U wot m8?");
+						Msg("...");
 						break;
 				}
 				break;
@@ -192,14 +191,8 @@ public class AlissaBaseScript : NpcScript
 		}
 	}
 	
-	private void BuyWindmill(int gold, int minutes)
+	protected void BuyWindmill(int gold, int minutes)
 	{
-		if (WindmillActive)
-		{
-			Msg("The Mill is already working.");
-			return;
-		}
-		
 		if (!Player.Inventory.HasGold(gold))
 		{
 			Msg("You don't have enough money. I'm sorry, you can't use it for free.");
@@ -208,32 +201,34 @@ public class AlissaBaseScript : NpcScript
 		
 		Player.Inventory.RemoveGold(gold);
 		ActivateWindmill(minutes);
+		
 		RndMsg(
 			"Okay!<br/>Anyone can use the Mill now for the next " + minutes + " minutes.<br/>I'm counting, haha.",
 			"Yay! I got some pocket money!"
 		);
 	}
 			
-	public void ActivateWindmill(int minutes)
+	protected void ActivateWindmill(int minutes)
 	{
 		if (WindmillActive)
 			return;
+		
+		WindmillActive = true;
 			
 		WindmillProp.State = "on";
 		WindmillProp.XML = "<xml EventText=\"" + Player.Name + " has activated the Windmill. Anybody can use it now to grind crops into flour.\"/>";
 		
-		millTimer.Interval=minutes * 1000 * 60;
-		millTimer.Start();
+		SetTimeout(minutes * 60 * 1000, DeactivateWindmill);
 		
 		Send.PropUpdate(WindmillProp);
 	}
 
-	public void DeactivateWindmill(object source, ElapsedEventArgs e)
+	protected void DeactivateWindmill()
 	{
+		WindmillActive = false;
+		
 		WindmillProp.State = "off";
 		WindmillProp.XML = "<xml EventText=\"The Mill is currently not in operation.<br/>Once you operate it, you can grind the crops into flour.\"/>";
-		
-		millTimer.Stop();
 		
 		Send.PropUpdate(WindmillProp);
 	}
