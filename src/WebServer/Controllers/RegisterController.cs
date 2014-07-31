@@ -3,6 +3,7 @@
 
 using Aura.Shared.Database;
 using Aura.Shared.Mabi;
+using Aura.Shared.Util;
 using SharpExpress;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,8 @@ namespace Aura.Web.Controllers
 				var passHash = Password.RawToMD5SHA256(pass1);
 
 				AuraDb.Instance.CreateAccount(name, passHash);
+
+				Log.Info("New account created: {0}", name);
 
 				name = "";
 				success = "Account created successfully.";
