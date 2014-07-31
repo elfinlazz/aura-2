@@ -8,11 +8,7 @@ using Aura.Web.Util;
 using SharpExpress;
 using SharpExpress.Engines;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Security.Principal;
-using System.Text;
 
 namespace Aura.Web
 {
@@ -97,12 +93,9 @@ namespace Aura.Web
 
 		public void CheckAdmin()
 		{
-			var id = WindowsIdentity.GetCurrent();
-			var principal = new WindowsPrincipal(id);
-
-			if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+			if (!CliUtil.CheckAdmin())
 			{
-				Log.Error("The Web Server requires admin permissions, please restart it as admin. See the Wiki for more information.");
+				Log.Error("The Web Server requires admin permissions, please restart it as admin. See the Wiki for more information, on the Web Server page.");
 				CliUtil.Exit(740);
 			}
 		}
