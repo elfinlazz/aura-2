@@ -6,6 +6,12 @@
 
 public class TirRegionScript : RegionScript
 {
+	public override void InitializeRegion()
+	{
+		// Set up windmill prop
+		ChannelServer.Instance.World.GetRegion(1).GetProp(0xA000010009042B).Xml.SetAttributeValue("EventText", "The Mill is currently not in operation.\nOnce you operate it, you can grind the crops into flour.");
+	}
+
 	public override void LoadWarps()
 	{
 		// Bank

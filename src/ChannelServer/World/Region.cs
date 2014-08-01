@@ -230,7 +230,11 @@ namespace Aura.Channel.World
 				// Send all props of a region, so they're visible from afar.
 				// While client props are visible as well they don't have to
 				// be sent, the client already has them.
-				result.AddRange(_props.Values.Where(a => a.ServerSide));
+				// ^^^^^^^^^^^^^^^^^^ This caused a bug with client prop states
+				// not being set until the prop was used by a player while
+				// the creature was in the region (eg windmill) so we'll count
+				// all props as visible. -- Xcelled
+				result.AddRange(_props.Values);
 			}
 			finally
 			{
@@ -610,7 +614,7 @@ namespace Aura.Channel.World
 			try
 			{
 				// All props are visible, but not all of them are in range.
-				result.AddRange(_props.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range) && a.ServerSide));
+				result.AddRange(_props.Values.Where(a => a.GetPosition().InRange(source.GetPosition(), range)));
 			}
 			finally
 			{
