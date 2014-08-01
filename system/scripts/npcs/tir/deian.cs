@@ -36,6 +36,8 @@ public class DeianScript : NpcScript
 
 	protected override async Task Talk()
 	{
+		SetBgm("NPC_Deian.mp3");
+	
 		await Intro(
 			"An adolescent boy carrying a shepherd's staff watches over a flock of sheep.",
 			"Now and then, he hollers at some sheep that've wandered too far, and his voice cracks every time.",

@@ -31,6 +31,8 @@ public class DilysScript : NpcScript
 	
 	protected override async Task Talk()
 	{
+		SetBgm("NPC_Dilys.mp3");
+		
 		await Intro(
 			"A tall, slim lady tinkers with various ointments, herbs, and bandages.",
 			"She looks wise beyond her years, but it might just be the healer's dress",

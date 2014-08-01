@@ -32,6 +32,8 @@ public class CaitinBaseScript : NpcScript
 	
 	protected override async Task Talk()
 	{
+		SetBgm("NPC_Caitin.mp3");
+		
 		await Intro(
 			"A young lady pouring flour into a bowl smiles at you as you enter.",
 			"Her round face is adorably plump and her eyes shine brightly.",
