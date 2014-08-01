@@ -13,6 +13,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using System.Threading;
 using Aura.Data.Database;
+using Boo.Lang.Compiler.TypeSystem;
 
 namespace Aura.Channel.World
 {
@@ -663,7 +664,7 @@ namespace Aura.Channel.World
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-				foreach (NPC npc in _creatures.Values.Where(a => a.Is(EntityType.NPC)))
+				foreach (var npc in _creatures.Values.OfType<NPC>())
 				{
 					if (npc.AI == null)
 						continue;
@@ -696,7 +697,7 @@ namespace Aura.Channel.World
 			try
 			{
 				var result = 0;
-				foreach (NPC npc in _creatures.Values.Where(a => a.Is(EntityType.NPC)))
+				foreach (var npc in _creatures.Values.OfType<NPC>())
 				{
 					if (npc.AI != null && npc.AI.State == Aura.Channel.Scripting.Scripts.AiScript.AiState.Aggro && npc.Race == raceId && npc.Target == target)
 						result++;
@@ -718,7 +719,7 @@ namespace Aura.Channel.World
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-				foreach (NPC npc in _creatures.Values.Where(a => a.Is(EntityType.NPC) && a.Has(CreatureStates.GoodNpc)))
+				foreach (var npc in _creatures.Values.Where(a => a.Has(CreatureStates.GoodNpc) && a is NPC))
 					list.Add(npc);
 			}
 			finally

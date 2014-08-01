@@ -15,8 +15,6 @@ namespace Aura.Channel.World.Entities
 	{
 		private static long _npcId = MabiId.Npcs;
 
-		public override EntityType EntityType { get { return EntityType.NPC; } }
-
 		public NpcScript Script { get; set; }
 		public AiScript AI { get; set; }
 		public int SpawnId { get; set; }
