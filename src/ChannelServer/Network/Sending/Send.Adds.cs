@@ -1177,8 +1177,15 @@ namespace Aura.Channel.Network.Sending
 				packet.PutString(prop.State);
 				packet.PutLong(0);
 
-				packet.PutByte(true); // Extra data
-				packet.PutString(prop.Xml.ToString());
+				if (prop.HasXml)
+				{
+					packet.PutByte(true);
+					packet.PutString(prop.Xml.ToString());
+				}
+				else
+				{
+					packet.PutByte(false);
+				}
 
 				packet.PutInt(0);
 				packet.PutShort(0);
@@ -1187,7 +1194,17 @@ namespace Aura.Channel.Network.Sending
 			{
 				packet.PutString(prop.State);
 				packet.PutLong(DateTime.Now);
-				packet.PutByte(false);
+
+				if (prop.HasXml)
+				{
+					packet.PutByte(true);
+					packet.PutString(prop.Xml.ToString());
+				}
+				else
+				{
+					packet.PutByte(false);
+				}
+
 				packet.PutFloat(prop.Info.Direction);
 			}
 
@@ -1198,13 +1215,17 @@ namespace Aura.Channel.Network.Sending
 		{
 			packet.PutString(prop.State);
 			packet.PutLong(DateTime.Now);
-			if (!prop.HasXml)
-				packet.PutByte(false);
-			else
+
+			if (prop.HasXml)
 			{
 				packet.PutByte(true);
 				packet.PutString(prop.Xml.ToString());
 			}
+			else
+			{
+				packet.PutByte(false);
+			}
+
 			packet.PutFloat(prop.Info.Direction);
 			packet.PutShort(0);
 
