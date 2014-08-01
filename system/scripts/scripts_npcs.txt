@@ -7,6 +7,8 @@
 npcs/nao.cs
 npcs/tin.cs
 
+npcs/dugald/tracy.cs
+
 npcs/tir/alissa.cs
 npcs/tir/bebhinn.cs
 npcs/tir/caitin.cs
