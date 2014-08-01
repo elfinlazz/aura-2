@@ -1041,7 +1041,7 @@ namespace Aura.Channel.World
 		{
 			return _pockets.Values.Where(a => (a.Pocket >= Pocket.Armor && a.Pocket <= Pocket.Robe) || (a.Pocket >= Pocket.Accessory1 && a.Pocket <= Pocket.Accessory2))
 				.SelectMany(pocket => pocket.Items.Where(a => a != null))
-				.Aggregate(0, (current, item) => current + item.OptionInfo.Protection);
+				.Sum(item => item.OptionInfo.Protection);
 		}
 
 		/// <summary>
