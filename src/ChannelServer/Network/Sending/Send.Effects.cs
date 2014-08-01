@@ -130,5 +130,18 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Plays a sound file to all entities in range of <paramref name="source"/>.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="file">The file to play, eg "data/sound/Tarlach_change.wav"</param>
+		public static void PlaySound(Entity source, string file)
+		{
+			var packet = new Packet(Op.PlaySound, source.EntityId);
+			packet.PutString(file);
+
+			source.Region.Broadcast(packet, source);
+		}
 	}
 }
