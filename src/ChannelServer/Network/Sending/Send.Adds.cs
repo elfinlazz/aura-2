@@ -709,7 +709,7 @@ namespace Aura.Channel.Network.Sending
 
 			// [150100] NPC options
 			// --------------------------------------------------------------
-			if (type == CreaturePacketType.Public && creature.Is(EntityType.NPC))
+			if (type == CreaturePacketType.Public && creature is NPC)
 			{
 				packet.PutShort(0);		         // OnlyShowFilter
 				packet.PutShort(0);		         // HideFilter
@@ -892,7 +892,7 @@ namespace Aura.Channel.Network.Sending
 					packet.PutInt(dest.Y);
 				}
 
-				if (creature.Is(EntityType.NPC))
+				if (creature is NPC)
 				{
 					packet.PutString(creature.StandStyleTalking);
 				}

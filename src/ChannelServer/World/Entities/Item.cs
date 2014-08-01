@@ -18,7 +18,6 @@ namespace Aura.Channel.World.Entities
 
 		private static long _itemId = MabiId.TmpItems;
 
-		public override EntityType EntityType { get { return EntityType.Item; } }
 		public override DataType DataType { get { return DataType.Item; } }
 		public override int RegionId
 		{

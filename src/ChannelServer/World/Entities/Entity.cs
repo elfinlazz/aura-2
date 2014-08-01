@@ -16,14 +16,12 @@ namespace Aura.Channel.World.Entities
 		public abstract int RegionId { get; set; }
 		public Region Region { get; set; }
 
-		public abstract EntityType EntityType { get; }
 		public abstract DataType DataType { get; }
 
 		public DateTime DisappearTime { get; set; }
 
 		public abstract Position GetPosition();
 
-		public bool Is(EntityType type) { return (this.EntityType == type); }
 		public bool Is(DataType type) { return (this.DataType == type); }
 	}
 
@@ -31,9 +29,4 @@ namespace Aura.Channel.World.Entities
 	/// Vague entity data type, used in EntityAppears.
 	/// </summary>
 	public enum DataType : short { Creature = 16, Item = 80, Prop = 160 }
-
-	/// <summary>
-	/// More exact entity type, used only by Aura.
-	/// </summary>
-	public enum EntityType { Undefined, Character, Pet, Item, NPC, Prop }
 }

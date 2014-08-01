@@ -57,8 +57,6 @@ namespace Aura.Channel.World.Entities
 
 		public bool HasXml { get { return __xml != null; } }
 
-		public override EntityType EntityType { get { return Entities.EntityType.Prop; } }
-
 		public override int RegionId
 		{
 			get { return this.Info.Region; }

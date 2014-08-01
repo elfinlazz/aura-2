@@ -369,7 +369,7 @@ namespace Aura.Channel.Database
 				}
 			}
 
-			if (character.Is(EntityType.Character))
+			if (character is Character)
 			{
 				// Default
 				character.Keywords.Add("personal_info");
@@ -449,7 +449,7 @@ namespace Aura.Channel.Database
 			// hidden ones for now
 			// TODO: Move to race skill db.
 			character.Skills.Add(SkillId.CombatMastery, SkillRank.RF, character.Race);
-			if (character.Is(EntityType.Character))
+			if (character is Character)
 			{
 				character.Skills.Add(SkillId.HiddenEnchant, SkillRank.Novice, character.Race);
 				character.Skills.Add(SkillId.HiddenResurrection, SkillRank.Novice, character.Race);
