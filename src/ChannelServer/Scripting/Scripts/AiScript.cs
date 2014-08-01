@@ -506,13 +506,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected bool DoesHate(Creature target)
 		{
-			foreach (var tag in _hateTags.Values)
-			{
-				if (target.RaceData.HasTag(tag))
-					return true;
-			}
-
-			return false;
+			return _hateTags.Values.Any(tag => target.RaceData.HasTag(tag));
 		}
 
 		/// <summary>
@@ -522,13 +516,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected bool DoesLove(Creature target)
 		{
-			foreach (var tag in _loveTags.Values)
-			{
-				if (target.RaceData.HasTag(tag))
-					return true;
-			}
-
-			return false;
+			return _loveTags.Values.Any(tag => target.RaceData.HasTag(tag));
 		}
 
 		// Flow control

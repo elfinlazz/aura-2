@@ -168,16 +168,9 @@ namespace Aura.Login.Database
 		/// </summary>
 		/// <param name="cardItems"></param>
 		/// <returns></returns>
-		private List<Item> CardItemsToItems(List<CharCardSetData> cardItems)
+		private List<Item> CardItemsToItems(IEnumerable<CharCardSetData> cardItems)
 		{
-			var result = new List<Item>();
-
-			foreach (var cardItem in cardItems)
-			{
-				result.Add(new Item(cardItem.Class, (Pocket)cardItem.Pocket, cardItem.Color1, cardItem.Color2, cardItem.Color3));
-			}
-
-			return result;
+			return cardItems.Select(cardItem => new Item(cardItem.Class, (Pocket) cardItem.Pocket, cardItem.Color1, cardItem.Color2, cardItem.Color3)).ToList();
 		}
 
 		/// <summary>
@@ -193,9 +186,7 @@ namespace Aura.Login.Database
 		/// </remarks>
 		private void GenerateItemColors(ref List<Item> items, string hash)
 		{
-			int ihash = 5381;
-			foreach (var ch in hash)
-				ihash = ihash * 33 + (int)ch;
+			var ihash = hash.Aggregate(5381, (current, ch) => current*33 + (int) ch);
 
 			var rnd = new MTRandom(ihash);
 			foreach (var item in items.Where(a => a.Info.Pocket != Pocket.Face && a.Info.Pocket != Pocket.Hair))

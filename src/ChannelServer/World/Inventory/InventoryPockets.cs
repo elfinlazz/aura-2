@@ -127,10 +127,9 @@ namespace Aura.Channel.World
 
 		public override IEnumerable<Item> Items
 		{
-			get
+			get 
 			{
-				foreach (var item in _items.Values)
-					yield return item;
+				return _items.Values;
 			}
 		}
 
@@ -399,13 +398,8 @@ namespace Aura.Channel.World
 
 		public override int CountItem(int itemId)
 		{
-			var result = 0;
-
-			foreach (var item in _items.Values)
-				if (item.Info.Id == itemId || item.Data.StackItem == itemId)
-					result += item.Info.Amount;
-
-			return result;
+			return _items.Values.Where(item => item.Info.Id == itemId || item.Data.StackItem == itemId)
+				.Aggregate(0, (current, item) => current + item.Info.Amount);
 		}
 
 		public override Item GetItem(long id)
@@ -538,10 +532,9 @@ namespace Aura.Channel.World
 
 		public override IEnumerable<Item> Items
 		{
-			get
+			get 
 			{
-				foreach (var item in _items)
-					yield return item;
+				return _items;
 			}
 		}
 
@@ -592,13 +585,8 @@ namespace Aura.Channel.World
 
 		public override int CountItem(int itemId)
 		{
-			var result = 0;
-
-			foreach (var item in _items)
-				if (item.Info.Id == itemId || item.Data.StackItem == itemId)
-					result += item.Info.Amount;
-
-			return result;
+			return _items.Where(item => item.Info.Id == itemId || item.Data.StackItem == itemId)
+				.Aggregate(0, (current, item) => current + item.Info.Amount);
 		}
 
 		public override Item GetItem(long id)
