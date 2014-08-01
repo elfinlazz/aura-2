@@ -1198,7 +1198,7 @@ namespace Aura.Channel.Network.Sending
 		{
 			packet.PutString(prop.State);
 			packet.PutLong(DateTime.Now);
-			if (prop.HasXml)
+			if (!prop.HasXml)
 				packet.PutByte(false);
 			else
 			{
