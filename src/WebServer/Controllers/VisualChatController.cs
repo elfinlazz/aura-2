@@ -22,9 +22,9 @@ namespace Aura.Web.Controllers
 	{
 		public void Index(Request req, Response res)
 		{
-			var server = req.Parameters.Get("server", "");
-			var characterId = req.Parameters.Get("characterid", "");
-			var characterName = req.Parameters.Get("charname", "");
+			var server = req.Parameter("server", "");
+			var characterId = req.Parameter("characterid", "");
+			var characterName = req.Parameter("charname", "");
 			var file = req.Files.FirstOrDefault();
 
 			// Check char name

@@ -41,9 +41,6 @@ namespace Aura.Web
 
 			this.NavigateToRoot();
 
-			// Check rights
-			this.CheckAdmin();
-
 			// Conf
 			this.LoadConf(this.Conf = new WebConf());
 
@@ -88,15 +85,6 @@ namespace Aura.Web
 				Log.Error("Failed to start web server.");
 				Log.Info("The port might already be in use, make sure no other application, like other web servers or Skype, are using it or set a different port in web.conf.");
 				CliUtil.Exit(1);
-			}
-		}
-
-		public void CheckAdmin()
-		{
-			if (!CliUtil.CheckAdmin())
-			{
-				Log.Error("The Web Server requires admin permissions, please restart it as admin. See the Wiki for more information, on the Web Server page.");
-				CliUtil.Exit(740);
 			}
 		}
 	}

@@ -44,9 +44,9 @@ namespace Aura.Web.Controllers
 				return;
 			}
 
-			var charId = req.Parameters.Get("char_id", null);
-			var serverName = req.Parameters.Get("name_server", null);
-			var loadSuccess = req.Parameters.Get("ui_load_success", null);
+			var charId = req.Parameter("char_id", null);
+			var serverName = req.Parameter("name_server", null);
+			var loadSuccess = req.Parameter("ui_load_success", null);
 
 			// Check parameters
 			if (!Regex.IsMatch(charId, @"^[0-9]{16}$") || !Regex.IsMatch(charId, @"^[0-9A-Za-z_ ]+$"))

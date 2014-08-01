@@ -14,8 +14,8 @@ namespace Aura.Login.Web
 			if (!LoginServer.Instance.Conf.Login.IsTrustedSource(req.ClientIp))
 				return;
 
-			var name = req.Parameters.Get("name");
-			var pass = req.Parameters.Get("pass");
+			var name = req.Parameter("name");
+			var pass = req.Parameter("pass");
 
 			// Check parameters
 			if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(pass))

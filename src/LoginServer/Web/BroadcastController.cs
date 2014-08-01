@@ -13,7 +13,7 @@ namespace Aura.Login.Web
 			if (!LoginServer.Instance.Conf.Login.IsTrustedSource(req.ClientIp))
 				return;
 
-			var msg = req.Parameters.Get("msg", null);
+			var msg = req.Parameter("msg", null);
 			if (!string.IsNullOrWhiteSpace(msg))
 				Send.Internal_Broadcast(msg);
 		}

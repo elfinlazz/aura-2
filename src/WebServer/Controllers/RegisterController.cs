@@ -17,9 +17,10 @@ namespace Aura.Web.Controllers
 	{
 		public void Index(Request req, Response res)
 		{
-			var name = req.Parameters.Get("name");
-			var pass1 = req.Parameters.Get("password1");
-			var pass2 = req.Parameters.Get("password2");
+
+			var name = req.Parameter("name");
+			var pass1 = req.Parameter("password1");
+			var pass2 = req.Parameter("password2");
 
 			var error = "";
 			var success = "";
