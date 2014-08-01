@@ -50,7 +50,7 @@ namespace Aura.Data
 							this.Warnings.Add(new DatabaseWarningException(ex.Message + ", in " + Environment.NewLine + obj.ToString(), path));
 							continue;
 						}
-						catch (OverflowException ex)
+						catch (OverflowException)
 						{
 							this.Warnings.Add(new DatabaseWarningException("Number to big or too small for variable, in " + Environment.NewLine + obj.ToString(), path));
 							continue;

@@ -224,8 +224,8 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Clear();
 			_state = AiState.Idle;
 
-			if (this.Creature.BattleStance == BattleStance.Ready)
-				this.Creature.BattleStance = BattleStance.Idle;
+			if (this.Creature.IsInBattleStance)
+				this.Creature.IsInBattleStance = false;
 
 			if (this.Creature.Target != null)
 			{
@@ -278,7 +278,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 						_state = AiState.Alert;
 						_alertTime = DateTime.Now;
-						this.Creature.BattleStance = BattleStance.Ready;
+						this.Creature.IsInBattleStance = true;
 
 						Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
 					}
@@ -292,7 +292,7 @@ namespace Aura.Channel.Scripting.Scripts
 				}
 
 				// Switch to aggro from alert after the delay
-				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
+				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.IsInBattleStance) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
 				{
 					// Check aggro limit
 					var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
@@ -572,7 +572,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void AggroCreature(Creature creature)
 		{
 			_state = AiState.Aggro;
-			this.Creature.BattleStance = BattleStance.Ready;
+			this.Creature.IsInBattleStance = true;
 			this.Creature.Target = creature;
 			Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
 		}

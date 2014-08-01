@@ -26,20 +26,20 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.ChangeStanceRequest)]
 		public void ChangeStance(ChannelClient client, Packet packet)
 		{
-			var stance = (BattleStance)packet.GetByte();
+			var stance = packet.GetByte();
 
 			var creature = client.GetCreature(packet.Id);
 			if (creature == null)
 				return;
 
-			if (stance > BattleStance.Ready)
+			if (stance > 1)
 			{
 				Log.Warning("HandleChangeStance: Unknown battle stance '{0}'.", stance);
 				return;
 			}
 
 			// Change stance
-			creature.BattleStance = stance;
+			creature.IsInBattleStance = Convert.ToBoolean(stance);
 
 			// Response (unlocks the char)
 			Send.ChangeStanceRequestR(creature);

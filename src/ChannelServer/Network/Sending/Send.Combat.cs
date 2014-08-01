@@ -22,7 +22,7 @@ namespace Aura.Channel.Network.Sending
 		public static void ChangeStance(Creature creature)
 		{
 			var packet = new Packet(Op.ChangeStance, creature.EntityId);
-			packet.PutByte((byte)creature.BattleStance);
+			packet.PutByte(creature.IsInBattleStance);
 			packet.PutByte(1);
 
 			creature.Region.Broadcast(packet, creature);

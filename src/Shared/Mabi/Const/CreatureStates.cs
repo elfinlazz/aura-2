@@ -71,10 +71,4 @@ namespace Aura.Shared.Mabi.Const
 		ThrowingGold = 0x04000000,
 		ZombieWalk = 0x08000000,
 	}
-
-	public enum BattleStance : byte
-	{
-		Idle = 0,
-		Ready = 1,
-	}
 }
