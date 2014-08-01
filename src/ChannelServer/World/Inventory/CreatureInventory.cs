@@ -27,6 +27,14 @@ namespace Aura.Channel.World
 		private const int GoldItemId = 2000;
 		private const int GoldStackMax = 1000;
 
+		/// <summary>
+		/// These pockets aren't checked by the Count() method
+		/// </summary>
+		public readonly IEnumerable<Pocket> InvisiblePockets = new[]
+		{
+			Pocket.Temporary
+		};
+
 		private Creature _creature;
 		private Dictionary<Pocket, InventoryPocket> _pockets;
 
@@ -861,7 +869,7 @@ namespace Aura.Channel.World
 			var result = 0;
 
 			lock (_pockets)
-				foreach (var pocket in _pockets.Values)
+				foreach (var pocket in _pockets.Values.Where(a => !InvisiblePockets.Contains(a.Pocket)))
 					result += pocket.CountItem(itemId);
 
 			return result;
