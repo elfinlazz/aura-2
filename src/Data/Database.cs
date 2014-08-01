@@ -151,11 +151,10 @@ namespace Aura.Data
 			{
 				// Hotfix for issue #20
 
-				// TODO: Log this
-				System.Diagnostics.Debug.WriteLine("Logme: Warning: MsgPack failed to deserialize cache. " +
+				this.Warnings.Add(new DatabaseWarningException("MsgPack failed to deserialize cache. " +
 				"This is usually caused by an incorrect version of the MsgPack library. " +
-				"Please download and compile the latest version of MsgPack, then place the " +
-				"generated dll in Aura's Lib folder. Lastly, recompile Aura.");
+				"Please download and compile the latest version of MsgPack (https://github.com/msgpack/msgpack-cli), " +
+				"then place the generated dll in Aura's Lib folder. Lastly, recompile Aura."));
 
 				return false;
 			}
