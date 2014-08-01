@@ -50,6 +50,7 @@ public class FerghusBaseScript : NpcScript
 		{
 			case "@talk":
 				Msg("Are you new here? Good to see you.");
+				await Conversation();
 				break;
 				
 			case "@shop":
