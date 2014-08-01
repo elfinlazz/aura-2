@@ -56,7 +56,7 @@ public class AlissaBaseScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Msg("Hello, we've never met before. My name is Alissa. You have such a pretty name.<br/>How did I know that?<br/>Haha, it's written above your head. Don't tell me you don't see it?");
+				Msg("Hello, we've never met before. My name is Alissa. You have such a pretty name. <username/>...<br/>How did I know that?<br/>Haha, it's written above your head. Don't tell me you don't see it?");
 				//Msg("Hey, what brings you back? Wait...did you change your name?<br/>It's already hard enough trying to memorize everyone's name...");
 				//Msg("You come here pretty often.<br/>It's 'cause you like me huh? Hehe!");
 				await StartConversation();
