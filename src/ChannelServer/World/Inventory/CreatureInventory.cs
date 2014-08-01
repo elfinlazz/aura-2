@@ -45,9 +45,7 @@ namespace Aura.Channel.World
 		{
 			get
 			{
-				foreach (var pocket in _pockets.Values)
-					foreach (var item in pocket.Items.Where(a => a != null))
-						yield return item;
+				return _pockets.Values.SelectMany(pocket => pocket.Items.Where(a => a != null));
 
 				//var x = (from pocket in _pockets.Values.Where(a => a.Pocket.IsEquip())
 				//         where pocket.Items.Any()
@@ -63,11 +61,8 @@ namespace Aura.Channel.World
 		/// </summary>
 		public IEnumerable<Item> Equipment
 		{
-			get
-			{
-				foreach (var pocket in _pockets.Values.Where(a => a.Pocket.IsEquip()))
-					foreach (var item in pocket.Items.Where(a => a != null))
-						yield return item;
+			get {
+				return _pockets.Values.Where(a => a.Pocket.IsEquip()).SelectMany(pocket => pocket.Items.Where(a => a != null));
 			}
 		}
 
@@ -76,11 +71,9 @@ namespace Aura.Channel.World
 		/// </summary>
 		public IEnumerable<Item> ActualEquipment
 		{
-			get
-			{
-				foreach (var pocket in _pockets.Values.Where(a => a.Pocket.IsEquip() && a.Pocket != Pocket.Hair && a.Pocket != Pocket.Face))
-					foreach (var item in pocket.Items.Where(a => a != null))
-						yield return item;
+			get {
+				return _pockets.Values.Where(a => a.Pocket.IsEquip() && a.Pocket != Pocket.Hair && a.Pocket != Pocket.Face)
+					.SelectMany(pocket => pocket.Items.Where(a => a != null));
 			}
 		}
 
@@ -205,14 +198,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public Item GetItem(long entityId)
 		{
-			foreach (var pocket in _pockets.Values)
-			{
-				var item = pocket.GetItem(entityId);
-				if (item != null)
-					return item;
-			}
-
-			return null;
+			return _pockets.Values.Select(pocket => pocket.GetItem(entityId)).FirstOrDefault(item => item != null);
 		}
 
 		/// <summary>
@@ -747,23 +733,20 @@ namespace Aura.Channel.World
 		{
 			lock (_pockets)
 			{
-				foreach (var pocket in _pockets.Values)
+				if (_pockets.Values.Any(pocket => pocket.Remove(item)))
 				{
-					if (pocket.Remove(item))
+					Send.ItemRemove(_creature, item);
+
+					this.UpdateInventory(item, item.Info.Pocket, Pocket.None);
+
+					// Remove bag pocket
+					if (item.OptionInfo.LinkedPocketId != Pocket.None)
 					{
-						Send.ItemRemove(_creature, item);
-
-						this.UpdateInventory(item, item.Info.Pocket, Pocket.None);
-
-						// Remove bag pocket
-						if (item.OptionInfo.LinkedPocketId != Pocket.None)
-						{
-							this.Remove(item.OptionInfo.LinkedPocketId);
-							item.OptionInfo.LinkedPocketId = Pocket.None;
-						}
-
-						return true;
+						this.Remove(item.OptionInfo.LinkedPocketId);
+						item.OptionInfo.LinkedPocketId = Pocket.None;
 					}
+
+					return true;
 				}
 			}
 
@@ -852,11 +835,7 @@ namespace Aura.Channel.World
 		public bool Has(Item item)
 		{
 			lock (_pockets)
-				foreach (var pocket in _pockets.Values)
-					if (pocket.Has(item))
-						return true;
-
-			return false;
+				return _pockets.Values.Any(pocket => pocket.Has(item));
 		}
 
 		/// <summary>
@@ -866,13 +845,9 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public int Count(int itemId)
 		{
-			var result = 0;
-
 			lock (_pockets)
-				foreach (var pocket in _pockets.Values.Where(a => !InvisiblePockets.Contains(a.Pocket)))
-					result += pocket.CountItem(itemId);
-
-			return result;
+				return _pockets.Values.Where(a => !InvisiblePockets.Contains(a.Pocket))
+					.Sum(pocket => pocket.CountItem(itemId));
 		}
 
 		/// <summary>
@@ -1053,13 +1028,9 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public int GetEquipmentDefense()
 		{
-			var result = 0;
-
-			foreach (var pocket in _pockets.Values.Where(a => (a.Pocket >= Pocket.Armor && a.Pocket <= Pocket.Robe) || (a.Pocket >= Pocket.Accessory1 && a.Pocket <= Pocket.Accessory2)))
-				foreach (var item in pocket.Items.Where(a => a != null))
-					result += item.OptionInfo.Defense;
-
-			return result;
+			return _pockets.Values.Where(a => (a.Pocket >= Pocket.Armor && a.Pocket <= Pocket.Robe) || (a.Pocket >= Pocket.Accessory1 && a.Pocket <= Pocket.Accessory2))
+				.SelectMany(pocket => pocket.Items.Where(a => a != null))
+				.Sum(item => item.OptionInfo.Defense);
 		}
 
 		/// <summary>
@@ -1068,13 +1039,9 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public int GetEquipmentProtection()
 		{
-			var result = 0;
-
-			foreach (var pocket in _pockets.Values.Where(a => (a.Pocket >= Pocket.Armor && a.Pocket <= Pocket.Robe) || (a.Pocket >= Pocket.Accessory1 && a.Pocket <= Pocket.Accessory2)))
-				foreach (var item in pocket.Items.Where(a => a != null))
-					result += item.OptionInfo.Protection;
-
-			return result;
+			return _pockets.Values.Where(a => (a.Pocket >= Pocket.Armor && a.Pocket <= Pocket.Robe) || (a.Pocket >= Pocket.Accessory1 && a.Pocket <= Pocket.Accessory2))
+				.SelectMany(pocket => pocket.Items.Where(a => a != null))
+				.Sum(item => item.OptionInfo.Protection);
 		}
 
 		/// <summary>

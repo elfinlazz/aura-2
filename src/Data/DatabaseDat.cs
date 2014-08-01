@@ -12,8 +12,7 @@ namespace Aura.Data
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
 		{
-			foreach (var entry in this.Entries.Values)
-				yield return entry;
+			return ((IEnumerable<TInfo>) this.Entries.Values).GetEnumerator();
 		}
 
 		public TInfo Find(TIndex key)

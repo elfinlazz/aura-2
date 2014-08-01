@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Aura.Data.Database
 {
@@ -30,14 +31,12 @@ namespace Aura.Data.Database
 		/// <returns></returns>
 		public PropDropItemInfo GetRndItem(Random rand)
 		{
-			float total = 0;
-			foreach (var cls in this.Items)
-				total += cls.Chance;
+			var total = this.Items.Sum(cls => cls.Chance);
 
-			var rand_val = rand.NextDouble() * total;
-			int i = 0;
-			for (; rand_val > 0; ++i)
-				rand_val -= this.Items[i].Chance;
+			var randVal = rand.NextDouble() * total;
+			var i = 0;
+			for (; randVal > 0; ++i)
+				randVal -= this.Items[i].Chance;
 
 			return this.Items[i - 1];
 		}

@@ -237,10 +237,9 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.ReceiveMethod != Receive.Automatically || character.Quests.Has(this.Id))
 				return false;
 
-			foreach (var prerequisite in this.Prerequisites)
+			if (this.Prerequisites.Any(prerequisite => !prerequisite.Met(character)))
 			{
-				if (!prerequisite.Met(character))
-					return false;
+				return false;
 			}
 
 			character.Quests.Start(this.Id);

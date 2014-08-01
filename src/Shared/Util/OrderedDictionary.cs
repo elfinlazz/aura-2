@@ -266,7 +266,7 @@ namespace Aura.Shared.Util
 				throw new ArgumentOutOfRangeException("index", "Must be greater than or equal to zero.");
 
 			if (index + fDictionary.Count > array.Length)
-				throw new ArgumentException("array", "Array is too small");
+				throw new ArgumentException("Array is too small", "array");
 
 			foreach (var pair in this)
 			{

@@ -696,13 +696,8 @@ namespace Aura.Channel.World
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-				var result = 0;
-				foreach (var npc in _creatures.Values.OfType<NPC>())
-				{
-					if (npc.AI != null && npc.AI.State == Aura.Channel.Scripting.Scripts.AiScript.AiState.Aggro && npc.Race == raceId && npc.Target == target)
-						result++;
-				}
-				return result;
+				return _creatures.Values.OfType<NPC>()
+					.Count(npc => npc.AI != null && npc.AI.State == Scripting.Scripts.AiScript.AiState.Aggro && npc.Race == raceId && npc.Target == target);
 			}
 			finally
 			{
@@ -719,8 +714,7 @@ namespace Aura.Channel.World
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-				foreach (var npc in _creatures.Values.Where(a => a.Has(CreatureStates.GoodNpc) && a is NPC))
-					list.Add(npc);
+				list.AddRange(_creatures.Values.Where(a => a.Has(CreatureStates.GoodNpc) && a is NPC));
 			}
 			finally
 			{

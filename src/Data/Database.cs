@@ -99,13 +99,9 @@ namespace Aura.Data
 			}
 			else
 			{
-				foreach (var file in files)
+				if (files.Any(file => File.GetLastWriteTime(file) > File.GetLastWriteTime(cache)))
 				{
-					if (File.GetLastWriteTime(file) > File.GetLastWriteTime(cache))
-					{
-						fromFiles = true;
-						break;
-					}
+					fromFiles = true;
 				}
 			}
 

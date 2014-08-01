@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Aura.Channel.World.Entities;
 using Aura.Data;
@@ -235,14 +236,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public Prop GetProp(long id)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var prop = region.GetProp(id);
-				if (prop != null)
-					return prop;
-			}
-
-			return null;
+			return _regions.Values.Select(region => region.GetProp(id)).FirstOrDefault(prop => prop != null);
 		}
 
 		/// <summary>
@@ -252,14 +246,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public PlayerCreature GetPlayer(string name)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var creature = region.GetPlayer(name);
-				if (creature != null)
-					return creature;
-			}
-
-			return null;
+			return _regions.Values.Select(region => region.GetPlayer(name)).FirstOrDefault(creature => creature != null);
 		}
 
 		/// <summary>
@@ -283,14 +270,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public Creature GetCreature(long entityId)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var creature = region.GetCreature(entityId);
-				if (creature != null)
-					return creature;
-			}
-
-			return null;
+			return _regions.Values.Select(region => region.GetCreature(entityId)).FirstOrDefault(creature => creature != null);
 		}
 
 		/// <summary>
@@ -300,14 +280,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public Creature GetCreature(string name)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var creature = region.GetCreature(name);
-				if (creature != null)
-					return creature;
-			}
-
-			return null;
+			return _regions.Values.Select(region => region.GetCreature(name)).FirstOrDefault(creature => creature != null);
 		}
 
 		/// <summary>
@@ -317,14 +290,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public NPC GetNpc(long entityId)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var creature = region.GetNpc(entityId);
-				if (creature != null)
-					return creature;
-			}
-
-			return null;
+			return _regions.Values.Select(region => region.GetNpc(entityId)).FirstOrDefault(creature => creature != null);
 		}
 
 		/// <summary>
