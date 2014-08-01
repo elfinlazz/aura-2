@@ -116,7 +116,7 @@ namespace Aura.Shared.Mabi
 			if (this.DateTime.DayOfWeek == DayOfWeek.Saturday)
 				lastSaturday = (this.DateTime.Hour < 12) ? this.DateTime.AddDays(-7) : this.DateTime;
 			else
-				lastSaturday.AddDays(-(int)lastSaturday.DayOfWeek - 1);
+				lastSaturday = lastSaturday.AddDays(-(int)lastSaturday.DayOfWeek - 1);
 
 			lastSaturday = lastSaturday.Date.AddHours(12);
 
