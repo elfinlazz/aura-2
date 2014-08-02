@@ -499,6 +499,7 @@ namespace Aura.Login.Database
 				cmd.Set("protection", creature.Protection);
 				cmd.Set("ap", creature.AP);
 				cmd.Set("creationTime", DateTime.Now);
+				cmd.Set("lastAging", DateTime.Now);
 
 				cmd.Execute();
 
