@@ -24,7 +24,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		public static void Internal_ChannelStatus()
 		{
-			var cur = 0;// ChannelServer.Instance.World.GetCharactersCount();
+			var cur = ChannelServer.Instance.World.CountPlayers();
 			var max = ChannelServer.Instance.Conf.Channel.MaxUsers;
 
 			var packet = new Packet(Op.Internal.ChannelStatus, 0);

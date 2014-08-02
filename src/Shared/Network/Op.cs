@@ -67,6 +67,8 @@ namespace Aura.Shared.Network
 		public const int Disappear = 0x4E2A;
 		//public const int GoRebirth = 0x4E32;
 		public const int WarpUnk1 = 0x4E39;
+		public const int Rebirth = 0x4E84;
+		public const int RebirthR = 0x4E85;
 		public const int PonsUpdate = 0x4E8F; // b:2, i:amount, sent on login
 
 		public const int ChannelCharacterInfoRequest = 0x5208;
@@ -344,6 +346,7 @@ namespace Aura.Shared.Network
 		public const int DungeonInfo = 0x9470;
 		public const int ArenaRoundInfo = 0x9667;
 		public const int ArenaRoundInfoCancel = 0x9668;
+		public const int AgeUpEffect = 0x9858;
 
 		public const int ConditionUpdate = 0xA028;
 		public const int DyePaletteReq = 0xA418;

@@ -23,7 +23,7 @@ namespace Aura.Channel.World.Entities
 	{
 		private static long _propId = MabiId.ServerProps;
 
-		private XElement __xml; 
+		private XElement _xml;
 
 		public override DataType DataType { get { return DataType.Prop; } }
 
@@ -36,6 +36,11 @@ namespace Aura.Channel.World.Entities
 		/// *sigh* Yes, we're checking the id, happy now, devCAT? .__.
 		/// </remarks>
 		public bool ServerSide { get { return (this.EntityId >= MabiId.ServerProps); } }
+
+		/// <summary>
+		/// Returns true if prop is not server sided and has a state or extra data.
+		/// </summary>
+		public bool ModifiedClientSide { get { return !this.ServerSide && (this.State != "" || this.HasXml); } }
 
 		/// <summary>
 		/// Called when a player interacts with the prop (touch, attack).
@@ -53,9 +58,9 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Xml with additional options.
 		/// </summary>
-		public XElement Xml { get { return __xml ?? (__xml = new XElement("xml")); } }
+		public XElement Xml { get { return _xml ?? (_xml = new XElement("xml")); } }
 
-		public bool HasXml { get { return __xml != null; } }
+		public bool HasXml { get { return _xml != null; } }
 
 		public override int RegionId
 		{

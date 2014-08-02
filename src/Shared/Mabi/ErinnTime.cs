@@ -106,6 +106,24 @@ namespace Aura.Shared.Mabi
 		}
 
 		/// <summary>
+		/// Returns the DateTime for last Saturday at 12:00.
+		/// </summary>
+		/// <returns></returns>
+		public DateTime GetLastSaturday()
+		{
+			var lastSaturday = DateTime.MinValue;
+
+			if (this.DateTime.DayOfWeek == DayOfWeek.Saturday)
+				lastSaturday = (this.DateTime.Hour < 12) ? this.DateTime.AddDays(-7) : this.DateTime;
+			else
+				lastSaturday = this.DateTime.AddDays(-(int)this.DateTime.DayOfWeek - 1);
+
+			lastSaturday = lastSaturday.Date.AddHours(12);
+
+			return lastSaturday;
+		}
+
+		/// <summary>
 		/// Returns a string with the Erinn time of this instance in AM/PM.
 		/// </summary>
 		/// <returns></returns>

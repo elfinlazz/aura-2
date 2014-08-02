@@ -231,11 +231,18 @@ namespace Aura.Channel.World
 				// Send all props of a region, so they're visible from afar.
 				// While client props are visible as well they don't have to
 				// be sent, the client already has them.
+				//
 				// ^^^^^^^^^^^^^^^^^^ This caused a bug with client prop states
 				// not being set until the prop was used by a player while
 				// the creature was in the region (eg windmill) so we'll count
 				// all props as visible. -- Xcelled
-				result.AddRange(_props.Values);
+				//
+				// ^^^^^^^^^^^^^^^^^^ That causes a huge EntitiesAppear packet,
+				// because there are thousands of client props. We only need
+				// the ones that make a difference. Added check for
+				// state and XML. [exec]
+
+				result.AddRange(_props.Values.Where(a => a.ServerSide || a.ModifiedClientSide));
 			}
 			finally
 			{
@@ -397,6 +404,25 @@ namespace Aura.Channel.World
 			try
 			{
 				return _creatures.Values.Where(a => a.IsPlayer).ToList();
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
+		/// Returns amount of players in region.
+		/// </summary>
+		/// <returns></returns>
+		public int CountPlayers()
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				// Count any player creatures that are directly controlled,
+				// filtering creatures with masters (pets/partners).
+				return _creatures.Values.Count(a => a is PlayerCreature && a.Master == null);
 			}
 			finally
 			{
