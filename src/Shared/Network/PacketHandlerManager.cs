@@ -56,7 +56,7 @@ namespace Aura.Shared.Network
 		/// </summary>
 		/// <param name="client"></param>
 		/// <param name="packet"></param>
-		public void Handle(TClient client, Packet packet)
+		public virtual void Handle(TClient client, Packet packet)
 		{
 			// Don't log internal packets
 			//if (packet.Op < Op.Internal.ServerIdentify)
