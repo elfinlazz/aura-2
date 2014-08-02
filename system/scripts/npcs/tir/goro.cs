@@ -94,12 +94,12 @@ public class GoroBaseScript : NpcScript
 	
 	protected override async Task Keywords(string kw)
 	{
-                    RndMsg(
-                        "Well...",
-                        "Hmm...I believe I have heard about it...",
-                        "Excuse me, what did you say?",
-                        "I do not know anything about that kind of story."                
-                    );
+            RndMsg(
+                "Well...",
+                "Hmm...I believe I have heard about it...",
+                "Excuse me, what did you say?",
+                "I do not know anything about that kind of story."                
+            );
 	}
 	
 	public override void EndConversation()
