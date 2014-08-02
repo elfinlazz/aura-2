@@ -94,40 +94,40 @@ public class GoroBaseScript : NpcScript
 	
 	protected override async Task Keywords(string kw)
 	{
-            RndMsg(
-                "Well...",
-                "Hmm...I believe I have heard about it...",
-                "Excuse me, what did you say?",
-                "I do not know anything about that kind of story."                
-            );
+		RndMsg(
+			"Well...",
+			"Hmm...I believe I have heard about it...",
+			"Excuse me, what did you say?",
+			"I do not know anything about that kind of story."
+		);
 	}
 	
 	public override void EndConversation()
 	{
 		Close("<npcportrait name='NONE' /><title name='NONE' />Goodbye, Goro. I'll see you later!");
-	}
-	
-	public class GoroShop : NpcShopScript
+	}	
+}
+
+public class GoroShop : NpcShopScript
+{
+	public override void Setup()
 	{
-		public override void Setup()
-		{
-			//--- Arena -------------------------------------
-			//-----------------------------------------------		
-			Add("Arena", 63019, 10);   //Alby Battle Arena Coin
-			Add("Arena", 63019, 20);   //Alby Battle Arena Coin
-			Add("Arena", 63019, 50);   //Alby Battle Arena Coin
-			Add("Arena", 63019, 100);  //Alby Battle Arena Coin
-			
-			//--- Potions -----------------------------------
-			//-----------------------------------------------
-			Add("Potions", 60005, 10); //Bandage
-			Add("Potions", 60005, 20); //Bandage
-			Add("Potions", 63000, 10); //Phoenix Feather
-			Add("Potions", 63000, 20); //Phoenix Feather
-			Add("Potions", 51002);     //HP 30 Potion
-			Add("Potions", 51002, 20); //HP 30 Potion
-			Add("Potions", 51012);     //Stamina 30 Potion
-			Add("Potions", 51012, 20); //Stamina 30 Potion
-		}
+		//--- Arena -------------------------------------
+		//-----------------------------------------------		
+		Add("Arena", 63019, 10);   //Alby Battle Arena Coin
+		Add("Arena", 63019, 20);   //Alby Battle Arena Coin
+		Add("Arena", 63019, 50);   //Alby Battle Arena Coin
+		Add("Arena", 63019, 100);  //Alby Battle Arena Coin
+		
+		//--- Potions -----------------------------------
+		//-----------------------------------------------
+		Add("Potions", 60005, 10); //Bandage
+		Add("Potions", 60005, 20); //Bandage
+		Add("Potions", 63000, 10); //Phoenix Feather
+		Add("Potions", 63000, 20); //Phoenix Feather
+		Add("Potions", 51002);     //HP 30 Potion
+		Add("Potions", 51002, 20); //HP 30 Potion
+		Add("Potions", 51012);     //Stamina 30 Potion
+		Add("Potions", 51012, 20); //Stamina 30 Potion
 	}
 }
