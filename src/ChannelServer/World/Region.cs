@@ -405,6 +405,25 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns amount of players in region.
+		/// </summary>
+		/// <returns></returns>
+		public int CountPlayers()
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				// Count any player creatures that are directly controlled,
+				// filtering creatures with masters (pets/partners).
+				return _creatures.Values.Count(a => a is PlayerCreature && a.Master == null);
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
 		/// Returns all visible creatures in range of entity, excluding itself.
 		/// </summary>
 		/// <param name="range"></param>

@@ -264,6 +264,15 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns amount of players in all regions.
+		/// </summary>
+		/// <returns></returns>
+		public int CountPlayers()
+		{
+			return _regions.Values.Sum(region => region.CountPlayers());
+		}
+
+		/// <summary>
 		/// Returns creature from any region by id, or null.
 		/// </summary>
 		/// <param name="entityId"></param>
