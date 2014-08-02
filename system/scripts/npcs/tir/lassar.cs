@@ -203,12 +203,12 @@ public class LassarBaseScript : NpcScript
 				break;
 			
 			default:
-				RndMsg(
-					"Why don't you ask other people? I am afraid I would be of little help.",
+				RndMsg(					
 					"Being a teacher doesn't necessarily mean knowing everything.",
-					"I thought I knew. But it is more difficult to actually explain it than I thought.",
 					"Hmm... I don't know.",
-					"Honestly, I don't know much."
+					"Honestly, I don't know much.",
+					"I thought I knew. But it is more difficult to actually explain it than I thought.",
+					"Why don't you ask other people? I am afraid I would be of little help."				
 				);
 				break;
 		}
