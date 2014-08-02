@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Shared.Mabi.Const
 {
 	/// <summary>
 	/// Flags for SkillInfo
 	/// </summary>
+	[Flags]
 	public enum SkillFlags : ushort
 	{
 		Shown = 0x01,

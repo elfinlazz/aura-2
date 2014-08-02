@@ -244,6 +244,7 @@ namespace Aura.Shared.Util
 	/// <summary>
 	/// Used in LoadData, to specify which db files should be loaded.
 	/// </summary>
+	[Flags]
 	public enum DataLoad : uint
 	{
 		//Spawns = 0x01,

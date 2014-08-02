@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Shared.Mabi.Const
 {
 	/// <summary>
@@ -61,6 +63,7 @@ namespace Aura.Shared.Mabi.Const
 		ItemBagsMax = 199,
 	}
 
+	[Flags]
 	public enum BagTags
 	{
 		Equipment = 0x01,

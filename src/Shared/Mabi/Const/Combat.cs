@@ -8,6 +8,7 @@ using System.Text;
 
 namespace Aura.Shared.Mabi.Const
 {
+	[Flags]
 	public enum AttackerOptions : uint
 	{
 		None = 0x00,
@@ -50,6 +51,7 @@ namespace Aura.Shared.Mabi.Const
 		FirstHit = 0x400,
 	}
 
+	[Flags]
 	public enum TargetOptions : uint
 	{
 		None = 0x00,
@@ -134,6 +136,7 @@ namespace Aura.Shared.Mabi.Const
 	}
 
 	// Most likely flags
+	[Flags]
 	public enum CombatActionType : byte
 	{
 		None = 0x00,
