@@ -99,6 +99,10 @@ CREATE TABLE IF NOT EXISTS `creatures` (
   `title` smallint(5) unsigned NOT NULL DEFAULT '0',
   `optionTitle` smallint(5) unsigned NOT NULL DEFAULT '0',
   `state` int(10) unsigned NOT NULL DEFAULT '0',
+  `creationTime` datetime NOT NULL,
+  `lastAging` datetime NOT NULL,
+  `lastRebirth` datetime DEFAULT NULL,
+  `lastLogin` datetime DEFAULT NULL,
   PRIMARY KEY (`creatureId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
@@ -213,7 +217,10 @@ INSERT INTO `updates` (`path`) VALUES
 ('main.sql'),
 ('update_2014-02-26.sql'),
 ('update_2014-02-27.sql'),
-('update_2014-07-26.sql');
+('update_2014-07-26.sql'),
+('update_2014-07-27.sql'),
+('update_2014-07-28.sql'),
+('update_2014-07-31.sql');
 
 ALTER TABLE `updates`
  ADD PRIMARY KEY (`path`);

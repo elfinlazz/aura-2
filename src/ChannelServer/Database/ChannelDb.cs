@@ -203,6 +203,11 @@ namespace Aura.Channel.Database
 					character.Age = reader.GetInt16("age");
 					character.State = (CreatureStates)reader.GetUInt32("state");
 
+					character.CreationTime = reader.GetDateTimeSafe("creationTime");
+					character.LastRebirth = reader.GetDateTimeSafe("lastRebirth");
+					character.LastLogin = reader.GetDateTimeSafe("lastLogin");
+					character.LastAging = reader.GetDateTimeSafe("lastAging");
+
 					character.LifeFoodMod = reader.GetFloat("lifeFood");
 					character.ManaFoodMod = reader.GetFloat("manaFood");
 					character.StaminaFoodMod = reader.GetFloat("staminaFood");
@@ -727,6 +732,13 @@ namespace Aura.Channel.Database
 				cmd.Set("title", creature.Titles.SelectedTitle);
 				cmd.Set("optionTitle", creature.Titles.SelectedOptionTitle);
 				cmd.Set("state", (uint)creature.State);
+				cmd.Set("age", creature.Age);
+
+				cmd.Set("lastAging", creature.LastAging);
+				if (creature.LastRebirth != DateTime.MinValue)
+					cmd.Set("lastRebirth", creature.LastRebirth);
+				if (creature.LastLogin != DateTime.MinValue)
+					cmd.Set("lastLogin", creature.LastLogin);
 
 				cmd.Execute();
 			}

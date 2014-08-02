@@ -101,6 +101,11 @@ namespace Aura.Shared.Util
 					this.LoadDb(AuraData.StatsLevelUpDb, "db/stats_levelup.txt", reload);
 				}
 
+				if ((toLoad & DataLoad.StatsAge) != 0)
+				{
+					this.LoadDb(AuraData.StatsAgeUpDb, "db/stats_ageup.txt", reload);
+				}
+
 				if ((toLoad & DataLoad.Motions) != 0)
 				{
 					this.LoadDb(AuraData.MotionDb, "db/motions.txt", reload);
@@ -264,6 +269,7 @@ namespace Aura.Shared.Util
 		Weather = 0x4000,
 		Keywords = 0x8000,
 		Titles = 0x10000,
+		StatsAge = 0x20000,
 
 		All = 0xFFFFFFFF,
 
