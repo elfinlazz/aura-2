@@ -28,9 +28,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var stance = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (stance > 1)
 			{
@@ -70,9 +68,7 @@ namespace Aura.Channel.Network.Handlers
 			var mode = (TargetMode)packet.GetByte();
 			var unkString = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Id == 0 means untargetting, go with the null
 			Creature target = null;
@@ -110,8 +106,7 @@ namespace Aura.Channel.Network.Handlers
 			var targetEntityId = packet.GetLong();
 			var unkString = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check target
 			var target = creature.Region.GetCreature(targetEntityId);

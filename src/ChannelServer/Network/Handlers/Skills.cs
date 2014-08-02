@@ -26,8 +26,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var skillId = (SkillId)packet.GetUShort();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			var skill = creature.Skills.Get(skillId);
 			if (skill == null || !skill.IsRankable) goto L_Fail;
@@ -75,9 +74,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var skillId = (SkillId)packet.GetUShort();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			var skill = creature.Skills.Get(skillId);
 			if (skill == null)
@@ -129,9 +126,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var skillId = (SkillId)packet.GetUShort();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			var skill = creature.Skills.Get(skillId);
 			if (skill == null)
@@ -179,9 +174,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var skillId = (SkillId)packet.GetUShort();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Don't start another while one is active. If you cast another
 			// skill with one already active the client sends Cancel first.
@@ -239,9 +232,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var skillId = (SkillId)packet.GetUShort();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			var skill = creature.Skills.Get(skillId);
 			if (skill == null)
@@ -287,9 +278,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var skillId = (SkillId)packet.GetUShort();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			var skill = creature.Skills.Get(skillId);
 			if (skill == null)
@@ -335,9 +324,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var skillId = (SkillId)packet.GetUShort();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			var skill = creature.Skills.Get(skillId);
 			if (skill == null)
@@ -389,9 +376,7 @@ namespace Aura.Channel.Network.Handlers
 			var unkByte1 = packet.GetByte();
 			var unkByte2 = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			creature.Skills.CancelActiveSkill();
 		}

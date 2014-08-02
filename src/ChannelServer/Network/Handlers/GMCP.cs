@@ -37,8 +37,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var targetName = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
@@ -70,8 +69,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var targetName = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
@@ -103,8 +101,7 @@ namespace Aura.Channel.Network.Handlers
 			var x = packet.GetInt();
 			var y = packet.GetInt();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
@@ -124,8 +121,9 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.GmcpRevive)]
 		public void GmcpRevive(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null || !creature.IsDead) return;
+			var creature = client.GetCreatureSafe(packet.Id);
+			if (!creature.IsDead)
+				return;
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
@@ -148,8 +146,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var activate = packet.GetBool();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
@@ -176,8 +173,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var targetName = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
@@ -211,8 +207,7 @@ namespace Aura.Channel.Network.Handlers
 			var duration = packet.GetInt();
 			var reason = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{
@@ -251,8 +246,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.GmcpNpcList)]
 		public void GmcpNpcList(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
 			{

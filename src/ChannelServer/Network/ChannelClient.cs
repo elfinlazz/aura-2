@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Aura.Channel.Database;
 using Aura.Channel.Scripting;
+using Aura.Channel.Util;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 
@@ -45,6 +46,15 @@ namespace Aura.Channel.Network
 			Creature creature;
 			this.Creatures.TryGetValue(id, out creature);
 			return creature;
+		}
+
+		public Creature GetCreatureSafe(long id)
+		{
+			var r = this.GetCreature(id);
+			if (r == null)
+				throw new SevereViolation("Account doesn't have creature 0x{0:X}", id);
+
+			return r;
 		}
 
 		/// <summary>

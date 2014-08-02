@@ -28,9 +28,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.MoonGateInfoRequest)]
 		public void MoonGateInfoRequest(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Empty answer for now.
 			Send.MoonGateInfoRequestR(creature);
@@ -48,9 +46,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.MailsRequest)]
 		public void MailsRequest(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Empty answer for now.
 			Send.MailsRequestR(creature);
@@ -65,9 +61,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.SosButtonRequest)]
 		public void SosButtonRequest(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Disable by default, until we have the whole thing.
 			Send.SosButtonRequestR(creature, false);
@@ -89,9 +83,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var unkByte = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Default answer for now
 			Send.HomesteadInfoRequestR(creature);
@@ -112,9 +104,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.ChannelLoginUnk)]
 		public void ChannelLoginUnk(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Default answer
 			Send.ChannelLoginUnkR(creature);
@@ -134,9 +124,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.ContinentWarpCoolDown)]
 		public void ContinentWarpCoolDown(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Default answer
 			Send.ContinentWarpCoolDownR(creature);
@@ -153,8 +141,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var unkInt = packet.GetInt();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (creature.Temp.CurrentCutscene == null)
 			{
@@ -183,8 +170,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var gestureName = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			creature.StopMove();
 

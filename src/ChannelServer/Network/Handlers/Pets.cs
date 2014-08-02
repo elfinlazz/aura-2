@@ -24,9 +24,7 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 			var unkByte = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (creature.Pet != null)
 			{
@@ -68,9 +66,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var entityId = packet.GetLong();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			var pet = creature.Pet;
 			if (pet == null || pet.EntityId != entityId)
@@ -113,9 +109,7 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 			var action = (PetAction)packet.GetByte();
 
-			var pet = client.GetCreature(packet.Id);
-			if (pet == null)
-				return;
+			var pet = client.GetCreatureSafe(packet.Id);
 
 			//Send.Chat(pet, "...");
 
@@ -142,8 +136,8 @@ namespace Aura.Channel.Network.Handlers
 			var x = packet.GetInt();
 			var y = packet.GetInt();
 
-			var pet = client.GetCreature(packet.Id);
-			if (pet == null || pet.Master == null)
+			var pet = client.GetCreatureSafe(packet.Id);
+			if (pet.Master == null)
 				return;
 
 			if (pet.Master.RegionId != pet.RegionId)
@@ -183,12 +177,11 @@ namespace Aura.Channel.Network.Handlers
 			var y = packet.GetInt();
 
 			// Get creature
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Get pet
-			var pet = client.GetCreature(petEntityId);
-			if (pet == null || pet.Master == null)
+			var pet = client.GetCreatureSafe(petEntityId);
+			if (pet.Master == null)
 			{
 				Log.Warning("PutItemIntoPetInv: Player '{0}' tried to move item to invalid pet.", creature.Name);
 				goto L_Fail;
@@ -237,13 +230,11 @@ namespace Aura.Channel.Network.Handlers
 			var itemEntityId = packet.GetLong();
 
 			// Get creature
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Get pet
-			var pet = client.GetCreature(petEntityId);
-			if (pet == null || pet.Master == null)
+			var pet = client.GetCreatureSafe(petEntityId);
+			if (pet.Master == null)
 			{
 				Log.Warning("Player '{0}' tried to move item from invalid pet.", creature.Name);
 				Send.TakeItemFromPetInvR(creature, false);
@@ -281,11 +272,9 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var mountEntityId = packet.GetLong();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			var mount = client.GetCreature(mountEntityId);
+			var mount = creature.Region.GetCreature(mountEntityId);
 			if (mount == null || mount == creature)
 				return;
 
@@ -304,9 +293,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.PetUnmount)]
 		public void PetUnmount(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// ...
 
@@ -330,9 +317,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var ai = packet.GetString();
 
-			var pet = client.GetCreature(packet.Id);
-			if (pet == null)
-				return;
+			var pet = client.GetCreatureSafe(packet.Id);
 
 			pet.Vars.Perm.PetAI = ai;
 		}
@@ -346,9 +331,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.GetPetAi)]
 		public void GetPetAi(ChannelClient client, Packet packet)
 		{
-			var pet = client.GetCreature(packet.Id);
-			if (pet == null)
-				return;
+			var pet = client.GetCreatureSafe(packet.Id);
 
 			// Send back AI, default to OasisRulePassive on null.
 			Send.GetPetAiR(pet, pet.Vars.Perm.PetAI ?? "OasisRulePassive.xml");
