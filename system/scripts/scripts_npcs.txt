@@ -17,6 +17,7 @@ npcs/tir/dilys.cs
 npcs/tir/duncan.cs
 npcs/tir/endelyon.cs
 npcs/tir/ferghus.cs
+npcs/tir/goro.cs
 npcs/tir/malcolm.cs
 npcs/tir/meven.cs
 npcs/tir/nora.cs

@@ -197,6 +197,7 @@ namespace Aura.Data.Database
 		}
 	}
 
+	[Flags]
 	public enum RaceStands : int
 	{
 		KnockBackable = 0x01,

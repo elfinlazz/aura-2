@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Shared.Mabi.Const
 {
+	[Flags]
 	public enum CreatureStates : uint
 	{
 		Initialized = 0x00000001,
@@ -41,6 +44,7 @@ namespace Aura.Shared.Mabi.Const
 		Npc = 0x80000000,
 	}
 
+	[Flags]
 	public enum CreatureStatesEx : uint
 	{
 		DefenceBonus = 0x00000001,

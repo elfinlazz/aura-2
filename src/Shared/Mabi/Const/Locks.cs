@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Shared.Mabi.Const
 {
 	/// <summary>
 	/// This list is based on vague information found in the client,
 	/// aside from the values at the end. Testing needed.
 	/// </summary>
+	[Flags]
 	public enum Locks : uint
 	{
 		MoveRun = 0x00000001,
