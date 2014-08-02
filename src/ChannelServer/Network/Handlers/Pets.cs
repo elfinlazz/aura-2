@@ -35,13 +35,7 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
-			var pet = client.Account.GetPet(entityId);
-			if (pet == null)
-			{
-				Log.Warning("SummonPet: Failed to get pet '{0}', for '{1}'.", entityId.ToString("X16"), client.Account.Id);
-				Send.SummonPetR(creature, null);
-				return;
-			}
+			var pet = client.Account.GetPetSafe(entityId);
 
 			// Doesn't fix giant mount problems.
 			if (creature.IsGiant)

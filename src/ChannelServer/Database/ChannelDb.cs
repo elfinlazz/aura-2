@@ -155,7 +155,9 @@ namespace Aura.Channel.Database
 		/// Returns creature by entityId from table.
 		/// </summary>
 		/// <typeparam name="TCreature"></typeparam>
+		/// <param name="account"></param>
 		/// <param name="entityId"></param>
+		/// <param name="table"></param>
 		/// <returns></returns>
 		private TCreature GetCharacter<TCreature>(Account account, long entityId, string table) where TCreature : PlayerCreature, new()
 		{

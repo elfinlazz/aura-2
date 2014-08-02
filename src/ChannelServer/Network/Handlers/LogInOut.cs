@@ -48,13 +48,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Check character
-			var character = account.GetCharacterOrPet(characterId);
-			if (character == null)
-			{
-				Log.Warning("ChannelLogin handler: Account ({0}) doesn't contain character ({1}).", accountId, characterId);
-				client.Kill();
-				return;
-			}
+			var character = account.GetCharacterOrPetSafe(characterId);
 
 			client.Account = account;
 			client.Controlling = character;

@@ -27,9 +27,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		/// <param name="item"></param>
 		public virtual void OnUse(Creature creature, Item item)
-		{
-			throw new NotImplementedException();
-		}
+		{ }
 
 		/// <summary>
 		/// Executed when item is equipped.

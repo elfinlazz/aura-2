@@ -319,13 +319,9 @@ namespace Aura.Channel.Scripting.Scripts
 				return null;
 
 			// Random targetable creature
-			var potentialTargets = creatures.Where(target =>
-			{
-				return
-					this.Creature.CanTarget(target) &&
-					this.DoesHate(target) &&
-					!this.DoesLove(target);
-			}).ToList();
+			var potentialTargets = creatures.Where(target => this.Creature.CanTarget(target) &&
+			                                                 this.DoesHate(target) &&
+			                                                 !this.DoesLove(target)).ToList();
 
 			if (potentialTargets.Count == 0)
 				return null;

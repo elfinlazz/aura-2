@@ -67,7 +67,9 @@ namespace Aura.Channel.Scripting
 
 			// Polygon
 			var result = new Point();
-			while (!this.IsPointInside(result = new Point(rnd.Next(_minX, _maxX), rnd.Next(_minY, _maxY)))) ;
+			while (!this.IsPointInside(result = new Point(rnd.Next(_minX, _maxX), rnd.Next(_minY, _maxY))))
+			{ }
+
 			return result;
 		}
 

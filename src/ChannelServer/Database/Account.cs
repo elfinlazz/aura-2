@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Scripting;
 
@@ -44,9 +45,27 @@ namespace Aura.Channel.Database
 			return result;
 		}
 
-		public PlayerCreature GetPet(long entityId)
+		public PlayerCreature GetCharacterOrPetSafe(long entityId)
+		{
+			var r = this.GetCharacterOrPet(entityId);
+			if (r == null)
+				throw new SevereViolation("Account doesn't contain character 0x{0:X}", entityId);
+
+			return r;
+		}
+
+		public Pet GetPet(long entityId)
 		{
 			return this.Pets.FirstOrDefault(a => a.EntityId == entityId);
+		}
+
+		public Pet GetPetSafe(long entityId)
+		{
+			var r = this.GetPet(entityId);
+			if (r == null)
+				throw new SevereViolation("Account doesn't contain pet 0x{0:X}", entityId);
+
+			return r;
 		}
 	}
 }
