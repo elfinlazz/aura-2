@@ -97,10 +97,11 @@ public class LassarBaseScript : NpcScript
 				Msg("Good luck...ha ha ha.");
 				break;
 				
-			case "about_study": // End Conversation button over Continue button
-				Msg("So, you already know Icebolt, do you? Did you have any trouble using it?<br/>Since you know the basics already, I'll give you a tuition discount.<br/>Tuition is a lump sum that includes three days of lessons including today.<br/>This tuition covers up to the end of Basic Sorcery Chapter One.");
+			case "about_study":
+				//Msg("So, you already know Icebolt, do you? Did you have any trouble using it?<br/>Since you know the basics already, I'll give you a tuition discount.<br/>Tuition is a lump sum that includes three days of lessons including today.<br/>This tuition covers up to the end of Basic Sorcery Chapter One.");
 				//Msg("Class has started long ago.<br/>You should come back later.");
 				Msg("Sorry, my classes aren't ready to be studied.");
+				Close();
 				break;
 				
 			case "shop_misc":
