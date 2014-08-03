@@ -61,7 +61,7 @@ public class PiarasBaseScript : NpcScript
 		switch(keyword)
 		{
 			case "personal_info":
-				Player.Keywords.Give("inn");
+				Player.Keywords.Give("shop_inn");
 				Msg("I might sound too proud,<br/>but I put a lot of effort into making this place as comfortable for my guests as possible.<br/>Please visit us when you need a place to stay.<br/>");
 				break;
 				
