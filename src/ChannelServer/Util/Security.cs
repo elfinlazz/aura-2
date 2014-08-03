@@ -13,12 +13,14 @@ namespace Aura.Channel.Util
 	{
 		private const int _stackDepth = 5;
 
-		private string _message;
+		private readonly string _message;
 
 		/// <summary>
 		/// Details on what happened, including a brief stack trace
 		/// </summary>
 		public override string Message { get { return _message; } }
+
+		public string StackReport { get; private set; }
 		
 		/// <summary>
 		/// How bad it was
@@ -31,13 +33,13 @@ namespace Aura.Channel.Util
 
 			var stacktrace = new System.Diagnostics.StackTrace(2); // Skip 2 frames for this and calling ctor
 
-			var stackreport = string.Join("-->",
+			StackReport = string.Join(" --> ",
 				stacktrace.GetFrames()
 				.Take(_stackDepth)
 				.Reverse()
-				.Select(n => n.GetMethod().Name));
+				.Select(n => n.GetMethod().DeclaringType.Name + "." + n.GetMethod().Name));
 
-			_message = string.Format("{0} === {1}", report, stackreport);
+			_message = string.Format("{0}: {1}", stacktrace.GetFrame(0).GetMethod().Name, report);
 		}
 	}
 
