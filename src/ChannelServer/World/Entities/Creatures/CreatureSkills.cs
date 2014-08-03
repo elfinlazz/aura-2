@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.Skills;
 using Aura.Channel.Network.Sending;
@@ -104,6 +105,16 @@ namespace Aura.Channel.World.Entities.Creatures
 			lock (_skills)
 				_skills.TryGetValue(id, out result);
 			return result;
+		}
+
+		public Skill GetSafe(SkillId id)
+		{
+			var r = this.Get(id);
+
+			if (r == null)
+				throw new ModerateViolation("Tried to get nonexistant skill {0}.", id);
+
+			return r;
 		}
 
 		/// <summary>

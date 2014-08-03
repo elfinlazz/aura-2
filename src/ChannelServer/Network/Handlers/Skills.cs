@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
@@ -28,8 +29,8 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var skill = creature.Skills.Get(skillId);
-			if (skill == null || !skill.IsRankable) goto L_Fail;
+			var skill = creature.Skills.GetSafe(skillId);
+			if (!skill.IsRankable) goto L_Fail;
 
 			var nextRank = skill.SkillData.GetRankData((int)skill.Info.Rank + 1, creature.Race);
 			if (nextRank == null)
@@ -76,13 +77,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var skill = creature.Skills.Get(skillId);
-			if (skill == null)
-			{
-				Log.Warning("SkillStart: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
-				Send.SkillStartSilentCancel(creature, skillId);
-				return;
-			}
+			var skill = creature.Skills.GetSafe(skillId);
 
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<IStartable>(skillId);
 			if (handler == null)
@@ -128,13 +123,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var skill = creature.Skills.Get(skillId);
-			if (skill == null)
-			{
-				Log.Warning("SkillStop: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
-				Send.SkillStopSilentCancel(creature, skillId);
-				return;
-			}
+			var skill = creature.Skills.GetSafe(skillId);
 
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<IStoppable>(skillId);
 			if (handler == null)
@@ -185,13 +174,7 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
-			var skill = creature.Skills.Get(skillId);
-			if (skill == null)
-			{
-				Log.Warning("SkillPrepare: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
-				Send.SkillPrepareSilentCancel(creature, skillId);
-				return;
-			}
+			var skill = creature.Skills.GetSafe(skillId);
 
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<IPreparable>(skillId);
 			if (handler == null)
@@ -234,13 +217,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var skill = creature.Skills.Get(skillId);
-			if (skill == null)
-			{
-				Log.Warning("SkillReady: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
-				// Cancel?
-				return;
-			}
+			var skill = creature.Skills.GetSafe(skillId);
 
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<IReadyable>(skillId);
 			if (handler == null)
@@ -280,13 +257,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var skill = creature.Skills.Get(skillId);
-			if (skill == null)
-			{
-				Log.Warning("SkillUse: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
-				Send.SkillUseSilentCancel(creature);
-				return;
-			}
+			var skill = creature.Skills.GetSafe(skillId);
 
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<IUseable>(skillId);
 			if (handler == null)
@@ -326,13 +297,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var skill = creature.Skills.Get(skillId);
-			if (skill == null)
-			{
-				Log.Warning("SkillComplete: Player '{0}' tried to use skill '{1}', which he doesn't have.", creature.Name, skillId);
-				// Cancel?
-				goto L_End;
-			}
+			var skill = creature.Skills.GetSafe(skillId);
 
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<ICompletable>(skillId);
 			if (handler == null)

@@ -145,7 +145,7 @@ namespace Aura.Channel.Network.Handlers
 
 			if (creature.Temp.CurrentCutscene == null)
 			{
-				Log.Error("FinishedCutscene: Player '{0}' tried to finish invalud cutscene.", creature.EntityIdHex);
+				Log.Error("FinishedCutscene: Player '{0}' tried to finish invalid cutscene.", creature.EntityIdHex);
 				return;
 			}
 

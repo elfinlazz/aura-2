@@ -44,6 +44,9 @@ namespace Aura.Channel.Network.Handlers
 			var account = ChannelDb.Instance.GetAccount(accountId);
 			if (account == null || account.SessionKey != sessionKey)
 			{
+				// This doesn't autoban because the client is not yet "authenticated",
+				// so an evil person might be able to use it to inflate someone's
+				// autoban score without knowing their password
 				Log.Warning("ChannelLogin handler: Invalid account ({0}) or session ({1}).", accountId, sessionKey);
 				client.Kill();
 				return;

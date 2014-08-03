@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.Network.Sending;
@@ -38,10 +39,7 @@ namespace Aura.Channel.Network.Handlers
 			var target = ChannelServer.Instance.World.GetNpc(npcEntityId);
 			if (target == null)
 			{
-				Send.NpcTalkStartR_Fail(creature);
-
-				Log.Warning("Creature '{0}' tried to talk to non-existing NPC '{1}'.", creature.Name, npcEntityId.ToString("X16"));
-				return;
+				throw new ModerateViolation("Tried to talk to non-existant NPC 0x{0:X}", npcEntityId);
 			}
 
 			// Special NPCs
@@ -56,10 +54,7 @@ namespace Aura.Channel.Network.Handlers
 			// Some special NPCs require special permission.
 			if (disallow)
 			{
-				Send.NpcTalkStartR_Fail(creature);
-
-				Log.Warning("NpcTalkStart: Creature '{0}' tried to talk to NPC '{1}' without permission.", creature.Name, target.Name);
-				return;
+				throw new ModerateViolation("Tried to talk to NPC 0x{0:X} ({1}) without permission.", npcEntityId, target.Name);
 			}
 
 			// Check script
@@ -143,9 +138,7 @@ namespace Aura.Channel.Network.Handlers
 			var match = Regex.Match(result, "<return type=\"string\">(?<result>[^<]*)</return>");
 			if (!match.Success)
 			{
-				Log.Warning("NpcTalkSelect: Player '{0}' sent invalid return ({1}).", creature.Name, result);
-				Send.NpcTalkEndR(creature, client.NpcSession.Target.EntityId);
-				return;
+				throw new ModerateViolation("Invalid NPC talk selection: {0}", result);
 			}
 
 			var response = match.Groups["result"].Value;
@@ -232,8 +225,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check open shop
 			if (creature.Temp.CurrentShop == null)
 			{
-				Log.Warning("NpcShopBuyItem: Player '' tried to buy something with cur shop being null.", creature.EntityIdHex);
-				goto L_Fail;
+				throw new ModerateViolation("Tried to buy an item with a null shop.");
 			}
 
 			// Get item
@@ -298,8 +290,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check open shop
 			if (creature.Temp.CurrentShop == null)
 			{
-				Log.Warning("NpcShopSellItem: Player '' tried to sell something with cur shop being null.", creature.EntityIdHex);
-				goto L_End;
+				throw new ModerateViolation("Tried to sell something with current shop being null");
 			}
 
 			// Get item

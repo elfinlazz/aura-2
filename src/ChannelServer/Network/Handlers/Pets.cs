@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.World;
@@ -140,9 +141,7 @@ namespace Aura.Channel.Network.Handlers
 
 			if (pet.Master.RegionId != pet.RegionId)
 			{
-				Log.Warning("Illegal pet teleport by '{0}'.", packet.Id.ToString("X16"));
-				Send.TelePetR(pet, false);
-				return;
+				throw new ModerateViolation("Illegal pet teleport");
 			}
 
 			pet.Warp(pet.RegionId, x, y);
@@ -184,10 +183,12 @@ namespace Aura.Channel.Network.Handlers
 			var item = creature.Inventory.GetItemSafe(itemEntityId);
 
 			// Check pocket
-			if (!pet.IsPartner && pocket != Pocket.Inventory)
+			// If the pet is a partner, limit pockets to normally accessible pockets
+			// TODO: Should really limit to equip + Inventory
+			// If the pet is not a partner, limit to inventory
+			if ((pet.IsPartner && !CreatureInventory.AccessiblePockets.Contains(pocket)) || (!pet.IsPartner && pocket != Pocket.Inventory))
 			{
-				Log.Warning("PutItemIntoPetInv: Player '{0}' tried to move item to invalid pocket '{1}'.", creature.Name, pocket);
-				goto L_Fail;
+				throw new ModerateViolation("Attempted to put an item into an invalid pet pocket ({0})", pocket);
 			}
 
 			// Try move
