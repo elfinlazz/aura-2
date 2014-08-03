@@ -58,6 +58,22 @@ namespace Aura.Channel.Network
 		}
 
 		/// <summary>
+		/// Calls <see cref="GetCreatureSafe(long)"/> and then checks the pet's master for null.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public Creature GetSummonedPetSafe(long id)
+		{
+			var pet = this.GetCreatureSafe(id);
+			if (pet.Master == null)
+			{
+				throw new ModerateViolation("Pet 0x{0:X} doesn't have a master.", id);
+			}
+
+			return pet;
+		}
+
+		/// <summary>
 		/// Saves characters, despawns and disposes them, etc.
 		/// </summary>
 		public override void CleanUp()

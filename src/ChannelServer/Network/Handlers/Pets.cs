@@ -136,9 +136,7 @@ namespace Aura.Channel.Network.Handlers
 			var x = packet.GetInt();
 			var y = packet.GetInt();
 
-			var pet = client.GetCreatureSafe(packet.Id);
-			if (pet.Master == null)
-				return;
+			var pet = client.GetSummonedPetSafe(packet.Id);
 
 			if (pet.Master.RegionId != pet.RegionId)
 			{
@@ -180,20 +178,10 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Get pet
-			var pet = client.GetCreatureSafe(petEntityId);
-			if (pet.Master == null)
-			{
-				Log.Warning("PutItemIntoPetInv: Player '{0}' tried to move item to invalid pet.", creature.Name);
-				goto L_Fail;
-			}
+			var pet = client.GetSummonedPetSafe(petEntityId);
 
 			// Get item
-			var item = creature.Inventory.GetItem(itemEntityId);
-			if (item == null)
-			{
-				Log.Warning("PutItemIntoPetInv: Player '{0}' tried to move invalid item to pet.", creature.Name);
-				goto L_Fail;
-			}
+			var item = creature.Inventory.GetItemSafe(itemEntityId);
 
 			// Check pocket
 			if (!pet.IsPartner && pocket != Pocket.Inventory)
@@ -233,22 +221,10 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Get pet
-			var pet = client.GetCreatureSafe(petEntityId);
-			if (pet.Master == null)
-			{
-				Log.Warning("Player '{0}' tried to move item from invalid pet.", creature.Name);
-				Send.TakeItemFromPetInvR(creature, false);
-				return;
-			}
+			var pet = client.GetSummonedPetSafe(petEntityId);
 
 			// Get item
-			var item = pet.Inventory.GetItem(itemEntityId);
-			if (item == null)
-			{
-				Log.Warning("Player '{0}' tried to move invalid item from pet.", creature.Name);
-				Send.TakeItemFromPetInvR(creature, false);
-				return;
-			}
+			var item = pet.Inventory.GetItemSafe(itemEntityId);
 
 			// Try move
 			if (!pet.Inventory.MovePet(pet, item, creature, Pocket.Cursor, 0, 0))

@@ -30,7 +30,7 @@ namespace Aura.Channel.Network.Handlers
 		public void ItemMove(ChannelClient client, Packet packet)
 		{
 			var entityId = packet.GetLong();
-			var source = (Pocket)packet.GetByte();
+			var untrustedSource = (Pocket)packet.GetByte(); // Discard this, NA does too
 			var target = (Pocket)packet.GetByte();
 			var unk = packet.GetByte();
 			var targetX = packet.GetByte();
@@ -40,9 +40,9 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check item
-			var item = creature.Inventory.GetItem(entityId);
-			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
-				goto L_Fail;
+			var item = creature.Inventory.GetItemSafe(entityId);
+
+			var source = item.Info.Pocket;
 
 			// Check bag
 			if (item.IsBag && target.IsBag() && !ChannelServer.Instance.Conf.World.Bagception)
@@ -83,13 +83,7 @@ namespace Aura.Channel.Network.Handlers
 				return;
 
 			// Check item
-			var item = creature.Inventory.GetItem(entityId);
-			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
-			{
-				Log.Warning("Player '{0}' ({1}) tried to drop invalid item.", creature.Name, creature.EntityIdHex);
-				Send.ItemDropR(creature, false);
-				return;
-			}
+			var item = creature.Inventory.GetItemSafe(entityId);
 
 			// Check for filled bags
 			if (item.IsBag && item.OptionInfo.LinkedPocketId != Pocket.None && creature.Inventory.CountItemsInPocket(item.OptionInfo.LinkedPocketId) > 0)
@@ -173,13 +167,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var item = creature.Inventory.GetItem(itemId);
-			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
-			{
-				Log.Warning("Player '{0}' ({1}) tried to destroy invalid item.", creature.Name, creature.EntityIdHex);
-				Send.ItemDestroyR(creature, false);
-				return;
-			}
+			var item = creature.Inventory.GetItemSafe(itemId);
 
 			if (!creature.Inventory.Remove(item))
 			{
@@ -208,8 +196,8 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check item
-			var item = creature.Inventory.GetItem(itemId);
-			if (item == null || item.Data.StackType == StackType.None)
+			var item = creature.Inventory.GetItemSafe(itemId);
+			if (item.Data.StackType == StackType.None)
 			{
 				Send.ItemSplitR(creature, false);
 				return;
@@ -220,11 +208,7 @@ namespace Aura.Channel.Network.Handlers
 				amount = item.Info.Amount;
 
 			// Clone item or create new one based on stack item
-			Item splitItem;
-			if (item.Data.StackItem == 0)
-				splitItem = new Item(item);
-			else
-				splitItem = new Item(item.Data.StackItem);
+			var splitItem = item.Data.StackItem == 0 ? new Item(item) : new Item(item.Data.StackItem);
 			splitItem.Info.Amount = amount;
 
 			// New item on cursor
@@ -332,12 +316,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Get item
-			var item = creature.Inventory.GetItem(entityId);
-			if (item == null)
-			{
-				Log.Warning("Player '{0}' tried to use item he doesn't possess.", creature.Name);
-				goto L_Fail;
-			}
+			var item = creature.Inventory.GetItemSafe(entityId);
 
 			// Meta Data Scripts
 			var gotMetaScript = false;
@@ -475,8 +454,8 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check bag
-			var bag = creature.Inventory.GetItem(entityId);
-			if (bag == null || !bag.IsBag || bag.OptionInfo.LinkedPocketId == Pocket.None)
+			var bag = creature.Inventory.GetItemSafe(entityId);
+			if (!bag.IsBag || bag.OptionInfo.LinkedPocketId == Pocket.None)
 			{
 				Log.Warning("Player '{0}' ({1}) tried to unequip invalid bag.", creature.Name, creature.EntityIdHex);
 				Send.UnequipBagR(creature, false);

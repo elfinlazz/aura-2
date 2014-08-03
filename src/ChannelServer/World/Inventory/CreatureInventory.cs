@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Util;
 using Aura.Channel.World.Entities;
 using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
@@ -27,13 +28,62 @@ namespace Aura.Channel.World
 		private const int GoldItemId = 2000;
 		private const int GoldStackMax = 1000;
 
+		static CreatureInventory()
+		{
+			AccessiblePockets = new HashSet<Pocket>()
+			{
+				Pocket.Accessory1,
+				Pocket.Accessory2,
+				Pocket.Armor,
+				Pocket.ArmorStyle,
+				Pocket.BattleReward,
+				Pocket.ComboCard,
+				Pocket.Cursor,
+				Pocket.EnchantReward,
+				Pocket.Falias1,
+				Pocket.Falias2,
+				Pocket.Falias3,
+				Pocket.Falias4,
+				Pocket.Glove,
+				Pocket.GloveStyle,
+				Pocket.Head,
+				Pocket.HeadStyle,
+				Pocket.Inventory,
+				Pocket.LeftHand1,
+				Pocket.LeftHand2,
+				Pocket.Magazine1,
+				Pocket.Magazine2,
+				Pocket.ManaCrystalReward,
+				Pocket.PersonalInventory,
+				Pocket.RightHand1,
+				Pocket.RightHand2,
+				Pocket.Robe,
+				Pocket.RobeStyle,
+				Pocket.Shoe,
+				Pocket.ShoeStyle,
+				Pocket.Temporary,
+				Pocket.Trade,
+				Pocket.VIPInventory,
+			};
+
+			for (var i = Pocket.ItemBags; i <= Pocket.ItemBagsMax; i++)
+			{
+				AccessiblePockets.Add(i);
+			}
+		}
+
 		/// <summary>
 		/// These pockets aren't checked by the Count() method
 		/// </summary>
-		public readonly IEnumerable<Pocket> InvisiblePockets = new[]
+		public static readonly IEnumerable<Pocket> InvisiblePockets = new[]
 		{
 			Pocket.Temporary
 		};
+
+		/// <summary>
+		/// These pockets are checked by Safe methoods.
+		/// </summary>
+		public static ISet<Pocket> AccessiblePockets { get; private set; }
 
 		private Creature _creature;
 		private Dictionary<Pocket, InventoryPocket> _pockets;
@@ -61,7 +111,8 @@ namespace Aura.Channel.World
 		/// </summary>
 		public IEnumerable<Item> Equipment
 		{
-			get {
+			get
+			{
 				return _pockets.Values.Where(a => a.Pocket.IsEquip()).SelectMany(pocket => pocket.Items.Where(a => a != null));
 			}
 		}
@@ -71,7 +122,8 @@ namespace Aura.Channel.World
 		/// </summary>
 		public IEnumerable<Item> ActualEquipment
 		{
-			get {
+			get
+			{
 				return _pockets.Values.Where(a => a.Pocket.IsEquip() && a.Pocket != Pocket.Hair && a.Pocket != Pocket.Face)
 					.SelectMany(pocket => pocket.Items.Where(a => a != null));
 			}
@@ -201,6 +253,21 @@ namespace Aura.Channel.World
 			return _pockets.Values.Select(pocket => pocket.GetItem(entityId)).FirstOrDefault(item => item != null);
 		}
 
+		public Item GetItemSafe(long entityId)
+		{
+			var r = this.GetItem(entityId);
+
+			if (r == null)
+				throw new SevereViolation("Creature does not have a item 0x{0:X}", entityId);
+
+			if (!AccessiblePockets.Contains(r.Info.Pocket))
+				throw new SevereViolation("Item 0x{0:X} is located in inaccessible pocket {1}", entityId, r.Info.Pocket);
+
+			// TODO: Check item data type?
+
+			return r;
+		}
+
 		/// <summary>
 		/// Returns item at the location, or null.
 		/// </summary>
@@ -210,10 +277,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public Item GetItemAt(Pocket pocket, int x, int y)
 		{
-			if (!this.Has(pocket))
-				return null;
-
-			return _pockets[pocket].GetItemAt(x, y);
+			return !this.Has(pocket) ? null : _pockets[pocket].GetItemAt(x, y);
 		}
 
 		/// <summary>

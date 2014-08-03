@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using Aura.Channel.Util;
 using Aura.Shared.Util;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Network.Sending;
@@ -76,6 +77,24 @@ namespace Aura.Channel.Scripting
 		public bool IsValid()
 		{
 			return (this.Target != null && this.Script != null);
+		}
+
+		/// <summary>
+		/// Checks <see cref="IsValid(long)"/>. If false, throws <see cref="ModerateViolation"/>.
+		/// </summary>
+		public void EnsureValid(long npcId)
+		{
+			if (!this.IsValid(npcId))
+				throw new ModerateViolation("Invalid NPC session");
+		}
+
+		/// <summary>
+		/// Checks <see cref="IsValid()"/>. If false, throws <see cref="ModerateViolation"/>.
+		/// </summary>
+		public void EnsureValid()
+		{
+			if (!this.IsValid())
+				throw new ModerateViolation("Invalid NPC session");
 		}
 	}
 

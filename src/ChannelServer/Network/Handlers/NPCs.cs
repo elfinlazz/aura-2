@@ -137,12 +137,7 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check session
-			if (!client.NpcSession.IsValid())
-			{
-				Log.Warning("NpcTalkSelect: Player '{0}' is in invalid session.", creature.Name);
-				Send.NpcTalkEndR(creature, client.NpcSession.Target.EntityId);
-				return;
-			}
+			client.NpcSession.EnsureValid();
 
 			// Check result string
 			var match = Regex.Match(result, "<return type=\"string\">(?<result>[^<]*)</return>");
@@ -201,12 +196,7 @@ namespace Aura.Channel.Network.Handlers
 			var character = client.GetCreatureSafe(packet.Id);
 
 			// Check session
-			if (!client.NpcSession.IsValid())
-			{
-				Send.NpcTalkKeywordR_Fail(character);
-				Log.Warning("NpcTalkKeyword: Player '{0}' sent a keyword without valid NPC session.", character.Name);
-				return;
-			}
+			client.NpcSession.EnsureValid();
 
 			// Check keyword
 			if (!character.Keywords.Has(keyword))
@@ -237,11 +227,7 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check session
-			if (!client.NpcSession.IsValid())
-			{
-				Log.Warning("NpcShopBuyItem: Player '{0}' is in invalid session.", creature.Name);
-				goto L_Fail;
-			}
+			client.NpcSession.EnsureValid();
 
 			// Check open shop
 			if (creature.Temp.CurrentShop == null)
@@ -307,11 +293,7 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check session
-			if (!client.NpcSession.IsValid())
-			{
-				Log.Warning("NpcShopSellItem: Player '{0}' is in invalid session.", creature.Name);
-				goto L_End;
-			}
+			client.NpcSession.EnsureValid();
 
 			// Check open shop
 			if (creature.Temp.CurrentShop == null)
@@ -321,12 +303,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Get item
-			var item = creature.Inventory.GetItem(entityId);
-			if (item == null)
-			{
-				Log.Warning("NpcShopSellItem: Item '{0}' doesn't exist in '{1}'s inventory.", entityId.ToString("X16"), creature.Name);
-				goto L_End;
-			}
+			var item = creature.Inventory.GetItemSafe(entityId);
 
 			// Calculate selling price
 			int sellingPrice = sellingPrice = item.OptionInfo.SellingPrice;

@@ -229,7 +229,7 @@ namespace Aura.Channel.Network.Handlers
 			// Better kill the connection, modders could bypass a dc request.
 			target.Client.Kill();
 
-			Send.MsgBox(creature, Localization.Get("'{0}' has been banned till '{1}'."), targetName, end);
+			Send.MsgBox(creature, Localization.Get("'{0}' has been banned till '{1}' UTC."), targetName, end.ToUniversalTime());
 		}
 
 		/// <summary>
