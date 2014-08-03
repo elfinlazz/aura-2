@@ -210,59 +210,59 @@ public class FerghusBaseScript : NpcScript
 				break;
 		}
 	}
-	
-	public class FerghusShop : NpcShopScript
+}
+
+public class FerghusShop : NpcShopScript
+{
+	public override void Setup()
 	{
-		public override void Setup()
-		{
-			//--- Weapon tab -----------------------------
-			//--------------------------------------------
-			Add("Weapon", 40023);       //Gathering Knife
-			Add("Weapon", 45001, 20);   //Arrow x20
-			Add("Weapon", 45001, 100);  //Arrow x100
-			Add("Weapon", 40022);       //Gathering Axe
-			Add("Weapon", 45002, 50);   //Bolt x50
-			Add("Weapon", 45002, 200);  //Bolt x200
-			Add("Weapon", 40027);       //Weeding Hoe
-			Add("Weapon", 40003);       //Short Bow
-			Add("Weapon", 40026);       //Sickle
-			Add("Weapon", 40006);       //Dagger
-			Add("Weapon", 40005);       //Short Sword
-			Add("Weapon", 40025);       //Pickaxe
-			Add("Weapon", 40179);       //Spiked Knuckle
-			Add("Weapon", 40007);       //Hatchet
-			Add("Weapon", 40024);       //Blacksmith Hammer
-			Add("Weapon", 40244);       //Bear Knuckle
-			Add("Weapon", 40180);       //Hobnail Knuckle
-			Add("Weapon", 40745);       //Basic Control Bar
-			Add("Weapon", 40841);       //Spiral Shuriken
-			Add("Weapon", 46001);       //Round Shield
-			
-			//--- Shoes and Gloves tab -------------------
-			//--------------------------------------------			
-			Add("Shoes Gloves", 16004); //Studded Bracelet
-			Add("Shoes Gloves", 16008); //Cores' Thief Gloves
-			Add("Shoes Gloves", 16000); //Leather Gloves
-			Add("Shoes Gloves", 17021); //Lorica Sandles
-			Add("Shoes Gloves", 17014); //Leather Shoes
-			Add("Shoes Gloves", 17001); //Ladies Leather Boots
-			Add("Shoes Gloves", 17005); //Hunter Boots
-			Add("Shoes Gloves", 17015); //Combat Shoes
-			Add("Shoes Gloves", 17016); //Field Combat Shoes
-			Add("Shoes Gloves", 17020); //Thief Shoes
-			Add("Shoes Gloves", 16014); //Lorica Gloves
-			
-			//--- Helmet tab -----------------------------
-			//--------------------------------------------
-			Add("Helmet", 18503);       //Cuirassier Helm
-			
-			//--- Armor tab ------------------------------
-			//--------------------------------------------
-			Add("Armor", 14001);        //Light Leather Mail (F)
-			Add("Armor", 14010);        //Light Leather Mail (M)
-			Add("Armor", 14004);        //Cloth Mail
-			Add("Armor", 14008);        //Full Leather Armor Set (F)
-			Add("Armor", 14003);        //Studded Cuirassier
-		}
+		//--- Weapon tab -----------------------------
+		//--------------------------------------------
+		Add("Weapon", 40023);       //Gathering Knife
+		Add("Weapon", 45001, 20);   //Arrow x20
+		Add("Weapon", 45001, 100);  //Arrow x100
+		Add("Weapon", 40022);       //Gathering Axe
+		Add("Weapon", 45002, 50);   //Bolt x50
+		Add("Weapon", 45002, 200);  //Bolt x200
+		Add("Weapon", 40027);       //Weeding Hoe
+		Add("Weapon", 40003);       //Short Bow
+		Add("Weapon", 40026);       //Sickle
+		Add("Weapon", 40006);       //Dagger
+		Add("Weapon", 40005);       //Short Sword
+		Add("Weapon", 40025);       //Pickaxe
+		Add("Weapon", 40179);       //Spiked Knuckle
+		Add("Weapon", 40007);       //Hatchet
+		Add("Weapon", 40024);       //Blacksmith Hammer
+		Add("Weapon", 40244);       //Bear Knuckle
+		Add("Weapon", 40180);       //Hobnail Knuckle
+		Add("Weapon", 40745);       //Basic Control Bar
+		Add("Weapon", 40841);       //Spiral Shuriken
+		Add("Weapon", 46001);       //Round Shield
+		
+		//--- Shoes and Gloves tab -------------------
+		//--------------------------------------------			
+		Add("Shoes Gloves", 16004); //Studded Bracelet
+		Add("Shoes Gloves", 16008); //Cores' Thief Gloves
+		Add("Shoes Gloves", 16000); //Leather Gloves
+		Add("Shoes Gloves", 17021); //Lorica Sandles
+		Add("Shoes Gloves", 17014); //Leather Shoes
+		Add("Shoes Gloves", 17001); //Ladies Leather Boots
+		Add("Shoes Gloves", 17005); //Hunter Boots
+		Add("Shoes Gloves", 17015); //Combat Shoes
+		Add("Shoes Gloves", 17016); //Field Combat Shoes
+		Add("Shoes Gloves", 17020); //Thief Shoes
+		Add("Shoes Gloves", 16014); //Lorica Gloves
+		
+		//--- Helmet tab -----------------------------
+		//--------------------------------------------
+		Add("Helmet", 18503);       //Cuirassier Helm
+		
+		//--- Armor tab ------------------------------
+		//--------------------------------------------
+		Add("Armor", 14001);        //Light Leather Mail (F)
+		Add("Armor", 14010);        //Light Leather Mail (M)
+		Add("Armor", 14004);        //Cloth Mail
+		Add("Armor", 14008);        //Full Leather Armor Set (F)
+		Add("Armor", 14003);        //Studded Cuirassier
 	}
 }
