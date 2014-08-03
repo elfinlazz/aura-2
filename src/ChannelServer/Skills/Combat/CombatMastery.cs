@@ -112,7 +112,7 @@ namespace Aura.Channel.Skills.Combat
 					var newPos = attacker.GetPosition().GetRelative(targetPosition, KnockBackDistance);
 
 					Position intersection;
-					if (target.Region.Collissions.Find(targetPosition, newPos, out intersection))
+					if (target.Region.Collisions.Find(targetPosition, newPos, out intersection))
 						newPos = targetPosition.GetRelative(intersection, -50);
 
 					target.SetPosition(newPos.X, newPos.Y);

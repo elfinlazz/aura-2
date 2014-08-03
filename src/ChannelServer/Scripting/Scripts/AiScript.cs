@@ -519,6 +519,18 @@ namespace Aura.Channel.Scripting.Scripts
 			return _loveTags.Values.Any(tag => target.RaceData.HasTag(tag));
 		}
 
+		/// <summary>
+		/// Returns true if there are collisions between the two positions.
+		/// </summary>
+		/// <param name="pos"></param>
+		/// <param name="pos"></param>
+		/// <returns></returns>
+		protected bool AnyCollisions(Position pos1, Position pos2)
+		{
+			Position intersection;
+			return this.Creature.Region.Collisions.Find(pos1, pos2, out intersection);
+		}
+
 		// Flow control
 		// ------------------------------------------------------------------
 
@@ -686,7 +698,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 			// Check for collision
 			Position intersection;
-			if (this.Creature.Region.Collissions.Find(pos, destination, out intersection))
+			if (this.Creature.Region.Collisions.Find(pos, destination, out intersection))
 				destination = pos.GetRelative(intersection, -10);
 
 			this.Creature.Move(destination, walk);
