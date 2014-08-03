@@ -66,7 +66,7 @@ public class PiarasBaseScript : NpcScript
 				break;
 				
 			case "rumor":
-				Msg("There are rumors at the Inn about Southern Plains of Tir Chonaill and Gigantic Black Wolf appearing at 7Days later Dawn.<br/>I hope it remains a rumor.");
+				Msg("Why don't you talk to others in town? There's a good spot to meet people. The Town Square is right up this way. I suggest you try there first.");
 				break;
 				
 			case "about_skill":
