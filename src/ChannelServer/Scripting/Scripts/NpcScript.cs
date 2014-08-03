@@ -106,7 +106,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public virtual void EndConversation()
 		{
-			Close("<npcportrait name='NONE' /><title name='NONE' />(You ended your conversation with <npcname/>.)");
+			Close("(You ended your conversation with <npcname/>.)");
 		}
 
 		/// <summary>
