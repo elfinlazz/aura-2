@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Channel.World.Quests;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
@@ -67,6 +68,21 @@ namespace Aura.Channel.World.Entities.Creatures
 		{
 			lock (_quests)
 				return _quests.Values.FirstOrDefault(a => a.UniqueId == uniqueId);
+		}
+
+		/// <summary>
+		/// Calls <see cref="Get(long)"/>. If the result is null, throws <see cref="SevereViolation"/>.
+		/// </summary>
+		/// <param name="uniqueId"></param>
+		/// <returns></returns>
+		public Quest GetSafe(long uniqueId)
+		{
+			var q = this.Get(uniqueId);
+
+			if (q == null)
+				throw new SevereViolation("Creature does not have quest 0x{0:X}", uniqueId);
+
+			return q;
 		}
 
 		/// <summary>

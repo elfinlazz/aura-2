@@ -25,8 +25,8 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var quest = creature.Quests.Get(uniqueQuestId);
-			if (quest == null || !quest.IsDone) goto L_Fail;
+			var quest = creature.Quests.GetSafe(uniqueQuestId);
+			if (!quest.IsDone) goto L_Fail;
 
 			if (!creature.Quests.Complete(quest)) goto L_Fail;
 
@@ -50,8 +50,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var quest = creature.Quests.Get(uniqueQuestId);
-			if (quest == null) goto L_Fail;
+			var quest = creature.Quests.GetSafe(uniqueQuestId);
 
 			if (!creature.Quests.GiveUp(quest)) goto L_Fail;
 
