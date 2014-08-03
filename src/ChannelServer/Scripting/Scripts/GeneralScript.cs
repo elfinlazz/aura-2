@@ -13,6 +13,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -316,9 +317,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="regionId"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		protected void Spawn(int raceId, int amount, int regionId, int x, int y)
+		protected List<Creature> Spawn(int raceId, int amount, int regionId, int x, int y)
 		{
-			this.Spawn(raceId, amount, regionId, x, y, null);
+			return this.Spawn(raceId, amount, regionId, x, y, null);
 		}
 
 		/// <summary>
@@ -330,53 +331,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="radius">Radius around position for random spawn</param>
-		protected void Spawn(int raceId, int amount, int regionId, int x, int y, int radius)
+		protected List<Creature> Spawn(int raceId, int amount, int regionId, int x, int y, int radius)
 		{
-			this.Spawn(raceId, amount, regionId, x, y, radius, true, null);
-		}
-
-		/// <summary>
-		/// Spawns creature(s)
-		/// </summary>
-		/// <param name="raceId"></param>
-		/// <param name="amount"></param>
-		/// <param name="regionId"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <param name="radius">Radius around position for random spawn</param>
-		/// <param name="effect">Whether to display spawn effect</param>
-		protected void Spawn(int raceId, int amount, int regionId, int x, int y, int radius, bool effect)
-		{
-			this.Spawn(raceId, amount, regionId, x, y, radius, effect, null);
-		}
-
-		/// <summary>
-		/// Spawns creature(s)
-		/// </summary>
-		/// <param name="raceId"></param>
-		/// <param name="amount"></param>
-		/// <param name="regionId"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <param name="onDeath">Runs when one of the creatures dies</param>
-		protected void Spawn(int raceId, int amount, int regionId, int x, int y, Action<Creature, Creature> onDeath)
-		{
-			this.Spawn(raceId, amount, regionId, x, y, 0, true, onDeath);
-		}
-
-		/// <summary>
-		/// Spawns creature(s)
-		/// </summary>
-		/// <param name="raceId"></param>
-		/// <param name="amount"></param>
-		/// <param name="regionId"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <param name="radius">Radius around position for random spawn</param>
-		/// <param name="onDeath">Runs when one of the creatures dies</param>
-		protected void Spawn(int raceId, int amount, int regionId, int x, int y, int radius, Action<Creature, Creature> onDeath)
-		{
-			this.Spawn(raceId, amount, regionId, x, y, 0, true, onDeath);
+			return this.Spawn(raceId, amount, regionId, x, y, radius, true, null);
 		}
 
 		/// <summary>
@@ -389,10 +346,38 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="y"></param>
 		/// <param name="radius">Radius around position for random spawn</param>
 		/// <param name="effect">Whether to display spawn effect</param>
-		/// <param name="onDeath">Runs when one of the creatures dies</param>
-		protected void Spawn(int raceId, int amount, int regionId, int x, int y, int radius, bool effect, Action<Creature, Creature> onDeath)
+		protected List<Creature> Spawn(int raceId, int amount, int regionId, int x, int y, int radius, bool effect)
 		{
-			this.Spawn(raceId, amount, regionId, new Position(x, y), radius, effect, onDeath);
+			return this.Spawn(raceId, amount, regionId, x, y, radius, effect, null);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="onDeath">Runs when one of the creatures dies</param>
+		protected List<Creature> Spawn(int raceId, int amount, int regionId, int x, int y, Action<Creature, Creature> onDeath)
+		{
+			return this.Spawn(raceId, amount, regionId, x, y, 0, true, onDeath);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="radius">Radius around position for random spawn</param>
+		/// <param name="onDeath">Runs when one of the creatures dies</param>
+		protected List<Creature> Spawn(int raceId, int amount, int regionId, int x, int y, int radius, Action<Creature, Creature> onDeath)
+		{
+			return this.Spawn(raceId, amount, regionId, x, y, 0, true, onDeath);
 		}
 
 		/// <summary>
@@ -406,8 +391,26 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="radius">Radius around position for random spawn</param>
 		/// <param name="effect">Whether to display spawn effect</param>
 		/// <param name="onDeath">Runs when one of the creatures dies</param>
-		protected void Spawn(int raceId, int amount, int regionId, Position pos, int radius, bool effect, Action<Creature, Creature> onDeath)
+		protected List<Creature> Spawn(int raceId, int amount, int regionId, int x, int y, int radius, bool effect, Action<Creature, Creature> onDeath)
 		{
+			return this.Spawn(raceId, amount, regionId, new Position(x, y), radius, effect, onDeath);
+		}
+
+		/// <summary>
+		/// Spawns creature(s)
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="radius">Radius around position for random spawn</param>
+		/// <param name="effect">Whether to display spawn effect</param>
+		/// <param name="onDeath">Runs when one of the creatures dies</param>
+		protected List<Creature> Spawn(int raceId, int amount, int regionId, Position pos, int radius, bool effect, Action<Creature, Creature> onDeath)
+		{
+			var result = new List<Creature>();
+
 			amount = Math2.MinMax(1, 100, amount);
 
 			var rnd = RandomProvider.Get();
@@ -421,7 +424,11 @@ namespace Aura.Channel.Scripting.Scripts
 
 				if (onDeath != null)
 					creature.Death += onDeath;
+
+				result.Add(creature);
 			}
+
+			return result;
 		}
 
 		#endregion Spawn
