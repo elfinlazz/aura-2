@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aura.Channel.Database;
+using Aura.Channel.Network;
+using Aura.Shared.Util;
+using MySql.Data.MySqlClient.Memcached;
 
 namespace Aura.Channel.Util
 {
@@ -16,10 +20,13 @@ namespace Aura.Channel.Util
 		private readonly string _message;
 
 		/// <summary>
-		/// Details on what happened, including a brief stack trace
+		/// Details on what happened
 		/// </summary>
 		public override string Message { get { return _message; } }
 
+		/// <summary>
+		/// A short stack trace to identify where the incident occured.
+		/// </summary>
 		public string StackReport { get; private set; }
 		
 		/// <summary>
@@ -33,7 +40,7 @@ namespace Aura.Channel.Util
 
 			var stacktrace = new System.Diagnostics.StackTrace(2); // Skip 2 frames for this and calling ctor
 
-			StackReport = string.Join(" --> ",
+			this.StackReport = string.Join(" --> ",
 				stacktrace.GetFrames()
 				.Take(_stackDepth)
 				.Reverse()
@@ -79,8 +86,99 @@ namespace Aura.Channel.Util
 
 	public enum IncidentSeverityLevel
 	{
-		Mild,
+		Mild = 1,
 		Moderate,
 		Severe
+	}
+
+	public sealed class Autoban
+	{
+		private readonly ChannelClient _client;
+
+		public int Score
+		{
+			get
+			{
+				return _client.Account.AutobanScore;
+			}
+
+			private set
+			{
+				_client.Account.AutobanScore = value;
+			}
+		}
+	
+		public int BanCount
+		{
+			get
+			{
+				return _client.Account.AutobanCount;
+			}
+
+			private set
+			{
+				_client.Account.AutobanCount = value;
+			}
+		}
+
+		public DateTime LastAutobanReduction
+		{
+			get
+			{
+				return _client.Account.LastAutobanReduction;
+			}
+			private set
+			{
+				_client.Account.LastAutobanReduction = value;
+			}
+		}
+
+		public Autoban(ChannelClient client)
+		{
+			_client = client;
+		}
+
+		public void Incident(IncidentSeverityLevel level, string report, string stacktrace = null)
+		{
+			switch (level)
+			{
+				case IncidentSeverityLevel.Mild: this.Score += 1; break;
+				case IncidentSeverityLevel.Moderate: this.Score += 5; break;
+				case IncidentSeverityLevel.Severe: this.Score += 10; break;
+				default:
+					Log.Warning("Unknown severity level {0}", level);
+					goto case IncidentSeverityLevel.Mild;
+			}
+
+			Log.Warning(
+				"Account '{0}' (Controlling {1}) just committed a {2} offense. Total ban score: {3}. Incident report: {4}",
+				_client.Account.Id, _client.Controlling == null ? "NULL" : "'" + _client.Controlling.Name + "'", level, this.Score,
+				report);
+
+			ChannelDb.Instance.LogAutobanIncident(_client.Account, _client.Controlling, level, report, stacktrace);
+
+			this.LastAutobanReduction = DateTime.Now;
+
+			this.Ban();
+
+			_client.Kill();
+		}
+
+		private void Ban()
+		{
+			this.BanCount++;
+
+			TimeSpan banLength = TimeSpan.FromHours(5);
+
+			Log.Info("Autobanning account '{0}'. Total times they've been autobanned: {1}. Length of this ban: {2}",
+				_client.Account.Id, this.BanCount, banLength);
+
+			_client.Account.BanExpiration = DateTime.Now + banLength;
+
+			_client.Account.BanReason = "Automatic ban triggered.";
+
+			// So their score doesn't decrease while they're banned.
+			this.LastAutobanReduction = _client.Account.BanExpiration;
+		}
 	}
 }

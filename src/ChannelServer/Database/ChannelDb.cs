@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using Aura.Channel.Scripting;
 using Aura.Channel.Skills;
+using Aura.Channel.Util;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World.Entities.Creatures;
@@ -58,6 +59,25 @@ namespace Aura.Channel.Database
 						account.Id = reader.GetStringSafe("accountId");
 						account.SessionKey = reader.GetInt64("sessionKey");
 						account.Authority = reader.GetByte("authority");
+						account.AutobanCount = reader.GetInt32("autobanCount");
+						account.AutobanScore = reader.GetInt32("autobanScore");
+						account.LastAutobanReduction = reader.GetDateTimeSafe("lastAutobanReduction");
+
+						// We don't need to decrease their score if it's already zero!
+						if (account.AutobanScore > 0)
+						{
+							var elapsed = DateTime.Now - account.LastAutobanReduction;
+							var delta = (int) (elapsed.Ticks/TimeSpan.FromDays(1).Ticks);
+
+							// Adding a -delta means they're a time traveller! =*O*=
+							// It would also increase their score.
+							if (delta < 0)
+							{
+								account.AutobanScore -= delta;
+								// We add the delta to prevent rapid logins/outs from affecting the score
+								account.LastAutobanReduction = account.LastAutobanReduction.Add(TimeSpan.FromDays(1*delta));
+							}
+						}
 					}
 				}
 
@@ -585,6 +605,22 @@ namespace Aura.Channel.Database
 						}
 					}
 				}
+			}
+		}
+
+		public void LogAutobanIncident(Account a, Creature controlling, IncidentSeverityLevel level, string report, string stacktrace)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var cmd = new InsertCommand("INSERT INTO `log_autoban` {0}", conn))
+			{
+				cmd.Set("accountId", a.Id);
+				cmd.Set("characterId", controlling == null ? null : (long?)(controlling.EntityId));
+				cmd.Set("date", DateTime.Now);
+				cmd.Set("level", (int) level);
+				cmd.Set("report", report);
+				cmd.Set("stacktrace", stacktrace);
+
+				cmd.Execute();
 			}
 		}
 

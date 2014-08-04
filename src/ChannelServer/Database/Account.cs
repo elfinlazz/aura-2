@@ -28,6 +28,53 @@ namespace Aura.Channel.Database
 
 		public ScriptVariables Vars { get; protected set; }
 
+		private int _autobanScore;
+		private int _autobanCount;
+
+		/// <summary>
+		/// Account's current Autoban score. Don't set this directly
+		/// as Autoban takes care of it.
+		/// </summary>
+		public int AutobanScore
+		{
+			get
+			{
+				return _autobanScore;
+			}
+			internal set
+			{
+				if (value < 0)
+					value = 0;
+
+				_autobanScore = value;
+			}
+		}
+
+		/// <summary>
+		/// Account's current Autoban count. Don't set this directly
+		/// as Autoban takes care of it.
+		/// </summary>
+		public int AutobanCount
+		{
+			get
+			{
+				return _autobanCount;
+			}
+			internal set
+			{
+				if (value < 0)
+					value = 0;
+
+				_autobanCount = value;
+			}
+		}
+
+		/// <summary>
+		/// Last time this account had its autoban score reduced.
+		/// Don't set this directly, as Autoban takes care of it.
+		/// </summary>
+		public DateTime LastAutobanReduction { get; internal set; }
+
 		public Account()
 		{
 			this.Characters = new List<Character>();
