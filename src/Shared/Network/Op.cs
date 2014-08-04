@@ -65,10 +65,11 @@ namespace Aura.Shared.Network
 		public const int DisconnectRequestR = 0x4E25;
 		public const int RequestClientDisconnect = 0x4E26;
 		public const int Disappear = 0x4E2A;
-		//public const int GoRebirth = 0x4E32;
+		public const int GoRebirth = 0x4E32;
+		public const int GoRebirthR = 0x4E33;
 		public const int WarpUnk1 = 0x4E39;
-		public const int Rebirth = 0x4E84;
-		public const int RebirthR = 0x4E85;
+		public const int RequestRebirth = 0x4E84;
+		public const int RequestRebirthR = 0x4E85;
 		public const int PonsUpdate = 0x4E8F; // b:2, i:amount, sent on login
 
 		public const int ChannelCharacterInfoRequest = 0x5208;
@@ -165,6 +166,11 @@ namespace Aura.Shared.Network
 		public const int ForceRunTo = 0x659A;
 		public const int ForceWalkTo = 0x659B;
 		public const int EnterRegionRequestR = 0x659C; // on login
+		public const int UrlUpdateChronicle = 0x65A2;
+		public const int UrlUpdateAdvertise = 0x65A3;
+		public const int UrlUpdateGuestbook = 0x65A4;
+		public const int UrlUpdatePvp = 0x65A5;
+		public const int UrlUpdateDungeonBoard = 0x65A6;
 		public const int TakeOff = 0x65A8;
 		public const int TakingOff = 0x65A9;
 		public const int TakeOffR = 0x65AA;
