@@ -106,7 +106,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public virtual void EndConversation()
 		{
-			Close("<npcportrait name='NONE' /><title name='NONE' />(You ended your conversation with <npcname/>.)");
+			Close("(You ended your conversation with <npcname/>.)");
 		}
 
 		/// <summary>
@@ -686,7 +686,17 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="message">Dialog closes immediately if null.</param>
 		public void Close(string message = null)
 		{
-			this.Close2(message);
+			this.Close(Hide.Both, message);
+		}
+
+		/// <summary>
+		/// Closes dialog box, by sending NpcTalkEndR, and leaves the NPC.
+		/// </summary>
+		/// <param name="hide"></param>
+		/// <param name="message">Dialog closes immediately if null.</param>
+		public void Close(Hide hide, string message)
+		{
+			this.Close2(hide, message);
 			this.Exit();
 		}
 
@@ -696,8 +706,26 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="message">Dialog closes immediately if null.</param>
 		public void Close2(string message = null)
 		{
-			if (message != null && this.NPC.DialogPortrait != null)
-				message = new DialogPortrait(this.NPC.DialogPortrait).ToString() + message;
+			this.Close2(Hide.Both, message);
+		}
+
+		/// <summary>
+		/// Sends NpcTalkEndR but doesn't leave NPC.
+		/// </summary>
+		/// <param name="hide"></param>
+		/// <param name="message">Dialog closes immediately if null.</param>
+		public void Close2(Hide hide, string message)
+		{
+			if (message != null)
+			{
+				if (hide == Hide.Face || hide == Hide.Both)
+					message = new DialogPortrait(null).ToString() + message;
+				else if (this.NPC.DialogPortrait != null)
+					message = new DialogPortrait(this.NPC.DialogPortrait).ToString() + message;
+
+				if (hide == Hide.Name || hide == Hide.Both)
+					message = new DialogTitle(null).ToString() + message;
+			}
 
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
 		}

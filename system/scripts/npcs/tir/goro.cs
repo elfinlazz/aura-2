@@ -104,7 +104,7 @@ public class GoroBaseScript : NpcScript
 	
 	public override void EndConversation()
 	{
-		Close("<npcportrait name='NONE' /><title name='NONE' />Goodbye, Goro. I'll see you later!");
+		Close("Goodbye, Goro. I'll see you later!");
 	}	
 }
 

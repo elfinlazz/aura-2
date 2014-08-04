@@ -40,7 +40,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Manager for blocking objects in the region.
 		/// </summary>
-		public RegionCollision Collissions { get; protected set; }
+		public RegionCollision Collisions { get; protected set; }
 
 		public Region(int id)
 		{
@@ -63,8 +63,8 @@ namespace Aura.Channel.World
 				return;
 			}
 
-			this.Collissions = new RegionCollision(_regionData.X1, _regionData.Y1, _regionData.X2, _regionData.Y2);
-			this.Collissions.Init(_regionData);
+			this.Collisions = new RegionCollision(_regionData.X1, _regionData.Y1, _regionData.X2, _regionData.Y2);
+			this.Collisions.Init(_regionData);
 
 			this.LoadClientProps();
 		}
