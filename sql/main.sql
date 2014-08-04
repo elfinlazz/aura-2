@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `log_autoban` (
   `date` datetime NOT NULL,
   `level` int(10) NOT NULL,
   `report` varchar(500) NOT NULL,
-  `stacktrace` int(100) DEFAULT NULL
+  `stacktrace` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `partners` (

@@ -67,7 +67,7 @@ namespace Aura.Channel.Database
 						if (account.AutobanScore > 0 && ChannelServer.Instance.Conf.Autoban.ReductionTime.Ticks != 0)
 						{
 							var elapsed = DateTime.Now - account.LastAutobanReduction;
-							var delta = (int)(elapsed.Ticks / TimeSpan.FromDays(1).Ticks);
+							var delta = (int)(elapsed.TotalMinutes / ChannelServer.Instance.Conf.Autoban.ReductionTime.TotalMinutes);
 
 							// Adding a -delta means they're a time traveller! =*O*=
 							// It would also increase their score.
@@ -76,7 +76,7 @@ namespace Aura.Channel.Database
 								account.AutobanScore -= delta;
 								// We add the delta to prevent rapid logins/outs from affecting the score
 								account.LastAutobanReduction = account.LastAutobanReduction.Add(
-									TimeSpan.FromTicks(ChannelServer.Instance.Conf.Autoban.ReductionTime.Ticks * delta));
+									TimeSpan.FromMinutes((long)(ChannelServer.Instance.Conf.Autoban.ReductionTime.TotalMinutes * delta)));
 							}
 						}
 					}
@@ -705,6 +705,9 @@ namespace Aura.Channel.Database
 				cmd.Set("lastlogin", account.LastLogin);
 				cmd.Set("banReason", account.BanReason);
 				cmd.Set("banExpiration", account.BanExpiration);
+				cmd.Set("autobanCount", account.AutobanCount);
+				cmd.Set("autobanScore", account.AutobanScore);
+				cmd.Set("lastAutobanReduction", account.LastAutobanReduction);
 
 				cmd.Execute();
 			}

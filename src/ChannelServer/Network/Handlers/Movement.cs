@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Channel.World;
 using Aura.Shared.Util;

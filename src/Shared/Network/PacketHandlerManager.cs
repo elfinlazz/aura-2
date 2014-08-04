@@ -69,14 +69,7 @@ namespace Aura.Shared.Network
 				return;
 			}
 
-			try
-			{
-				handler(client, packet);
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex, "There has been a problem while handling '{0:X4}'.", packet.Op);
-			}
+			handler(client, packet);
 		}
 
 		public virtual void UnknownPacket(TClient client, Packet packet)

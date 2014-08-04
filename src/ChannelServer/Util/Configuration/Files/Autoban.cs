@@ -55,7 +55,7 @@ namespace Aura.Channel.Util.Configuration.Files
 		/// 
 		/// None = BanTime
 		/// Linear = BanTime * i
-		/// Exponential = BanTime * 2^(i^1)
+		/// Exponential = BanTime * (i ^ 2)
 		/// 
 		/// Where i is the number of times the player has been autobanned
 		/// </remarks>
@@ -79,7 +79,7 @@ namespace Aura.Channel.Util.Configuration.Files
 			ModerateAmount = this.GetInt("moderate_amount", 5);
 			SevereAmount = this.GetInt("severe_amount", 10);
 			ReductionTime = this.GetTimeSpan("reduction_time", TimeSpan.FromDays(7));
-			InitialBanTime = this.GetTimeSpan("initial_ban_time", TimeSpan.FromHours(5));
+			InitialBanTime = this.GetTimeSpan("initial_ban_time", TimeSpan.FromHours(6));
 			LengthIncrease = this.GetEnum("length_increase", AutobanLengthIncrease.Exponential);
 			ResetScoreOnBan = this.GetBool("reset_on_ban", false);
 		}

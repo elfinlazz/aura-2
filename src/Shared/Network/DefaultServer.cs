@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using Aura.Shared.Util;
 
 namespace Aura.Shared.Network
 {
@@ -59,7 +60,15 @@ namespace Aura.Shared.Network
 					var packet = new Packet(buffer, 6);
 
 					//Logger.Debug(packet);
-					this.Handlers.Handle(client, packet);
+
+					try
+					{
+						this.Handlers.Handle(client, packet);
+					}
+					catch (Exception ex)
+					{
+						Log.Exception(ex, "There has been a problem while handling '{0:X4}'.", packet.Op);
+					}
 				}
 			}
 		}

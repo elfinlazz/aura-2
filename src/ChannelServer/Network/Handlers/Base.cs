@@ -70,7 +70,7 @@ namespace Aura.Channel.Network.Handlers
 
 		private void HandleSecurityException(ChannelClient client, SecurityViolationException ex)
 		{
-			// TODO: Autoban
+			client.Autoban.Incident(ex.Level, ex.Message, ex.StackReport);
 		}
 	}
 }

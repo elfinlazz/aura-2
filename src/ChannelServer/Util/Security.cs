@@ -172,7 +172,7 @@ namespace Aura.Channel.Util
 
 			this.LastAutobanReduction = DateTime.Now;
 
-			if (this.Score > ChannelServer.Instance.Conf.Autoban.BanAt)
+			if (this.Score >= ChannelServer.Instance.Conf.Autoban.BanAt)
 				this.Ban();
 
 			_client.Kill();
@@ -191,12 +191,12 @@ namespace Aura.Channel.Util
 					break;
 
 				case AutobanLengthIncrease.Linear:
-					banLength = TimeSpan.FromTicks(ChannelServer.Instance.Conf.Autoban.InitialBanTime.Ticks * this.BanCount);
+					banLength = TimeSpan.FromMinutes((long)(ChannelServer.Instance.Conf.Autoban.InitialBanTime.TotalMinutes * this.BanCount));
 					break;
 
 				case AutobanLengthIncrease.Exponential:
-					banLength = TimeSpan.FromTicks(
-						(long) Math.Pow(ChannelServer.Instance.Conf.Autoban.InitialBanTime.Ticks, Math.Pow(2, this.BanCount - 1)));
+					banLength = TimeSpan.FromMinutes(
+						 ChannelServer.Instance.Conf.Autoban.InitialBanTime.TotalMinutes * (long)Math.Pow(this.BanCount, 2));
 					break;
 
 				default:
