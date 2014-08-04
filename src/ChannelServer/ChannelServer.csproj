@@ -158,6 +158,7 @@
     <Compile Include="Skills\SkillManager.cs" />
     <Compile Include="Util\Configuration\ChannelConf.cs" />
     <Compile Include="Util\ChannelConsoleCommands.cs" />
+    <Compile Include="Util\Configuration\Files\Autoban.cs" />
     <Compile Include="Util\Configuration\Files\Channel.cs" />
     <Compile Include="Util\Configuration\Files\Commands.cs" />
     <Compile Include="Util\Configuration\Files\World.cs" />

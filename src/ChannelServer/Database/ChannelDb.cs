@@ -64,10 +64,10 @@ namespace Aura.Channel.Database
 						account.LastAutobanReduction = reader.GetDateTimeSafe("lastAutobanReduction");
 
 						// We don't need to decrease their score if it's already zero!
-						if (account.AutobanScore > 0)
+						if (account.AutobanScore > 0 && ChannelServer.Instance.Conf.Autoban.ReductionTime.Ticks != 0)
 						{
 							var elapsed = DateTime.Now - account.LastAutobanReduction;
-							var delta = (int) (elapsed.Ticks/TimeSpan.FromDays(1).Ticks);
+							var delta = (int)(elapsed.Ticks / TimeSpan.FromDays(1).Ticks);
 
 							// Adding a -delta means they're a time traveller! =*O*=
 							// It would also increase their score.
@@ -75,7 +75,8 @@ namespace Aura.Channel.Database
 							{
 								account.AutobanScore -= delta;
 								// We add the delta to prevent rapid logins/outs from affecting the score
-								account.LastAutobanReduction = account.LastAutobanReduction.Add(TimeSpan.FromDays(1*delta));
+								account.LastAutobanReduction = account.LastAutobanReduction.Add(
+									TimeSpan.FromTicks(ChannelServer.Instance.Conf.Autoban.ReductionTime.Ticks * delta));
 							}
 						}
 					}
@@ -616,7 +617,7 @@ namespace Aura.Channel.Database
 				cmd.Set("accountId", a.Id);
 				cmd.Set("characterId", controlling == null ? null : (long?)(controlling.EntityId));
 				cmd.Set("date", DateTime.Now);
-				cmd.Set("level", (int) level);
+				cmd.Set("level", (int)level);
 				cmd.Set("report", report);
 				cmd.Set("stacktrace", stacktrace);
 
