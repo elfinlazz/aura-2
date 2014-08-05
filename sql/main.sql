@@ -162,16 +162,6 @@ CREATE TABLE IF NOT EXISTS `keywords` (
   PRIMARY KEY (`creatureId`,`keywordId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `log_autoban` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `accountId` varchar(50) NOT NULL,
-  `characterId` bigint(20) DEFAULT NULL,
-  `date` datetime NOT NULL,
-  `level` int(10) NOT NULL,
-  `report` varchar(500) NOT NULL,
-  `stacktrace` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `partners` (
   `entityId` bigint(20) NOT NULL AUTO_INCREMENT,
   `accountId` varchar(50) NOT NULL,
@@ -233,8 +223,7 @@ INSERT INTO `updates` (`path`) VALUES
 ('update_2014-07-26.sql'),
 ('update_2014-07-27.sql'),
 ('update_2014-07-28.sql'),
-('update_2014-07-31.sql'),
-('update_2014-08-03.sql');
+('update_2014-07-31.sql');
 
 ALTER TABLE `updates`
  ADD PRIMARY KEY (`path`);
@@ -289,12 +278,6 @@ ALTER TABLE `items`
 ALTER TABLE `keywords`
   ADD CONSTRAINT `keywords_ibfk_2` FOREIGN KEY (`creatureId`) REFERENCES `creatures` (`creatureId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `keywords_ibfk_1` FOREIGN KEY (`creatureId`) REFERENCES `creatures` (`creatureId`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE `log_autoban`
-  ADD PRIMARY KEY (`id`), ADD KEY `accountId` (`accountId`), ADD KEY `characterId` (`characterId`);
-
-ALTER TABLE `log_autoban`
-  ADD CONSTRAINT `log_autoban_ibfk_1` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `partners`
   ADD CONSTRAINT `partners_ibfk_3` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`) ON DELETE CASCADE ON UPDATE CASCADE,

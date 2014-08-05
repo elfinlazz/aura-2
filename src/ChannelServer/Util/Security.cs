@@ -165,10 +165,10 @@ namespace Aura.Channel.Util
 				_client.Account.Id, _client.Controlling == null ? "NULL" : "'" + _client.Controlling.Name + "'", level, this.Score,
 				report);
 
+			ChannelDb.Instance.LogSecurityIncident(_client, level, report, stacktrace);
+
 			if (!ChannelServer.Instance.Conf.Autoban.Enabled)
 				return;
-
-			ChannelDb.Instance.LogAutobanIncident(_client.Account, _client.Controlling, level, report, stacktrace);
 
 			this.LastAutobanReduction = DateTime.Now;
 

@@ -73,7 +73,7 @@ namespace Aura.Channel.Util.Configuration.Files
 		{
 			this.Require("system/conf/autoban.conf");
 
-			Enabled = this.GetBool("enabled", true);
+			Enabled = this.GetBool("enabled", false);
 			BanAt = this.GetInt("ban_at", 10);
 			MildAmount = this.GetInt("mild_amount", 1);
 			ModerateAmount = this.GetInt("moderate_amount", 5);

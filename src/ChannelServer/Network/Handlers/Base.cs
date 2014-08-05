@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aura.Channel.Database;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Util;
 using Aura.Shared.Network;
@@ -47,7 +48,12 @@ namespace Aura.Channel.Network.Handlers
 			{
 				// This handles cases like an exception being thrown in a ctor
 				if (!CheckInnerSecurityException(client, ex))
+				{
+					ChannelDb.Instance.LogSecurityIncident(client,
+						IncidentSeverityLevel.Moderate, "Unhandled exception while processing packet: " + ex.ToString(), null);
+
 					throw;
+				}
 			}
 		}
 

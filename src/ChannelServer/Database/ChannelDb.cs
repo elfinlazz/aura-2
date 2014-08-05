@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using Aura.Channel.Network;
 using Aura.Channel.Scripting;
 using Aura.Channel.Skills;
 using Aura.Channel.Util;
@@ -609,13 +610,14 @@ namespace Aura.Channel.Database
 			}
 		}
 
-		public void LogAutobanIncident(Account a, Creature controlling, IncidentSeverityLevel level, string report, string stacktrace)
+		public void LogSecurityIncident(ChannelClient client, IncidentSeverityLevel level, string report, string stacktrace)
 		{
 			using (var conn = AuraDb.Instance.Connection)
-			using (var cmd = new InsertCommand("INSERT INTO `log_autoban` {0}", conn))
+			using (var cmd = new InsertCommand("INSERT INTO `log_security` {0}", conn))
 			{
-				cmd.Set("accountId", a.Id);
-				cmd.Set("characterId", controlling == null ? null : (long?)(controlling.EntityId));
+				cmd.Set("accountId", client.Account.Id);
+				cmd.Set("characterId", client.Controlling == null ? null : (long?)(client.Controlling.EntityId));
+				cmd.Set("ipAddress", client.Address);
 				cmd.Set("date", DateTime.Now);
 				cmd.Set("level", (int)level);
 				cmd.Set("report", report);
