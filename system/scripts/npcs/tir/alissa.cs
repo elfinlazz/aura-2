@@ -4,8 +4,6 @@
 // 
 //---------------------------------------------------------------------------
 
-using System.Timers;
-
 public class AlissaBaseScript : NpcScript
 {
 	const long WindmillPropId = 0xA000010009042B;
