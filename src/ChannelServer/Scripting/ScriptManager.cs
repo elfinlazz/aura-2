@@ -35,6 +35,7 @@ namespace Aura.Channel.Scripting
 
 		private Dictionary<string, Compiler> _compilers;
 
+		private Dictionary<string, Type> _scripts;
 		private Dictionary<int, ItemScript> _itemScripts;
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<string, NpcShopScript> _shops;
@@ -55,6 +56,7 @@ namespace Aura.Channel.Scripting
 			_compilers.Add("cs", new CSharpCompiler());
 			_compilers.Add("boo", new BooCompiler());
 
+			_scripts = new Dictionary<string, Type>();
 			_itemScripts = new Dictionary<int, ItemScript>();
 			_aiScripts = new Dictionary<string, Type>();
 			_shops = new Dictionary<string, NpcShopScript>();
@@ -109,6 +111,7 @@ namespace Aura.Channel.Scripting
 		{
 			Log.Info("Loading scripts, this might take a few minutes...");
 
+			_scripts.Clear();
 			_creatureSpawns.Clear();
 			_questScripts.Clear();
 			_hooks.Clear();
@@ -455,6 +458,13 @@ namespace Aura.Channel.Scripting
 			{
 				try
 				{
+					if (_scripts.ContainsKey(type.Name))
+					{
+						Log.Error("Script classes must have unique names, duplicate '{0}' found in '{1}'.", type.Name, Path.GetFileName(filePath));
+						continue;
+					}
+					_scripts[type.Name] = type;
+
 					// Initiate script
 					var script = Activator.CreateInstance(type) as IScript;
 					if (!script.Init())
