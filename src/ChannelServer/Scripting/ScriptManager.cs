@@ -469,13 +469,15 @@ namespace Aura.Channel.Scripting
 					if (type.IsSubclassOf(typeof(NpcShop)))
 						Log.Warning("{0}: NpcShop is obsolete and will eventually be removed, use NpcShopScript instead.", filePath);
 
-					// Run default methods for base scripts.
-					if (type.IsSubclassOf(typeof(GeneralScript)))
-					{
-						var baseScript = script as GeneralScript;
-						baseScript.AutoLoadEvents();
-						this.RegisterDisposableScript(baseScript);
-					}
+					// Register scripts implementing IDisposable as script to
+					// dispose on reload.
+					if (type.GetInterfaces().Contains(typeof(IDisposable)))
+						_scriptsToDispose.Add(script as IDisposable);
+
+					// Run auto loader. This has to be done after Init,
+					// because of how Load is called from GeneralScript.
+					if (type.GetInterfaces().Contains(typeof(IAutoLoader)))
+						(script as IAutoLoader).AutoLoad();
 				}
 				catch (Exception ex)
 				{
@@ -788,15 +790,6 @@ namespace Aura.Channel.Scripting
 				return null;
 
 			return result;
-		}
-
-		/// <summary>
-		/// Adds scriptt o list of scripts that are to disposed upon reload.
-		/// </summary>
-		/// <param name="script"></param>
-		public void RegisterDisposableScript(IDisposable script)
-		{
-			_scriptsToDispose.Add(script);
 		}
 	}
 

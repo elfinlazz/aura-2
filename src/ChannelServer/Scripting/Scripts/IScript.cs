@@ -7,4 +7,9 @@ namespace Aura.Channel.Scripting.Scripts
 	{
 		bool Init();
 	}
+
+	public interface IAutoLoader
+	{
+		void AutoLoad();
+	}
 }

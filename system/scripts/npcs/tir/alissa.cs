@@ -232,4 +232,9 @@ public class AlissaBaseScript : NpcScript
 		
 		Send.PropUpdate(WindmillProp);
 	}
+	
+	[On("MinutesTimeTick")]
+	public void Test(ErinnTime time){
+		Log.Debug("tick");
+	}
 }
