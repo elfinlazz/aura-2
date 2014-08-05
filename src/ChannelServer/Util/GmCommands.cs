@@ -57,9 +57,9 @@ namespace Aura.Channel.Util
 			Add(50, 50, "speed", "[increase]", HandleSpeed);
 			Add(50, 50, "spawn", "<race> [amount]", HandleSpawn);
 			Add(50, 50, "ap", "<amount>", HandleAp);
-			Add(50, 50, "gmcp", "", HandleGmcp);
-			Add(50, 99, "card", "<id>", HandleCard);
-			Add(50, 99, "petcard", "<race>", HandleCard);
+			Add(50, -1, "gmcp", "", HandleGmcp);
+			Add(50, 50, "card", "<id>", HandleCard);
+			Add(50, 50, "petcard", "<race>", HandleCard);
 			Add(50, 50, "heal", "", HandleHeal);
 			Add(50, 50, "clean", "", HandleClean);
 			Add(50, 50, "condition", "[a] [b] [c] [d] [e]", HandleCondition);
@@ -71,9 +71,9 @@ namespace Aura.Channel.Util
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
-			Add(99, 99, "reloaddata", "", HandleReloadData);
-			Add(99, 99, "reloadscripts", "", HandleReloadScripts);
-			Add(99, 99, "reloadconf", "", HandleReloadConf);
+			Add(99, -1, "reloaddata", "", HandleReloadData);
+			Add(99, -1, "reloadscripts", "", HandleReloadScripts);
+			Add(99, -1, "reloadconf", "", HandleReloadConf);
 			Add(99, 99, "closenpc", "", HandleCloseNpc);
 
 			// Aliases
@@ -140,7 +140,7 @@ namespace Aura.Channel.Util
 
 			// Parse arguments
 			var args = this.ParseLine(message);
-			args[0].TrimStart(ChannelServer.Instance.Conf.Commands.Prefix);
+			args[0] = args[0].TrimStart(ChannelServer.Instance.Conf.Commands.Prefix);
 
 			// Handle char commands
 			var sender = creature;
@@ -175,6 +175,12 @@ namespace Aura.Channel.Util
 			if ((!isCharCommand && client.Account.Authority < commandConf.Auth) || (isCharCommand && client.Account.Authority < commandConf.CharAuth))
 			{
 				Send.ServerMessage(creature, Localization.Get("Unknown command '{0}'."), args[0]);
+				return true;
+			}
+
+			if (isCharCommand && commandConf.CharAuth < 0)
+			{
+				Send.ServerMessage(creature, Localization.Get("Command '{0}' cannout be used on another character."), args[0]);
 				return true;
 			}
 

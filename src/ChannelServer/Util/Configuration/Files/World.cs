@@ -51,7 +51,8 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.EnableHunger = this.GetBool("enable_hunger", true);
 			this.YouAreWhatYouEat = this.GetBool("you_are_what_you_eat", true);
 
-			this.GmcpMinAuth = this.GetInt("gmcp_min_auth", 50);
+			var gmcpCommand = ChannelServer.Instance.CommandProcessor.GetCommand("gmcp");
+			this.GmcpMinAuth = gmcpCommand != null ? gmcpCommand.Auth : this.GetInt("gmcp_min_auth", 50);
 
 			this.PerfectPlay = this.GetBool("perfect_play", false);
 			this.CombatSystem = (this.GetString("combat_system", "dynamic") == "classic" ? CombatSystem.Classic : CombatSystem.Dynamic);

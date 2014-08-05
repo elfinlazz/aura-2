@@ -63,7 +63,7 @@ namespace Aura.Shared.Util.Commands
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		protected TCommand GetCommand(string name)
+		public TCommand GetCommand(string name)
 		{
 			TCommand command;
 			_commands.TryGetValue(name, out command);
@@ -82,7 +82,7 @@ namespace Aura.Shared.Util.Commands
 		public string Description { get; protected set; }
 		public TFunc Func { get; protected set; }
 
-		public Command(string name, string usage, string description, TFunc func)
+		protected Command(string name, string usage, string description, TFunc func)
 		{
 			if (!typeof(TFunc).IsSubclassOf(typeof(Delegate)))
 				throw new InvalidOperationException(typeof(TFunc).Name + " is not a delegate type");
