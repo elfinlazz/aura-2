@@ -73,15 +73,15 @@ namespace Aura.Channel.Util.Configuration.Files
 		{
 			this.Require("system/conf/autoban.conf");
 
-			Enabled = this.GetBool("enabled", false);
-			BanAt = this.GetInt("ban_at", 10);
-			MildAmount = this.GetInt("mild_amount", 1);
-			ModerateAmount = this.GetInt("moderate_amount", 5);
-			SevereAmount = this.GetInt("severe_amount", 10);
-			ReductionTime = this.GetTimeSpan("reduction_time", TimeSpan.FromDays(7));
-			InitialBanTime = this.GetTimeSpan("initial_ban_time", TimeSpan.FromHours(6));
-			LengthIncrease = this.GetEnum("length_increase", AutobanLengthIncrease.Exponential);
-			ResetScoreOnBan = this.GetBool("reset_on_ban", false);
+			this.Enabled = this.GetBool("enabled", false);
+			this.BanAt = this.GetInt("ban_at", 10);
+			this.MildAmount = this.GetInt("mild_amount", 1);
+			this.ModerateAmount = this.GetInt("moderate_amount", 5);
+			this.SevereAmount = this.GetInt("severe_amount", 10);
+			this.ReductionTime = this.GetTimeSpan("reduction_time", TimeSpan.FromDays(7));
+			this.InitialBanTime = this.GetTimeSpan("initial_ban_time", TimeSpan.FromHours(6));
+			this.LengthIncrease = this.GetEnum("length_increase", AutobanLengthIncrease.Exponential);
+			this.ResetScoreOnBan = this.GetBool("reset_on_ban", false);
 		}
 	}
 }
