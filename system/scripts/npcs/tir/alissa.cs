@@ -205,7 +205,7 @@ public class AlissaBaseScript : NpcScript
 			"Yay! I got some pocket money!"
 		);
 	}
-			
+	
 	protected void ActivateWindmill(int minutes)
 	{
 		if (WindmillActive)
@@ -229,10 +229,5 @@ public class AlissaBaseScript : NpcScript
 		WindmillProp.Xml.SetAttributeValue("EventText", "The Mill is currently not in operation.\nOnce you operate it, you can grind the crops into flour.");
 		
 		Send.PropUpdate(WindmillProp);
-	}
-	
-	[On("MinutesTimeTick")]
-	public void Test(ErinnTime time){
-		Log.Debug("tick");
 	}
 }
