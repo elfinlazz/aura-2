@@ -430,5 +430,22 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Broadcasts SkillTeleport to creature's region.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="castTime"></param>
+		public static void SkillTeleport(Creature creature, int x, int y)
+		{
+			var packet = new Packet(Op.SkillTeleport, creature.EntityId);
+			packet.PutByte(0); //unk1
+			packet.PutInt(x);
+			packet.PutInt(y);
+			packet.PutByte(0); //unk2
+
+			creature.Region.Broadcast(packet);
+		}
 	}
 }

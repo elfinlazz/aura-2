@@ -13,7 +13,6 @@ using System;
 
 namespace Aura.Channel.Skills.Magic
 {
-
 	[Skill(SkillId.SilentMove)]
 	public class SilentMoveSkillHandler : IPreparable, IReadyable, ICompletable, ICancelable, IUseable
 	{
@@ -35,7 +34,7 @@ namespace Aura.Channel.Skills.Magic
 			Send.SkillComplete(creature, skill.Info.Id);
 		}
 
-		public virtual void Cancel(Creature creature, Skill skill)
+		public void Cancel(Creature creature, Skill skill)
 		{
 			// Do nothing by default.
 		}
@@ -51,7 +50,15 @@ namespace Aura.Channel.Skills.Magic
 				return;
 			}
 
-			creature.Warp(creature.Region.Id, location.X, location.Y);
+			//Stop creature's movement.
+			creature.StopMove();
+
+			//Sends teleport effect. Does not teleport.
+			Send.Effect(creature, 67, (byte)2, location.X, location.Y);
+
+			//Teleports player to specified location, and updating it on the server.
+			Send.SkillTeleport(creature, location.X, location.Y);
+			creature.SetLocation(creature.Region.Id, location.X, location.Y);
 
 			Send.SkillUse(creature, skill.Info.Id, 1);
 		}
