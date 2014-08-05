@@ -12,6 +12,7 @@ using Aura.Shared.Util;
 using Aura.Channel.Util;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Network;
+using System.Threading.Tasks;
 
 namespace Aura.Channel.World
 {
@@ -48,8 +49,7 @@ namespace Aura.Channel.World
 		/// </summary>
 		private void AddRegionsFromData()
 		{
-			foreach (var region in AuraData.RegionDb.Entries.Values)
-				this.AddRegion(region.Id);
+			Parallel.ForEach(AuraData.RegionDb.Entries.Values, region => this.AddRegion(region.Id));
 		}
 
 		// ------------------------------------------------------------------
@@ -190,9 +190,11 @@ namespace Aura.Channel.World
 					Log.Warning("Region '{0}' already exists.", regionId);
 					return;
 				}
-
-				_regions.Add(regionId, new Region(regionId));
 			}
+
+			var region = new Region(regionId);
+			lock (_regions)
+				_regions.Add(regionId, region);
 		}
 
 		/// <summary>
