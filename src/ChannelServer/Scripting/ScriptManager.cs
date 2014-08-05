@@ -463,12 +463,6 @@ namespace Aura.Channel.Scripting
 						continue;
 					}
 
-					// Obsolescence check
-					if (type.IsSubclassOf(typeof(BaseScript)))
-						Log.Warning("{0}: BaseScript is obsolete and will eventually be removed, use GeneralScript instead.", filePath);
-					if (type.IsSubclassOf(typeof(NpcShop)))
-						Log.Warning("{0}: NpcShop is obsolete and will eventually be removed, use NpcShopScript instead.", filePath);
-
 					// Register scripts implementing IDisposable as script to
 					// dispose on reload.
 					if (type.GetInterfaces().Contains(typeof(IDisposable)))

@@ -503,9 +503,4 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Event = evnt;
 		}
 	}
-
-	// Backwards compatibility
-	public abstract class BaseScript : GeneralScript
-	{
-	}
 }
