@@ -562,8 +562,8 @@ namespace Aura.Login.Network
 				packet.PutLong(0);
 				packet.PutInt(0);
 				packet.PutByte(0); // 0: Human, 1: Elf, 2: Giant
-				packet.PutByte(0);
-				packet.PutByte(0);
+				packet.PutByte(0); // Assist character ?
+				packet.PutByte(0); // >0 hides all characters?
 			}
 
 			// Pets
