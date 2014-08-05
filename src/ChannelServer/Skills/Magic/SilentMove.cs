@@ -10,6 +10,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Channel.World;
 using System.Collections.Generic;
 using System;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Skills.Magic
 {
@@ -45,7 +46,7 @@ namespace Aura.Channel.Skills.Magic
 
 			if (!creature.GetPosition().InRange(location, (int)skill.RankData.Var1))
 			{
-				Send.Notice(creature, "Out of range.");
+				Send.Notice(creature, Localization.Get("Out of range."));
 				Send.SkillUse(creature, skill.Info.Id, 0);
 				return;
 			}
@@ -54,15 +55,13 @@ namespace Aura.Channel.Skills.Magic
 			creature.StopMove();
 
 			//Sends teleport effect. Does not teleport.
-			Send.Effect(creature, 67, (byte)2, location.X, location.Y);
+			Send.Effect(creature, Effect.SilentMoveTeleport, (byte)2, location.X, location.Y);
 
 			//Teleports player to specified location, and updating it on the server.
 			Send.SkillTeleport(creature, location.X, location.Y);
-			creature.SetLocation(creature.Region.Id, location.X, location.Y);
+			creature.SetPosition(location.X, location.Y);
 
 			Send.SkillUse(creature, skill.Info.Id, 1);
 		}
-
 	}
-
 }
