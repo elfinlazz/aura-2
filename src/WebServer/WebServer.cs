@@ -74,6 +74,7 @@ namespace Aura.Web
 			this.App.Post("/ui", new UiStorageController());
 			this.App.Post("/visual-chat", new VisualChatController());
 			this.App.All("/register", new RegisterController());
+			this.App.Post("/avatar-upload", new AvatarUploadController());
 
 			try
 			{
