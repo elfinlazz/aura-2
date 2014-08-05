@@ -54,13 +54,12 @@ namespace Aura.Shared.Util.Commands
 		{
 			Log.Info("Type 'help' for a list of console commands.");
 
-			var line = "";
 			while (true)
 			{
-				line = Console.ReadLine();
+				var line = Console.ReadLine();
 
 				var args = this.ParseLine(line);
-				if (args.Length == 0)
+				if (args.Count == 0)
 					continue;
 
 				var command = this.GetCommand(args[0]);
@@ -86,25 +85,25 @@ namespace Aura.Shared.Util.Commands
 			}
 		}
 
-		private CommandResult HandleHelp(string command, string[] args)
+		private CommandResult HandleHelp(string command, IList<string> args)
 		{
 			var maxLength = _commands.Values.Max(a => a.Name.Length);
 
 			Log.Info("Available commands");
-			foreach (var cmd in _commands.Values)
+			foreach (var cmd in _commands.Values.OrderBy(a => a.Name))
 				Log.Info("  {0,-" + (maxLength + 2) + "}{1}", cmd.Name, cmd.Description);
 
 			return CommandResult.Okay;
 		}
 
-		private CommandResult HandleStatus(string command, string[] args)
+		private CommandResult HandleStatus(string command, IList<string> args)
 		{
-			Log.Status("Memory Usage: {0} KB", Math.Round(GC.GetTotalMemory(false) / 1024f));
+			Log.Status("Memory Usage: {0:N0} KB", Math.Round(GC.GetTotalMemory(false) / 1024f));
 
 			return CommandResult.Okay;
 		}
 
-		protected virtual CommandResult HandleExit(string command, string[] args)
+		protected virtual CommandResult HandleExit(string command, IList<string> args)
 		{
 			CliUtil.Exit(0, false);
 
@@ -120,5 +119,5 @@ namespace Aura.Shared.Util.Commands
 		}
 	}
 
-	public delegate CommandResult ConsoleCommandFunc(string command, string[] args);
+	public delegate CommandResult ConsoleCommandFunc(string command, IList<string> args);
 }

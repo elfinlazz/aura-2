@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Collections.Generic;
 using Aura.Login.Database;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
@@ -15,16 +16,16 @@ namespace Aura.Login.Util
 			this.Add("auth", "<account> <level>", "Changes authority level of account", HandleAuth);
 		}
 
-		private CommandResult HandleShutDown(string command, string[] args)
+		private CommandResult HandleShutDown(string command, IList<string> args)
 		{
 			Log.Info("(Unimplemented)");
 
 			return CommandResult.Okay;
 		}
 
-		private CommandResult HandleAuth(string command, string[] args)
+		private CommandResult HandleAuth(string command, IList<string> args)
 		{
-			if (args.Length < 3)
+			if (args.Count < 3)
 				return CommandResult.InvalidArgument;
 
 			int level;
