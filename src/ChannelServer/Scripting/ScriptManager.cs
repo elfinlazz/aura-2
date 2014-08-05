@@ -461,6 +461,7 @@ namespace Aura.Channel.Scripting
 			{
 				try
 				{
+					// Make sure there's only one copy of each script.
 					if (_scripts.ContainsKey(type.Name))
 					{
 						Log.Error("Script classes must have unique names, duplicate '{0}' found in '{1}'.", type.Name, Path.GetFileName(filePath));
@@ -494,6 +495,8 @@ namespace Aura.Channel.Scripting
 						}
 					}
 
+					// Add class to load list, even if it's a dummy for remove,
+					// we can't be sure it's not supposed to get initialized.
 					_scripts[type.Name] = type;
 				}
 				catch (Exception ex)
