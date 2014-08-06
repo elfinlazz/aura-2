@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS `log_security` (
   `stacktrace` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 ALTER TABLE `log_security`
  ADD PRIMARY KEY (`id`), ADD KEY `accountId` (`accountId`), ADD KEY `characterId` (`characterId`),
  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;

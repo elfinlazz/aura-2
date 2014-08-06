@@ -1,15 +1,11 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aura.Channel.Database;
 using Aura.Channel.Network;
 using Aura.Shared.Util;
-using MySql.Data.MySqlClient.Memcached;
+using System;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Aura.Channel.Util
 {
@@ -47,7 +43,7 @@ namespace Aura.Channel.Util
 		/// A short stack trace to identify where the incident occured.
 		/// </summary>
 		public string StackReport { get; private set; }
-		
+
 		/// <summary>
 		/// How bad it was
 		/// </summary>
@@ -57,7 +53,7 @@ namespace Aura.Channel.Util
 		{
 			this.Level = lvl;
 
-			var stacktrace = new System.Diagnostics.StackTrace(2); // Skip 2 frames for this and calling ctor
+			var stacktrace = new StackTrace(2); // Skip 2 frames for this and calling ctor
 
 			this.StackReport = string.Join(" --> ",
 				stacktrace.GetFrames()
@@ -119,6 +115,13 @@ namespace Aura.Channel.Util
 
 	public static class Autoban
 	{
+		/// <summary>
+		/// Logs incident, increases ban points, and bans account if appropriate.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="level"></param>
+		/// <param name="report"></param>
+		/// <param name="stacktrace"></param>
 		public static void Incident(ChannelClient client, IncidentSeverityLevel level, string report, string stacktrace = null)
 		{
 			if (client.Account == null)
@@ -130,7 +133,7 @@ namespace Aura.Channel.Util
 				case IncidentSeverityLevel.Moderate: client.Account.AutobanScore += ChannelServer.Instance.Conf.Autoban.ModerateAmount; break;
 				case IncidentSeverityLevel.Severe: client.Account.AutobanScore += ChannelServer.Instance.Conf.Autoban.SevereAmount; break;
 				default:
-					Log.Warning("Unknown severity level {0}", level);
+					Log.Warning("Autoban.Incident: Unknown severity level {0}", level);
 					goto case IncidentSeverityLevel.Mild;
 			}
 
@@ -142,6 +145,10 @@ namespace Aura.Channel.Util
 				Ban(client);
 		}
 
+		/// <summary>
+		/// Bans account, length depends on ban points and previous bans.
+		/// </summary>
+		/// <param name="client"></param>
 		private static void Ban(ChannelClient client)
 		{
 			var autobanCount = ++client.Account.AutobanCount;
@@ -159,8 +166,7 @@ namespace Aura.Channel.Util
 					break;
 
 				case AutobanLengthIncrease.Exponential:
-					banLength = TimeSpan.FromMinutes(
-						 ChannelServer.Instance.Conf.Autoban.InitialBanTime.TotalMinutes * (long)Math.Pow(autobanCount, 2));
+					banLength = TimeSpan.FromMinutes(ChannelServer.Instance.Conf.Autoban.InitialBanTime.TotalMinutes * (long)Math.Pow(autobanCount, 2));
 					break;
 
 				default:
@@ -168,11 +174,9 @@ namespace Aura.Channel.Util
 					goto case AutobanLengthIncrease.Exponential;
 			}
 
-			Log.Info("Autobanning account '{0}'. Total times they've been autobanned: {1}. Length of this ban: {2}",
-				client.Account.Id, autobanCount, banLength);
+			Log.Info("Autobanning account '{0}'. Total times they've been autobanned: {1}. Length of this ban: {2}", client.Account.Id, autobanCount, banLength);
 
 			client.Account.BanExpiration = DateTime.Now + banLength;
-
 			client.Account.BanReason = "Automatic ban triggered.";
 
 			// So their score doesn't decrease while they're banned.

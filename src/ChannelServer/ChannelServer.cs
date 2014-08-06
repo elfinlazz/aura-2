@@ -110,10 +110,11 @@ namespace Aura.Channel
 			// Skills
 			this.LoadSkills();
 
-			// Start
+			// Autoban
 			if (this.Conf.Autoban.Enabled)
 				this.Events.SecurityViolation += (e) => Autoban.Incident(e.Client, e.Level, e.Report, e.StackReport);
 
+			// Start
 			this.Server.Start(this.Conf.Channel.ChannelPort);
 
 			// Inter
@@ -273,22 +274,6 @@ namespace Aura.Channel
 				Log.Warning("InitDatabase: Found items with temp entity ids.");
 				// TODO: clean up dbs
 			}
-		}
-
-		public void OnSecurityViolation(ChannelClient offender, IncidentSeverityLevel level, string report, string stacktrace)
-		{
-			var accName = offender.Account == null ? "<NULL>" : "'" + offender.Account.Id + "'";
-			var charName = offender.Controlling == null ? "<NULL>" : "'" + offender.Controlling.Name + "'";
-
-			Log.Warning("Client '{0}' : Account {1} (Controlling {2}) just committed a {3} offense. Incident report: {4}",
-				offender.Address, accName, charName, level, report);
-
-			if (offender.Account != null)
-				ChannelDb.Instance.LogSecurityIncident(offender, level, report, stacktrace);
-
-			this.Events.OnSecurityViolation(new SecurityViolationEventArgs(offender, level, report, stacktrace));
-
-			offender.Kill();
 		}
 	}
 }

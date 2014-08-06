@@ -48,13 +48,19 @@ namespace Aura.Channel.Network
 			return creature;
 		}
 
+		/// <summary>
+		/// Returns creature or throws security exception if creature
+		/// couldn't be found in client.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public Creature GetCreatureSafe(long id)
 		{
-			var r = this.GetCreature(id);
-			if (r == null)
-				throw new SevereViolation("Account doesn't have creature 0x{0:X}", id);
+			var result = this.GetCreature(id);
+			if (result == null)
+				throw new SevereViolation("Client doesn't control creature 0x{0:X}", id);
 
-			return r;
+			return result;
 		}
 
 		/// <summary>
@@ -66,9 +72,7 @@ namespace Aura.Channel.Network
 		{
 			var pet = this.GetCreatureSafe(id);
 			if (pet.Master == null)
-			{
 				throw new ModerateViolation("Pet 0x{0:X} doesn't have a master.", id);
-			}
 
 			return pet;
 		}

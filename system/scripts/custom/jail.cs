@@ -1,11 +1,10 @@
 // --- Aura Script ----------------------------------------------------------
 //  Jail
 // --- Description ----------------------------------------------------------
-//  Puts all players who commit a security violation in "Jail"
+//  Puts all players who commit a security violation in "Jail".
 // --- By -------------------------------------------------------------------
 //  Xcelled
 // --------------------------------------------------------------------------
-using Aura.Channel.Util;
 
 public class JailScript : NpcScript
 {

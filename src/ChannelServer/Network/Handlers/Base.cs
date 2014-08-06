@@ -8,6 +8,7 @@ using Aura.Channel.Database;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Util;
 using Aura.Shared.Network;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -33,13 +34,13 @@ namespace Aura.Channel.Network.Handlers
 			catch (SecurityViolationException ex)
 			{
 				// Simplest case, where an exception comes up directly
-				HandleSecurityException(client, ex);
+				this.HandleSecurityException(client, ex);
 			}
 			catch (AggregateException ex)
 			{
-				// Relatively complex case involving possibly multile exceptions (from tasks)
-				// So we have to check out all of them.
-				var unhandled = ex.Flatten().InnerExceptions.Where(e => !CheckInnerSecurityException(client, e)).ToList();
+				// Relatively complex case involving possibly multile exceptions (from tasks),
+				// so we have to check out all of them.
+				var unhandled = ex.Flatten().InnerExceptions.Where(e => !this.CheckInnerSecurityException(client, e)).ToList();
 
 				if (unhandled.Count != 0)
 					throw new AggregateException(unhandled);
@@ -47,36 +48,56 @@ namespace Aura.Channel.Network.Handlers
 			catch (Exception ex)
 			{
 				// This handles cases like an exception being thrown in a ctor
-				if (!CheckInnerSecurityException(client, ex))
+				if (!this.CheckInnerSecurityException(client, ex))
 				{
-					ChannelDb.Instance.LogSecurityIncident(client,
-						IncidentSeverityLevel.Moderate, "Unhandled exception while processing packet: " + ex, null);
-
+					// TODO: This might not be related to security,
+					//   really log it in that table?
+					ChannelDb.Instance.LogSecurityIncident(client, IncidentSeverityLevel.Moderate, "Unhandled exception while processing packet: " + ex, null);
 					throw;
 				}
 			}
 		}
 
+		/// <summary>
+		/// Checks for SecurityViolationExceptions in inner exceptions.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="ex"></param>
+		/// <returns></returns>
 		private bool CheckInnerSecurityException(ChannelClient client, Exception ex)
 		{
 			var secEx = ex as SecurityViolationException;
 			if (secEx != null)
 			{
-				HandleSecurityException(client, secEx);
+				this.HandleSecurityException(client, secEx);
 				return true;
 			}
-			else
+			else if (ex.InnerException != null)
 			{
-				if (ex.InnerException != null)
-					return CheckInnerSecurityException(client, ex.InnerException);
+				return this.CheckInnerSecurityException(client, ex.InnerException);
 			}
 
 			return false;
 		}
 
+		/// <summary>
+		/// Handles SecurityViolationException.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="ex"></param>
 		private void HandleSecurityException(ChannelClient client, SecurityViolationException ex)
 		{
-			ChannelServer.Instance.OnSecurityViolation(client, ex.Level, ex.Message, ex.StackReport);
+			var accName = client.Account == null ? "<NULL>" : "'" + client.Account.Id + "'";
+			var charName = client.Controlling == null ? "<NULL>" : "'" + client.Controlling.Name + "'";
+
+			if (client.Account != null)
+				ChannelDb.Instance.LogSecurityIncident(client, ex.Level, ex.Message, ex.StackReport);
+
+			ChannelServer.Instance.Events.OnSecurityViolation(new SecurityViolationEventArgs(client, ex.Level, ex.Message, ex.StackReport));
+
+			client.Kill();
+
+			Log.Warning("Client '{0}' : Account {1} (Controlling {2}) just committed a {3} offense. Incident report: {4}", client.Address, accName, charName, ex.Level, ex.Message);
 		}
 	}
 }

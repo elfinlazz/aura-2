@@ -253,19 +253,25 @@ namespace Aura.Channel.World
 			return _pockets.Values.Select(pocket => pocket.GetItem(entityId)).FirstOrDefault(item => item != null);
 		}
 
+		/// <summary>
+		/// Returns item or throws security violation exception,
+		/// if item didn't exist or isn't allowed to be accessed.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
 		public Item GetItemSafe(long entityId)
 		{
-			var r = this.GetItem(entityId);
+			var result = this.GetItem(entityId);
 
-			if (r == null)
+			if (result == null)
 				throw new SevereViolation("Creature does not have a item 0x{0:X}", entityId);
 
-			if (!AccessiblePockets.Contains(r.Info.Pocket))
-				throw new SevereViolation("Item 0x{0:X} is located in inaccessible pocket {1}", entityId, r.Info.Pocket);
+			if (!AccessiblePockets.Contains(result.Info.Pocket))
+				throw new SevereViolation("Item 0x{0:X} is located in inaccessible pocket {1}", entityId, result.Info.Pocket);
 
 			// TODO: Check item data type?
 
-			return r;
+			return result;
 		}
 
 		/// <summary>
