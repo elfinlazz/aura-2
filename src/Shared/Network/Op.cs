@@ -390,6 +390,7 @@ namespace Aura.Shared.Network
 		public const int EnableRoyalAlchemist = 0xA9A3;
 		public const int SosButtonRequest = 0xA9A9;
 		public const int SosButtonRequestR = 0xA9AA;
+		public const int SkillTeleport = 0xA9EC;
 
 		// [150000~180000] Something was added? Next two ops changed.
 
