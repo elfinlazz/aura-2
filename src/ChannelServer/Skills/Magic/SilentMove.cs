@@ -3,17 +3,21 @@
 
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills.Base;
-using Aura.Channel.World.Entities;
-using Aura.Shared.Network;
-using Aura.Shared.Mabi;
-using Aura.Shared.Mabi.Const;
 using Aura.Channel.World;
-using System.Collections.Generic;
-using System;
+using Aura.Channel.World.Entities;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Network;
 using Aura.Shared.Util;
 
 namespace Aura.Channel.Skills.Magic
 {
+	/// <summary>
+	/// Handler for Silent Move skill.
+	/// </summary>
+	/// <remarks>
+	/// Var1: Cooldown
+	/// Var2: Max teleport distance
+	/// </remarks>
 	[Skill(SkillId.SilentMove)]
 	public class SilentMoveSkillHandler : IPreparable, IReadyable, ICompletable, ICancelable, IUseable
 	{
@@ -42,24 +46,25 @@ namespace Aura.Channel.Skills.Magic
 
 		public void Use(Creature creature, Skill skill, Packet packet)
 		{
-			var location = new Position(packet.GetLong());
+			var targetPos = new Position(packet.GetLong());
 
-			if (!creature.GetPosition().InRange(location, (int)skill.RankData.Var1))
+			// Check distance to target position
+			if (!creature.GetPosition().InRange(targetPos, (int)skill.RankData.Var2))
 			{
 				Send.Notice(creature, Localization.Get("Out of range."));
 				Send.SkillUse(creature, skill.Info.Id, 0);
 				return;
 			}
 
-			//Stop creature's movement.
+			// Stop creature's movement.
 			creature.StopMove();
 
-			//Sends teleport effect. Does not teleport.
-			Send.Effect(creature, Effect.SilentMoveTeleport, (byte)2, location.X, location.Y);
+			// Teleport effect (does not actually teleport)
+			Send.Effect(creature, Effect.SilentMoveTeleport, (byte)2, targetPos.X, targetPos.Y);
 
-			//Teleports player to specified location, and updating it on the server.
-			Send.SkillTeleport(creature, location.X, location.Y);
-			creature.SetPosition(location.X, location.Y);
+			// Teleport player to target position
+			creature.SetPosition(targetPos.X, targetPos.Y);
+			Send.SkillTeleport(creature, targetPos.X, targetPos.Y);
 
 			Send.SkillUse(creature, skill.Info.Id, 1);
 		}
