@@ -32,6 +32,7 @@ namespace Aura.Channel.Util
 			// Players
 			Add(00, 50, "where", "", HandleWhere);
 			Add(00, 50, "cp", "", HandleCp);
+			Add(00, 50, "distance", "", HandleDistance);
 
 			// VIPs
 			Add(01, 50, "go", "<location>", HandleGo);
@@ -1160,6 +1161,28 @@ namespace Aura.Channel.Util
 			Send.ServerMessage(sender, Localization.Get("Enabled all available titles, please relog to use them."));
 			if (target != sender)
 				Send.ServerMessage(target, Localization.Get("{0} enabled all available titles for you, please relog to use them."), sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleDistance(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			var distancePos = sender.Vars.Temp.DistanceCommandPos;
+
+			if (distancePos == null)
+			{
+				sender.Vars.Temp.DistanceCommandPos = sender.GetPosition();
+				Send.ServerMessage(sender, Localization.Get("Position 1 saved, use command again to calculate distance."));
+			}
+			else
+			{
+				var pos2 = sender.GetPosition();
+				var distance = pos2.GetDistance(distancePos);
+
+				Send.ServerMessage(sender, Localization.Get("Distance between '{0}' and '{1}': {2}"), distancePos, pos2, distance);
+
+				sender.Vars.Temp.DistanceCommandPos = null;
+			}
 
 			return CommandResult.Okay;
 		}
