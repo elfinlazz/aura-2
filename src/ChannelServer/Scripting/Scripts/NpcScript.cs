@@ -402,18 +402,18 @@ namespace Aura.Channel.Scripting.Scripts
 
 		/// <summary>
 		/// Joins lines and sends them as Msg,
-		/// but only once per creature and NPC.
+		/// but only once per creature and NPC per session.
 		/// </summary>
 		/// <param name="lines"></param>
 		protected async Task Intro(params object[] lines)
 		{
-			if (this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] == null)
+			if (this.Player.Vars.Temp["npc_intro:" + this.NPC.Name] == null)
 			{
 				// Explicit button and Select, so we don't get into the hooks
 				// (that might do more than sending msgs) without clicking.
 				this.Msg(Hide.Both, string.Join("<br/>", lines), this.Button("Continue"));
 				await Select();
-				this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] = true;
+				this.Player.Vars.Temp["npc_intro:" + this.NPC.Name] = true;
 			}
 
 			await Hook("after_intro");
