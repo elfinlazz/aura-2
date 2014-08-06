@@ -7,7 +7,7 @@
 // Dugald
 // --------------------------------------------------------------------------
 
-public class DugaldSealStoneScript : _SealStoneScript
+public class DugaldSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
@@ -32,7 +32,7 @@ public class DugaldSealStoneScript : _SealStoneScript
 // Ciar
 // --------------------------------------------------------------------------
 
-public class CiarSealStoneScript : _SealStoneScript
+public class CiarSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
@@ -55,7 +55,7 @@ public class CiarSealStoneScript : _SealStoneScript
 // Rabbie
 // --------------------------------------------------------------------------
 
-public class RabbieSealStoneScript : _SealStoneScript
+public class RabbieSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
@@ -78,7 +78,7 @@ public class RabbieSealStoneScript : _SealStoneScript
 // Math
 // --------------------------------------------------------------------------
 
-public class MathSealStoneScript : _SealStoneScript
+public class MathSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
@@ -106,7 +106,7 @@ public class MathSealStoneScript : _SealStoneScript
 // Bangor
 // --------------------------------------------------------------------------
 
-public class BangorSealStoneScript : _SealStoneScript
+public class BangorSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
@@ -131,7 +131,7 @@ public class BangorSealStoneScript : _SealStoneScript
 // Fiodh
 // --------------------------------------------------------------------------
 
-public class FiodhSealStoneScript : _SealStoneScript
+public class FiodhSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
@@ -154,13 +154,14 @@ public class FiodhSealStoneScript : _SealStoneScript
 // North Emain Macha
 // --------------------------------------------------------------------------
 
-public class NorthEmainSealStoneScript : _SealStoneScript
+public class NorthEmainSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
 		SetName("Seal Stone of North Emain Macha", "_sealstone_osnasail");
 		SetLocation(70, 7844, 13621, 0);
 		SetHelp("The Seal of North Emain Macha\n\nExperience before Age.");
+		SetLock(true);
 	}
 
 	public override bool Check(Creature creature, Prop prop)
@@ -177,13 +178,14 @@ public class NorthEmainSealStoneScript : _SealStoneScript
 // South Emain Macha
 // --------------------------------------------------------------------------
 
-public class SouthEmainSealStoneScript : _SealStoneScript
+public class SouthEmainSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
 		SetName("Seal Stone of South Emain Macha", "_sealstone_south_emainmacha");
 		SetLocation(53, 67830, 107710, 0);
 		SetHelp("The Seal of South Emain Macha\n\nExperience before Age.");
+		SetLock(true);
 	}
 
 	public override bool Check(Creature creature, Prop prop)
@@ -200,19 +202,18 @@ public class SouthEmainSealStoneScript : _SealStoneScript
 // Abb Neagh
 // --------------------------------------------------------------------------
 
-public class AbbSealStoneScript : _SealStoneScript
+public class AbbSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
 		SetName("Seal Stone of Abb Neagh", "_sealstone_south_taillteann");
 		SetLocation(14, 14023, 56756, 0);
 		SetHelp("The Seal of Abb Neagh\n\nBlah, Wand, blah, Mage.");
+		SetLock(true);
 	}
 
 	public override bool Check(Creature creature, Prop prop)
 	{
-		return false;
-
 		// Wand
 		if (creature.RightHand != null && creature.RightHand.Info.Id >= 40038 && creature.RightHand.Info.Id <= 40041)
 			return true;
@@ -229,19 +230,18 @@ public class AbbSealStoneScript : _SealStoneScript
 // Sliab Cuilin
 // --------------------------------------------------------------------------
 
-public class SliabSealStoneScript : _SealStoneScript
+public class SliabSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
 		SetName("Seal Stone of Sliab Cuilin", "_sealstone_east_taillteann");
 		SetLocation(16, 6336, 62882, 0);
 		SetHelp("The Seal of Sliab Cuilin\n\nUtilize Tracy's Secret.");
+		SetLock(true);
 	}
 
 	public override bool Check(Creature creature, Prop prop)
 	{
-		return false;
-
 		return (creature.LeftHand != null && creature.LeftHand.Info.Id == 1028); // Tracy's Secret
 	}
 
@@ -254,19 +254,18 @@ public class SliabSealStoneScript : _SealStoneScript
 // Tara
 // --------------------------------------------------------------------------
 
-public class TaraSealStoneScript : _SealStoneScript
+public class TaraSealStoneScript : SealStoneScript
 {
 	public override void Setup()
 	{
 		SetName("Seal Stone of Tara", "_sealstone_tara");
 		SetLocation(400, 56799, 33820, 2.23f);
 		SetHelp("The Seal of Tara\n\nAlchemists only!!!");
+		SetLock(true);
 	}
 
 	public override bool Check(Creature creature, Prop prop)
 	{
-		return false;
-
 		// Have alchemist clothes, shoes, a Cylinder, and Beginner Alchemist title equipped ?
 
 		if (creature.Titles.SelectedTitle != 26)
@@ -306,9 +305,9 @@ public class TaraSealStoneScript : _SealStoneScript
 // Base Script
 // --------------------------------------------------------------------------
 
-public abstract class _SealStoneScript : GeneralScript
+public abstract class SealStoneScript : GeneralScript
 {
-	protected const bool AllowMultiple = true;
+	protected const bool AllowMultiple = false;
 
 	protected string _name, _ident;
 	protected int _region, _x, _y;
@@ -348,7 +347,7 @@ public abstract class _SealStoneScript : GeneralScript
 			}
 
 			// You can only become breaker once officially.
-			if (IsBreaker(creature) && !AllowMultiple)
+			if (IsBreaker(creature) && !AllowMultiple && creature.Titles.SelectedTitle != 60001)
 			{
 				Send.Notice(creature, "Unable to break the Seal.\nYou already hold the title of a Seal Breaker.");
 				return;
