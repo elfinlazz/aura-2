@@ -75,7 +75,6 @@ namespace Aura.Channel.Util
 			Add(99, -1, "reloadscripts", "", HandleReloadScripts);
 			Add(99, -1, "reloadconf", "", HandleReloadConf);
 			Add(99, 99, "closenpc", "", HandleCloseNpc);
-			Add(99, -1, "security", "", HandleSecurity);
 
 			// Aliases
 			AddAlias("item", "drop");
@@ -83,11 +82,6 @@ namespace Aura.Channel.Util
 			AddAlias("skillinfo", "si");
 			AddAlias("raceinfo", "ri");
 			AddAlias("broadcast", "bc");
-		}
-
-		private CommandResult HandleSecurity(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
-		{
-			throw new ModerateViolation("Test from command");
 		}
 
 		// ------------------------------------------------------------------
