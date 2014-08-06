@@ -171,6 +171,9 @@ namespace Aura.Channel.Scripting
 			}
 			Log.Progress(100, 100);
 
+			// Init scripts
+			this.InitializeScripts();
+
 			if (toLoad.Count > 0)
 				Log.WriteLine();
 
@@ -458,13 +461,60 @@ namespace Aura.Channel.Scripting
 			{
 				try
 				{
+					// Make sure there's only one copy of each script.
 					if (_scripts.ContainsKey(type.Name))
 					{
 						Log.Error("Script classes must have unique names, duplicate '{0}' found in '{1}'.", type.Name, Path.GetFileName(filePath));
 						continue;
 					}
-					_scripts[type.Name] = type;
 
+					// Check overrides
+					var overide = type.GetCustomAttribute<OverrideAttribute>();
+					if (overide != null)
+					{
+						if (_scripts.ContainsKey(overide.TypeName))
+						{
+							_scripts.Remove(overide.TypeName);
+						}
+						else
+							Log.Warning("Override: Script class '{0}' not found ({1} @ {2}).", overide.TypeName, type.Name, Path.GetFileName(filePath));
+					}
+
+					// Check removes
+					var removes = type.GetCustomAttribute<RemoveAttribute>();
+					if (removes != null)
+					{
+						foreach (var rm in removes.TypeNames)
+						{
+							if (_scripts.ContainsKey(rm))
+							{
+								_scripts.Remove(rm);
+							}
+							else
+								Log.Warning("Remove: Script class '{0}' not found ({1} @ {2}).", rm, type.Name, Path.GetFileName(filePath));
+						}
+					}
+
+					// Add class to load list, even if it's a dummy for remove,
+					// we can't be sure it's not supposed to get initialized.
+					_scripts[type.Name] = type;
+				}
+				catch (Exception ex)
+				{
+					Log.Exception(ex, "Error while loading script '{0}' ({1}).", type.Name, ex.Message);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Initializes all scripts loaded from assemblies.
+		/// </summary>
+		private void InitializeScripts()
+		{
+			foreach (var type in _scripts.Values)
+			{
+				try
+				{
 					// Initiate script
 					var script = Activator.CreateInstance(type) as IScript;
 					if (!script.Init())

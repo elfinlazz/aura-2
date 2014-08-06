@@ -124,6 +124,7 @@
     <Compile Include="Scripting\Compilers\BooCompiler.cs" />
     <Compile Include="Scripting\CreatureSpawn.cs" />
     <Compile Include="Scripting\NpcSession.cs" />
+    <Compile Include="Scripting\ScriptAttributes.cs" />
     <Compile Include="Scripting\Scripts\AiScript.cs" />
     <Compile Include="Scripting\Scripts\GeneralScript.cs" />
     <Compile Include="Scripting\Scripts\DialogElements.cs" />
