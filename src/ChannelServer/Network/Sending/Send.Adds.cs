@@ -971,7 +971,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutLong(character.CreationTime);
 			packet.PutLong(character.LastRebirth);
 			packet.PutString("");
-			packet.PutByte(0);
+			packet.PutByte(0); // "true" makes character lie on floor?
 			packet.PutByte(2);
 
 			// [150100] Pocket ExpireTime List
@@ -984,8 +984,8 @@ namespace Aura.Channel.Network.Sending
 				packet.PutShort(72);
 
 				// ?
-				packet.PutLong(0);
-				packet.PutShort(73);
+				//packet.PutLong(0);
+				//packet.PutShort(73);
 
 				packet.PutLong(0);
 			}

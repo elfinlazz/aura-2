@@ -4,7 +4,7 @@
 // 
 //---------------------------------------------------------------------------
 
-public class NoraBaseScript : NpcScript
+public class RanaldBaseScript : NpcScript
 {
 	public override void Load()
 	{

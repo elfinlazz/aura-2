@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AvatarUploadController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\UiStorageController.cs" />
     <Compile Include="Controllers\MainController.cs" />

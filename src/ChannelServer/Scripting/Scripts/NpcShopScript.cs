@@ -245,9 +245,4 @@ namespace Aura.Channel.Scripting.Scripts
 			return result;
 		}
 	}
-
-	// Backwards compatibility
-	public class NpcShop : NpcShopScript
-	{
-	}
 }

@@ -4,8 +4,6 @@
 // 
 //---------------------------------------------------------------------------
 
-using System.Timers;
-
 public class AlissaBaseScript : NpcScript
 {
 	const long WindmillPropId = 0xA000010009042B;
@@ -207,7 +205,7 @@ public class AlissaBaseScript : NpcScript
 			"Yay! I got some pocket money!"
 		);
 	}
-			
+	
 	protected void ActivateWindmill(int minutes)
 	{
 		if (WindmillActive)

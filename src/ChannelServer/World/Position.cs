@@ -31,6 +31,16 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// New Position based on location id (i.e. 0x3000RRRRXXXXYYYY).
+		/// </summary>
+		/// <param name="locationId"></param>
+		public Position(long locationId)
+		{
+			this.X = (short)(locationId >> 16) * 20;
+			this.Y = (short)(locationId >> 00) * 20;
+		}
+
+		/// <summary>
 		/// Returns distance between this and another position.
 		/// </summary>
 		/// <param name="otherPos"></param>

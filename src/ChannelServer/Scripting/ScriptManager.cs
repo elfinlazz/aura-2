@@ -35,6 +35,7 @@ namespace Aura.Channel.Scripting
 
 		private Dictionary<string, Compiler> _compilers;
 
+		private Dictionary<string, Type> _scripts;
 		private Dictionary<int, ItemScript> _itemScripts;
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<string, NpcShopScript> _shops;
@@ -55,6 +56,7 @@ namespace Aura.Channel.Scripting
 			_compilers.Add("cs", new CSharpCompiler());
 			_compilers.Add("boo", new BooCompiler());
 
+			_scripts = new Dictionary<string, Type>();
 			_itemScripts = new Dictionary<int, ItemScript>();
 			_aiScripts = new Dictionary<string, Type>();
 			_shops = new Dictionary<string, NpcShopScript>();
@@ -109,6 +111,7 @@ namespace Aura.Channel.Scripting
 		{
 			Log.Info("Loading scripts, this might take a few minutes...");
 
+			_scripts.Clear();
 			_creatureSpawns.Clear();
 			_questScripts.Clear();
 			_hooks.Clear();
@@ -455,6 +458,13 @@ namespace Aura.Channel.Scripting
 			{
 				try
 				{
+					if (_scripts.ContainsKey(type.Name))
+					{
+						Log.Error("Script classes must have unique names, duplicate '{0}' found in '{1}'.", type.Name, Path.GetFileName(filePath));
+						continue;
+					}
+					_scripts[type.Name] = type;
+
 					// Initiate script
 					var script = Activator.CreateInstance(type) as IScript;
 					if (!script.Init())
@@ -463,19 +473,15 @@ namespace Aura.Channel.Scripting
 						continue;
 					}
 
-					// Obsolescence check
-					if (type.IsSubclassOf(typeof(BaseScript)))
-						Log.Warning("{0}: BaseScript is obsolete and will eventually be removed, use GeneralScript instead.", filePath);
-					if (type.IsSubclassOf(typeof(NpcShop)))
-						Log.Warning("{0}: NpcShop is obsolete and will eventually be removed, use NpcShopScript instead.", filePath);
+					// Register scripts implementing IDisposable as script to
+					// dispose on reload.
+					if (type.GetInterfaces().Contains(typeof(IDisposable)))
+						_scriptsToDispose.Add(script as IDisposable);
 
-					// Run default methods for base scripts.
-					if (type.IsSubclassOf(typeof(GeneralScript)))
-					{
-						var baseScript = script as GeneralScript;
-						baseScript.AutoLoadEvents();
-						this.RegisterDisposableScript(baseScript);
-					}
+					// Run auto loader. This has to be done after Init,
+					// because of how Load is called from GeneralScript.
+					if (type.GetInterfaces().Contains(typeof(IAutoLoader)))
+						(script as IAutoLoader).AutoLoad();
 				}
 				catch (Exception ex)
 				{
@@ -788,15 +794,6 @@ namespace Aura.Channel.Scripting
 				return null;
 
 			return result;
-		}
-
-		/// <summary>
-		/// Adds scriptt o list of scripts that are to disposed upon reload.
-		/// </summary>
-		/// <param name="script"></param>
-		public void RegisterDisposableScript(IDisposable script)
-		{
-			_scriptsToDispose.Add(script);
 		}
 	}
 

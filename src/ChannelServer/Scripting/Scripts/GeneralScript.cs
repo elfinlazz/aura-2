@@ -21,7 +21,7 @@ namespace Aura.Channel.Scripting.Scripts
 	/// General purpose script with various helpful methods and the
 	/// auto subscription feature.
 	/// </summary>
-	public abstract class GeneralScript : IDisposable, IScript
+	public abstract class GeneralScript : IDisposable, IScript, IAutoLoader
 	{
 		private const int PropDropRadius = 50;
 
@@ -40,7 +40,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Adds subscribtions based on "On" attribute on methods.
 		/// </summary>
-		public void AutoLoadEvents()
+		public void AutoLoad()
 		{
 			var type = this.GetType();
 			var methods = this.GetType().GetMethods();
@@ -502,10 +502,5 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			this.Event = evnt;
 		}
-	}
-
-	// Backwards compatibility
-	public abstract class BaseScript : GeneralScript
-	{
 	}
 }

@@ -14,6 +14,9 @@
 /user/scripts/*
 !/user/scripts/scripts_custom-example.txt
 
+/user/resources/*
+!/user/resources/readme.txt
+
 /web/ui/storage/*
 /web/ui_storage/*
 /user/save/*
