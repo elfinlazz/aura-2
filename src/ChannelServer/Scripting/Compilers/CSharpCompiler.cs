@@ -73,6 +73,7 @@ namespace Aura.Channel.Scripting.Compilers
 			add.Append("using System.Threading.Tasks;");
 			add.Append("using System.Timers;");
 			add.Append("using Microsoft.CSharp;");
+			add.Append("using Aura.Channel.Network;");
 			add.Append("using Aura.Channel.Network.Sending;");
 			add.Append("using Aura.Channel.Scripting.Scripts;");
 			add.Append("using Aura.Channel.Scripting;");
