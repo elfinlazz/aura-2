@@ -1,7 +1,9 @@
 // --- Aura Script ----------------------------------------------------------
 //  Jail
 // --- Description ----------------------------------------------------------
-//  Puts all players who commit a security violation in "Jail".
+//  Puts all players who commit a security violation in "Jail" and adds
+//  the "jail" command (default auth 50:-1), that can be used to jail
+//  characters freely.
 // --- By -------------------------------------------------------------------
 //  Xcelled, exec
 // --------------------------------------------------------------------------
