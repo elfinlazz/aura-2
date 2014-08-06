@@ -112,7 +112,7 @@ namespace Aura.Channel
 
 			// Start
 			if (this.Conf.Autoban.Enabled)
-				this.SecurityViolation += (sender, e) => Autoban.Incident(e.Client, e.Level, e.Report, e.StackReport);
+				this.Events.SecurityViolation += (e) => Autoban.Incident(e.Client, e.Level, e.Report, e.StackReport);
 
 			this.Server.Start(this.Conf.Channel.ChannelPort);
 
