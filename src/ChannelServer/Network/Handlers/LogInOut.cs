@@ -102,6 +102,7 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check permission
+			// This can happen from time to time, client lag?
 			if (!creature.Warping)
 			{
 				Log.Warning("Unauthorized warp attemp from '{0}'.", creature.Name);
