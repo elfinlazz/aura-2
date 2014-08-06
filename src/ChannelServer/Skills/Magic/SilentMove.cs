@@ -21,6 +21,9 @@ namespace Aura.Channel.Skills.Magic
 	[Skill(SkillId.SilentMove)]
 	public class SilentMoveSkillHandler : IPreparable, IReadyable, ICompletable, ICancelable, IUseable
 	{
+		// Buffer to compensate for using the skill while moving
+		private const int DistanceBuffer = 250;
+
 		public void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{
 			Send.SkillFlashEffect(creature);
@@ -49,7 +52,7 @@ namespace Aura.Channel.Skills.Magic
 			var targetPos = new Position(packet.GetLong());
 
 			// Check distance to target position
-			if (!creature.GetPosition().InRange(targetPos, (int)skill.RankData.Var2))
+			if (!creature.GetPosition().InRange(targetPos, (int)skill.RankData.Var2 + DistanceBuffer))
 			{
 				Send.Notice(creature, Localization.Get("Out of range."));
 				Send.SkillUse(creature, skill.Info.Id, 0);
