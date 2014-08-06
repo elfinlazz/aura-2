@@ -17,9 +17,8 @@
 /user/resources/*
 !/user/resources/readme.txt
 
-/web/ui/storage/*
-/web/ui_storage/*
 /user/save/*
+!/user/save/readme.txt
 
 #################
 ## Visual Studio
