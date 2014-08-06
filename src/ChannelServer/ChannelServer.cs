@@ -58,8 +58,6 @@ namespace Aura.Channel
 
 		public WorldManager World { get; private set; }
 
-		public event EventHandler<SecurityViolationEventArgs> SecurityViolation;
-
 		private ChannelServer()
 		{
 			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -288,8 +286,7 @@ namespace Aura.Channel
 			if (offender.Account != null)
 				ChannelDb.Instance.LogSecurityIncident(offender, level, report, stacktrace);
 
-			if (this.SecurityViolation != null)
-				this.SecurityViolation(this, new SecurityViolationEventArgs(offender, level, report, stacktrace));
+			this.Events.OnSecurityViolation(new SecurityViolationEventArgs(offender, level, report, stacktrace));
 
 			offender.Kill();
 		}
