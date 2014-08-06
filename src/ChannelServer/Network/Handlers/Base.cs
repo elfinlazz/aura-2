@@ -50,7 +50,7 @@ namespace Aura.Channel.Network.Handlers
 				if (!CheckInnerSecurityException(client, ex))
 				{
 					ChannelDb.Instance.LogSecurityIncident(client,
-						IncidentSeverityLevel.Moderate, "Unhandled exception while processing packet: " + ex.ToString(), null);
+						IncidentSeverityLevel.Moderate, "Unhandled exception while processing packet: " + ex, null);
 
 					throw;
 				}
@@ -76,7 +76,7 @@ namespace Aura.Channel.Network.Handlers
 
 		private void HandleSecurityException(ChannelClient client, SecurityViolationException ex)
 		{
-			client.Autoban.Incident(ex.Level, ex.Message, ex.StackReport);
+			ChannelServer.Instance.OnSecurityViolation(client, ex.Level, ex.Message, ex.StackReport);
 		}
 	}
 }

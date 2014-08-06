@@ -30,13 +30,10 @@ namespace Aura.Channel.Network
 		/// </summary>
 		public NpcSession NpcSession { get; set; }
 
-		public Autoban Autoban { get; protected set; }
-
 		public ChannelClient()
 		{
 			this.Creatures = new Dictionary<long, Creature>();
 			this.NpcSession = new NpcSession();
-			this.Autoban = new Autoban(this);
 		}
 
 		/// <summary>
