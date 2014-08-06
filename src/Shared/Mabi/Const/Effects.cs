@@ -92,7 +92,7 @@ namespace Aura.Shared.Mabi.Const
 		/// <summary>
 		/// The teleport effect for Silent Move
 		/// </summary>
-		public static readonly int SilentMoveTeleport = 66;
+		public static readonly int SilentMoveTeleport = 67;
 
 		/// <summary>
 		/// Chef Owl
