@@ -21,13 +21,13 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.Require("system/conf/channel.conf");
 
 			this.LoginHost = this.GetString("login_host", "127.0.0.1");
-			this.LoginPort = this.GetInt("login_port", 11020);
+			this.LoginPort = this.GetInt("login_port", 11000);
 
-			this.ChannelServer = this.GetString("channel_server", "127.0.0.1");
-			this.ChannelName = this.GetString("channel_name", "127.0.0.1");
+			this.ChannelServer = this.GetString("channel_server", "Aura");
+			this.ChannelName = this.GetString("channel_name", "Ch1");
 			this.ChannelHost = this.GetString("channel_host", "127.0.0.1");
 			this.ChannelPort = this.GetInt("channel_port", 11020);
-			this.MaxUsers = this.GetInt("max_users", 11020);
+			this.MaxUsers = this.GetInt("max_users", 20);
 		}
 	}
 }
