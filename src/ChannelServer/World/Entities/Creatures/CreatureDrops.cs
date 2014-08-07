@@ -12,6 +12,9 @@ namespace Aura.Channel.World.Entities.Creatures
 {
 	public class CreatureDrops
 	{
+		/// <summary>
+		/// Circle pattern for dropping 21 stacks of gold.
+		/// </summary>
 		public static int[,] MaxGoldPattern = new int[,] { 
 			            {-50,100},  {0,100},  {50,100},
 			{-100,50},  {-50,50},   {0,50},   {50,50},   {100,50},

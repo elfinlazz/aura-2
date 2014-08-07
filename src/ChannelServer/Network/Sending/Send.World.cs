@@ -66,6 +66,8 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="entities"></param>
 		public static void EntitiesAppear(ChannelClient client, IEnumerable<Entity> entities)
 		{
+			// Count() is much faster then creating a list, speed being
+			// important in this method.
 			var count = (short)entities.Count();
 			if (count < 1)
 				return;

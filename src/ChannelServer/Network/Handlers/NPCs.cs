@@ -297,7 +297,7 @@ namespace Aura.Channel.Network.Handlers
 			var item = creature.Inventory.GetItemSafe(entityId);
 
 			// Calculate selling price
-			int sellingPrice = sellingPrice = item.OptionInfo.SellingPrice;
+			var sellingPrice = item.OptionInfo.SellingPrice;
 			if (item.Data.StackType == StackType.Sac)
 			{
 				// Add costs of the items inside the sac
