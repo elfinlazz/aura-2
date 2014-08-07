@@ -11,7 +11,7 @@ using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 
-namespace Aura.Channel.World
+namespace Aura.Channel.World.Inventory
 {
 	/// <summary>
 	/// Inventory for players

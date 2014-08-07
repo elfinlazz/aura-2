@@ -22,6 +22,7 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Database
 {

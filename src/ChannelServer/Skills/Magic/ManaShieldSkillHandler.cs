@@ -7,7 +7,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 
-namespace Aura.Channel.Skills.Life
+namespace Aura.Channel.Skills.Magic
 {
 	/// <summary>
 	/// Handles the Rest skill. Also called when using a chair.

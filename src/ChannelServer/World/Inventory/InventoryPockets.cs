@@ -8,7 +8,7 @@ using Aura.Channel.World.Entities;
 using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 
-namespace Aura.Channel.World
+namespace Aura.Channel.World.Inventory
 {
 	public abstract class InventoryPocket
 	{
@@ -127,7 +127,7 @@ namespace Aura.Channel.World
 
 		public override IEnumerable<Item> Items
 		{
-			get 
+			get
 			{
 				return _items.Values;
 			}
@@ -532,7 +532,7 @@ namespace Aura.Channel.World
 
 		public override IEnumerable<Item> Items
 		{
-			get 
+			get
 			{
 				return _items;
 			}

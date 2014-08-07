@@ -15,6 +15,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Mabi.Structs;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Network.Handlers
 {
