@@ -73,7 +73,7 @@ namespace Aura.Shared.Mabi
 		/// <summary>
 		/// Returns true if it's not night, duh.
 		/// </summary>
-		public bool IsDay { get { return this.IsNight; ; } }
+		public bool IsDay { get { return !this.IsNight; ; } }
 
 		/// <summary>
 		/// Returns true if time of this instance is 0:00am.
