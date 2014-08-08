@@ -6,8 +6,9 @@ using System.IO;
 using Aura.Data;
 using Aura.Shared.Database;
 using Aura.Shared.Util.Configuration;
+using Aura.Shared.Util;
 
-namespace Aura.Shared.Util
+namespace Aura.Shared
 {
 	/// <summary>
 	/// General methods needed by all servers.

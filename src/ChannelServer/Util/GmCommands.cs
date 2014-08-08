@@ -1,27 +1,23 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using Aura.Channel.Database;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
-using Aura.Channel.Skills;
-using Aura.Channel.Util.Configuration.Files;
-using Aura.Channel.World;
 using Aura.Channel.World.Entities;
+using Aura.Channel.World.Entities.Creatures;
 using Aura.Data;
 using Aura.Data.Database;
+using Aura.Shared;
 using Aura.Shared.Database;
+using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
-using Aura.Shared.Mabi;
-using Aura.Channel.World.Entities.Creatures;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Aura.Channel.Util
 {

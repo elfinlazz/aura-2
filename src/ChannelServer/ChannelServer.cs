@@ -1,21 +1,22 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Net.Sockets;
-using System.Threading;
+using Aura.Channel.Database;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Handlers;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting;
+using Aura.Channel.Skills;
 using Aura.Channel.Util;
 using Aura.Channel.Util.Configuration;
 using Aura.Channel.World;
+using Aura.Shared;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
-using Aura.Channel.Skills;
 using Aura.Shared.Util.Configuration;
-using Aura.Channel.Database;
+using System;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace Aura.Channel
 {

@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
 using Aura.Login.Database;
 using Aura.Login.Network;
 using Aura.Login.Network.Handlers;
 using Aura.Login.Util;
+using Aura.Login.Web;
+using Aura.Shared;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using SharpExpress;
-using System.Net;
-using Aura.Login.Web;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Aura.Login
 {
