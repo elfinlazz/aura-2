@@ -44,7 +44,6 @@ namespace Aura.Channel.World.Entities
 				_firstTimeAppear = false;
 				return result;
 			}
-			set { _firstTimeAppear = true; }
 		}
 
 		public long QuestId { get; set; }
