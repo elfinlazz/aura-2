@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `loggedIn` tinyint(1) NOT NULL DEFAULT '0',
   `autobanCount` INT(10) NOT NULL DEFAULT '0',
   `autobanScore` INT(10) NOT NULL DEFAULT '0',
-  `lastAutobanReduction` DATETIME NULL DEFAULT NULL
+  `lastAutobanReduction` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`accountId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
