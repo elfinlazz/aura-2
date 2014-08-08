@@ -31,7 +31,7 @@ namespace Aura.Channel.World.Quests
 
 		public abstract ObjectiveType Type { get; }
 
-		public QuestObjective(int amount)
+		protected QuestObjective(int amount)
 		{
 			this.MetaData = new MabiDictionary();
 			this.Amount = amount;

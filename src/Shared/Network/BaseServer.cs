@@ -30,7 +30,7 @@ namespace Aura.Shared.Network
 		/// </summary>
 		public event ClientConnectionEventHandler ClientDisconnected;
 
-		public BaseServer()
+		protected BaseServer()
 		{
 			_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			this.Clients = new List<TClient>();

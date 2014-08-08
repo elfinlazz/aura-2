@@ -41,7 +41,7 @@ namespace Aura.Shared.Network
 			}
 		}
 
-		public BaseClient()
+		protected BaseClient()
 		{
 			this.Buffer = new byte[BufferDefaultSize];
 			this.Crypto = new MabiCrypto(0x41757261); // 0xAura

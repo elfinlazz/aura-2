@@ -41,7 +41,7 @@ namespace Aura.Channel.Scripting.Scripts
 			set { _player = value; }
 		}
 
-		public NpcScript()
+		protected NpcScript()
 		{
 			this.NPC = new NPC();
 			_resumeSignal = new SemaphoreSlim(0);

@@ -533,7 +533,7 @@ namespace Aura.Channel.World.Entities
 
 		// ------------------------------------------------------------------
 
-		public Creature()
+		protected Creature()
 		{
 			this.Client = new DummyClient();
 

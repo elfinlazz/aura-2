@@ -20,7 +20,7 @@ namespace Aura.Channel.World.Inventory
 		/// </summary>
 		public abstract int Count { get; }
 
-		public InventoryPocket(Pocket pocket)
+		protected InventoryPocket(Pocket pocket)
 		{
 			this.Pocket = pocket;
 		}

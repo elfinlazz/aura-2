@@ -18,7 +18,7 @@ namespace Aura.Shared.Util.Commands
 	{
 		protected Dictionary<string, TCommand> _commands;
 
-		public CommandManager()
+		protected CommandManager()
 		{
 			_commands = new Dictionary<string, TCommand>();
 		}

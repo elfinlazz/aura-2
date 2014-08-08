@@ -13,7 +13,7 @@ namespace Aura.Shared.Database
 		protected MySqlCommand _mc;
 		protected Dictionary<string, object> _set;
 
-		public SimpleCommand(string command, MySqlConnection conn, MySqlTransaction trans = null)
+		protected SimpleCommand(string command, MySqlConnection conn, MySqlTransaction trans = null)
 		{
 			_mc = new MySqlCommand(command, conn, trans);
 			_set = new Dictionary<string, object>();

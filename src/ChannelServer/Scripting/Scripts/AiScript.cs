@@ -71,7 +71,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public AiState State { get { return _state; } }
 
-		public AiScript()
+		protected AiScript()
 		{
 			this.Phrases = new List<string>();
 
@@ -320,8 +320,8 @@ namespace Aura.Channel.Scripting.Scripts
 
 			// Random targetable creature
 			var potentialTargets = creatures.Where(target => this.Creature.CanTarget(target) &&
-			                                                 this.DoesHate(target) &&
-			                                                 !this.DoesLove(target)).ToList();
+															 this.DoesHate(target) &&
+															 !this.DoesLove(target)).ToList();
 
 			if (potentialTargets.Count == 0)
 				return null;
