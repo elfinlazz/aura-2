@@ -64,7 +64,7 @@ namespace Aura.Channel.Network.Sending
 		/// </remarks>
 		/// <param name="client"></param>
 		/// <param name="creature">Negative response if null</param>
-		public static void EnterRegionRequestR(Creature creature)
+		public static void EnterRegionRequestR(ChannelClient client, Creature creature)
 		{
 			var packet = new Packet(Op.EnterRegionRequestR, MabiId.Channel);
 			packet.PutByte(creature != null);
@@ -75,7 +75,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutLong(DateTime.Now);
 			}
 
-			creature.Client.Send(packet);
+			client.Send(packet);
 		}
 
 		/// <summary>
