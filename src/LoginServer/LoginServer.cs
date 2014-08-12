@@ -134,7 +134,7 @@ namespace Aura.Login
 			Log.Info("Checking for updates...");
 
 			var files = Directory.GetFiles("sql");
-			foreach (var filePath in files.Where(a => Path.GetExtension(a) == ".sql"))
+			foreach (var filePath in files.Where(file => Path.GetExtension(file).ToLower() == ".sql"))
 				this.RunUpdate(Path.GetFileName(filePath));
 		}
 
