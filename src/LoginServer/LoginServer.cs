@@ -133,32 +133,19 @@ namespace Aura.Login
 		{
 			Log.Info("Checking for updates...");
 
-			try
-			{
-				var files = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "sql"));
-				foreach (var filePath in files.Where(a => Path.GetExtension(a) == ".sql"))
-					this.RunUpdate(filePath);
-			}
-			catch (Exception ex)
-			{
-				Log.Error("Error while updating database: {0}", ex.Message);
-				CliUtil.Exit(1);
-			}
+			var files = Directory.GetFiles("sql");
+			foreach (var filePath in files.Where(a => Path.GetExtension(a) == ".sql"))
+				this.RunUpdate(Path.GetFileName(filePath));
 		}
 
-		private void RunUpdate(string filePath)
+		private void RunUpdate(string updateFile)
 		{
-			if (LoginDb.Instance.CheckUpdate(filePath))
+			if (LoginDb.Instance.CheckUpdate(updateFile))
 				return;
 
-			var name = Path.GetFileName(filePath);
+			Log.Info("Update '{0}' found, executing...", updateFile);
 
-			Log.Info("Update '{0}' found, executing...", name);
-
-			if (!LoginDb.Instance.RunUpdate(filePath))
-				Log.Error("Update '{0}' failed.", name);
-			else
-				Log.Info("Update '{0}' successful.", name);
+			LoginDb.Instance.RunUpdate(updateFile);
 		}
 
 		public void Broadcast(Packet packet)
