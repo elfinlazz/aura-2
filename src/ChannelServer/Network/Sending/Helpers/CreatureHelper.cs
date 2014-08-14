@@ -3,6 +3,7 @@
 
 using Aura.Channel.World.Entities;
 using Aura.Data;
+using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using System;
 using System.Linq;
@@ -357,10 +358,23 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutShort(0);			     // CurrentSkill
 				packet.PutByte(0);			     // SkillStackCount
 				packet.PutInt(0);			     // SkillProgress
-				packet.PutInt(0);			     // SkillSyncList
+
+				// Wrong?
+				//packet.PutInt(0);			     // SkillSyncList
 				// loop						         
 				//   packet.PutShort
 				//   packet.PutShort
+
+				// Not 100% sure what this is, Yiting added the above years
+				// ago, now it looks like this is a list of skill bins,
+				// maybe those that are currently active, since one potential
+				// one is Outfit Action, with the InUse flag being set.
+				// It's also possible that it was two shorts originally,
+				// the skill id + the flags. [exec]
+				var skillsInUse = creature.Skills.GetList(s => s.Has(SkillFlags.InUse));
+				packet.PutInt(skillsInUse.Count);
+				foreach (var skill in skillsInUse)
+					packet.PutBin(skill.Info);
 			}
 
 			// [150100] ?

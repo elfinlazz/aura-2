@@ -33,7 +33,7 @@ namespace Aura.Shared.Mabi.Structs
 		public SkillFlags Flag;
 		public long LastPromotionTime;
 		public short PromotionCount;
-		private short __unknown26; // -1
+		public short __unknown26; // -1
 		public int PromotionExp;
 		public short ConditionCount1;
 		public short ConditionCount2;
@@ -44,6 +44,6 @@ namespace Aura.Shared.Mabi.Structs
 		public short ConditionCount7;
 		public short ConditionCount8;
 		public short ConditionCount9;
-		private short __unknown50; // 113
+		public short __unknown50; // 113
 	}
 }

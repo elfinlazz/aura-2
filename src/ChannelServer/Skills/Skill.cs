@@ -168,5 +168,32 @@ namespace Aura.Channel.Skills
 
 			return (exp - result);
 		}
+
+		/// <summary>
+		/// Activates given flag(s).
+		/// </summary>
+		/// <param name="flags"></param>
+		public void Activate(SkillFlags flags)
+		{
+			this.Info.Flag |= flags;
+		}
+
+		/// <summary>
+		/// Deativates given flag(s).
+		/// </summary>
+		/// <param name="flags"></param>
+		public void Deactivate(SkillFlags flags)
+		{
+			this.Info.Flag &= ~flags;
+		}
+
+		/// <summary>
+		/// Returns true if skill has the given flags.
+		/// </summary>
+		/// <param name="flags"></param>
+		public bool Has(SkillFlags flags)
+		{
+			return ((this.Info.Flag & flags) != 0);
+		}
 	}
 }

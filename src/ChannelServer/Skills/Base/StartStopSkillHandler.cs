@@ -63,6 +63,8 @@ namespace Aura.Channel.Skills.Base
 				return;
 			}
 
+			skill.Activate(SkillFlags.InUse);
+
 			// Use mana/stamina
 			this.UseMana(creature, skill);
 			this.UseStamina(creature, skill);
@@ -87,6 +89,8 @@ namespace Aura.Channel.Skills.Base
 				unkByte = packet.GetByte();
 
 			var result = this.Stop(creature, skill, dict);
+
+			skill.Deactivate(SkillFlags.InUse);
 
 			if (result == StartStopResult.Fail)
 				Send.SkillStopSilentCancel(creature, skill.Info.Id);

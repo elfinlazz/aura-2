@@ -54,10 +54,14 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Returns new list of all skills.
 		/// </summary>
 		/// <returns></returns>
-		public ICollection<Skill> GetList()
+		public ICollection<Skill> GetList(Func<Skill, bool> predicate = null)
 		{
 			lock (_skills)
-				return _skills.Values.ToArray();
+			{
+				// Return all or only the ones matching the predicate.
+				var skills = (predicate == null ? _skills.Values : _skills.Values.Where(predicate));
+				return skills.ToArray();
+			}
 		}
 
 		/// <summary>
