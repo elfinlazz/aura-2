@@ -189,7 +189,7 @@ namespace Aura.Shared.Mabi
 					case "4": this.Set(key, Convert.ToInt32(val)); break;
 					case "8": this.Set(key, Convert.ToInt64(val)); break;
 					case "f": this.Set(key, Convert.ToSingle(val, CultureInfo.InvariantCulture)); break;
-					case "s": this.Set(key, val.Replace("%S", ";")); break;
+					case "s": this.Set(key, val.Replace("%S", ";").Replace("%C", ":")); break;
 					case "b": this.Set(key, val == "1"); break;
 				}
 			}
