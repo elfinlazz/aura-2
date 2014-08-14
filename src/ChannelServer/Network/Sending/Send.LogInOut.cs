@@ -5,6 +5,7 @@ using System;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Channel.World.Entities;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {

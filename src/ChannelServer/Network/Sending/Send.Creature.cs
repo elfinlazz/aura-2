@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Aura.Data;
 using Aura.Shared.Mabi.Structs;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -427,4 +428,6 @@ namespace Aura.Channel.Network.Sending
 			creature.Region.Broadcast(packet, creature);
 		}
 	}
+
+	public enum StatUpdateType : byte { Private = 3, Public = 4 }
 }

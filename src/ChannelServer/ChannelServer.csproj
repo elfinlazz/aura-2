@@ -102,6 +102,15 @@
     <Compile Include="Network\Handlers\Misc.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Handlers\NPCs.cs" />
+    <Compile Include="Network\Sending\Helpers\ConditionHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\CreatureHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\EntityHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\ItemHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\PropHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\PvpHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\QuestHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\RegenHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\TalentHelper.cs" />
     <Compile Include="Network\Sending\Send.GMCP.cs" />
     <Compile Include="Network\Sending\Send.Quests.cs" />
     <Compile Include="Network\Sending\Send.Effects.cs" />
@@ -203,7 +212,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Compile Include="Network\Sending\Send.Adds.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">

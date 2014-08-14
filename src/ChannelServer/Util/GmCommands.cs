@@ -210,10 +210,10 @@ namespace Aura.Channel.Util
 		{
 			var pos = target.GetPosition();
 			var msg = sender == target
-				? Localization.Get("You're here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4}")
-				: Localization.Get("{3} is here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4}");
+				? Localization.Get("You're here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4} (Radian: {6})")
+				: Localization.Get("{3} is here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4} (Radian: {6})");
 
-			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name, target.Direction, AuraData.RegionInfoDb.GetAreaId(target.RegionId, pos.X, pos.Y));
+			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name, target.Direction, AuraData.RegionInfoDb.GetAreaId(target.RegionId, pos.X, pos.Y), MabiMath.ByteToRadian(target.Direction).ToInvariant("#.###"));
 
 			return CommandResult.Okay;
 		}
