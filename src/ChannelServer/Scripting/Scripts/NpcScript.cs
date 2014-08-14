@@ -796,8 +796,8 @@ namespace Aura.Channel.Scripting.Scripts
 		public DialogBgm Bgm(string file) { return new DialogBgm(file); }
 
 		public DialogImage Image(string name) { return new DialogImage(name, false, 0, 0); }
-		public DialogImage Image(string name, int width, int height) { return new DialogImage(name, false, width, height); }
-		public DialogImage Image(string name, bool localize, int width, int height) { return new DialogImage(name, localize, width, height); }
+		public DialogImage Image(string name, int width = 0, int height = 0) { return new DialogImage(name, false, width, height); }
+		public DialogImage Image(string name, bool localize = false, int width = 0, int height = 0) { return new DialogImage(name, localize, width, height); }
 
 		public DialogList List(string text, int height, string cancelKeyword, params DialogButton[] elements) { return new DialogList(text, height, cancelKeyword, elements); }
 		public DialogList List(string text, params DialogButton[] elements) { return this.List(text, (int)elements.Length, elements); }

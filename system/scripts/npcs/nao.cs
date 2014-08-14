@@ -25,11 +25,19 @@ public class NaoScript : NpcScript
 			"Her deep azure eyes remind everyone of an endless blue sea full of mystique.",
 			"With her pale skin and her distinctively sublime silhouette, she seems like she belongs in another world."
 		);
-
+		
+		if(!Player.Has(CreatureStates.EverEnteredWorld))
+			await Initialization();
+		else
+			await Rebirth();
+	}
+	
+	private async Task Initialization()
+	{
 		await Introduction();
 		await Questions();
 		// Destiny/Talent...
-		await End();
+		await EndIntroduction();
 	}
 
 	private async Task Introduction()
@@ -81,7 +89,7 @@ public class NaoScript : NpcScript
 		}
 	}
 
-	private async Task End()
+	private async Task EndIntroduction()
 	{
 		Msg("Are you ready to take the next step?");
 		Msg("You will be headed to Erinn right now.<br/>Don't worry, once you get there, someone else is there to take care of you, my little friend by the name of Tin.<br/>After you receive some pointers from Tin, head Northeast and you will see a town.");
@@ -110,6 +118,73 @@ public class NaoScript : NpcScript
 			case 0: return "If there is something you'd like to know more of, please ask me now.";
 			case 1: return "Do not hesitate to ask questions. I am more than happy to answer them for you.";
 			case 2: return "If you have any questions before heading off to Erinn, please feel free to ask.";
+		}
+	}
+	
+	private async Task Rebirth()
+	{
+		Msg("Hello, <username/>!<br/>Is life here in Erinn pleasant for you?");
+		Msg("If you wish, you can abandon your current body and be reborn into a new one, <username/>.");
+		
+		while(true)
+		{
+			Msg("Feel free to ask me any questions you have about rebirth.<br/>Once you've made up your mind to be reborn, press Rebirth.",
+				Button("Rebirth"), Button("About Rebirths"), Button("Cancel"));
+			
+			switch(await Select())
+			{
+				case "@rebirth":
+					Msg("(Unimplemented.)"); // <rebirth style='-1'/>
+					break;
+					
+				case "@about_rebirths":
+					await RebirthAbout();
+					break;
+					
+				case "@cancel":
+					Msg("There are plenty more opportunities to be reborn.<br/>Perhaps another time.<rebirth hide='true'/>");
+					goto L_End;
+			}
+		}
+		
+	L_End:
+		Close(Hide.None, "I wish you good fortune in your new life on Erinn.<br/>Take care.");
+	}
+	
+	private async Task RebirthAbout()
+	{
+		while(true)
+		{
+			Msg("When you rebirth, you will be able to have a new body.<br/>Aside from your looks, you can also change your age and starting location.<br/>Please feel free to ask me more.",
+				Button("What is Rebirth?", "@whatis"), Button("What changes after a Rebirth?", "@whatchanges"), Button("What does not change after a Rebirth?", "@whatnot"), Button("Done"));
+		
+			switch(await Select())
+			{
+				case "@whatis":
+					Msg("You can choose a new body between the age of 10 and 17.<br/>Know that you won't receive the extra 7 AP just for being 17,<br/>as you did at the beginning of your journey.<br/>You will keep the AP that you have right now.");
+					Msg("Also, your Level and Exploration Level will reset to 1.<br/>You'll get to keep all of your skills from your previous life, though.");
+					Msg("You'll have to<br/>start at a low level for the Exploration Quests,<br/>but I doubt that it will be an issue for you.");
+					Msg("If you wish, you can even just change your appearance<br/>without resetting your levels or your age.<br/>Just don't select the 'Reset Levels and Age' button<br/>to remake yourself without losing your levels.", Image("Rebirth_01_c2", true, 200, 200));
+					Msg("You can even change your gender<br/>by clicking on 'Change Gender and Look.'<br/>If you want to maintain your current look, then don't select that button.", Image("Rebirth_02_c2", true, 200, 200));
+					Msg("You can choose where you would like to rebirth.<br/>Choose between Tir Chonaill, Qilla Base Camp,<br/>or the last location you were at<br/>in your current life.", Image("Rebirth_03", true, 200, 200));
+					break;
+				
+				case "@whatchanges":
+					Msg("You can choose a new body between the ages of 10 and 17.<br/>though you won't receive the extra 7 AP just for being 17<br/>as you did at the beginning of your journey.");
+					Msg("You'll keep all the AP that you have right now<br/>and your level will reset to 1.<br/>You'll keep all of your skills from your previous life, though.");
+					Msg("If you wish, you can even change your appearance without<br/>resetting your levels or your age.<br/>Just don't select the 'Reset Levels and Age' button,<br/>and you'll be able to remake yourself without losing your current levels.", Image("Rebirth_01", true));
+					Msg("You can even change your gender by selecting 'Change Gender and Look.'<br/>If you want to keep your current look, just don't select that button.", Image("Rebirth_02", true));
+					Msg("Lastly, if you would like to return to your last location,<br/>select 'Move to the Last Location'.<br/>Otherwise, you'll be relocated to the Forest of Souls<br/>near Tir Chonaill.");
+					break;
+				
+				case "@whatnot":
+					Msg("First of all, know that you cannot change the<br/>name you chose upon entering Erinn.<br/>Your name is how others know you<br/>even when all else changes.");
+					Msg("<username/>, you can also bring all the knowledge you'd earned<br/>in this life into your next one.<br/>Skills, keywords, remaining AP, titles, and guild will all be carried over.<br/>The items you have and your banking information will also remain intact.");
+					break;
+				
+				default:
+					return;
+			}
 		}
 	}
 }

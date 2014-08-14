@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Login.Database;
 using Aura.Shared.Network;
 
 namespace Aura.Login.Network.Handlers
@@ -41,15 +42,17 @@ namespace Aura.Login.Network.Handlers
 
 			// Check channel and character
 			var channelInfo = LoginServer.Instance.ServerList.GetChannel(serverName, channelName);
-			var character = client.Account.GetCharacter(characterId);
-			if (character == null)
-				character = client.Account.GetPet(characterId);
+			var character = client.Account.GetCharacter(characterId) ?? client.Account.GetPet(characterId);
 
 			if (channelInfo == null || character == null)
 			{
 				Send.ChannelInfoRequestR_Fail(client);
 				return;
 			}
+
+			// Uninitialize if rebirth requested, so character goes to Nao.
+			if (rebirth)
+				LoginDb.Instance.UninitializeCreature(character.CreatureId);
 
 			// Success
 			Send.ChannelInfoRequestR(client, channelInfo, characterId);

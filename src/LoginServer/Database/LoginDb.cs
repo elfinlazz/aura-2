@@ -648,5 +648,19 @@ namespace Aura.Login.Database
 
 			// TODO: Add points (pons)...
 		}
+
+		/// <summary>
+		/// Unsets creature's Initialized creature state flag.
+		/// </summary>
+		/// <param name="creatureId"></param>
+		public void UninitializeCreature(long creatureId)
+		{
+			using (var conn = AuraDb.Instance.Connection)
+			using (var mc = new MySqlCommand("UPDATE `creatures` SET `state` = `state` & ~1 WHERE `creatureId` = @creatureId", conn))
+			{
+				mc.Parameters.AddWithValue("@creatureId", creatureId);
+				mc.ExecuteNonQuery();
+			}
+		}
 	}
 }
