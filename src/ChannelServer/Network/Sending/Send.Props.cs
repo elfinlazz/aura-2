@@ -8,6 +8,7 @@ using System.Text;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Channel.World;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {

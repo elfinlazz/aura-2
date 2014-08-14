@@ -8,6 +8,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.World.Entities.Creatures;
 using System.Globalization;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {
