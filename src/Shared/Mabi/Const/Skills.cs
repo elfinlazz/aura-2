@@ -375,14 +375,13 @@ namespace Aura.Shared.Mabi.Const
 		NameColorChange = 50047,
 		InstallUninstallCylinder = 50048,
 		HolyFlame = 50049,
-
+		OutfitAction = 50167,
 
 		UseMorrighansFeather = 50050,
 		CreateFaliasPortal = 50051,
 		UseItemChattingColorChange = 50052,
 		InstallPrivateFarmFacility = 50053,
 		ReorientHomesteadbuilding = 50054,
-
 
 		Paint = 50055,
 		MixPaint = 50056,
@@ -478,7 +477,6 @@ namespace Aura.Shared.Mabi.Const
 		TybaltsFencingSkills = 51005,
 		JulietsFeelings = 51006,
 		ShylocksStep = 51007,
-
 
 		MerrowSmash = 52000,
 		MerrowRisingDragon = 52001,

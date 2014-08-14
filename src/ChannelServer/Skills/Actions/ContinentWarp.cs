@@ -36,7 +36,7 @@ namespace Aura.Channel.Skills.Actions
 	/// TODO: Research destinations and how they overwrite each other.
 	/// </remarks>
 	[Skill(SkillId.ContinentWarp)]
-	public class ContinentWarpSkillHandler : IPreparable, IUseable, ICompletable, ICancelable
+	public class ContinentWarp : IPreparable, IUseable, ICompletable, ICancelable
 	{
 		private enum Continent : byte
 		{

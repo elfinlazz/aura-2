@@ -139,7 +139,8 @@
     <Compile Include="Scripting\Scripts\RegionScript.cs" />
     <Compile Include="Scripting\ScriptVariables.cs" />
     <Compile Include="Scripting\MagicWordsScript.cs" />
-    <Compile Include="Skills\Actions\ContinentWarpSkillHandler.cs" />
+    <Compile Include="Skills\Actions\ContinentWarp.cs" />
+    <Compile Include="Skills\Actions\OutfitAction.cs" />
     <Compile Include="Skills\Base\CombatSkillHandler.cs" />
     <Compile Include="Skills\Base\Interfaces.cs" />
     <Compile Include="Skills\Base\StandardPrepareHandler.cs" />
