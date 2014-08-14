@@ -150,7 +150,7 @@ namespace Aura.Login.Network
 				packet.PutShort(character.EyeType);
 				packet.PutByte(character.EyeColor);
 				packet.PutByte(character.MouthType);
-				packet.PutInt(0);
+				packet.PutUInt((uint)character.State);
 				packet.PutFloat(character.Height);
 				packet.PutFloat(character.Weight);
 				packet.PutFloat(character.Upper);

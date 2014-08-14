@@ -316,6 +316,7 @@ namespace Aura.Login.Database
 						character.EyeType = reader.GetInt16("eyeType");
 						character.EyeColor = reader.GetByte("eyeColor");
 						character.MouthType = reader.GetByte("mouthType");
+						character.State = (CreatureStates)reader.GetUInt32("state");
 						character.Height = reader.GetFloat("height");
 						character.Weight = reader.GetFloat("weight");
 						character.Upper = reader.GetFloat("upper");
@@ -475,6 +476,7 @@ namespace Aura.Login.Database
 				cmd.Set("eyeType", creature.EyeType);
 				cmd.Set("eyeColor", creature.EyeColor);
 				cmd.Set("mouthType", creature.MouthType);
+				cmd.Set("state", (uint)creature.State);
 				cmd.Set("height", creature.Height);
 				cmd.Set("weight", creature.Weight);
 				cmd.Set("upper", creature.Upper);

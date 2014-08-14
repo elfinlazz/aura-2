@@ -9,6 +9,7 @@ using Aura.Login.Util;
 using Aura.Shared.Database;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Login.Network.Handlers
 {
@@ -217,6 +218,7 @@ namespace Aura.Login.Network.Handlers
 			pet.Race = card.Race;
 			pet.Age = 1;
 			pet.Server = serverName;
+			pet.State |= CreatureStates.Initialized;
 			pet.Height = petInfo.Height;
 			pet.Upper = petInfo.Upper;
 			pet.Lower = petInfo.Lower;
@@ -378,6 +380,7 @@ namespace Aura.Login.Network.Handlers
 			partner.EyeColor = eyeColor;
 			partner.MouthType = mouthType;
 			partner.Server = serverName;
+			partner.State |= CreatureStates.Initialized;
 
 			partner.Height = height;
 			partner.Weight = weight;
