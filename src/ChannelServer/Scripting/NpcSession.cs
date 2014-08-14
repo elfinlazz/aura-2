@@ -37,6 +37,7 @@ namespace Aura.Channel.Scripting
 		/// Starts session
 		/// </summary>
 		/// <param name="target"></param>
+		/// <param name="creature"></param>
 		public void Start(NPC target, Creature creature)
 		{
 			this.Target = target;

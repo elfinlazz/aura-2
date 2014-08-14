@@ -51,7 +51,7 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Broadcasts PropDisappears in prop's region.
 		/// </summary>
-		/// <param name="entity"></param>
+		/// <param name="prop"></param>
 		public static void PropDisappears(Prop prop)
 		{
 			var packet = new Packet(Op.PropDisappears, MabiId.Broadcast);

@@ -379,6 +379,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Returns all player creatures in range.
 		/// </summary>
+		/// <param name="pos"></param>
 		/// <param name="range"></param>
 		/// <returns></returns>
 		public List<Creature> GetPlayersInRange(Position pos, int range = VisibleRange)
@@ -433,6 +434,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Returns all visible creatures in range of entity, excluding itself.
 		/// </summary>
+		/// <param name="entity"></param>
 		/// <param name="range"></param>
 		/// <returns></returns>
 		public List<Creature> GetVisibleCreaturesInRange(Entity entity, int range = VisibleRange)
@@ -676,6 +678,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Activates AIs in range of the movement path.
 		/// </summary>
+		/// <param name="creature"></param>
 		/// <param name="from"></param>
 		/// <param name="to"></param>
 		public void ActivateAis(Creature creature, Position from, Position to)

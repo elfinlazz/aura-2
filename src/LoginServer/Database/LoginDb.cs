@@ -507,6 +507,8 @@ namespace Aura.Login.Database
 		/// </summary>
 		/// <param name="creatureId"></param>
 		/// <param name="items"></param>
+		/// <param name="conn"></param>
+		/// <param name="transaction"></param>
 		private void AddItems(long creatureId, List<Item> items, MySqlConnection conn, MySqlTransaction transaction)
 		{
 			foreach (var item in items)
@@ -625,8 +627,7 @@ namespace Aura.Login.Database
 		/// <summary>
 		/// Adds trade item and points of card to character.
 		/// </summary>
-		/// <param name="targetName"></param>
-		/// <param name="serverName"></param>
+		/// <param name="targetCharacter"></param>
 		/// <param name="charCard"></param>
 		public void TradeCard(Character targetCharacter, CharCardData charCard)
 		{

@@ -225,7 +225,8 @@ namespace Aura.Channel.Network.Sending
 		/// Type can be various things, like "gold", "exp", or "ap".
 		/// </remarks>
 		/// <param name="creature"></param>
-		/// <param name="itemEntityId"></param>
+		/// <param name="type"></param>
+		/// <param name="amount"></param>
 		public static void AcquireInfo(Creature creature, string type, int amount)
 		{
 			var packet = new Packet(Op.AcquireInfo, creature.EntityId);
@@ -349,6 +350,7 @@ namespace Aura.Channel.Network.Sending
 		/// Effect is only played for ages 1~25.
 		/// </remarks>
 		/// <param name="creature"></param>
+		/// <param name="age"></param>
 		public static void AgeUpEffect(Creature creature, short age)
 		{
 			var packet = new Packet(Op.AgeUpEffect, creature.EntityId);

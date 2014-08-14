@@ -240,7 +240,8 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
-		/// <param name="unkByte"></param>
+		/// <param name="stun"></param>
+		/// <param name="unk"></param>
 		public static void SkillUseStun(Creature creature, SkillId skillId, int stun, int unk)
 		{
 			var packet = new Packet(Op.SkillUse, creature.EntityId);
@@ -306,8 +307,8 @@ namespace Aura.Channel.Network.Sending
 		/// Broadcasts Effect in range of creature.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
 		/// <param name="instrument"></param>
-		/// <param name="quality"></param>
 		/// <param name="compressedMML"></param>
 		/// <param name="rndScore"></param>
 		public static void SkillUsePlayingInstrument(Creature creature, SkillId skillId, InstrumentType instrument, string compressedMML, int rndScore)
@@ -435,8 +436,8 @@ namespace Aura.Channel.Network.Sending
 		/// Broadcasts SkillTeleport to creature's region.
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
-		/// <param name="castTime"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
 		public static void SkillTeleport(Creature creature, int x, int y)
 		{
 			var packet = new Packet(Op.SkillTeleport, creature.EntityId);

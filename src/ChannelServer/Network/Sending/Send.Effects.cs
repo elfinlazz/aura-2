@@ -23,6 +23,7 @@ namespace Aura.Channel.Network.Sending
 		/// Parameters have to be casted to the proper type, use carefully!
 		/// </remarks>
 		/// <param name="creature"></param>
+		/// <param name="effectId"></param>
 		/// <param name="parameters"></param>
 		public static void Effect(Creature creature, int effectId, params object[] parameters)
 		{

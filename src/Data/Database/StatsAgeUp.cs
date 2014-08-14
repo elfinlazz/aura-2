@@ -30,7 +30,7 @@ namespace Aura.Data.Database
 		/// Returns the age info for the given race
 		/// at the given age, or null.
 		/// </summary>
-		/// <param name="race"></param>
+		/// <param name="raceId"></param>
 		/// <param name="age"></param>
 		/// <returns></returns>
 		public StatsAgeUpData Find(int raceId, int age)

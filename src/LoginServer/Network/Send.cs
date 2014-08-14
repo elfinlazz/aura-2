@@ -329,6 +329,7 @@ namespace Aura.Login.Network
 		/// Sends AccountInfoRequestR to client, with client's account's data.
 		/// </summary>
 		/// <param name="client"></param>
+		/// <param name="success"></param>
 		public static void AccountInfoRequestR(LoginClient client, bool success)
 		{
 			var packet = new Packet(Op.AccountInfoRequestR, MabiId.Login);
@@ -387,6 +388,7 @@ namespace Aura.Login.Network
 		/// </summary>
 		/// <param name="client"></param>
 		/// <param name="info">Negative response if null.</param>
+		/// <param name="characterId"></param>
 		public static void ChannelInfoRequestR(LoginClient client, ChannelInfo info, long characterId)
 		{
 			var packet = new Packet(Op.ChannelInfoRequestR, MabiId.Channel);

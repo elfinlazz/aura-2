@@ -728,6 +728,7 @@ namespace Aura.Channel.Database
 		/// Saves creature and all its data.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="account"></param>
 		public void SaveCharacter(PlayerCreature creature, Account account)
 		{
 			using (var conn = AuraDb.Instance.Connection)

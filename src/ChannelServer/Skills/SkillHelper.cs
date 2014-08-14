@@ -95,6 +95,7 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		/// <param name="aAction"></param>
 		/// <param name="tAction"></param>
+		/// <param name="damage"></param>
 		/// <returns></returns>
 		public static bool HandleDefense(AttackerAction aAction, TargetAction tAction, ref float damage)
 		{
@@ -123,6 +124,8 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		/// <param name="target"></param>
 		/// <param name="damage"></param>
+		/// <param name="defense"></param>
+		/// <param name="protection"></param>
 		public static void HandleDefenseProtection(Creature target, ref float damage, bool defense = true, bool protection = true)
 		{
 			if (defense)

@@ -249,8 +249,7 @@ namespace Aura.Channel.Skills.Music
 		/// <summary>
 		/// Called when a player attacks someone (training).
 		/// </summary>
-		/// <param name="creature"></param>
-		/// <param name="attacker"></param>
+		/// <param name="action"></param>
 		protected virtual void OnCreatureAttackedByPlayer(TargetAction action)
 		{
 			// Check for instrument in attacker's right hand

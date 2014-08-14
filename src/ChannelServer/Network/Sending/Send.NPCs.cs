@@ -85,8 +85,7 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Sends NpcTalkKeywordR to creature's client.
 		/// </summary>
-		/// <param name="client"></param>
-		/// <param name="success"></param>
+		/// <param name="creature"></param>
 		/// <param name="keyword">Negative response if null</param>
 		public static void NpcTalkKeywordR(Creature creature, string keyword)
 		{

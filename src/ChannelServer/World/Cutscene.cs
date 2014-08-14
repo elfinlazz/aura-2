@@ -62,7 +62,7 @@ namespace Aura.Channel.World
 		/// Adds new creature of race as actor.
 		/// </summary>
 		/// <param name="name"></param>
-		/// <param name="creature"></param>
+		/// <param name="raceId"></param>
 		public void AddActor(string name, int raceId)
 		{
 			var creature = new NPC();

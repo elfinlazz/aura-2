@@ -402,8 +402,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="raceId"></param>
 		/// <param name="amount"></param>
 		/// <param name="regionId"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="pos"></param>
 		/// <param name="radius">Radius around position for random spawn</param>
 		/// <param name="effect">Whether to display spawn effect</param>
 		/// <param name="onDeath">Runs when one of the creatures dies</param>

@@ -93,6 +93,7 @@ namespace Aura.Login.Database
 		/// character's ids are also set in that case.
 		/// </summary>
 		/// <param name="character"></param>
+		/// <param name="cardInfo"></param>
 		/// <returns></returns>
 		public bool CreateCharacter(Character character, CharCardData cardInfo)
 		{
@@ -170,7 +171,7 @@ namespace Aura.Login.Database
 		/// <returns></returns>
 		private List<Item> CardItemsToItems(IEnumerable<CharCardSetData> cardItems)
 		{
-			return cardItems.Select(cardItem => new Item(cardItem.Class, (Pocket) cardItem.Pocket, cardItem.Color1, cardItem.Color2, cardItem.Color3)).ToList();
+			return cardItems.Select(cardItem => new Item(cardItem.Class, (Pocket)cardItem.Pocket, cardItem.Color1, cardItem.Color2, cardItem.Color3)).ToList();
 		}
 
 		/// <summary>
@@ -186,7 +187,7 @@ namespace Aura.Login.Database
 		/// </remarks>
 		private void GenerateItemColors(ref List<Item> items, string hash)
 		{
-			var ihash = hash.Aggregate(5381, (current, ch) => current*33 + (int) ch);
+			var ihash = hash.Aggregate(5381, (current, ch) => current * 33 + (int)ch);
 
 			var rnd = new MTRandom(ihash);
 			foreach (var item in items.Where(a => a.Info.Pocket != Pocket.Face && a.Info.Pocket != Pocket.Hair))
@@ -205,6 +206,7 @@ namespace Aura.Login.Database
 		/// Deletes character card from account.
 		/// </summary>
 		/// <param name="cardId"></param>
+		/// <param name="card"></param>
 		public bool DeleteCharacterCard(Card card)
 		{
 			if (!LoginDb.Instance.DeleteCard(card))
@@ -218,7 +220,7 @@ namespace Aura.Login.Database
 		/// <summary>
 		/// Deletes pet card from account.
 		/// </summary>
-		/// <param name="cardId"></param>
+		/// <param name="card"></param>
 		public bool DeletePetCard(Card card)
 		{
 			if (!LoginDb.Instance.DeleteCard(card))

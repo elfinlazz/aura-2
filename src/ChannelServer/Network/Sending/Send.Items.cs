@@ -117,6 +117,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="item"></param>
+		/// <param name="pocket"></param>
 		public static void ItemRemove(Creature creature, Item item, Pocket pocket)
 		{
 			var packet = new Packet(Op.ItemRemove, creature.EntityId);

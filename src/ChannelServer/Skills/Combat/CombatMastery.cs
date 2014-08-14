@@ -146,7 +146,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <summary>
 		/// Returns stun time for the attacker.
 		/// </summary>
-		/// <param name="weaponSpeed"></param>
+		/// <param name="weapon"></param>
 		/// <param name="knockback"></param>
 		/// <returns></returns>
 		public short GetAttackerStun(Item weapon, bool knockback)
@@ -167,7 +167,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <summary>
 		/// Returns stun time for the target.
 		/// </summary>
-		/// <param name="weaponSpeed"></param>
+		/// <param name="weapon"></param>
 		/// <param name="knockback"></param>
 		/// <returns></returns>
 		public short GetTargetStun(Item weapon, bool knockback)

@@ -346,6 +346,7 @@ namespace Aura.Channel.Scripting
 		/// Returns new AI script by name for creature, or null.
 		/// </summary>
 		/// <param name="name"></param>
+		/// <param name="creature"></param>
 		/// <returns></returns>
 		public AiScript GetAi(string name, Creature creature)
 		{
@@ -653,6 +654,7 @@ namespace Aura.Channel.Scripting
 		/// Spawns all creatures for spawn, or amount.
 		/// </summary>
 		/// <param name="spawn"></param>
+		/// <param name="amount"></param>
 		/// <returns></returns>
 		public int Spawn(CreatureSpawn spawn, int amount = 0)
 		{
@@ -680,6 +682,8 @@ namespace Aura.Channel.Scripting
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="spawnId"></param>
+		/// <param name="active"></param>
+		/// <param name="effect"></param>
 		/// <returns></returns>
 		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId, bool active, bool effect)
 		{

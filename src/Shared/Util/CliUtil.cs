@@ -53,6 +53,7 @@ namespace Aura.Shared.Util
 		/// Waits for the return key, and closes the application afterwards.
 		/// </summary>
 		/// <param name="exitCode"></param>
+		/// <param name="wait"></param>
 		public static void Exit(int exitCode, bool wait = true)
 		{
 			if (wait)

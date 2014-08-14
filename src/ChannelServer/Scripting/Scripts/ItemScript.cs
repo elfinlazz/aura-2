@@ -165,6 +165,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Adds magic seal meta data to item.
 		/// </summary>
+		/// <param name="item"></param>
 		/// <param name="color"></param>
 		/// <param name="script"></param>
 		protected void MagicSeal(Item item, string color, string script = null)

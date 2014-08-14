@@ -181,7 +181,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <summary>
 		/// Completes and removes quest, if it exists.
 		/// </summary>
-		/// <param name="questId"></param>
+		/// <param name="quest"></param>
 		public bool Complete(Quest quest)
 		{
 			var success = this.Complete(quest, true);
@@ -211,7 +211,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <summary>
 		/// Completes and removes quest, if it exists.
 		/// </summary>
-		/// <param name="questId"></param>
+		/// <param name="quest"></param>
 		/// <param name="rewards">Shall rewards be given?</param>
 		private bool Complete(Quest quest, bool rewards)
 		{

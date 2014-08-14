@@ -131,6 +131,7 @@ namespace Aura.Shared.Database
 		/// Returns true if the name is valid and available.
 		/// </summary>
 		/// <param name="name"></param>
+		/// <param name="serverName"></param>
 		/// <returns></returns>
 		public NameCheckResult NameOkay(string name, string serverName)
 		{

@@ -86,7 +86,9 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Adds skill silently. Returns false if the skill already exists,
 		/// with a rank that's equal or higher.
 		/// </summary>
-		/// <param name="skill"></param>
+		/// <param name="skillId"></param>
+		/// <param name="skillRank"></param>
+		/// <param name="raceId"></param>
 		public bool Add(SkillId skillId, SkillRank skillRank, int raceId)
 		{
 			if (!AuraData.SkillDb.Exists((int)skillId))

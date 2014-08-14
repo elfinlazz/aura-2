@@ -53,6 +53,8 @@ namespace Aura.Channel.Util.Configuration.Files
 		/// if the command wasn't found in the config.
 		/// </summary>
 		/// <param name="command"></param>
+		/// <param name="defaultAuth"></param>
+		/// <param name="defaultCharAuth"></param>
 		/// <returns></returns>
 		public CommandAuthConf GetAuth(string command, int defaultAuth, int defaultCharAuth)
 		{

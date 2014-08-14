@@ -437,6 +437,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Runs all hook funcs, one by one.
 		/// </remarks>
 		/// <param name="hookName"></param>
+		/// <param name="args"></param>
 		/// <returns></returns>
 		protected async Task Hook(string hookName, params object[] args)
 		{
@@ -613,6 +614,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Sends dialog to player's client.
 		/// </summary>
+		/// <param name="hide"></param>
 		/// <param name="message"></param>
 		/// <param name="elements"></param>
 		public void Msg(Hide hide, string message, params DialogElement[] elements)
@@ -649,6 +651,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Sends dialog to player's client.
 		/// </summary>
+		/// <param name="hide"></param>
 		/// <param name="elements"></param>
 		public void Msg(Hide hide, params DialogElement[] elements)
 		{

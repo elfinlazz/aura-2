@@ -99,6 +99,7 @@ namespace Aura.Channel.Util
 		/// Adds new command.
 		/// </summary>
 		/// <param name="auth"></param>
+		/// <param name="charAuth"></param>
 		/// <param name="name"></param>
 		/// <param name="usage"></param>
 		/// <param name="func"></param>

@@ -287,7 +287,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Returns creature from any region by name, or null.
 		/// </summary>
-		/// <param name="entityId"></param>
+		/// <param name="name"></param>
 		/// <returns></returns>
 		public Creature GetCreature(string name)
 		{

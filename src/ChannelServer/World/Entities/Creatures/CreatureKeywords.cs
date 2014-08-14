@@ -130,7 +130,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <summary>
 		/// Adds keyword and sends NewKeyword.
 		/// </summary>
-		/// <param name="keywordId"></param>
+		/// <param name="keyword"></param>
 		public bool Give(string keyword)
 		{
 			var data = AuraData.KeywordDb.Find(keyword);
@@ -157,7 +157,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <summary>
 		/// Returns true if creature has keyword.
 		/// </summary>
-		/// <param name="keywordId"></param>
+		/// <param name="keyword"></param>
 		/// <returns></returns>
 		public bool Has(string keyword)
 		{

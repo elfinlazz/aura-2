@@ -52,6 +52,7 @@ namespace Aura.Channel.Network.Sending
 		/// Sends system message (special Chat) to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="from"></param>
 		/// <param name="format"></param>
 		/// <param name="args"></param>
 		private static void SystemMessage(Creature creature, string from, string format, params object[] args)
@@ -248,6 +249,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="region"></param>
 		/// <param name="type"></param>
+		/// <param name="duration"></param>
 		/// <param name="format"></param>
 		/// <param name="args"></param>
 		public static void Notice(Region region, NoticeType type, int duration, string format, params object[] args)

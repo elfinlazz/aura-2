@@ -112,6 +112,7 @@ namespace Aura.Channel.World.Entities
 		/// Item based on item and entity id.
 		/// </summary>
 		/// <param name="itemId"></param>
+		/// <param name="entityId"></param>
 		public Item(int itemId, long entityId)
 		{
 			this.Init(itemId);
@@ -187,6 +188,7 @@ namespace Aura.Channel.World.Entities
 		/// Drops item in location with a new entity id.
 		/// </summary>
 		/// <param name="region"></param>
+		/// <param name="pos"></param>
 		public void Drop(Region region, Position pos)
 		{
 			var rnd = RandomProvider.Get();

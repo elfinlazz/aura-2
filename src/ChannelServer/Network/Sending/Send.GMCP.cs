@@ -40,7 +40,7 @@ namespace Aura.Channel.Network.Sending
 		/// Sends GmcpNpcListR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="success"></param>
+		/// <param name="npcs"></param>
 		public static void GmcpNpcListR(Creature creature, ICollection<Creature> npcs)
 		{
 			var packet = new Packet(Op.GmcpNpcListR, creature.EntityId);

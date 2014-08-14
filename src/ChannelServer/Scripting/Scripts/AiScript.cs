@@ -134,8 +134,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Main "loop"
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="args"></param>
+		/// <param name="state"></param>
 		private void Heartbeat(object state)
 		{
 			if (this.Creature == null || this.Creature.Region == null)
@@ -387,7 +386,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Radius in which creature become potential targets.
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="radius"></param>
 		protected void SetAggroRadius(int radius)
 		{
 			_aggroRadius = radius;
@@ -396,7 +395,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// The way the AI decides whether to go into Alert/Aggro.
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="type"></param>
 		protected void SetAggroType(AggroType type)
 		{
 			_aggroType = type;
@@ -405,7 +404,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Milliseconds before creature attacks.
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="limit"></param>
 		protected void SetAggroLimit(AggroLimit limit)
 		{
 			_aggroLimit = limit;
@@ -518,8 +517,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Returns true if there are collisions between the two positions.
 		/// </summary>
-		/// <param name="pos"></param>
-		/// <param name="pos"></param>
+		/// <param name="pos1"></param>
+		/// <param name="pos2"></param>
 		/// <returns></returns>
 		protected bool AnyCollisions(Position pos1, Position pos2)
 		{
@@ -663,8 +662,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature runs to destination.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="destination"></param>
 		/// <returns></returns>
 		protected IEnumerable RunTo(Position destination)
 		{
@@ -674,8 +672,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature walks to destination.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="destination"></param>
 		/// <returns></returns>
 		protected IEnumerable WalkTo(Position destination)
 		{
@@ -685,8 +682,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature moves to destination.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="destination"></param>
+		/// <param name="walk"></param>
 		/// <returns></returns>
 		protected IEnumerable MoveTo(Position destination, bool walk)
 		{
@@ -715,7 +712,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature circles around target.
 		/// </summary>
-		/// <param name="distance"></param>
+		/// <param name="radius"></param>
 		/// <param name="timeMin"></param>
 		/// <param name="timeMax"></param>
 		/// <returns></returns>
@@ -727,9 +724,10 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature circles around target.
 		/// </summary>
-		/// <param name="distance"></param>
+		/// <param name="radius"></param>
 		/// <param name="timeMin"></param>
 		/// <param name="timeMax"></param>
+		/// <param name="clockwise"></param>
 		/// <returns></returns>
 		protected IEnumerable Circle(int radius, int timeMin, int timeMax, bool clockwise)
 		{
