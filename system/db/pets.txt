@@ -132,6 +132,7 @@
 { raceId: 471005, name: "Shark Robe Seal", timeLimit: 105, exp: 1.7, height: 0.4, upper: 1.43, lower: 1.45, life: 10, mana: 10, stamina: 10, str: 10, int: 10, dex: 10, will: 10, luck: 2, defense: 0, protection: 2 },
 { raceId: 471006, name: "Skeleton Maid", timeLimit: 117, exp: 1.8, height: 0.46, upper: 1.7, lower: 0.8, life: 68, mana: 32, stamina: 68, str: 38, int: 10, dex: 22, will: 18, luck: 2, defense: 0, protection: 2 },
 { raceId: 471007, name: "Shark Robe Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
+{ raceId: 471010, name: "Lite Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
 { raceId: 490025, name: "Warp Imp", timeLimit: 112, exp: 1.7, height: 0.2, upper: 3.6, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
 { raceId: 500001, name: "Black Mud Crab", timeLimit: 90, exp: 1.6, height: 0.75, upper: 1.0, lower: 1.0, life: 50, mana: 33, stamina: 34, str: 33, int: 40, dex: 27, will: 27, luck: 28, defense: 0, protection: 2 },
 { raceId: 500002, name: "Red Rock Crab", timeLimit: 111, exp: 1.7, height: 0.75, upper: 1.0, lower: 1.0, life: 45, mana: 40, stamina: 39, str: 27, int: 38, dex: 24, will: 30, luck: 29, defense: 0, protection: 2 },
