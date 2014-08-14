@@ -198,8 +198,11 @@ namespace Aura.Channel.World.Entities
 
 			// Apply stat bonuses
 			this.LifeMaxBase += life;
+			this.Life += life;
 			this.ManaMaxBase += mana;
+			this.Mana += mana;
 			this.StaminaMaxBase += stamina;
+			this.Stamina += stamina;
 			this.StrBase += str;
 			this.DexBase += dex;
 			this.IntBase += int_;
