@@ -12,9 +12,6 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `banExpiration` datetime DEFAULT NULL,
   `banReason` varchar(255) DEFAULT NULL,
   `loggedIn` tinyint(1) NOT NULL DEFAULT '0',
-  `autobanCount` INT(10) NOT NULL DEFAULT '0',
-  `autobanScore` INT(10) NOT NULL DEFAULT '0',
-  `lastAutobanReduction` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`accountId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
