@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Network.Sending;
+using Aura.Data;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Aura.Channel.Network.Sending;
-using Aura.Channel.World.Entities.Creatures;
-using Aura.Shared.Util;
-using Aura.Shared.Mabi.Const;
-using Aura.Data;
 
 namespace Aura.Channel.World.Entities
 {
@@ -55,6 +54,11 @@ namespace Aura.Channel.World.Entities
 		public DateTime LastAging { get; set; }
 
 		/// <summary>
+		/// Specifies whether to update visible creatures or not.
+		/// </summary>
+		public bool Watching { get; set; }
+
+		/// <summary>
 		/// Set to true if creature is supposed to be saved.
 		/// </summary>
 		public bool Save { get; set; }
@@ -84,6 +88,11 @@ namespace Aura.Channel.World.Entities
 		/// Returns whether creature is able to receive exp and level up.
 		/// </summary>
 		public override bool LevelingEnabled { get { return true; } }
+
+		public PlayerCreature()
+		{
+			this.Watching = true;
+		}
 
 		/// <summary>
 		/// Instructs client to move to target location.
@@ -116,6 +125,9 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public void LookAround()
 		{
+			if (!this.Watching)
+				return;
+
 			var currentlyVisible = this.Region.GetVisibleEntities(this);
 
 			var appear = currentlyVisible.Except(_visibleEntities);

@@ -315,6 +315,17 @@ namespace Aura.Channel.Network.Handlers
 			if (rebirth)
 				creature.Deactivate(CreatureStates.Initialized);
 
+			// Make visible entities disappear, otherwise they will still
+			// be there after the channel switch. Can't be handled automatically
+			// like normal (dis)appearing because the other channel doesn't
+			// know what the player saw before.
+			var playerCreature = creature as PlayerCreature;
+			if (playerCreature != null)
+			{
+				playerCreature.Watching = false;
+				Send.EntitiesDisappear(playerCreature.Client, playerCreature.Region.GetVisibleEntities(playerCreature));
+			}
+
 			// Success
 			Send.SwitchChannelR(creature, channel);
 		}
