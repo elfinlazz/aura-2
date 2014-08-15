@@ -129,76 +129,76 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
-		/// Sends SkillStart to creature's client.
+		/// Sends SkillStart to creature's client or broadcasts it if skill is
+		/// of type "BroadcastStartStop".
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
-		/// <param name="broadcast"></param>
+		/// <param name="skill"></param>
 		/// <param name="extra"></param>
-		public static void SkillStart(Creature creature, SkillId skillId, bool broadcast, string extra)
+		public static void SkillStart(Creature creature, Skill skill, string extra)
 		{
 			var packet = new Packet(Op.SkillStart, creature.EntityId);
-			packet.PutUShort((ushort)skillId);
+			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutString(extra);
 
-			if (!broadcast)
+			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
 				creature.Client.Send(packet);
 			else
 				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
-		/// Sends SkillStart to creature's client.
+		/// Sends SkillStart to creature's client or broadcasts it if skill is
+		/// of type "BroadcastStartStop".
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
-		/// <param name="broadcast"></param>
+		/// <param name="skill"></param>
 		/// <param name="unkByte"></param>
-		public static void SkillStart(Creature creature, SkillId skillId, bool broadcast, byte unkByte)
+		public static void SkillStart(Creature creature, Skill skill, byte unkByte)
 		{
 			var packet = new Packet(Op.SkillStart, creature.EntityId);
-			packet.PutUShort((ushort)skillId);
+			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutByte(unkByte);
 
-			if (!broadcast)
+			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
 				creature.Client.Send(packet);
 			else
 				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
-		/// Sends SkillStop to creature's client.
+		/// Sends SkillStop to creature's client or broadcasts it if skill is
+		/// of type "BroadcastStartStop".
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
-		/// <param name="broadcast"></param>
+		/// <param name="skill"></param>
 		/// <param name="extra"></param>
-		public static void SkillStop(Creature creature, SkillId skillId, bool broadcast, string extra)
+		public static void SkillStop(Creature creature, Skill skill, string extra)
 		{
 			var packet = new Packet(Op.SkillStop, creature.EntityId);
-			packet.PutUShort((ushort)skillId);
+			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutString(extra);
 
-			if (!broadcast)
+			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
 				creature.Client.Send(packet);
 			else
 				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
-		/// Sends SkillStop to creature's client.
+		/// Sends SkillStop to creature's client or broadcasts it if skill is
+		/// of type "BroadcastStartStop".
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
-		/// <param name="broadcast"></param>
+		/// <param name="skill"></param>
 		/// <param name="unkByte"></param>
-		public static void SkillStop(Creature creature, SkillId skillId, bool broadcast, byte unkByte)
+		public static void SkillStop(Creature creature, Skill skill, byte unkByte)
 		{
 			var packet = new Packet(Op.SkillStop, creature.EntityId);
-			packet.PutUShort((ushort)skillId);
+			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutByte(unkByte);
 
-			if (!broadcast)
+			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
 				creature.Client.Send(packet);
 			else
 				creature.Region.Broadcast(packet, creature);
