@@ -11,6 +11,7 @@ using Aura.Shared.Mabi;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
 using Aura.Shared.Mabi.Const;
+using Aura.Data.Database;
 
 namespace Aura.Channel.Skills.Base
 {
@@ -72,9 +73,9 @@ namespace Aura.Channel.Skills.Base
 			Send.StatUpdate(creature, StatUpdateType.Private, Stat.Mana, Stat.Stamina);
 
 			if (stringParam)
-				Send.SkillStart(creature, skill.Info.Id, dict.ToString());
+				Send.SkillStart(creature, skill.Info.Id, (skill.SkillData.Type == SkillType.BroadcastStartStop), dict.ToString());
 			else
-				Send.SkillStart(creature, skill.Info.Id, unkByte);
+				Send.SkillStart(creature, skill.Info.Id, (skill.SkillData.Type == SkillType.BroadcastStartStop), unkByte);
 		}
 
 		public void Stop(Creature creature, Skill skill, Packet packet)
@@ -95,9 +96,9 @@ namespace Aura.Channel.Skills.Base
 			if (result == StartStopResult.Fail)
 				Send.SkillStopSilentCancel(creature, skill.Info.Id);
 			else if (stringParam)
-				Send.SkillStop(creature, skill.Info.Id, dict.ToString());
+				Send.SkillStop(creature, skill.Info.Id, (skill.SkillData.Type == SkillType.BroadcastStartStop), dict.ToString());
 			else
-				Send.SkillStop(creature, skill.Info.Id, unkByte);
+				Send.SkillStop(creature, skill.Info.Id, (skill.SkillData.Type == SkillType.BroadcastStartStop), unkByte);
 		}
 
 		public void Stop(Creature creature, Skill skill)
@@ -107,7 +108,7 @@ namespace Aura.Channel.Skills.Base
 			if (result == StartStopResult.Fail)
 				Send.SkillStopSilentCancel(creature, skill.Info.Id);
 			else
-				Send.SkillStop(creature, skill.Info.Id, "");
+				Send.SkillStop(creature, skill.Info.Id, (skill.SkillData.Type == SkillType.BroadcastStartStop), "");
 		}
 
 		public virtual StartStopResult Start(Creature creature, Skill skill, MabiDictionary dict)

@@ -134,13 +134,16 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
 		/// <param name="extra"></param>
-		public static void SkillStart(Creature creature, SkillId skillId, string extra)
+		public static void SkillStart(Creature creature, SkillId skillId, bool broadcast, string extra)
 		{
 			var packet = new Packet(Op.SkillStart, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
 			packet.PutString(extra);
 
-			creature.Client.Send(packet);
+			if (!broadcast)
+				creature.Client.Send(packet);
+			else
+				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
@@ -149,13 +152,16 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
 		/// <param name="unkByte"></param>
-		public static void SkillStart(Creature creature, SkillId skillId, byte unkByte)
+		public static void SkillStart(Creature creature, SkillId skillId, bool broadcast, byte unkByte)
 		{
 			var packet = new Packet(Op.SkillStart, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
 			packet.PutByte(unkByte);
 
-			creature.Client.Send(packet);
+			if (!broadcast)
+				creature.Client.Send(packet);
+			else
+				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
@@ -164,13 +170,16 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
 		/// <param name="extra"></param>
-		public static void SkillStop(Creature creature, SkillId skillId, string extra)
+		public static void SkillStop(Creature creature, SkillId skillId, bool broadcast, string extra)
 		{
 			var packet = new Packet(Op.SkillStop, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
 			packet.PutString(extra);
 
-			creature.Client.Send(packet);
+			if (!broadcast)
+				creature.Client.Send(packet);
+			else
+				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
@@ -179,13 +188,16 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
 		/// <param name="unkByte"></param>
-		public static void SkillStop(Creature creature, SkillId skillId, byte unkByte)
+		public static void SkillStop(Creature creature, SkillId skillId, bool broadcast, byte unkByte)
 		{
 			var packet = new Packet(Op.SkillStop, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
 			packet.PutByte(unkByte);
 
-			creature.Client.Send(packet);
+			if (!broadcast)
+				creature.Client.Send(packet);
+			else
+				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>

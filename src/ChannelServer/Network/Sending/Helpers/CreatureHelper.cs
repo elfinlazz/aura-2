@@ -3,6 +3,7 @@
 
 using Aura.Channel.World.Entities;
 using Aura.Data;
+using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using System;
@@ -366,14 +367,15 @@ namespace Aura.Channel.Network.Sending.Helpers
 				//   packet.PutShort
 
 				// Not 100% sure what this is, Yiting added the above years
-				// ago, now it looks like this is a list of skill bins,
-				// maybe those that are currently active, since one potential
-				// one is Outfit Action, with the InUse flag being set.
-				// It's also possible that it was two shorts originally,
+				// ago, now it looks like this is a list of skill bins.
+				// The skills listed seem to be skills of type "7",
+				// which seem to be skills that have their Start/Stop
+				// packets being broadcasted.
+				// It's possible that it was two shorts originally,
 				// the skill id + the flags. [exec]
-				var skillsInUse = creature.Skills.GetList(s => s.Has(SkillFlags.InUse));
-				packet.PutInt(skillsInUse.Count);
-				foreach (var skill in skillsInUse)
+				var skills = creature.Skills.GetList(s => s.SkillData.Type == SkillType.BroadcastStartStop);
+				packet.PutInt(skills.Count);
+				foreach (var skill in skills)
 					packet.PutBin(skill.Info);
 			}
 
