@@ -133,6 +133,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
+		/// <param name="broadcast"></param>
 		/// <param name="extra"></param>
 		public static void SkillStart(Creature creature, SkillId skillId, bool broadcast, string extra)
 		{
@@ -151,6 +152,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
+		/// <param name="broadcast"></param>
 		/// <param name="unkByte"></param>
 		public static void SkillStart(Creature creature, SkillId skillId, bool broadcast, byte unkByte)
 		{
@@ -169,6 +171,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
+		/// <param name="broadcast"></param>
 		/// <param name="extra"></param>
 		public static void SkillStop(Creature creature, SkillId skillId, bool broadcast, string extra)
 		{
@@ -187,6 +190,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
+		/// <param name="broadcast"></param>
 		/// <param name="unkByte"></param>
 		public static void SkillStop(Creature creature, SkillId skillId, bool broadcast, byte unkByte)
 		{
