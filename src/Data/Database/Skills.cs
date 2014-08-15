@@ -15,6 +15,7 @@ namespace Aura.Data.Database
 		public string Name { get; set; }
 		public ushort MasterTitle { get; set; }
 		public byte MaxRank { get; set; }
+		public SkillType Type { get; set; }
 
 		public Dictionary<int, Dictionary<int, SkillRankData>> RankData { get; set; }
 
@@ -137,6 +138,7 @@ namespace Aura.Data.Database
 			skillInfo.Id = entry.ReadUShort("id");
 			skillInfo.Name = entry.ReadString("name");
 			skillInfo.MasterTitle = entry.ReadUShort("masterTitle");
+			skillInfo.Type = (SkillType)entry.ReadInt("type", -1);
 
 			// Ranks
 			skillInfo.RankData = new Dictionary<int, Dictionary<int, SkillRankData>>();
@@ -241,5 +243,20 @@ namespace Aura.Data.Database
 				}
 			}
 		}
+	}
+
+	public enum SkillType
+	{
+		None = -1,
+		Unk1 = 0,
+		Combat = 1,
+		RangedCombat = 2,
+		RangedCombat2 = 3,
+		Production = 4,
+		MaterialProduction = 5,
+		Enchanting = 6,
+		BroadcastStartStop = 7,
+		StartStop = 8,
+		Passive = 10,
 	}
 }
