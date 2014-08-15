@@ -272,5 +272,51 @@ namespace Aura.Channel.Network.Handlers
 			Send.EnterRegion(creature);
 			creature.Warping = true;
 		}
+
+		/// <summary>
+		/// Sent repeatedly while channel list is open to update it.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="packet"></param>
+		[PacketHandler(Op.GetChannelList)]
+		public void GetChannelList(ChannelClient client, Packet packet)
+		{
+			var server = ChannelServer.Instance.ServerList.GetServer(ChannelServer.Instance.Conf.Channel.ChannelServer);
+			if (server == null) return; // Should never happen
+
+			Send.GetChannelListR(client, server);
+		}
+
+		/// <summary>
+		/// Request for switching channels or entering rebirth from channel.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="packet"></param>
+		[PacketHandler(Op.SwitchChannel)]
+		public void SwitchChannel(ChannelClient client, Packet packet)
+		{
+			var channelName = packet.GetString();
+			var rebirth = packet.GetBool();
+
+			var creature = client.GetControlledCreatureSafe();
+
+			// Get channel
+			var channel = ChannelServer.Instance.ServerList.GetChannel(ChannelServer.Instance.Conf.Channel.ChannelServer, channelName);
+			if (channel == null)
+			{
+				Log.Debug("Warning: Player '{0}' tried to switch to non-existent channel '{1}'.", creature.Name, channelName);
+				Send.SwitchChannelR(creature, null);
+				return;
+			}
+
+			// XXX: Check for same channel switch?
+
+			// Deactivate Initialized state, so we can reach Nao.
+			if (rebirth)
+				creature.Deactivate(CreatureStates.Initialized);
+
+			// Success
+			Send.SwitchChannelR(creature, channel);
+		}
 	}
 }

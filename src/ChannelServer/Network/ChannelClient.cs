@@ -64,6 +64,21 @@ namespace Aura.Channel.Network
 		}
 
 		/// <summary>
+		/// Returns controlled creature or throws security exception if
+		/// it's null.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public Creature GetControlledCreatureSafe()
+		{
+			var result = this.Controlling;
+			if (result == null)
+				throw new SevereViolation("Client doesn't control any creature");
+
+			return result;
+		}
+
+		/// <summary>
 		/// Calls <see cref="GetCreatureSafe(long)"/> and then checks the pet's master for null.
 		/// </summary>
 		/// <param name="id"></param>

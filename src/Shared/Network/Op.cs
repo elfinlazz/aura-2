@@ -65,8 +65,10 @@ namespace Aura.Shared.Network
 		public const int DisconnectRequestR = 0x4E25;
 		public const int RequestClientDisconnect = 0x4E26;
 		public const int Disappear = 0x4E2A;
-		public const int GoRebirth = 0x4E32;
-		public const int GoRebirthR = 0x4E33;
+		public const int SwitchChannel = 0x4E32;
+		public const int SwitchChannelR = 0x4E33;
+		public const int GetChannelList = 0x4E34;
+		public const int GetChannelListR = 0x4E35;
 		public const int WarpUnk1 = 0x4E39;
 		public const int RequestRebirth = 0x4E84;
 		public const int RequestRebirthR = 0x4E85;
