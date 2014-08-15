@@ -25,8 +25,6 @@ namespace Aura.Channel.Skills.Actions
 
 		public override StartStopResult Stop(Creature creature, Skill skill, MabiDictionary dict)
 		{
-			Send.Effect(creature, Effect.OutfitAction, false);
-
 			return StartStopResult.Okay;
 		}
 	}
