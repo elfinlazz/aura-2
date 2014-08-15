@@ -80,6 +80,7 @@
     <Compile Include="Network\Packet.cs" />
     <Compile Include="Network\Op.cs" />
     <Compile Include="Network\PacketHandlerManager.cs" />
+    <Compile Include="Network\Sending\Helpers\ServerInfoHelper.cs" />
     <Compile Include="Network\ServerInfo.cs" />
     <Compile Include="Network\ServerInfoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

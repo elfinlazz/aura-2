@@ -8,6 +8,7 @@ using Aura.Shared.Database;
 using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Shared.Network.Sending.Helpers;
 
 namespace Aura.Login.Network
 {
@@ -68,8 +69,8 @@ namespace Aura.Login.Network
 		/// <param name="client"></param>
 		/// <param name="account"></param>
 		/// <param name="sessionKey"></param>
-		/// <param name="servers"></param>
-		public static void LoginR(LoginClient client, Account account, long sessionKey, List<ServerInfo> servers)
+		/// <param name="serverList"></param>
+		public static void LoginR(LoginClient client, Account account, long sessionKey, ICollection<ServerInfo> serverList)
 		{
 			var packet = new Packet(Op.LoginR, MabiId.Login);
 			packet.PutByte((byte)LoginResult.Success);
@@ -83,9 +84,7 @@ namespace Aura.Login.Network
 
 			// Servers
 			// --------------------------------------------------------------
-			packet.PutByte((byte)servers.Count);
-			foreach (var server in servers)
-				packet.Add(server);
+			packet.AddServerList(serverList, ServerInfoType.Client);
 
 			// Account Info
 			// --------------------------------------------------------------
@@ -424,17 +423,25 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
-		/// Sends server/channel status update to all connected clients,
-		/// incl channels.
+		/// Sends server/channel status update to all connected players.
 		/// </summary>
-		public static void ChannelUpdate()
+		public static void ChannelStatus(ICollection<ServerInfo> serverList)
 		{
 			var packet = new Packet(Op.ChannelStatus, MabiId.Login);
-			packet.PutByte((byte)LoginServer.Instance.ServerList.List.Count);
-			foreach (var server in LoginServer.Instance.ServerList.List)
-				packet.Add(server);
+			packet.AddServerList(serverList, ServerInfoType.Client);
 
-			LoginServer.Instance.Broadcast(packet);
+			LoginServer.Instance.BroadcastPlayers(packet);
+		}
+
+		/// <summary>
+		/// Sends server/channel status update to all connected channels.
+		/// </summary>
+		public static void Internal_ChannelStatus(ICollection<ServerInfo> serverList)
+		{
+			var packet = new Packet(Op.Internal.ChannelStatus, MabiId.Login);
+			packet.AddServerList(serverList, ServerInfoType.Internal);
+
+			LoginServer.Instance.BroadcastChannels(packet);
 		}
 
 		/// <summary>
@@ -474,35 +481,6 @@ namespace Aura.Login.Network
 				packet.PutLong(cardId);
 
 			client.Send(packet);
-		}
-
-		/// <summary>
-		/// Adds server and channel information to packet.
-		/// </summary>
-		/// <param name="packet"></param>
-		/// <param name="server"></param>
-		private static void Add(this Packet packet, ServerInfo server)
-		{
-			packet.PutString(server.Name);
-			packet.PutShort(0); // Server type?
-			packet.PutShort(0);
-			packet.PutByte(1);
-
-			// Channels
-			// ----------------------------------------------------------
-			packet.PutInt((int)server.Channels.Count);
-			foreach (var channel in server.Channels.Values)
-			{
-				var state = channel.State;
-				if ((DateTime.Now - channel.LastUpdate).TotalSeconds > 90)
-					state = ChannelState.Maintenance;
-
-				packet.PutString(channel.Name);
-				packet.PutInt((int)state);
-				packet.PutInt((int)channel.Events);
-				packet.PutInt(0); // 1 for Housing? Hidden?
-				packet.PutShort(channel.Stress);
-			}
 		}
 
 		/// <summary>

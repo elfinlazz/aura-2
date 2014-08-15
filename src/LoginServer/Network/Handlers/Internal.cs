@@ -84,7 +84,8 @@ namespace Aura.Login.Network.Handlers
 			channel.LastUpdate = DateTime.Now;
 			channel.State = state;
 
-			Send.ChannelUpdate();
+			Send.ChannelStatus(LoginServer.Instance.ServerList.List);
+			Send.Internal_ChannelStatus(LoginServer.Instance.ServerList.List);
 		}
 
 		/// <summary>

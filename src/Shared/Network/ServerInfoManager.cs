@@ -103,13 +103,14 @@ namespace Aura.Shared.Network
 		}
 
 		/// <summary>
-		/// Adds channel and server if it doesn't exist yet.
+		/// Adds channel and server, if it doesn't exist yet.
+		/// Replaces channel if it already exists.
 		/// </summary>
 		/// <param name="channel"></param>
 		public void Add(ChannelInfo channel)
 		{
 			var server = this.Add(channel.ServerName);
-			server.Channels.Add(channel.Name, channel);
+			server.Channels[channel.Name] = channel;
 		}
 	}
 }

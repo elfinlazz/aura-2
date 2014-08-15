@@ -125,7 +125,8 @@ namespace Aura.Login
 				Log.Status("Channel '{0}' disconnected, switched to Maintenance.", client.Account.Name);
 				channel.State = ChannelState.Maintenance;
 
-				Send.ChannelUpdate();
+				Send.ChannelStatus(this.ServerList.List);
+				Send.Internal_ChannelStatus(this.ServerList.List);
 			}
 		}
 
@@ -164,6 +165,17 @@ namespace Aura.Login
 			lock (this.Server.Clients)
 			{
 				foreach (var client in this.Server.Clients.Where(a => a.State == ClientState.LoggedIn && this.ChannelClients.Contains(a)))
+				{
+					client.Send(packet);
+				}
+			}
+		}
+
+		public void BroadcastPlayers(Packet packet)
+		{
+			lock (this.Server.Clients)
+			{
+				foreach (var client in this.Server.Clients.Where(a => a.State == ClientState.LoggedIn && !this.ChannelClients.Contains(a)))
 				{
 					client.Send(packet);
 				}
