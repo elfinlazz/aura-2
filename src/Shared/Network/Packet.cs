@@ -491,6 +491,16 @@ namespace Aura.Shared.Network
 			Buffer.BlockCopy(_buffer, _bodyStart, buffer, offset, _bodyLen);
 		}
 
+		/// <summary>
+		/// Returns true if type is a valid value of the enum and not None.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		private bool IsValidType(PacketElementType type)
+		{
+			return (type >= PacketElementType.Byte && type <= PacketElementType.Bin);
+		}
+
 		public override string ToString()
 		{
 			var result = new StringBuilder();
@@ -500,7 +510,7 @@ namespace Aura.Shared.Network
 			result.AppendFormat("Op: {0:X08}, Id: {1:X016}" + Environment.NewLine, this.Op, this.Id);
 
 			PacketElementType type;
-			for (int i = 1; ((type = this.Peek()) != PacketElementType.None && _ptr < _buffer.Length); ++i)
+			for (int i = 1; (this.IsValidType(type = this.Peek()) && _ptr < _buffer.Length); ++i)
 			{
 				if (type == PacketElementType.Byte)
 				{
