@@ -647,6 +647,11 @@ namespace Aura.Login.Network
 		/// Password + Secondary password
 		/// </summary>
 		SecondaryPassword = 20,
+
+		/// <summary>
+		/// RSA password, used by CH
+		/// </summary>
+		CH = 23,
 	}
 
 	public enum LoginResult

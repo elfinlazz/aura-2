@@ -99,7 +99,7 @@ namespace Aura.Login.Network.Handlers
 					if (loginType == LoginType.EU)
 						password = Password.RawToMD5(passbin);
 
-					// Upgrade MD5 to SHA1
+					// Upgrade MD5 to SHA1 (used by newer clients)
 					if (password.Length == 32) // MD5
 						password = Password.MD5ToSHA256(password);
 
@@ -122,7 +122,7 @@ namespace Aura.Login.Network.Handlers
 
 					break;
 
-				// Logging in, comming from a channel
+				// Logging in, coming from a channel
 				case LoginType.FromChannel:
 
 					// [160XXX] Double account name
@@ -150,7 +150,14 @@ namespace Aura.Login.Network.Handlers
 
 					// Triggered by people using their official accounts?
 					// Are those information cached somewhere?
+					// TODO: Rephrase? Sounds weird, as if we *know* their data.
 					Send.LoginR_Msg(client, Localization.Get("Please don't use your official login information."));
+					return;
+
+				// Unsupported/unknown type
+				case LoginType.CH:
+				default:
+					Send.LoginR_Msg(client, Localization.Get("Unsupported password encryption, please use the latest NA client."));
 					return;
 			}
 
