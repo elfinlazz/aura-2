@@ -106,8 +106,8 @@ CREATE TABLE IF NOT EXISTS `creatures` (
   PRIMARY KEY (`creatureId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-INSERT INTO `creatures` (`creatureId`, `server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`, `region`, `x`, `y`, `direction`, `level`, `levelTotal`, `exp`, `ap`, `age`, `lifeMax`, `lifeDelta`, `injuries`, `manaMax`, `manaDelta`, `staminaMax`, `staminaDelta`, `hunger`, `str`, `int`, `dex`, `will`, `luck`, `lifeFood`, `manaFood`, `staminaFood`, `strFood`, `intFood`, `dexFood`, `willFood`, `luckFood`, `defense`, `protection`, `deletionTime`, `weaponSet`, `title`, `optionTitle`, `state`) VALUES
-(1, 'AuraSystem', '_Dummy', 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 12800, 38100, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0);
+INSERT INTO `creatures` (`creatureId`, `server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`, `region`, `x`, `y`, `direction`, `level`, `levelTotal`, `exp`, `ap`, `age`, `lifeMax`, `lifeDelta`, `injuries`, `manaMax`, `manaDelta`, `staminaMax`, `staminaDelta`, `hunger`, `str`, `int`, `dex`, `will`, `luck`, `lifeFood`, `manaFood`, `staminaFood`, `strFood`, `intFood`, `dexFood`, `willFood`, `luckFood`, `defense`, `protection`, `deletionTime`, `weaponSet`, `title`, `optionTitle`, `state`, `creationTime`, `lastAging`, `lastRebirth`, `lastLogin`) VALUES
+(1, 'AuraSystem', '_Dummy', 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 12800, 38100, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL);
 
 CREATE TABLE IF NOT EXISTS `coupons` (
   `code` varchar(19) NOT NULL,
