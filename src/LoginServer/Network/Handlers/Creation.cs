@@ -317,7 +317,7 @@ namespace Aura.Login.Network.Handlers
 			var skinColor = packet.GetByte();
 			var hair = packet.GetInt();
 			var hairColor = packet.GetByte();
-			var eyeType = packet.GetByte();
+			var eyeType = packet.GetShort();
 			var eyeColor = packet.GetByte();
 			var mouthType = packet.GetByte();
 			var face = packet.GetInt();
