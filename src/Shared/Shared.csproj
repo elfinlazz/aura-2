@@ -106,7 +106,7 @@
     <Compile Include="Util\OrderedDictionary.cs" />
     <Compile Include="Util\RandomProvider.cs" />
     <Compile Include="ServerMain.cs" />
-    <Compile Include="Util\String.cs" />
+    <Compile Include="Util\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">

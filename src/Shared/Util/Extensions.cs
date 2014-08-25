@@ -5,7 +5,7 @@ using System;
 
 namespace Aura.Shared.Util
 {
-	public static class StringExtension
+	public static class Extensions
 	{
 		/// <summary>
 		/// Calculates differences between 2 strings.
