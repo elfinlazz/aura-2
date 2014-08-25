@@ -16,7 +16,7 @@ namespace Aura.Shared.Util
 		/// <param name="max"></param>
 		/// <param name="val"></param>
 		/// <returns></returns>
-		public static int MinMax(int min, int max, int val)
+		public static int Clamp(int min, int max, int val)
 		{
 			if (val < min)
 				return min;
@@ -33,7 +33,7 @@ namespace Aura.Shared.Util
 		/// <param name="max"></param>
 		/// <param name="val"></param>
 		/// <returns></returns>
-		public static float MinMax(float min, float max, float val)
+		public static float Clamp(float min, float max, float val)
 		{
 			if (val < min)
 				return min;

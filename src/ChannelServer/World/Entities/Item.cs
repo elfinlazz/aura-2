@@ -55,7 +55,7 @@ namespace Aura.Channel.World.Entities
 		public int Amount
 		{
 			get { return this.Info.Amount; }
-			set { this.Info.Amount = (ushort)Math2.MinMax(0, this.Data.StackMax, value); }
+			set { this.Info.Amount = (ushort)Math2.Clamp(0, this.Data.StackMax, value); }
 		}
 
 		/// <summary>

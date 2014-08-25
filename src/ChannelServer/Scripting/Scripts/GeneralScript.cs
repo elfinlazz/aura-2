@@ -410,7 +410,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			var result = new List<Creature>();
 
-			amount = Math2.MinMax(1, 100, amount);
+			amount = Math2.Clamp(1, 100, amount);
 
 			var rnd = RandomProvider.Get();
 

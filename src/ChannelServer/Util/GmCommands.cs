@@ -608,7 +608,7 @@ namespace Aura.Channel.Util
 				return CommandResult.InvalidArgument;
 
 			if (rank > 0)
-				rank = Math2.MinMax(0, 18, 16 - rank);
+				rank = Math2.Clamp(0, 18, 16 - rank);
 
 			var rankData = skillData.GetRankData(rank, target.Race);
 			if (rankData == null)
@@ -727,7 +727,7 @@ namespace Aura.Channel.Util
 			if (args.Count > 1 && !short.TryParse(args[1], out speed))
 				return CommandResult.InvalidArgument;
 
-			speed = (short)Math2.MinMax(0, 1000, speed);
+			speed = (short)Math2.Clamp(0, 1000, speed);
 
 			if (speed == 0)
 				target.Conditions.Deactivate(ConditionsC.Hurry);
