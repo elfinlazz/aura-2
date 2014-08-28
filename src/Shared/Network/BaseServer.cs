@@ -33,6 +33,7 @@ namespace Aura.Shared.Network
 		protected BaseServer()
 		{
 			_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			_socket.NoDelay = true;
 			this.Clients = new List<TClient>();
 		}
 
@@ -115,6 +116,10 @@ namespace Aura.Shared.Network
 			try
 			{
 				client.Socket = (result.AsyncState as Socket).EndAccept(result);
+
+				// We don't need this here, since it's inherited from the parent
+				// client.Socket.NoDelay = true;
+
 				client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, new AsyncCallback(OnReceive), client);
 
 				this.AddClient(client);
