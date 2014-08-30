@@ -47,11 +47,6 @@ namespace Aura.Shared.Network
 			this.Crypto = new MabiCrypto(0x41757261); // 0xAura
 		}
 
-		public bool Is(ClientState state)
-		{
-			return (this.State == state);
-		}
-
 		/// <summary>
 		/// Sends buffer (duh).
 		/// </summary>
