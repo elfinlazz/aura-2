@@ -399,6 +399,16 @@ namespace Aura.Shared.Network
 
 		// ------------------------------------------------------------------
 
+		/// <summary>
+		/// Reads variable lengthed number from buffer.
+		/// </summary>
+		/// <remarks>
+		/// Used for the counters after op and id.
+		/// http://en.wikipedia.org/wiki/LEB128
+		/// </remarks>
+		/// <param name="buffer"></param>
+		/// <param name="ptr"></param>
+		/// <returns></returns>
 		private int ReadVarInt(byte[] buffer, ref int ptr)
 		{
 			int result = 0;
@@ -414,6 +424,16 @@ namespace Aura.Shared.Network
 			return result;
 		}
 
+		/// <summary>
+		/// Writes variable lengthed number to buffer.
+		/// </summary>
+		/// <remarks>
+		/// Used for the counters after op and id.
+		/// http://en.wikipedia.org/wiki/LEB128
+		/// </remarks>
+		/// <param name="value"></param>
+		/// <param name="buffer"></param>
+		/// <param name="ptr"></param>
 		private void WriteVarInt(int value, byte[] buffer, ref int ptr)
 		{
 			do
