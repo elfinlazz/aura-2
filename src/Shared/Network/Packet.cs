@@ -29,10 +29,10 @@ namespace Aura.Shared.Network
 		/// <summary>
 		/// Default size for the buffer
 		/// </summary>
-		private const int DefaultSize = 8192;
+		private const int DefaultSize = 1024 * 2;
 
 		/// <summary>
-		/// Size added, every time it runs out of space
+		/// Size added, every time the buffer runs out of space
 		/// </summary>
 		private const int AddSize = 1024;
 
