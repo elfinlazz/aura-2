@@ -253,7 +253,6 @@ namespace Aura.Shared
 	[Flags]
 	public enum DataLoad : uint
 	{
-		None = 0,
 		//Spawns = 0x01,
 		Skills = 0x02,
 		Races = 0x04,

@@ -17,23 +17,26 @@ using System.Linq;
 
 namespace Aura.Login
 {
-	public class LoginServer : ServerRunner<LoginClient, DefaultServer<LoginClient>,
-		LoginConf, LoginServerHandlers, LoginConsoleCommands>
+	public class LoginServer : ServerMain
 	{
 		public static readonly LoginServer Instance = new LoginServer();
 
-		public override string Name { get { return "Login Server"; } }
-		protected override ConsoleColor _headerColor { get { return ConsoleColor.Magenta; } }
+		private bool _running = false;
 
-		protected override int _listenPort { get { return this.Conf.Login.Port; } }
-
-		protected override DataLoad _dataLoad { get { return DataLoad.LoginServer; } }
-
+		/// <summary>
+		/// Instance of the actual server component.
+		/// </summary>
+		private DefaultServer<LoginClient> Server { get; set; }
 
 		/// <summary>
 		/// List of servers and channels.
 		/// </summary>
 		public ServerInfoManager ServerList { get; private set; }
+
+		/// <summary>
+		/// Configuration
+		/// </summary>
+		public LoginConf Conf { get; private set; }
 
 		/// <summary>
 		/// List of connected channel clients.
@@ -47,6 +50,9 @@ namespace Aura.Login
 
 		private LoginServer()
 		{
+			this.Server = new DefaultServer<LoginClient>();
+			this.Server.Handlers = new LoginServerHandlers();
+			this.Server.Handlers.AutoLoad();
 			this.Server.ClientDisconnected += this.OnClientDisconnected;
 
 			this.ServerList = new ServerInfoManager();
@@ -55,13 +61,44 @@ namespace Aura.Login
 		}
 
 		/// <summary>
-		/// Loads all necessary components
+		/// Loads all necessary components and starts the server.
 		/// </summary>
-		protected override void AfterSetup()
+		public void Run()
 		{
+			if (_running)
+				throw new Exception("Server is already running.");
+
+			CliUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
+			CliUtil.LoadingTitle();
+
+			this.NavigateToRoot();
+
+			// Conf
+			this.LoadConf(this.Conf = new LoginConf());
+
+			// Database
+			this.InitDatabase(this.Conf);
+
+			// Check if there are any updates
 			this.CheckDatabaseUpdates();
 
+			// Data
+			this.LoadData(DataLoad.LoginServer, false);
+
+			// Localization
+			this.LoadLocalization(this.Conf);
+
 			this.LoadWebApi();
+
+			// Start
+			this.Server.Start(this.Conf.Login.Port);
+
+			CliUtil.RunningTitle();
+			_running = true;
+
+			// Commands
+			var commands = new LoginConsoleCommands();
+			commands.Wait();
 		}
 
 		private void OnClientDisconnected(LoginClient client)

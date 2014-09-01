@@ -20,27 +20,31 @@ using System.Threading;
 
 namespace Aura.Channel
 {
-	public class ChannelServer : ServerRunner<ChannelClient, DefaultServer<ChannelClient>,
-		ChannelConf, ChannelServerHandlers, ChannelConsoleCommands>
+	public class ChannelServer : ServerMain
 	{
 		public static readonly ChannelServer Instance = new ChannelServer();
-
-		public override string Name { get { return "Channel Server"; } }
-		protected override ConsoleColor _headerColor { get { return ConsoleColor.DarkGreen; } }
-
-		protected override int _listenPort { get { return this.Conf.Channel.ChannelPort; } }
-
-		protected override DataLoad _dataLoad { get { return DataLoad.ChannelServer; } }
 
 		/// <summary>
 		/// Milliseconds between connection tries.
 		/// </summary>
 		private const int LoginTryTime = 10 * 1000;
 
+		private bool _running = false;
+
+		/// <summary>
+		/// Instance of the actual server component.
+		/// </summary>
+		public DefaultServer<ChannelClient> Server { get; protected set; }
+
 		/// <summary>
 		/// List of servers and channels.
 		/// </summary>
 		public ServerInfoManager ServerList { get; private set; }
+
+		/// <summary>
+		/// Configuration
+		/// </summary>
+		public ChannelConf Conf { get; private set; }
 
 		/// <summary>
 		/// Client connecting to the login server.
@@ -57,6 +61,11 @@ namespace Aura.Channel
 
 		private ChannelServer()
 		{
+			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
+			this.Server = new DefaultServer<ChannelClient>();
+			this.Server.Handlers = new ChannelServerHandlers();
+			this.Server.Handlers.AutoLoad();
 			this.Server.ClientDisconnected += this.OnClientDisconnected;
 
 			this.ServerList = new ServerInfoManager();
@@ -69,10 +78,30 @@ namespace Aura.Channel
 		}
 
 		/// <summary>
-		/// Loads all necessary components
+		/// Loads all necessary components and starts the server.
 		/// </summary>
-		protected override void AfterSetup()
+		public void Run()
 		{
+			if (_running)
+				throw new Exception("Server is already running.");
+
+			CliUtil.WriteHeader("Channel Server", ConsoleColor.DarkGreen);
+			CliUtil.LoadingTitle();
+
+			this.NavigateToRoot();
+
+			// Conf
+			this.LoadConf(this.Conf = new ChannelConf());
+
+			// Database
+			this.InitDatabase(this.Conf);
+
+			// Data
+			this.LoadData(DataLoad.ChannelServer, false);
+
+			// Localization
+			this.LoadLocalization(this.Conf);
+
 			// World
 			this.InitializeWorld();
 
@@ -85,12 +114,20 @@ namespace Aura.Channel
 			// Autoban
 			if (this.Conf.Autoban.Enabled)
 				this.Events.SecurityViolation += (e) => Autoban.Incident(e.Client, e.Level, e.Report, e.StackReport);
-		}
 
-		protected override void AfterStart()
-		{
+			// Start
+			this.Server.Start(this.Conf.Channel.ChannelPort);
+
+			// Inter
 			this.ConnectToLogin(true);
 			this.StartStatusUpdateTimer();
+
+			CliUtil.RunningTitle();
+			_running = true;
+
+			// Commands
+			var commands = new ChannelConsoleCommands();
+			commands.Wait();
 		}
 
 		/// <summary>
@@ -160,6 +197,39 @@ namespace Aura.Channel
 		{
 			if (client == this.LoginServer)
 				this.ConnectToLogin(false);
+		}
+
+		/// <summary>
+		/// Handler for unhandled exceptions.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			try
+			{
+				Log.Error("Oh no! Ferghus escaped his memory block and infected the rest of the server!");
+				Log.Error("Aura has encountered an unexpected and unrecoverable error. We're going to try to save as much as we can.");
+			}
+			catch { }
+			try
+			{
+				this.Server.Stop();
+			}
+			catch { }
+			try
+			{
+				// save the world
+			}
+			catch { }
+			try
+			{
+				Log.Exception((Exception)e.ExceptionObject);
+				Log.Status("Closing server.");
+			}
+			catch { }
+
+			CliUtil.Exit(1, false);
 		}
 
 		private void StartStatusUpdateTimer()
