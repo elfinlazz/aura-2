@@ -152,6 +152,8 @@ namespace Aura.Channel.Network.Handlers
 			player.LastAging = DateTime.Now;
 			player.LastRebirth = DateTime.Now;
 
+			creature.Activate(CreatureStates.JustRebirth);
+
 			// Success
 			Send.RequestRebirthR(creature, true);
 		}

@@ -35,13 +35,19 @@ public class TinScript : NpcScript
 			"as it slips off little by little."
 		);
 		
-		Msg("Hey, who are you?");
-		Msg("You don't look like you're from this world. Am I right?<br/>Did you make your way down here from Soul Stream?<br/>Ahhh, so Nao sent you here!");
-		Msg("She's way too obedient to the Goddess' wishes.<br/>Anyway, she's a good girl, so be nice to her.");
-		
-		// Rebirth
-		// Msg("Hey, <username/>.  Were you reborn?<br/>Do you remember me?");
-		// Msg("Well... your appearance changed a little bit, but you still seem the same to me.");
+		if(!Player.Has(CreatureStates.JustRebirth))
+		{
+			Msg("Hey, who are you?");
+			Msg("You don't look like you're from this world. Am I right?<br/>Did you make your way down here from Soul Stream?<br/>Ahhh, so Nao sent you here!");
+			Msg("She's way too obedient to the Goddess' wishes.<br/>Anyway, she's a good girl, so be nice to her.");
+		}
+		else
+		{
+			Msg("Hey, <username/>.  Were you reborn?<br/>Do you remember me?");
+			Msg("Well... your appearance changed a little bit, but you still seem the same to me.");
+			
+			// Dyes? Check CreatureStates.FreeRebirth?
+		}
 		
 		Msg("Was there something else you wanted to talk about?");
 		await StartConversation();
