@@ -124,6 +124,13 @@ public class NaoScript : NpcScript
 	private async Task Rebirth()
 	{
 		Msg("Hello, <username/>!<br/>Is life here in Erinn pleasant for you?");
+		
+		if(!RebirthAllowed())
+		{
+			Msg("Barely any time has passed since your last rebirth.<br/>Why don't you enjoy your current life in Erinn for a bit longer?");
+			goto L_End;
+		}
+		
 		Msg("If you wish, you can abandon your current body and be reborn into a new one, <username/>.");
 		
 		while(true)
@@ -202,5 +209,11 @@ public class NaoScript : NpcScript
 					return;
 			}
 		}
+	}
+	
+	private bool RebirthAllowed()
+	{
+		var player = (PlayerCreature)Player;
+		return (player.LastRebirth + ChannelServer.Instance.Conf.World.RebirthTime < DateTime.Now);
 	}
 }

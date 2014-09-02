@@ -31,6 +31,8 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public bool Bagception { get; protected set; }
 
+		public TimeSpan RebirthTime { get; protected set; }
+
 		public void Load()
 		{
 			this.Require("system/conf/world.conf");
@@ -58,6 +60,8 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.CombatSystem = (this.GetString("combat_system", "dynamic") == "classic" ? CombatSystem.Classic : CombatSystem.Dynamic);
 
 			this.Bagception = this.GetBool("bagception", false);
+
+			this.RebirthTime = TimeSpan.FromDays(this.GetInt("rebirth_time", 6));
 		}
 	}
 
