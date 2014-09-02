@@ -134,21 +134,37 @@ public class NaoScript : NpcScript
 			switch(await Select())
 			{
 				case "@rebirth":
-					Msg("(Unimplemented.)"); // <rebirth style='-1'/>
+					Msg("<rebirth style='-1'/>");
+					switch(await Select())
+					{
+						case "@rebirth":
+							// Old:
+							//   Msg("Would you like to be reborn with the currently selected features?<br/><button title='Yes' keyword='@rebirthyes' /><button title='No' keyword='@rebirthhelp' />");
+							//   Msg("<username/>, you have been reborn with a new appearance.<br/>Did you enjoy having Close Combat as your active Talent?<br/>Would you like to choose a different active Talent for this life?<button title='New Talent' keyword='@yes' /><button title='Keep Old Talent' keyword='@no' />");
+							//   Msg("Then I will show you the different Talents available to you.<br/>Please select your new active Talent after you consider everything.<talent_select />")
+							//   Msg("You have selected Close Combat.<br/>May your courage and skill grow.<br/>I will be cheering you on from afar.");
+							Close(Hide.None, "May your new appearance bring you happiness!<br/>Though you'll be different when next we meet,<br/>but I'll still be able to recognize you, <username/>.<p/>We will meet again, right?<br/>Until then, take care.");
+							return;
+					
+						default:
+							goto L_Cancel;
+					}
 					break;
 					
 				case "@about_rebirths":
 					await RebirthAbout();
 					break;
 					
-				case "@cancel":
-					Msg("There are plenty more opportunities to be reborn.<br/>Perhaps another time.<rebirth hide='true'/>");
-					goto L_End;
+				default:
+					goto L_Cancel;
 			}
 		}
 		
+	L_Cancel:
+		Msg("There are plenty more opportunities to be reborn.<br/>Perhaps another time.<rebirth hide='true'/>");
+		
 	L_End:
-		Close(Hide.None, "I wish you good fortune in your new life on Erinn.<br/>Take care.");
+		Close(Hide.None, "Until we meet again, then.<br/>I wish you the best of luck in Erinn.<br/>I'll see you around.");
 	}
 	
 	private async Task RebirthAbout()

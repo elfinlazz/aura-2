@@ -30,10 +30,10 @@ namespace Aura.Data.Database
 		/// Returns the age info (base stats) for the given race
 		/// at the given age, or null.
 		/// </summary>
-		/// <param name="raceId">0 = Human, 1 = Elf, 2 = Giant</param>
+		/// <param name="raceId"></param>
 		/// <param name="age">10-17</param>
 		/// <returns></returns>
-		public StatsBaseData Find(int raceId, byte age)
+		public StatsBaseData Find(int raceId, int age)
 		{
 			raceId = (raceId & ~3);
 

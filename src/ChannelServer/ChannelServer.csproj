@@ -97,6 +97,7 @@
     <Compile Include="Network\Handlers\Pets.cs" />
     <Compile Include="Network\Handlers\Props.cs" />
     <Compile Include="Network\Handlers\Quests.cs" />
+    <Compile Include="Network\Handlers\Rebirth.cs" />
     <Compile Include="Network\Handlers\Skills.cs" />
     <Compile Include="Network\Handlers\LogInOut.cs" />
     <Compile Include="Network\Handlers\Misc.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Network\Sending\Send.LogInOut.cs" />
     <Compile Include="Network\Sending\Send.Internal.cs" />
     <Compile Include="Network\Sending\Send.Messages.cs" />
+    <Compile Include="Network\Sending\Send.Rebirth.cs" />
     <Compile Include="Network\Sending\Send.Vehicles.cs" />
     <Compile Include="Network\Sending\Send.World.cs" />
     <Compile Include="Program.cs" />
