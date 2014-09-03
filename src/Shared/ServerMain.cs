@@ -56,13 +56,13 @@ namespace Aura.Shared
 		/// Tries to initialize database with the information from conf,
 		/// exits on error.
 		/// </summary>
-		public virtual void InitDatabase(BaseConf conf)
+		public virtual void InitDatabase(AuraDb db, BaseConf conf)
 		{
 			Log.Info("Initializing database...");
 
 			try
 			{
-				AuraDb.Instance.Init(conf.Database.Host, conf.Database.User, conf.Database.Pass, conf.Database.Db);
+				db.Init(conf.Database.Host, conf.Database.User, conf.Database.Pass, conf.Database.Db);
 			}
 			catch (Exception ex)
 			{

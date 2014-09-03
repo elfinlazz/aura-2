@@ -874,7 +874,7 @@ namespace Aura.Channel.Util
 					return CommandResult.InvalidArgument;
 			}
 
-			AuraDb.Instance.AddCard(target.Client.Account.Id, type, race);
+			ChannelServer.Instance.Database.AddCard(target.Client.Account.Id, type, race);
 
 			Send.ServerMessage(sender, Localization.Get("Added card."));
 			if (target != sender)

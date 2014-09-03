@@ -578,14 +578,14 @@ namespace Aura.Channel.Scripting.Scripts
 					int cardId;
 					if (!int.TryParse(splitted[1], out cardId))
 						return false;
-					AuraDb.Instance.AddCard(this.Player.Client.Account.Id, cardId, 0);
+					ChannelServer.Instance.Database.AddCard(this.Player.Client.Account.Id, cardId, 0);
 					break;
 
 				case "petcard":
 					int raceId;
 					if (!int.TryParse(splitted[1], out raceId))
 						return false;
-					AuraDb.Instance.AddCard(this.Player.Client.Account.Id, MabiId.PetCardType, raceId);
+					ChannelServer.Instance.Database.AddCard(this.Player.Client.Account.Id, MabiId.PetCardType, raceId);
 					break;
 
 				default:

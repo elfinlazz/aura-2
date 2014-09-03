@@ -29,7 +29,7 @@ namespace Aura.Login.Network.Handlers
 			var server = packet.GetString();
 			var name = packet.GetString();
 
-			var result = AuraDb.Instance.NameOkay(name, server);
+			var result = LoginServer.Instance.Database.NameOkay(name, server);
 
 			Send.NameCheckR(client, result);
 		}
@@ -110,7 +110,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Check name
-			var nameCheck = AuraDb.Instance.NameOkay(name, serverName);
+			var nameCheck = LoginServer.Instance.Database.NameOkay(name, serverName);
 			if (nameCheck != NameCheckResult.Okay)
 			{
 				Log.Error("Character creation: Invalid name ({0}).", nameCheck);
@@ -205,7 +205,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Check name
-			var nameCheck = AuraDb.Instance.NameOkay(name, serverName);
+			var nameCheck = LoginServer.Instance.Database.NameOkay(name, serverName);
 			if (nameCheck != NameCheckResult.Okay)
 			{
 				Log.Error("Pet creation: Invalid name ({0}).", nameCheck);
@@ -361,7 +361,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Check name
-			var nameCheck = AuraDb.Instance.NameOkay(name, serverName);
+			var nameCheck = LoginServer.Instance.Database.NameOkay(name, serverName);
 			if (nameCheck != NameCheckResult.Okay)
 			{
 				Log.Error("Partner creation: Invalid name ({0}).", nameCheck);

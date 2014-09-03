@@ -108,9 +108,9 @@ namespace Aura.Login.Network.Handlers
 					{
 						accountId = accountId.Remove(0, 5);
 
-						if (!AuraDb.Instance.AccountExists(accountId) && password != "")
+						if (!LoginServer.Instance.Database.AccountExists(accountId) && password != "")
 						{
-							AuraDb.Instance.CreateAccount(accountId, password);
+							LoginServer.Instance.Database.CreateAccount(accountId, password);
 							Log.Info("New account '{0}' was created.", accountId);
 						}
 					}
@@ -246,13 +246,13 @@ namespace Aura.Login.Network.Handlers
 			if (account.CharacterCards.Count < 1 && account.Characters.Count < 1)
 			{
 				// Free card
-				var card = AuraDb.Instance.AddCard(account.Name, 147, 0);
+				var card = LoginServer.Instance.Database.AddCard(account.Name, 147, 0);
 				account.CharacterCards.Add(card);
 
 				if (account.PetCards.Count < 1 && account.Pets.Count < 1)
 				{
 					// 7-day Horse
-					card = AuraDb.Instance.AddCard(account.Name, MabiId.PetCardType, 260016);
+					card = LoginServer.Instance.Database.AddCard(account.Name, MabiId.PetCardType, 260016);
 					account.PetCards.Add(card);
 				}
 			}

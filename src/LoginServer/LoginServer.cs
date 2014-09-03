@@ -82,7 +82,7 @@ namespace Aura.Login
 			this.LoadConf(this.Conf = new LoginConf());
 
 			// Database
-			this.InitDatabase(this.Conf);
+			this.InitDatabase(this.Database = new LoginDb(), this.Conf);
 
 			// Check if there are any updates
 			this.CheckDatabaseUpdates();
@@ -93,6 +93,7 @@ namespace Aura.Login
 			// Localization
 			this.LoadLocalization(this.Conf);
 
+			// Web API
 			this.LoadWebApi();
 
 			// Start

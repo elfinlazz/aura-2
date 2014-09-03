@@ -21,7 +21,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Aura.Channel.Database
 {
-	public class ChannelDb
+	public class ChannelDb : AuraDb
 	{
 		/// <summary>
 		/// Returns account incl all characters or null, if it doesn't exist.
@@ -32,7 +32,7 @@ namespace Aura.Channel.Database
 		{
 			var account = new Account();
 
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			{
 				// Account
 				// ----------------------------------------------------------
@@ -177,7 +177,7 @@ namespace Aura.Channel.Database
 			ushort title = 0, optionTitle = 0;
 			float lifeDelta = 0, manaDelta = 0, staminaDelta = 0;
 
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `" + table + "` AS c INNER JOIN `creatures` AS cr ON c.creatureId = cr.creatureId WHERE `entityId` = @entityId", conn))
 			{
 				mc.Parameters.AddWithValue("@entityId", entityId);
@@ -318,7 +318,7 @@ namespace Aura.Channel.Database
 		{
 			var result = new List<Item>();
 
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			// Sort descending by linkedPocket to get bags first, they have
 			// to be created before the items can be added.
 			using (var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId ORDER BY `linkedPocket` DESC", conn))
@@ -373,7 +373,7 @@ namespace Aura.Channel.Database
 		/// <param name="character"></param>
 		private void GetCharacterKeywords(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `keywords` WHERE `creatureId` = @creatureId", conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
@@ -410,7 +410,7 @@ namespace Aura.Channel.Database
 		/// <param name="character"></param>
 		private void GetCharacterTitles(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `titles` WHERE `creatureId` = @creatureId", conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
@@ -434,7 +434,7 @@ namespace Aura.Channel.Database
 		/// <param name="character"></param>
 		private void GetCharacterSkills(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `skills` WHERE `creatureId` = @creatureId", conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
@@ -529,7 +529,7 @@ namespace Aura.Channel.Database
 		/// <param name="character"></param>
 		public void GetCharacterQuests(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			{
 				using (var mc = new MySqlCommand("SELECT * FROM `quests` WHERE `creatureId` = @creatureId", conn))
 				{
@@ -602,7 +602,7 @@ namespace Aura.Channel.Database
 
 		public void LogSecurityIncident(ChannelClient client, IncidentSeverityLevel level, string report, string stacktrace)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var cmd = new InsertCommand("INSERT INTO `log_security` {0}", conn))
 			{
 				cmd.Set("accountId", client.Account.Id);
@@ -623,7 +623,7 @@ namespace Aura.Channel.Database
 		/// <param name="character"></param>
 		public void SaveQuests(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				// Delete quests
@@ -689,7 +689,7 @@ namespace Aura.Channel.Database
 		/// <param name="account"></param>
 		public void SaveAccount(Account account)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var cmd = new UpdateCommand("UPDATE `accounts` SET {0} WHERE `accountId` = @accountId", conn))
 			{
 				cmd.AddParameter("@accountId", account.Id);
@@ -720,7 +720,7 @@ namespace Aura.Channel.Database
 		/// <param name="account"></param>
 		public void SaveCharacter(PlayerCreature creature, Account account)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var cmd = new UpdateCommand("UPDATE `creatures` SET {0} WHERE `creatureId` = @creatureId", conn))
 			{
 				var characterLocation = creature.GetPosition();
@@ -794,7 +794,7 @@ namespace Aura.Channel.Database
 		/// <param name="creature"></param>
 		private void SaveCharacterKeywords(PlayerCreature creature)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var mc = new MySqlCommand("DELETE FROM `keywords` WHERE `creatureId` = @creatureId", conn, transaction))
@@ -824,7 +824,7 @@ namespace Aura.Channel.Database
 		/// <param name="creature"></param>
 		private void SaveCharacterTitles(PlayerCreature creature)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var mc = new MySqlCommand("DELETE FROM `titles` WHERE `creatureId` = @creatureId", conn, transaction))
@@ -861,7 +861,7 @@ namespace Aura.Channel.Database
 		/// <param name="creature"></param>
 		private void SaveCharacterItems(PlayerCreature creature)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var mc = new MySqlCommand("DELETE FROM `items` WHERE `creatureId` = @creatureId", conn, transaction))
@@ -920,7 +920,7 @@ namespace Aura.Channel.Database
 		/// <param name="creature"></param>
 		private void SaveCharacterSkills(PlayerCreature creature)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var mc = new MySqlCommand("DELETE FROM `skills` WHERE `creatureId` = @creatureId", conn, transaction))
@@ -963,7 +963,7 @@ namespace Aura.Channel.Database
 		/// <returns></returns>
 		public VariableManager LoadVars(string accountId, long creatureId)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM vars WHERE accountId = @accountId AND creatureId = @creatureId", conn))
 			{
 				mc.Parameters.AddWithValue("@accountId", accountId);
@@ -1024,7 +1024,7 @@ namespace Aura.Channel.Database
 		/// <param name="vars"></param>
 		public void SaveVars(string accountId, long creatureId, VariableManager vars)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var deleteMc = new MySqlCommand("DELETE FROM vars WHERE accountId = @accountId AND creatureId = @creatureId", conn, transaction))
@@ -1106,7 +1106,7 @@ namespace Aura.Channel.Database
 		/// <returns></returns>
 		public bool TmpItemsExist()
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT itemId FROM `items` WHERE `entityId` >= @entityId", conn))
 			{
 				mc.Parameters.AddWithValue("@entityId", MabiId.TmpItems);
@@ -1122,7 +1122,7 @@ namespace Aura.Channel.Database
 		/// <returns></returns>
 		public string GetCouponScript(string code)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `coupons` WHERE `code` = @code AND (`expiration` IS NULL OR `expiration` > NOW()) AND NOT `used`", conn))
 			{
 				mc.Parameters.AddWithValue("@code", code);
@@ -1149,7 +1149,7 @@ namespace Aura.Channel.Database
 		/// <returns></returns>
 		public bool UseCoupon(string code)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var cmd = new UpdateCommand("UPDATE `coupons` SET {0} WHERE `code` = @code", conn))
 			{
 				cmd.AddParameter("@code", code);

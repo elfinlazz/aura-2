@@ -11,6 +11,7 @@ using Aura.Channel.Util;
 using Aura.Channel.Util.Configuration;
 using Aura.Channel.World;
 using Aura.Shared;
+using Aura.Shared.Database;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Configuration;
@@ -73,8 +74,6 @@ namespace Aura.Channel
 			this.Server.Handlers.AutoLoad();
 			this.Server.ClientDisconnected += this.OnClientDisconnected;
 
-			this.Database = new ChannelDb();
-
 			this.ServerList = new ServerInfoManager();
 
 			this.CommandProcessor = new GmCommandManager();
@@ -101,7 +100,7 @@ namespace Aura.Channel
 			this.LoadConf(this.Conf = new ChannelConf());
 
 			// Database
-			this.InitDatabase(this.Conf);
+			this.InitDatabase(this.Database = new ChannelDb(), this.Conf);
 
 			// Data
 			this.LoadData(DataLoad.ChannelServer, false);
@@ -271,9 +270,9 @@ namespace Aura.Channel
 			this.SkillManager.AutoLoad();
 		}
 
-		public override void InitDatabase(BaseConf conf)
+		public override void InitDatabase(AuraDb db, BaseConf conf)
 		{
-			base.InitDatabase(conf);
+			base.InitDatabase(db, conf);
 
 			// If items end up with temp ids in the db we'd get entity ids
 			// that exist twice, when creating new temps later on.
