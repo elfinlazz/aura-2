@@ -17,7 +17,7 @@ namespace Aura.Shared.Mabi.Const
 		InventoryViewDisabled = 0x00000080,
 		PetFinishMode = 0x00000100,
 		FreeRebirth = 0x00000200,
-		JustRebirth = 0x00000400,
+		JustRebirthed = 0x00000400,
 		LevelResetRebirth = 0x00000800,
 		EnableCommonPvp = 0x00001000,
 		JournalVisible = 0x00002000,
