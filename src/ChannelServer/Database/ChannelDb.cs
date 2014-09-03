@@ -1,39 +1,28 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Network;
+using Aura.Channel.Scripting;
+using Aura.Channel.Skills;
+using Aura.Channel.Util;
+using Aura.Channel.World.Entities;
+using Aura.Channel.World.Entities.Creatures;
+using Aura.Channel.World.Inventory;
+using Aura.Channel.World.Quests;
+using Aura.Shared.Database;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using Aura.Channel.Network;
-using Aura.Channel.Scripting;
-using Aura.Channel.Skills;
-using Aura.Channel.Util;
-using Aura.Channel.World;
-using Aura.Channel.World.Entities;
-using Aura.Channel.World.Entities.Creatures;
-using Aura.Channel.World.Quests;
-using Aura.Data;
-using Aura.Data.Database;
-using Aura.Shared.Database;
-using Aura.Shared.Mabi;
-using Aura.Shared.Mabi.Const;
-using Aura.Shared.Util;
-using MySql.Data.MySqlClient;
-using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Database
 {
 	public class ChannelDb
 	{
-		public static readonly ChannelDb Instance = new ChannelDb();
-
-		private ChannelDb()
-		{
-		}
-
 		/// <summary>
 		/// Returns account incl all characters or null, if it doesn't exist.
 		/// </summary>

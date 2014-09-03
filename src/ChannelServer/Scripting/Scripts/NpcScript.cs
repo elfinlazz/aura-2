@@ -538,7 +538,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="code"></param>
 		public bool RedeemCoupon(string code)
 		{
-			var script = ChannelDb.Instance.GetCouponScript(code);
+			var script = ChannelServer.Instance.Database.GetCouponScript(code);
 			if (script == null) return false;
 
 			if (string.IsNullOrWhiteSpace(script))
@@ -593,7 +593,7 @@ namespace Aura.Channel.Scripting.Scripts
 					return false;
 			}
 
-			ChannelDb.Instance.UseCoupon(code);
+			ChannelServer.Instance.Database.UseCoupon(code);
 
 			return true;
 		}

@@ -98,7 +98,7 @@ namespace Aura.Channel.Network
 		public override void CleanUp()
 		{
 			if (this.Account != null)
-				ChannelDb.Instance.SaveAccount(this.Account);
+				ChannelServer.Instance.Database.SaveAccount(this.Account);
 
 			foreach (var creature in this.Creatures.Values.Where(a => a.Region != null))
 			{

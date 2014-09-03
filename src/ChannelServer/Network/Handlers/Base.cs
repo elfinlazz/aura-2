@@ -52,7 +52,7 @@ namespace Aura.Channel.Network.Handlers
 				{
 					// TODO: This might not be related to security,
 					//   really log it in that table?
-					ChannelDb.Instance.LogSecurityIncident(client, IncidentSeverityLevel.Moderate, "Unhandled exception while processing packet: " + ex, null);
+					ChannelServer.Instance.Database.LogSecurityIncident(client, IncidentSeverityLevel.Moderate, "Unhandled exception while processing packet: " + ex, null);
 					throw;
 				}
 			}
@@ -91,7 +91,7 @@ namespace Aura.Channel.Network.Handlers
 			var charName = client.Controlling == null ? "<NULL>" : "'" + client.Controlling.Name + "'";
 
 			if (client.Account != null)
-				ChannelDb.Instance.LogSecurityIncident(client, ex.Level, ex.Message, ex.StackReport);
+				ChannelServer.Instance.Database.LogSecurityIncident(client, ex.Level, ex.Message, ex.StackReport);
 
 			ChannelServer.Instance.Events.OnSecurityViolation(new SecurityViolationEventArgs(client, ex.Level, ex.Message, ex.StackReport));
 

@@ -74,7 +74,7 @@ namespace Aura.Channel.Scripting
 
 		public void Init()
 		{
-			this.GlobalVars.Perm = ChannelDb.Instance.LoadVars("Aura System", 0);
+			this.GlobalVars.Perm = ChannelServer.Instance.Database.LoadVars("Aura System", 0);
 			ChannelServer.Instance.Events.MabiTick += OnMabiTick;
 		}
 
@@ -744,7 +744,7 @@ namespace Aura.Channel.Scripting
 		/// <param name="time"></param>
 		public void OnMabiTick(ErinnTime time)
 		{
-			ChannelDb.Instance.SaveVars("Aura System", 0, this.GlobalVars.Perm);
+			ChannelServer.Instance.Database.SaveVars("Aura System", 0, this.GlobalVars.Perm);
 			Log.Info("Saved global script variables.");
 		}
 

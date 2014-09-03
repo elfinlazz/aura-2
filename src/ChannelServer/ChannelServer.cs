@@ -47,6 +47,11 @@ namespace Aura.Channel
 		public ChannelConf Conf { get; private set; }
 
 		/// <summary>
+		/// Database
+		/// </summary>
+		public ChannelDb Database { get; private set; }
+
+		/// <summary>
 		/// Client connecting to the login server.
 		/// </summary>
 		public ChannelClient LoginServer { get; private set; }
@@ -67,6 +72,8 @@ namespace Aura.Channel
 			this.Server.Handlers = new ChannelServerHandlers();
 			this.Server.Handlers.AutoLoad();
 			this.Server.ClientDisconnected += this.OnClientDisconnected;
+
+			this.Database = new ChannelDb();
 
 			this.ServerList = new ServerInfoManager();
 
@@ -270,7 +277,7 @@ namespace Aura.Channel
 
 			// If items end up with temp ids in the db we'd get entity ids
 			// that exist twice, when creating new temps later on.
-			if (ChannelDb.Instance.TmpItemsExist())
+			if (ChannelServer.Instance.Database.TmpItemsExist())
 			{
 				Log.Warning("InitDatabase: Found items with temp entity ids.");
 				// TODO: clean up dbs

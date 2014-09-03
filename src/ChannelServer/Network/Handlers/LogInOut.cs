@@ -41,7 +41,7 @@ namespace Aura.Channel.Network.Handlers
 				return;
 
 			// Check account
-			var account = ChannelDb.Instance.GetAccount(accountId);
+			var account = ChannelServer.Instance.Database.GetAccount(accountId);
 			if (account == null || account.SessionKey != sessionKey)
 			{
 				// This doesn't autoban because the client is not yet "authenticated",
