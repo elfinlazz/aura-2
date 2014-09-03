@@ -32,7 +32,7 @@ namespace Aura.Login.Util
 			if (!int.TryParse(args[2], out level))
 				return CommandResult.InvalidArgument;
 
-			if (!LoginDb.Instance.ChangeAuth(args[1], level))
+			if (!LoginServer.Instance.Database.ChangeAuth(args[1], level))
 			{
 				Log.Error("Failed to change auth. (Does the account exist?)");
 				return CommandResult.Okay;

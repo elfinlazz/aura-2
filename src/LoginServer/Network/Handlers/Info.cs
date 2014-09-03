@@ -34,7 +34,7 @@ namespace Aura.Login.Network.Handlers
 				return;
 			}
 
-			var items = LoginDb.Instance.GetEquipment(character.CreatureId);
+			var items = LoginServer.Instance.Database.GetEquipment(character.CreatureId);
 
 			Send.CharacterInfoRequestR(client, op, character, items);
 		}

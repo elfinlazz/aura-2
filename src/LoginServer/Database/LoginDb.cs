@@ -1,27 +1,20 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections.Generic;
 using Aura.Data;
+using Aura.Data.Database;
 using Aura.Shared.Database;
-using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using Aura.Data.Database;
 
 namespace Aura.Login.Database
 {
 	public class LoginDb
 	{
-		public static readonly LoginDb Instance = new LoginDb();
-
-		private LoginDb()
-		{
-		}
-
 		/// <summary>
 		/// Checks whether the SQL update file has already been applied.
 		/// </summary>

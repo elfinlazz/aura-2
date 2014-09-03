@@ -167,7 +167,7 @@ namespace Aura.Login.Network.Handlers
 			var localClientIP = packet.GetString();
 
 			// Get account
-			var account = LoginDb.Instance.GetAccount(accountId);
+			var account = LoginServer.Instance.Database.GetAccount(accountId);
 			if (account == null)
 			{
 				Send.LoginR_Fail(client, LoginResult.IdOrPassIncorrect);
@@ -178,7 +178,7 @@ namespace Aura.Login.Network.Handlers
 			if (loginType == LoginType.SecondaryPassword && account.SecondaryPassword == null)
 			{
 				account.SecondaryPassword = secondaryPassword;
-				LoginDb.Instance.UpdateAccountSecondaryPassword(account);
+				LoginServer.Instance.Database.UpdateAccountSecondaryPassword(account);
 			}
 
 			// Check bans
@@ -202,7 +202,7 @@ namespace Aura.Login.Network.Handlers
 				if (account.SecondaryPassword == null)
 				{
 					account.SecondaryPassword = secondaryPassword;
-					LoginDb.Instance.UpdateAccountSecondaryPassword(account);
+					LoginServer.Instance.Database.UpdateAccountSecondaryPassword(account);
 				}
 				// Check secondary
 				else if (account.SecondaryPassword != secondaryPassword)
@@ -219,7 +219,7 @@ namespace Aura.Login.Network.Handlers
 				return;
 			}
 
-			account.SessionKey = LoginDb.Instance.CreateSession(account.Name);
+			account.SessionKey = LoginServer.Instance.Database.CreateSession(account.Name);
 
 			// Second password, please!
 			if (LoginServer.Instance.Conf.Login.EnableSecondaryPassword && loginType == LoginType.Normal)
@@ -231,14 +231,14 @@ namespace Aura.Login.Network.Handlers
 			// Update account
 			account.LastLogin = DateTime.Now;
 			account.LoggedIn = true;
-			LoginDb.Instance.UpdateAccount(account);
+			LoginServer.Instance.Database.UpdateAccount(account);
 
 			// Req. Info
-			account.CharacterCards = LoginDb.Instance.GetCharacterCards(account.Name);
-			account.PetCards = LoginDb.Instance.GetPetCards(account.Name);
-			account.Characters = LoginDb.Instance.GetCharacters(account.Name);
-			account.Pets = LoginDb.Instance.GetPetsAndPartners(account.Name);
-			account.Gifts = LoginDb.Instance.GetGifts(account.Name);
+			account.CharacterCards = LoginServer.Instance.Database.GetCharacterCards(account.Name);
+			account.PetCards = LoginServer.Instance.Database.GetPetCards(account.Name);
+			account.Characters = LoginServer.Instance.Database.GetCharacters(account.Name);
+			account.Pets = LoginServer.Instance.Database.GetPetsAndPartners(account.Name);
+			account.Gifts = LoginServer.Instance.Database.GetGifts(account.Name);
 
 			// Add free cards if there are none.
 			// If you don't have chars and char cards, you get a new free card,

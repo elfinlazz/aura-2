@@ -25,7 +25,7 @@ namespace Aura.Login.Web
 			}
 
 			// Get account
-			var account = LoginDb.Instance.GetAccount(name);
+			var account = LoginServer.Instance.Database.GetAccount(name);
 			if (account == null)
 			{
 				res.Send("0");

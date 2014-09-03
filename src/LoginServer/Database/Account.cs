@@ -106,7 +106,7 @@ namespace Aura.Login.Database
 			items.Add(new Item(character.Face, Pocket.Face, character.SkinColor, 0, 0));
 			items.Add(new Item(character.Hair, Pocket.Hair, character.HairColor + 0x10000000u, 0, 0));
 
-			if (!LoginDb.Instance.CreateCharacter(this.Name, character, items))
+			if (!LoginServer.Instance.Database.CreateCharacter(this.Name, character, items))
 				return false;
 
 			this.Characters.Add(character);
@@ -122,7 +122,7 @@ namespace Aura.Login.Database
 		/// <returns></returns>
 		public bool CreatePet(Character pet)
 		{
-			if (!LoginDb.Instance.CreatePet(this.Name, pet))
+			if (!LoginServer.Instance.Database.CreatePet(this.Name, pet))
 				return false;
 
 			this.Pets.Add(pet);
@@ -156,7 +156,7 @@ namespace Aura.Login.Database
 			items.Add(new Item(partner.Face, Pocket.Face, partner.SkinColor, 0, 0));
 			items.Add(new Item(partner.Hair, Pocket.Hair, partner.HairColor + 0x10000000u, 0, 0));
 
-			if (!LoginDb.Instance.CreatePartner(this.Name, partner, items))
+			if (!LoginServer.Instance.Database.CreatePartner(this.Name, partner, items))
 				return false;
 
 			this.Pets.Add(partner);
@@ -209,7 +209,7 @@ namespace Aura.Login.Database
 		/// <param name="card"></param>
 		public bool DeleteCharacterCard(Card card)
 		{
-			if (!LoginDb.Instance.DeleteCard(card))
+			if (!LoginServer.Instance.Database.DeleteCard(card))
 				return false;
 
 			this.CharacterCards.Remove(card);
@@ -223,7 +223,7 @@ namespace Aura.Login.Database
 		/// <param name="card"></param>
 		public bool DeletePetCard(Card card)
 		{
-			if (!LoginDb.Instance.DeleteCard(card))
+			if (!LoginServer.Instance.Database.DeleteCard(card))
 				return false;
 
 			this.PetCards.Remove(card);
@@ -244,7 +244,7 @@ namespace Aura.Login.Database
 			else
 				this.PetCards.Add(gift);
 
-			LoginDb.Instance.ChangeGiftToCard(gift.Id);
+			LoginServer.Instance.Database.ChangeGiftToCard(gift.Id);
 		}
 
 		/// <summary>
@@ -253,7 +253,7 @@ namespace Aura.Login.Database
 		/// <param name="gift"></param>
 		public void DeleteGift(Gift gift)
 		{
-			LoginDb.Instance.DeleteCard(gift);
+			LoginServer.Instance.Database.DeleteCard(gift);
 			this.Gifts.Remove(gift);
 		}
 	}

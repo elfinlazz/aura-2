@@ -35,7 +35,7 @@ namespace Aura.Login.Network.Handlers
 				return;
 
 			client.Account.LoggedIn = false;
-			LoginDb.Instance.UpdateAccount(client.Account);
+			LoginServer.Instance.Database.UpdateAccount(client.Account);
 
 			Log.Info("'{0}' is closing the connection.", accountName);
 		}

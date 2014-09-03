@@ -34,6 +34,11 @@ namespace Aura.Login
 		public ServerInfoManager ServerList { get; private set; }
 
 		/// <summary>
+		/// Database
+		/// </summary>
+		public LoginDb Database { get; private set; }
+
+		/// <summary>
 		/// Configuration
 		/// </summary>
 		public LoginConf Conf { get; private set; }
@@ -141,12 +146,12 @@ namespace Aura.Login
 
 		private void RunUpdate(string updateFile)
 		{
-			if (LoginDb.Instance.CheckUpdate(updateFile))
+			if (LoginServer.Instance.Database.CheckUpdate(updateFile))
 				return;
 
 			Log.Info("Update '{0}' found, executing...", updateFile);
 
-			LoginDb.Instance.RunUpdate(updateFile);
+			LoginServer.Instance.Database.RunUpdate(updateFile);
 		}
 
 		public void Broadcast(Packet packet)

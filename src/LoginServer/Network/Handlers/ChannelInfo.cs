@@ -52,7 +52,7 @@ namespace Aura.Login.Network.Handlers
 
 			// Uninitialize if rebirth requested, so character goes to Nao.
 			if (rebirth)
-				LoginDb.Instance.UninitializeCreature(character.CreatureId);
+				LoginServer.Instance.Database.UninitializeCreature(character.CreatureId);
 
 			// Success
 			Send.ChannelInfoRequestR(client, channelInfo, characterId);

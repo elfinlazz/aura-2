@@ -80,7 +80,7 @@ namespace Aura.Login.Network.Handlers
 					character.DeletionTime = now.AddHours(conf.DeletionWait);
 			}
 
-			LoginDb.Instance.UpdateDeletionTime(character);
+			LoginServer.Instance.Database.UpdateDeletionTime(character);
 
 			// Successful response
 			Send.DeleteR(client, op, serverName, id);
