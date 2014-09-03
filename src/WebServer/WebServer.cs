@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Shared;
+using Aura.Shared.Database;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
 using Aura.Web.Controllers;
@@ -25,6 +26,11 @@ namespace Aura.Web
 		public WebApplication App { get; private set; }
 
 		/// <summary>
+		/// Database
+		/// </summary>
+		public AuraDb Database { get; private set; }
+
+		/// <summary>
 		/// Configuration
 		/// </summary>
 		public WebConf Conf { get; private set; }
@@ -46,7 +52,7 @@ namespace Aura.Web
 			this.LoadConf(this.Conf = new WebConf());
 
 			// Database
-			this.InitDatabase(this.Conf);
+			this.InitDatabase(this.Database = new AuraDb(), this.Conf);
 
 			// Server
 			this.StartWebServer();

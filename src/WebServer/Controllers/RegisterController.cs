@@ -52,7 +52,7 @@ namespace Aura.Web.Controllers
 					goto L_Send;
 				}
 
-				if (AuraDb.Instance.AccountExists(name))
+				if (WebServer.Instance.Database.AccountExists(name))
 				{
 					error = "Account already exists.";
 					goto L_Send;
@@ -60,7 +60,7 @@ namespace Aura.Web.Controllers
 
 				var passHash = Password.RawToMD5SHA256(pass1);
 
-				AuraDb.Instance.CreateAccount(name, passHash);
+				WebServer.Instance.Database.CreateAccount(name, passHash);
 
 				Log.Info("New account created: {0}", name);
 
