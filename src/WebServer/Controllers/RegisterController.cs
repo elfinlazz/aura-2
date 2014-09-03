@@ -69,7 +69,7 @@ namespace Aura.Web.Controllers
 			}
 
 		L_Send:
-			res.Render("web/register.htm", new { error = error, success = success, name = name });
+			res.Render("web/register.htm", new { error, success, name });
 		}
 	}
 }
