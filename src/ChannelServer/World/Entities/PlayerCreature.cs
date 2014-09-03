@@ -44,6 +44,11 @@ namespace Aura.Channel.World.Entities
 		public DateTime LastRebirth { get; set; }
 
 		/// <summary>
+		/// How many times the character rebirthed.
+		/// </summary>
+		public int RebirthCount { get; set; }
+
+		/// <summary>
 		/// Time of last login.
 		/// </summary>
 		public DateTime LastLogin { get; set; }

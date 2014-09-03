@@ -151,6 +151,7 @@ namespace Aura.Channel.Network.Handlers
 			var player = (PlayerCreature)creature;
 			player.LastAging = DateTime.Now;
 			player.LastRebirth = DateTime.Now;
+			player.RebirthCount++;
 
 			creature.Activate(CreatureStates.JustRebirth);
 

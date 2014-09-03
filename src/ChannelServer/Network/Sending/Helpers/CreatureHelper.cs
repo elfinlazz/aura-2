@@ -84,7 +84,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutShort(creature.Level);
 				packet.PutInt(creature.LevelTotal);
 				packet.PutShort(0);                  // Max Level (reached ever?)
-				packet.PutShort(0);					 // Rebirthes
+				packet.PutShort((short)character.RebirthCount);
 				packet.PutShort(0);
 				packet.PutLong(AuraData.ExpDb.CalculateRemaining(creature.Level, creature.Exp) * 1000);
 				packet.PutShort(creature.Age);
