@@ -34,14 +34,14 @@ namespace Aura.Shared.Network
 
 			// Decrypt packet if crypt flag isn't 3.
 			if (buffer[5] != 0x03)
-				client.Crypto.DecodePacket(ref buffer);
+				client.Crypto.FromClient(buffer, 6, buffer.Length);
 
 			//Log.Debug("in:  " + BitConverter.ToString(buffer));
 
-			// Flag 1 is a ping or something, encode and send back.
+			// Flag 1 is a heartbeat, acknowledge and send back.
 			if (buffer[5] == 0x01)
 			{
-				client.Crypto.EncodePacket(ref buffer);
+				BitConverter.GetBytes(BitConverter.ToUInt32(buffer, 6) ^ 0x98BADCFE).CopyTo(buffer, 6);
 				client.Socket.Send(buffer);
 			}
 			else

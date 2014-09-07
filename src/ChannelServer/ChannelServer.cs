@@ -13,6 +13,7 @@ using Aura.Channel.World;
 using Aura.Shared;
 using Aura.Shared.Database;
 using Aura.Shared.Network;
+using Aura.Shared.Network.Crypto;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Configuration;
 using System;
@@ -171,7 +172,7 @@ namespace Aura.Channel
 
 					// Recv Seed, send back empty packet to get done with the challenge.
 					this.LoginServer.Socket.Receive(buffer);
-					this.LoginServer.Crypto = new MabiCrypto(BitConverter.ToUInt32(buffer, 0));
+					this.LoginServer.Crypto = new MabiCrypto(BitConverter.ToUInt32(buffer, 0), false);
 					this.LoginServer.Send(Packet.Empty());
 
 					// Challenge end

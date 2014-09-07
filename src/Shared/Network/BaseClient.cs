@@ -3,6 +3,7 @@
 
 using System;
 using System.Net.Sockets;
+using Aura.Shared.Network.Crypto;
 using Aura.Shared.Util;
 
 namespace Aura.Shared.Network
@@ -44,7 +45,7 @@ namespace Aura.Shared.Network
 		protected BaseClient()
 		{
 			this.Buffer = new byte[BufferDefaultSize];
-			this.Crypto = new MabiCrypto(0x41757261); // 0xAura
+			this.Crypto = new MabiCrypto(0x0, true); // 0xAura 0x41757261
 		}
 
 		/// <summary>
@@ -56,7 +57,7 @@ namespace Aura.Shared.Network
 			if (this.State == ClientState.Dead)
 				return;
 
-			this.EncodeBuffer(ref buffer);
+			this.EncodeBuffer(buffer);
 
 			//Log.Debug("out: " + BitConverter.ToString(buffer));
 
@@ -87,7 +88,7 @@ namespace Aura.Shared.Network
 		/// Encodes buffer.
 		/// </summary>
 		/// <param name="buffer"></param>
-		protected abstract void EncodeBuffer(ref byte[] buffer);
+		protected abstract void EncodeBuffer(byte[] buffer);
 
 		/// <summary>
 		/// Builds packet, appending the overall header and checksum.

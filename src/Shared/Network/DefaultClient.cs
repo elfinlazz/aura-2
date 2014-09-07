@@ -12,10 +12,9 @@ namespace Aura.Shared.Network
 	/// </summary>
 	public class DefaultClient : BaseClient
 	{
-		protected override void EncodeBuffer(ref byte[] buffer)
+		protected override void EncodeBuffer(byte[] buffer)
 		{
-			// Set raw flag
-			buffer[5] = 0x03;
+			this.Crypto.FromServer(buffer, 6, buffer.Length - 6);
 		}
 
 		protected override byte[] BuildPacket(Packet packet)
