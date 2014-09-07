@@ -64,6 +64,18 @@ namespace Aura.Shared.Network.Crypto
 
 		/// <summary>
 		/// Applies the appropriate transformation to a packet that travels
+		/// from the server to client
+		/// 
+		/// This version uses the defaults for a standard Mabi packet
+		/// </summary>
+		/// <param name="packet"></param>
+		public void FromServer(byte[] packet)
+		{
+			FromServer(packet, 6, packet.Length-6);
+		}
+
+		/// <summary>
+		/// Applies the appropriate transformation to a packet that travels
 		/// from the client to server.
 		/// </summary>
 		/// <param name="packet"></param>
@@ -72,6 +84,18 @@ namespace Aura.Shared.Network.Crypto
 		public void FromClient(byte[] packet, int offset, int count)
 		{
 			_mabiCipher.ProcessPacket(packet, offset, count);
+		}
+
+		/// <summary>
+		/// Applies the appropriate transformation to a packet that travels
+		/// from the client to server.
+		/// 
+		/// This version uses the defaults for a standard Mabi packet
+		/// </summary>
+		/// <param name="packet"></param>
+		public void FromClient(byte[] packet)
+		{
+			FromClient(packet, 6, packet.Length);
 		}
 	}
 }

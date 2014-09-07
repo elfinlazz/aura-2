@@ -15,21 +15,6 @@ namespace Aura.Login
 	{
 		static void Main(string[] args)
 		{
-			var c = new MabiCrypto(0x0, false);
-			var s = new MabiCrypto(0x0, true);
-
-			var p = new byte[25];
-
-			s.FromServer(p, 6, p.Length);
-			c.FromServer(p, 6, p.Length);
-
-			Debug.Assert(p.All(b => b == 0));
-
-			c.FromClient(p, 6, p.Length);
-			s.FromClient(p, 6, p.Length);
-
-			Debug.Assert(p.All(b => b == 0));
-
 			try
 			{
 				LoginServer.Instance.Run();

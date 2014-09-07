@@ -14,7 +14,7 @@ namespace Aura.Shared.Network
 	{
 		protected override void EncodeBuffer(byte[] buffer)
 		{
-			this.Crypto.FromServer(buffer, 6, buffer.Length - 6);
+			this.Crypto.FromServer(buffer);
 		}
 
 		protected override byte[] BuildPacket(Packet packet)
