@@ -103,6 +103,7 @@
     <Compile Include="Network\Handlers\Misc.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Handlers\NPCs.cs" />
+    <Compile Include="Network\InternalClient.cs" />
     <Compile Include="Network\Sending\Helpers\ConditionHelper.cs" />
     <Compile Include="Network\Sending\Helpers\CreatureHelper.cs" />
     <Compile Include="Network\Sending\Helpers\EntityHelper.cs" />

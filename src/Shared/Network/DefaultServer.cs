@@ -34,7 +34,7 @@ namespace Aura.Shared.Network
 
 			// Decrypt packet if crypt flag isn't 3.
 			if (buffer[5] != 0x03)
-				client.Crypto.FromClient(buffer);
+				client.DecodeBuffer(buffer);
 
 			//Log.Debug("in:  " + BitConverter.ToString(buffer));
 

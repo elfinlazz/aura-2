@@ -90,6 +90,8 @@ namespace Aura.Shared.Network
 		/// <param name="buffer"></param>
 		protected abstract void EncodeBuffer(byte[] buffer);
 
+		public abstract void DecodeBuffer(byte[] buffer);
+
 		/// <summary>
 		/// Builds packet, appending the overall header and checksum.
 		/// </summary>

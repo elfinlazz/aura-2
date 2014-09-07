@@ -56,7 +56,7 @@ namespace Aura.Channel
 		/// <summary>
 		/// Client connecting to the login server.
 		/// </summary>
-		public ChannelClient LoginServer { get; private set; }
+		public InternalClient LoginServer { get; private set; }
 
 		public GmCommandManager CommandProcessor { get; private set; }
 
@@ -164,7 +164,7 @@ namespace Aura.Channel
 					if (this.LoginServer != null && this.LoginServer.State != ClientState.Dead)
 						this.LoginServer.Kill();
 
-					this.LoginServer = new ChannelClient();
+					this.LoginServer = new InternalClient();
 					this.LoginServer.Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 					this.LoginServer.Socket.Connect(ChannelServer.Instance.Conf.Channel.LoginHost, ChannelServer.Instance.Conf.Channel.LoginPort);
 

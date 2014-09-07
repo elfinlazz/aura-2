@@ -2,8 +2,6 @@
 // For more information, see license file in the main folder
 
 using System;
-using System.Net.Sockets;
-using Aura.Shared.Util;
 
 namespace Aura.Shared.Network
 {
@@ -15,6 +13,11 @@ namespace Aura.Shared.Network
 		protected override void EncodeBuffer(byte[] buffer)
 		{
 			this.Crypto.FromServer(buffer);
+		}
+
+		public override void DecodeBuffer(byte[] buffer)
+		{
+			this.Crypto.FromClient(buffer);
 		}
 
 		protected override byte[] BuildPacket(Packet packet)
