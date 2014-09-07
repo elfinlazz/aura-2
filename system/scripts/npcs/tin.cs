@@ -35,7 +35,7 @@ public class TinScript : NpcScript
 			"as it slips off little by little."
 		);
 		
-		if(!Player.Has(CreatureStates.JustRebirth))
+		if(!Player.Has(CreatureStates.JustRebirthed))
 		{
 			Msg("Hey, who are you?");
 			Msg("You don't look like you're from this world. Am I right?<br/>Did you make your way down here from Soul Stream?<br/>Ahhh, so Nao sent you here!");
