@@ -40,33 +40,27 @@ namespace Aura.Shared.Network
 		public DateTime LastUpdate { get; set; }
 
 		/// <summary>
-		/// 0 = Maintenance,
-		/// 1 = Normal,
-		/// 2 = Busy,
-		/// 3 = Full,
-		/// 5 = Error
+		/// Status of the channel
 		/// </summary>
+		/// <remarks>
+		/// This needs to be update to reflect the stress value.
+		/// </remarks>
 		public ChannelState State { get; set; }
 
 		/// <summary>
-		/// 0 = Normal,
-		/// 1 = Event,
-		/// 2 = PvP,
-		/// 3 = Event/PvP
+		/// What events are going on
 		/// </summary>
 		public ChannelEvent Events { get; set; }
 
 		/// <summary>
-		/// 0-75
+		/// 0-100%, in increments of 5%.
 		/// </summary>
-		/// <remarks>
-		/// It's probably 0-100%, and the last 25% aren't visible.
-		/// </remarks>
 		public short Stress
 		{
 			get
 			{
-				return (short)(75f / this.MaxUsers * this.Users);
+				var val = (this.Users * 100) / this.MaxUsers;
+				return (short)(val - val % 5);
 			}
 		}
 
@@ -89,12 +83,55 @@ namespace Aura.Shared.Network
 			this.Port = port;
 
 			this.State = ChannelState.Normal;
-			this.Events = ChannelEvent.Normal;
+			this.Events = ChannelEvent.None;
 
 			this.LastUpdate = DateTime.MinValue;
 		}
 	}
 
-	public enum ChannelState { Maintenance, Normal, Busy, Full, Error = 5 }
-	public enum ChannelEvent { Normal, Event, PvP, EventPvP }
+	public enum ChannelState
+	{
+		/// <summary>
+		/// Server is offline for maint
+		/// </summary>
+		Maintenance = 0,
+		/// <summary>
+		/// Server is online and stress is [0,40) (less than 40%)
+		/// </summary>
+		Normal = 1,
+		/// <summary>
+		/// Server is online and stress is [40,70) (between 40% and 70%)
+		/// </summary>
+		Busy = 2,
+		/// <summary>
+		/// Server is online and stress is [70,95) (between 70% and 95%)
+		/// </summary>
+		Full = 3,
+		/// <summary>
+		/// Server is online and stress is [95,+∞) (greater than 95%)
+		/// 
+		/// In this state, the client won't allow you to move to the channel
+		/// </summary>
+		Bursting = 4,
+		/// <summary>
+		/// This state has never been directly observed. Maybe used internally,
+		/// or possibly if a channel crashes.
+		/// 
+		/// Shows up as [Maintenance] clientside.
+		/// </summary>
+		Booting = 5,
+		/// <summary>
+		/// Any other value is interpreted as [Error], unknown if this affects
+		/// client behavior.
+		/// </summary>
+		Error = 6		
+	}
+
+	[Flags]
+	public enum ChannelEvent
+	{
+		None = 0,
+		Event = 1,
+		PvP = 2
+	}
 }
