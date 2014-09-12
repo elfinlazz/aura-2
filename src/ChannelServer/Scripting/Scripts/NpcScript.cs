@@ -427,7 +427,29 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public bool GiveItem(int itemId, int amount = 1)
 		{
-			return Player.Inventory.Add(itemId, amount);
+			return this.Player.Inventory.Add(itemId, amount);
+		}
+
+		/// <summary>
+		/// Removes item(s) to player's inventory.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public bool RemoveItem(int itemId, int amount = 1)
+		{
+			return this.Player.Inventory.Remove(itemId, amount);
+		}
+
+		/// <summary>
+		/// Checks if player has item(s) in their inventory.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public bool HasItem(int itemId, int amount = 1)
+		{
+			return this.Player.Inventory.Remove(itemId, amount);
 		}
 
 		/// <summary>
