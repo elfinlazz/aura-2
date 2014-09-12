@@ -431,7 +431,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Removes item(s) to player's inventory.
+		/// Removes item(s) from a player's inventory.
 		/// </summary>
 		/// <param name="itemId"></param>
 		/// <param name="amount"></param>
