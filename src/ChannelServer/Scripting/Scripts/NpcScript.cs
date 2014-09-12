@@ -449,7 +449,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public bool HasItem(int itemId, int amount = 1)
 		{
-			return this.Player.Inventory.Remove(itemId, amount);
+			return this.Player.Inventory.Has(itemId, amount);
 		}
 
 		/// <summary>
