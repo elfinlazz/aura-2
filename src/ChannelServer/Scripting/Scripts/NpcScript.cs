@@ -431,6 +431,24 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Adds an item to player's inventory with specific colors.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="color1"></param>
+		/// <param name="color2"></param>
+		/// <param name="color3"></param>
+		/// <returns></returns>
+		public bool GiveItem(int itemId, uint color1, uint color2, uint color3)
+		{
+			var item = new Item(itemId);
+			item.Info.Color1 = color1;
+			item.Info.Color2 = color2;
+			item.Info.Color3 = color3;
+
+			return Player.Inventory.Add(item, true);
+		}
+
+		/// <summary>
 		/// Removes item(s) from a player's inventory.
 		/// </summary>
 		/// <param name="itemId"></param>
