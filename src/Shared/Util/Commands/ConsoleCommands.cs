@@ -27,7 +27,7 @@ namespace Aura.Shared.Util.Commands
 		/// <param name="name"></param>
 		/// <param name="description"></param>
 		/// <param name="handler"></param>
-		protected void Add(string name, string description, ConsoleCommandFunc handler)
+		public void Add(string name, string description, ConsoleCommandFunc handler)
 		{
 			this.Add(name, "", description, handler);
 		}
@@ -39,7 +39,7 @@ namespace Aura.Shared.Util.Commands
 		/// <param name="usage"></param>
 		/// <param name="description"></param>
 		/// <param name="handler"></param>
-		protected void Add(string name, string usage, string description, ConsoleCommandFunc handler)
+		public void Add(string name, string usage, string description, ConsoleCommandFunc handler)
 		{
 			if (_commands.ContainsKey(name))
 				Log.Warning("Console command '{0}' is being overwritten.", name);

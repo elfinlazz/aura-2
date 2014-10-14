@@ -59,6 +59,7 @@ namespace Aura.Channel
 		public InternalClient LoginServer { get; private set; }
 
 		public GmCommandManager CommandProcessor { get; private set; }
+		public ChannelConsoleCommands ConsoleCommands { get; private set; }
 
 		public ScriptManager ScriptManager { get; private set; }
 		public SkillManager SkillManager { get; private set; }
@@ -78,6 +79,7 @@ namespace Aura.Channel
 			this.ServerList = new ServerInfoManager();
 
 			this.CommandProcessor = new GmCommandManager();
+			this.ConsoleCommands = new ChannelConsoleCommands();
 
 			this.ScriptManager = new ScriptManager();
 			this.SkillManager = new SkillManager();
@@ -133,8 +135,7 @@ namespace Aura.Channel
 			_running = true;
 
 			// Commands
-			var commands = new ChannelConsoleCommands();
-			commands.Wait();
+			ConsoleCommands.Wait();
 		}
 
 		/// <summary>
