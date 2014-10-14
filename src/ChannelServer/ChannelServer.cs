@@ -135,7 +135,7 @@ namespace Aura.Channel
 			_running = true;
 
 			// Commands
-			ConsoleCommands.Wait();
+			this.ConsoleCommands.Wait();
 		}
 
 		/// <summary>
