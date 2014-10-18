@@ -53,7 +53,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			{
 				packet.PutInt(0);
 			}
-			// [180800, NA189 - 2014-07-23] Ninja?
+			// [180800, NA189 (23.07.2014)] Ninja?
 			{
 				packet.PutInt(0);
 			}

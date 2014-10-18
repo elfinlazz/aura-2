@@ -169,6 +169,10 @@ namespace Aura.Login.Network
 				packet.PutFloat(49.0f);
 				packet.PutFloat(0.0f);
 				packet.PutFloat(49.0f);
+				// [180800, NA196 (14.10.2014)] ?
+				{
+					packet.PutShort(0);
+				}
 				packet.PutInt(0);
 				packet.PutInt(0);
 				packet.PutShort(0);
@@ -526,7 +530,13 @@ namespace Aura.Login.Network
 				packet.PutLong(0);
 			}
 
-			packet.PutByte(0);
+			// [180800, NA196 (14.10.2014)] ?
+			{
+				packet.PutByte(0);
+				packet.PutLong(0);
+			}
+
+			packet.PutByte(0);	
 			packet.PutByte(0);				// 1: 프리미엄 PC방 서비스 사용중, 16: Free Play Event
 			packet.PutByte(false);			// Free Beginner Service
 

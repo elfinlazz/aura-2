@@ -190,7 +190,7 @@ namespace Aura.Channel.Network.Handlers
 		/// ?
 		/// </summary>
 		/// <remarks>
-		/// Purpose unknown, sent when pressing escape.
+		/// Purpose unknown, sent when pressing escape and switching weapon sets.
 		/// </remarks>
 		/// <example>
 		/// No parameters.
