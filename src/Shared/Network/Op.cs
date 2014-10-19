@@ -395,43 +395,43 @@ namespace Aura.Shared.Network
 		public const int SkillTeleport = 0xA9EC;
 
 		// [150000~180000] Something was added? Next two ops changed.
+		// [180800, NA196] Something was added? Ops 0xAAXX - 0xABXX increased by 4.
 
-		public const int SubsribeStunMeter = 0xAA1D;
-		public const int StunMeterTotal = 0xAA1E;
-		public const int StunMeterUpdate = 0xAA1F;
+		public const int SubsribeStunMeter = 0xAA21;
+		public const int StunMeterTotal = 0xAA22;
+		public const int StunMeterUpdate = 0xAA23;
 
-		public const int HomesteadInfoRequest = 0xAA54;
-		public const int HomesteadInfoRequestR = 0xAA55;
+		public const int HomesteadInfoRequest = 0xAA58;
+		public const int HomesteadInfoRequestR = 0xAA59;
 
 		// [180300, NA166 (18.09.2013)] 2 new ops somewhere here, possibly the two below
 
-		public const int ChannelLoginUnk = 0xAA83;
-		public const int ChannelLoginUnkR = 0xAA84;
+		public const int ChannelLoginUnk = 0xAA87;
+		public const int ChannelLoginUnkR = 0xAA88;
 
-		public const int CollectionRequest = 0xAA87;
-		public const int CollectionRequestR = 0xAA88;
+		public const int CollectionRequest = 0xAA8B;
+		public const int CollectionRequestR = 0xAA8C;
 
-		public const int UnkEsc = 0xAAEE;
+		public const int UnkEsc = 0xAAF3;
+		public const int GoBeautyShop = 0xAAF8;
+		public const int GoBeautyShopR = 0xAAF9;
+		public const int LeaveBeautyShop = 0xAAFA;
+		public const int LeaveBeautyShopR = 0xAAFB;
+		public const int OpenBeautyShop = 0xAAFC;
+		//public const int ? = 0xAAFD;	// Buy looks?
+		//public const int ? = 0xAAFE;	// Buy looks R?
+		public const int CancelBeautyShop = 0xAAFF;
+		public const int CancelBeautyShopR = 0xAB00;
 
-		public const int GoBeautyShop = 0xAAF4;
-		public const int GoBeautyShopR = 0xAAF5;
-		public const int LeaveBeautyShop = 0xAAF6;
-		public const int LeaveBeautyShopR = 0xAAF7;
-		public const int OpenBeautyShop = 0xAAF8;
-		//public const int ? = 0xAAF9;	// Buy looks?
-		//public const int ? = 0xAAFA;	// Buy looks R?
-		public const int CancelBeautyShop = 0xAAFB;
-		public const int CancelBeautyShopR = 0xAAFC;
+		public const int TalentInfoUpdate = 0xAB17;
+		public const int TalentTitleChange = 0xAB18;
+		public const int TalentTitleUpdate = 0xAB19;
 
-		public const int TalentInfoUpdate = 0xAB13;
-		public const int TalentTitleChange = 0xAB14;
-		public const int TalentTitleUpdate = 0xAB15;
-
-		public const int ShamalaTransformationUpdate = 0xAB17;
-		public const int ShamalaTransformationUse = 0xAB18;
-		public const int ShamalaTransformation = 0xAB19;
-		public const int ShamalaTransformationEnd = 0xAB1A;
-		public const int ShamalaTransformationEndR = 0xAB1B;
+		public const int ShamalaTransformationUpdate = 0xAB1B;
+		public const int ShamalaTransformationUse = 0xAB1C;
+		public const int ShamalaTransformation = 0xAB1D;
+		public const int ShamalaTransformationEnd = 0xAB1E;
+		public const int ShamalaTransformationEndR = 0xAB1F;
 
 		public const int NpcTalk = 0x13882;
 		public const int NpcTalkSelect = 0x13883;

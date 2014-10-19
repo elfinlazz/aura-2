@@ -43,7 +43,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			{
 				packet.PutUInt((uint)creature.StateEx);
 
-				// [180300, NA166 (18.09.2013)
+				// [180300, NA166 (18.09.2013)]
 				{
 					packet.PutInt(0);
 				}
@@ -177,7 +177,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 					packet.PutShort(0);			     // DualgunWAttackMinBaseMod
 					packet.PutShort(0);			     // DualgunWAttackMaxBaseMod
 				}
-				// [180800, NA189 - 2014-07-23] Ninja?
+				// [180800, NA189 (23.07.2014)] Ninja?
 				{
 					packet.PutShort(0);			     // ? AttackMinBaseMod
 					packet.PutShort(0);			     // ? AttackMaxBaseMod
@@ -211,6 +211,12 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutByte(0);					 // ElementFire
 				packet.PutByte(0);					 // ElementIce
 
+				// [180800, NA196 (14.10.2014)] ?
+				{
+					packet.PutByte(0);
+					packet.PutByte(0);
+				}
+
 				var regens = creature.Regens.GetList();
 				packet.PutInt(regens.Count);
 				foreach (var regen in regens)
@@ -222,6 +228,11 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutFloat(creature.LifeMaxBaseTotal);
 				packet.PutFloat(creature.LifeMaxMod);
 				packet.PutFloat(creature.LifeInjured);
+
+				// [180800, NA196 (14.10.2014)] ?
+				{
+					packet.PutShort(0);
+				}
 
 				var regens = creature.Regens.GetPublicList();
 				packet.PutInt(regens.Count);
@@ -400,6 +411,11 @@ namespace Aura.Channel.Network.Sending.Helpers
 			// PvP
 			// --------------------------------------------------------------
 			packet.AddPvPInfo(creature);
+
+			// [180800, NA196 (14.10.2014)] ?
+			{
+				packet.PutByte(0);
+			}
 
 			// Conditions
 			// --------------------------------------------------------------
@@ -947,6 +963,10 @@ namespace Aura.Channel.Network.Sending.Helpers
 			// [180300, NA166 (18.09.2013)] ?
 			{
 				packet.PutByte(0);
+				packet.PutByte(0);
+			}
+			// [180800, NA196 (14.10.2014)] ?
+			{
 				packet.PutByte(0);
 			}
 			packet.PutInt(0);
