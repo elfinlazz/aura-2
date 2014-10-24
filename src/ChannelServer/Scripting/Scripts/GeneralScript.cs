@@ -14,6 +14,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using System.Threading;
 using System.Collections.Generic;
+using Aura.Shared.Util.Commands;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -183,6 +184,18 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void AddCommand(int auth, int charAuth, string name, string usage, GmCommandFunc func)
 		{
 			ChannelServer.Instance.CommandProcessor.Add(auth, charAuth, name, usage, func);
+		}
+
+		/// <summary>
+		/// Adds console command.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="usage"></param>
+		/// <param name="description"></param>
+		/// <param name="handler"></param>
+		protected void AddConsoleCommand(string name, string usage, string description, ConsoleCommandFunc handler)
+		{
+			ChannelServer.Instance.ConsoleCommands.Add(name, usage, description, handler);
 		}
 
 		#endregion Extension
