@@ -153,7 +153,7 @@ public class AeiraScript : NpcScript
 
 			case "school":
 				Msg("The School is up there! Head straight up and you'll see it.<br/>If you have a good set of eyes, you could see it from here, too. Hehehe.");
-				Msg("h, if you get to go there,<br/>please see how Stewart is doing! Please.");
+				Msg("Oh, if you get to go there,<br/>please see how Stewart is doing! Please.");
 				break;
 
 			case "skill_campfire":
