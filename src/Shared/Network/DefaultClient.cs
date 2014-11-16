@@ -12,7 +12,10 @@ namespace Aura.Shared.Network
 	{
 		protected override void EncodeBuffer(byte[] buffer)
 		{
-			this.Crypto.FromServer(buffer);
+			//this.Crypto.FromServer(buffer);
+
+			// Set raw flag
+			buffer[5] = 0x03;
 		}
 
 		public override void DecodeBuffer(byte[] buffer)

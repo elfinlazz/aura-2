@@ -603,6 +603,9 @@ namespace Aura.Channel.Database
 
 		public void LogSecurityIncident(ChannelClient client, IncidentSeverityLevel level, string report, string stacktrace)
 		{
+			if (client == null || client.Account == null)
+				return; // TODO: log?
+
 			using (var conn = this.Connection)
 			using (var cmd = new InsertCommand("INSERT INTO `log_security` {0}", conn))
 			{
