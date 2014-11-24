@@ -69,6 +69,7 @@ public class AranwenScript : NpcScript
 				break;
 		}
 	}
+
 	protected override async Task Keywords(string keyword) {
 		switch (keyword) {
 			case "personal_info":
@@ -159,6 +160,11 @@ public class AranwenScript : NpcScript
 
 			case "school":
 				Msg("Mmm? This is the only school around here.");
+				break;
+
+			case "skill_windmill":
+				Player.Keywords.Remove("skill_windmill");
+				Msg("Are you curious about the Windmill skill?<br/>It is a useful skill to have when you're surrounded by enemies.<br/>Very well. I will teach you the Windmill skill.");
 				break;
 
 			case "shop_restaurant":
