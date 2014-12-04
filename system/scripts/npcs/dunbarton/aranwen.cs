@@ -45,15 +45,16 @@ public class AranwenScript : NpcScript
 
 		Msg("What brings you here?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
 
-		switch (await Select()) {
+		switch (await Select()) 
+		{
 			case "@talk":
 				Msg("Hmm. <username/>, right?<br/>Of course.");
-				//Msg("Hmm. <username/>, right?");
-				//Msg("Yes? Please don't block my view.");
+				// Msg("Hmm. <username/>, right?");
+				// Msg("Yes? Please don't block my view.");
 
-				//if the player is wearing the Savior of Erinn title, she will say this after the first message
-				//Msg("Guardian of Erinn...<br/>If it were anyone else,<br/>I would tell them to stop being so arrogant...");
-				//Msg("But with you, <username/>, you are definitely qualified.<br/>Good job.");
+				// if the player is wearing the Savior of Erinn title, she will say this after the first message
+				// Msg("Guardian of Erinn...<br/>If it were anyone else,<br/>I would tell them to stop being so arrogant...");
+				// Msg("But with you, <username/>, you are definitely qualified.<br/>Good job.");
 				await StartConversation();
 				break;
 
@@ -70,7 +71,8 @@ public class AranwenScript : NpcScript
 		}
 	}
 
-	protected override async Task Keywords(string keyword) {
+	protected override async Task Keywords(string keyword) 
+	{
 		switch (keyword) {
 			case "personal_info":
 				Msg("Let me introduce myself.<br/>My name is Aranwen. I teach combat skills at the Dunbarton School.");
@@ -85,7 +87,7 @@ public class AranwenScript : NpcScript
 				Msg("...if you are interested in high-leveled bowman skills, then<br/>you should at least master the Fire Arrow skill first.");
 				break;
 
-			case "shop_misc": //General Shop
+			case "shop_misc": // General Shop
 				Msg("Hmm. Looking for the General Shop?<br/>You'll find it down there across the Square.");
 				Msg("Walter should be standing by the door.<br/>You can buy instruments, music scores, gifts, and tailoring goods such as sewing patterns.");
 				break;
@@ -144,16 +146,16 @@ public class AranwenScript : NpcScript
 				Msg("If you are willing,<br/>would you go and take some out?<br/>You'll be appreciated by many.");
 				break;
 
-			case "brook": //Adelia Stream
+			case "brook": // Adelia Stream
 				Msg("Adelia Stream...<br/>I believe you're speaking of the<br/>stream in Tir Chonaill...");
 				Msg("Shouldn't you be asking<br/>these questions<br/>in Tir Chonaill?");
 				break;
 
-			case "shop_headman": //Chief's House
+			case "shop_headman": // Chief's House
 				Msg("A chief?<br/>This town is ruled by a Lord,<br/>so there is no such person as a chief here.");
 				break;
 
-			case "temple": //Church
+			case "temple": // Church
 				Msg("You must have something to discuss with Priestess Kristell.<br/>You'll find her at the Church up north.");
 				Msg("You can also take the stairs that head<br/>northwest to the Square.<br/>There are other ways to get there, too,<br/>so it shouldn't be too difficult to find it.");
 				break;
@@ -172,7 +174,7 @@ public class AranwenScript : NpcScript
 				Msg("The Restaurant is in the north alley of the Square.");
 				break;
 
-			case "shop_armory": //Weapon Shop
+			case "shop_armory": // Weapon Shop
 				Msg("Nerys is the owner of the Weapons Shop.<br/>Keep following the road that leads down south<br/>and you'll see her mending weapons outside.");
 				Msg("She may seem a little aloof,<br/>but don't let that get to you too much<br/>and you'll get used to it.");
 				break;
@@ -186,7 +188,7 @@ public class AranwenScript : NpcScript
 				Msg("Many types of books go through that place,<br/>so even if you don't find what you want right away,<br/>keep visiting and you'll soon get it.");
 				break;
 
-			case "shop_goverment_office": //Town Office
+			case "shop_goverment_office": // Town Office
 				Msg("Are you looking for Eavan?<br/>The Lord and the Captain of the Royal Guards<br/>are very hard to reach. ");
 				Msg("If you're really looking for Eavan,<br/>go over to that large building to the north of the Square.");
 				break;
@@ -205,7 +207,9 @@ public class AranwenScript : NpcScript
 				break;
 		}
 	}
-	public override void EndConversation() {
+
+	public override void EndConversation() 
+	{
 		Close("Thank you, Aranwen. I'll see you later!");
 	}
 }
@@ -218,15 +222,15 @@ public class AranwenShop : NpcShopScript
 		// Party Quest
 		//----------------
 
-		//Page 1
-		Add("Party Quest", 70025); //Party Quest Scroll [10 Red Bears]
-		Add("Party Quest", 70025); //Party Quest Scroll [30 Red Bears]
-		Add("Party Quest", 70025); //Party Quest Scroll [30 Brown Grizzly Bears]
-		Add("Party Quest", 70025); //Party Quest Scroll [30 Red Grizzly Bears]
-		Add("Party Quest", 70025); //Party Quest Scroll [30 Black Grizzly Bears]
-		Add("Party Quest", 70025); //Party Quest Scroll [10 Black Grizzly Bears and 10 Brown Grizzly Bears]
-		Add("Party Quest", 70025); //Party Quest Scroll [15 Black Grizzly Bear Cubs and Brown Grizzly Bear Cubs]
-		Add("Party Quest", 70025); //Party Quest Scroll [10 Red Grizzly Bears and 10 Brown Grizzly Bears]
-		Add("Party Quest", 70025); //Party Quest Scroll [15 Red Grizzly Bear Cubs and Brown Grizzly Bear Cubs]
+		// Page 1
+		Add("Party Quest", 70025); // Party Quest Scroll [10 Red Bears]
+		Add("Party Quest", 70025); // Party Quest Scroll [30 Red Bears]
+		Add("Party Quest", 70025); // Party Quest Scroll [30 Brown Grizzly Bears]
+		Add("Party Quest", 70025); // Party Quest Scroll [30 Red Grizzly Bears]
+		Add("Party Quest", 70025); // Party Quest Scroll [30 Black Grizzly Bears]
+		Add("Party Quest", 70025); // Party Quest Scroll [10 Black Grizzly Bears and 10 Brown Grizzly Bears]
+		Add("Party Quest", 70025); // Party Quest Scroll [15 Black Grizzly Bear Cubs and Brown Grizzly Bear Cubs]
+		Add("Party Quest", 70025); // Party Quest Scroll [10 Red Grizzly Bears and 10 Brown Grizzly Bears]
+		Add("Party Quest", 70025); // Party Quest Scroll [15 Red Grizzly Bear Cubs and Brown Grizzly Bear Cubs]
 	}
 }
