@@ -34,7 +34,8 @@ public class AeiraScript : NpcScript
 		AddPhrase("Whew... I should just finish up the transcription.");
 	}
 
-	protected override async Task Talk() {
+	protected override async Task Talk() 
+	{
 		SetBgm("NPC_Aeira.mp3");
 
 		await Intro(
@@ -45,7 +46,8 @@ public class AeiraScript : NpcScript
 
 		Msg("So, what can I help you with?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"));
 
-		switch (await Select()) {
+		switch (await Select())
+		{
 			case "@talk":
 				Msg("So, what can I help you with?");
 				//"Hahaha. I... Umm... I think I've met you before...<br/>Your name was...<br/>Oh, I'm sorry, <username/>. My mind went blank for a second. Hehehe."
@@ -204,7 +206,9 @@ public class AeiraScript : NpcScript
 				break;
 		}
 	}
-	public override void EndConversation() {
+
+	public override void EndConversation() 
+	{
 		Close("Thank you, Aeira. I'll see you later!");
 	}
 }
@@ -217,82 +221,82 @@ public class AeiraShop : NpcShopScript
 		// Skill Book
 		//----------------
 
-		//Page 1
-		Add("Skill Book", 1006); //Introduction to Music Composition
-		Add("Skill Book", 1012); //Campfire Manual
-		Add("Skill Book", 1505); //The World of Handicrafts
-		Add("Skill Book", 1302); //Your first Glass of Wine Vol. 1
-		Add("Skill Book", 1303); //Your first Glass of Wine Vol. 2
-		Add("Skill Book", 1011); //Improving Your Composing Skill
-		Add("Skill Book", 1304); //Wine for the Everyman
-		Add("Skill Book", 1018); //The History of Music in Erinn (1)
-		Add("Skill Book", 1305); //Tin's Liquor Drop
-		Add("Skill Book", 1083); //Campfire Skill: Beyond the Kit
-		Add("Skill Book", 1064); //Master Chef's Cooking Class: Baking
-		Add("Skill Book", 1065); //Master Chef's Cooking Class: Simmering
-		Add("Skill Book", 1019); //The History of Music in Erinn (2)
-		Add("Skill Book", 1066); //About Kneading
-		Add("Skill Book", 1020); //Composition Lessons with Helene (1)
-		Add("Skill Book", 1123); //The Great Camping Companion: Camp Kit
-		Add("Skill Book", 1007); //Healing: The Basics of Magic
-		Add("Skill Book", 1029); //A Campfire Memory
-		Add("Skill Book", 1114); //The History of Music in Erinn (3)
-		Add("Skill Book", 1111); //The Path of Composing
-		Add("Skill Book", 1013); //Music Theory
+		// Page 1
+		Add("Skill Book", 1006); // Introduction to Music Composition
+		Add("Skill Book", 1012); // Campfire Manual
+		Add("Skill Book", 1505); // The World of Handicrafts
+		Add("Skill Book", 1302); // Your first Glass of Wine Vol. 1
+		Add("Skill Book", 1303); // Your first Glass of Wine Vol. 2
+		Add("Skill Book", 1011); // Improving Your Composing Skill
+		Add("Skill Book", 1304); // Wine for the Everyman
+		Add("Skill Book", 1018); // The History of Music in Erinn (1)
+		Add("Skill Book", 1305); // Tin's Liquor Drop
+		Add("Skill Book", 1083); // Campfire Skill: Beyond the Kit
+		Add("Skill Book", 1064); // Master Chef's Cooking Class: Baking
+		Add("Skill Book", 1065); // Master Chef's Cooking Class: Simmering
+		Add("Skill Book", 1019); // The History of Music in Erinn (2)
+		Add("Skill Book", 1066); // About Kneading
+		Add("Skill Book", 1020); // Composition Lessons with Helene (1)
+		Add("Skill Book", 1123); // The Great Camping Companion: Camp Kit
+		Add("Skill Book", 1007); // Healing: The Basics of Magic
+		Add("Skill Book", 1029); // A Campfire Memory
+		Add("Skill Book", 1114); // The History of Music in Erinn (3)
+		Add("Skill Book", 1111); // The Path of Composing
+		Add("Skill Book", 1013); // Music Theory
 		
 		//----------------
-		//Life Skill Book
+		// Life Skill Book
+		//----------------
+
+		// Page 1
+		Add("Life Skill Book", 1055); // The Road to Becoming a Magic Warrior
+		Add("Life Skill Book", 1056); // How to Enjoy Field Hunting
+		Add("Life Skill Book", 1092); // Enchant, Another Mysterious Magic
+		Add("Life Skill Book", 1124); // An Easy Guide to Taking Up Residence in a Home
+		Add("Life Skill Book", 1102); // Your Pet
+		Add("Life Skill Book", 1052); // How to milk a Cow
+		Add("Life Skill Book", 1050); // An Unempolyed Man's Memoir of Clothes
+		Add("Life Skill Book", 1040); // Facial Expressions Require Practice too
+		Add("Life Skill Book", 1046); // Fire Arrow, The Ultimate Archery
+		Add("Life Skill Book", 1021); // The Tir Chonaill Environs
+		Add("Life Skill Book", 1022); // The Dunbarton Environs
+		Add("Life Skill Book", 1043); // Wizards Love the Dark
+		Add("Life Skill Book", 1057); // Introduction to Field Bosses
+		Add("Life Skill Book", 1058); // Understanding Whisps
+		Add("Life Skill Book", 1015); // Seal Stone Research Almanac: Rabbie Dungeon
+		Add("Life Skill Book", 1016); // Seal Stone Research Almanac: Ciar Dungeon
+		Add("Life Skill Book", 1017); // Seal Stone Research Almanac: Dugald Aisle
+		Add("Life Skill Book", 1033); // Guidebook for Dungeon Exploration - Theory
+		Add("Life Skill Book", 1034); // Guidebook for Dungeon Exploration - Practicum
+		Add("Life Skill Book", 1035); // An Adventurer's Memoir
+		Add("Life Skill Book", 1077); // Wanderer of the Fiodh Forest
+		Add("Life Skill Book", 1090); // How Am I Going to Survive Like This?
+		Add("Life Skill Book", 1031); // Understanding Elementals
+		Add("Life Skill Book", 1036); // Records of the Bangorr Seal Stone Investigation
+		Add("Life Skill Book", 1072); // Cooking on Your Own Vol. 1
+		Add("Life Skill Book", 1073); // Cooking on Your Own Vol. 2
+
+		//----------------
+		// Literature
 		//----------------
 
 		//Page 1
-		Add("Life Skill Book", 1055); //The Road to Becoming a Magic Warrior
-		Add("Life Skill Book", 1056); //How to Enjoy Field Hunting
-		Add("Life Skill Book", 1092); //Enchant, Another Mysterious Magic
-		Add("Life Skill Book", 1124); //An Easy Guide to Taking Up Residence in a Home
-		Add("Life Skill Book", 1102); //Your Pet
-		Add("Life Skill Book", 1052); //How to milk a Cow
-		Add("Life Skill Book", 1050); //An Unempolyed Man's Memoir of Clothes
-		Add("Life Skill Book", 1040); //Facial Expressions Require Practice too
-		Add("Life Skill Book", 1046); //Fire Arrow, The Ultimate Archery
-		Add("Life Skill Book", 1021); //The Tir Chonaill Environs
-		Add("Life Skill Book", 1022); //The Dunbarton Environs
-		Add("Life Skill Book", 1043); //Wizards Love the Dark
-		Add("Life Skill Book", 1057); //Introduction to Field Bosses
-		Add("Life Skill Book", 1058); //Understanding Whisps
-		Add("Life Skill Book", 1015); //Seal Stone Research Almanac: Rabbie Dungeon
-		Add("Life Skill Book", 1016); //Seal Stone Research Almanac: Ciar Dungeon
-		Add("Life Skill Book", 1017); //Seal Stone Research Almanac: Dugald Aisle
-		Add("Life Skill Book", 1033); //Guidebook for Dungeon Exploration - Theory
-		Add("Life Skill Book", 1034); //Guidebook for Dungeon Exploration - Practicum
-		Add("Life Skill Book", 1035); //An Adventurer's Memoir
-		Add("Life Skill Book", 1077); //Wanderer of the Fiodh Forest
-		Add("Life Skill Book", 1090); //How Am I Going to Survive Like This?
-		Add("Life Skill Book", 1031); //Understanding Elementals
-		Add("Life Skill Book", 1036); //Records of the Bangorr Seal Stone Investigation
-		Add("Life Skill Book", 1072); //Cooking on Your Own Vol. 1
-		Add("Life Skill Book", 1073); //Cooking on Your Own Vol. 2
-
-		//----------------
-		//Literature
-		//----------------
-
-		//Page 1
-		Add("Literature", 1023); //The Story of Spiral Hill
-		Add("Literature", 1025); //Mystery of the Dungeon
-		Add("Literature", 1026); //A Report on Astralium
-		Add("Literature", 1027); //I Hate Cuteness
-		Add("Literature", 1028); //Tracy's Secret
-		Add("Literature", 1032); //The Shadow Mystery
-		Add("Literature", 1140); //It's a 'paper airplane' that flies.
-		Add("Literature", 1001); //The Story of a White Doe
-		Add("Literature", 1059); //A Campfire Story
-		Add("Literature", 1060); //Imp's Diary
-		Add("Literature", 1061); //The Tale of Ifan the Rich
-		Add("Literature", 1042); //Animal-loving Healer
-		Add("Literature", 1103); //The Story of a Lizard
-		Add("Literature", 1104); //The Origin of Moon Gates
-		Add("Literature", 74028); //The Forgotten Legend of Fiodh Forest
-		Add("Literature", 74029); //The Tragedy of Emain Macha
-		Add("Literature", 74027); //The Knight of Light Lugh, The Hero of Mag Tuireadh
+		Add("Literature", 1023); // The Story of Spiral Hill
+		Add("Literature", 1025); // Mystery of the Dungeon
+		Add("Literature", 1026); // A Report on Astralium
+		Add("Literature", 1027); // I Hate Cuteness
+		Add("Literature", 1028); // Tracy's Secret
+		Add("Literature", 1032); // The Shadow Mystery
+		Add("Literature", 1140); // It's a 'paper airplane' that flies.
+		Add("Literature", 1001); // The Story of a White Doe
+		Add("Literature", 1059); // A Campfire Story
+		Add("Literature", 1060); // Imp's Diary
+		Add("Literature", 1061); // The Tale of Ifan the Rich
+		Add("Literature", 1042); // Animal-loving Healer
+		Add("Literature", 1103); // The Story of a Lizard
+		Add("Literature", 1104); // The Origin of Moon Gates
+		Add("Literature", 74028); // The Forgotten Legend of Fiodh Forest
+		Add("Literature", 74029); // The Tragedy of Emain Macha
+		Add("Literature", 74027); // The Knight of Light Lugh, The Hero of Mag Tuireadh
 	}
 }
