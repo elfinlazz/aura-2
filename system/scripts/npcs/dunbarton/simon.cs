@@ -45,7 +45,7 @@ public class SimonScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Msg(Hide.Name,"(<npcname/> is slowly looking me over.)");
+				Msg(Hide.Name, "(<npcname/> is slowly looking me over.)");
 				// You are back <username />.
 				// Simon is smiling at me as if we've known each other for years.
 				await StartConversation();
@@ -210,7 +210,7 @@ public class SimonScript : NpcScript
 	
 	public override void EndConversation()
 	{
-		Close(Hide.Name,"(Thank you, Simon. I'll see you later!)");
+		Close(Hide.Name, "(Thank you, Simon. I'll see you later!)");
 	}
 }
 

@@ -212,7 +212,7 @@ public class NerysScript : NpcScript
 	
 	public override void EndConversation()
 	{
-		Close(Hide.Name,"(Thank you, Nerys. I'll see you later!)");
+		Close(Hide.Name, "(Thank you, Nerys. I'll see you later!)");
 	}
 }
 
