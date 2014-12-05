@@ -29,7 +29,10 @@ namespace Aura.Channel.World.Quests
 
 		public MabiDictionary MetaData { get; protected set; }
 
-		public abstract ObjectiveType Type { get; }
+		/// <summary>
+		/// Gets the type code used in the packet.
+		/// </summary>
+		public abstract byte __TypeCode { get; }
 
 		protected QuestObjective(int amount)
 		{
@@ -43,9 +46,12 @@ namespace Aura.Channel.World.Quests
 	/// </summary>
 	public class QuestObjectiveKill : QuestObjective
 	{
-		public override ObjectiveType Type { get { return ObjectiveType.Kill; } }
-
 		public string[] RaceTypes { get; set; }
+
+		/// <summary>
+		/// Gets the type code used in the packet.
+		/// </summary>
+		public override byte __TypeCode { get { return 1; } }
 
 		public QuestObjectiveKill(int amount, params string[] raceTypes)
 			: base(amount)
@@ -73,9 +79,12 @@ namespace Aura.Channel.World.Quests
 	/// </summary>
 	public class QuestObjectiveCollect : QuestObjective
 	{
-		public override ObjectiveType Type { get { return ObjectiveType.Collect; } }
-
 		public int ItemId { get; set; }
+
+		/// <summary>
+		/// Gets the type code used in the packet.
+		/// </summary>
+		public override byte __TypeCode { get { return 2; } }
 
 		public QuestObjectiveCollect(int itemId, int amount)
 			: base(amount)
@@ -94,9 +103,12 @@ namespace Aura.Channel.World.Quests
 	/// </summary>
 	public class QuestObjectiveTalk : QuestObjective
 	{
-		public override ObjectiveType Type { get { return ObjectiveType.Talk; } }
-
 		public string Name { get; set; }
+
+		/// <summary>
+		/// Gets the type code used in the packet.
+		/// </summary>
+		public override byte __TypeCode { get { return 3; } }
 
 		public QuestObjectiveTalk(string npcName)
 			: base(1)
@@ -113,10 +125,13 @@ namespace Aura.Channel.World.Quests
 	/// </summary>
 	public class QuestObjectiveReachRank : QuestObjective
 	{
-		public override ObjectiveType Type { get { return ObjectiveType.ReachRank; } }
-
 		public SkillId Id { get; set; }
 		public SkillRank Rank { get; set; }
+
+		/// <summary>
+		/// Gets the type code used in the packet.
+		/// </summary>
+		public override byte __TypeCode { get { return 9; } }
 
 		public QuestObjectiveReachRank(SkillId skillId, SkillRank rank)
 			: base(1)
