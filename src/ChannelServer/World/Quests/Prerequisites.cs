@@ -109,4 +109,22 @@ namespace Aura.Channel.World.Quests
 			return this.Prerequisites.Any(p => p.Met(character));
 		}
 	}
+
+	/// <summary>
+	/// Inverts the return of a prerequisite's Met()
+	/// </summary>
+	public class QuestPrerequisiteNot : QuestPrerequisite
+	{
+		protected QuestPrerequisite _prereq;
+
+		public QuestPrerequisiteNot(QuestPrerequisite prerequiste)
+		{
+			_prereq = prerequiste;
+		}
+
+		public override bool Met(Creature character)
+		{
+			return !_prereq.Met(character);
+		}
+	}
 }

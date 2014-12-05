@@ -242,7 +242,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="character"></param>
 		private void OnPlayerLoggedIn(Creature character)
 		{
-			this.CheckPrerequisites(character);
+			if (this.CheckPrerequisites(character))
+				character.Quests.Start(this.Id);
 		}
 
 		/// <summary>
@@ -255,14 +256,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.ReceiveMethod != Receive.Automatically || character.Quests.Has(this.Id))
 				return false;
 
-			if (this.Prerequisites.Any(prerequisite => !prerequisite.Met(character)))
-			{
-				return false;
-			}
-
-			character.Quests.Start(this.Id);
-
-			return true;
+			return this.Prerequisites.All(prerequisite => prerequisite.Met(character));
 		}
 
 		/// <summary>
@@ -356,7 +350,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="questId"></param>
 		private void OnPlayerCompletesQuest(Creature character, int questId)
 		{
-			this.CheckPrerequisites(character);
+			if (this.CheckPrerequisites(character))
+				character.Quests.Start(this.Id);
 		}
 	}
 
