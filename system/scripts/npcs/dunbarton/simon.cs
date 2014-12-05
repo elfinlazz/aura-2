@@ -207,6 +207,7 @@ public class SimonScript : NpcScript
 				break;
 		}
 	}
+	
 	public override void EndConversation()
 	{
 		Close("Thank you, Simon. I'll see you later!");
