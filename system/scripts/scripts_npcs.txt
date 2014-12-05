@@ -30,5 +30,6 @@ npcs/tir/deian.cs
 npcs/dunbarton/aeira.cs
 npcs/dunbarton/aranwen.cs
 npcs/dunbarton/austeyn.cs
+npcs/dunbarton/simon.cs
 
 include "/user/scripts/scripts_npcs.txt"
