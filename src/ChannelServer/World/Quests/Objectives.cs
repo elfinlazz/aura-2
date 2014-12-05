@@ -51,7 +51,7 @@ namespace Aura.Channel.World.Quests
 		/// <summary>
 		/// Gets the type code used in the packet.
 		/// </summary>
-		public override byte __TypeCode { get { return 1; } }
+		public sealed override byte __TypeCode { get { return 1; } }
 
 		public QuestObjectiveKill(int amount, params string[] raceTypes)
 			: base(amount)
@@ -84,7 +84,7 @@ namespace Aura.Channel.World.Quests
 		/// <summary>
 		/// Gets the type code used in the packet.
 		/// </summary>
-		public override byte __TypeCode { get { return 2; } }
+		public sealed override byte __TypeCode { get { return 2; } }
 
 		public QuestObjectiveCollect(int itemId, int amount)
 			: base(amount)
@@ -108,7 +108,7 @@ namespace Aura.Channel.World.Quests
 		/// <summary>
 		/// Gets the type code used in the packet.
 		/// </summary>
-		public override byte __TypeCode { get { return 3; } }
+		public sealed override byte __TypeCode { get { return 3; } }
 
 		public QuestObjectiveTalk(string npcName)
 			: base(1)
@@ -131,7 +131,7 @@ namespace Aura.Channel.World.Quests
 		/// <summary>
 		/// Gets the type code used in the packet.
 		/// </summary>
-		public override byte __TypeCode { get { return 9; } }
+		public sealed override byte __TypeCode { get { return 9; } }
 
 		public QuestObjectiveReachRank(SkillId skillId, SkillRank rank)
 			: base(1)
