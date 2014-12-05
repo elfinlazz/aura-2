@@ -1,8 +1,8 @@
-// --- Aura Script -----------------------------------------------------------
+//--- Aura Script -----------------------------------------------------------
 // Simon
-// --- Description -----------------------------------------------------------
+//--- Description -----------------------------------------------------------
 // Clothing Store Owner
-// ---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 
 public class SimonScript : NpcScript
 {
@@ -45,7 +45,7 @@ public class SimonScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Msg("Hide.Name,(Simon is slowly looking me over.");
+				Msg(Hide.Name,"(<npcname/> is slowly looking me over.)");
 				// You are back <username />.
 				// Simon is smiling at me as if we've known each other for years.
 				await StartConversation();
@@ -193,7 +193,7 @@ public class SimonScript : NpcScript
 				break;
 
 			case "shop_goverment_office": // Town Office
-				Msg("Missing.");
+				Msg("Oh! You mean where that elegant lady Eavan works?<br/>The Town Office is just over there.<br/>Go left a little, then out to the edge of the Square.<br/>You'll see a large building there. That's the one.");
 				break;
 
 			default:
@@ -210,7 +210,7 @@ public class SimonScript : NpcScript
 	
 	public override void EndConversation()
 	{
-		Close("Thank you, Simon. I'll see you later!");
+		Close(Hide.Name,"(Thank you, Simon. I'll see you later!)");
 	}
 }
 
