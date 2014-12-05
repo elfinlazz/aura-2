@@ -19,13 +19,16 @@ namespace Aura.Channel.Scripting.Scripts
 {
 	public class QuestScript : GeneralScript
 	{
-		public int Id { get; set; }
+		public int Id { get; protected set; }
 
-		public string Name { get; set; }
-		public string Description { get; set; }
+		public string Name { get; protected set; }
+		public string Description { get; protected set; }
 
-		public Receive ReceiveMethod { get; set; }
-		public bool Cancelable { get; set; }
+		public Receive ReceiveMethod { get; protected set; }
+		public bool Cancelable { get; protected set; }
+		public TimeSpan TimeLimit { get; protected set; }
+		public int Soundset { get; protected set; }
+		public bool EssentialIcon { get; protected set; }
 
 		public List<QuestPrerequisite> Prerequisites { get; protected set; }
 		public OrderedDictionary<string, QuestObjective> Objectives { get; protected set; }
@@ -120,6 +123,21 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void SetReceive(Receive method)
 		{
 			this.ReceiveMethod = method;
+		}
+
+		protected void SetTimeLimit(TimeSpan limit)
+		{
+			this.TimeLimit = limit;
+		}
+
+		protected void SetSoundset(int set)
+		{
+			this.Soundset = set;
+		}
+
+		protected void SetEssentialIcon(bool icon)
+		{
+			this.EssentialIcon = icon;
 		}
 
 		/// <summary>
