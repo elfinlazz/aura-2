@@ -21,6 +21,7 @@ Noteworthy contributors
 
 * Oversight
 * Pikachu
+* T. (anonymous)
 
 Special thanks to everybody on the [Mabinogi World Wiki](http://wiki.mabinogiworld.com),
 for years of research and data collection.
