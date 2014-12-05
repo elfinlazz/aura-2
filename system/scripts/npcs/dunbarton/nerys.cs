@@ -49,7 +49,7 @@ public class NerysScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Msg(Hide.Name,"(<npcname/> is looking at me.)");
+				Msg(Hide.Name, "(<npcname/> is looking at me.)");
 				// Msg("<face name='normal'/>What are you looking for?");
 				// Msg(Hide.Name,"(<npcname/> is waiting for me to say something.)");
 				await StartConversation();
@@ -85,7 +85,7 @@ public class NerysScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-			Player.Keywords.Give("shop_armory");
+				Player.Keywords.Give("shop_armory");
 				Msg("I'm Nerys, the owner of this Weapons Shop. Nice to meet you.");
 				// Msg("<face name='normal'/>Aren't you here to buy weapons?<br/>Well, I guess having a chat buddy doesn't hurt.");
 				break;
@@ -326,6 +326,5 @@ public class NerysShop : NpcShopScript
 		Add("Arrowheads", 64016); // Bundle of Fine Bolt Heads
 		Add("Arrowheads", 64014); // Bundle of the Finest Arrowheads
 		Add("Arrowheads", 64017); // Bundle of the Finest Bolt Heads
-		
 	}
 }

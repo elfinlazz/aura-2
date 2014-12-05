@@ -329,6 +329,5 @@ public class SimonShop : NpcShopScript
 		//----------------
 		
 		// Currently empty.
-
 	}
 }
