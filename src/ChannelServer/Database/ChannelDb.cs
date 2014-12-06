@@ -540,30 +540,34 @@ namespace Aura.Channel.Database
 					{
 						while (reader.Read())
 						{
-							var uniqueId = reader.GetInt64("questIdUnique");
-							var id = reader.GetInt32("questId");
-							var state = (QuestState)reader.GetInt32("state");
-							var itemEntityId = reader.GetInt64("itemEntityId");
-
-							// TODO: Check if quests exist?
-							//  (Creating it will throw otherwise.)
-
-							var quest = new Quest(id, uniqueId, state);
-
-							if (quest.State == QuestState.InProgress)
+							try
 							{
-								// Don't add quest if quest item is missing
-								quest.QuestItem = character.Inventory.GetItem(itemEntityId);
-								if (quest.QuestItem == null)
+								var uniqueId = reader.GetInt64("questIdUnique");
+								var id = reader.GetInt32("questId");
+								var state = (QuestState) reader.GetInt32("state");
+								var itemEntityId = reader.GetInt64("itemEntityId");
+
+								var quest = new Quest(id, uniqueId, state);
+
+								if (quest.State == QuestState.InProgress)
 								{
-									Log.Error("Db.GetCharacterQuests: Unable to find quest item for '{0}'.", quest.Id);
-									continue;
+									// Don't add quest if quest item is missing
+									quest.QuestItem = character.Inventory.GetItem(itemEntityId);
+									if (quest.QuestItem == null)
+									{
+										Log.Error("Db.GetCharacterQuests: Unable to find quest item for '{0}'.", quest.Id);
+										continue;
+									}
+
+									quest.QuestItem.QuestId = quest.UniqueId;
 								}
 
-								quest.QuestItem.QuestId = quest.UniqueId;
+								character.Quests.Add(quest);
 							}
-
-							character.Quests.Add(quest);
+							catch (Exception ex)
+							{
+								Log.Warning(ex.Message);
+							}
 						}
 					}
 				}
