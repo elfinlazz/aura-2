@@ -26,9 +26,11 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public Receive ReceiveMethod { get; protected set; }
 		public bool Cancelable { get; protected set; }
+		
 		public TimeSpan TimeLimit { get; protected set; }
 		public int Soundset { get; protected set; }
 		public bool EssentialIcon { get; protected set; }
+		public bool MustComplete { get; protected set; }
 
 		public List<QuestPrerequisite> Prerequisites { get; protected set; }
 		public OrderedDictionary<string, QuestObjective> Objectives { get; protected set; }
@@ -46,6 +48,8 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Rewards = new List<QuestReward>();
 
 			this.MetaData = new MabiDictionary();
+
+			this.TimeLimit = TimeSpan.Zero;
 		}
 
 		public override bool Init()
@@ -138,6 +142,11 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void SetEssentialIcon(bool icon)
 		{
 			this.EssentialIcon = icon;
+		}
+
+		protected void SetMustComplete(bool must)
+		{
+			this.MustComplete = must;
 		}
 
 		/// <summary>
