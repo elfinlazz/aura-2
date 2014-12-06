@@ -8,21 +8,24 @@
 // simply talking to Trefor again.
 //---------------------------------------------------------------------------
 
-public class BeginnerUladh2QuestScript : QuestScript
+public class RescueResidentQuestScript : QuestScript
 {
 	public override void Load()
 	{
-		SetId(1000002);
+		SetId(202002);
+		SetMustComplete(true);
+		SetEssentialIcon(true);
+		SetSoundset(4);
 		SetName("Rescue Resident");
 		SetDescription("I'm Trefor, serving as a guard in the north part of the town, past the Healer's House. One of the residents of this town went to Alby Dungeon and has not come back yet. I'm worried about it, so I need you to help me search for the lost resident. - Trefor -");
 		
 		SetReceive(Receive.Automatically);
-		AddPrerequisite(Completed(1000001));
+		AddPrerequisite(Completed(202001));
 
 		AddObjective("talk_trefor", "Talk with Trefor", 1, 8692, 52637, Talk("trefor"));
-		AddObjective("kill_foxes", "Hunt 5 Young Brown Foxes", 1, 9124, 52108, Kill(5, "/brownfox/"));
+		AddObjective("kill_foxes", "Hunt 5 Young Brown Foxes", 1, 9100, 52000, Kill(5, "/brownfox/"));
 		AddObjective("talk_trefor2", "Talk with Trefor", 1, 8692, 52637, Talk("trefor"));
-		AddObjective("clear_alby", "Rescue a town resident from Alby Dungeon", 13, 3203, 3199, Talk("trefor"));
+		AddObjective("clear_alby", "Rescue a town resident from Alby Dungeon", 13, 3200, 3200, Talk("trefor"));
 		
 		AddRewards(Exp(300), Gold(1800), AP(3));
 		

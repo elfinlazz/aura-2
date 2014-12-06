@@ -16,7 +16,7 @@ public class BeginnerUladhSchool1QuestScript : QuestScript
 		SetDescription("This is Ranald, a battle instructor at School. Battling is the most basic, fundamental aspect of an adventure. Even the ones that don't believe in fighting should at least learn to defend themselves. Please stop by the School when you can. - Ranald -");
 		
 		SetReceive(Receive.Automatically);
-		AddPrerequisite(Completed(1000002)); // Rescue Resident
+		AddPrerequisite(Completed(202002)); // Rescue Resident
 
 		AddObjective("talk_ranald", "Talk with Ranald at Tir Chonaill School", 1, 4651, 32166, Talk("ranald"));
 		

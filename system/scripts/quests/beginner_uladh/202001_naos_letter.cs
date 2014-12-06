@@ -5,11 +5,14 @@
 // to Nao for the first time.
 //---------------------------------------------------------------------------
 
-public class BeginnerUladh1QuestScript : QuestScript
+public class NaosLetterQuestScript : QuestScript
 {
 	public override void Load()
 	{
-		SetId(1000001);
+		SetId(202001);
+		SetMustComplete(true);
+		SetEssentialIcon(true);
+		SetSoundset(3);
 		SetName("Nao's Letter of Introduction");
 		SetDescription("Dear [Chief Duncan],\r\nI am directing someone to you. This person is from another world. Please help them adjust to life in Erinn. Thank you, and I hope I will be able to visit you soon. - Nao Pryderi -");
 		

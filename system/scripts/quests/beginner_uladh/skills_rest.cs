@@ -13,7 +13,7 @@ public class BeginnerUladhRestQuestScript : QuestScript
 		SetDescription("This is Nora, working for the Inn. Welcome to Tir Chonaill. All Travelers seem to sleep outdoors. They just show up and vanish. How can we make money at this rate!? Teee Heee... Well, it's no secret.... I'll let you know the Resting Skill. - Nora -");
 		
 		SetReceive(Receive.Automatically);
-		AddPrerequisite(Completed(1000002));
+		AddPrerequisite(Completed(202002));
 		AddPrerequisite(NotSkill(SkillId.Rest));
 
 		AddObjective("get_rest_rf", "Acquire Resting Skill Rank F", 1, 15933, 33363, ReachRank(SkillId.Rest, SkillRank.RF));
