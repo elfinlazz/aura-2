@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -399,7 +400,7 @@ namespace Aura.Channel.Scripting
 				}
 				catch (UnauthorizedAccessException)
 				{
-					Log.Debug("Unable to delete '{0}'", outPath);
+					Log.Warning("Unable to delete '{0}'", outPath);
 				}
 
 				var lines = File.ReadAllLines(path);
@@ -432,6 +433,36 @@ namespace Aura.Channel.Scripting
 			return null;
 		}
 
+		private static IEnumerable<Type> GetJITtedTypes(Assembly asm, string filePath)
+		{
+			Type[] types;
+			try
+			{
+				types = asm.GetTypes();
+				foreach (var method in types.SelectMany(t => t.GetMethods(BindingFlags.DeclaredOnly |
+					BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)).Where(m => !m.IsAbstract))
+				{
+					RuntimeHelpers.PrepareMethod(method.MethodHandle);
+				}
+			}
+			catch (Exception)
+			{
+				// Happens if classes in source or other scripts change,
+				// i.e. a class name changes, or a parent class. Only
+				// fixable by recaching, so they can "sync" again.
+
+				Log.Error("GetJITtedTypes: Loading of one or multiple types in '{0}' failed, classes in this file won't be loaded. " +
+				"Restart your server to recompile the offending scripts. Delete your cache folder if this error persists.", filePath);
+
+				// Mark for recomp
+				new FileInfo(filePath).LastWriteTime = DateTime.Now;
+
+				return Enumerable.Empty<Type>();
+			}
+
+			return types;
+		}
+
 		/// <summary>
 		/// Loads script classes inside assembly.
 		/// </summary>
@@ -440,23 +471,7 @@ namespace Aura.Channel.Scripting
 		/// <returns></returns>
 		private void LoadScriptAssembly(Assembly asm, string filePath)
 		{
-			Type[] types = null;
-			try
-			{
-				types = asm.GetTypes();
-			}
-			catch (ReflectionTypeLoadException)
-			{
-				// Happens if classes in source or other scripts change,
-				// i.e. a class name changes, or a parent class. Only
-				// fixable by recaching, so they can "sync" again.
-
-				Log.Error("LoadScriptAssembly: Loading of one or multiple types in '{0}' failed, classes in this file won't be loaded. Delete your cache folder if this error persists.", filePath);
-				return;
-			}
-
-			if (types == null)
-				return;
+			var types = GetJITtedTypes(asm, filePath);
 
 			foreach (var type in types.Where(a => a.GetInterfaces().Contains(typeof(IScript)) && !a.IsAbstract && !a.Name.StartsWith("_")))
 			{
@@ -512,8 +527,11 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		private void InitializeScripts()
 		{
-			foreach (var type in _scripts.Values)
+			foreach (var kvp in _scripts)
 			{
+				var type = kvp.Value;
+				var path = kvp.Key;
+
 				try
 				{
 					// Initiate script
@@ -521,6 +539,7 @@ namespace Aura.Channel.Scripting
 					if (!script.Init())
 					{
 						Log.Debug("LoadScriptAssembly: Failed to initiate '{0}'.", type.Name);
+
 						continue;
 					}
 

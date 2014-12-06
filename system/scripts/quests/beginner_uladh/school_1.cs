@@ -20,10 +20,7 @@ public class BeginnerUladhSchool1QuestScript : QuestScript
 
 		AddObjective("talk_ranald", "Talk with Ranald at Tir Chonaill School", 1, 4651, 32166, Talk("ranald"));
 		
-		AddReward(Exp(600));
-		AddReward(Item(1612)); // Defense Guidebook
-		AddReward(Skill(SkillId.Defense, SkillRank.RF));
-		// +2 Life
+		AddRewards(Exp(600), Item(1612), Skill(SkillId.Defense, SkillRank.RF)); // Defense Guidebook
 		
 		AddHook("_ranald", "after_intro", TalkRanald);
 		AddHook("_ranald", "before_keywords", RanaldKeywords);
