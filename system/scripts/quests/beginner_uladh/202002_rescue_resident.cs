@@ -24,7 +24,9 @@ public class RescueResidentQuestScript : QuestScript
 		AddObjective("talk_trefor2", "Talk with Trefor", 1, 8692, 52637, Talk("trefor"));
 		AddObjective("clear_alby", "Rescue a town resident from Alby Dungeon", 13, 3200, 3200, Talk("trefor"));
 		
-		AddRewards(Exp(300), Gold(1800), AP(3));
+		AddReward(Exp(300));
+		AddReward(Gold(1800));
+		AddReward(AP(3));
 		
 		AddHook("_trefor", "after_intro", TalkTrefor);
 	}

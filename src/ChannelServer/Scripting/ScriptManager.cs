@@ -532,11 +532,8 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		private void InitializeScripts()
 		{
-			foreach (var kvp in _scripts)
+			foreach (var type in _scripts.Values)
 			{
-				var type = kvp.Value;
-				var path = kvp.Key;
-
 				try
 				{
 					// Initiate script
@@ -544,7 +541,6 @@ namespace Aura.Channel.Scripting
 					if (!script.Init())
 					{
 						Log.Debug("LoadScriptAssembly: Failed to initiate '{0}'.", type.Name);
-
 						continue;
 					}
 

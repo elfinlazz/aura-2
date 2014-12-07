@@ -183,9 +183,9 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Objectives.Add(ident, objective);
 		}
 
-		protected void AddRewards(params QuestReward[] rewards)
+		protected void AddReward(QuestReward reward)
 		{
-			this.Rewards.AddRange(rewards);
+			this.Rewards.Add(reward);
 		}
 
 		// Prerequisite Factory
