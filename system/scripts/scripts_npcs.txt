@@ -30,6 +30,7 @@ npcs/tir/deian.cs
 npcs/dunbarton/aeira.cs
 npcs/dunbarton/aranwen.cs
 npcs/dunbarton/austeyn.cs
+npcs/dunbarton/eavan.cs
 npcs/dunbarton/nerys.cs
 npcs/dunbarton/simon.cs
 
