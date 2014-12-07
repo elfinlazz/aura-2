@@ -37,6 +37,20 @@ namespace Aura.Channel.Network.Sending
 			SystemMessage(creature, "<SERVER>", format, args);
 		}
 
+		public static void System_Broadcast(string from, string format, params object[] args)
+		{
+			var packet = new Packet(Op.Chat, MabiId.Broadcast);
+			packet.PutByte(0);
+			packet.PutString("<{0}>", from);
+			packet.PutString(format, args);
+			packet.PutByte(true);
+			packet.PutUInt(0xFFFF8080);
+			packet.PutInt(0);
+			packet.PutByte(0);
+
+			ChannelServer.Instance.World.Broadcast(packet);
+		}
+
 		/// <summary>
 		/// Sends combat message (special Chat) to creature's client.
 		/// </summary>

@@ -62,6 +62,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "condition", "[a] [b] [c] [d] [e]", HandleCondition);
 			Add(50, 50, "effect", "<id> [(b|i|s:parameter)|me]", HandleEffect);
 			Add(50, 50, "prop", "<id>", HandleProp);
+			Add(50, 50, "msg", "<message>", HandleMsg);
 			Add(50, 50, "broadcast", "<message>", HandleBroadcast);
 			Add(50, 50, "allskills", "", HandleAllSkills);
 			Add(50, 50, "alltitles", "", HandleAllTitles);
@@ -78,6 +79,7 @@ namespace Aura.Channel.Util
 			AddAlias("iteminfo", "ii");
 			AddAlias("skillinfo", "si");
 			AddAlias("raceinfo", "ri");
+			AddAlias("msg", "m");
 			AddAlias("broadcast", "bc");
 		}
 
@@ -1116,6 +1118,16 @@ namespace Aura.Channel.Util
 			var notice = sender.Name + ": " + message.Substring(message.IndexOf(" "));
 
 			Send.Internal_Broadcast(notice);
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleMsg(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (args.Count < 2)
+				return CommandResult.InvalidArgument;
+
+			Send.System_Broadcast(target.Name, message.Substring(message.IndexOf(" ")));
 
 			return CommandResult.Okay;
 		}
