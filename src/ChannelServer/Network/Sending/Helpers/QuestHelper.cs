@@ -92,7 +92,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				var progress = quest.GetProgress(objectiveData.Key);
 
 				// Objective
-				packet.PutByte(objective.__TypeCode);
+				packet.PutByte((byte)objective.Type);
 				packet.PutString(objective.Description);
 				packet.PutString(objective.MetaData.ToString());
 

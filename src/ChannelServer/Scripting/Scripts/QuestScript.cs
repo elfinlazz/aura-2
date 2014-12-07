@@ -160,13 +160,13 @@ namespace Aura.Channel.Scripting.Scripts
 			objective.X = x;
 			objective.Y = y;
 
-			if (objective is QuestObjectiveKill)
+			if (objective.Type == ObjectiveType.Kill)
 			{
 				ChannelServer.Instance.Events.CreatureKilledByPlayer -= this.OnCreatureKilledByPlayer;
 				ChannelServer.Instance.Events.CreatureKilledByPlayer += this.OnCreatureKilledByPlayer;
 			}
 
-			if (objective is QuestObjectiveCollect)
+			if (objective.Type == ObjectiveType.Collect)
 			{
 				ChannelServer.Instance.Events.PlayerReceivesItem -= this.OnPlayerReceivesOrRemovesItem;
 				ChannelServer.Instance.Events.PlayerReceivesItem += this.OnPlayerReceivesOrRemovesItem;
@@ -174,7 +174,7 @@ namespace Aura.Channel.Scripting.Scripts
 				ChannelServer.Instance.Events.PlayerRemovesItem += this.OnPlayerReceivesOrRemovesItem;
 			}
 
-			if (objective is QuestObjectiveReachRank)
+			if (objective.Type == ObjectiveType.ReachRank)
 			{
 				ChannelServer.Instance.Events.SkillRankChanged -= this.OnSkillRankChanged;
 				ChannelServer.Instance.Events.SkillRankChanged += this.OnSkillRankChanged;
@@ -257,7 +257,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (progress == null) return;
 
 			var objective = this.Objectives[progress.Ident] as QuestObjectiveKill;
-			if (objective == null || !objective.Check(creature)) return;
+			if (objective == null || objective.Type != ObjectiveType.Kill || !objective.Check(creature)) return;
 
 			if (progress.Count >= objective.Amount) return;
 
@@ -286,7 +286,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (progress == null) return;
 
 			var objective = this.Objectives[progress.Ident] as QuestObjectiveCollect;
-			if (objective == null || itemId != objective.ItemId) return;
+			if (objective == null || objective.Type != ObjectiveType.Collect || itemId != objective.ItemId) return;
 
 			if (progress.Count >= objective.Amount) return;
 
@@ -316,7 +316,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (progress == null) return;
 
 			var objective = this.Objectives[progress.Ident] as QuestObjectiveReachRank;
-			if (objective == null) return;
+			if (objective == null || objective.Type != ObjectiveType.ReachRank) return;
 
 			if (skill.Info.Id != objective.Id || skill.Info.Rank < objective.Rank) return;
 
