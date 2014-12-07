@@ -383,6 +383,36 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Msg(new DialogBgm(fileName));
 		}
 
+		protected void SetFavor(int favor)
+		{
+			this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] = favor;
+		}
+
+		protected void SetStress(int stress)
+		{
+			this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = stress;
+		}
+
+		protected void SetMemory(int mem)
+		{
+			this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = mem;
+		}
+
+		protected int GetFavor()
+		{
+			return this.Player.Vars.Perm["npc_favor_" + this.NPC.Name];
+		}
+
+		protected int GetStress()
+		{
+			return this.Player.Vars.Perm["npc_stress_" + this.NPC.Name];
+		}
+
+		protected int GetMemory()
+		{
+			return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name];
+		}
+
 		/// <summary>
 		/// Opens shop for player.
 		/// </summary>
