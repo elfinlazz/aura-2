@@ -879,6 +879,22 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public DialogFaceExpression Expression(string expression) { return new DialogFaceExpression(expression); }
 
+		public DialogFaceExpression FavorExpression()
+		{
+			var favor = GetFavor();
+
+			if (favor > 40)
+				return Expression("love");
+			if (favor > 15)
+				return Expression("good");
+			if (favor > -15)
+				return Expression("normal");
+			if (favor > -40)
+				return Expression("bad");
+
+			return Expression("hate");
+		}
+
 		public DialogMovie Movie(string file, int width, int height, bool loop = true) { return new DialogMovie(file, width, height, loop); }
 
 		public DialogText Text(string format, params object[] args) { return new DialogText(format, args); }
