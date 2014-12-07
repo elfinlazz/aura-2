@@ -87,14 +87,13 @@ namespace Aura.Channel.Network.Sending
 		/// Sends Chat in range of creature.
 		/// </summary>
 		/// <param name="creature">Source, in terms of name and position</param>
-		/// <param name="format"></param>
-		/// <param name="args"></param>
-		public static void Chat(Creature creature, string format, params object[] args)
+		/// <param name="message"></param>
+		public static void Chat(Creature creature, string message)
 		{
 			var packet = new Packet(Op.Chat, creature.EntityId);
 			packet.PutByte(0); // speech (0) vs thought (1) bubble
 			packet.PutString(creature.Name);
-			packet.PutString(format, args);
+			packet.PutString(message);
 
 			// The following part is not required for normal chat
 
