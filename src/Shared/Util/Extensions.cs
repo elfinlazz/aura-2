@@ -2,6 +2,7 @@
 // For more information, see licence.txt in the main folder
 
 using System;
+using System.Collections.Generic;
 
 namespace Aura.Shared.Util
 {
@@ -51,6 +52,17 @@ namespace Aura.Shared.Util
 			}
 
 			return result[sLen, cLen];
+		}
+
+		/// <summary>
+		/// Returns a random item from the given IList
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list">The list.</param>
+		/// <returns></returns>
+		public static T Random<T>(this IList<T> list)
+		{
+			return list[RandomProvider.Get().Next(list.Count)];
 		}
 	}
 }

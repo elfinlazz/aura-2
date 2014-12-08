@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -25,11 +26,14 @@ namespace Aura.Channel.Scripting.Scripts
 		private SemaphoreSlim _resumeSignal;
 		private CancellationTokenSource _cancellation;
 
+		private SortedList<int, string> _memoryGreetings = new SortedList<int, string>();
+
 		public ConversationState ConversationState { get; private set; }
 
 		public NPC NPC { get; set; }
 
 		private Creature _player;
+
 		public Creature Player
 		{
 			get
@@ -127,12 +131,167 @@ namespace Aura.Channel.Scripting.Scripts
 			_cancellation.Cancel();
 		}
 
+		protected virtual void Greet()
+		{
+			// TODO: if (DoingPtj()) ...
+
+			var mem = this.GetMemory();
+			var stress = this.GetStress();
+
+			var msg = "[ERROR - NO GREETINGS DEFINED]";
+
+			foreach (var k in _memoryGreetings)
+			{
+				msg = k.Value;
+				if (k.Key <= mem)
+					break;
+			}
+
+			if (mem <= 0)
+				this.SetMemory(1);
+			else if (mem == 2)
+			{
+				if (stress == 0)
+				{
+					this.ModifyMemory(1);
+					this.ModifyStress(5);
+				}
+			}
+			else if (mem <= 6)
+			{
+				if (stress == 0)
+				{
+					this.ModifyMemory(1);
+					this.ModifyStress(5);
+				}
+			}
+			else
+			{
+				if (stress == 0)
+				{
+					this.ModifyMemory(1);
+					this.ModifyStress(10);
+				}
+			}
+
+			this.Msg(Hide.None, msg, FavorExpression());
+		}
+
+		public virtual NpcMood GetMood()
+		{
+			var stress = this.GetStress();
+			var favor = this.GetFavor();
+
+			if (stress > 12)
+				return NpcMood.VeryStressed;
+			if (stress > 8)
+				return NpcMood.Stressed;
+			if (favor > 40)
+				return NpcMood.Love;
+			if (favor > 30)
+				return NpcMood.ReallyLikes;
+			if (favor > 10)
+				return NpcMood.Likes;
+			if (favor < -22)
+				return NpcMood.Hates;
+			if (favor < -12)
+				return NpcMood.ReallyDislikes;
+			if (favor < -5)
+				return NpcMood.Dislikes;
+
+			var mem = this.GetMemory();
+
+			if (mem > 15)
+				return NpcMood.BestFriends;
+			if (mem > 5)
+				return NpcMood.Friends;
+
+			return NpcMood.Neutral;
+
+		}
+
+		protected static readonly string[] _neutralMessages =
+		{
+			"is looking at me.",
+			"is looking in my direction.",
+			"is waiting for me to says something.",
+			"is paying attention to me."
+		};
+
+		protected static readonly string[] _hateMessages =
+		{
+			"is looking at me like they don't want to see me.",
+			"obviously hates me."
+		};
+
+		public string GetMoodString()
+		{
+			return this.GetMoodString(this.GetMood());
+		}
+
+		public virtual string GetMoodString(NpcMood mood)
+		{
+			string moodStr;
+
+			switch (mood)
+			{
+				case NpcMood.VeryStressed:
+					moodStr = "seems to have something else to do.";
+					break;
+
+				case NpcMood.Stressed:
+					moodStr = "is giving me a look that it may be better to stop this conversation.";
+					break;
+
+				case NpcMood.BestFriends:
+					moodStr = "is smiling at me as if we've known each other for years.";
+					break;
+
+				case NpcMood.Friends:
+					moodStr = "is giving me a welcome look.";
+					break;
+
+				case NpcMood.Hates:
+					moodStr = _hateMessages.Random();
+					break;
+
+				case NpcMood.ReallyDislikes:
+					moodStr = "is looking at me with obvious disgust.";
+					break;
+
+				case NpcMood.Dislikes:
+					moodStr = "looks like it's a bit unpleasent that I'm here.";
+					break;
+
+				case NpcMood.Likes:
+					moodStr = "is giving me a friendly smile.";
+					break;
+
+				case NpcMood.ReallyLikes:
+					moodStr = "is really giving me a friendly vibe.";
+					break;
+
+				case NpcMood.Love:
+					moodStr = "is looking at me with great interest.";
+					break;
+
+				default:
+					moodStr = _neutralMessages.Random();
+					break;
+			}
+
+			return string.Format(Localization.Get("( <npcname/> {0} )"), moodStr);
+		}
+
 		/// <summary>
 		/// Conversation (keywords) loop with initial mood message.
 		/// </summary>
 		/// <returns></returns>
 		public virtual async Task StartConversation()
 		{
+			this.Msg(Hide.Name, GetMoodString());
+			await Conversation();
+
 			switch (this.Random(2))
 			{
 				case 0: this.Msg(Hide.Name, "(<npcname/> is looking in my direction.)"); break;
@@ -149,7 +308,6 @@ namespace Aura.Channel.Scripting.Scripts
 			// (<npcname/> is looking at me with great interest.)
 			// (<npcname/> is really giving me a friendly vibe.) 
 
-			await Conversation();
 		}
 
 		/// <summary>
@@ -158,8 +316,16 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public virtual async Task Conversation()
 		{
+			var mood = GetMood();
+
 			while (true)
 			{
+				if (mood != GetMood())
+				{
+					mood = GetMood();
+					Msg(Hide.Name, GetMoodString(mood));
+				}
+
 				this.ShowKeywords();
 				var keyword = await Select();
 
@@ -170,9 +336,6 @@ namespace Aura.Channel.Scripting.Scripts
 				// (I think I left a good impression.)
 				// (The conversation drew a lot of interest.)
 				// (That was a great conversation!)
-
-				// mood message if mood changed? ...
-				// update intimicy, based on mood? ...
 			}
 		}
 
@@ -411,6 +574,21 @@ namespace Aura.Channel.Scripting.Scripts
 		protected int GetMemory()
 		{
 			return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name];
+		}
+
+		protected void ModifyFavor(int delta)
+		{
+			SetFavor(GetFavor() + delta);
+		}
+
+		protected void ModifyStress(int delta)
+		{
+			SetStress(GetStress() + delta);
+		}
+
+		protected void ModifyMemory(int delta)
+		{
+			SetMemory(GetMemory() + delta);
 		}
 
 		/// <summary>
@@ -881,7 +1059,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public DialogFaceExpression FavorExpression()
 		{
-			var favor = GetFavor();
+			var favor = this.GetFavor();
 
 			if (favor > 40)
 				return Expression("love");
@@ -909,6 +1087,21 @@ namespace Aura.Channel.Scripting.Scripts
 	public enum Hide { None, Face, Name, Both }
 	public enum ConversationState { Ongoing, Select, Ended }
 	public enum HookResult { Continue, Break, End }
+
+	public enum NpcMood
+	{
+		VeryStressed,
+		Stressed,
+		BestFriends,
+		Friends,
+		Hates,
+		ReallyDislikes,
+		Dislikes,
+		Neutral,
+		Likes,
+		ReallyLikes,
+		Love,
+	}
 
 #if __MonoCS__
 	// Added in Mono 3.0.8, adding it here for convenience.
