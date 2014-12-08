@@ -26,7 +26,7 @@ namespace Aura.Channel.Scripting.Scripts
 		private SemaphoreSlim _resumeSignal;
 		private CancellationTokenSource _cancellation;
 
-		private SortedList<int, string> _memoryGreetings = new SortedList<int, string>();
+		private static SortedList<int, string> _greetings = new SortedList<int, string>();
 
 		public ConversationState ConversationState { get; private set; }
 
@@ -143,15 +143,19 @@ namespace Aura.Channel.Scripting.Scripts
 
 			var msg = "[ERROR - NO GREETINGS DEFINED]";
 
-			foreach (var k in _memoryGreetings)
+			// Take the highest greeting without going over their memorability
+			foreach (var k in _greetings.TakeWhile(k => k.Key <= mem))
 			{
 				msg = k.Value;
-				if (k.Key <= mem)
-					break;
 			}
 
 			if (mem <= 0)
 				this.SetMemory(1);
+			else if (mem == 1)
+			{
+				// Do nothing. Keeps players from raising their familiarity
+				// just by talking.
+			}
 			else if (mem == 2)
 			{
 				if (stress == 0)
@@ -538,6 +542,16 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		/// <summary>
+		/// Adds a greeting to the NPC.
+		/// </summary>
+		/// <param name="memorability">The memorability.</param>
+		/// <param name="greeting">The greeting.</param>
+		protected void AddGreeting(int memorability, string greeting)
+		{
+			_greetings.Add(memorability, greeting);
+		}
+
+		/// <summary>
 		/// Sends Msg with Bgm element.
 		/// </summary>
 		/// <param name="creature"></param>
@@ -580,7 +594,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected int GetFavor()
 		{
-			return this.Player.Vars.Perm["npc_favor_" + this.NPC.Name];
+			return this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] ?? 0;
 		}
 
 		/// <summary>
@@ -589,7 +603,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected int GetStress()
 		{
-			return this.Player.Vars.Perm["npc_stress_" + this.NPC.Name];
+			return this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] ?? 0;
 		}
 
 		/// <summary>
@@ -598,7 +612,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected int GetMemory()
 		{
-			return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name];
+			return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0;
 		}
 
 		/// <summary>

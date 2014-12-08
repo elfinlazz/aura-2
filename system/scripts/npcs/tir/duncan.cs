@@ -20,6 +20,12 @@ public class DuncanBaseScript : NpcScript
 		EquipItem(Pocket.Armor, 15004, 0x5E3E48, 0xD4975C, 0x3D3645);
 		EquipItem(Pocket.Shoe, 17021, 0xCBBBAD);
 
+		AddGreeting(0, "Welcome to Tir Chonaill.");
+		AddGreeting(1, "What did you say your name was again...?<br/>Anyway, welcome.");
+		AddGreeting(2, "So you've finally made it here, <username/>");
+		AddGreeting(6, "I was just thinking... <username/> should be visiting right about now.");
+		AddGreeting(7, "Hoho, I will definitely remember your face, <username/>!");
+
 		AddPhrase("Ah, that bird in the tree is still sleeping.");
 		AddPhrase("Ah, who knows how many days are left in these old bones?");
 		AddPhrase("Everything appears to be fine, but something feels off.");
@@ -41,12 +47,13 @@ public class DuncanBaseScript : NpcScript
 			"As he speaks, his voice resonates with a kind of gentle authority."
 		);
 		
+
 		Msg("Please let me know if you need anything.", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrive Lost Items", "@lostandfound"));
 		
 		switch(await Select())
 		{
 			case "@talk":
-				Msg("What did you say your name was?<br/>Anyway, welcome.");
+				Greet();
 				await StartConversation();
 				return;
 				
