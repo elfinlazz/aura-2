@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using System.Collections.Generic;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
+using Boo.Lang;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -69,11 +71,16 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Adds empty tab.
 		/// </summary>
 		/// <param name="tabTitle"></param>
+		/// <param name="shouldDisplay">
+		/// A function called whenever a creature opens the shop.
+		/// Determines if the tab should be displayed.
+		/// Defaults to a tautology if null.
+		///</param>
 		/// <returns></returns>
-		public NpcShopTab Add(string tabTitle)
+		public NpcShopTab Add(string tabTitle, Func<Creature, bool> shouldDisplay = null)
 		{
 			NpcShopTab tab;
-			_tabs.Add(tabTitle, (tab = new NpcShopTab(tabTitle, _tabs.Count)));
+			_tabs.Add(tabTitle, (tab = new NpcShopTab(tabTitle, _tabs.Count, shouldDisplay)));
 			return tab;
 		}
 
@@ -217,11 +224,23 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public int Order { get; protected set; }
 
-		public NpcShopTab(string title, int order)
+		/// <summary>
+		/// A function called whenever a creature opens the shop.
+		/// Determines if the tab should be displayed.
+		/// Defaults to a tautology if null.
+		/// </summary>
+		/// <value>
+		/// The should display.
+		/// </value>
+		public Func<Creature, bool> ShouldDisplay { get; protected set; }
+
+		public NpcShopTab(string title, int order, Func<Creature, bool> display)
 		{
 			_items = new Dictionary<long, Item>();
 			this.Title = title;
 			this.Order = order;
+
+			this.ShouldDisplay = display ?? (c => true);
 		}
 
 		/// <summary>
