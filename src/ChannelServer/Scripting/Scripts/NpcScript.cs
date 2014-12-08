@@ -289,25 +289,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public virtual async Task StartConversation()
 		{
-			this.Msg(Hide.Name, GetMoodString());
+			this.Msg(Hide.Name, GetMoodString(), FavorExpression());
+
 			await Conversation();
-
-			switch (this.Random(2))
-			{
-				case 0: this.Msg(Hide.Name, "(<npcname/> is looking in my direction.)"); break;
-				case 1: this.Msg(Hide.Name, "(<npcname/> is waiting for me to say something.)"); break;
-				//case 2: this.Msg(Hide.Name, "(<npcname/> is giving me a look that it may be better to stop this conversation.)"); break;
-			}
-
-			// (<npcname/> is looking in my direction)
-			// (<npcname/> is waiting for me to say something)
-			// (<npcname/> is giving me a look that it may be better to stop this conversation.)
-			// (<npcname/> is smiling at me as if we've known each other for years.)
-			// (<npcname/> is giving me a friendly smile.)
-			// (<npcname/> is giving me a welcome look.)
-			// (<npcname/> is looking at me with great interest.)
-			// (<npcname/> is really giving me a friendly vibe.) 
-
 		}
 
 		/// <summary>
@@ -323,7 +307,7 @@ namespace Aura.Channel.Scripting.Scripts
 				if (mood != GetMood())
 				{
 					mood = GetMood();
-					Msg(Hide.Name, GetMoodString(mood));
+					Msg(Hide.Name, GetMoodString(mood), FavorExpression());
 				}
 
 				this.ShowKeywords();
@@ -333,9 +317,10 @@ namespace Aura.Channel.Scripting.Scripts
 
 				await this.Keywords(keyword);
 
-				// (I think I left a good impression.)
-				// (The conversation drew a lot of interest.)
-				// (That was a great conversation!)
+				// TODO: Npc reaction method goes here
+				RndMsg("(I think I left a good impression.)",
+					"(The conversation drew a lot of interest.)",
+					"(That was a great conversation!)");
 			}
 		}
 
