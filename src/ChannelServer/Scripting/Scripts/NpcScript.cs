@@ -69,7 +69,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			this.NPC = new NPC();
 			_resumeSignal = new SemaphoreSlim(0);
-			_cancellation = new CancellationTokenSource();		
+			_cancellation = new CancellationTokenSource();
 		}
 
 		public override bool Init()
@@ -137,7 +137,7 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 			catch (OperationCanceledException)
 			{
-				
+
 			}
 			this.ConversationState = ConversationState.Ended;
 		}
@@ -167,8 +167,8 @@ namespace Aura.Channel.Scripting.Scripts
 			if (gift.Info.Id == 51046) // Likeability pot
 			{
 				score = 10;
-				this.ModifyFavor(10);
-				this.ModifyMemory(4); // Gotta remember who gave you roofies!!
+				this.Favor += 10;
+				this.Memorability += 4; // Gotta remember who gave you roofies!!
 			}
 			else
 			{
@@ -176,14 +176,14 @@ namespace Aura.Channel.Scripting.Scripts
 
 				if (gift.Data.StackType == Data.Database.StackType.Stackable)
 				{
-					delta *= gift.Amount*gift.Data.StackMax/(Random(2) + 5);
+					delta *= gift.Amount * gift.Data.StackMax / (Random(2) + 5);
 				}
 				else
 				{
 					delta /= (Random(2) + 2);
 				}
 
-				this.ModifyFavor(delta);
+				this.Favor += delta;
 			}
 
 			if (score > 6)
@@ -229,8 +229,8 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			// TODO: if (DoingPtj()) ...
 
-			var mem = this.GetMemory();
-			var stress = this.GetStress();
+			var mem = this.Memorability;
+			var stress = this.Stress;
 
 			var msg = "[ERROR - NO GREETINGS DEFINED]";
 
@@ -241,7 +241,7 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 
 			if (mem <= 0)
-				this.SetMemory(1);
+				this.Memorability = 1;
 			else if (mem == 1)
 			{
 				// Do nothing. Keeps players from raising their familiarity
@@ -251,24 +251,24 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				if (stress == 0)
 				{
-					this.ModifyMemory(1);
-					this.ModifyStress(5);
+					this.Memorability += 1;
+					this.Stress += 5;
 				}
 			}
 			else if (mem <= 6)
 			{
 				if (stress == 0)
 				{
-					this.ModifyMemory(1);
-					this.ModifyStress(5);
+					this.Memorability += 1;
+					this.Stress += 5;
 				}
 			}
 			else
 			{
 				if (stress == 0)
 				{
-					this.ModifyMemory(1);
-					this.ModifyStress(10);
+					this.Memorability += 1;
+					this.Stress += 10;
 				}
 			}
 
@@ -281,8 +281,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public virtual NpcMood GetMood()
 		{
-			var stress = this.GetStress();
-			var favor = this.GetFavor();
+			var stress = this.Stress;
+			var favor = this.Favor;
 
 			if (stress > 12)
 				return NpcMood.VeryStressed;
@@ -301,7 +301,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (favor < -5)
 				return NpcMood.Dislikes;
 
-			var mem = this.GetMemory();
+			var mem = this.Memorability;
 
 			if (mem > 15)
 				return NpcMood.BestFriends;
@@ -682,84 +682,39 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Sets the favor.
+		/// Gets or sets the favor.
 		/// </summary>
-		/// <param name="favor">The favor.</param>
-		protected void SetFavor(int favor)
+		/// <value>
+		/// The favor.
+		/// </value>
+		public int Favor
 		{
-			this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] = favor;
+			get { return this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] ?? 0; }
+			set { this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] = value; }
 		}
 
 		/// <summary>
-		/// Sets the stress.
+		/// Gets or sets the stress.
 		/// </summary>
-		/// <param name="stress">The stress.</param>
-		protected void SetStress(int stress)
+		/// <value>
+		/// The stress.
+		/// </value>
+		public int Stress
 		{
-			this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = stress;
+			get { return this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] ?? 0; }
+			set { this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = value; }
 		}
 
 		/// <summary>
-		/// Sets the memory.
+		/// Gets or sets the memorability.
 		/// </summary>
-		/// <param name="mem">The memory.</param>
-		protected void SetMemory(int mem)
+		/// <value>
+		/// The memorability.
+		/// </value>
+		public int Memorability
 		{
-			this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = mem;
-		}
-
-		/// <summary>
-		/// Gets the favor.
-		/// </summary>
-		/// <returns></returns>
-		protected int GetFavor()
-		{
-			return this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] ?? 0;
-		}
-
-		/// <summary>
-		/// Gets the stress.
-		/// </summary>
-		/// <returns></returns>
-		protected int GetStress()
-		{
-			return this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] ?? 0;
-		}
-
-		/// <summary>
-		/// Gets the memory.
-		/// </summary>
-		/// <returns></returns>
-		protected int GetMemory()
-		{
-			return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0;
-		}
-
-		/// <summary>
-		/// Modifies the favor.
-		/// </summary>
-		/// <param name="delta">The delta.</param>
-		protected void ModifyFavor(int delta)
-		{
-			SetFavor(GetFavor() + delta);
-		}
-
-		/// <summary>
-		/// Modifies the stress.
-		/// </summary>
-		/// <param name="delta">The delta.</param>
-		protected void ModifyStress(int delta)
-		{
-			SetStress(GetStress() + delta);
-		}
-
-		/// <summary>
-		/// Modifies the memory.
-		/// </summary>
-		/// <param name="delta">The delta.</param>
-		protected void ModifyMemory(int delta)
-		{
-			SetMemory(GetMemory() + delta);
+			get { return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0; }
+			set { this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = value; }
 		}
 
 		/// <summary>
@@ -1230,7 +1185,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public DialogFaceExpression FavorExpression()
 		{
-			var favor = this.GetFavor();
+			var favor = this.Favor;
 
 			if (favor > 40)
 				return Expression("love");
@@ -1253,7 +1208,7 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		protected enum ItemState : byte { Up = 0, Down = 1 }
-		protected enum GiftReaction { Dislike, Neutral, Like, Love}
+		protected enum GiftReaction { Dislike, Neutral, Like, Love }
 
 		protected class GiftWeights
 		{
