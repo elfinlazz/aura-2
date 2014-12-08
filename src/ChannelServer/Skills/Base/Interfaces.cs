@@ -22,7 +22,7 @@ namespace Aura.Channel.Skills.Base
 	}
 
 	/// <summary>
-	/// Skills using StartTalk use Stop to end them.
+	/// Skills using Start use Stop to end them.
 	/// </summary>
 	public interface IStoppable : ISkillHandler
 	{

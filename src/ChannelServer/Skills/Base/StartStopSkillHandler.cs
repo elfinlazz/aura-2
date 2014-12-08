@@ -16,16 +16,16 @@ using Aura.Data.Database;
 namespace Aura.Channel.Skills.Base
 {
 	/// <summary>
-	/// Base class for skills that use only StartTalk and Stop.
+	/// Base class for skills that use only Start and Stop.
 	/// </summary>
 	/// <remarks>
-	/// Sends back Skill(StartTalk|Stop) with string or byte parameter,
+	/// Sends back Skill(Start|Stop) with string or byte parameter,
 	/// depending on incoming packet. Always passes a dictionary to the
 	/// next methods, since the byte seems useless =|
 	/// The parameter can also be missing in Stop, example:
 	/// Auto stop of ManaShield on 0 mana.
 	/// 
-	/// If StartTalk|Stop returns fail a silent cancel will be sent.
+	/// If Start|Stop returns fail a silent cancel will be sent.
 	/// </remarks>
 	public abstract class StartStopSkillHandler : IStartStoppable
 	{

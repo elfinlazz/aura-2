@@ -124,7 +124,7 @@ namespace Aura.Channel
 			if (this.Conf.Autoban.Enabled)
 				this.Events.SecurityViolation += (e) => Autoban.Incident(e.Client, e.Level, e.Report, e.StackReport);
 
-			// StartTalk
+			// Start
 			this.Server.Start(this.Conf.Channel.ChannelPort);
 
 			// Inter

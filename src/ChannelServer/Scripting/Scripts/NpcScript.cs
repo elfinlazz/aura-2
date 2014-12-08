@@ -69,8 +69,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			this.NPC = new NPC();
 			_resumeSignal = new SemaphoreSlim(0);
-			_cancellation = new CancellationTokenSource();
-		}
+			_cancellation = new CancellationTokenSource();		}
 
 		public override bool Init()
 		{
