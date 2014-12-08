@@ -1215,7 +1215,23 @@ namespace Aura.Channel.Scripting.Scripts
 
 			public int CalculateScore(Item gift)
 			{
-				return 0; // TODO: This
+				var score = 0;
+
+				var taste = gift.Data.Taste;
+
+				score += this.Adult * taste.Adult;
+				score += this.Anime * taste.Anime;
+				score += this.Beauty * taste.Beauty;
+				score += this.Individuality * taste.Individuality;
+				score += this.Luxury * taste.Luxury;
+				score += this.Maniac * taste.Maniac;
+				score += this.Meaning * taste.Meaning;
+				score += this.Rarity * taste.Rarity;
+				score += this.Sexy * taste.Sexy;
+				score += this.Toughness * taste.Toughness;
+				score += this.Utility * taste.Utility;
+
+				return score;
 			}
 		}
 	}
