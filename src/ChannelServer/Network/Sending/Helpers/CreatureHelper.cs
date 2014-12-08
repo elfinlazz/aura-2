@@ -22,7 +22,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 
 			var pos = creature.GetPosition();
 
-			// Start
+			// StartTalk
 			// --------------------------------------------------------------
 
 			packet.PutLong(creature.EntityId);
@@ -380,7 +380,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				// Not 100% sure what this is, Yiting added the above years
 				// ago, now it looks like this is a list of skill bins.
 				// The skills listed seem to be skills of type "7",
-				// which seem to be skills that have their Start/Stop
+				// which seem to be skills that have their StartTalk/Stop
 				// packets being broadcasted.
 				// It's possible that it was two shorts originally,
 				// the skill id + the flags. [exec]

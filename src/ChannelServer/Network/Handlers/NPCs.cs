@@ -78,7 +78,7 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.NpcTalkStartR(creature, npcEntityId);
 
-			client.NpcSession.Start(target, creature);
+			client.NpcSession.StartTalk(target, creature);
 		}
 
 		/// <summary>

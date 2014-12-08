@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using Aura.Channel.Network.Sending;
-using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
-using Boo.Lang;
 
 namespace Aura.Channel.Scripting.Scripts
 {

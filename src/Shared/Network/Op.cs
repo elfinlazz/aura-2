@@ -130,6 +130,8 @@ namespace Aura.Shared.Network
 		public const int ItemAmount = 0x59EA;
 		public const int UseItem = 0x59EB;
 		public const int UseItemR = 0x59EC;
+		public const int GiftItem = 0x59EF;
+		public const int GiftItemR = 0x59F0;
 		public const int UnequipBag = 0x59F4;
 		public const int UnequipBagR = 0x59F5;
 

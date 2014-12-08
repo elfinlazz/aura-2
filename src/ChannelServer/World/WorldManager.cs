@@ -74,7 +74,7 @@ namespace Aura.Channel.World
 		{
 			var now = DateTime.Now;
 
-			// Start timer on the next HeartbeatTime
+			// StartTalk timer on the next HeartbeatTime
 			// (eg on the next full 500 ms) and run it regularly afterwards.
 			_heartbeatTimer = new Timer(Heartbeat, null, HeartbeatTime - (now.Ticks / 10000 % HeartbeatTime), HeartbeatTime);
 		}
