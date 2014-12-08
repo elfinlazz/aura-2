@@ -52,17 +52,7 @@ namespace Aura.Channel.Scripting.Scripts
 			_weights = new GiftWeights();
 
 			// Default to Duncan so gifts at least do something.
-			SetGiftWeights(beauty: 0,
-				indiv: 0,
-				luxury: 0,
-				toughness: 1,
-				utility: 2,
-				rarity: 0,
-				meaning: 2,
-				adult: 1,
-				maniac: -1,
-				anime: -1,
-				sexy: 0);
+			SetGiftWeights(beauty: 0, individuality: 0, luxury: 0, toughness: 1, utility: 2, rarity: 0, meaning: 2, adult: 1, maniac: -1, anime: -1, sexy: 0);
 		}
 
 		protected NpcScript()
@@ -453,7 +443,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="adult">The adult.</param>
 		/// <param name="anime">The anime.</param>
 		/// <param name="beauty">The beauty.</param>
-		/// <param name="indiv">The indiv.</param>
+		/// <param name="individuality">The indiv.</param>
 		/// <param name="luxury">The luxury.</param>
 		/// <param name="maniac">The maniac.</param>
 		/// <param name="meaning">The meaning.</param>
@@ -461,12 +451,12 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="sexy">The sexy.</param>
 		/// <param name="toughness">The toughness.</param>
 		/// <param name="utility">The utility.</param>
-		protected static void SetGiftWeights(int adult, int anime, int beauty, int indiv, int luxury, int maniac, int meaning, int rarity, int sexy, int toughness, int utility)
+		protected static void SetGiftWeights(int adult, int anime, int beauty, int individuality, int luxury, int maniac, int meaning, int rarity, int sexy, int toughness, int utility)
 		{
 			_weights.Adult = adult;
 			_weights.Anime = anime;
 			_weights.Beauty = beauty;
-			_weights.Indivisuality = indiv;
+			_weights.Individuality = individuality;
 			_weights.Luxury = luxury;
 			_weights.Maniac = maniac;
 			_weights.Meaning = meaning;
@@ -1214,7 +1204,7 @@ namespace Aura.Channel.Scripting.Scripts
 			public int Adult { get; set; }
 			public int Anime { get; set; }
 			public int Beauty { get; set; }
-			public int Indivisuality { get; set; }
+			public int Individuality { get; set; }
 			public int Luxury { get; set; }
 			public int Maniac { get; set; }
 			public int Meaning { get; set; }
