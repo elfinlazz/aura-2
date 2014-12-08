@@ -131,6 +131,9 @@ namespace Aura.Channel.Scripting.Scripts
 			_cancellation.Cancel();
 		}
 
+		/// <summary>
+		/// Greets the player. **MODIFIES STATS**
+		/// </summary>
 		protected virtual void Greet()
 		{
 			// TODO: if (DoingPtj()) ...
@@ -177,6 +180,10 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Msg(Hide.None, msg, FavorExpression());
 		}
 
+		/// <summary>
+		/// Gets the mood.
+		/// </summary>
+		/// <returns></returns>
 		public virtual NpcMood GetMood()
 		{
 			var stress = this.GetStress();
@@ -224,11 +231,20 @@ namespace Aura.Channel.Scripting.Scripts
 			"obviously hates me."
 		};
 
+		/// <summary>
+		/// Gets the mood string for the current move.
+		/// </summary>
+		/// <returns></returns>
 		public string GetMoodString()
 		{
 			return this.GetMoodString(this.GetMood());
 		}
 
+		/// <summary>
+		/// Gets the mood string for the given mood.
+		/// </summary>
+		/// <param name="mood">The mood.</param>
+		/// <returns></returns>
 		public virtual string GetMoodString(NpcMood mood)
 		{
 			string moodStr;
@@ -531,46 +547,82 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Msg(new DialogBgm(fileName));
 		}
 
+		/// <summary>
+		/// Sets the favor.
+		/// </summary>
+		/// <param name="favor">The favor.</param>
 		protected void SetFavor(int favor)
 		{
 			this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] = favor;
 		}
 
+		/// <summary>
+		/// Sets the stress.
+		/// </summary>
+		/// <param name="stress">The stress.</param>
 		protected void SetStress(int stress)
 		{
 			this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = stress;
 		}
 
+		/// <summary>
+		/// Sets the memory.
+		/// </summary>
+		/// <param name="mem">The memory.</param>
 		protected void SetMemory(int mem)
 		{
 			this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = mem;
 		}
 
+		/// <summary>
+		/// Gets the favor.
+		/// </summary>
+		/// <returns></returns>
 		protected int GetFavor()
 		{
 			return this.Player.Vars.Perm["npc_favor_" + this.NPC.Name];
 		}
 
+		/// <summary>
+		/// Gets the stress.
+		/// </summary>
+		/// <returns></returns>
 		protected int GetStress()
 		{
 			return this.Player.Vars.Perm["npc_stress_" + this.NPC.Name];
 		}
 
+		/// <summary>
+		/// Gets the memory.
+		/// </summary>
+		/// <returns></returns>
 		protected int GetMemory()
 		{
 			return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name];
 		}
 
+		/// <summary>
+		/// Modifies the favor.
+		/// </summary>
+		/// <param name="delta">The delta.</param>
 		protected void ModifyFavor(int delta)
 		{
 			SetFavor(GetFavor() + delta);
 		}
 
+		/// <summary>
+		/// Modifies the stress.
+		/// </summary>
+		/// <param name="delta">The delta.</param>
 		protected void ModifyStress(int delta)
 		{
 			SetStress(GetStress() + delta);
 		}
 
+		/// <summary>
+		/// Modifies the memory.
+		/// </summary>
+		/// <param name="delta">The delta.</param>
 		protected void ModifyMemory(int delta)
 		{
 			SetMemory(GetMemory() + delta);
