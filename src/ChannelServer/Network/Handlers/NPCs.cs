@@ -328,5 +328,22 @@ namespace Aura.Channel.Network.Handlers
 		L_End:
 			Send.NpcShopSellItemR(creature);
 		}
+
+		/// <summary>
+		/// Sent when clicking on close button in bank.
+		/// </summary>
+		/// <remarks>
+		/// Doesn't lock the character if response isn't sent.
+		/// </remarks>
+		/// <example>
+		/// 0001 [..............00] Byte   : 0
+		/// </example>
+		[PacketHandler(Op.CloseBank)]
+		public void CloseBank(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			Send.CloseBankR(creature);
+		}
 	}
 }

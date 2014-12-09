@@ -9,6 +9,7 @@ using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Channel.Network.Sending.Helpers;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -148,6 +149,57 @@ namespace Aura.Channel.Network.Sending
 		public static void NpcShopSellItemR(Creature creature)
 		{
 			var packet = new Packet(Op.NpcShopSellItemR, creature.EntityId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends OpenBank to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void OpenBank(Creature creature)
+		{
+			var packet = new Packet(Op.OpenBank, creature.EntityId);
+
+			packet.PutByte(1);
+			packet.PutByte(0);
+			packet.PutLong(DateTime.Now);
+			packet.PutByte(0);
+			packet.PutString(creature.Client.Account.Id);
+			packet.PutString("BelfastBank"); // Bank id
+			packet.PutString("Bank"); // Bank title
+			packet.PutInt(0); // Gold
+
+			packet.PutInt(creature.Client.Account.Characters.Count);
+			foreach (var character in creature.Client.Account.Characters)
+			{
+				packet.PutString(character.Name); // Tab title
+				packet.PutByte(0);
+				packet.PutInt(12); // X
+				packet.PutInt(8); // Y
+				packet.PutInt(0); // Item count
+				{
+					//var item = new Item(creature.Inventory.GetItemAt(Pocket.Armor, 0, 0).Info.Id);
+
+					//packet.PutString("BelfastBank"); // Bank id
+					//packet.PutULong(18446744017659355058);
+					//packet.PutULong(0);
+					//packet.AddItemInfo(item, ItemPacketType.Private);
+				}
+			}
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends OpenBank to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void CloseBankR(Creature creature)
+		{
+			var packet = new Packet(Op.CloseBankR, creature.EntityId);
+
+			packet.PutByte(true);
 
 			creature.Client.Send(packet);
 		}

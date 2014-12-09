@@ -638,6 +638,14 @@ namespace Aura.Channel.Scripting.Scripts
 			return true;
 		}
 
+		/// <summary>
+		/// Opens bank window.
+		/// </summary>
+		public void OpenBank()
+		{
+			Send.OpenBank(this.Player);
+		}
+
 		// Dialog
 		// ------------------------------------------------------------------
 
