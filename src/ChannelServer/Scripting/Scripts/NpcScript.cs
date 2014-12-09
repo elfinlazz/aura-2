@@ -156,7 +156,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (gift.Info.Id == 51046) // Likeability pot
 			{
 				score = 10;
-				this.Favor += 10;
+				this.Favor += 10; // Determined through a LOT of pots... RIP my bank :(
 				this.Memorability += 4; // Gotta remember who gave you roofies!!
 			}
 			else
@@ -165,11 +165,13 @@ namespace Aura.Channel.Scripting.Scripts
 
 				if (gift.Data.StackType == Data.Database.StackType.Stackable)
 				{
-					delta *= gift.Amount * gift.Data.StackMax / (Random(2) + 5);
+					delta *= gift.Amount * gift.Data.StackMax * 3;
+					delta /= (1 + 2 * (Random(4) + 7));
 				}
 				else
 				{
-					delta /= (Random(2) + 2);
+					delta *= 3;
+					delta /= (Random(7) + 6);
 				}
 
 				this.Favor += delta;
@@ -283,9 +285,9 @@ namespace Aura.Channel.Scripting.Scripts
 				return NpcMood.ReallyLikes;
 			if (favor > 10)
 				return NpcMood.Likes;
-			if (favor < -22)
+			if (favor < -20)
 				return NpcMood.Hates;
-			if (favor < -12)
+			if (favor < -10)
 				return NpcMood.ReallyDislikes;
 			if (favor < -5)
 				return NpcMood.Dislikes;

@@ -14,6 +14,7 @@ public class DuncanBaseScript : NpcScript
 		SetFace(skinColor: 20, eyeType: 17);
 		SetStand("human/male/anim/male_natural_stand_npc_duncan_new", "male_natural_stand_npc_Duncan_talk");
 		SetLocation(1, 15409, 38310, 122);
+		SetGiftWeights(beauty: 0, individuality: 0, luxury: 0, toughness: 1, utility: 2, rarity: 0, meaning: 2, adult: 1, maniac: -1, anime: -1, sexy: 0);
 
 		EquipItem(Pocket.Face, 4950, 0x93005C);
 		EquipItem(Pocket.Hair, 4083, 0xBAAD9A);
