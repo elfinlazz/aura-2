@@ -54,7 +54,6 @@ public class DuncanBaseScript : NpcScript
 		switch(await Select())
 		{
 			case "@talk":
-				Greet();
 				await StartConversation();
 				return;
 				

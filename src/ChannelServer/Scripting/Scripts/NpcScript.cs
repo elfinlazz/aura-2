@@ -391,6 +391,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public virtual async Task StartConversation()
 		{
+			this.Greet();
+
 			this.Msg(Hide.Name, GetMoodString(), FavorExpression());
 
 			await Conversation();
