@@ -386,7 +386,7 @@ namespace Aura.Channel.Scripting
 			var outPath = this.GetCachePath(path);
 
 			Compiler compiler;
-			_compilers.TryGetValue(Path.GetExtension(path).TrimStart('.'), out compiler);
+			_compilers.TryGetValue(ext, out compiler);
 			if (compiler == null)
 			{
 				Log.Error("No compiler found for script '{0}'.", path);
