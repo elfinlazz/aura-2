@@ -18,7 +18,8 @@ public class BeginnerUladhRestQuestScript : QuestScript
 
 		AddObjective("get_rest_rf", "Acquire Resting Skill Rank F", 1, 15933, 33363, ReachRank(SkillId.Rest, SkillRank.RF));
 		
-		AddRewards(Exp(700), Item(1601)); // Skill Guide Book
+		AddReward(Exp(700));
+		AddReward(Item(1601)); // Skill Guide Book
 		
 		AddHook("_nora", "after_intro", TalkNora);
 		AddHook("_nora", "before_keywords", NoraKeywords);

@@ -130,28 +130,23 @@ namespace Aura.Channel.Scripting
 			try
 			{
 				using (var fr = new FileReader(IndexPath))
+				{
 					foreach (var line in fr)
 					{
-						try
+						// Get script path for either user or system
+						var scriptPath = Path.Combine(UserIndexRoot, line);
+						if (!File.Exists(scriptPath))
+							scriptPath = Path.Combine(SystemIndexRoot, line);
+						if (!File.Exists(scriptPath))
 						{
-							// Get script path for either user or system
-							var scriptPath = Path.Combine(UserIndexRoot, line);
-							if (!File.Exists(scriptPath))
-								scriptPath = Path.Combine(SystemIndexRoot, line);
-							if (!File.Exists(scriptPath))
-							{
-								Log.Warning("Script not found: {0}", line);
-								continue;
-							}
+							Log.Warning("Script not found: {0}", line);
+							continue;
+						}
 
-							// Easiest way to get a unique, ordered list.
-							toLoad[line] = scriptPath;
-						}
-						catch (Exception ex1)
-						{
-							Log.Exception(ex1, string.Format("Problem in scripts list: '{0}'", line));
-						}
+						// Easiest way to get a unique, ordered list.
+						toLoad[line] = scriptPath;
 					}
+				}
 			}
 			catch (Exception ex)
 			{
@@ -532,11 +527,8 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		private void InitializeScripts()
 		{
-			foreach (var kvp in _scripts)
+			foreach (var type in _scripts.Values)
 			{
-				var type = kvp.Value;
-				var path = kvp.Key;
-
 				try
 				{
 					// Initiate script
@@ -544,7 +536,6 @@ namespace Aura.Channel.Scripting
 					if (!script.Init())
 					{
 						Log.Debug("LoadScriptAssembly: Failed to initiate '{0}'.", type.Name);
-
 						continue;
 					}
 

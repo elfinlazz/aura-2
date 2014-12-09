@@ -19,18 +19,13 @@ namespace Aura.Channel.Scripting.Scripts
 {
 	public class QuestScript : GeneralScript
 	{
-		public int Id { get; protected set; }
+		public int Id { get; set; }
 
-		public string Name { get; protected set; }
-		public string Description { get; protected set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
 
-		public Receive ReceiveMethod { get; protected set; }
-		public bool Cancelable { get; protected set; }
-		
-		public TimeSpan TimeLimit { get; protected set; }
-		public int Soundset { get; protected set; }
-		public bool EssentialIcon { get; protected set; }
-		public bool MustComplete { get; protected set; }
+		public Receive ReceiveMethod { get; set; }
+		public bool Cancelable { get; set; }
 
 		public List<QuestPrerequisite> Prerequisites { get; protected set; }
 		public OrderedDictionary<string, QuestObjective> Objectives { get; protected set; }
@@ -48,8 +43,6 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Rewards = new List<QuestReward>();
 
 			this.MetaData = new MabiDictionary();
-
-			this.TimeLimit = TimeSpan.Zero;
 		}
 
 		public override bool Init()
@@ -129,26 +122,6 @@ namespace Aura.Channel.Scripting.Scripts
 			this.ReceiveMethod = method;
 		}
 
-		protected void SetTimeLimit(TimeSpan limit)
-		{
-			this.TimeLimit = limit;
-		}
-
-		protected void SetSoundset(int set)
-		{
-			this.Soundset = set;
-		}
-
-		protected void SetEssentialIcon(bool icon)
-		{
-			this.EssentialIcon = icon;
-		}
-
-		protected void SetMustComplete(bool must)
-		{
-			this.MustComplete = must;
-		}
-
 		/// <summary>
 		/// Adds prerequisite that has to be met before auto receiving the quest.
 		/// </summary>
@@ -187,13 +160,13 @@ namespace Aura.Channel.Scripting.Scripts
 			objective.X = x;
 			objective.Y = y;
 
-			if (objective is QuestObjectiveKill)
+			if (objective.Type == ObjectiveType.Kill)
 			{
 				ChannelServer.Instance.Events.CreatureKilledByPlayer -= this.OnCreatureKilledByPlayer;
 				ChannelServer.Instance.Events.CreatureKilledByPlayer += this.OnCreatureKilledByPlayer;
 			}
 
-			if (objective is QuestObjectiveCollect)
+			if (objective.Type == ObjectiveType.Collect)
 			{
 				ChannelServer.Instance.Events.PlayerReceivesItem -= this.OnPlayerReceivesOrRemovesItem;
 				ChannelServer.Instance.Events.PlayerReceivesItem += this.OnPlayerReceivesOrRemovesItem;
@@ -201,7 +174,7 @@ namespace Aura.Channel.Scripting.Scripts
 				ChannelServer.Instance.Events.PlayerRemovesItem += this.OnPlayerReceivesOrRemovesItem;
 			}
 
-			if (objective is QuestObjectiveReachRank)
+			if (objective.Type == ObjectiveType.ReachRank)
 			{
 				ChannelServer.Instance.Events.SkillRankChanged -= this.OnSkillRankChanged;
 				ChannelServer.Instance.Events.SkillRankChanged += this.OnSkillRankChanged;
@@ -210,9 +183,9 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Objectives.Add(ident, objective);
 		}
 
-		protected void AddRewards(params QuestReward[] rewards)
+		protected void AddReward(QuestReward reward)
 		{
-			this.Rewards.AddRange(rewards);
+			this.Rewards.Add(reward);
 		}
 
 		// Prerequisite Factory
@@ -284,7 +257,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (progress == null) return;
 
 			var objective = this.Objectives[progress.Ident] as QuestObjectiveKill;
-			if (objective == null || !objective.Check(creature)) return;
+			if (objective == null || objective.Type != ObjectiveType.Kill || !objective.Check(creature)) return;
 
 			if (progress.Count >= objective.Amount) return;
 
@@ -313,7 +286,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (progress == null) return;
 
 			var objective = this.Objectives[progress.Ident] as QuestObjectiveCollect;
-			if (objective == null || itemId != objective.ItemId) return;
+			if (objective == null || objective.Type != ObjectiveType.Collect || itemId != objective.ItemId) return;
 
 			if (progress.Count >= objective.Amount) return;
 
@@ -343,7 +316,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (progress == null) return;
 
 			var objective = this.Objectives[progress.Ident] as QuestObjectiveReachRank;
-			if (objective == null) return;
+			if (objective == null || objective.Type != ObjectiveType.ReachRank) return;
 
 			if (skill.Info.Id != objective.Id || skill.Info.Rank < objective.Rank) return;
 

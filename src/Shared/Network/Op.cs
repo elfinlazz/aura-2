@@ -394,7 +394,7 @@ namespace Aura.Shared.Network
 		public const int EnableRoyalAlchemist = 0xA9A3;
 		public const int SosButtonRequest = 0xA9A9;
 		public const int SosButtonRequestR = 0xA9AA;
-		public const int SkillTeleport = 0xA9EC;
+		public const int SkillTeleport = 0xA9F0;
 
 		// [150000~180000] Something was added? Next two ops changed.
 		// [180800, NA196] Something was added? Ops 0xAAXX - 0xABXX increased by 4.

@@ -10,7 +10,7 @@ using Aura.Shared.Mabi.Const;
 namespace Aura.Channel.Skills.Magic
 {
 	/// <summary>
-	/// Handles the Rest skill. Also called when using a chair.
+	/// Handles the Mana Shield skill.
 	/// </summary>
 	/// <remarks>
 	/// Var1: Base Mana Efficiency

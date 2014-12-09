@@ -10,15 +10,12 @@ public class NaosLetterQuestScript : QuestScript
 	public override void Load()
 	{
 		SetId(202001);
-		SetMustComplete(true);
-		SetEssentialIcon(true);
-		SetSoundset(3);
 		SetName("Nao's Letter of Introduction");
 		SetDescription("Dear [Chief Duncan],\r\nI am directing someone to you. This person is from another world. Please help them adjust to life in Erinn. Thank you, and I hope I will be able to visit you soon. - Nao Pryderi -");
 		
 		AddObjective("talk_duncan", "Go to Tir Chonaill and deliver the Letter to Chief Duncan.", 1, 15409, 38310, Talk("duncan"));
 
-		AddRewards(Exp(100));
+		AddReward(Exp(100));
 		
 		AddHook("_duncan", "after_intro", TalkDuncan);
 	}

@@ -9,13 +9,6 @@ using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.World.Quests
 {
-	//Kill = 1,
-	//Collect = 2,
-	//Talk = 3,
-	//Deliver = 4,
-	//ReachRank = 9,
-	//ReachLevel = 15,
-
 	public abstract class QuestObjective
 	{
 		public string Ident { get; set; }
@@ -29,10 +22,7 @@ namespace Aura.Channel.World.Quests
 
 		public MabiDictionary MetaData { get; protected set; }
 
-		/// <summary>
-		/// Gets the type code used in the packet.
-		/// </summary>
-		public abstract byte __TypeCode { get; }
+		public abstract ObjectiveType Type { get; }
 
 		protected QuestObjective(int amount)
 		{
@@ -46,12 +36,9 @@ namespace Aura.Channel.World.Quests
 	/// </summary>
 	public class QuestObjectiveKill : QuestObjective
 	{
-		public string[] RaceTypes { get; set; }
+		public override ObjectiveType Type { get { return ObjectiveType.Kill; } }
 
-		/// <summary>
-		/// Gets the type code used in the packet.
-		/// </summary>
-		public sealed override byte __TypeCode { get { return 1; } }
+		public string[] RaceTypes { get; set; }
 
 		public QuestObjectiveKill(int amount, params string[] raceTypes)
 			: base(amount)
@@ -79,12 +66,9 @@ namespace Aura.Channel.World.Quests
 	/// </summary>
 	public class QuestObjectiveCollect : QuestObjective
 	{
-		public int ItemId { get; set; }
+		public override ObjectiveType Type { get { return ObjectiveType.Collect; } }
 
-		/// <summary>
-		/// Gets the type code used in the packet.
-		/// </summary>
-		public sealed override byte __TypeCode { get { return 2; } }
+		public int ItemId { get; set; }
 
 		public QuestObjectiveCollect(int itemId, int amount)
 			: base(amount)
@@ -103,12 +87,9 @@ namespace Aura.Channel.World.Quests
 	/// </summary>
 	public class QuestObjectiveTalk : QuestObjective
 	{
-		public string Name { get; set; }
+		public override ObjectiveType Type { get { return ObjectiveType.Talk; } }
 
-		/// <summary>
-		/// Gets the type code used in the packet.
-		/// </summary>
-		public sealed override byte __TypeCode { get { return 3; } }
+		public string Name { get; set; }
 
 		public QuestObjectiveTalk(string npcName)
 			: base(1)
@@ -125,13 +106,10 @@ namespace Aura.Channel.World.Quests
 	/// </summary>
 	public class QuestObjectiveReachRank : QuestObjective
 	{
+		public override ObjectiveType Type { get { return ObjectiveType.ReachRank; } }
+
 		public SkillId Id { get; set; }
 		public SkillRank Rank { get; set; }
-
-		/// <summary>
-		/// Gets the type code used in the packet.
-		/// </summary>
-		public sealed override byte __TypeCode { get { return 9; } }
 
 		public QuestObjectiveReachRank(SkillId skillId, SkillRank rank)
 			: base(1)

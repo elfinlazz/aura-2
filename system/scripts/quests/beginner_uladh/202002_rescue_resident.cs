@@ -13,9 +13,6 @@ public class RescueResidentQuestScript : QuestScript
 	public override void Load()
 	{
 		SetId(202002);
-		SetMustComplete(true);
-		SetEssentialIcon(true);
-		SetSoundset(4);
 		SetName("Rescue Resident");
 		SetDescription("I'm Trefor, serving as a guard in the north part of the town, past the Healer's House. One of the residents of this town went to Alby Dungeon and has not come back yet. I'm worried about it, so I need you to help me search for the lost resident. - Trefor -");
 		
@@ -27,7 +24,9 @@ public class RescueResidentQuestScript : QuestScript
 		AddObjective("talk_trefor2", "Talk with Trefor", 1, 8692, 52637, Talk("trefor"));
 		AddObjective("clear_alby", "Rescue a town resident from Alby Dungeon", 13, 3200, 3200, Talk("trefor"));
 		
-		AddRewards(Exp(300), Gold(1800), AP(3));
+		AddReward(Exp(300));
+		AddReward(Gold(1800));
+		AddReward(AP(3));
 		
 		AddHook("_trefor", "after_intro", TalkTrefor);
 	}
