@@ -65,7 +65,7 @@ namespace Aura.Shared.Util
 							if (!Directory.Exists(Archive))
 								Directory.CreateDirectory(Archive);
 
-							var time = File.GetCreationTime(value);
+							var time = File.GetLastWriteTime(value);
 							var archive = Path.Combine(Archive, time.ToString("yyyy-MM-dd_hh-mm"));
 							var archiveFilePath = Path.Combine(archive, Path.GetFileName(value));
 
