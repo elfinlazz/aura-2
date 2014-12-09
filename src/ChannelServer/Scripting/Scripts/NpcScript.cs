@@ -59,7 +59,8 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			this.NPC = new NPC();
 			_resumeSignal = new SemaphoreSlim(0);
-			_cancellation = new CancellationTokenSource();		}
+			_cancellation = new CancellationTokenSource();
+		}
 
 		public override bool Init()
 		{
@@ -421,10 +422,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 				await this.Keywords(keyword);
 
-				// TODO: Npc reaction method goes here
-				RndMsg("(I think I left a good impression.)",
-					"(The conversation drew a lot of interest.)",
-					"(That was a great conversation!)");
+				await this.KeywordResponse(keyword);
 			}
 		}
 
@@ -436,6 +434,20 @@ namespace Aura.Channel.Scripting.Scripts
 		protected virtual async Task Keywords(string keyword)
 		{
 			await Task.Yield();
+		}
+
+		/// <summary>
+		/// Called after the keyword has been completed.
+		/// </summary>
+		/// <param name="keyword">The keyword.</param>
+		/// <returns></returns>
+		protected virtual async Task KeywordResponse(string keyword)
+		{
+			this.RndMsg(Localization.Get("(I think I left a good impression.)"),
+				Localization.Get("(The conversation drew a lot of interest.)"),
+				Localization.Get("(That was a great conversation!)"));
+
+			await Task.Yield(); // Shut up, compiler
 		}
 
 		// Setup
