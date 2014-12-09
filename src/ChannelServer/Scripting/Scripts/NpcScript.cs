@@ -736,7 +736,7 @@ namespace Aura.Channel.Scripting.Scripts
 				return;
 			}
 
-			shop.OpenFor(this.Player);
+			shop.OpenFor(this.Player, this.NPC);
 		}
 
 		/// <summary>

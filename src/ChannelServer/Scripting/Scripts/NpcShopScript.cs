@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
@@ -37,6 +38,16 @@ namespace Aura.Channel.Scripting.Scripts
 		/// All tabs in the shop.
 		/// </summary>
 		public ICollection<NpcShopTab> Tabs { get { return _tabs.Values; } }
+
+		/// <summary>
+		/// Gets the visible tabs based off the <see cref="NpcShopTab.ShouldDisplay"/> function.
+		/// 
+		/// ** warning ** this IEnumerable is not cached!! 
+		/// </summary>
+		/// <value>
+		/// The visible tabs.
+		/// </value>
+		public IEnumerable<NpcShopTab> VisibleTabs { get; protected set; }
 
 		public NpcShopScript()
 		{
@@ -75,7 +86,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Defaults to a tautology if null.
 		///</param>
 		/// <returns></returns>
-		public NpcShopTab Add(string tabTitle, Func<Creature, bool> shouldDisplay = null)
+		public NpcShopTab Add(string tabTitle, Func<Creature, NPC, bool> shouldDisplay = null)
 		{
 			NpcShopTab tab;
 			_tabs.Add(tabTitle, (tab = new NpcShopTab(tabTitle, _tabs.Count, shouldDisplay)));
@@ -168,13 +179,14 @@ namespace Aura.Channel.Scripting.Scripts
 
 		/// <summary>
 		/// Returns new item based on target item from one of the tabs by id,
-		/// or null.
+		/// or null. Optionally limits search to visible tabs only
 		/// </summary>
 		/// <param name="entityId"></param>
+		/// <param name="onlyVisible"></param>
 		/// <returns></returns>
-		public Item GetItem(long entityId)
+		public Item GetItem(long entityId, bool onlyVisible)
 		{
-			foreach (var tab in _tabs.Values)
+			foreach (var tab in (onlyVisible ? VisibleTabs : Tabs))
 			{
 				var item = tab.Get(entityId);
 				if (item != null)
@@ -188,11 +200,14 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Sends OpenNpcShop for creature and this shop.
 		/// </summary>
 		/// <param name="creature"></param>
-		public void OpenFor(Creature creature)
+		/// <param name="owner"></param>
+		public void OpenFor(Creature creature, NPC owner)
 		{
 			// Shops without tabs are weird.
 			if (_tabs.Count == 0)
 				this.Add("Empty");
+
+			VisibleTabs = this.Tabs.Where(t => t.ShouldDisplay(creature, owner));
 
 			creature.Temp.CurrentShop = this;
 
@@ -230,15 +245,15 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <value>
 		/// The should display.
 		/// </value>
-		public Func<Creature, bool> ShouldDisplay { get; protected set; }
+		public Func<Creature, NPC, bool> ShouldDisplay { get; protected set; }
 
-		public NpcShopTab(string title, int order, Func<Creature, bool> display)
+		public NpcShopTab(string title, int order, Func<Creature, NPC, bool> display)
 		{
 			_items = new Dictionary<long, Item>();
 			this.Title = title;
 			this.Order = order;
 
-			this.ShouldDisplay = display ?? (c => true);
+			this.ShouldDisplay = display ?? ((c, n) => true);
 		}
 
 		/// <summary>

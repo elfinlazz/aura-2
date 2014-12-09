@@ -229,7 +229,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Get item
-			var item = creature.Temp.CurrentShop.GetItem(entityId);
+			var item = creature.Temp.CurrentShop.GetItem(entityId, true);
 			if (item == null)
 			{
 				Log.Warning("NpcShopBuyItem: Item '{0}' doesn't exist in shop.", entityId.ToString("X16"));
