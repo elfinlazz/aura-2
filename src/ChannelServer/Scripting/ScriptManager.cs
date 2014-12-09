@@ -158,7 +158,7 @@ namespace Aura.Channel.Scripting
 			int done = 0, loaded = 0;
 			foreach (string filePath in toLoad.Values)
 			{
-				var asm = this.Compile(filePath);
+				var asm = this.GetAssembly(filePath);
 				if (asm != null)
 				{
 					this.LoadScriptAssembly(asm, filePath);
@@ -255,7 +255,7 @@ namespace Aura.Channel.Scripting
 					continue;
 				}
 
-				var asm = this.Compile(scriptPath);
+				var asm = this.GetAssembly(scriptPath);
 				if (asm != null)
 					this.LoadItemScriptAssembly(asm, entry.Id);
 
@@ -270,7 +270,7 @@ namespace Aura.Channel.Scripting
 
 			// Compile will update assembly if generated script was updated
 			//foreach (string filePath in )
-			var inlineAsm = this.Compile(tmpPath);
+			var inlineAsm = this.GetAssembly(tmpPath);
 			if (inlineAsm != null)
 				this.LoadItemScriptAssembly(inlineAsm);
 
@@ -295,7 +295,7 @@ namespace Aura.Channel.Scripting
 				{
 					var fileName = Path.GetFileNameWithoutExtension(filePath);
 
-					var asm = this.Compile(filePath);
+					var asm = this.GetAssembly(filePath);
 					if (asm != null)
 					{
 						// Get first AiScript class and save the type
@@ -363,18 +363,26 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
-		///  Compiles script and returns the resulting assembly, or null.
+		/// Loads assembly for script, compiles it if necessary.
+		/// Returns null if there was a problem.
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		private Assembly Compile(string path)
+		private Assembly GetAssembly(string path)
 		{
 			if (!File.Exists(path))
 			{
-				Log.Error("Script '{0}' not found.", path);
+				Log.Error("File '{0}' not found.", path);
 				return null;
 			}
 
+			var ext = Path.GetExtension(path).TrimStart('.');
+
+			// Load dlls directly
+			if (ext == "dll")
+				return Assembly.LoadFrom(path);
+
+			// Try to compile other files
 			var outPath = this.GetCachePath(path);
 
 			Compiler compiler;
