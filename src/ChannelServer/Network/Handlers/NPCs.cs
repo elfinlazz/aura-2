@@ -345,5 +345,35 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.CloseBankR(creature);
 		}
+
+		/// <summary>
+		/// Sent when selecting which tabs to display (human, elf, giant).
+		/// </summary>
+		/// <remarks>
+		/// This packet is only sent when enabling Elf or Giant, it's not sent
+		/// on deactivating them and not for Human either.
+		/// It's to request data that was not sent initially,
+		/// i.e. send only Human first and Elf and Giant when ticked.
+		/// The client only requests those tabs once.
+		/// </remarks>
+		/// <example>
+		/// 0001 [..............01] Byte   : 1
+		/// </example>
+		[PacketHandler(Op.RequestBankTabs)]
+		public void RequestBankTabs(ChannelClient client, Packet packet)
+		{
+			var race = (BankTabRace)packet.GetByte();
+			Log.Debug(race);
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			switch (race)
+			{
+				default:
+				case BankTabRace.Human: Send.OpenBank(creature, client.Account.Characters.Where(c => c.IsHuman), BankTabRace.Human); break;
+				case BankTabRace.Elf: Send.OpenBank(creature, client.Account.Characters.Where(c => c.IsElf), BankTabRace.Elf); break;
+				case BankTabRace.Giant: Send.OpenBank(creature, client.Account.Characters.Where(c => c.IsGiant), BankTabRace.Giant); break;
+			}
+		}
 	}
 }

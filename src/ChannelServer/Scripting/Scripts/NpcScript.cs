@@ -643,7 +643,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public void OpenBank()
 		{
-			Send.OpenBank(this.Player);
+			Send.OpenBank(this.Player, this.Player.Client.Account.Characters.Where(c => c.IsHuman), BankTabRace.Human);
 		}
 
 		// Dialog

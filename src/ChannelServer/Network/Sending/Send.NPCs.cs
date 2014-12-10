@@ -157,12 +157,12 @@ namespace Aura.Channel.Network.Sending
 		/// Sends OpenBank to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
-		public static void OpenBank(Creature creature)
+		public static void OpenBank(Creature creature, IEnumerable<Character> characters, BankTabRace race)
 		{
 			var packet = new Packet(Op.OpenBank, creature.EntityId);
 
 			packet.PutByte(1);
-			packet.PutByte(0);
+			packet.PutByte((byte)race);
 			packet.PutLong(DateTime.Now);
 			packet.PutByte(0);
 			packet.PutString(creature.Client.Account.Id);
@@ -170,11 +170,11 @@ namespace Aura.Channel.Network.Sending
 			packet.PutString("Bank"); // Bank title
 			packet.PutInt(0); // Gold
 
-			packet.PutInt(creature.Client.Account.Characters.Count);
-			foreach (var character in creature.Client.Account.Characters)
+			packet.PutInt(characters.Count());
+			foreach (var character in characters)
 			{
 				packet.PutString(character.Name); // Tab title
-				packet.PutByte(0);
+				packet.PutByte((byte)race); // Race
 				packet.PutInt(12); // X
 				packet.PutInt(8); // Y
 				packet.PutInt(0); // Item count
@@ -203,5 +203,10 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+	}
+
+	public enum BankTabRace : byte
+	{
+		Human, Elf, Giant
 	}
 }

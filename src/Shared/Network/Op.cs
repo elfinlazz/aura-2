@@ -228,6 +228,7 @@ namespace Aura.Shared.Network
 		public const int ClearNpcShop = 0x7158; // Empties tabs
 		public const int AddToNpcShop = 0x7159; // Adds items while shop is open, works like open
 		public const int OpenNpcShop = 0x715E;
+		public const int RequestBankTabs = 0x7211;
 		public const int OpenBank = 0x7212;
 		public const int CloseBank = 0x7215;
 		public const int CloseBankR = 0x7216;
