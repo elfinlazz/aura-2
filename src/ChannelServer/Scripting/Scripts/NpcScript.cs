@@ -351,7 +351,7 @@ namespace Aura.Channel.Scripting.Scripts
 					break;
 
 				case NpcMood.Friends:
-					moodStr = "is giving me a welcome look.";
+					moodStr = "is really giving me a friendly vibe.";
 					break;
 
 				case NpcMood.Hates:
@@ -367,15 +367,15 @@ namespace Aura.Channel.Scripting.Scripts
 					break;
 
 				case NpcMood.Likes:
-					moodStr = "is giving me a friendly smile.";
+					moodStr = "is looking at me with great interest.";
 					break;
 
 				case NpcMood.ReallyLikes:
-					moodStr = "is really giving me a friendly vibe.";
+					moodStr = "is giving me a friendly smile.";
 					break;
 
 				case NpcMood.Love:
-					moodStr = "is looking at me with great interest.";
+					moodStr = "is giving me a welcome look.";
 					break;
 
 				default:

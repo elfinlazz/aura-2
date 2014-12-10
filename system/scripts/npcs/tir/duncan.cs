@@ -23,7 +23,7 @@ public class DuncanBaseScript : NpcScript
 
 		AddGreeting(0, "Welcome to Tir Chonaill.");
 		AddGreeting(1, "What did you say your name was again...?<br/>Anyway, welcome.");
-		AddGreeting(2, "So you've finally made it here, <username/>");
+		AddGreeting(2, "<username/>, I could recognize you from afar.");
 		AddGreeting(6, "I was just thinking... <username/> should be visiting right about now.");
 		AddGreeting(7, "Hoho, I will definitely remember your face, <username/>!");
 
@@ -36,6 +36,16 @@ public class DuncanBaseScript : NpcScript
 		AddPhrase("That tree has been there for quite a long time, now that I think about it.");
 		AddPhrase("The graveyard has been left unattended far too long.");
 		AddPhrase("Watch your language.");
+	}
+
+	protected override string GetGiftReply(GiftReaction score)
+	{
+		switch (score)
+		{
+			case GiftReaction.Love: return (new[] { "Oh! How did you know I like this?<br/>Thank you very much."}).Random();
+			case GiftReaction.Dislike: return (new[] { "Hmm. Not exactly to my taste...", "Hmm. I'll keep it safe for someone who may need it."}).Random();
+		}
+		return (new[] { "Is that for me?", "You didn't need to do this..." }).Random();
 	}
 	
 	protected override async Task Talk()
@@ -79,13 +89,17 @@ public class DuncanBaseScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				Msg("I'm the chief of this town...");
-				//Msg("Once again, welcome to Tir Chonaill.");
-				// MoodChange
+				if (Favor > 40)
+					Msg("See that bird on the tree over there? When I was young, he used to help me on the battlefield.<br/>Now he's as old as I am and sleeps all the time.<br/>Perhaps he has closed his heart in disappointment at my present appearance, so old and changed...");
+				else
+					Msg("Once again, welcome to Tir Chonaill.");
 				break;
 				
 			case "rumor":
-				Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?");
+				if (Favor > 40)
+					Msg("The weather here changes unpredictably because Tir Chonaill is located high up in the mountains.<br/>There are instances where bridges collapse and roads are destroyed after a heavy rainfall,<br/>and people lose all contact with the outside world.<br/>Despite that, I think you've done quite well here.");
+				else
+					Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?");
 				//Msg("Talk to the good people in Tir Chonaill as much as you can, and pay close attention to what they say.<br/>Once you become friends with them, they will help you in many ways.<br/>Why don't you start off by visiting the buildings around the Square?");
 				// MoodChange
 				break;
