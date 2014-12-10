@@ -376,7 +376,6 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Sends Msg with Bgm element.
 		/// </summary>
-		/// <param name="creature"></param>
 		/// <param name="fileName"></param>
 		protected void SetBgm(string fileName)
 		{
@@ -854,6 +853,14 @@ namespace Aura.Channel.Scripting.Scripts
 		public DialogText Text(string format, params object[] args) { return new DialogText(format, args); }
 
 		public DialogHotkey Hotkey(string text) { return new DialogHotkey(text); }
+
+		public DialogMinimap Minimap(bool zoom, bool maxSize, bool center) { return new DialogMinimap(zoom, maxSize, center); }
+
+		public DialogShowPosition ShowPosition(int region, int x, int y, int remainingTime) { return new DialogShowPosition(region, x, y, remainingTime); }
+
+		public DialogShowDirection ShowDirection(int x, int y, int angle) { return new DialogShowDirection(x, y, angle); }
+
+		public DialogSetDefaultName SetDefaultName(string name) { return new DialogSetDefaultName(name); }
 
 		// ------------------------------------------------------------------
 

@@ -350,4 +350,90 @@ namespace Aura.Channel.Scripting.Scripts
 			sb.AppendFormat("<movie name='{0}' width='{1}' height='{2}' loop='{3}' />", this.File, this.Width, this.Height, this.Loop);
 		}
 	}
+
+	/// <summary>
+	/// Opens minimap, which is usually hidden during conversations.
+	/// </summary>
+	public class DialogMinimap : DialogElement
+	{
+		public bool Zoom { get; set; }
+		public bool MaxSize { get; set; }
+		public bool Center { get; set; }
+
+		public DialogMinimap(bool zoom, bool maxSize, bool center)
+		{
+			this.Zoom = zoom;
+			this.MaxSize = maxSize;
+			this.Center = center;
+		}
+
+		public override void Render(ref StringBuilder sb)
+		{
+			sb.AppendFormat("<openminimap zoom='{0}' max_size='{1}' center='{2}' />", this.Zoom, this.MaxSize, this.Center);
+		}
+	}
+
+	/// <summary>
+	/// Displays marker on minimap for specified duration.
+	/// </summary>
+	public class DialogShowPosition : DialogElement
+	{
+		public int Region { get; set; }
+		public int X { get; set; }
+		public int Y { get; set; }
+		public int RemainingTime { get; set; }
+
+		public DialogShowPosition(int region, int x, int y, int remainingTime)
+		{
+			this.Region = region;
+			this.X = x;
+			this.Y = y;
+			this.RemainingTime = remainingTime;
+		}
+
+		public override void Render(ref StringBuilder sb)
+		{
+			sb.AppendFormat("<show_position region='{0}' pos='{1} {2}' remainingtime='{3}' />", this.Region, this.X, this.Y, this.RemainingTime);
+		}
+	}
+
+	/// <summary>
+	/// Turns camera into the direction of the position.
+	/// </summary>
+	public class DialogShowDirection : DialogElement
+	{
+		public int X { get; set; }
+		public int Y { get; set; }
+		public int Angle { get; set; }
+
+		public DialogShowDirection(int x, int y, int angle)
+		{
+			this.X = x;
+			this.Y = y;
+			this.Angle = angle;
+		}
+
+		public override void Render(ref StringBuilder sb)
+		{
+			sb.AppendFormat("<show_dir pos='{0} {1}' pitch='{2}' />", this.X, this.Y, this.Angle);
+		}
+	}
+
+	/// <summary>
+	/// Changes the name displayed for the NPC for the rest of the conversation.
+	/// </summary>
+	public class DialogSetDefaultName : DialogElement
+	{
+		public string Name { get; set; }
+
+		public DialogSetDefaultName(string name)
+		{
+			this.Name = name;
+		}
+
+		public override void Render(ref StringBuilder sb)
+		{
+			sb.AppendFormat("<defaultname name='{0}' />", this.Name);
+		}
+	}
 }
