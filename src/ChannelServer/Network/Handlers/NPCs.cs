@@ -58,7 +58,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Check script
-			if (target.Script == null)
+			if (target.ScriptType == null)
 			{
 				Send.NpcTalkStartR_Fail(creature);
 

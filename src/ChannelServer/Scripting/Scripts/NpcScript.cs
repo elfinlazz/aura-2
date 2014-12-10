@@ -26,9 +26,6 @@ namespace Aura.Channel.Scripting.Scripts
 		private SemaphoreSlim _resumeSignal;
 		private CancellationTokenSource _cancellation;
 
-		private static readonly SortedList<int, string> _greetings;
-		private static readonly GiftWeights _weights;
-
 		public ConversationState ConversationState { get; private set; }
 
 		public NPC NPC { get; set; }
@@ -46,30 +43,21 @@ namespace Aura.Channel.Scripting.Scripts
 			set { _player = value; }
 		}
 
-		static NpcScript()
-		{
-			_greetings = new SortedList<int, string>();
-			_weights = new GiftWeights();
-
-			// Default to Duncan so gifts at least do something.
-			SetGiftWeights(beauty: 0, individuality: 0, luxury: 0, toughness: 1, utility: 2, rarity: 0, meaning: 2, adult: 1, maniac: -1, anime: -1, sexy: 0);
-		}
-
 		protected NpcScript()
 		{
-			this.NPC = new NPC();
 			_resumeSignal = new SemaphoreSlim(0);
 			_cancellation = new CancellationTokenSource();
 		}
 
 		public override bool Init()
 		{
+			this.NPC = new NPC();
+			this.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
+			this.NPC.ScriptType = this.GetType();
+			this.NPC.LoadDefault();
 			this.NPC.AI = ChannelServer.Instance.ScriptManager.GetAi("npc_normal", this.NPC);
 
 			this.Load();
-			this.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
-			this.NPC.Script = this;
-			this.NPC.LoadDefault();
 
 			if (this.NPC.RegionId > 0)
 			{
@@ -152,7 +140,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		protected virtual GiftReaction AcceptGift(Item gift)
 		{
-			var score = _weights.CalculateScore(gift);
+			var score = this.NPC.GiftWeights.CalculateScore(gift);
 
 			if (gift.Info.Id == 51046) // Likeability pot
 			{
@@ -227,7 +215,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var msg = "[ERROR - NO GREETINGS DEFINED]";
 
 			// Take the highest greeting without going over their memorability
-			foreach (var k in _greetings.TakeWhile(k => k.Key <= mem))
+			foreach (var k in this.NPC.Greetings.TakeWhile(k => k.Key <= mem))
 			{
 				msg = k.Value;
 			}
@@ -465,19 +453,19 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="sexy">The sexy.</param>
 		/// <param name="toughness">The toughness.</param>
 		/// <param name="utility">The utility.</param>
-		protected static void SetGiftWeights(int adult, int anime, int beauty, int individuality, int luxury, int maniac, int meaning, int rarity, int sexy, int toughness, int utility)
+		protected void SetGiftWeights(int adult, int anime, int beauty, int individuality, int luxury, int maniac, int meaning, int rarity, int sexy, int toughness, int utility)
 		{
-			_weights.Adult = adult;
-			_weights.Anime = anime;
-			_weights.Beauty = beauty;
-			_weights.Individuality = individuality;
-			_weights.Luxury = luxury;
-			_weights.Maniac = maniac;
-			_weights.Meaning = meaning;
-			_weights.Rarity = rarity;
-			_weights.Sexy = sexy;
-			_weights.Toughness = toughness;
-			_weights.Utility = utility;
+			this.NPC.GiftWeights.Adult = adult;
+			this.NPC.GiftWeights.Anime = anime;
+			this.NPC.GiftWeights.Beauty = beauty;
+			this.NPC.GiftWeights.Individuality = individuality;
+			this.NPC.GiftWeights.Luxury = luxury;
+			this.NPC.GiftWeights.Maniac = maniac;
+			this.NPC.GiftWeights.Meaning = meaning;
+			this.NPC.GiftWeights.Rarity = rarity;
+			this.NPC.GiftWeights.Sexy = sexy;
+			this.NPC.GiftWeights.Toughness = toughness;
+			this.NPC.GiftWeights.Utility = utility;
 		}
 
 		/// <summary>
@@ -671,13 +659,12 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="greeting">The greeting.</param>
 		protected void AddGreeting(int memorability, string greeting)
 		{
-			_greetings.Add(memorability, greeting);
+			this.NPC.Greetings.Add(memorability, greeting);
 		}
 
 		/// <summary>
 		/// Sends Msg with Bgm element.
 		/// </summary>
-		/// <param name="creature"></param>
 		/// <param name="fileName"></param>
 		protected void SetBgm(string fileName)
 		{
@@ -1212,42 +1199,6 @@ namespace Aura.Channel.Scripting.Scripts
 
 		protected enum ItemState : byte { Up = 0, Down = 1 }
 		protected enum GiftReaction { Dislike, Neutral, Like, Love }
-
-		protected class GiftWeights
-		{
-			public int Adult { get; set; }
-			public int Anime { get; set; }
-			public int Beauty { get; set; }
-			public int Individuality { get; set; }
-			public int Luxury { get; set; }
-			public int Maniac { get; set; }
-			public int Meaning { get; set; }
-			public int Rarity { get; set; }
-			public int Sexy { get; set; }
-			public int Toughness { get; set; }
-			public int Utility { get; set; }
-
-			public int CalculateScore(Item gift)
-			{
-				var score = 0;
-
-				var taste = gift.Data.Taste;
-
-				score += this.Adult * taste.Adult;
-				score += this.Anime * taste.Anime;
-				score += this.Beauty * taste.Beauty;
-				score += this.Individuality * taste.Individuality;
-				score += this.Luxury * taste.Luxury;
-				score += this.Maniac * taste.Maniac;
-				score += this.Meaning * taste.Meaning;
-				score += this.Rarity * taste.Rarity;
-				score += this.Sexy * taste.Sexy;
-				score += this.Toughness * taste.Toughness;
-				score += this.Utility * taste.Utility;
-
-				return score;
-			}
-		}
 	}
 
 	public enum Hide { None, Face, Name, Both }

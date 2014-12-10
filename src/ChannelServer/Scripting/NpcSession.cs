@@ -64,11 +64,11 @@ namespace Aura.Channel.Scripting
 		{
 			this.Target = target;
 
-			if (target.AI == null)
+			if (target.ScriptType == null)
 				return false;
 
-			var script = Activator.CreateInstance(target.Script.GetType()) as NpcScript;
-			script.NPC = target.Script.NPC;
+			var script = Activator.CreateInstance(target.ScriptType) as NpcScript;
+			script.NPC = target;
 			script.Player = creature;
 			this.Script = script;
 			return true;

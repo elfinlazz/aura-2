@@ -460,7 +460,7 @@ namespace Aura.Channel.Network.Handlers
 			// TODO: If !Item is giftable..
 			// TODO: If !Npc in range...
 
-			if (npc.Script == null)
+			if (npc.ScriptType == null)
 				return;
 
 			Send.NpcTalkStartR(client.Controlling, npc.EntityId);

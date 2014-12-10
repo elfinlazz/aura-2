@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Collections.Generic;
 using System.Threading;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Shared.Util;
-using Aura.Channel.Scripting;
 using System;
 using Aura.Channel.Network.Sending;
 
@@ -15,9 +15,12 @@ namespace Aura.Channel.World.Entities
 	{
 		private static long _npcId = MabiId.Npcs;
 
-		public NpcScript Script { get; set; }
+		public Type ScriptType { get; set; }
 		public AiScript AI { get; set; }
 		public int SpawnId { get; set; }
+
+		public SortedList<int, string> Greetings { get; set; }
+		public GiftWeightInfo GiftWeights { get; set; }
 
 		/// <summary>
 		/// Location the NPC was spawned at.
@@ -37,6 +40,8 @@ namespace Aura.Channel.World.Entities
 			this.RegionId = 0;
 			this.Life = this.LifeMaxBase = 1000;
 			this.Color1 = this.Color2 = this.Color2 = 0x808080;
+			this.GiftWeights = new GiftWeightInfo();
+			this.Greetings = new SortedList<int, string>();
 		}
 
 		public override void Dispose()
@@ -197,5 +202,42 @@ namespace Aura.Channel.World.Entities
 
 			return (min + ((max - min) * balance));
 		}
+
+		public class GiftWeightInfo
+		{
+			public int Adult { get; set; }
+			public int Anime { get; set; }
+			public int Beauty { get; set; }
+			public int Individuality { get; set; }
+			public int Luxury { get; set; }
+			public int Maniac { get; set; }
+			public int Meaning { get; set; }
+			public int Rarity { get; set; }
+			public int Sexy { get; set; }
+			public int Toughness { get; set; }
+			public int Utility { get; set; }
+
+			public int CalculateScore(Item gift)
+			{
+				var score = 0;
+
+				var taste = gift.Data.Taste;
+
+				score += this.Adult * taste.Adult;
+				score += this.Anime * taste.Anime;
+				score += this.Beauty * taste.Beauty;
+				score += this.Individuality * taste.Individuality;
+				score += this.Luxury * taste.Luxury;
+				score += this.Maniac * taste.Maniac;
+				score += this.Meaning * taste.Meaning;
+				score += this.Rarity * taste.Rarity;
+				score += this.Sexy * taste.Sexy;
+				score += this.Toughness * taste.Toughness;
+				score += this.Utility * taste.Utility;
+
+				return score;
+			}
+		}
+
 	}
 }
