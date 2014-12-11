@@ -327,7 +327,7 @@ namespace Aura.Channel.Scripting.Scripts
 			switch (mood)
 			{
 				case NpcMood.VeryStressed:
-					moodStr = "seems to have something else to do.";
+					moodStr = "is giving me and impression that I am interruping something.";
 					break;
 
 				case NpcMood.Stressed:
