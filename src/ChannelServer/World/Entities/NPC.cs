@@ -205,21 +205,21 @@ namespace Aura.Channel.World.Entities
 
 		public class GiftWeightInfo
 		{
-			public int Adult { get; set; }
-			public int Anime { get; set; }
-			public int Beauty { get; set; }
-			public int Individuality { get; set; }
-			public int Luxury { get; set; }
-			public int Maniac { get; set; }
-			public int Meaning { get; set; }
-			public int Rarity { get; set; }
-			public int Sexy { get; set; }
-			public int Toughness { get; set; }
-			public int Utility { get; set; }
+			public float Adult { get; set; }
+			public float Anime { get; set; }
+			public float Beauty { get; set; }
+			public float Individuality { get; set; }
+			public float Luxury { get; set; }
+			public float Maniac { get; set; }
+			public float Meaning { get; set; }
+			public float Rarity { get; set; }
+			public float Sexy { get; set; }
+			public float Toughness { get; set; }
+			public float Utility { get; set; }
 
 			public int CalculateScore(Item gift)
 			{
-				var score = 0;
+				var score = 0f;
 
 				var taste = gift.Data.Taste;
 
@@ -235,7 +235,7 @@ namespace Aura.Channel.World.Entities
 				score += this.Toughness * taste.Toughness;
 				score += this.Utility * taste.Utility;
 
-				return score;
+				return (int)score;
 			}
 		}
 

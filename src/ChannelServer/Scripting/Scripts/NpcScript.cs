@@ -453,7 +453,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="sexy">The sexy.</param>
 		/// <param name="toughness">The toughness.</param>
 		/// <param name="utility">The utility.</param>
-		protected void SetGiftWeights(int adult, int anime, int beauty, int individuality, int luxury, int maniac, int meaning, int rarity, int sexy, int toughness, int utility)
+		protected void SetGiftWeights(float adult, float anime, float beauty, float individuality, float luxury, float maniac, float meaning, float rarity, float sexy, float toughness, float utility)
 		{
 			this.NPC.GiftWeights.Adult = adult;
 			this.NPC.GiftWeights.Anime = anime;
