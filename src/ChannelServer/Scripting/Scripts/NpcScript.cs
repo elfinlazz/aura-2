@@ -307,7 +307,7 @@ namespace Aura.Channel.Scripting.Scripts
 		};
 
 		/// <summary>
-		/// Gets the mood string for the current move.
+		/// Gets the mood string for the current mood.
 		/// </summary>
 		/// <returns></returns>
 		public string GetMoodString()
@@ -408,8 +408,24 @@ namespace Aura.Channel.Scripting.Scripts
 
 				await this.Keywords(keyword);
 
-				await this.KeywordResponse(keyword);
+				var  fd =this.KeywordResponse(keyword);
+
+				this.Msg(Hide.Name, string.Format("({0})", this.GetStandardKeywordResponse(fd)), this.FavorExpression());
 			}
+		}
+
+		private static readonly string[] _neutralResponses =
+		{
+			Localization.Get("I think I left a good impression."),
+			Localization.Get("The conversation drew a lot of interest."),
+			Localization.Get("That was a great conversation!")
+		};
+
+		private string GetStandardKeywordResponse(int favorDelta)
+		{
+			// Seem to be multiple levels? -5, -2, 0, 2, 5?
+
+			return _neutralResponses.Random();
 		}
 
 		/// <summary>
@@ -423,17 +439,17 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Called after the keyword has been completed.
+		/// Called after the keyword has been completed. Use it to override the 
+		/// default responses and modifiers
 		/// </summary>
 		/// <param name="keyword">The keyword.</param>
-		/// <returns></returns>
-		protected virtual async Task KeywordResponse(string keyword)
+		/// <returns>The amount the NPC's favor has increased for this keyword</returns>
+		protected virtual int KeywordResponse(string keyword)
 		{
-			this.RndMsg(Localization.Get("(I think I left a good impression.)"),
-				Localization.Get("(The conversation drew a lot of interest.)"),
-				Localization.Get("(That was a great conversation!)"));
+			this.Stress += this.Random(3);
+			this.Memorability += this.Random(2);
 
-			await Task.Yield(); // Shut up, compiler
+			return 0;
 		}
 
 		// Setup
