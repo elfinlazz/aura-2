@@ -821,6 +821,12 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutByte(0);    // Banner enabled?
 			}
 
+			// [190100, NA198 (11.12.2014)] ?
+			// --------------------------------------------------------------
+			{
+				packet.PutInt(0);
+			}
+
 			// [180300, NA166 (18.09.2013)] ?
 			// Required, even though it looks like a list.
 			// --------------------------------------------------------------
