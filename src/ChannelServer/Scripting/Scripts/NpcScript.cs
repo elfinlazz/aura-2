@@ -426,6 +426,8 @@ namespace Aura.Channel.Scripting.Scripts
 			// Seem to be multiple levels? -5, -2, 0, 2, 5?
 
 			return _neutralResponses.Random();
+
+			// (It seems I left quite a good impression.)
 		}
 
 		/// <summary>
