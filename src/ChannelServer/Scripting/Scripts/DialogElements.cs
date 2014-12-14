@@ -9,6 +9,11 @@ namespace Aura.Channel.Scripting.Scripts
 {
 	public class DialogElement
 	{
+		public static implicit operator DialogElement(string msg)
+		{
+			return (DialogText)msg;
+		}
+
 		public List<DialogElement> Children { get; protected set; }
 
 		public DialogElement()
@@ -52,6 +57,18 @@ namespace Aura.Channel.Scripting.Scripts
 	public class DialogText : DialogElement
 	{
 		public string Text { get; set; }
+
+		/// <summary>
+		/// Performs an implicit conversion from <see cref="System.String"/> to <see cref="DialogText"/>.
+		/// </summary>
+		/// <param name="msg">The msg.</param>
+		/// <returns>
+		/// A new DialogText instance with the string as the text.
+		/// </returns>
+		public static implicit operator DialogText(string msg)
+		{
+			return new DialogText(msg);
+		}
 
 		public DialogText(string format, params object[] args)
 		{

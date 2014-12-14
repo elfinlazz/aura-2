@@ -641,32 +641,6 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		/// <summary>
-		/// Sends dialog to player's client.
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="elements"></param>
-		public void Msg(string message, params DialogElement[] elements)
-		{
-			this.Msg(Hide.None, message, elements);
-		}
-
-		/// <summary>
-		/// Sends dialog to player's client.
-		/// </summary>
-		/// <param name="hide"></param>
-		/// <param name="message"></param>
-		/// <param name="elements"></param>
-		public void Msg(Hide hide, string message, params DialogElement[] elements)
-		{
-			var mes = new DialogElement();
-
-			mes.Add(new DialogText(message));
-			mes.Add(elements);
-
-			this.Msg(hide, mes);
-		}
-
-		/// <summary>
 		/// Sends one of the passed messenges.
 		/// </summary>
 		/// <param name="msgs"></param>
