@@ -343,14 +343,22 @@ namespace Aura.Shared.Network
 		public const int TouchPropR = 0x908C;
 		public const int PropInteraction = 0x908D; // Doors?
 		public const int PlaySound = 0x908F;
-		public const int Effect = 0x9090;
-		public const int EffectDelayed = 0x9091;
-		public const int QuestOwlComplete = 0x9093;
-		public const int QuestOwlNew = 0x9094;
-		public const int PartyWantedUpdate = 0x9095;
-		public const int PvPInformation = 0x9096;
-		public const int NaoRevivalExit = 0x9098;
-		public const int NaoRevivalEntrance = 0x909C;
+
+		// [190100, NA198 (11.12.2014)] Something added here?
+		// Effect~NaoRevivalEntrance definitely shifted by 1,
+		// prop hitting was still the same.
+
+		public const int Effect = 0x9091;
+		public const int EffectDelayed = 0x9092;
+		public const int QuestOwlComplete = 0x9094;
+		public const int QuestOwlNew = 0x9095;
+		public const int PartyWantedUpdate = 0x9096;
+		public const int PvPInformation = 0x9097;
+		public const int NaoRevivalExit = 0x9099;
+		public const int NaoRevivalEntrance = 0x909D;
+
+		// [190100, NA198 (11.12.2014)] End of above's shift?
+
 		public const int DungeonInfo = 0x9470;
 		public const int ArenaRoundInfo = 0x9667;
 		public const int ArenaRoundInfoCancel = 0x9668;
