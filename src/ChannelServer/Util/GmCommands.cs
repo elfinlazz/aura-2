@@ -66,6 +66,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "broadcast", "<message>", HandleBroadcast);
 			Add(50, 50, "allskills", "", HandleAllSkills);
 			Add(50, 50, "alltitles", "", HandleAllTitles);
+			Add(50, 50, "gold", "<amount>", HandleGold);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -1192,6 +1193,37 @@ namespace Aura.Channel.Util
 
 				sender.Vars.Temp.DistanceCommandPos = null;
 			}
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleGold(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (args.Count < 2)
+				return CommandResult.InvalidArgument;
+
+			int amount;
+			if (!int.TryParse(args[1], out amount))
+				return CommandResult.InvalidArgument;
+
+			if (amount > 1000000)
+				amount = 1000000;
+
+			var rnd = RandomProvider.Get();
+			var i = amount;
+			while (i > 0)
+			{
+				var stack = new Item(2000);
+				stack.Info.Amount = (ushort)Math.Min(1000, i);
+				i -= stack.Info.Amount;
+
+				if (!target.Inventory.Insert(stack, false))
+					stack.Drop(target.Region, target.GetPosition().GetRandomInRange(500, rnd));
+			}
+
+			Send.SystemMessage(sender, Localization.Get("Spawned {0:n0}g."), amount);
+			if (sender != target)
+				Send.SystemMessage(target, Localization.Get("{0} gave you {1:n0}g."), sender.Name, amount);
 
 			return CommandResult.Okay;
 		}

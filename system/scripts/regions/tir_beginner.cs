@@ -29,8 +29,8 @@ public class TirBeginnerRegionScript : RegionScript
 			// Only do this once.
 			if (creature.Vars.Perm["TinCutscene"] != null) return;
 
-			if (!creature.Quests.Has(1000001))
-				creature.Quests.Start(1000001); // Nao's Letter of Introduction
+			if (!creature.Quests.Has(202001))
+				creature.Quests.Start(202001); // Nao's Letter of Introduction
 
 			var cutscene = new Cutscene("tuto_meet_tin", creature);
 			cutscene.AddActor("me", creature);

@@ -377,7 +377,6 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Sends Msg with Bgm element.
 		/// </summary>
-		/// <param name="creature"></param>
 		/// <param name="fileName"></param>
 		protected void SetBgm(string fileName)
 		{
@@ -651,32 +650,6 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		/// <summary>
-		/// Sends dialog to player's client.
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="elements"></param>
-		public void Msg(string message, params DialogElement[] elements)
-		{
-			this.Msg(Hide.None, message, elements);
-		}
-
-		/// <summary>
-		/// Sends dialog to player's client.
-		/// </summary>
-		/// <param name="hide"></param>
-		/// <param name="message"></param>
-		/// <param name="elements"></param>
-		public void Msg(Hide hide, string message, params DialogElement[] elements)
-		{
-			var mes = new DialogElement();
-
-			mes.Add(new DialogText(message));
-			mes.Add(elements);
-
-			this.Msg(hide, mes);
-		}
-
-		/// <summary>
 		/// Sends one of the passed messenges.
 		/// </summary>
 		/// <param name="msgs"></param>
@@ -863,6 +836,14 @@ namespace Aura.Channel.Scripting.Scripts
 		public DialogText Text(string format, params object[] args) { return new DialogText(format, args); }
 
 		public DialogHotkey Hotkey(string text) { return new DialogHotkey(text); }
+
+		public DialogMinimap Minimap(bool zoom, bool maxSize, bool center) { return new DialogMinimap(zoom, maxSize, center); }
+
+		public DialogShowPosition ShowPosition(int region, int x, int y, int remainingTime) { return new DialogShowPosition(region, x, y, remainingTime); }
+
+		public DialogShowDirection ShowDirection(int x, int y, int angle) { return new DialogShowDirection(x, y, angle); }
+
+		public DialogSetDefaultName SetDefaultName(string name) { return new DialogSetDefaultName(name); }
 
 		// ------------------------------------------------------------------
 

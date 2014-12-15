@@ -98,13 +98,17 @@ namespace Aura.Channel.Skills.Life
 			// Update chair
 			sittingProp.Xml.SetAttributeValue("OWNER", creature.EntityId);
 			sittingProp.Xml.SetAttributeValue("SITCHAR", creature.EntityId);
-			
+
 			Send.PropUpdate(sittingProp);
 
 			creature.Temp.CurrentChairData = chairData;
 			creature.Temp.SittingProp = sittingProp;
 		}
 
+		/// <summary>
+		/// Removes current chair prop.
+		/// </summary>
+		/// <param name="creature"></param>
 		private void RemoveChair(Creature creature)
 		{
 			if (creature.Temp.SittingProp == null || creature.Temp.CurrentChairData == null)
@@ -117,7 +121,7 @@ namespace Aura.Channel.Skills.Life
 			// Update chair
 			creature.Temp.SittingProp.Xml.SetAttributeValue("OWNER", 0);
 			creature.Temp.SittingProp.Xml.SetAttributeValue("SITCHAR", 0);
-			
+
 			Send.PropUpdate(creature.Temp.SittingProp);
 
 			Send.AssignSittingProp(creature, 0, 0);
