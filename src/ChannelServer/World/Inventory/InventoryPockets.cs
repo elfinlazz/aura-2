@@ -111,9 +111,9 @@ namespace Aura.Channel.World.Inventory
 	/// </summary>
 	public class InventoryPocketNormal : InventoryPocket
 	{
-		private Dictionary<long, Item> _items;
-		private Item[,] _map;
-		private int _width, _height;
+		protected Dictionary<long, Item> _items;
+		protected Item[,] _map;
+		protected int _width, _height;
 
 		public InventoryPocketNormal(Pocket pocket, int width, int height)
 			: base(pocket)

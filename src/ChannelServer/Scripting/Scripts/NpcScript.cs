@@ -16,6 +16,7 @@ using Aura.Data;
 using Aura.Shared.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -643,7 +644,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public void OpenBank()
 		{
-			Send.OpenBank(this.Player, this.Player.Client.Account.Characters.Where(c => c.IsHuman), BankTabRace.Human);
+			Send.OpenBank(this.Player, this.Player.Client.Account.Bank, BankTabRace.Human);
 		}
 
 		// Dialog

@@ -16,6 +16,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Data;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Scripting.Scripts;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -363,17 +364,13 @@ namespace Aura.Channel.Network.Handlers
 		public void RequestBankTabs(ChannelClient client, Packet packet)
 		{
 			var race = (BankTabRace)packet.GetByte();
-			Log.Debug(race);
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			switch (race)
-			{
-				default:
-				case BankTabRace.Human: Send.OpenBank(creature, client.Account.Characters.Where(c => c.IsHuman), BankTabRace.Human); break;
-				case BankTabRace.Elf: Send.OpenBank(creature, client.Account.Characters.Where(c => c.IsElf), BankTabRace.Elf); break;
-				case BankTabRace.Giant: Send.OpenBank(creature, client.Account.Characters.Where(c => c.IsGiant), BankTabRace.Giant); break;
-			}
+			if (race <= BankTabRace.Human || race >= BankTabRace.Giant)
+				race = BankTabRace.Human;
+
+			Send.OpenBank(creature, client.Account.Bank, race);
 		}
 	}
 }

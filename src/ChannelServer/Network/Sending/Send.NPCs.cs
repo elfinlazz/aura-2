@@ -10,6 +10,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Channel.Network.Sending.Helpers;
 using Aura.Shared.Mabi.Const;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -157,7 +158,9 @@ namespace Aura.Channel.Network.Sending
 		/// Sends OpenBank to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
-		public static void OpenBank(Creature creature, IEnumerable<Character> characters, BankTabRace race)
+		/// <param name="bank"></param>
+		/// <param name="race"></param>
+		public static void OpenBank(Creature creature, BankInventory bank, BankTabRace race)
 		{
 			var packet = new Packet(Op.OpenBank, creature.EntityId);
 
@@ -166,25 +169,27 @@ namespace Aura.Channel.Network.Sending
 			packet.PutLong(DateTime.Now);
 			packet.PutByte(0);
 			packet.PutString(creature.Client.Account.Id);
-			packet.PutString("BelfastBank"); // Bank id
-			packet.PutString("Bank"); // Bank title
-			packet.PutInt(0); // Gold
+			packet.PutString("Global"); // Current bank id
+			packet.PutString("Bank"); // Current bank title
+			packet.PutInt(bank.Gold);
 
-			packet.PutInt(characters.Count());
-			foreach (var character in characters)
+			var tabList = bank.GetTabList(race);
+			packet.PutInt(tabList.Count);
+			foreach (var tab in tabList)
 			{
-				packet.PutString(character.Name); // Tab title
-				packet.PutByte((byte)race); // Race
-				packet.PutInt(12); // X
-				packet.PutInt(8); // Y
-				packet.PutInt(0); // Item count
-				{
-					//var item = new Item(creature.Inventory.GetItemAt(Pocket.Armor, 0, 0).Info.Id);
+				packet.PutString(tab.Name);
+				packet.PutByte((byte)tab.Race);
+				packet.PutInt(tab.Width);
+				packet.PutInt(tab.Height);
 
-					//packet.PutString("BelfastBank"); // Bank id
-					//packet.PutULong(18446744017659355058);
-					//packet.PutULong(0);
-					//packet.AddItemInfo(item, ItemPacketType.Private);
+				var itemList = tab.GetItemList();
+				packet.PutInt(itemList.Count);
+				foreach (var item in itemList)
+				{
+					packet.PutString("Global"); // Bank id
+					packet.PutULong(18446744017659355058);
+					packet.PutULong(0);
+					packet.AddItemInfo(item, ItemPacketType.Private);
 				}
 			}
 
@@ -203,10 +208,5 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
-	}
-
-	public enum BankTabRace : byte
-	{
-		Human, Elf, Giant
 	}
 }
