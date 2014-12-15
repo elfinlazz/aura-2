@@ -232,6 +232,17 @@ namespace Aura.Shared.Network
 		public const int OpenBank = 0x7212;
 		public const int CloseBank = 0x7215;
 		public const int CloseBankR = 0x7216;
+		public const int BankWithdrawItem = 0x7217;
+		public const int BankWithdrawItemR = 0x7218;
+		public const int BankDepositItem = 0x7219;
+		public const int BankDepositItemR = 0x721A;
+		public const int BankDepositGold = 0x721B;
+		public const int BankDepositGoldR = 0x721C;
+		public const int BankWithdrawGold = 0x721D;
+		public const int BankWithdrawGoldR = 0x721E;
+		public const int BankUpdateGold = 0x721F;
+		public const int BankAddItem = 0x7220;
+		public const int BankRemoveItem = 0x7221;
 		public const int OpenMail = 0x7242;
 		public const int CloseMail = 0x7243;
 		public const int ConfirmMailRecipent = 0x7244;
