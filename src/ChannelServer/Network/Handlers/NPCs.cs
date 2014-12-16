@@ -367,7 +367,7 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (race <= BankTabRace.Human || race >= BankTabRace.Giant)
+			if (race < BankTabRace.Human || race > BankTabRace.Giant)
 				race = BankTabRace.Human;
 
 			Send.OpenBank(creature, client.Account.Bank, race);
