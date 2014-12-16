@@ -658,6 +658,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="elements"></param>
 		public void Msg(params DialogElement[] elements)
 		{
+			this.LocalizeDialog(ref elements);
+
 			this.Msg(Hide.None, elements);
 		}
 
@@ -668,6 +670,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="elements"></param>
 		public void Msg(Hide hide, params DialogElement[] elements)
 		{
+			this.LocalizeDialog(ref elements);
+
 			var element = new DialogElement();
 
 			if (hide == Hide.Face || hide == Hide.Both)
@@ -694,6 +698,25 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Player.EntityId, HttpUtility.HtmlEncode(element.ToString()));
 
 			Send.NpcTalk(this.Player, xml);
+		}
+
+		/// <summary>
+		/// Replaces text of localizable elements with translated texts,
+		/// if any are defined.
+		/// </summary>
+		/// <param name="elements"></param>
+		private void LocalizeDialog(ref DialogElement[] elements)
+		{
+			foreach (var element in elements)
+			{
+				var text = element as DialogText;
+				if (text != null)
+					text.Text = Localization.Get(text.Text);
+
+				var button = element as DialogButton;
+				if (button != null)
+					button.Text = Localization.Get(button.Text);
+			}
 		}
 
 		/// <summary>

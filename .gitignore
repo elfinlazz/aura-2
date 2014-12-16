@@ -20,6 +20,8 @@
 /user/save/*
 !/user/save/readme.txt
 
+/user/localization/*
+
 #################
 ## Visual Studio
 #################
