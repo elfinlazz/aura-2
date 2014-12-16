@@ -153,6 +153,14 @@ namespace Aura.Channel.World.Inventory
 				this.Gold += item.Info.Amount;
 				Send.BankUpdateGold(creature, this.Gold);
 			}
+			// Add check as gold
+			else if (item.Info.Id == 2004)
+			{
+				var amount = item.MetaData1.GetInt("EVALUE");
+
+				this.Gold += amount;
+				Send.BankUpdateGold(creature, this.Gold);
+			}
 			// Normal items
 			else
 			{

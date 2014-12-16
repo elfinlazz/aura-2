@@ -405,16 +405,39 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.BankWithdrawGold)]
 		public void BankWithdrawGold(ChannelClient client, Packet packet)
 		{
-			var check = packet.GetBool(); // TODO: Checks
-			var amount = packet.GetInt();
+			var check = packet.GetBool();
+			var withdrawAmount = packet.GetInt();
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (client.Account.Bank.Gold < amount)
-				throw new ModerateViolation("BankWithdrawGold: '{0}' ({1}) tried to withdraw more than he has.", creature.Name, creature.EntityIdHex);
+			var removeAmount = withdrawAmount;
+			if (check) removeAmount += withdrawAmount / 20; // +5%
 
-			creature.Inventory.AddGold(amount);
-			client.Account.Bank.RemoveGold(creature, amount);
+			if (client.Account.Bank.Gold < removeAmount)
+				throw new ModerateViolation("BankWithdrawGold: '{0}' ({1}) tried to withdraw more than he has ({2}/{3}).", creature.Name, creature.EntityIdHex, removeAmount, client.Account.Bank.Gold);
+
+			// Add gold to inventory if no check
+			if (!check)
+			{
+				creature.Inventory.AddGold(withdrawAmount);
+			}
+			// Add check item to creature's cursor pocket if check
+			else
+			{
+				var item = new Item(2004); // Check
+				item.MetaData1.SetInt("EVALUE", withdrawAmount);
+
+				// This shouldn't happen.
+				if (!creature.Inventory.Add(item, Pocket.Cursor))
+				{
+					Log.Debug("BankWithdrawGold: Unable to add check to cursor.");
+
+					Send.BankWithdrawGoldR(creature, false);
+					return;
+				}
+			}
+
+			client.Account.Bank.RemoveGold(creature, removeAmount);
 
 			Send.BankWithdrawGoldR(creature, true);
 		}
