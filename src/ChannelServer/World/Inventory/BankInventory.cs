@@ -67,6 +67,21 @@ namespace Aura.Channel.World.Inventory
 			lock (this.Tabs)
 				return this.Tabs.Values.Where(a => a.Race == race).ToList();
 		}
+
+		/// <summary>
+		/// Adds item to tab without any checks (only use for initialization).
+		/// </summary>
+		/// <param name="tabName"></param>
+		/// <param name="item"></param>
+		public bool InitAdd(string tabName, Item item)
+		{
+			if (!this.Tabs.ContainsKey(tabName))
+				return false;
+
+			this.Tabs[tabName].AddUnsafe(item);
+
+			return true;
+		}
 	}
 
 	public class BankTabPocket : InventoryPocketNormal
@@ -89,8 +104,6 @@ namespace Aura.Channel.World.Inventory
 				return _items.Values.ToList();
 		}
 	}
-
-
 
 	public enum BankTabRace : byte
 	{
