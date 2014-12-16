@@ -76,8 +76,13 @@ namespace Aura.Shared.Util
 						if (state == 2)
 						{
 							var val = buffer.ToString();
+							val = val.Replace("\\t", "\t");
+							val = val.Replace("\\r\\n", "\n");
+							val = val.Replace("\\n", "\n");
+
 							if (!string.IsNullOrWhiteSpace(val))
 								_storage[id] = val;
+
 							buffer.Clear();
 						}
 
@@ -90,6 +95,10 @@ namespace Aura.Shared.Util
 						if (state == 1)
 						{
 							id = buffer.ToString();
+							id = id.Replace("\\t", "\t");
+							id = id.Replace("\\r\\n", "\n");
+							id = id.Replace("\\n", "\n");
+
 							buffer.Clear();
 						}
 
