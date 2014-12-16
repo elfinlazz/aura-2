@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Aura.Shared.Util
@@ -30,9 +31,7 @@ namespace Aura.Shared.Util
 			}
 			else if (Directory.Exists(path))
 			{
-				var di = new DirectoryInfo(path);
-
-				var files = Directory.EnumerateFiles(path);
+				var files = Directory.EnumerateFiles(path).Where(a => Path.GetExtension(a).ToLower() == ".po");
 				foreach (var file in files)
 					LoadFile(file);
 
@@ -52,30 +51,56 @@ namespace Aura.Shared.Util
 		/// <param name="path"></param>
 		private static void LoadFile(string path)
 		{
+			if (!File.Exists(path))
+				return;
+
 			using (var sr = new StreamReader(path, Encoding.UTF8))
 			{
-				if (!File.Exists(path))
-					return;
+				var buffer = new StringBuilder();
+				var id = "";
+				var state = 0; // 1=id, 2=str
 
 				while (!sr.EndOfStream)
 				{
 					var line = sr.ReadLine().Trim();
-					if (line.Length < 3 || line.StartsWith("//"))
+					var start = -1;
+
+					// Skip empty lines and comments
+					if (string.IsNullOrWhiteSpace(line) || line[0] == '#' || (start = line.IndexOf('"')) == -1)
 						continue;
 
-					// Next line if not tab found
-					var pos = line.IndexOf('\t');
-					if (pos < 0) continue;
+					if (line.StartsWith("msgid"))
+					{
+						// If we were reading a str value, put it into storage
+						// if it's not blank.
+						if (state == 2)
+						{
+							var val = buffer.ToString();
+							if (!string.IsNullOrWhiteSpace(val))
+								_storage[id] = val;
+							buffer.Clear();
+						}
 
-					var key = line.Substring(0, pos).Trim();
-					var val = line.Substring(pos + 1).Trim();
+						state = 1;
+					}
 
-					// Replace \t and [\r]\n
-					val = val.Replace("\\t", "\t");
-					val = val.Replace("\\r\\n", "\n");
-					val = val.Replace("\\n", "\n");
+					if (line.StartsWith("msgstr"))
+					{
+						// If we were reading an id, save it
+						if (state == 1)
+						{
+							id = buffer.ToString();
+							buffer.Clear();
+						}
 
-					_storage[key] = val;
+						state = 2;
+					}
+
+					// Read string in between the "s
+					start += 1;
+					var length = line.LastIndexOf('"') - start;
+
+					buffer.Append(line.Substring(start, length));
 				}
 			}
 		}
