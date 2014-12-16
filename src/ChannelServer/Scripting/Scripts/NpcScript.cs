@@ -16,6 +16,7 @@ using Aura.Data;
 using Aura.Shared.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
+using System.Text;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -695,9 +696,59 @@ namespace Aura.Channel.Scripting.Scripts
 							"</arguments>" +
 						"</function>" +
 				"</call>",
-			this.Player.EntityId, HttpUtility.HtmlEncode(element.ToString()));
+			this.Player.EntityId, HtmlEncode(element.ToString()));
 
 			Send.NpcTalk(this.Player, xml);
+		}
+
+		/// <summary>
+		/// Encodes HTML characters in string.
+		/// </summary>
+		/// <remarks>
+		/// HttpUtility.HtmlEncode encodes UTF8 characters that don't have
+		/// to be converted and that the client doesn't understand encoded.
+		/// </remarks>
+		/// <param name="html"></param>
+		/// <returns></returns>
+		private string HtmlEncode(string html)
+		{
+			if (string.IsNullOrWhiteSpace(html))
+				return "";
+
+			var result = new StringBuilder();
+
+			for (int i = 0; i < html.Length; i++)
+			{
+				var chr = html[i];
+				switch (chr)
+				{
+					case '&':
+						result.Append("&amp;");
+						break;
+
+					case '>':
+						result.Append("&gt;");
+						break;
+
+					case '<':
+						result.Append("&lt;");
+						break;
+
+					case '"':
+						result.Append("&quot;");
+						break;
+
+					case '\'':
+						result.Append("&#39;");
+						break;
+
+					default:
+						result.Append(chr);
+						break;
+				}
+			}
+
+			return result.ToString();
 		}
 
 		/// <summary>
