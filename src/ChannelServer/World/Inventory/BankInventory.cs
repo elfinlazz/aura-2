@@ -147,21 +147,31 @@ namespace Aura.Channel.World.Inventory
 			var item = creature.Inventory.GetItem(itemEntityId);
 			if (item == null) return false;
 
-			// Generate a new item, makes moving and updating easier.
-			var newItem = new Item(item);
+			// Add gold directly
+			if (item.Info.Id == 2000)
+			{
+				this.Gold += item.Info.Amount;
+				Send.BankUpdateGold(creature, this.Gold);
+			}
+			// Normal items
+			else
+			{
+				// Generate a new item, makes moving and updating easier.
+				var newItem = new Item(item);
 
-			// Try adding item to tab
-			if (!tab.TryAdd(newItem, x, y))
-				return false;
+				// Try adding item to tab
+				if (!tab.TryAdd(newItem, x, y))
+					return false;
 
-			// Update bank id
-			newItem.Bank = bankId;
+				// Update bank id
+				newItem.Bank = bankId;
+
+				// Update client
+				Send.BankAddItem(creature, newItem, bankId, tabName);
+			}
 
 			// Remove item from inventory
 			creature.Inventory.Remove(item);
-
-			// Update client
-			Send.BankAddItem(creature, newItem, bankId, tabName);
 
 			return true;
 		}
