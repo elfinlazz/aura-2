@@ -124,6 +124,38 @@ namespace Aura.Channel.World.Inventory
 
 			return this.Gold;
 		}
+
+		/// <summary>
+		/// Moves item from creature's inventory into bank.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		/// <param name="bankId"></param>
+		/// <param name="tabName"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public bool DepositItem(Creature creature, Item item, string bankId, string tabName, int x, int y)
+		{
+			if (!this.Tabs.ContainsKey(tabName))
+				return false;
+
+			var originalPocket = item.Info.Pocket;
+
+			if (this.Tabs[tabName].TryAdd(item, x, y))
+			{
+				item.Bank = bankId;
+
+				creature.Inventory.Remove(item, false);
+
+				Send.ItemRemove(creature, item, originalPocket);
+				Send.BankAddItem(creature, item, bankId, tabName);
+
+				return true;
+			}
+
+			return false;
+		}
 	}
 
 	public class BankTabPocket : InventoryPocketNormal
@@ -140,10 +172,40 @@ namespace Aura.Channel.World.Inventory
 			this.Race = race;
 		}
 
+		/// <summary>
+		/// Returns thread-safe list of items in this pocket.
+		/// </summary>
+		/// <returns></returns>
 		public IList<Item> GetItemList()
 		{
 			lock (_items)
 				return _items.Values.ToList();
+		}
+
+		/// <summary>
+		/// Attempts to add the item at the given position.
+		/// </summary>
+		/// <remarks>
+		/// TODO: Inventory really needs some refactoring, we shouldn't have
+		///   to override such methods.
+		/// </remarks>
+		/// <param name="item"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public bool TryAdd(Item item, int x, int y)
+		{
+			if (x + item.Data.Width > _width || y + item.Data.Height > _height)
+				return false;
+
+			var collidingItems = this.GetCollidingItems((uint)x, (uint)y, item);
+			if (collidingItems.Count > 0)
+				return false;
+
+			item.Move(this.Pocket, x, y);
+			this.AddUnsafe(item);
+
+			return true;
 		}
 	}
 

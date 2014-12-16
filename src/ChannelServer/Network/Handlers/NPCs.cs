@@ -418,5 +418,29 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.BankWithdrawGoldR(creature, true);
 		}
+
+		/// <summary>
+		/// Sent when depositing gold in the bank.
+		/// </summary>
+		/// 0001 [005000CA6F3EE634] Long   : 22518867586639412
+		/// 0002 [................] String : Exec
+		/// 0003 [........0000000B] Int    : 11
+		/// 0004 [........00000004] Int    : 4
+		/// </example>
+		[PacketHandler(Op.BankDepositItem)]
+		public void BankDepositItem(ChannelClient client, Packet packet)
+		{
+			var itemEntityId = packet.GetLong();
+			var tabName = packet.GetString();
+			var posX = packet.GetInt();
+			var posY = packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+			var item = creature.Inventory.GetItemSafe(itemEntityId);
+
+			var success = client.Account.Bank.DepositItem(creature, item, "Global", tabName, posX, posY);
+
+			Send.BankDepositItemR(creature, true);
+		}
 	}
 }

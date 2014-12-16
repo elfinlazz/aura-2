@@ -247,5 +247,35 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends BankDepositItemR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void BankDepositItemR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.BankDepositItemR, creature.EntityId);
+
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends BankAddItem to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void BankAddItem(Creature creature, Item item, string bankId, string tabName)
+		{
+			var packet = new Packet(Op.BankAddItem, creature.EntityId);
+
+			packet.PutString(tabName);
+			packet.PutString(bankId);
+			packet.PutLong(0);
+			packet.PutLong(0);
+			packet.AddItemInfo(item, ItemPacketType.Private);
+
+			creature.Client.Send(packet);
+		}
 	}
 }
