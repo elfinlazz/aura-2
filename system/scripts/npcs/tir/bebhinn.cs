@@ -34,11 +34,7 @@ public class BebhinnBaseScript : NpcScript
 	{
 		SetBgm("NPC_Bebhinn.mp3");
 	
-		await Intro(
-			"A young lady is admiring her nails as you enter.",
-			"When she notices you, she looks up expectantly, as if waiting for you to liven things up.",
-			"Her big, blue eyes sparkle with charm and fun, and her subtle smile creates irresistable dimples."
-		);
+		await Intro("A young lady is admiring her nails as you enter.<br/>When she notices you, she looks up expectantly, as if waiting for you to liven things up.<br/>Her big, blue eyes sparkle with charm and fun, and her subtle smile creates irresistable dimples.");
 		
 		Msg("May I help you?", Button("Start Conversation", "@talk"), Button("Open My Account", "@bank"), Button("Redeem Coupon", "@redeem"), Button("Shop", "@shop"));
 		
