@@ -197,7 +197,7 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
-		/// Sends OpenBank to creature's client.
+		/// Sends CloseBankR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
 		public static void CloseBankR(Creature creature)
@@ -205,6 +205,45 @@ namespace Aura.Channel.Network.Sending
 			var packet = new Packet(Op.CloseBankR, creature.EntityId);
 
 			packet.PutByte(true);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends BankDepositGoldR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void BankDepositGoldR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.BankDepositGoldR, creature.EntityId);
+
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends BankWithdrawGoldR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void BankWithdrawGoldR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.BankWithdrawGoldR, creature.EntityId);
+
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends BankUpdateGold to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void BankUpdateGold(Creature creature, int amount)
+		{
+			var packet = new Packet(Op.BankUpdateGold, creature.EntityId);
+
+			packet.PutInt(amount);
 
 			creature.Client.Send(packet);
 		}

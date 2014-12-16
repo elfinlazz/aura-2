@@ -372,5 +372,51 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.OpenBank(creature, client.Account.Bank, race);
 		}
+
+		/// <summary>
+		/// Sent when depositing gold in the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [........00000014] Int    : 20
+		/// </example>
+		[PacketHandler(Op.BankDepositGold)]
+		public void BankDepositGold(ChannelClient client, Packet packet)
+		{
+			var amount = packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			if (creature.Inventory.Gold < amount)
+				throw new ModerateViolation("BankDepositGold: '{0}' ({1}) tried to deposit more than he has.", creature.Name, creature.EntityIdHex);
+
+			creature.Inventory.RemoveGold(amount);
+			client.Account.Bank.AddGold(creature, amount);
+
+			Send.BankDepositGoldR(creature, true);
+		}
+
+		/// <summary>
+		/// Sent when withdrawing gold from the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [..............00] Byte   : 0
+		/// 0002 [........00000014] Int    : 20
+		/// </example>
+		[PacketHandler(Op.BankWithdrawGold)]
+		public void BankWithdrawGold(ChannelClient client, Packet packet)
+		{
+			var check = packet.GetBool(); // TODO: Checks
+			var amount = packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			if (client.Account.Bank.Gold < amount)
+				throw new ModerateViolation("BankWithdrawGold: '{0}' ({1}) tried to withdraw more than he has.", creature.Name, creature.EntityIdHex);
+
+			creature.Inventory.AddGold(amount);
+			client.Account.Bank.RemoveGold(creature, amount);
+
+			Send.BankWithdrawGoldR(creature, true);
+		}
 	}
 }

@@ -20,9 +20,9 @@ namespace Aura.Channel.World.Inventory
 		private Dictionary<string, BankTabPocket> Tabs { get; set; }
 
 		/// <summary>
-		/// Amount of silver.
+		/// Amount of silver. Use Add/RemoveGold to automatically update the client.
 		/// </summary>
-		public int Gold { get; private set; }
+		public int Gold { get; set; }
 
 		/// <summary>
 		/// Creates new account bank.
@@ -95,6 +95,34 @@ namespace Aura.Channel.World.Inventory
 			this.Tabs[tabName].AddUnsafe(item);
 
 			return true;
+		}
+
+		/// <summary>
+		/// Adds gold to bank, sends update, and returns the new amount.
+		/// </summary>
+		/// <param name="creature">Creature removing gold (needed for updating)</param>
+		/// <param name="amount">Amount of gold</param>
+		/// <returns>New gold amount after adding</returns>
+		public int AddGold(Creature creature, int amount)
+		{
+			this.Gold += amount;
+			Send.BankUpdateGold(creature, this.Gold);
+
+			return this.Gold;
+		}
+
+		/// <summary>
+		/// Removes gold to bank, sends update, and returns the new amount.
+		/// </summary>
+		/// <param name="creature">Creature adding gold (needed for updating)</param>
+		/// <param name="amount">Amount of gold</param>
+		/// <returns>New gold amount after removing</returns>
+		public int RemoveGold(Creature creature, int amount)
+		{
+			this.Gold -= amount;
+			Send.BankUpdateGold(creature, this.Gold);
+
+			return this.Gold;
 		}
 	}
 
