@@ -135,26 +135,68 @@ namespace Aura.Channel.World.Inventory
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <returns></returns>
-		public bool DepositItem(Creature creature, Item item, string bankId, string tabName, int x, int y)
+		public bool DepositItem(Creature creature, long itemEntityId, string bankId, string tabName, int x, int y)
 		{
+			// Check tab
 			if (!this.Tabs.ContainsKey(tabName))
 				return false;
 
-			var originalPocket = item.Info.Pocket;
+			var tab = this.Tabs[tabName];
 
-			if (this.Tabs[tabName].TryAdd(item, x, y))
-			{
-				item.Bank = bankId;
+			// Check item
+			var item = creature.Inventory.GetItem(itemEntityId);
+			if (item == null) return false;
 
-				creature.Inventory.Remove(item, false);
+			// Generate a new item, makes moving and updating easier.
+			var newItem = new Item(item);
 
-				Send.ItemRemove(creature, item, originalPocket);
-				Send.BankAddItem(creature, item, bankId, tabName);
+			// Try adding item to tab
+			if (!tab.TryAdd(newItem, x, y))
+				return false;
 
-				return true;
-			}
+			// Update bank id
+			newItem.Bank = bankId;
 
-			return false;
+			// Remove item from inventory
+			creature.Inventory.Remove(item);
+
+			// Update client
+			Send.BankAddItem(creature, newItem, bankId, tabName);
+
+			return true;
+		}
+
+		/// <summary>
+		/// Moves item with given id from bank to creature's cursor pocket.
+		/// Returns whether it was successful or not.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="itemEntityId"></param>
+		/// <returns></returns>
+		public bool WithdrawItem(Creature creature, string tabName, long itemEntityId)
+		{
+			// Check tab
+			if (!this.Tabs.ContainsKey(tabName))
+				return false;
+
+			var tab = this.Tabs[tabName];
+
+			// Check item
+			var item = tab.GetItem(itemEntityId);
+			if (item == null) return false;
+
+			// Generate a new item, makes moving and updating easier.
+			var newItem = new Item(item);
+
+			// Try moving item into cursor pocket
+			if (!creature.Inventory.Add(newItem, Pocket.Cursor))
+				return false;
+
+			// Remove item from bank
+			tab.Remove(item);
+			Send.BankRemoveItem(creature, tabName, itemEntityId);
+
+			return true;
 		}
 	}
 

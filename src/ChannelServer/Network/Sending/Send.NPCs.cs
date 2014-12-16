@@ -213,6 +213,7 @@ namespace Aura.Channel.Network.Sending
 		/// Sends BankDepositGoldR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="success"></param>
 		public static void BankDepositGoldR(Creature creature, bool success)
 		{
 			var packet = new Packet(Op.BankDepositGoldR, creature.EntityId);
@@ -226,6 +227,7 @@ namespace Aura.Channel.Network.Sending
 		/// Sends BankWithdrawGoldR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="success"></param>
 		public static void BankWithdrawGoldR(Creature creature, bool success)
 		{
 			var packet = new Packet(Op.BankWithdrawGoldR, creature.EntityId);
@@ -239,6 +241,7 @@ namespace Aura.Channel.Network.Sending
 		/// Sends BankUpdateGold to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="amount"></param>
 		public static void BankUpdateGold(Creature creature, int amount)
 		{
 			var packet = new Packet(Op.BankUpdateGold, creature.EntityId);
@@ -252,6 +255,7 @@ namespace Aura.Channel.Network.Sending
 		/// Sends BankDepositItemR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="success"></param>
 		public static void BankDepositItemR(Creature creature, bool success)
 		{
 			var packet = new Packet(Op.BankDepositItemR, creature.EntityId);
@@ -262,9 +266,26 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends BankWithdrawItemR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void BankWithdrawItemR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.BankWithdrawItemR, creature.EntityId);
+
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends BankAddItem to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		/// <param name="bankId"></param>
+		/// <param name="tabName"></param>
 		public static void BankAddItem(Creature creature, Item item, string bankId, string tabName)
 		{
 			var packet = new Packet(Op.BankAddItem, creature.EntityId);
@@ -274,6 +295,22 @@ namespace Aura.Channel.Network.Sending
 			packet.PutLong(0);
 			packet.PutLong(0);
 			packet.AddItemInfo(item, ItemPacketType.Private);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends BankRemoveItem to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="tabName"></param>
+		/// <param name="itemEntityId"></param>
+		public static void BankRemoveItem(Creature creature, string tabName, long itemEntityId)
+		{
+			var packet = new Packet(Op.BankRemoveItem, creature.EntityId);
+
+			packet.PutString(tabName);
+			packet.PutLong(itemEntityId);
 
 			creature.Client.Send(packet);
 		}

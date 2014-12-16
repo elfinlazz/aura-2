@@ -420,8 +420,9 @@ namespace Aura.Channel.Network.Handlers
 		}
 
 		/// <summary>
-		/// Sent when depositing gold in the bank.
+		/// Sent when putting an item into the bank.
 		/// </summary>
+		/// <example>
 		/// 0001 [005000CA6F3EE634] Long   : 22518867586639412
 		/// 0002 [................] String : Exec
 		/// 0003 [........0000000B] Int    : 11
@@ -436,11 +437,30 @@ namespace Aura.Channel.Network.Handlers
 			var posY = packet.GetInt();
 
 			var creature = client.GetCreatureSafe(packet.Id);
-			var item = creature.Inventory.GetItemSafe(itemEntityId);
 
-			var success = client.Account.Bank.DepositItem(creature, item, "Global", tabName, posX, posY);
+			var success = client.Account.Bank.DepositItem(creature, itemEntityId, "Global", tabName, posX, posY);
 
-			Send.BankDepositItemR(creature, true);
+			Send.BankDepositItemR(creature, success);
+		}
+
+		/// <summary>
+		/// Sent when taking an item out of the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [................] String : Exec
+		/// 0002 [005000CA6F3EE634] Long   : 22518867586639412
+		/// </example>
+		[PacketHandler(Op.BankWithdrawItem)]
+		public void BankWithdrawItem(ChannelClient client, Packet packet)
+		{
+			var tabName = packet.GetString();
+			var itemEntityId = packet.GetLong();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			var success = client.Account.Bank.WithdrawItem(creature, tabName, itemEntityId);
+
+			Send.BankWithdrawItemR(creature, success);
 		}
 	}
 }

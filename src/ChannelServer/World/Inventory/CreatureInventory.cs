@@ -799,14 +799,13 @@ namespace Aura.Channel.World.Inventory
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public bool Remove(Item item, bool updateClient = true)
+		public bool Remove(Item item)
 		{
 			lock (_pockets)
 			{
 				if (_pockets.Values.Any(pocket => pocket.Remove(item)))
 				{
-					if (updateClient)
-						Send.ItemRemove(_creature, item);
+					Send.ItemRemove(_creature, item);
 
 					this.UpdateInventory(item, item.Info.Pocket, Pocket.None);
 
