@@ -347,6 +347,12 @@ namespace Aura.Channel.Database
 		/// <summary>
 		/// Returns list of items for creature with the given id.
 		/// </summary>
+		/// <remarks>
+		/// TODO: This should be refactored to read all items in one go,
+		///   instead of reading two or more separate lists.
+		///   1) Make it "ReadItem"
+		///   2) Handle the items in the actual item loading methods
+		/// </remarks>
 		/// <param name="creatureId"></param>
 		/// <returns></returns>
 		private List<Item> GetItems(long creatureId, bool bank = false)
@@ -378,6 +384,7 @@ namespace Aura.Channel.Database
 						var entityId = reader.GetInt64("entityId");
 
 						var item = new Item(itemId, entityId);
+						item.Bank = reader.GetStringSafe("bank");
 						item.Info.Pocket = (Pocket)reader.GetInt32("pocket");
 						item.Info.X = reader.GetInt32("x");
 						item.Info.Y = reader.GetInt32("y");
@@ -923,7 +930,8 @@ namespace Aura.Channel.Database
 					mc.ExecuteNonQuery();
 				}
 
-				foreach (var item in creature.Inventory.Items)
+				var items = creature.Inventory.Items.Union(creature.Client.Account.Bank.GetTabItems(creature.Name));
+				foreach (var item in items)
 				{
 					using (var cmd = new InsertCommand("INSERT INTO `items` {0}", conn, transaction))
 					{
@@ -931,6 +939,7 @@ namespace Aura.Channel.Database
 						if (item.EntityId < MabiId.TmpItems)
 							cmd.Set("entityId", item.EntityId);
 						cmd.Set("itemId", item.Info.Id);
+						cmd.Set("bank", item.Bank);
 						cmd.Set("pocket", (byte)item.Info.Pocket);
 						cmd.Set("x", item.Info.X);
 						cmd.Set("y", item.Info.Y);
@@ -967,6 +976,7 @@ namespace Aura.Channel.Database
 				transaction.Commit();
 			}
 		}
+
 		/// <summary>
 		/// Writes all of creature's skills to the database.
 		/// </summary>

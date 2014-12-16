@@ -69,6 +69,20 @@ namespace Aura.Channel.World.Inventory
 		}
 
 		/// <summary>
+		/// Returns all items in specified tab. Returns an empty
+		/// list if tab doesn't exist.
+		/// </summary>
+		/// <param name="tabName"></param>
+		/// <returns></returns>
+		public IList<Item> GetTabItems(string tabName)
+		{
+			if (!this.Tabs.ContainsKey(tabName))
+				return new List<Item>();
+
+			return this.Tabs[tabName].GetItemList();
+		}
+
+		/// <summary>
 		/// Adds item to tab without any checks (only use for initialization).
 		/// </summary>
 		/// <param name="tabName"></param>

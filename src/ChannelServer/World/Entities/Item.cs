@@ -25,11 +25,35 @@ namespace Aura.Channel.World.Entities
 			set { this.Info.Region = value; }
 		}
 
+		/// <summary>
+		/// Public item information
+		/// </summary>
 		public ItemInfo Info;
+
+		/// <summary>
+		/// Private item information
+		/// </summary>
 		public ItemOptionInfo OptionInfo;
+
+		/// <summary>
+		/// Aura database item data
+		/// </summary>
 		public ItemData Data { get; protected set; }
+
+		/// <summary>
+		/// Meta information 1
+		/// </summary>
 		public MabiDictionary MetaData1 { get; protected set; }
+
+		/// <summary>
+		/// Meta information 2
+		/// </summary>
 		public MabiDictionary MetaData2 { get; protected set; }
+
+		/// <summary>
+		/// Bank at which the item is currently lying around.
+		/// </summary>
+		public string Bank { get; set; }
 
 		private bool _firstTimeAppear = true;
 		/// <summary>
