@@ -118,6 +118,15 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		/// <summary>
+		/// Returns the localized version of text.
+		/// </summary>
+		/// <param name="text"></param>
+		protected string L(string text)
+		{
+			return Localization.Get(text);
+		}
+
+		/// <summary>
 		/// Returns random number between 0.0 and 100.0.
 		/// </summary>
 		/// <returns></returns>
