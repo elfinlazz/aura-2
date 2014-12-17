@@ -34,11 +34,7 @@ public class SimonScript : NpcScript
 	{
 		SetBgm("NPC_Simon.mp3");
 
-		await Intro(
-			"With a long face, narrow shoulders, and a pale complexion, this man crosses his delicate hands in front of the chest and sways left and right.",
-			"His demeanor is exaggerated and the voice nasal. He seems to have a habit of glancing sideways with those light brown eyes.",
-			"His fashionable shirt has an intricate pattern and was made with great care."
-		);
+		await Intro("With a long face, narrow shoulders, and a pale complexion, this man crosses his delicate hands in front of the chest and sways left and right.<br/>His demeanor is exaggerated and the voice nasal. He seems to have a habit of glancing sideways with those light brown eyes.<br/>His fashionable shirt has an intricate pattern and was made with great care.");
 
 		Msg("What do you want?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Repair Item", "@repair"), Button("Modify Item", "@upgrade"));
 

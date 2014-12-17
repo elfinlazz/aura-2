@@ -35,11 +35,7 @@ public class DuncanBaseScript : NpcScript
 	{
 		SetBgm("NPC_Duncan.mp3");
 		
-		await Intro(
-			"An elderly man gazes softly at the world around him with a calm air of confidence.",
-			"Although his face appears weather-beaten, and his hair and beard are gray, his large beaming eyes make him look youthful somehow.",
-			"As he speaks, his voice resonates with a kind of gentle authority."
-		);
+		await Intro("An elderly man gazes softly at the world around him with a calm air of confidence.<br/>Although his face appears weather-beaten, and his hair and beard are gray, his large beaming eyes make him look youthful somehow.<br/>As he speaks, his voice resonates with a kind of gentle authority.");
 		
 		Msg("Please let me know if you need anything.", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrive Lost Items", "@lostandfound"));
 		

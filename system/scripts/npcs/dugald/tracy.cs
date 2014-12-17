@@ -38,11 +38,7 @@ public class TracyScript : NpcScript
 	{
 		SetBgm("NPC_Tracy.mp3");
 	
-		await Intro(
-			"This broad-shouldered man holding a wood-cutting axe in his right hand must have gone through a lot of rough times.",
-			"He's wearing a cap backwards and his bronzed face is covered with a heavy beard.",
-			"Between the wavy strands of his bushy dark brown hair are a pair of bright, playful eyes full of benevolent mischief."
-		);
+		await Intro("This broad-shouldered man holding a wood-cutting axe in his right hand must have gone through a lot of rough times.<br/>He's wearing a cap backwards and his bronzed face is covered with a heavy beard.<br/>Between the wavy strands of his bushy dark brown hair are a pair of bright, playful eyes full of benevolent mischief.");
 		
 		Msg("What is it? Come on, spit it out!<br/>I'm a busy man!", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
 		

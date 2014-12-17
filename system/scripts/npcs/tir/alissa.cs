@@ -42,12 +42,7 @@ public class AlissaBaseScript : NpcScript
 	{
 		SetBgm("NPC_Alissa.mp3");
 
-		await Intro(
-			"A young girl stands with her hands on her hips like she's a person of great importance.",
-			"She wears a worn out hat that frames her soft hair, round face, and button nose.",
-			"As she stands there, you notice that her apron is actually too big and she's discreetly trying to keep it from slipping.",
-			"In spite of all that, her cherry eyes sparkle with curiosity."
-		);
+		await Intro("A young girl stands with her hands on her hips like she's a person of great importance.<br/>She wears a worn out hat that frames her soft hair, round face, and button nose.<br/>As she stands there, you notice that her apron is actually too big and she's discreetly trying to keep it from slipping.<br/>In spite of all that, her cherry eyes sparkle with curiosity.");
 
 		Msg("So, what can I do for you?", Button("Start a Conversation", "@talk"), Button("Operate the Windmill", "@windmill"));
 

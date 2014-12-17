@@ -34,12 +34,7 @@ public class NoraBaseScript : NpcScript
 	{
 		SetBgm("NPC_Nora.mp3");
 	
-		await Intro(
-			"A girl wearing a well-ironed green apron leans forward, gazing cheerfully at her sorroundings.",
-			"Her bright eyes are azure blue and a faint smile plays on her lips.",
-			"Cross-shaped earrings dangle from her ears, dancing playfully between her honey-blonde hair.",
-			"Her hands are always busy, as she engages in some chore or another, though she often looks into the distance as if deep in thought."
-		);
+		await Intro("A girl wearing a well-ironed green apron leans forward, gazing cheerfully at her surroundings.<br/>Her bright eyes are azure blue and a faint smile plays on her lips.<br/>Cross-shaped earrings dangle from her ears, dancing playfully between her honey-blonde hair.<br/>Her hands are always busy, as she engages in some chore or another, though she often looks into the distance as if deep in thought.");
 		
 		Msg("How can I help you?", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Repair Item", "@repair"));
 		

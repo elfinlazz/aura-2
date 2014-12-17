@@ -37,11 +37,7 @@ public class AranwenScript : NpcScript
 	{
 		SetBgm("NPC_Aranwen.mp3");
 
-		await Intro(
-			"A lady decked out in shining armor is confidently training students in swordsmanship in front of the school.",
-			"Unlike a typical swordswoman, her moves seem delicate and elegant.",
-			"Her long, braided silver hair falls down her back, leaving her eyes sternly fixed on me."
-		);
+		await Intro("A lady decked out in shining armor is confidently training students in swordsmanship in front of the school.<br/>Unlike a typical swordswoman, her moves seem delicate and elegant.<br/>Her long, braided silver hair falls down her back, leaving her eyes sternly fixed on me.");
 
 		Msg("What brings you here?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
 

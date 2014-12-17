@@ -38,11 +38,7 @@ public class FerghusBaseScript : NpcScript
 	{
 		SetBgm("NPC_Ferghus.mp3");
 		
-		await Intro(
-			"His bronze complexion shines with the glow of vitality. His distinctive facial outline ends with a strong jaw line covered with dark beard.",
-			"The first impression clearly shows he is a seasoned blacksmith with years of experience.",
-			"The wide-shouldered man keeps humming with a deep voice while his muscular torso swings gently to the rhythm of the tune."
-		);
+		await Intro("His bronze complexion shines with the glow of vitality. His distinctive facial outline ends with a strong jaw line covered with dark beard.<br/>The first impression clearly shows he is a seasoned blacksmith with years of experience.<br/>The wide-shouldered man keeps humming with a deep voice while his muscular torso swings gently to the rhythm of the tune.");
 		
 		Msg("Welcome to my Blacksmith's Shop.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Repair Item", "@repair"), Button("Modify Item", "@upgrade"));
 		

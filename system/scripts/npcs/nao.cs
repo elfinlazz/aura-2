@@ -20,11 +20,7 @@ public class NaoScript : NpcScript
 	{
 		SetBgm("Nao_talk.mp3");
 
-		await Intro(
-			"A beautiful girl in a black dress with intricate patterns.",
-			"Her deep azure eyes remind everyone of an endless blue sea full of mystique.",
-			"With her pale skin and her distinctively sublime silhouette, she seems like she belongs in another world."
-		);
+		await Intro("A beautiful girl in a black dress with intricate patterns.<br/>Her deep azure eyes remind everyone of an endless blue sea full of mystique.<br/>With her pale skin and her distinctively sublime silhouette, she seems like she belongs in another world.");
 		
 		if(!Player.Has(CreatureStates.EverEnteredWorld))
 			await Initialization();

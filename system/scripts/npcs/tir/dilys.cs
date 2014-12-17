@@ -31,11 +31,7 @@ public class DilysScript : NpcScript
 	
 	protected override async Task Talk()
 	{
-		await Intro(
-			"A tall, slim lady tinkers with various ointments, herbs, and bandages.",
-			"She looks wise beyond her years, but it might just be the healer's dress",
-			"and neatly combed hair."
-		);
+		await Intro("A tall, slim lady tinkers with various ointments, herbs, and bandages.<br/>She looks wise beyond her years, but it might just be the healer's dress<br/>and neatly combed hair.");
 
 		Msg("Welcome to the Healer's House.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Get Treatment", "@healerscare"), Button("Heal Pet", "@petheal"));
 		

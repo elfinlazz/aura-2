@@ -39,11 +39,7 @@ public class LassarBaseScript : NpcScript
 	{
 		SetBgm("NPC_Lassar.mp3");
 		
-		await Intro(
-			"Waves of her red hair come down to her shoulders.",
-			"Judging by her somewhat small stature, well-proportioned body, and a neat two-piece school uniform, it isn't hard to tell that she is a teacher.",
-			"The intelligent look in her eyes, the clear lip line and eyebrows present her as a charming lady."
-		);
+		await Intro("Waves of her red hair come down to her shoulders.<br/>Judging by her somewhat small stature, well-proportioned body, and a neat two-piece school uniform, it isn't hard to tell that she is a teacher.<br/>The intelligent look in her eyes, the clear lip line and eyebrows present her as a charming lady.");
 		
 		Msg("Is there anything I can help you with?", Button("Start a Conversation", "@talk"), Button("Shop" , "@shop"), Button("Repair Item" , "@repair"), Button("Upgrade item" , "@upgrade"));
 		

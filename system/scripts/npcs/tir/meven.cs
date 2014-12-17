@@ -27,11 +27,7 @@ public class MevenBaseScript : NpcScript
 	{
 		SetBgm("NPC_Meven.mp3");
 		
-		await Intro(
-			"Dressed in a robe, this composed man of moderate build maintains a very calm posture.",
-			"Every bit of his appearance and the air surrounding him show that he is unfailingly a man of the clergy.",
-			"Silvery hair frames his friendly face, and his gentle eyes suggest a rather quaint and quiet mood with flashes of hidden humor."
-		);
+		await Intro("Dressed in a robe, this composed man of moderate build maintains a very calm posture.<br/>Every bit of his appearance and the air surrounding him show that he is unfailingly a man of the clergy.<br/>Silvery hair frames his friendly face, and his gentle eyes suggest a rather quaint and quiet mood with flashes of hidden humor.");
 		
 		Msg("Welcome to the Church of Lymilark.", Button("Start a Conversation", "@talk"));
 		

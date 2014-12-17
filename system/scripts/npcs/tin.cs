@@ -28,12 +28,7 @@ public class TinScript : NpcScript
 	{
 		SetBgm("NPC_Tin.mp3");
 		
-		await Intro(
-			"A little boy with a heavy helmet is looking in my direction.", 
-			"The helmet is very well polished and features a dragon on the top, but prevents me from being able to see his face.",
-			"He speaks in a low voice, and every once in a while places his left hand on his chin to keep his helmet on,",
-			"as it slips off little by little."
-		);
+		await Intro("A little boy with a heavy helmet is looking in my direction.<br/>The helmet is very well polished and features a dragon on the top, but prevents me from being able to see his face.<br/>He speaks in a low voice, and every once in a while places his left hand on his chin to keep his helmet on,<br/>as it slips off little by little.");
 		
 		if(!Player.Has(CreatureStates.JustRebirthed))
 		{

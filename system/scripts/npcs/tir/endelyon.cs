@@ -30,10 +30,7 @@ public class EndelyonBaseScript : NpcScript
 	{
 		SetBgm("NPC_Endelyon.mp3");
 	
-		await Intro(
-			"An elegant young woman in the simple black dress of a",
-			"Lymilark priestess stands in front of the church."
-		);
+		await Intro("An elegant young woman in the simple black dress of a<br/>Lymilark priestess stands in front of the church.");
 		
 		Msg("May I help you?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
 		

@@ -34,11 +34,7 @@ public class RanaldBaseScript : NpcScript
 	{
 		SetBgm("NPC_Ranald.mp3");
 	
-		await Intro(
-			"From his appearance and posture, there is no doubt that he is well into middle age, but he is surprisingly well-built and in good shape.",
-			"Long fringes of hair cover half of his forehead and right cheek. A strong nose bridge stands high between his shining hawkish eyes.",
-			"His deep, low voice has the power to command other people's attention."
-		);
+		await Intro("From his appearance and posture, there is no doubt that he is well into middle age, but he is surprisingly well-built and in good shape.<br/>Long fringes of hair cover half of his forehead and right cheek. A strong nose bridge stands high between his shining hawkish eyes.<br/>His deep, low voice has the power to command other people's attention.");
 		
 		Msg("How can I help you?", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"), Button("Get Ciar Beginner Dungeon Pass", "@ciarpass"));
 		

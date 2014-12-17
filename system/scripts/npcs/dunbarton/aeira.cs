@@ -38,11 +38,7 @@ public class AeiraScript : NpcScript
 	{
 		SetBgm("NPC_Aeira.mp3");
 
-		await Intro(
-			"This girl seems to be in her late teens with big thick glasses resting at the tip of her nose.",
-			"Behind the glasses are two large brown eyes shining brilliantly.",
-			"Wearing a loose-fitting dress, she has a ribbon made of soft and thin material around her neck."
-		);
+		await Intro("This girl seems to be in her late teens with big thick glasses resting at the tip of her nose.<br/>Behind the glasses are two large brown eyes shining brilliantly.<br/>Wearing a loose-fitting dress, she has a ribbon made of soft and thin material around her neck.");
 
 		Msg("So, what can I help you with?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"));
 

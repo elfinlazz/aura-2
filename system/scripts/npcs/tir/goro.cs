@@ -26,11 +26,7 @@ public class GoroBaseScript : NpcScript
 	
 	protected override async Task Talk()
 	{
-		await Intro(
-			"With his rough skin, menacing face, and his constant hard-breathing,",
-			"he has the sure look of a Goblin.<br/>Yet, there is something different about this one.",
-			"Strangely, it appears to have a sense of noble demeanor that does not match its rugged looks."
-		);
+		await Intro("With his rough skin, menacing face, and his constant hard-breathing,<br/>he has the sure look of a Goblin.<br/>Yet, there is something different about this one.<br/>Strangely, it appears to have a sense of noble demeanor that does not match its rugged looks.");
 		
 		Msg("How can I help you?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"));
 		

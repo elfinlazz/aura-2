@@ -35,11 +35,7 @@ public class GlenisScript : NpcScript
 	{
 		SetBgm("NPC_Glenis.mp3");
 
-		await Intro(
-			"With her round face and large, sparkling eyes, this middle aged woman appears to have a big heart.",
-			"Her face, devoid of makeup, is dominated by her large eyes and a playful smile.",
-			"Over her lace collar she wears an old but well-polished locket."
-		);
+		await Intro("With her round face and large, sparkling eyes, this middle aged woman appears to have a big heart.<br/>Her face, devoid of makeup, is dominated by her large eyes and a playful smile.<br/>Over her lace collar she wears an old but well-polished locket.");
 
 		Msg("Welcome!<br/>This is Glenis' Restaurant.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"));
 

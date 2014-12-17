@@ -37,12 +37,7 @@ public class NerysScript : NpcScript
 	{
 		SetBgm("NPC_Nerys.mp3");
 
-		await Intro(
-			"This lady has a slender build and wears comfortable clothing.",
-			"The subtle softness of her short red hair is brought out by being tightly combed back.",
-			"Thick ruby earrings matching her hair dangle from her ears and",
-			"slightly waver and glitter every time she looks up."
-		);
+		await Intro("This lady has a slender build and wears comfortable clothing.<br/>The subtle softness of her short red hair is brought out by being tightly combed back.<br/>Thick ruby earrings matching her hair dangle from her ears and<br/>slightly waver and glitter every time she looks up.");
 
 		Msg("Tell me if you need anything.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Repair Item", "@repair"), Button("Modify Item", "@upgrade"));
 

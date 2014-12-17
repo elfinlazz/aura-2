@@ -39,12 +39,7 @@ public class TreforBaseScript : NpcScript
 	
 	protected override async Task Talk()
 	{
-		await Intro(
-			"Quite a specimen of physical fitness appears before you wearing well-polished armor that fits closely the contours of his body.",
-			"A medium-length sword hangs delicately from the scabbard at his waist. While definitely a sight to behold,",
-			"it's difficult to see much of his face because of his lowered visor, but one cannot help but notice the flash in his eyes",
-			"occasionally catching the light between the slits on his helmet. His tightly pursed lips seem to belie his desire to not shot any emotion."
-		);
+		await Intro("Quite a specimen of physical fitness appears before you wearing well-polished armor that fits closely the contours of his body.<br/>A medium-length sword hangs delicately from the scabbard at his waist. While definitely a sight to behold,<br/>it's difficult to see much of his face because of his lowered visor, but one cannot help but notice the flash in his eyes<br/>occasionally catching the light between the slits on his helmet. His tightly pursed lips seem to belie his desire to not shot any emotion.");
 		
 		Msg("How can I help you?", Button("Start Conversation", "@talk"), Button("Shop"), Button("Upgrade Item", "@upgrade"), Button("Get Alby Beginner Dungeon Pass", "@pass"));
 		
