@@ -197,11 +197,11 @@ public class FerghusBaseScript : NpcScript
 				
 			default:
 				RndMsg(
-					"?",
-					"*Yawn* I don't know.",
-					"That's not my concern.",
-					"I don't know, man. That's just out of my league.",
-					"Haha. I have no idea."
+					L("?"),
+					L("*Yawn* I don't know."),
+					L("That's not my concern."),
+					L("I don't know, man. That's just out of my league."),
+					L("Haha. I have no idea.")
 				);
 				break;
 		}

@@ -194,11 +194,11 @@ public class SimonScript : NpcScript
 
 			default:
 				RndMsg(
-					"<face name='normal'/>Go ask someone else.",
-					"<face name='normal'/>So... what do you want me to do about that?",
-					"<face name='normal'/>Should I know about something like that?",
-					"<face name='normal'/>I don't know anything about that.",
-					"<face name='normal'/>Don't you think you've had enough? Let's talk about something else."
+					L("Go ask someone else."),
+					L("So... what do you want me to do about that?"),
+					L("Should I know about something like that?"),
+					L("I don't know anything about that."),
+					L("Don't you think you've had enough? Let's talk about something else.")
 				);
 				break;
 		}

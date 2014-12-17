@@ -233,14 +233,14 @@ public class AusteynScript : NpcScript
 
 			default:
 				RndMsg(
-					"Hmm. I don't know.",
-					"Oh, I don't think it's a topic I'm familiar with.",
-					"Ha ha. Why are you asking me? I don't know.",
-					"Shame. I probably can't help you with that.",
-					"Hmm? What is it you just said?",
-					"Hmm... It's news to me.<br/>I'll ask someone else for you when they come by.",
-					"Heh. Don't think that I<br/>should know everything you talk about.",
-					"You can't keep talking about something like that with me. Hahaha."
+					L("Hmm. I don't know."),
+					L("Oh, I don't think it's a topic I'm familiar with."),
+					L("Ha ha. Why are you asking me? I don't know."),
+					L("Shame. I probably can't help you with that."),
+					L("Hmm? What is it you just said?"),
+					L("Hmm... It's news to me.<br/>I'll ask someone else for you when they come by."),
+					L("Heh. Don't think that I<br/>should know everything you talk about."),
+					L("You can't keep talking about something like that with me. Hahaha.")
 				);
 				break;
 		}

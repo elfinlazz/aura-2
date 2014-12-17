@@ -256,12 +256,12 @@ public class TracyScript : NpcScript
 
 			default:
 				RndMsg(
-					"I don't know anything about that. Try to make some sense.",
-					"I don't think other people know about that...",
-					"Man! You want me to talk about it?",
-					"That's what you want to tell me? Childish....",
-					"What? You want to be a know-it-all?",
-					"Why do you care about all that weird stuff?"
+					L("I don't know anything about that. Try to make some sense."),
+					L("I don't think other people know about that..."),
+					L("Man! You want me to talk about it?"),
+					L("That's what you want to tell me? Childish...."),
+					L("What? You want to be a know-it-all?"),
+					L("Why do you care about all that weird stuff?")
 				);
 				break;
 		}

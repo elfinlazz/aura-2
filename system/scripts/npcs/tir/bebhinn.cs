@@ -155,13 +155,13 @@ public class BebhinnBaseScript : NpcScript
 			
 			default:
 				RndMsg(
-					"Can we change the subject?",
-					"Hmm... You know a story I've never heard of... How could that be?",
-					"Hehe... I don't know what you're talking about...",
-					"I said I don't know! Why do you keep rubbing it in my face? That's mean... Hehe.",
-					"I have no idea... Why don't you ask someone else?",
-					"What's that?",
-					"Well...what do you mean?"
+					L("Can we change the subject?"),
+					L("Hmm... You know a story I've never heard of... How could that be?"),
+					L("Hehe... I don't know what you're talking about..."),
+					L("I said I don't know! Why do you keep rubbing it in my face? That's mean... Hehe."),
+					L("I have no idea... Why don't you ask someone else?"),
+					L("What's that?"),
+					L("Well...what do you mean?")
 				);
 				// MoodChange
 				break;

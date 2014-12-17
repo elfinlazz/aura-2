@@ -191,14 +191,14 @@ public class AranwenScript : NpcScript
 
 			default:
 				RndMsg(
-					"I don't know anything about it. I'm sorry I can't be much help.",
-					"I don't know anything about it. Why don't you ask others?",
-					"Being a teacher doesn't mean that I know everything.",
-					"Hey! Asking me about such things is a waste of time.",
-					"It doesn't seem bad but... I don't think I can help you with it.",
-					"I don't know too much about anything other than combat skills.",
-					"If you keep bringing up topics like this, I can't say much to you.",
-					"Will you tell me about it when you find out more?"
+					L("I don't know anything about it. I'm sorry I can't be much help."),
+					L("I don't know anything about it. Why don't you ask others?"),
+					L("Being a teacher doesn't mean that I know everything."),
+					L("Hey! Asking me about such things is a waste of time."),
+					L("It doesn't seem bad but... I don't think I can help you with it."),
+					L("I don't know too much about anything other than combat skills."),
+					L("If you keep bringing up topics like this, I can't say much to you."),
+					L("Will you tell me about it when you find out more?")
 				);
 				break;
 		}

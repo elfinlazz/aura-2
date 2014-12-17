@@ -204,10 +204,10 @@ public class EavanScript : NpcScript
 
 			default:
 				RndMsg(
-					"I don't know much about all that. <username/>, you do understand, don't you?",
-					"I'm feeling achy all over today.<br/>I think I need to get some rest now. I'm so sorry, <username/>.<br/>I feel like I've heard something like that before... Perhaps I can find some notes I've jotted down in my expedition journal?",
-					"You know, something's just come up and I'm a bit busy right now.<br/>Do you mind coming back another day?",
-					"Must be that you've been exploring for so long now, right?<br/><username/>, you can certainly know a whole lot."
+					L("I don't know much about all that. <username/>, you do understand, don't you?"),
+					L("I'm feeling achy all over today.<br/>I think I need to get some rest now. I'm so sorry, <username/>.<br/>I feel like I've heard something like that before... Perhaps I can find some notes I've jotted down in my expedition journal?"),
+					L("You know, something's just come up and I'm a bit busy right now.<br/>Do you mind coming back another day?"),
+					L("Must be that you've been exploring for so long now, right?<br/><username/>, you can certainly know a whole lot.")
 				);
 				break;
 		}

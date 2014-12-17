@@ -192,11 +192,11 @@ public class PiarasBaseScript : NpcScript
 			
 			default:
 				RndMsg(
-					"?",
-					"I don't know about that.",
-					"I'd love to listen to you, but about something else.",
-					"I'm afraid this conversation isn't very interesting to me.",				
-					"To be honest, I don't know."					
+					L("?"),
+					L("I don't know about that."),
+					L("I'd love to listen to you, but about something else."),
+					L("I'm afraid this conversation isn't very interesting to me."),
+					L("To be honest, I don't know.")
 				);
 				break;
 		}		

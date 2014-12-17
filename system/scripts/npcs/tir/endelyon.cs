@@ -226,11 +226,11 @@ public class EndelyonBaseScript : NpcScript
 
 			default:
 				RndMsg(
-					"Well, I'm afraid I can't comment on that.",
-					"I guess you'd better ask someone else about such things.",
-					"I have no idea...",
-					"It doesn't sound familiar to me, I mean...",
-					"I don't think I can help you with that. Can we talk about something else?"
+					L("Well, I'm afraid I can't comment on that."),
+					L("I guess you'd better ask someone else about such things."),
+					L("I have no idea..."),
+					L("It doesn't sound familiar to me, I mean..."),
+					L("I don't think I can help you with that. Can we talk about something else?")
 				);
 				break;
 		}

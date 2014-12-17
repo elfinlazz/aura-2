@@ -195,12 +195,12 @@ public class DeianScript : NpcScript
 
 			default:
 				RndMsg(
-					"Ask all you want, I'm not telling you.",
-					"Hold up, I feel like I'm being interrogated.",
-					"Meh, I don't want to tell you.",
-					"Pry all you like. You'll get nothing from me.",
-					"So many questions, at least give me a small gift...",
-					"Sometimes, I'm just not in the mood to answer questions."
+					L("Ask all you want, I'm not telling you."),
+					L("Hold up, I feel like I'm being interrogated."),
+					L("Meh, I don't want to tell you."),
+					L("Pry all you like. You'll get nothing from me."),
+					L("So many questions, at least give me a small gift..."),
+					L("Sometimes, I'm just not in the mood to answer questions.")
 				);
 				break;
 		}

@@ -107,11 +107,11 @@ public class DuncanBaseScript : NpcScript
 				
 			default:
 				RndMsg(
-					"I don't know anything about that...",
-					"I think it'd be better for you to ask someone else.",
-					"Hmm, I wonder who might know about that...",
-					"I have no idea...",
-					"I don't really know about that... "
+					L("I don't know anything about that..."),
+					L("I think it'd be better for you to ask someone else."),
+					L("Hmm, I wonder who might know about that..."),
+					L("I have no idea..."),
+					L("I don't really know about that... ")
 				);
 				// MoodChange
 				break;

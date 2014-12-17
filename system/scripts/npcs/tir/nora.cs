@@ -135,12 +135,12 @@ public class NoraBaseScript : NpcScript
 			
 			default:
 				RndMsg(
-					"Can we change the subject?",
-					"Huh?",
-					"I don't know much about that.",
-					"What are you talking about?",
-					"I can't understand what you're asking.",
-					"I don't... I don't know."
+					L("Can we change the subject?"),
+					L("Huh?"),
+					L("I don't know much about that."),
+					L("What are you talking about?"),
+					L("I can't understand what you're asking."),
+					L("I don't... I don't know.")
 				);
 				break;
 		}

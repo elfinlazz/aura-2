@@ -183,14 +183,14 @@ public class GlenisScript : NpcScript
 
 			default:
 				RndMsg(
-					"You should go ask someone else.",
-					"I don't know much about things like that. Ha ha.",
-					"Oh, no. I don't know what to tell you about that.",
-					"Ha ha. It's no use asking me about something like that.",
-					"Oh, that... Umm... No, I don't think I know anything about it.",
-					"Well, people do ask me about it every now and then.<br/>It must be an important topic.",
-					"That's not a topic I'm very familiar with. Perhaps Walter over there knows more about it than I do.",
-					"Asking about a topic like that to an<br/>ordinary Restaurant owner is not very proper, you know. Ha ha."
+					L("You should go ask someone else."),
+					L("I don't know much about things like that. Ha ha."),
+					L("Oh, no. I don't know what to tell you about that."),
+					L("Ha ha. It's no use asking me about something like that."),
+					L("Oh, that... Umm... No, I don't think I know anything about it."),
+					L("Well, people do ask me about it every now and then.<br/>It must be an important topic."),
+					L("That's not a topic I'm very familiar with. Perhaps Walter over there knows more about it than I do."),
+					L("Asking about a topic like that to an<br/>ordinary Restaurant owner is not very proper, you know. Ha ha.")
 				);
 				break;
 		}

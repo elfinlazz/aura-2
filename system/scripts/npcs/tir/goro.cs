@@ -61,9 +61,9 @@ public class GoroBaseScript : NpcScript
 			{					
 				case "@reply1":
 					RndMsg(
-						"The Arenas are located in every dungeon across Erinn and each have its own rules.<br/>Here, in Alby Battle Arena, you will participate in the Single Deathmatch.",
-						"The people of Erinn, who value peace,<br/>are known to dislike hurting each other.<br/>However, the true meaning of competition<br/>is something all races have been doing during uncountable millenia.",
-						"This is the place to test and train your strength, wisdom, and skills.<br/>Even if you get hurt and lose consciousness in the Arena,<br/>you will not lose any EXP like you did in the outside world."
+						L("The Arenas are located in every dungeon across Erinn and each have its own rules.<br/>Here, in Alby Battle Arena, you will participate in the Single Deathmatch."),
+						L("The people of Erinn, who value peace,<br/>are known to dislike hurting each other.<br/>However, the true meaning of competition<br/>is something all races have been doing during uncountable millenia."),
+						L("This is the place to test and train your strength, wisdom, and skills.<br/>Even if you get hurt and lose consciousness in the Arena,<br/>you will not lose any EXP like you did in the outside world.")
 					);
 					break;
 					
@@ -91,10 +91,10 @@ public class GoroBaseScript : NpcScript
 	protected override async Task Keywords(string kw)
 	{
 		RndMsg(
-			"Well...",
-			"Hmm...I believe I have heard about it...",
-			"Excuse me, what did you say?",
-			"I do not know anything about that kind of story."
+			L("Well..."),
+			L("Hmm...I believe I have heard about it..."),
+			L("Excuse me, what did you say?"),
+			L("I do not know anything about that kind of story.")
 		);
 	}
 	

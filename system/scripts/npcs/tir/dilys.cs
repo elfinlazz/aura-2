@@ -219,11 +219,11 @@ public class DilysScript : NpcScript
 				
 			default:
 				RndMsg(
-					"I don't know... I'm sorry.",
-					"Did you ask others about this as well?",
-					"What are you talking about?",
-					"Did they say they didn't know about it either?<br/>Well...",
-					"Eh?"
+					L("I don't know... I'm sorry."),
+					L("Did you ask others about this as well?"),
+					L("What are you talking about?"),
+					L("Did they say they didn't know about it either?<br/>Well..."),
+					L("Eh?")
 				);
 				break;
 		}

@@ -187,17 +187,17 @@ public class AeiraScript : NpcScript
 
 			default:
 				RndMsg(
-					"I don't know too much about that. Sorry...",
-					"I don't really understand what you just said...",
-					"Hahaha. Well, it's not really my area of expertise...",
-					"...?",
-					"I don't know too much about that. Sorry...",
-					"Oh... Umm... That... I don't know.",
-					"I don't know much about it, but let me know if you find out more.",
-					"I'm not sure exactly what that is but it seems important,<br/>seeing how so many people inquire about it...",
-					"I'm not sure I know. Maybe Stewart knows.",
-					"Yeah, but... I don't really know anything about that.",
-					"I don't really understand what you just said..."
+					L("I don't know too much about that. Sorry..."),
+					L("I don't really understand what you just said..."),
+					L("Hahaha. Well, it's not really my area of expertise..."),
+					L("...?"),
+					L("I don't know too much about that. Sorry..."),
+					L("Oh... Umm... That... I don't know."),
+					L("I don't know much about it, but let me know if you find out more."),
+					L("I'm not sure exactly what that is but it seems important,<br/>seeing how so many people inquire about it..."),
+					L("I'm not sure I know. Maybe Stewart knows."),
+					L("Yeah, but... I don't really know anything about that."),
+					L("I don't really understand what you just said...")
 				);
 				break;
 		}

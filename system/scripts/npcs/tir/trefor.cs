@@ -229,11 +229,11 @@ public class TreforBaseScript : NpcScript
 				
 			default:
 				RndMsg(
-					"Oh, is that so?",
-					"That was quite boring...",
-					"Never heard of it. I don't think that has anything to do with me.",
-					"I'm bored. Why don't we talk about something else?",
-					"Do you have anything more interesting to talk about?"
+					L("Oh, is that so?"),
+					L("That was quite boring..."),
+					L("Never heard of it. I don't think that has anything to do with me."),
+					L("I'm bored. Why don't we talk about something else?"),
+					L("Do you have anything more interesting to talk about?")
 				);
 				break;
 		}

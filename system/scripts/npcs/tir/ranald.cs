@@ -267,11 +267,11 @@ public class RanaldBaseScript : NpcScript
 
 			default:
 				RndMsg(
-					"Hmm... Actually, I forgot my lines... Haha.",
-					"I am not very interested in that.",
-					"I haven't paid much attention to it, especially on a topic like that.",
-					"Well, I don't really know...",
-					"You know I've been busy..."
+					L("Hmm... Actually, I forgot my lines... Haha."),
+					L("I am not very interested in that."),
+					L("I haven't paid much attention to it, especially on a topic like that."),
+					L("Well, I don't really know..."),
+					L("You know I've been busy...")
 				);
 				break;
 		}

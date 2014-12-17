@@ -192,14 +192,14 @@ public class NerysScript : NpcScript
 
 			default:
 				RndMsg(
-					"<face name='normal'/>You are rather grumpy.",
-					"<face name='normal'/>Hmm. You like to ask strange questions, don't you?",
-					"<face name='normal'/>I'm not sure.",
-					"<face name='normal'/>Well... I think I might have heard something about that.",
-					"<face name='normal'/>Don't ask me about stuff like that.",
-					"<face name='normal'/>Someone else probably knows.",
-					"<face name='normal'/>I don't know. It's news to me.",
-					"<face name='normal'/>People ask me about that a lot...<br/>But I'm not interested in that at all."
+					L("You are rather grumpy."),
+					L("Hmm. You like to ask strange questions, don't you?"),
+					L("I'm not sure."),
+					L("Well... I think I might have heard something about that."),
+					L("Don't ask me about stuff like that."),
+					L("Someone else probably knows."),
+					L("I don't know. It's news to me."),
+					L("People ask me about that a lot...<br/>But I'm not interested in that at all.")
 				);
 				break;
 		}

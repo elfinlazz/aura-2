@@ -173,12 +173,12 @@ public class AlissaBaseScript : NpcScript
 
 			default:
 				RndMsg(
-					"You're expecting too much from me.",
-					"Ah... well, I don't know anything about that.",
-					"You're not testing me, are you?",
-					"Eh... It feels like you're treating me like a child.",
-					"Hmm... I think Ferghus would be able to explain it better. He's across the stream.",
-					"Perhaps Caitin might know. Well... Anyway..."
+					L("You're expecting too much from me."),
+					L("Ah... well, I don't know anything about that."),
+					L("You're not testing me, are you?"),
+					L("Eh... It feels like you're treating me like a child."),
+					L("Hmm... I think Ferghus would be able to explain it better. He's across the stream."),
+					L("Perhaps Caitin might know. Well... Anyway...")
 				);
 				break;
 		}
@@ -196,8 +196,8 @@ public class AlissaBaseScript : NpcScript
 		ActivateWindmill(minutes);
 		
 		RndMsg(
-			"Okay!<br/>Anyone can use the Mill now for the next " + minutes + " minutes.<br/>I'm counting, haha.",
-			"Yay! I got some pocket money!"
+			L("Okay!<br/>Anyone can use the Mill now for the next " + minutes + " minutes.<br/>I'm counting, haha."),
+			L("Yay! I got some pocket money!")
 		);
 	}
 	

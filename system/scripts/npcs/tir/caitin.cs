@@ -151,11 +151,11 @@ public class CaitinBaseScript : NpcScript
 				
 			default:
 				RndMsg(
-					"Can we change the subject?",
-					"I don't have much to say about that.",
-					"Never heard of that before.",
-					"Well, I really don't know.",
-					"Did you ask everyone else the same question?"
+					L("Can we change the subject?"),
+					L("I don't have much to say about that."),
+					L("Never heard of that before."),
+					L("Well, I really don't know."),
+					L("Did you ask everyone else the same question?")
 				);
 				break;
 		}

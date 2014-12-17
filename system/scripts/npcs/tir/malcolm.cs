@@ -153,11 +153,11 @@ public class MalcolmBaseScript : NpcScript
 
 			default:
 				RndMsg(
-					"I don't know.",
-					"Hm... Beats me.",
-					"Well... I don't have much to say about it.",
-					"I think I heard about it but... I can't remember.",
-					"Sorry, I don't know.<br/>Hm... Maybe I should have a travel diary to write things down."
+					L("I don't know."),
+					L("Hm... Beats me."),
+					L("Well... I don't have much to say about it."),
+					L("I think I heard about it but... I can't remember."),
+					L("Sorry, I don't know.<br/>Hm... Maybe I should have a travel diary to write things down.")
 				);
 				break;
 		}

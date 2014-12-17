@@ -210,11 +210,11 @@ public class MevenBaseScript : NpcScript
 				
 			default:
 				RndMsg(
-					"I am sorry, but ignorance is not a sin.",
-					"...<br/>I really don't know.",
-					"I don't think I heard of that, I'm sorry.",
-					"How could I know about that, I'm just a priest.",
-					"...?"
+					L("I am sorry, but ignorance is not a sin."),
+					L("...<br/>I really don't know."),
+					L("I don't think I heard of that, I'm sorry."),
+					L("How could I know about that, I'm just a priest."),
+					L("...?")
 				);
 				break;
 		}
