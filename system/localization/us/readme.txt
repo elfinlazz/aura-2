@@ -40,14 +40,30 @@ Creating a new translation:
   Aura folder.
 * Switch to the "Translation properties" and enter any project name and
   select "UTF-8" as source code charset.
-* Switch to the "Source keywords" and add two new items:
-  - Localization.Get
-  - L
+* Switch to the "Source keywords" and add the following new items,
+  without quotation:
+  "Localization.Get"
+  "Msg:1"
+  "Msg:2"
+  "Msg:3"
+  "Msg:4"
+  "Button:1"
+  "Intro:1"
+  "AddPhrase:1"
+  "L"
+  These are the function names the program will look for to get strings.
+  Localization.Get is usually used inside the core, e.g. for the Eweca
+  messages. The other methods are used in scripts for various things.
+  You can also create multiple po files and group those a little,
+  e.g. make one file for the core, where you only look for Localization.Get.
 * Poedit will now search all source files and NPCs for translatable texts.
 * Once it's done searching you can start translating, by selecting a line
   and adding the translation at the bottom.
 * Finally save the file and you're done, after changing the localization to
-  load "de" it should use your strings instead of the English ones.
+  load "de", if you've put the file(s) in a folder called "de", it should use
+  your strings instead of the English ones. Naturally you can also put them in
+  a "us" folder, to simply replace default phrases, without changing the
+  language.
 
 After creating the ".po" file once you can simply open it with Poedit again,
 fix translations, or update the catalogue, which makes it read the source
