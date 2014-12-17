@@ -405,13 +405,13 @@ namespace Aura.Channel.Scripting.Scripts
 		/// but only once per creature and NPC per session.
 		/// </summary>
 		/// <param name="lines"></param>
-		protected async Task Intro(params object[] lines)
+		protected async Task Intro(string msg)
 		{
 			if (this.Player.Vars.Temp["npc_intro:" + this.NPC.Name] == null)
 			{
 				// Explicit button and Select, so we don't get into the hooks
 				// (that might do more than sending msgs) without clicking.
-				this.Msg(Hide.Both, string.Join("<br/>", lines), this.Button("Continue"));
+				this.Msg(Hide.Both, msg, this.Button("Continue"));
 				await Select();
 				this.Player.Vars.Temp["npc_intro:" + this.NPC.Name] = true;
 			}
@@ -659,8 +659,6 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="elements"></param>
 		public void Msg(params DialogElement[] elements)
 		{
-			this.LocalizeDialog(ref elements);
-
 			this.Msg(Hide.None, elements);
 		}
 
