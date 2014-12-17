@@ -323,6 +323,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="phrase"></param>
 		protected void AddPhrase(string phrase)
 		{
+			phrase = Localization.Get(phrase);
+
 			if (this.NPC.AI != null)
 				this.NPC.AI.Phrases.Add(phrase);
 		}
