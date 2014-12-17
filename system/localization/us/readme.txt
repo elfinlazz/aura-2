@@ -47,6 +47,7 @@ Creating a new translation:
   "Msg:2"
   "Msg:3"
   "Msg:4"
+  "List:1"
   "Button:1"
   "Intro:1"
   "AddPhrase:1"

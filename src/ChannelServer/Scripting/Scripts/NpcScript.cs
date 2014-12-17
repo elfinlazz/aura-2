@@ -760,13 +760,39 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			foreach (var element in elements)
 			{
+				// Localize text element
 				var text = element as DialogText;
 				if (text != null)
+				{
 					text.Text = Localization.Get(text.Text);
+					continue;
+				}
 
+				// Localize button element
 				var button = element as DialogButton;
 				if (button != null)
+				{
 					button.Text = Localization.Get(button.Text);
+					continue;
+				}
+
+				// Localize list element
+				var list = element as DialogList;
+				if (list != null)
+				{
+					list.Text = Localization.Get(list.Text);
+
+					// Localize child buttons
+					Log.Debug(list.Children.Count);
+					foreach (var child in list.Children)
+					{
+						button = child as DialogButton;
+						if (button != null)
+							button.Text = Localization.Get(button.Text);
+					}
+
+					continue;
+				}
 			}
 		}
 
