@@ -556,7 +556,7 @@
 { id: 30008, name: "the Diligent", effects: { "Defense":1, "LifeRate":100, "StaminaRate":100 } }, 
 { id: 30009, name: "the Head Figure", effects: { "Defense":3, "Protection":5, "MaxAttackRate":100, "MinAttackRate":100, "LifeRate":100, "ManaRate":100, "StaminaRate":100 } }, 
 { id: 30010, name: "the Weak", effects: { "StaminaRate":100, "LifeRate":100 } }, 
-{ id: 30011, name: "소환된" }, 
+{ id: 30011, name: "the Summoned" }, 
 { id: 30012, name: "the Event" }, 
 { id: 30013, name: "the Cursed", effects: { "MaxAttackRate":100, "MinAttackRate":100 } }, 
 { id: 30014, name: "the Resurrected", effects: { "MaxAttackRate":100, "MinAttackRate":100 } }, 
