@@ -8,6 +8,8 @@ using Aura.Channel.Scripting;
 using Aura.Channel.Util;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
+using Aura.Channel.Skills.Life;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Network
 {
@@ -97,18 +99,24 @@ namespace Aura.Channel.Network
 		/// </summary>
 		public override void CleanUp()
 		{
-			if (this.Account != null)
-				ChannelServer.Instance.Database.SaveAccount(this.Account);
+			// Dispose creatures, to remove subscriptions and stuff.
+			// Do this before unspawning, the creature might need the region.
+			foreach (var creature in this.Creatures.Values)
+				creature.Dispose();
 
 			foreach (var creature in this.Creatures.Values.Where(a => a.Region != null))
 			{
+				// Close NPC sessions
 				if (creature.Client.NpcSession.Script != null)
 					creature.Client.NpcSession.Clear();
+
+				// Unspawn creature
 				creature.Region.RemoveCreature(creature);
 			}
 
-			foreach (var creature in this.Creatures.Values)
-				creature.Dispose();
+			// Save everything after we're done cleaning up
+			if (this.Account != null)
+				ChannelServer.Instance.Database.SaveAccount(this.Account);
 
 			this.Creatures.Clear();
 			this.Account = null;

@@ -5,6 +5,7 @@
 //---------------------------------------------------------------------------
 
 [
+{ itemId: 41157, name: "Special Fishing Chair", propId: 43158, giantPropId: 43159 },
 { itemId: 50087, name: "School Chair", propId: 42598, giantPropId: 42819 },
 { itemId: 50088, name: "Living Room Chair", propId: 42599, giantPropId: 42820 },
 { itemId: 50089, name: "Reading Chair", propId: 42600, giantPropId: 42821 },
@@ -16,4 +17,20 @@
 { itemId: 50098, name: "Rainy Fox Chair", propId: 44262, giantPropId: 44263, effect: 345 },
 { itemId: 50099, name: "Single Sunbed", propId: 44323, giantPropId: 44325 },
 { itemId: 50100, name: "Double Sunbed", propId: 44324, giantPropId: 44326 },
+{ itemId: 50496, name: "Gold Medal Podium", propId: 44603, giantPropId: 44603 },
+{ itemId: 50497, name: "Silver Medal Podium", propId: 44604, giantPropId: 44604 },
+{ itemId: 50498, name: "Bronze Medal Podium", propId: 44605, giantPropId: 44605 },
+{ itemId: 50499, name: "4th Place Podium", propId: 44608, giantPropId: 44608 },
+{ itemId: 50838, name: "Couple Heart Statue", propId: 44618, giantPropId: 44618 },
+{ itemId: 50839, name: "Thinking Chair", propId: 44633, giantPropId: 44635 },
+{ itemId: 50840, name: "Golden Thinking Chair", propId: 44634, giantPropId: 44636 },
+{ itemId: 50841, name: "Gold Crown Thinking Chair", propId: 44668, giantPropId: 44667 },
+{ itemId: 50842, name: "Silver Crown Thinking Chair", propId: 44668, giantPropId: 44667 },
+{ itemId: 50843, name: "Bornze  Crown Thinking Chair", propId: 44668, giantPropId: 44667 },
+{ itemId: 50844, name: "Afternoon Tea Table", propId: 44744, giantPropId: 44745 },
+{ itemId: 50845, name: "Afternoon Tea Table", propId: 44744, giantPropId: 44745 },
+{ itemId: 50871, name: "Vampire Coffin", propId: 44854, giantPropId: 44855 },
+{ itemId: 50872, name: "Ghost Chair", propId: 44847, giantPropId: 44848 },
+{ itemId: 50873, name: "Halloween Broom Swing", propId: 44863, giantPropId: 44864 },
+{ itemId: 50874, name: "Christmas Chair", propId: 44871, giantPropId: 44871 },
 ]

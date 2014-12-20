@@ -52,7 +52,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "skill", "<id> [rank]", HandleSkill);
 			Add(50, 50, "title", "<id>", HandleTitle);
 			Add(50, 50, "speed", "[increase]", HandleSpeed);
-			Add(50, 50, "spawn", "<race> [amount]", HandleSpawn);
+			Add(50, 50, "spawn", "<race> [amount [title]]", HandleSpawn);
 			Add(50, 50, "ap", "<amount>", HandleAp);
 			Add(50, -1, "gmcp", "", HandleGmcp);
 			Add(50, 50, "card", "<id>", HandleCard);
@@ -66,6 +66,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "broadcast", "<message>", HandleBroadcast);
 			Add(50, 50, "allskills", "", HandleAllSkills);
 			Add(50, 50, "alltitles", "", HandleAllTitles);
+			Add(50, 50, "gold", "<amount>", HandleGold);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -763,6 +764,10 @@ namespace Aura.Channel.Util
 			if (args.Count > 2 && !int.TryParse(args[2], out amount))
 				return CommandResult.InvalidArgument;
 
+			ushort titleId = 30011;
+			if (args.Count > 3 && !ushort.TryParse(args[3], out titleId))
+				return CommandResult.InvalidArgument;
+
 			var targetPos = target.GetPosition();
 			for (int i = 0; i < amount; ++i)
 			{
@@ -770,6 +775,12 @@ namespace Aura.Channel.Util
 				var y = (int)(targetPos.Y + Math.Cos(i) * i * 20);
 
 				var creature = ChannelServer.Instance.ScriptManager.Spawn(raceId, target.RegionId, x, y, -1, true, true);
+
+				if (titleId != 0)
+				{
+					creature.Titles.Enable(titleId);
+					creature.Titles.ChangeTitle(titleId, false);
+				}
 			}
 
 			Send.ServerMessage(sender, Localization.Get("Creatures spawned."));
@@ -1192,6 +1203,37 @@ namespace Aura.Channel.Util
 
 				sender.Vars.Temp.DistanceCommandPos = null;
 			}
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleGold(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (args.Count < 2)
+				return CommandResult.InvalidArgument;
+
+			int amount;
+			if (!int.TryParse(args[1], out amount))
+				return CommandResult.InvalidArgument;
+
+			if (amount > 1000000)
+				amount = 1000000;
+
+			var rnd = RandomProvider.Get();
+			var i = amount;
+			while (i > 0)
+			{
+				var stack = new Item(2000);
+				stack.Info.Amount = (ushort)Math.Min(1000, i);
+				i -= stack.Info.Amount;
+
+				if (!target.Inventory.Insert(stack, false))
+					stack.Drop(target.Region, target.GetPosition().GetRandomInRange(500, rnd));
+			}
+
+			Send.SystemMessage(sender, Localization.Get("Spawned {0:n0}g."), amount);
+			if (sender != target)
+				Send.SystemMessage(target, Localization.Get("{0} gave you {1:n0}g."), sender.Name, amount);
 
 			return CommandResult.Okay;
 		}

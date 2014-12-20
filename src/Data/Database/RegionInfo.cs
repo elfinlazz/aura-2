@@ -91,7 +91,7 @@ namespace Aura.Data.Database
 		Unk1 = 1,
 		AreaChange = 10, // ? (texts, bgm change)
 		Collision = 14,
-		Unk2 = 2000,     // something about the monsters
+		CreatureSpawn = 2000,
 	}
 
 	public enum SignalType : int
