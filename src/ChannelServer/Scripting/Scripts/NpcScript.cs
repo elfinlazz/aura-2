@@ -1003,6 +1003,18 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Sends one of the passed messages + FavorExpression.
+		/// </summary>
+		/// <param name="msgs"></param>
+		public void RndFavorMsg(params string[] msgs)
+		{
+			if (msgs == null || msgs.Length == 0)
+				return;
+
+			this.Msg(Hide.None, msgs[Random(msgs.Length)], FavorExpression());
+		}
+
+		/// <summary>
 		/// Sends dialog to player's client.
 		/// </summary>
 		/// <param name="elements"></param>
