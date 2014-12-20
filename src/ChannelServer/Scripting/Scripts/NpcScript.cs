@@ -165,8 +165,6 @@ namespace Aura.Channel.Scripting.Scripts
 
 			await this.ReactToGift(gift, score);
 			await this.Select();
-
-			this.Close();
 		}
 
 		/// <summary>
