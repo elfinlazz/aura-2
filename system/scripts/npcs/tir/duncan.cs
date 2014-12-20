@@ -42,10 +42,10 @@ public class DuncanBaseScript : NpcScript
 	{
 		switch (score)
 		{
-			case GiftReaction.Love: return (new[] { "Oh! How did you know I like this?<br/>Thank you very much."}).Random();
-			case GiftReaction.Dislike: return (new[] { "Hmm. Not exactly to my taste...", "Hmm. I'll keep it safe for someone who may need it."}).Random();
+			case GiftReaction.Love: return RndStr("Oh! How did you know I like this?<br/>Thank you very much.");
+			case GiftReaction.Dislike: return RndStr("Hmm. Not exactly to my taste...", "Hmm. I'll keep it safe for someone who may need it.");
+			default: return RndStr("Is that for me?", "You didn't need to do this...");
 		}
-		return (new[] { "Is that for me?", "You didn't need to do this..." }).Random();
 	}
 	
 	protected override async Task Talk()

@@ -174,7 +174,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		protected virtual string GetGiftReply(GiftReaction score)
 		{
-			return "Thank you.";
+			return Localization.Get("Thank you.");
 		}
 
 		/// <summary>
@@ -337,20 +337,6 @@ namespace Aura.Channel.Scripting.Scripts
 
 		}
 
-		protected static readonly string[] _neutralMessages =
-		{
-			"is looking at me.",
-			"is looking in my direction.",
-			"is waiting for me to says something.",
-			"is paying attention to me."
-		};
-
-		protected static readonly string[] _hateMessages =
-		{
-			"is looking at me like they don't want to see me.",
-			"obviously hates me."
-		};
-
 		/// <summary>
 		/// Gets the mood string for the current mood.
 		/// </summary>
@@ -372,51 +358,59 @@ namespace Aura.Channel.Scripting.Scripts
 			switch (mood)
 			{
 				case NpcMood.VeryStressed:
-					moodStr = "is giving me and impression that I am interruping something.";
+					moodStr = Localization.Get("is giving me and impression that I am interruping something.");
 					break;
 
 				case NpcMood.Stressed:
-					moodStr = "is giving me a look that it may be better to stop this conversation.";
+					moodStr = Localization.Get("is giving me a look that it may be better to stop this conversation.");
 					break;
 
 				case NpcMood.BestFriends:
-					moodStr = "is smiling at me as if we've known each other for years.";
+					moodStr = Localization.Get("is smiling at me as if we've known each other for years.");
 					break;
 
 				case NpcMood.Friends:
-					moodStr = "is really giving me a friendly vibe.";
+					moodStr = Localization.Get("is really giving me a friendly vibe.");
 					break;
 
 				case NpcMood.Hates:
-					moodStr = _hateMessages.Random();
+					moodStr = this.RndStr(
+						Localization.Get("is looking at me like they don't want to see me."),
+						Localization.Get("obviously hates me.")
+					);
 					break;
 
 				case NpcMood.ReallyDislikes:
-					moodStr = "is looking at me with obvious disgust.";
+					moodStr = Localization.Get("is looking at me with obvious disgust.");
 					break;
 
 				case NpcMood.Dislikes:
-					moodStr = "looks like it's a bit unpleasent that I'm here.";
+					moodStr = Localization.Get("looks like it's a bit unpleasent that I'm here.");
 					break;
 
 				case NpcMood.Likes:
-					moodStr = "is looking at me with great interest.";
+					moodStr = Localization.Get("is looking at me with great interest.");
 					break;
 
 				case NpcMood.ReallyLikes:
-					moodStr = "is giving me a friendly smile.";
+					moodStr = Localization.Get("is giving me a friendly smile.");
 					break;
 
 				case NpcMood.Love:
-					moodStr = "is giving me a welcome look.";
+					moodStr = Localization.Get("is giving me a welcome look.");
 					break;
 
 				default:
-					moodStr = _neutralMessages.Random();
+					moodStr = this.RndStr(
+						Localization.Get("is looking at me."),
+						Localization.Get("is looking in my direction."),
+						Localization.Get("is waiting for me to says something."),
+						Localization.Get("is paying attention to me.")
+					);
 					break;
 			}
 
-			return string.Format(Localization.Get("( <npcname/> {0} )"), moodStr);
+			return "(<npcname/> " + moodStr + ")";
 		}
 
 		/// <summary>
@@ -425,7 +419,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public virtual async Task StartConversation()
 		{
-			this.Msg(Hide.Name, GetMoodString(), FavorExpression());
+			this.Msg(Hide.Name, this.GetMoodString(), this.FavorExpression());
 
 			await Conversation();
 		}
@@ -992,6 +986,18 @@ namespace Aura.Channel.Scripting.Scripts
 			return true;
 		}
 
+		/// <summary>
+		/// Returns a random string from the given ones.
+		/// </summary>
+		/// <param name="msgs"></param>
+		public string RndStr(params string[] msgs)
+		{
+			if (msgs == null || msgs.Length == 0)
+				return null;
+
+			return msgs[Random(msgs.Length)];
+		}
+
 		// Dialog
 		// ------------------------------------------------------------------
 
@@ -1001,10 +1007,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="msgs"></param>
 		public void RndMsg(params string[] msgs)
 		{
-			if (msgs == null || msgs.Length == 0)
-				return;
-
-			this.Msg(msgs[Random(msgs.Length)]);
+			var msg = this.RndStr(msgs);
+			if (msg != null)
+				this.Msg(msgs[Random(msgs.Length)]);
 		}
 
 		/// <summary>
@@ -1013,10 +1018,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="msgs"></param>
 		public void RndFavorMsg(params string[] msgs)
 		{
-			if (msgs == null || msgs.Length == 0)
-				return;
-
-			this.Msg(Hide.None, msgs[Random(msgs.Length)], FavorExpression());
+			var msg = this.RndStr(msgs);
+			if (msg != null)
+				this.Msg(Hide.None, msgs[Random(msgs.Length)], FavorExpression());
 		}
 
 		/// <summary>
