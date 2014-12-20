@@ -19,7 +19,7 @@ namespace Aura.Channel.World.Entities
 		public AiScript AI { get; set; }
 		public int SpawnId { get; set; }
 
-		public SortedList<int, string> Greetings { get; set; }
+		public SortedList<int, List<string>> Greetings { get; set; }
 		public GiftWeightInfo GiftWeights { get; set; }
 
 		/// <summary>
@@ -41,7 +41,7 @@ namespace Aura.Channel.World.Entities
 			this.Life = this.LifeMaxBase = 1000;
 			this.Color1 = this.Color2 = this.Color2 = 0x808080;
 			this.GiftWeights = new GiftWeightInfo();
-			this.Greetings = new SortedList<int, string>();
+			this.Greetings = new SortedList<int, List<string>>();
 		}
 
 		public override void Dispose()

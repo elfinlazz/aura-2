@@ -215,9 +215,10 @@ namespace Aura.Channel.Scripting.Scripts
 			var msg = "[ERROR - NO GREETINGS DEFINED]";
 
 			// Take the highest greeting without going over their memorability
-			foreach (var k in this.NPC.Greetings.TakeWhile(k => k.Key <= mem))
+			foreach (var list in this.NPC.Greetings.TakeWhile(k => k.Key <= mem))
 			{
-				msg = k.Value;
+				var msgs = list.Value;
+				msg = msgs[Random(msgs.Count)];
 			}
 
 			if (mem <= 0)
@@ -408,7 +409,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 				await this.Keywords(keyword);
 
-				var  fd =this.KeywordResponse(keyword);
+				var fd = this.KeywordResponse(keyword);
 
 				this.Msg(Hide.Name, string.Format("({0})", this.GetStandardKeywordResponse(fd)), this.FavorExpression());
 			}
@@ -677,7 +678,10 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="greeting">The greeting.</param>
 		protected void AddGreeting(int memorability, string greeting)
 		{
-			this.NPC.Greetings.Add(memorability, greeting);
+			if (!this.NPC.Greetings.ContainsKey(memorability))
+				this.NPC.Greetings.Add(memorability, new List<string>());
+
+			this.NPC.Greetings[memorability].Add(greeting);
 		}
 
 		/// <summary>
