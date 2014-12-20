@@ -52,7 +52,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "skill", "<id> [rank]", HandleSkill);
 			Add(50, 50, "title", "<id>", HandleTitle);
 			Add(50, 50, "speed", "[increase]", HandleSpeed);
-			Add(50, 50, "spawn", "<race> [amount]", HandleSpawn);
+			Add(50, 50, "spawn", "<race> [amount [title]]", HandleSpawn);
 			Add(50, 50, "ap", "<amount>", HandleAp);
 			Add(50, -1, "gmcp", "", HandleGmcp);
 			Add(50, 50, "card", "<id>", HandleCard);
@@ -764,6 +764,10 @@ namespace Aura.Channel.Util
 			if (args.Count > 2 && !int.TryParse(args[2], out amount))
 				return CommandResult.InvalidArgument;
 
+			ushort titleId = 30011;
+			if (args.Count > 3 && !ushort.TryParse(args[3], out titleId))
+				return CommandResult.InvalidArgument;
+
 			var targetPos = target.GetPosition();
 			for (int i = 0; i < amount; ++i)
 			{
@@ -771,6 +775,12 @@ namespace Aura.Channel.Util
 				var y = (int)(targetPos.Y + Math.Cos(i) * i * 20);
 
 				var creature = ChannelServer.Instance.ScriptManager.Spawn(raceId, target.RegionId, x, y, -1, true, true);
+
+				if (titleId != 0)
+				{
+					creature.Titles.Enable(titleId);
+					creature.Titles.ChangeTitle(titleId, false);
+				}
 			}
 
 			Send.ServerMessage(sender, Localization.Get("Creatures spawned."));
