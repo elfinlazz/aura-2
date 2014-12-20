@@ -158,7 +158,7 @@ public class BebhinnBaseScript : NpcScript
 				break;
 			
 			default:
-				RndMsg(
+				RndFavorMsg(
 					"Can we change the subject?",
 					"Hmm... You know a story I've never heard of... How could that be?",
 					"Hehe... I don't know what you're talking about...",

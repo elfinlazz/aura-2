@@ -132,7 +132,7 @@ public class DuncanBaseScript : NpcScript
 				break;
 				
 			default:
-				RndFavorMsg(
+				RndMsg(
 					"I don't know anything about that...",
 					"I think it'd be better for you to ask someone else.",
 					"Hmm, I wonder who might know about that...",
