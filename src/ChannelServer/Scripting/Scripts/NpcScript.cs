@@ -161,9 +161,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		protected virtual async Task Gift(Item gift)
 		{
-			var score = AcceptGift(gift);
+			var score = this.GetGiftReaction(gift);
 
-			var reply = GetGiftReply(score);
+			var reply = this.GetGiftReply(score);
 
 			this.Msg(Hide.None, reply, FavorExpression());
 
@@ -174,10 +174,15 @@ namespace Aura.Channel.Scripting.Scripts
 
 		protected virtual string GetGiftReply(GiftReaction score)
 		{
-			return "Hum. It's nice, I guess...";
+			return "Thank you.";
 		}
 
-		protected virtual GiftReaction AcceptGift(Item gift)
+		/// <summary>
+		/// Returns NPCs reaction to gifted item.
+		/// </summary>
+		/// <param name="gift"></param>
+		/// <returns></returns>
+		protected virtual GiftReaction GetGiftReaction(Item gift)
 		{
 			var score = this.NPC.GiftWeights.CalculateScore(gift);
 
