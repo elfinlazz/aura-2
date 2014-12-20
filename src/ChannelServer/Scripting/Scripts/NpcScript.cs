@@ -28,10 +28,15 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public ConversationState ConversationState { get; private set; }
 
+		/// <summary>
+		/// The NPC associated with this instance of the NPC script.
+		/// </summary>
 		public NPC NPC { get; set; }
 
 		private Creature _player;
-
+		/// <summary>
+		/// The player associated with this instance of the NPC script.
+		/// </summary>
 		public Creature Player
 		{
 			get
@@ -43,12 +48,43 @@ namespace Aura.Channel.Scripting.Scripts
 			set { _player = value; }
 		}
 
+		/// <summary>
+		/// Gets or sets the NPC's favor towards the player.
+		/// </summary>
+		public int Favor
+		{
+			get { return this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] ?? 0; }
+			set { this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the NPC's stress.
+		/// </summary>
+		public int Stress
+		{
+			get { return this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] ?? 0; }
+			set { this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets how well the NPC remembers the player.
+		/// </summary>
+		public int Memorability
+		{
+			get { return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0; }
+			set { this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = value; }
+		}
+
 		protected NpcScript()
 		{
 			_resumeSignal = new SemaphoreSlim(0);
 			_cancellation = new CancellationTokenSource();
 		}
 
+		/// <summary>
+		/// Initiates the NPC script, creating and placing the NPC.
+		/// </summary>
+		/// <returns></returns>
 		public override bool Init()
 		{
 			this.NPC = new NPC();
@@ -120,6 +156,9 @@ namespace Aura.Channel.Scripting.Scripts
 			this.ConversationState = ConversationState.Ended;
 		}
 
+		/// <summary>
+		/// Called instead of Talk when a player started the conversation with a gift.
+		/// </summary>
 		protected virtual async Task Gift(Item gift)
 		{
 			var score = AcceptGift(gift);
@@ -461,17 +500,17 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Sets the gift weights.
 		/// </summary>
-		/// <param name="adult">The adult.</param>
-		/// <param name="anime">The anime.</param>
-		/// <param name="beauty">The beauty.</param>
-		/// <param name="individuality">The indiv.</param>
-		/// <param name="luxury">The luxury.</param>
-		/// <param name="maniac">The maniac.</param>
-		/// <param name="meaning">The meaning.</param>
-		/// <param name="rarity">The rarity.</param>
-		/// <param name="sexy">The sexy.</param>
-		/// <param name="toughness">The toughness.</param>
-		/// <param name="utility">The utility.</param>
+		/// <param name="adult">How much the NPC likes "adult" items.</param>
+		/// <param name="anime">How much the NPC likes "anime" items.</param>
+		/// <param name="beauty">How much the NPC likes "beauty" items.</param>
+		/// <param name="individuality">How much the NPC likes "indiv" items.</param>
+		/// <param name="luxury">How much the NPC likes "luxury" items.</param>
+		/// <param name="maniac">How much the NPC likes "maniac" items.</param>
+		/// <param name="meaning">How much the NPC likes "meaning" items.</param>
+		/// <param name="rarity">How much the NPC likes "rarity" items.</param>
+		/// <param name="sexy">How much the NPC likes "sexy" items.</param>
+		/// <param name="toughness">How much the NPC likes "toughness" items.</param>
+		/// <param name="utility">How much the NPC likes "utility" items.</param>
 		protected void SetGiftWeights(float adult, float anime, float beauty, float individuality, float luxury, float maniac, float meaning, float rarity, float sexy, float toughness, float utility)
 		{
 			this.NPC.GiftWeights.Adult = adult;
@@ -668,21 +707,21 @@ namespace Aura.Channel.Scripting.Scripts
 			this.NPC.AI = ai;
 		}
 
-		// Functions
-		// ------------------------------------------------------------------
-
 		/// <summary>
 		/// Adds a greeting to the NPC.
 		/// </summary>
-		/// <param name="memorability">The memorability.</param>
-		/// <param name="greeting">The greeting.</param>
-		protected void AddGreeting(int memorability, string greeting)
+		/// <param name="memorability">Memorability needed for this message to appear.</param>
+		/// <param name="greetingMessage">Message sent if the player's memorability matches.</param>
+		protected void AddGreeting(int memorability, string greetingMessage)
 		{
 			if (!this.NPC.Greetings.ContainsKey(memorability))
 				this.NPC.Greetings.Add(memorability, new List<string>());
 
-			this.NPC.Greetings[memorability].Add(greeting);
+			this.NPC.Greetings[memorability].Add(greetingMessage);
 		}
+
+		// Functions
+		// ------------------------------------------------------------------
 
 		/// <summary>
 		/// Sends Msg with Bgm element.
@@ -691,42 +730,6 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void SetBgm(string fileName)
 		{
 			this.Msg(new DialogBgm(fileName));
-		}
-
-		/// <summary>
-		/// Gets or sets the favor.
-		/// </summary>
-		/// <value>
-		/// The favor.
-		/// </value>
-		public int Favor
-		{
-			get { return this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] ?? 0; }
-			set { this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] = value; }
-		}
-
-		/// <summary>
-		/// Gets or sets the stress.
-		/// </summary>
-		/// <value>
-		/// The stress.
-		/// </value>
-		public int Stress
-		{
-			get { return this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] ?? 0; }
-			set { this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = value; }
-		}
-
-		/// <summary>
-		/// Gets or sets the memorability.
-		/// </summary>
-		/// <value>
-		/// The memorability.
-		/// </value>
-		public int Memorability
-		{
-			get { return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0; }
-			set { this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = value; }
 		}
 
 		/// <summary>
@@ -988,7 +991,7 @@ namespace Aura.Channel.Scripting.Scripts
 		// ------------------------------------------------------------------
 
 		/// <summary>
-		/// Sends one of the passed messenges.
+		/// Sends one of the passed messages.
 		/// </summary>
 		/// <param name="msgs"></param>
 		public void RndMsg(params string[] msgs)
