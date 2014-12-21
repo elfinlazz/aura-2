@@ -49,7 +49,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Gets or sets the NPC's favor towards the player.
+		/// Gets or sets how much the NPC likes the player.
 		/// </summary>
 		public int Favor
 		{
@@ -470,7 +470,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 				await this.Keywords(keyword);
 
-				var fd = this.KeywordResponse(keyword);
+				var fd = this.KeywordMoodChange(keyword);
 
 				this.Msg(Hide.Name, string.Format("({0})", this.GetStandardKeywordResponse(fd)), this.FavorExpression());
 			}
@@ -505,7 +505,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="keyword">The keyword.</param>
 		/// <returns>The amount the NPC's favor has increased for this keyword</returns>
-		protected virtual int KeywordResponse(string keyword)
+		protected virtual int KeywordMoodChange(string keyword)
 		{
 			this.Stress += this.Random(3);
 			this.Memorability += this.Random(2);
