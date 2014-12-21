@@ -62,8 +62,27 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public int Stress
 		{
-			get { return this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] ?? 0; }
-			set { this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = value; }
+			get
+			{
+				// Get NPC stress and last change date
+				var stress = this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] ?? 0;
+				var change = this.Player.Vars.Perm["npc_stress_change_" + this.NPC.Name];
+
+				// Reduce stress by 1 each minute
+				if (change != null && stress > 0)
+				{
+					var diff = DateTime.Now - change;
+					stress = Math.Max(0, stress - diff.TotalMinutes);
+				}
+
+				return (int)stress;
+			}
+			set
+			{
+				// Set new stress value and change date
+				this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = value;
+				this.Player.Vars.Perm["npc_stress_change_" + this.NPC.Name] = DateTime.Now;
+			}
 		}
 
 		/// <summary>
