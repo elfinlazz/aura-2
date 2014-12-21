@@ -200,6 +200,7 @@
     <Compile Include="World\Entities\PlayerCreature.cs" />
     <Compile Include="World\Entities\Prop.cs" />
     <Compile Include="World\EventManager.cs" />
+    <Compile Include="World\Inventory\BankInventory.cs" />
     <Compile Include="World\Inventory\CreatureInventory.cs" />
     <Compile Include="World\Inventory\InventoryPockets.cs" />
     <Compile Include="World\Location.cs" />

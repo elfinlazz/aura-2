@@ -51,7 +51,7 @@ public class BebhinnBaseScript : NpcScript
 				return;
 				
 			case "@bank":
-				Msg("(Unimplemented)");
+				OpenBank();
 				return;
 				
 			case "@redeem":

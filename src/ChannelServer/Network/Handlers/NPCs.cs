@@ -16,6 +16,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Data;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Scripting.Scripts;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -327,6 +328,162 @@ namespace Aura.Channel.Network.Handlers
 
 		L_End:
 			Send.NpcShopSellItemR(creature);
+		}
+
+		/// <summary>
+		/// Sent when clicking on close button in bank.
+		/// </summary>
+		/// <remarks>
+		/// Doesn't lock the character if response isn't sent.
+		/// </remarks>
+		/// <example>
+		/// 0001 [..............00] Byte   : 0
+		/// </example>
+		[PacketHandler(Op.CloseBank)]
+		public void CloseBank(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			Send.CloseBankR(creature);
+		}
+
+		/// <summary>
+		/// Sent when selecting which tabs to display (human, elf, giant).
+		/// </summary>
+		/// <remarks>
+		/// This packet is only sent when enabling Elf or Giant, it's not sent
+		/// on deactivating them and not for Human either.
+		/// It's to request data that was not sent initially,
+		/// i.e. send only Human first and Elf and Giant when ticked.
+		/// The client only requests those tabs once.
+		/// </remarks>
+		/// <example>
+		/// 0001 [..............01] Byte   : 1
+		/// </example>
+		[PacketHandler(Op.RequestBankTabs)]
+		public void RequestBankTabs(ChannelClient client, Packet packet)
+		{
+			var race = (BankTabRace)packet.GetByte();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			if (race < BankTabRace.Human || race > BankTabRace.Giant)
+				race = BankTabRace.Human;
+
+			Send.OpenBank(creature, client.Account.Bank, race);
+		}
+
+		/// <summary>
+		/// Sent when depositing gold in the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [........00000014] Int    : 20
+		/// </example>
+		[PacketHandler(Op.BankDepositGold)]
+		public void BankDepositGold(ChannelClient client, Packet packet)
+		{
+			var amount = packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			if (creature.Inventory.Gold < amount)
+				throw new ModerateViolation("BankDepositGold: '{0}' ({1}) tried to deposit more than he has.", creature.Name, creature.EntityIdHex);
+
+			creature.Inventory.RemoveGold(amount);
+			client.Account.Bank.AddGold(creature, amount);
+
+			Send.BankDepositGoldR(creature, true);
+		}
+
+		/// <summary>
+		/// Sent when withdrawing gold from the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [..............00] Byte   : 0
+		/// 0002 [........00000014] Int    : 20
+		/// </example>
+		[PacketHandler(Op.BankWithdrawGold)]
+		public void BankWithdrawGold(ChannelClient client, Packet packet)
+		{
+			var check = packet.GetBool();
+			var withdrawAmount = packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			var removeAmount = withdrawAmount;
+			if (check) removeAmount += withdrawAmount / 20; // +5%
+
+			if (client.Account.Bank.Gold < removeAmount)
+				throw new ModerateViolation("BankWithdrawGold: '{0}' ({1}) tried to withdraw more than he has ({2}/{3}).", creature.Name, creature.EntityIdHex, removeAmount, client.Account.Bank.Gold);
+
+			// Add gold to inventory if no check
+			if (!check)
+			{
+				creature.Inventory.AddGold(withdrawAmount);
+			}
+			// Add check item to creature's cursor pocket if check
+			else
+			{
+				var item = new Item(2004); // Check
+				item.MetaData1.SetInt("EVALUE", withdrawAmount);
+
+				// This shouldn't happen.
+				if (!creature.Inventory.Add(item, Pocket.Cursor))
+				{
+					Log.Debug("BankWithdrawGold: Unable to add check to cursor.");
+
+					Send.BankWithdrawGoldR(creature, false);
+					return;
+				}
+			}
+
+			client.Account.Bank.RemoveGold(creature, removeAmount);
+
+			Send.BankWithdrawGoldR(creature, true);
+		}
+
+		/// <summary>
+		/// Sent when putting an item into the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [005000CA6F3EE634] Long   : 22518867586639412
+		/// 0002 [................] String : Exec
+		/// 0003 [........0000000B] Int    : 11
+		/// 0004 [........00000004] Int    : 4
+		/// </example>
+		[PacketHandler(Op.BankDepositItem)]
+		public void BankDepositItem(ChannelClient client, Packet packet)
+		{
+			var itemEntityId = packet.GetLong();
+			var tabName = packet.GetString();
+			var posX = packet.GetInt();
+			var posY = packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			var success = client.Account.Bank.DepositItem(creature, itemEntityId, "Global", tabName, posX, posY);
+
+			Send.BankDepositItemR(creature, success);
+		}
+
+		/// <summary>
+		/// Sent when taking an item out of the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [................] String : Exec
+		/// 0002 [005000CA6F3EE634] Long   : 22518867586639412
+		/// </example>
+		[PacketHandler(Op.BankWithdrawItem)]
+		public void BankWithdrawItem(ChannelClient client, Packet packet)
+		{
+			var tabName = packet.GetString();
+			var itemEntityId = packet.GetLong();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			var success = client.Account.Bank.WithdrawItem(creature, tabName, itemEntityId);
+
+			Send.BankWithdrawItemR(creature, success);
 		}
 	}
 }

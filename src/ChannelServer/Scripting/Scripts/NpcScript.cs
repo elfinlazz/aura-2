@@ -16,6 +16,7 @@ using Aura.Data;
 using Aura.Shared.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -635,6 +636,14 @@ namespace Aura.Channel.Scripting.Scripts
 			ChannelServer.Instance.Database.UseCoupon(code);
 
 			return true;
+		}
+
+		/// <summary>
+		/// Opens bank window.
+		/// </summary>
+		public void OpenBank()
+		{
+			Send.OpenBank(this.Player, this.Player.Client.Account.Bank, BankTabRace.Human);
 		}
 
 		// Dialog

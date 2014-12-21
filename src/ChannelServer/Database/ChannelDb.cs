@@ -53,6 +53,7 @@ namespace Aura.Channel.Database
 						account.AutobanCount = reader.GetInt32("autobanCount");
 						account.AutobanScore = reader.GetInt32("autobanScore");
 						account.LastAutobanReduction = reader.GetDateTimeSafe("lastAutobanReduction");
+						account.Bank.Gold = reader.GetInt32("bankGold");
 
 						// We don't need to decrease their score if it's already zero!
 						if (account.AutobanScore > 0 && ChannelServer.Instance.Conf.Autoban.ReductionTime.Ticks != 0)
@@ -73,6 +74,7 @@ namespace Aura.Channel.Database
 					}
 				}
 
+				// Read account variables
 				account.Vars.Perm = this.LoadVars(account.Id, 0);
 
 				// Characters
@@ -97,6 +99,7 @@ namespace Aura.Channel.Database
 							}
 						}
 					}
+
 				}
 				catch (Exception ex)
 				{
@@ -176,6 +179,7 @@ namespace Aura.Channel.Database
 			var character = new TCreature();
 			ushort title = 0, optionTitle = 0;
 			float lifeDelta = 0, manaDelta = 0, staminaDelta = 0;
+			int bankWidth = 12, bankHeight = 8;
 
 			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `" + table + "` AS c INNER JOIN `creatures` AS cr ON c.creatureId = cr.creatureId WHERE `entityId` = @entityId", conn))
@@ -249,6 +253,9 @@ namespace Aura.Channel.Database
 
 					title = reader.GetUInt16("title");
 					optionTitle = reader.GetUInt16("optionTitle");
+
+					bankWidth = reader.GetInt32("bankWidth");
+					bankHeight = reader.GetInt32("bankHeight");
 				}
 
 				character.LoadDefault();
@@ -260,6 +267,11 @@ namespace Aura.Channel.Database
 			this.GetCharacterTitles(character);
 			this.GetCharacterSkills(character);
 			this.GetCharacterQuests(character);
+
+			// Add bank tab for characters
+			// TODO: Bank tabs for pets?
+			if (character.IsCharacter)
+				this.AddBankTabForCharacter(account, character, bankWidth, bankHeight);
 
 			// Add GM titles for the characters of authority 50+ accounts
 			if (account != null)
@@ -295,6 +307,7 @@ namespace Aura.Channel.Database
 			foreach (var item in items.Where(a => a.OptionInfo.LinkedPocketId != Pocket.None))
 				character.Inventory.Add(new InventoryPocketNormal(item.OptionInfo.LinkedPocketId, item.Data.BagWidth, item.Data.BagHeight));
 
+			// Add items
 			foreach (var item in items)
 			{
 				// Ignore items that were in bags that don't exist anymore.
@@ -311,18 +324,56 @@ namespace Aura.Channel.Database
 		}
 
 		/// <summary>
+		/// Reads bank tab for character from db and adds it to account.
+		/// </summary>
+		/// <param name="account"></param>
+		/// <param name="character"></param>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		private void AddBankTabForCharacter(Account account, PlayerCreature character, int width, int height)
+		{
+			// Add tab
+			var race = character.IsHuman ? BankTabRace.Human : character.IsElf ? BankTabRace.Elf : BankTabRace.Giant;
+			account.Bank.AddTab(character.Name, race, width, height);
+
+			// Read bank items
+			var items = this.GetItems(character.CreatureId, true);
+			foreach (var item in items)
+			{
+				if (!account.Bank.InitAdd(character.Name, item))
+					Log.Error("AddBankTabFromCharacter: Unable to add item '{0}' ({1}) to bank tab '{2}'.", item.Info.Id, item.EntityId, character.Name);
+			}
+		}
+
+		/// <summary>
 		/// Returns list of items for creature with the given id.
 		/// </summary>
+		/// <remarks>
+		/// TODO: This should be refactored to read all items in one go,
+		///   instead of reading two or more separate lists.
+		///   1) Make it "ReadItem"
+		///   2) Handle the items in the actual item loading methods
+		/// </remarks>
 		/// <param name="creatureId"></param>
 		/// <returns></returns>
-		private List<Item> GetItems(long creatureId)
+		private List<Item> GetItems(long creatureId, bool bank = false)
 		{
 			var result = new List<Item>();
 
-			using (var conn = this.Connection)
+			var query = "SELECT * FROM `items` WHERE `creatureId` = @creatureId";
+
+			// Filter bank items
+			if (bank)
+				query += " AND `pocket` = 0 AND `bank` IS NOT NULL";
+			else
+				query += " AND `pocket` != 0 AND `bank` IS NULL";
+
 			// Sort descending by linkedPocket to get bags first, they have
 			// to be created before the items can be added.
-			using (var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId ORDER BY `linkedPocket` DESC", conn))
+			query += " ORDER BY `linkedPocket` DESC";
+
+			using (var conn = this.Connection)
+			using (var mc = new MySqlCommand(query, conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", creatureId);
 
@@ -334,6 +385,7 @@ namespace Aura.Channel.Database
 						var entityId = reader.GetInt64("entityId");
 
 						var item = new Item(itemId, entityId);
+						item.Bank = reader.GetStringSafe("bank");
 						item.Info.Pocket = (Pocket)reader.GetInt32("pocket");
 						item.Info.X = reader.GetInt32("x");
 						item.Info.Y = reader.GetInt32("y");
@@ -544,7 +596,7 @@ namespace Aura.Channel.Database
 							{
 								var uniqueId = reader.GetInt64("questIdUnique");
 								var id = reader.GetInt32("questId");
-								var state = (QuestState) reader.GetInt32("state");
+								var state = (QuestState)reader.GetInt32("state");
 								var itemEntityId = reader.GetInt64("itemEntityId");
 
 								var quest = new Quest(id, uniqueId, state);
@@ -708,6 +760,7 @@ namespace Aura.Channel.Database
 				cmd.Set("autobanCount", account.AutobanCount);
 				cmd.Set("autobanScore", account.AutobanScore);
 				cmd.Set("lastAutobanReduction", account.LastAutobanReduction);
+				cmd.Set("bankGold", account.Bank.Gold);
 
 				cmd.Execute();
 			}
@@ -879,7 +932,8 @@ namespace Aura.Channel.Database
 					mc.ExecuteNonQuery();
 				}
 
-				foreach (var item in creature.Inventory.Items)
+				var items = creature.Inventory.Items.Union(creature.Client.Account.Bank.GetTabItems(creature.Name));
+				foreach (var item in items)
 				{
 					using (var cmd = new InsertCommand("INSERT INTO `items` {0}", conn, transaction))
 					{
@@ -887,6 +941,7 @@ namespace Aura.Channel.Database
 						if (item.EntityId < MabiId.TmpItems)
 							cmd.Set("entityId", item.EntityId);
 						cmd.Set("itemId", item.Info.Id);
+						cmd.Set("bank", item.Bank);
 						cmd.Set("pocket", (byte)item.Info.Pocket);
 						cmd.Set("x", item.Info.X);
 						cmd.Set("y", item.Info.Y);
@@ -923,6 +978,7 @@ namespace Aura.Channel.Database
 				transaction.Commit();
 			}
 		}
+
 		/// <summary>
 		/// Writes all of creature's skills to the database.
 		/// </summary>

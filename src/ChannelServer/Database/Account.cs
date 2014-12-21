@@ -8,6 +8,7 @@ using System.Text;
 using Aura.Channel.Util;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Scripting;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Database
 {
@@ -30,6 +31,11 @@ namespace Aura.Channel.Database
 
 		private int _autobanScore;
 		private int _autobanCount;
+
+		/// <summary>
+		/// Account wide bank.
+		/// </summary>
+		public BankInventory Bank { get; protected set; }
 
 		/// <summary>
 		/// Account's current Autoban score. Don't set this directly
@@ -80,6 +86,7 @@ namespace Aura.Channel.Database
 			this.Characters = new List<Character>();
 			this.Pets = new List<Pet>();
 			this.Vars = new ScriptVariables();
+			this.Bank = new BankInventory();
 
 			this.LastLogin = DateTime.Now;
 		}
