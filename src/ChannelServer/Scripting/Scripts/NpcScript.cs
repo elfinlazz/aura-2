@@ -358,59 +358,59 @@ namespace Aura.Channel.Scripting.Scripts
 			switch (mood)
 			{
 				case NpcMood.VeryStressed:
-					moodStr = Localization.Get("is giving me and impression that I am interruping something.");
+					moodStr = Localization.Get("(<npcname/> is giving me and impression that I am interruping something.)");
 					break;
 
 				case NpcMood.Stressed:
-					moodStr = Localization.Get("is giving me a look that it may be better to stop this conversation.");
+					moodStr = Localization.Get("(<npcname/> is giving me a look that it may be better to stop this conversation.)");
 					break;
 
 				case NpcMood.BestFriends:
-					moodStr = Localization.Get("is smiling at me as if we've known each other for years.");
+					moodStr = Localization.Get("(<npcname/> is smiling at me as if we've known each other for years.)");
 					break;
 
 				case NpcMood.Friends:
-					moodStr = Localization.Get("is really giving me a friendly vibe.");
+					moodStr = Localization.Get("(<npcname/> is really giving me a friendly vibe.)");
 					break;
 
 				case NpcMood.Hates:
 					moodStr = this.RndStr(
-						Localization.Get("is looking at me like they don't want to see me."),
-						Localization.Get("obviously hates me.")
+						Localization.Get("(<npcname/> is looking at me like they don't want to see me.)"),
+						Localization.Get("(<npcname/> obviously hates me.)")
 					);
 					break;
 
 				case NpcMood.ReallyDislikes:
-					moodStr = Localization.Get("is looking at me with obvious disgust.");
+					moodStr = Localization.Get("(<npcname/> is looking at me with obvious disgust.)");
 					break;
 
 				case NpcMood.Dislikes:
-					moodStr = Localization.Get("looks like it's a bit unpleasent that I'm here.");
+					moodStr = Localization.Get("(<npcname/> looks like it's a bit unpleasent that I'm here.)");
 					break;
 
 				case NpcMood.Likes:
-					moodStr = Localization.Get("is looking at me with great interest.");
+					moodStr = Localization.Get("(<npcname/> is looking at me with great interest.)");
 					break;
 
 				case NpcMood.ReallyLikes:
-					moodStr = Localization.Get("is giving me a friendly smile.");
+					moodStr = Localization.Get("(<npcname/> is giving me a friendly smile.)");
 					break;
 
 				case NpcMood.Love:
-					moodStr = Localization.Get("is giving me a welcome look.");
+					moodStr = Localization.Get("(<npcname/> is giving me a welcome look.)");
 					break;
 
 				default:
 					moodStr = this.RndStr(
-						Localization.Get("is looking at me."),
-						Localization.Get("is looking in my direction."),
-						Localization.Get("is waiting for me to says something."),
-						Localization.Get("is paying attention to me.")
+						Localization.Get("(<npcname/> is looking at me.)"),
+						Localization.Get("(<npcname/> is looking in my direction.)"),
+						Localization.Get("(<npcname/> is waiting for me to says something.)"),
+						Localization.Get("(<npcname/> is paying attention to me.)")
 					);
 					break;
 			}
 
-			return "(<npcname/> " + moodStr + ")";
+			return moodStr;
 		}
 
 		/// <summary>
@@ -453,18 +453,15 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 		}
 
-		private static readonly string[] _neutralResponses =
-		{
-			Localization.Get("I think I left a good impression."),
-			Localization.Get("The conversation drew a lot of interest."),
-			Localization.Get("That was a great conversation!")
-		};
-
 		private string GetStandardKeywordResponse(int favorDelta)
 		{
 			// Seem to be multiple levels? -5, -2, 0, 2, 5?
 
-			return _neutralResponses.Random();
+			return this.RndStr(
+				Localization.Get("I think I left a good impression."),
+				Localization.Get("The conversation drew a lot of interest."),
+				Localization.Get("That was a great conversation!")
+			);
 
 			// (It seems I left quite a good impression.)
 		}
