@@ -51,26 +51,26 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Gets or sets how well the NPC remembers the player.
 		/// </summary>
-		public int Memorability
+		public int Memory
 		{
 			get
 			{
-				// Get NPC memorability and last change date
-				var memorability = this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0;
+				// Get NPC memory and last change date
+				var memory = this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0;
 				var change = this.Player.Vars.Perm["npc_memory_change_" + this.NPC.Name];
 
-				// Reduce memorability by 1 each day
-				if (change != null && memorability > 0)
+				// Reduce memory by 1 each day
+				if (change != null && memory > 0)
 				{
 					TimeSpan diff = DateTime.Now - change;
-					memorability = Math.Max(0, memorability - diff.TotalDays);
+					memory = Math.Max(0, memory - diff.TotalDays);
 				}
 
-				return (int)memorability;
+				return (int)memory;
 			}
 			set
 			{
-				// Set new memorability value and change date
+				// Set new memory value and change date
 				this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = Math.Max(0, value);
 				this.Player.Vars.Perm["npc_memory_change_" + this.NPC.Name] = DateTime.Now;
 			}
@@ -250,7 +250,7 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				score = 10;
 				this.Favor += 10; // Determined through a LOT of pots... RIP my bank :(
-				this.Memorability += 4; // Gotta remember who gave you roofies!!
+				this.Memory += 4; // Gotta remember who gave you roofies!!
 			}
 			else
 			{
@@ -317,38 +317,38 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			// TODO: if (DoingPtj()) ...
 
-			var mem = this.Memorability;
+			var memory = this.Memory;
 			var stress = this.Stress;
 
 			var msg = "[ERROR - NO GREETINGS DEFINED]";
 
-			// Take the highest greeting without going over their memorability
-			foreach (var list in this.NPC.Greetings.TakeWhile(k => k.Key <= mem))
+			// Take the highest greeting without going over their memory
+			foreach (var list in this.NPC.Greetings.TakeWhile(k => k.Key <= memory))
 			{
 				var msgs = list.Value;
 				msg = msgs[Random(msgs.Count)];
 			}
 
-			if (mem <= 0)
-				this.Memorability = 1;
-			else if (mem == 1)
+			if (memory <= 0)
+				this.Memory = 1;
+			else if (memory == 1)
 			{
 				// Do nothing. Keeps players from raising their familiarity
 				// just by talking.
 			}
-			else if (mem == 2)
+			else if (memory == 2)
 			{
 				if (stress == 0)
 				{
-					this.Memorability += 1;
+					this.Memory += 1;
 					this.Stress += 5;
 				}
 			}
-			else if (mem <= 6)
+			else if (memory <= 6)
 			{
 				if (stress == 0)
 				{
-					this.Memorability += 1;
+					this.Memory += 1;
 					this.Stress += 5;
 				}
 			}
@@ -356,7 +356,7 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				if (stress == 0)
 				{
-					this.Memorability += 1;
+					this.Memory += 1;
 					this.Stress += 10;
 				}
 			}
@@ -370,8 +370,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public virtual NpcMood GetMood()
 		{
-			var stress = this.Stress;
-			var favor = this.Favor;
+			int stress = this.Stress;
+			int favor = this.Favor;
+			int memory = this.Memory;
 
 			if (stress > 12)
 				return NpcMood.VeryStressed;
@@ -390,11 +391,9 @@ namespace Aura.Channel.Scripting.Scripts
 			if (favor < -5)
 				return NpcMood.Dislikes;
 
-			var mem = this.Memorability;
-
-			if (mem > 15)
+			if (memory > 15)
 				return NpcMood.BestFriends;
-			if (mem > 5)
+			if (memory > 5)
 				return NpcMood.Friends;
 
 			return NpcMood.Neutral;
@@ -526,15 +525,15 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Modifies memorability, favor, and stress and sends random reaction
+		/// Modifies memory, favor, and stress and sends random reaction
 		/// message based on the favor change.
 		/// </summary>
-		/// <param name="memorability"></param>
+		/// <param name="memory"></param>
 		/// <param name="favor"></param>
 		/// <param name="stress"></param>
-		protected virtual void ModifyRelation(int memorability, int favor, int stress)
+		protected virtual void ModifyRelation(int memory, int favor, int stress)
 		{
-			if (memorability != 0) this.Memorability += memorability;
+			if (memory != 0) this.Memory += memory;
 			if (favor != 0) this.Favor += favor;
 			if (stress != 0) this.Stress += stress;
 
@@ -766,14 +765,14 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Adds a greeting to the NPC.
 		/// </summary>
-		/// <param name="memorability">Memorability needed for this message to appear.</param>
-		/// <param name="greetingMessage">Message sent if the player's memorability matches.</param>
-		protected void AddGreeting(int memorability, string greetingMessage)
+		/// <param name="memory">Memory needed for this message to appear.</param>
+		/// <param name="greetingMessage">Message sent if the player's memory matches.</param>
+		protected void AddGreeting(int memory, string greetingMessage)
 		{
-			if (!this.NPC.Greetings.ContainsKey(memorability))
-				this.NPC.Greetings.Add(memorability, new List<string>());
+			if (!this.NPC.Greetings.ContainsKey(memory))
+				this.NPC.Greetings.Add(memory, new List<string>());
 
-			this.NPC.Greetings[memorability].Add(greetingMessage);
+			this.NPC.Greetings[memory].Add(greetingMessage);
 		}
 
 		// Functions
