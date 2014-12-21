@@ -80,7 +80,7 @@ namespace Aura.Channel.Scripting.Scripts
 			set
 			{
 				// Set new stress value and change date
-				this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = value;
+				this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = Math.Max(0, value);
 				this.Player.Vars.Perm["npc_stress_change_" + this.NPC.Name] = DateTime.Now;
 			}
 		}
