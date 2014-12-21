@@ -49,12 +49,59 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Gets or sets how well the NPC remembers the player.
+		/// </summary>
+		public int Memorability
+		{
+			get
+			{
+				// Get NPC memorability and last change date
+				var memorability = this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0;
+				var change = this.Player.Vars.Perm["npc_memory_change_" + this.NPC.Name];
+
+				// Reduce memorability by 1 each day
+				if (change != null && memorability > 0)
+				{
+					TimeSpan diff = DateTime.Now - change;
+					memorability = Math.Max(0, memorability - diff.TotalDays);
+				}
+
+				return (int)memorability;
+			}
+			set
+			{
+				// Set new memorability value and change date
+				this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = Math.Max(0, value);
+				this.Player.Vars.Perm["npc_memory_change_" + this.NPC.Name] = DateTime.Now;
+			}
+		}
+
+		/// <summary>
 		/// Gets or sets how much the NPC likes the player.
 		/// </summary>
 		public int Favor
 		{
-			get { return this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] ?? 0; }
-			set { this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] = value; }
+			get
+			{
+				// Get NPC favor and last change date
+				var favor = this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] ?? 0;
+				var change = this.Player.Vars.Perm["npc_favor_change_" + this.NPC.Name];
+
+				// Reduce favor by 1 each hour
+				if (change != null && favor > 0)
+				{
+					TimeSpan diff = DateTime.Now - change;
+					favor = Math.Max(0, favor - diff.TotalHours);
+				}
+
+				return (int)favor;
+			}
+			set
+			{
+				// Set new favor value and change date
+				this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] = value;
+				this.Player.Vars.Perm["npc_favor_change_" + this.NPC.Name] = DateTime.Now;
+			}
 		}
 
 		/// <summary>
@@ -71,7 +118,7 @@ namespace Aura.Channel.Scripting.Scripts
 				// Reduce stress by 1 each minute
 				if (change != null && stress > 0)
 				{
-					var diff = DateTime.Now - change;
+					TimeSpan diff = DateTime.Now - change;
 					stress = Math.Max(0, stress - diff.TotalMinutes);
 				}
 
@@ -83,15 +130,6 @@ namespace Aura.Channel.Scripting.Scripts
 				this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = Math.Max(0, value);
 				this.Player.Vars.Perm["npc_stress_change_" + this.NPC.Name] = DateTime.Now;
 			}
-		}
-
-		/// <summary>
-		/// Gets or sets how well the NPC remembers the player.
-		/// </summary>
-		public int Memorability
-		{
-			get { return this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0; }
-			set { this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = value; }
 		}
 
 		protected NpcScript()
