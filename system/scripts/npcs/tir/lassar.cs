@@ -81,11 +81,13 @@ public class LassarBaseScript : NpcScript
 		{
 			case "personal_info":
 				Msg("Lassar means 'flame'.<br/>My mother gave birth to me after having dreamed about a wildfire burning the field.<br/>");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "rumor":
 				Msg("Farmland is just to the south of the School.<br/>They mainly grow wheat or barley, and the crop yields are enough<br/>for the people in Tir Chonaill.<br/>But I think there will be a shortage if travelers stay longer.");
 				Msg("That means no stealing crops for you!");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "about_skill":
@@ -210,6 +212,7 @@ public class LassarBaseScript : NpcScript
 					"I thought I knew. But it is more difficult to actually explain it than I thought.",
 					"Why don't you ask other people? I am afraid I would be of little help."				
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

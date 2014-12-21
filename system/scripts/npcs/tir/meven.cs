@@ -54,6 +54,7 @@ public class MevenBaseScript : NpcScript
 		{
 			case "personal_info":
 				Msg("I am Priest Meven.<br/>It's so nice to see someone cares for an old man.<br/>Ha ha.<br/>");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "rumor":
@@ -61,6 +62,7 @@ public class MevenBaseScript : NpcScript
 				Player.Keywords.Give("shop_grocery");
 				Player.Keywords.Give("shop_headman");
 				Msg("The General Shop, Grocery Store and the Bank<br/>surround the Square of the town.<br/>A bit higher up the hill is the Chief's House.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 			
 			case "about_arbeit":
@@ -220,6 +222,7 @@ public class MevenBaseScript : NpcScript
 					"How could I know about that, I'm just a priest.",
 					"...?"
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

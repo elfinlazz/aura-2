@@ -102,11 +102,13 @@ public class AlissaBaseScript : NpcScript
 		{
 			case "personal_info":
 				Msg("My name? I am Alissa.<br/>I work here at the mill, helping around with chores.<br/>Have you seen my sister? She's at the School.<br/>If you happen to go there, go inside the left building.<br/>She'll be in the magic class.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Player.Keywords.Give("shop_smith");
 				Msg("Ferghus?<br/>I don't know if he's a good blacksmith, but he's a nice person.<br/>Usually, when you ask him a question, he kindly answers everything...<br/>Go find out for yourself.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -185,6 +187,7 @@ public class AlissaBaseScript : NpcScript
 					"Hmm... I think Ferghus would be able to explain it better. He's across the stream.",
 					"Perhaps Caitin might know. Well... Anyway..."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

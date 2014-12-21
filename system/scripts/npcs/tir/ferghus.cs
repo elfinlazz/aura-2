@@ -80,12 +80,14 @@ public class FerghusBaseScript : NpcScript
 		{
 			case "personal_info":
 				Msg("I'm the blacksmith of Tir Chonaill. We'll see each other often, <username/>.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Player.Keywords.Give("windmill");
 				Msg("The wind around Tir Chonaill is very strong. It even breaks the windmill blades.<br/>And I'm the one to fix them.<br/>Malcolm's got some skills,<br/>but I'm the one who deals with iron.");
 				Msg("I made those extra blades out there just in case.<br/>When the Windmill stops working, it's really inconvenient around here.<br/>It's always better to be prepared, isn't it?<br/>");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "about_skill":
@@ -207,6 +209,7 @@ public class FerghusBaseScript : NpcScript
 					"I don't know, man. That's just out of my league.",
 					"Haha. I have no idea."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

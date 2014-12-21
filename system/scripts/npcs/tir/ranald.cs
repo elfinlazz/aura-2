@@ -80,6 +80,7 @@ public class RanaldBaseScript : NpcScript
 				Player.Keywords.Give("school");
 				Msg("Hello, there. I teach combat skills at the School in Tir Chonaill.<br/>If you're interested, talk to me with the 'Classes and Training' keyword.");
 				Msg("Hey, hey... This is not free. You'll need to pay tuition for my classes...<br/>");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
@@ -87,6 +88,7 @@ public class RanaldBaseScript : NpcScript
 				Msg("Hmm... Did you hear the news?<br/>Ferghus can't stop smiling these days.<br/>I heard his arrow sales have jumped up lately.");
 				Msg("It seems like Trefor received a huge gift from Ferghus.<br/>People are assuming that Trefor is helping Ferghus with something.");
 				//Msg("A dinner with Ferghus usually leads to a bit of drinking at the end.<br/>You know he loves to drink, right? As a matter of fact, I like to drink, too. Hahaha...");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -277,6 +279,7 @@ public class RanaldBaseScript : NpcScript
 					"Well, I don't really know...",
 					"You know I've been busy..."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

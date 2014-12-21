@@ -103,11 +103,13 @@ public class EavanScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info": 
-				Msg("You said your name was... <username/>, right? Tell me what's going on."); 
+				Msg("You said your name was... <username/>, right? Tell me what's going on.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor": 
 				Msg("Dunbarton is a city located near the border of the Kingdom of Aliech.<br/>It attracts a lot of travelers who are looking for adventure.<br/>If you'd like to improve your skills, how about going to the school?");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_arbeit":
@@ -213,6 +215,7 @@ public class EavanScript : NpcScript
 					"You know, something's just come up and I'm a bit busy right now.<br/>Do you mind coming back another day?",
 					"Must be that you've been exploring for so long now, right?<br/><username/>, you can certainly know a whole lot."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

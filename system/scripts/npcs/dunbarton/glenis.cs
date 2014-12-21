@@ -69,11 +69,13 @@ public class GlenisScript : NpcScript
 				// On the first time using this keyword, she says this
 				// "Oh, my! Don't be so formal but just call me Glenis!"
 				Msg("What do I do for a living, you ask? Ha ha. I own this Restaurant, and my name is Glenis. I thought I told you all of this.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Msg("Rumors around here? Well...<br/>Do I look like I would be keen on other people's affairs? Ha ha.<br/>You seem pretty tired.<br/>Why don't you go to the Healer's House down there and talk to Manus.");
 				Msg("If you have the Resting skill handy, he'll give you some helpful tips.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -196,6 +198,7 @@ public class GlenisScript : NpcScript
 					"That's not a topic I'm very familiar with. Perhaps Walter over there knows more about it than I do.",
 					"Asking about a topic like that to an<br/>ordinary Restaurant owner is not very proper, you know. Ha ha."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

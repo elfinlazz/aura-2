@@ -83,11 +83,13 @@ public class SimonScript : NpcScript
 				Msg("I don't think we've met. I'm Simon.");
 				// Msg("<face name='normal'/>So, are you saying that you don't know the only<br/>Clothing Shop in Dunbarton that happens to be mine?<br/>You're denser than you look.");
 				// Msg("<title name='NONE'/>(The conversation drew a lot of interest.)");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Msg("<face name='normal'/>I don't like to talk about people behind their backs.<br/>It's not a very good habit and you should get rid of it, too.<br/>Oh... You didn't mean that? Oh, I am so sorry.");
 				Msg("Aeira at the Bookstore seems to be very interested in music.<br/>If you happen to be interested in music, be nice to her.<br/>She'll give you something good if you become friends.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 			
 			case "about_arbeit":
@@ -204,6 +206,7 @@ public class SimonScript : NpcScript
 					"<face name='normal'/>I don't know anything about that.",
 					"<face name='normal'/>Don't you think you've had enough? Let's talk about something else."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

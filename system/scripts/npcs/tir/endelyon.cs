@@ -78,11 +78,13 @@ public class EndelyonBaseScript : NpcScript
 			case "personal_info":
 				Player.Keywords.Give("temple");
 				Msg("I don't have much knowledge, but I am here if you need help.<br/>");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Player.Keywords.Give("shop_healing");
 				Msg("<face name='normal'/>Have you met Dilys? She's the town's Healer.<br/>Walk along the road heading northeast, and you will find the Healer's House.<br/>Make sure to meet her if you pass by there.<br/>");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -235,6 +237,7 @@ public class EndelyonBaseScript : NpcScript
 					"It doesn't sound familiar to me, I mean...",
 					"I don't think I can help you with that. Can we talk about something else?"
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}
