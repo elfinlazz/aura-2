@@ -84,6 +84,8 @@ public class DuncanBaseScript : NpcScript
 					Msg("See that bird on the tree over there? When I was young, he used to help me on the battlefield.<br/>Now he's as old as I am and sleeps all the time.<br/>Perhaps he has closed his heart in disappointment at my present appearance, so old and changed...");
 				else
 					Msg("Once again, welcome to Tir Chonaill.");
+					
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "rumor":
@@ -92,7 +94,8 @@ public class DuncanBaseScript : NpcScript
 				else
 					Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?");
 				//Msg("Talk to the good people in Tir Chonaill as much as you can, and pay close attention to what they say.<br/>Once you become friends with them, they will help you in many ways.<br/>Why don't you start off by visiting the buildings around the Square?");
-				// MoodChange
+				
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "about_skill":
@@ -129,7 +132,8 @@ public class DuncanBaseScript : NpcScript
 					"I have no idea...",
 					"I don't really know about that... "
 				);
-				// MoodChange
+				
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

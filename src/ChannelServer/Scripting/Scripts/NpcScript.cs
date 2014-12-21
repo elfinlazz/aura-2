@@ -436,6 +436,8 @@ namespace Aura.Channel.Scripting.Scripts
 					break;
 			}
 
+			// (<npcname/> is slowly looking me over.)
+
 			return moodStr;
 		}
 
@@ -445,6 +447,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public virtual async Task StartConversation()
 		{
+			// Show mood once at the start of the conversation
 			this.Msg(Hide.Name, this.GetMoodString(), this.FavorExpression());
 
 			await Conversation();
@@ -453,43 +456,25 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Conversation (keywords) loop.
 		/// </summary>
+		/// <remarks>
+		/// This is a separate method so it can be called from hooks
+		/// that go into keyword handling after they're done,
+		/// without mood message.
+		/// </remarks>
 		/// <returns></returns>
 		public virtual async Task Conversation()
 		{
-			var mood = GetMood();
-
+			// Infinite keyword handling, conversation is closed
+			// via End Convo button
 			while (true)
 			{
-				if (mood != GetMood())
-				{
-					mood = GetMood();
-					Msg(Hide.Name, GetMoodString(mood), FavorExpression());
-				}
-
 				this.ShowKeywords();
 				var keyword = await Select();
 
 				await Hook("before_keywords", keyword);
 
 				await this.Keywords(keyword);
-
-				var fd = this.KeywordMoodChange(keyword);
-
-				this.Msg(Hide.Name, string.Format("({0})", this.GetStandardKeywordResponse(fd)), this.FavorExpression());
 			}
-		}
-
-		private string GetStandardKeywordResponse(int favorDelta)
-		{
-			// Seem to be multiple levels? -5, -2, 0, 2, 5?
-
-			return this.RndStr(
-				Localization.Get("I think I left a good impression."),
-				Localization.Get("The conversation drew a lot of interest."),
-				Localization.Get("That was a great conversation!")
-			);
-
-			// (It seems I left quite a good impression.)
 		}
 
 		/// <summary>
@@ -503,17 +488,28 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Called after the keyword has been completed. Use it to override the 
-		/// default responses and modifiers
+		/// Modifies memorability, favor, and stress and sends random reaction
+		/// message based on the favor change.
 		/// </summary>
-		/// <param name="keyword">The keyword.</param>
-		/// <returns>The amount the NPC's favor has increased for this keyword</returns>
-		protected virtual int KeywordMoodChange(string keyword)
+		/// <param name="memorability"></param>
+		/// <param name="favor"></param>
+		/// <param name="stress"></param>
+		protected virtual void ModifyRelation(int memorability, int favor, int stress)
 		{
-			this.Stress += this.Random(3);
-			this.Memorability += this.Random(2);
+			if (memorability != 0) this.Memorability += memorability;
+			if (favor != 0) this.Favor += favor;
+			if (stress != 0) this.Stress += stress;
 
-			return 0;
+			// Seem to be multiple levels? -5, -2, 0, 2, 5?
+
+			var msg = this.RndStr(
+				Localization.Get("(I think I left a good impression.)"),
+				Localization.Get("(The conversation drew a lot of interest.)"),
+				Localization.Get("(That was a great conversation!)")
+				// (It seems I left quite a good impression.)
+			);
+
+			this.Msg(Hide.Name, FavorExpression(), msg);
 		}
 
 		// Setup
