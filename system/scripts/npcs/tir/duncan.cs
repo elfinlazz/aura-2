@@ -38,16 +38,6 @@ public class DuncanBaseScript : NpcScript
 		AddPhrase("Watch your language.");
 	}
 
-	protected override string GetGiftReply(GiftReaction score)
-	{
-		switch (score)
-		{
-			case GiftReaction.Love: return RndStr("Oh! How did you know I like this?<br/>Thank you very much.");
-			case GiftReaction.Dislike: return RndStr("Hmm. Not exactly to my taste...", "Hmm. I'll keep it safe for someone who may need it.");
-			default: return RndStr("Is that for me?", "You didn't need to do this...");
-		}
-	}
-	
 	protected override async Task Talk()
 	{
 		SetBgm("NPC_Duncan.mp3");
@@ -132,7 +122,7 @@ public class DuncanBaseScript : NpcScript
 				break;
 				
 			default:
-				RndMsg(
+				RndFavorMsg(
 					"I don't know anything about that...",
 					"I think it'd be better for you to ask someone else.",
 					"Hmm, I wonder who might know about that...",
@@ -140,6 +130,30 @@ public class DuncanBaseScript : NpcScript
 					"I don't really know about that... "
 				);
 				// MoodChange
+				break;
+		}
+	}
+	
+	protected override async Task ReactToGift(Item item, GiftReaction score)
+	{
+		switch (score)
+		{
+			case GiftReaction.Love:
+				Msg("Oh! How did you know I like this?<br/>Thank you very much.");
+				break;
+				
+			case GiftReaction.Dislike:
+				RndMsg(
+					"Hmm. Not exactly to my taste...",
+					"Hmm. I'll keep it safe for someone who may need it."
+				);
+				break;
+			
+			default:
+				RndMsg(
+					"Is that for me?",
+					"You didn't need to do this..."
+				);
 				break;
 		}
 	}

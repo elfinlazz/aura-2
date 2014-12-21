@@ -182,18 +182,21 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			var score = this.GetGiftReaction(gift);
 
-			var reply = this.GetGiftReply(score);
-
-			this.Msg(Hide.None, reply, FavorExpression());
-
+			await this.ReactToGift(gift, score);
 			await this.Select();
-
-			this.Close();
 		}
 
-		protected virtual string GetGiftReply(GiftReaction score)
+		/// <summary>
+		/// Called from Gift, override to react to gifts.
+		/// </summary>
+		/// <param name="gift">Item gifted to the NPC by the player.</param>
+		/// <param name="reaction">NPCs reaction to the gift.</param>
+		/// <returns></returns>
+		protected virtual async Task ReactToGift(Item gift, GiftReaction reaction)
 		{
-			return Localization.Get("Thank you.");
+			this.Msg("Thank you.");
+
+			await Task.Yield();
 		}
 
 		/// <summary>
