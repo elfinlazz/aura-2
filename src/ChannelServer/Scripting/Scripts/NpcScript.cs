@@ -210,6 +210,10 @@ namespace Aura.Channel.Scripting.Scripts
 				this.Favor += delta;
 			}
 
+			// Reduce stress by 0 ~ score (or at least 4) - 1 for good gifts
+			if (score >= 0)
+				this.Stress -= this.Random(Math.Max(4, score));
+
 			if (score > 6)
 				return GiftReaction.Love;
 			if (score > 3)
