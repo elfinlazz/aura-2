@@ -311,15 +311,6 @@ namespace Aura.Channel.Scripting.Scripts
 			var memory = this.Memory;
 			var stress = this.Stress;
 
-			var msg = Localization.Get("(No greeting messages defined.)");
-
-			// Take the highest greeting without going over their memory
-			foreach (var list in this.NPC.Greetings.TakeWhile(k => k.Key <= memory))
-			{
-				var msgs = list.Value;
-				msg = msgs[Random(msgs.Count)];
-			}
-
 			if (memory <= 0)
 			{
 				this.Memory = 1;
@@ -338,6 +329,23 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				this.Memory += 1;
 				this.Stress += 10;
+			}
+
+			var msg = Localization.Get("(No greeting messages defined.)");
+
+			// Take the highest greeting without going over their memory
+			foreach (var list in this.NPC.Greetings.TakeWhile(k => k.Key <= memory))
+			{
+				var msgs = list.Value;
+				msg = msgs[Random(msgs.Count)];
+			}
+
+			// Show relation values to devCATs for debugging
+			if (this.Player.Titles.SelectedTitle == 60001)
+			{
+				msg += "<br/>" + "Favor: " + this.Favor;
+				msg += "<br/>" + "Memory: " + this.Memory;
+				msg += "<br/>" + "Stress: " + this.Stress;
 			}
 
 			this.Msg(Hide.None, msg, FavorExpression());
