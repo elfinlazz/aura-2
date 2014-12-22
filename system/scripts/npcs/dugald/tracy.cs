@@ -82,11 +82,13 @@ public class TracyScript : NpcScript
 			case "personal_info":
 				Msg("Hey, hey. You're thinking about my name again?<br/>I don't like it myself.");
 				Msg("Stop grinning. Don't give me that look any more. It's really disturbing.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Msg("Looks like the people who talked to me before<br/>don't really like my speaking style...<br/>Let me say something. These people just show up and start pestering me with all these silly questions,<br/>and I'm supposed to be polite to them all the time?");
 				Msg("What do you think? What?<br/>You don't like how I speak either?");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -267,6 +269,7 @@ public class TracyScript : NpcScript
 					"What? You want to be a know-it-all?",
 					"Why do you care about all that weird stuff?"
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

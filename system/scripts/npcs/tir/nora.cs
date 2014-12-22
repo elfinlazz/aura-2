@@ -74,10 +74,12 @@ public class NoraBaseScript : NpcScript
 		{
 			case "personal_info":
 				Msg("My name is Nora. Please don't forget it.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 			
 			case "rumor":
 				Msg("The Square is right up the little hill next to us.<br/>It's worth a visit if you have some time.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 			
 			case "about_skill":
@@ -147,6 +149,7 @@ public class NoraBaseScript : NpcScript
 					"I can't understand what you're asking.",
 					"I don't... I don't know."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

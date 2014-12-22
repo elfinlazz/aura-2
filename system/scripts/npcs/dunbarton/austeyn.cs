@@ -96,11 +96,13 @@ public class AusteynScript : NpcScript
 		{
 			case "personal_info":
 				Msg("My name is Austeyn. Your name is?<br/><username/>, huh? Ahhh. <username/>... <username/>...");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Msg("Are you from the north?<br/>Then you must be from the Ulaid region.<br/>Ulaid region is where the folks at Tir Chonaill live.<br/>They are the descendants of Partholon.");
 				Msg("I hear they used to be a kingdom, even though it has since turned into a small village.<br/>If you get to go there, say hello to the young lady at the Bank for me. Her name is Bebhinn.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -246,6 +248,7 @@ public class AusteynScript : NpcScript
 					"Heh. Don't think that I<br/>should know everything you talk about.",
 					"You can't keep talking about something like that with me. Hahaha."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

@@ -76,10 +76,12 @@ public class AranwenScript : NpcScript
 		switch (keyword) {
 			case "personal_info":
 				Msg("Let me introduce myself.<br/>My name is Aranwen. I teach combat skills at the Dunbarton School.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Msg("If you need a weapon for the training,<br/>why don't you go see Nerys in the south side?<br/>She runs the Weapons Shop.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -204,6 +206,7 @@ public class AranwenScript : NpcScript
 					"If you keep bringing up topics like this, I can't say much to you.",
 					"Will you tell me about it when you find out more?"
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

@@ -84,10 +84,12 @@ public class TreforBaseScript : NpcScript
 		{
 			case "personal_info":
 				Msg("Hmm... Have something to ask me?<br/>I'm nothing but a regular fellow from this town.<br/>I am but a humble servant of Lymirark, whose duty is to protect this town.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "rumor":
 				Msg("Recently, the people in this town have become somewhat anxious<br/>about the howling of wild animals outside.<br/>For some reason, their howling seems to be getting a little bit closer each day.<p/>That's why I'm standing guard like this.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "about_skill":
@@ -240,6 +242,7 @@ public class TreforBaseScript : NpcScript
 					"I'm bored. Why don't we talk about something else?",
 					"Do you have anything more interesting to talk about?"
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

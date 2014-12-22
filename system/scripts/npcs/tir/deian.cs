@@ -86,12 +86,14 @@ public class DeianScript : NpcScript
 		{
 			case "personal_info":
 				Msg("Yeah, yeah. I'm a mere shepherd...for now.<br/>But I will soon be a mighty warrior!<br/>");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Player.Keywords.Give("pool");
 				Msg("Some people should have been born as fish.<br/>They can't pass water without diving right in.<br/>I wish they'd stop.");
 				Msg("Not long ago, someone jumped into the reservoir<br/>and made a huge mess.<br/>Guess who got stuck cleaning it up?<br/>Sooo not my job.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -207,6 +209,7 @@ public class DeianScript : NpcScript
 					"So many questions, at least give me a small gift...",
 					"Sometimes, I'm just not in the mood to answer questions."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

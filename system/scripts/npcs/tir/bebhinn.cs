@@ -88,12 +88,12 @@ public class BebhinnBaseScript : NpcScript
 		{
 			case "personal_info":
 				Msg("My name is Bebhinn. Don't forget it!");
-				// MoodChange if not first?
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "rumor":
 				Msg("Oh, you know what?<br/>Some people were hitting the scarecrow at the School to practice their skills,<br/>and they wandered off and ruined the crops in the farmland.<br/>The owner got pretty upset about it.");
-				// MoodChange
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "about_skill":
@@ -158,7 +158,7 @@ public class BebhinnBaseScript : NpcScript
 				break;
 			
 			default:
-				RndMsg(
+				RndFavorMsg(
 					"Can we change the subject?",
 					"Hmm... You know a story I've never heard of... How could that be?",
 					"Hehe... I don't know what you're talking about...",
@@ -167,7 +167,7 @@ public class BebhinnBaseScript : NpcScript
 					"What's that?",
 					"Well...what do you mean?"
 				);
-				// MoodChange
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

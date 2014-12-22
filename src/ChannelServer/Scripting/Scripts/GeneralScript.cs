@@ -150,6 +150,18 @@ namespace Aura.Channel.Scripting.Scripts
 			return rnd.Next(min, max);
 		}
 
+		/// <summary>
+		/// Returns a random string from the given ones.
+		/// </summary>
+		/// <param name="strings"></param>
+		public string RndStr(params string[] strings)
+		{
+			if (strings == null || strings.Length == 0)
+				return null;
+
+			return strings[this.Random(strings.Length)];
+		}
+
 		#region Extension
 
 		/// <summary>

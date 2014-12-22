@@ -442,6 +442,37 @@ namespace Aura.Channel.Network.Handlers
 		}
 
 		/// <summary>
+		/// Sent when "gifting" an item.
+		/// </summary>
+		/// <example>
+		/// 0001 [0010F000000005E7] Long   : 4767482418038247
+		/// 0002 [005000CC7FFA923C] Long   : 22518876457308732
+		/// </example>
+		[PacketHandler(Op.GiftItem)]
+		public void GiftItem(ChannelClient client, Packet packet)
+		{
+			var npcId = packet.GetLong();
+			var itemId = packet.GetLong();
+
+			var npc = client.Controlling.Region.GetNpcSafe(npcId);
+			var item = client.Controlling.Inventory.GetItemSafe(itemId);
+
+			// TODO: If !Item is giftable..
+			// TODO: If !Npc in range...
+
+			if (npc.ScriptType == null)
+				return;
+
+			Send.NpcTalkStartR(client.Controlling, npc.EntityId);
+
+			client.NpcSession.StartGift(npc, client.Controlling, item);
+
+			client.Controlling.Inventory.Remove(item);
+
+			Send.GiftItemR(client.Controlling, true);
+		}
+
+		/// <summary>
 		/// Sent when unequipping a filled bag.
 		/// </summary>
 		/// <example>

@@ -310,6 +310,14 @@ namespace Aura.Channel.Network.Sending
 			creature.Client.Send(packet);
 		}
 
+		public static void GiftItemR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.GiftItemR, creature.EntityId);
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
 		/// <summary>
 		/// Sends UnequipBagR to creature's client.
 		/// </summary>

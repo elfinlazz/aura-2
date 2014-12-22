@@ -14,11 +14,18 @@ public class DuncanBaseScript : NpcScript
 		SetFace(skinColor: 20, eyeType: 17);
 		SetStand("human/male/anim/male_natural_stand_npc_duncan_new", "male_natural_stand_npc_Duncan_talk");
 		SetLocation(1, 15409, 38310, 122);
+		SetGiftWeights(beauty: 0, individuality: 0, luxury: 0, toughness: 1, utility: 2, rarity: 0, meaning: 2, adult: 1, maniac: -1, anime: -1, sexy: 0);
 
 		EquipItem(Pocket.Face, 4950, 0x93005C);
 		EquipItem(Pocket.Hair, 4083, 0xBAAD9A);
 		EquipItem(Pocket.Armor, 15004, 0x5E3E48, 0xD4975C, 0x3D3645);
 		EquipItem(Pocket.Shoe, 17021, 0xCBBBAD);
+
+		AddGreeting(0, "Welcome to Tir Chonaill.");
+		AddGreeting(1, "What did you say your name was again...?<br/>Anyway, welcome.");
+		AddGreeting(2, "<username/>, I could recognize you from afar.");
+		AddGreeting(6, "I was just thinking... <username/> should be visiting right about now.");
+		AddGreeting(7, "Hoho, I will definitely remember your face, <username/>!");
 
 		AddPhrase("Ah, that bird in the tree is still sleeping.");
 		AddPhrase("Ah, who knows how many days are left in these old bones?");
@@ -30,7 +37,7 @@ public class DuncanBaseScript : NpcScript
 		AddPhrase("The graveyard has been left unattended far too long.");
 		AddPhrase("Watch your language.");
 	}
-	
+
 	protected override async Task Talk()
 	{
 		SetBgm("NPC_Duncan.mp3");
@@ -41,12 +48,13 @@ public class DuncanBaseScript : NpcScript
 			"As he speaks, his voice resonates with a kind of gentle authority."
 		);
 		
+
 		Msg("Please let me know if you need anything.", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrive Lost Items", "@lostandfound"));
 		
 		switch(await Select())
 		{
 			case "@talk":
-				Msg("What did you say your name was?<br/>Anyway, welcome.");
+				Greet();
 				await StartConversation();
 				return;
 				
@@ -72,15 +80,22 @@ public class DuncanBaseScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				Msg("I'm the chief of this town...");
-				//Msg("Once again, welcome to Tir Chonaill.");
-				// MoodChange
+				if (Favor > 40)
+					Msg("See that bird on the tree over there? When I was young, he used to help me on the battlefield.<br/>Now he's as old as I am and sleeps all the time.<br/>Perhaps he has closed his heart in disappointment at my present appearance, so old and changed...");
+				else
+					Msg("Once again, welcome to Tir Chonaill.");
+					
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "rumor":
-				Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?");
+				if (Favor > 40)
+					Msg("The weather here changes unpredictably because Tir Chonaill is located high up in the mountains.<br/>There are instances where bridges collapse and roads are destroyed after a heavy rainfall,<br/>and people lose all contact with the outside world.<br/>Despite that, I think you've done quite well here.");
+				else
+					Msg("I heard a rumor that this is just a copy of the world of Erin. Trippy, huh?");
 				//Msg("Talk to the good people in Tir Chonaill as much as you can, and pay close attention to what they say.<br/>Once you become friends with them, they will help you in many ways.<br/>Why don't you start off by visiting the buildings around the Square?");
-				// MoodChange
+				
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "about_skill":
@@ -110,14 +125,39 @@ public class DuncanBaseScript : NpcScript
 				break;
 				
 			default:
-				RndMsg(
+				RndFavorMsg(
 					"I don't know anything about that...",
 					"I think it'd be better for you to ask someone else.",
 					"Hmm, I wonder who might know about that...",
 					"I have no idea...",
 					"I don't really know about that... "
 				);
-				// MoodChange
+				
+				ModifyRelation(0, 0, Random(2));
+				break;
+		}
+	}
+	
+	protected override async Task Gift(Item item, GiftReaction reaction)
+	{
+		switch (reaction)
+		{
+			case GiftReaction.Love:
+				Msg("Oh! How did you know I like this?<br/>Thank you very much.");
+				break;
+				
+			case GiftReaction.Dislike:
+				RndMsg(
+					"Hmm. Not exactly to my taste...",
+					"Hmm. I'll keep it safe for someone who may need it."
+				);
+				break;
+			
+			default:
+				RndMsg(
+					"Is that for me?",
+					"You didn't need to do this..."
+				);
 				break;
 		}
 	}

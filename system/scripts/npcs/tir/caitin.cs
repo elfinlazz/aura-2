@@ -67,11 +67,13 @@ public class CaitinBaseScript : NpcScript
 				Msg("My grandmother named me.<br/>I work here at the Grocery Store, so I know one important thing.<br/>You have to eat to survive!<br/>Food helps you regain your Stamina.");
 				Msg("That doesn't mean you can eat just anything.<br/>You shouldn't have too much greasy food<br/>because you could gain a lot of weight.");
 				Msg("Huh? You have food with you but don't know how to eat it?<br/>Okay, open the Inventory and right-click on the food.<br/>Then, click \"Use\" to eat.<br/>If you have bread in your Inventory, and your Stamina is low,<br/>try eating it now.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 			
 			case "rumor":
 				Player.Keywords.Give("brook");
 				Msg("Do you know anything about the Adelia Stream?<br/>The river near the Windmill is the Adelia Stream.<br/>");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "about_skill":
@@ -161,6 +163,7 @@ public class CaitinBaseScript : NpcScript
 					"Well, I really don't know.",
 					"Did you ask everyone else the same question?"
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

@@ -70,11 +70,13 @@ public class AeiraScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
+				ModifyRelation(Random(2), 0, Random(2));
 				Msg("Hehehe... I may not look the part, but I own this Bookstore.<br/>It's okay to be casual, but<br/>at least give me some respect as a store owner.");
 				break;
 
 			case "rumor":
 				Msg("If you want to properly train the stuff that's written on the book,<br/>why don't you first read the book in detail, then visit the school?<br/>Oh, and don't forget to talk to Stewart when you're there.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -203,6 +205,7 @@ public class AeiraScript : NpcScript
 					"Yeah, but... I don't really know anything about that.",
 					"I don't really understand what you just said..."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

@@ -88,11 +88,13 @@ public class NerysScript : NpcScript
 				Player.Keywords.Give("shop_armory");
 				Msg("I'm Nerys, the owner of this Weapons Shop. Nice to meet you.");
 				// Msg("<face name='normal'/>Aren't you here to buy weapons?<br/>Well, I guess having a chat buddy doesn't hurt.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Msg("<face name='normal'/>When going to a nearby dungeon, you must be adequately equipped with weapons.<br/>If not, you'll face a world of trouble.<br/>Try visiting Walter's General Shop or that idiot healer, Manus' place.");
 				Msg("Oh, and take your time talking to Aranwen at the School.<br/>She's rather irritable and high-flown,<br/>so she doesn't like to teach skills to those who don't have the basics down.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 			
 			case "about_arbeit":
@@ -206,6 +208,7 @@ public class NerysScript : NpcScript
 					"<face name='normal'/>I don't know. It's news to me.",
 					"<face name='normal'/>People ask me about that a lot...<br/>But I'm not interested in that at all."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

@@ -112,7 +112,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(0);
 			packet.PutInt(0);
 			packet.PutByte((byte)shop.Tabs.Count);
-			foreach (var tab in shop.Tabs)
+			foreach (var tab in shop.VisibleTabs)
 			{
 				packet.PutString("[{0}]{1}", tab.Order, tab.Title);
 

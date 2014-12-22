@@ -67,6 +67,8 @@ namespace Aura.Channel.Util
 			Add(50, 50, "allskills", "", HandleAllSkills);
 			Add(50, 50, "alltitles", "", HandleAllTitles);
 			Add(50, 50, "gold", "<amount>", HandleGold);
+			Add(50, 50, "favor", "<npc name> [amount]", HandleFavor);
+			Add(50, 50, "stress", "<npc name> [amount]", HandleStress);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -1234,6 +1236,62 @@ namespace Aura.Channel.Util
 			Send.SystemMessage(sender, Localization.Get("Spawned {0:n0}g."), amount);
 			if (sender != target)
 				Send.SystemMessage(target, Localization.Get("{0} gave you {1:n0}g."), sender.Name, amount);
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleFavor(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (args.Count < 2)
+				return CommandResult.InvalidArgument;
+
+			var name = args[1];
+			int favor = (target.Vars.Perm["npc_favor_" + name] ?? 0);
+
+			if (args.Count < 3)
+			{
+				Send.SystemMessage(sender, Localization.Get("Favor of {0}: {1}"), name, favor);
+				return CommandResult.Okay;
+			}
+
+			int amount;
+			if (!int.TryParse(args[2], out amount))
+				return CommandResult.InvalidArgument;
+
+			favor = amount;
+			target.Vars.Perm["npc_favor_" + name] = favor;
+
+			Send.SystemMessage(sender, Localization.Get("Changed favor for {0}, new value: {1}"), name, favor);
+			if (sender != target)
+				Send.SystemMessage(target, Localization.Get("{2} changed {0}'s favor towards you, new value: {1}"), name, favor, sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleStress(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (args.Count < 2)
+				return CommandResult.InvalidArgument;
+
+			var name = args[1];
+			int stress = (target.Vars.Perm["npc_stress_" + name] ?? 0);
+
+			if (args.Count < 3)
+			{
+				Send.SystemMessage(sender, Localization.Get("Stress of {0}: {1}"), name, stress);
+				return CommandResult.Okay;
+			}
+
+			int amount;
+			if (!int.TryParse(args[2], out amount))
+				return CommandResult.InvalidArgument;
+
+			stress = amount;
+			target.Vars.Perm["npc_stress_" + name] = stress;
+
+			Send.SystemMessage(sender, Localization.Get("Changed stress for {0}, new value: {1}"), name, stress);
+			if (sender != target)
+				Send.SystemMessage(target, Localization.Get("{2} changed {0}'s stress towards you, new value: {1}"), name, stress, sender.Name);
 
 			return CommandResult.Okay;
 		}

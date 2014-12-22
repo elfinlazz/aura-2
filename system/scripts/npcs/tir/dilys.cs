@@ -107,11 +107,13 @@ public class DilysScript : NpcScript
 			case "personal_info":
 				Player.Keywords.Give("shop_healing");
 				Msg("A healer's job is to treat sick people.<br/>Don't hesitate to come to me if you ever feel sick.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "rumor":
 				Player.Keywords.Give("graveyard");
 				Msg("It was hard for you to get here, wasn't it? I bet if I were a little closer to the Square<br/>you would've come earlier. Hehe...<br/>Truthfully, it is kind of scary being next to the graveyard.<p/>At first I thought about opening the Healer's House near the Square<br/>but Duncan advised me that this place would be better for business.<br/>Actually, I haven't had many patients.<br/>Only people who come to hunt spiders and...Trefor, who stores his goods here...");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "about_skill":
@@ -229,6 +231,7 @@ public class DilysScript : NpcScript
 					"Did they say they didn't know about it either?<br/>Well...",
 					"Eh?"
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

@@ -59,7 +59,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Check script
-			if (target.Script == null)
+			if (target.ScriptType == null)
 			{
 				Send.NpcTalkStartR_Fail(creature);
 
@@ -79,7 +79,7 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.NpcTalkStartR(creature, npcEntityId);
 
-			client.NpcSession.Start(target, creature);
+			client.NpcSession.StartTalk(target, creature);
 		}
 
 		/// <summary>
@@ -230,7 +230,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Get item
-			var item = creature.Temp.CurrentShop.GetItem(entityId);
+			var item = creature.Temp.CurrentShop.GetItem(entityId, true);
 			if (item == null)
 			{
 				Log.Warning("NpcShopBuyItem: Item '{0}' doesn't exist in shop.", entityId.ToString("X16"));

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Util;
 using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Shared.Mabi.Const;
@@ -356,6 +357,16 @@ namespace Aura.Channel.World
 		public NPC GetNpc(long entityId)
 		{
 			return this.GetCreature(entityId) as NPC;
+		}
+
+		public NPC GetNpcSafe(long npcId)
+		{
+			var npc = this.GetNpc(npcId);
+
+			if (npc == null)
+				throw new SevereViolation("Tried to get a nonexistant NPC");
+
+			return npc;
 		}
 
 		/// <summary>

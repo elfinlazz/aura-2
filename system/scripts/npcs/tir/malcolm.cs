@@ -77,10 +77,12 @@ public class MalcolmBaseScript : NpcScript
 			case "personal_info":
 				Player.Keywords.Give("shop_misc");
 				Msg("I run this General Shop. I sell various goods.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
 				Msg("Tir Chonaill is a peaceful town.<br/>So when something happens, everyone in the town knows right away.<br/>I warn you, some were humiliated because of that...<br/>Nothing is as important as being responsible for your own actions.<p/>If you behave like Tracy, you'll be in big trouble.");
+				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
@@ -164,6 +166,7 @@ public class MalcolmBaseScript : NpcScript
 					"I think I heard about it but... I can't remember.",
 					"Sorry, I don't know.<br/>Hm... Maybe I should have a travel diary to write things down."
 				);
+				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}

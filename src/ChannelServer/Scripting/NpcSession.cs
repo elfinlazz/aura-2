@@ -34,23 +34,44 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
+		/// Starts a new session and calls talk
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="creature"></param>
+		public void StartTalk(NPC target, Creature creature)
+		{
+			if (!this.Start(target, creature))
+				return;
+
+			this.Script.TalkAsync();
+		}
+
+
+		public void StartGift(NPC target, Creature creature, Item gift)
+		{
+			if (!this.Start(target, creature))
+				return;
+
+			this.Script.GiftAsync(gift);
+		}
+
+		/// <summary>
 		/// Starts session
 		/// </summary>
 		/// <param name="target"></param>
 		/// <param name="creature"></param>
-		public void Start(NPC target, Creature creature)
+		private bool Start(NPC target, Creature creature)
 		{
 			this.Target = target;
 
-			if (target.AI == null)
-				return;
+			if (target.ScriptType == null)
+				return false;
 
-			var script = Activator.CreateInstance(target.Script.GetType()) as NpcScript;
-			script.NPC = target.Script.NPC;
+			var script = Activator.CreateInstance(target.ScriptType) as NpcScript;
+			script.NPC = target;
 			script.Player = creature;
 			this.Script = script;
-
-			this.Script.TalkAsync();
+			return true;
 		}
 
 		/// <summary>
