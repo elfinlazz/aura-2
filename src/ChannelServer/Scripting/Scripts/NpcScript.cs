@@ -1029,18 +1029,6 @@ namespace Aura.Channel.Scripting.Scripts
 			return true;
 		}
 
-		/// <summary>
-		/// Returns a random string from the given ones.
-		/// </summary>
-		/// <param name="msgs"></param>
-		public string RndStr(params string[] msgs)
-		{
-			if (msgs == null || msgs.Length == 0)
-				return null;
-
-			return msgs[Random(msgs.Length)];
-		}
-
 		// Dialog
 		// ------------------------------------------------------------------
 
