@@ -228,7 +228,9 @@ namespace Aura.Channel.World.Entities
 			this.AbilityPoints += ap;
 
 			this.LastAging = DateTime.Now;
-			this.Height = Math.Min(1.0f, 1.0f / 7.0f * (this.Age - 10.0f)); // 0 ~ 1.0
+
+			if (this is Character)
+				this.Height = Math.Min(1.0f, 1.0f / 7.0f * (this.Age - 10.0f)); // 0 ~ 1.0
 
 			// Send stat bonuses
 			if (life != 0) Send.SimpleAcquireInfo(this, "life", mana);
