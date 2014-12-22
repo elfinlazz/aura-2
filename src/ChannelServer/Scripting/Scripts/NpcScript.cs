@@ -311,7 +311,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var memory = this.Memory;
 			var stress = this.Stress;
 
-			var msg = "[ERROR - NO GREETINGS DEFINED]";
+			var msg = Localization.Get("(No greeting messages defined.)");
 
 			// Take the highest greeting without going over their memory
 			foreach (var list in this.NPC.Greetings.TakeWhile(k => k.Key <= memory))
@@ -321,35 +321,23 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 
 			if (memory <= 0)
+			{
 				this.Memory = 1;
+			}
 			else if (memory == 1)
 			{
 				// Do nothing. Keeps players from raising their familiarity
 				// just by talking.
 			}
-			else if (memory == 2)
+			else if (memory <= 6 && stress == 0)
 			{
-				if (stress == 0)
-				{
-					this.Memory += 1;
-					this.Stress += 5;
-				}
+				this.Memory += 1;
+				this.Stress += 5;
 			}
-			else if (memory <= 6)
+			else if (stress == 0)
 			{
-				if (stress == 0)
-				{
-					this.Memory += 1;
-					this.Stress += 5;
-				}
-			}
-			else
-			{
-				if (stress == 0)
-				{
-					this.Memory += 1;
-					this.Stress += 10;
-				}
+				this.Memory += 1;
+				this.Stress += 10;
 			}
 
 			this.Msg(Hide.None, msg, FavorExpression());
