@@ -204,7 +204,7 @@ namespace Aura.Channel.Database
 					character.Height = reader.GetFloat("height");
 					character.Weight = reader.GetFloat("weight");
 					character.Upper = reader.GetFloat("upper");
-					character.Lower = reader.GetInt32("lower");
+					character.Lower = reader.GetFloat("lower");
 					character.Color1 = reader.GetUInt32("color1");
 					character.Color2 = reader.GetUInt32("color2");
 					character.Color3 = reader.GetUInt32("color3");
