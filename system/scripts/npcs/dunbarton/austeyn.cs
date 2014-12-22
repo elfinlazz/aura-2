@@ -75,8 +75,8 @@ public class AusteynScript : NpcScript
 				break;
 
 			case "@bank":
-				Msg("Unimplemented");
-				break;
+				OpenBank();
+				return;
 
 			case "@coin":
 				Msg("During the Coin event, you can collect 4 different kinds of coins");
