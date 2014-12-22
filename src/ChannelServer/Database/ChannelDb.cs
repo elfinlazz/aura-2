@@ -1061,6 +1061,7 @@ namespace Aura.Channel.Database
 							case "d": vars[name] = double.Parse(val); break;
 							case "b": vars[name] = bool.Parse(val); break;
 							case "s": vars[name] = val; break;
+							case "dt": vars[name] = DateTime.Parse(val); break;
 							case "o":
 								var buffer = Convert.FromBase64String(val);
 								var bf = new BinaryFormatter();
@@ -1120,15 +1121,12 @@ namespace Aura.Channel.Database
 					else if (var.Value is double) type = "d";
 					else if (var.Value is bool) type = "b";
 					else if (var.Value is string) type = "s";
+					else if (var.Value is DateTime) type = "dt";
 					else type = "o";
 
 					// Get value
 					var val = string.Empty;
-					if (type != "o")
-					{
-						val = var.Value.ToString();
-					}
-					else
+					if (type == "o")
 					{
 						// Objects are serialized to a Base64 string,
 						// because we're storing as string for easier
@@ -1138,6 +1136,14 @@ namespace Aura.Channel.Database
 							bf.Serialize(ms, var.Value);
 							val = Convert.ToBase64String(ms.ToArray());
 						}
+					}
+					else if (type == "dt")
+					{
+						val = var.Value.ToString();
+					}
+					else
+					{
+						val = var.Value.ToString();
 					}
 
 					// Make sure value isn't too big for the mediumtext field
