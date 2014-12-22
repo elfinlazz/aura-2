@@ -138,9 +138,9 @@ public class DuncanBaseScript : NpcScript
 		}
 	}
 	
-	protected override async Task Gift(Item item, GiftReaction score)
+	protected override async Task Gift(Item item, GiftReaction reaction)
 	{
-		switch (score)
+		switch (reaction)
 		{
 			case GiftReaction.Love:
 				Msg("Oh! How did you know I like this?<br/>Thank you very much.");
