@@ -183,7 +183,7 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 			catch (OperationCanceledException)
 			{
-				//Log.Debug(ex.Message);
+				// Thrown to get out of the async chain
 			}
 			this.ConversationState = ConversationState.Ended;
 		}
@@ -204,24 +204,15 @@ namespace Aura.Channel.Scripting.Scripts
 			this.ConversationState = ConversationState.Ongoing;
 			try
 			{
-				await this.Gift(gift);
+				var score = this.GetGiftReaction(gift);
+
+				await this.Gift(gift, score);
 			}
 			catch (OperationCanceledException)
 			{
-
+				// Thrown to get out of the async chain
 			}
 			this.ConversationState = ConversationState.Ended;
-		}
-
-		/// <summary>
-		/// Called instead of Talk when a player started the conversation with a gift.
-		/// </summary>
-		protected virtual async Task Gift(Item gift)
-		{
-			var score = this.GetGiftReaction(gift);
-
-			await this.ReactToGift(gift, score);
-			await this.Select();
 		}
 
 		/// <summary>
@@ -230,7 +221,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="gift">Item gifted to the NPC by the player.</param>
 		/// <param name="reaction">NPCs reaction to the gift.</param>
 		/// <returns></returns>
-		protected virtual async Task ReactToGift(Item gift, GiftReaction reaction)
+		protected virtual async Task Gift(Item gift, GiftReaction reaction)
 		{
 			this.Msg("Thank you.");
 

@@ -138,7 +138,7 @@ public class DuncanBaseScript : NpcScript
 		}
 	}
 	
-	protected override async Task ReactToGift(Item item, GiftReaction score)
+	protected override async Task Gift(Item item, GiftReaction score)
 	{
 		switch (score)
 		{
