@@ -33,6 +33,8 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public TimeSpan RebirthTime { get; protected set; }
 
+		public int BankGoldPerCharacter { get; protected set; }
+
 		public void Load()
 		{
 			this.Require("system/conf/world.conf");
@@ -62,6 +64,8 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.Bagception = this.GetBool("bagception", false);
 
 			this.RebirthTime = TimeSpan.FromDays(this.GetInt("rebirth_time", 6));
+
+			this.BankGoldPerCharacter = this.GetInt("gold_per_character", 5000000);
 		}
 	}
 

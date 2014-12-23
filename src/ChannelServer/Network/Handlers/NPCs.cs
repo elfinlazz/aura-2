@@ -389,9 +389,11 @@ namespace Aura.Channel.Network.Handlers
 			if (creature.Inventory.Gold < amount)
 				throw new ModerateViolation("BankDepositGold: '{0}' ({1}) tried to deposit more than he has.", creature.Name, creature.EntityIdHex);
 
-			if ((long)client.Account.Bank.Gold + amount > int.MaxValue)
+			var goldMax = Math.Min((long)int.MaxValue, client.Account.Characters.Count * (long)ChannelServer.Instance.Conf.World.BankGoldPerCharacter);
+
+			if ((long)client.Account.Bank.Gold + amount > goldMax)
 			{
-				Send.MsgBox(creature, Localization.Get("The maximum gold amount is {0:n0}."), int.MaxValue);
+				Send.MsgBox(creature, Localization.Get("The maximum amount of gold you may store in the bank is {0:n0}."), goldMax);
 				Send.BankDepositGoldR(creature, false);
 				return;
 			}
