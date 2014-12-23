@@ -107,10 +107,10 @@ namespace Aura.Channel.World
 			Send.CharacterUnlock(this.Leader, Locks.Default);
 			Send.CutsceneUnk(this);
 
+			this.Leader.Temp.CurrentCutscene = null;
+
 			if (_callback != null)
 				_callback(this);
-
-			this.Leader.Temp.CurrentCutscene = null;
 		}
 	}
 }
