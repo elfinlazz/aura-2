@@ -57,6 +57,8 @@ namespace Aura.Channel.World
 
 			_clients = new HashSet<ChannelClient>();
 
+			this.Collisions = new RegionCollision();
+
 			_regionData = AuraData.RegionInfoDb.Find(this.Id);
 			if (_regionData == null)
 			{
@@ -64,7 +66,6 @@ namespace Aura.Channel.World
 				return;
 			}
 
-			this.Collisions = new RegionCollision(_regionData.X1, _regionData.Y1, _regionData.X2, _regionData.Y2);
 			this.Collisions.Init(_regionData);
 
 			this.LoadClientProps();
