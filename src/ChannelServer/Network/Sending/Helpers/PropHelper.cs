@@ -35,6 +35,13 @@ namespace Aura.Channel.Network.Sending.Helpers
 				}
 
 				packet.PutInt(0);
+				// if ^ 1 ?
+				//   010 [........000000CA] Int    : 202
+				//   011 [........0000044C] Int    : 1100
+				//   012 [................] String : 
+				//   013 [..............02] Byte   : 2
+				//   014 [................] String : message:s:Do you wish to enter the room?;condition:s:notin(220189,194241,1354);
+
 				packet.PutShort(0);
 			}
 			else
