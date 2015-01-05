@@ -4,6 +4,6 @@
 // All scripts listed here will be loaded.
 //---------------------------------------------------------------------------
 
-g2/others/sealstones.cs
+others/sealstones.cs
 
 include "/user/scripts/g2/scripts_others.txt"

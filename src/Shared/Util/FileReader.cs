@@ -27,7 +27,7 @@ namespace Aura.Shared.Util
 	///	}
 	///	</code>
 	///	</example>
-	public class FileReader : IEnumerable<string>, IDisposable
+	public class FileReader : IEnumerable<FileReaderLine>, IDisposable
 	{
 		private string _filePath;
 		private string _relativePath;
@@ -46,7 +46,7 @@ namespace Aura.Shared.Util
 			_streamReader = new StreamReader(filePath);
 		}
 
-		public IEnumerator<string> GetEnumerator()
+		public IEnumerator<FileReaderLine> GetEnumerator()
 		{
 			string line;
 
@@ -97,7 +97,7 @@ namespace Aura.Shared.Util
 					continue;
 				}
 
-				yield return line;
+				yield return new FileReaderLine(line, _filePath);
 			}
 		}
 
@@ -109,6 +109,30 @@ namespace Aura.Shared.Util
 		public void Dispose()
 		{
 			_streamReader.Close();
+		}
+	}
+
+	public class FileReaderLine
+	{
+		/// <summary>
+		/// Current line.
+		/// </summary>
+		public string Value { get; private set; }
+
+		/// <summary>
+		/// Full path to the file the value was read from.
+		/// </summary>
+		public string File { get; private set; }
+
+		/// <summary>
+		/// New FileReaderLine.
+		/// </summary>
+		/// <param name="line"></param>
+		/// <param name="file"></param>
+		public FileReaderLine(string line, string file)
+		{
+			this.Value = line;
+			this.File = Path.GetFullPath(file);
 		}
 	}
 }

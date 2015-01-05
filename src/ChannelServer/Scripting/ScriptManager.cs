@@ -126,27 +126,10 @@ namespace Aura.Channel.Scripting
 			}
 
 			// Read script list
-			var toLoad = new OrderedDictionary();
+			OrderedDictionary toLoad = null;
 			try
 			{
-				using (var fr = new FileReader(IndexPath))
-				{
-					foreach (var line in fr)
-					{
-						// Get script path for either user or system
-						var scriptPath = Path.Combine(UserIndexRoot, line);
-						if (!File.Exists(scriptPath))
-							scriptPath = Path.Combine(SystemIndexRoot, line);
-						if (!File.Exists(scriptPath))
-						{
-							Log.Warning("Script not found: {0}", line);
-							continue;
-						}
-
-						// Easiest way to get a unique, ordered list.
-						toLoad[line] = scriptPath;
-					}
-				}
+				toLoad = this.ReadScriptList(IndexPath);
 			}
 			catch (Exception ex)
 			{
@@ -179,6 +162,45 @@ namespace Aura.Channel.Scripting
 				Log.WriteLine();
 
 			Log.Info("Done loading {0} scripts (of {1}).", loaded, toLoad.Count);
+		}
+
+		/// <summary>
+		/// Returns list of script files loaded from scripts.txt.
+		/// </summary>
+		/// <param name="rootList"></param>
+		/// <returns></returns>
+		private OrderedDictionary ReadScriptList(string rootList)
+		{
+			var result = new OrderedDictionary();
+
+			using (var fr = new FileReader(rootList))
+			{
+				foreach (var line in fr)
+				{
+					// Get path to file relative to "x/scripts/".
+					var relative = Path.GetFullPath(line.File);
+					relative = relative.Replace(Path.GetFullPath(UserIndexRoot), "");
+					relative = relative.Replace(Path.GetFullPath(SystemIndexRoot), "");
+					relative = Path.GetDirectoryName(relative);
+
+					var fileName = Path.Combine(relative, line.Value).Replace("\\", "/");
+
+					// Get script path for either user or system
+					var scriptPath = Path.Combine(UserIndexRoot, fileName);
+					if (!File.Exists(scriptPath))
+						scriptPath = Path.Combine(SystemIndexRoot, fileName);
+					if (!File.Exists(scriptPath))
+					{
+						Log.Warning("Script not found: {0}", fileName);
+						continue;
+					}
+
+					// Easiest way to get a unique, ordered list.
+					result[fileName] = scriptPath;
+				}
+			}
+
+			return result;
 		}
 
 		/// <summary>

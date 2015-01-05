@@ -60,10 +60,10 @@ namespace Aura.Shared.Util.Configuration
 					int pos = -1;
 
 					// Check for seperator
-					if ((pos = line.IndexOf(':')) < 0)
+					if ((pos = line.Value.IndexOf(':')) < 0)
 						return;
 
-					_options[line.Substring(0, pos).Trim()] = line.Substring(pos + 1).Trim();
+					_options[line.Value.Substring(0, pos).Trim()] = line.Value.Substring(pos + 1).Trim();
 				}
 			}
 		}
@@ -267,7 +267,7 @@ namespace Aura.Shared.Util.Configuration
 		protected T GetEnum<T>(string option, T defaultValue = default(T)) where T : struct
 		{
 			if (!typeof(T).IsEnum)
-				throw new NotSupportedException("Type " + typeof (T) + " is not an enum.");
+				throw new NotSupportedException("Type " + typeof(T) + " is not an enum.");
 
 			string value;
 			if (!_options.TryGetValue(option, out value))
