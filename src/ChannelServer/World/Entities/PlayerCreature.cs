@@ -68,6 +68,9 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public bool Save { get; set; }
 
+		/// <summary>
+		/// Player's CP, based on stats and skills.
+		/// </summary>
 		public override float CombatPower
 		{
 			get
@@ -94,6 +97,9 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public override bool LevelingEnabled { get { return true; } }
 
+		/// <summary>
+		/// Creatures new PlayerCreature.
+		/// </summary>
 		public PlayerCreature()
 		{
 			this.Watching = true;
@@ -144,6 +150,11 @@ namespace Aura.Channel.World.Entities
 			_visibleEntities = currentlyVisible;
 		}
 
+		/// <summary>
+		/// Returns whether player can target the given creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <returns></returns>
 		public override bool CanTarget(Creature creature)
 		{
 			if (!base.CanTarget(creature))

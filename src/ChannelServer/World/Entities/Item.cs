@@ -14,11 +14,24 @@ namespace Aura.Channel.World.Entities
 {
 	public class Item : Entity
 	{
+		/// <summary>
+		/// Radius in which the item is dropped in Drop().
+		/// </summary>
 		private const int DropRadius = 50;
 
+		/// <summary>
+		/// Unique item id that is increased for every new item.
+		/// </summary>
 		private static long _itemId = MabiId.TmpItems;
 
+		/// <summary>
+		/// Returns entity data type "Item".
+		/// </summary>
 		public override DataType DataType { get { return DataType.Item; } }
+
+		/// <summary>
+		/// Gets or sets the item's region, forwarding to Info.Region.
+		/// </summary>
 		public override int RegionId
 		{
 			get { return this.Info.Region; }
@@ -70,6 +83,9 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
+		/// <summary>
+		/// Quest id, used for quest items.
+		/// </summary>
 		public long QuestId { get; set; }
 
 		/// <summary>
@@ -172,12 +188,21 @@ namespace Aura.Channel.World.Entities
 			this.LoadDefault();
 		}
 
+		/// <summary>
+		/// Returns item's position, based on Info.X and Y.
+		/// </summary>
+		/// <returns></returns>
 		public override Position GetPosition()
 		{
 			return new Position(this.Info.X, this.Info.Y);
 		}
 
-		// Modifies position in inventory.
+		/// <summary>
+		/// Modifies position in inventory.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
 		public void Move(Pocket pocket, int x, int y)
 		{
 			this.Info.Pocket = pocket;
@@ -229,7 +254,7 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Loads data.
+		/// Loads default item information from data.
 		/// </summary>
 		public void LoadDefault()
 		{

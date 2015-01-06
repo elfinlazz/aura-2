@@ -13,13 +13,34 @@ namespace Aura.Channel.World.Entities
 {
 	public class NPC : Creature
 	{
+		/// <summary>
+		/// Unique entity id increased and used for each NPC.
+		/// </summary>
 		private static long _npcId = MabiId.Npcs;
 
+		/// <summary>
+		/// Type of the NpcScript used by the NPC.
+		/// </summary>
 		public Type ScriptType { get; set; }
+
+		/// <summary>
+		/// AI controlling the NPC
+		/// </summary>
 		public AiScript AI { get; set; }
+
+		/// <summary>
+		/// Creature spawn id, used for respawning.
+		/// </summary>
 		public int SpawnId { get; set; }
 
+		/// <summary>
+		/// List of greetings the NPC uses in conversations.
+		/// </summary>
 		public SortedList<int, List<string>> Greetings { get; set; }
+
+		/// <summary>
+		/// NPCs preferences regarding gifts.
+		/// </summary>
 		public GiftWeightInfo GiftWeights { get; set; }
 
 		/// <summary>
@@ -27,8 +48,14 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public Location SpawnLocation { get; set; }
 
+		/// <summary>
+		/// Custom portrait in dialog.
+		/// </summary>
 		public string DialogPortrait { get; set; }
 
+		/// <summary>
+		/// Creates new NPC
+		/// </summary>
 		public NPC()
 		{
 			this.EntityId = Interlocked.Increment(ref _npcId);
@@ -44,6 +71,9 @@ namespace Aura.Channel.World.Entities
 			this.Greetings = new SortedList<int, List<string>>();
 		}
 
+		/// <summary>
+		/// Disposes AI.
+		/// </summary>
 		public override void Dispose()
 		{
 			base.Dispose();
@@ -52,6 +82,10 @@ namespace Aura.Channel.World.Entities
 				this.AI.Dispose();
 		}
 
+		/// <summary>
+		/// Loads default information from race data.
+		/// </summary>
+		/// <param name="fullyFunctional">Fully functional creatures have an inv, regens, etc.</param>
 		public override void LoadDefault(bool fullyFunctional = true)
 		{
 			base.LoadDefault(fullyFunctional);
@@ -129,6 +163,11 @@ namespace Aura.Channel.World.Entities
 			return true;
 		}
 
+		/// <summary>
+		/// Returns whether the NPC can target the given creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <returns></returns>
 		public override bool CanTarget(Creature creature)
 		{
 			if (!base.CanTarget(creature))
@@ -142,6 +181,10 @@ namespace Aura.Channel.World.Entities
 			return true;
 		}
 
+		/// <summary>
+		/// Kills NPC, rewarding the killer.
+		/// </summary>
+		/// <param name="killer"></param>
 		public override void Kill(Creature killer)
 		{
 			base.Kill(killer);
