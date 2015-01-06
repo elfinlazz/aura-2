@@ -12,6 +12,5 @@ include "scripts_others.txt"
 include "scripts_quests.txt"
 include "scripts_regions.txt"
 include "scripts_warps.txt"
+include "scripts_generations.txt"
 include "scripts_custom.txt"
-
-//include "g2/scripts.txt"

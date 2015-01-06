@@ -1,0 +1,9 @@
+// Aura
+// Script list file
+//
+// All scripts listed here will be loaded.
+//---------------------------------------------------------------------------
+
+//include "g2/scripts.txt"
+
+include "/user/scripts/scripts_generations.txt"
