@@ -21,7 +21,7 @@ namespace Aura.Channel.Skills.Life
 	/// Var3: Injury regen
 	/// </remarks>
 	[Skill(SkillId.Rest)]
-	public class RestSkillHandler : StartStopSkillHandler
+	public class Rest : StartStopSkillHandler
 	{
 		public override StartStopResult Start(Creature creature, Skill skill, MabiDictionary dict)
 		{

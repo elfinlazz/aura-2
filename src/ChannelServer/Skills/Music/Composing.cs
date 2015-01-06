@@ -27,7 +27,7 @@ namespace Aura.Channel.Skills.Music
 	/// Var 4: Magical Effect chance
 	/// </remarks>
 	[Skill(SkillId.Composing)]
-	public class ComposingSkillHandler : IPreparable, ICompletable, ICancelable
+	public class Composing : IPreparable, ICompletable, ICancelable
 	{
 		private const int MMLMaxLength = 10000;
 

@@ -25,7 +25,7 @@ namespace Aura.Channel.Skills.Hidden
 	/// regulars.
 	/// </remarks>
 	[Skill(SkillId.Dye)]
-	public class DyeSkillHandler : IPreparable, IUseable, ICompletable, ICancelable
+	public class Dye : IPreparable, IUseable, ICompletable, ICancelable
 	{
 		public void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
 		{

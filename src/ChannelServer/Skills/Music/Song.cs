@@ -23,7 +23,7 @@ namespace Aura.Channel.Skills.Music
 	/// Prepare starts the singing, complete is sent once it's over.
 	/// </remarks>
 	[Skill(SkillId.Song)]
-	public class SongSkillHandler : PlayingInstrumentHandler
+	public class Song : PlayingInstrument
 	{
 		private const int RandomSongScoreMin = 2001, RandomSongScoreMax = 2052;
 

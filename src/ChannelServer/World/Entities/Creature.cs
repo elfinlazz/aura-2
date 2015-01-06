@@ -605,7 +605,7 @@ namespace Aura.Channel.World.Entities
 			// Do this in dispose because we can't expect a clean logout.
 			if (this.Has(CreatureStates.SitDown))
 			{
-				var restHandler = ChannelServer.Instance.SkillManager.GetHandler<RestSkillHandler>(SkillId.Rest);
+				var restHandler = ChannelServer.Instance.SkillManager.GetHandler<Rest>(SkillId.Rest);
 				if (restHandler != null)
 					restHandler.Stop(this, this.Skills.Get(SkillId.Rest));
 			}

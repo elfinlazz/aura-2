@@ -20,7 +20,7 @@ namespace Aura.Channel.Skills.Magic
 	/// Skill is stopped by client once Mana reaches 0.
 	/// </remarks>
 	[Skill(SkillId.ManaShield)]
-	public class ManaShieldSkillHandler : StartStopSkillHandler
+	public class ManaShield : StartStopSkillHandler
 	{
 		public override StartStopResult Start(Creature creature, Skill skill, MabiDictionary dict)
 		{
