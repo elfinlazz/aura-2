@@ -32,6 +32,7 @@ npcs/dunbarton/aranwen.cs
 npcs/dunbarton/austeyn.cs
 npcs/dunbarton/eavan.cs
 npcs/dunbarton/glenis.cs
+npcs/dunbarton/kristell.cs
 npcs/dunbarton/nerys.cs
 npcs/dunbarton/simon.cs
 
