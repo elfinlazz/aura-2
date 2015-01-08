@@ -64,7 +64,7 @@ namespace Aura.Channel.Scripting.Scripts
 				if (change != null && memory > 0)
 				{
 					TimeSpan diff = DateTime.Now - change;
-					memory = Math.Max(0, memory - diff.TotalDays);
+					memory = Math.Max(0, memory - Math.Floor(diff.TotalDays));
 				}
 
 				return (int)memory;
@@ -92,7 +92,7 @@ namespace Aura.Channel.Scripting.Scripts
 				if (change != null && favor > 0)
 				{
 					TimeSpan diff = DateTime.Now - change;
-					favor = Math.Max(0, favor - diff.TotalHours);
+					favor = Math.Max(0, favor - Math.Floor(diff.TotalHours));
 				}
 
 				return (int)favor;
@@ -120,7 +120,7 @@ namespace Aura.Channel.Scripting.Scripts
 				if (change != null && stress > 0)
 				{
 					TimeSpan diff = DateTime.Now - change;
-					stress = Math.Max(0, stress - diff.TotalMinutes);
+					stress = Math.Max(0, stress - Math.Floor(diff.TotalMinutes));
 				}
 
 				return (int)stress;
