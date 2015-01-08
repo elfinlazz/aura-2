@@ -1261,6 +1261,7 @@ namespace Aura.Channel.Util
 
 			favor = amount;
 			target.Vars.Perm["npc_favor_" + name] = favor;
+			target.Vars.Perm["npc_favor_change_" + name] = DateTime.Now;
 
 			Send.SystemMessage(sender, Localization.Get("Changed favor for {0}, new value: {1}"), name, favor);
 			if (sender != target)
@@ -1289,6 +1290,7 @@ namespace Aura.Channel.Util
 
 			stress = amount;
 			target.Vars.Perm["npc_stress_" + name] = stress;
+			target.Vars.Perm["npc_stress_change_" + name] = DateTime.Now;
 
 			Send.SystemMessage(sender, Localization.Get("Changed stress for {0}, new value: {1}"), name, stress);
 			if (sender != target)
@@ -1317,6 +1319,7 @@ namespace Aura.Channel.Util
 
 			stress = amount;
 			target.Vars.Perm["npc_memory_" + name] = stress;
+			target.Vars.Perm["npc_memory_change_" + name] = DateTime.Now;
 
 			Send.SystemMessage(sender, Localization.Get("Changed memory for {0}, new value: {1}"), name, stress);
 			if (sender != target)
