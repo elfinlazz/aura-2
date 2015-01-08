@@ -69,6 +69,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "gold", "<amount>", HandleGold);
 			Add(50, 50, "favor", "<npc name> [amount]", HandleFavor);
 			Add(50, 50, "stress", "<npc name> [amount]", HandleStress);
+			Add(50, 50, "memory", "<npc name> [amount]", HandleMemory);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -1292,6 +1293,34 @@ namespace Aura.Channel.Util
 			Send.SystemMessage(sender, Localization.Get("Changed stress for {0}, new value: {1}"), name, stress);
 			if (sender != target)
 				Send.SystemMessage(target, Localization.Get("{2} changed {0}'s stress towards you, new value: {1}"), name, stress, sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleMemory(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (args.Count < 2)
+				return CommandResult.InvalidArgument;
+
+			var name = args[1];
+			int stress = (target.Vars.Perm["npc_memory_" + name] ?? 0);
+
+			if (args.Count < 3)
+			{
+				Send.SystemMessage(sender, Localization.Get("Memory of {0}: {1}"), name, stress);
+				return CommandResult.Okay;
+			}
+
+			int amount;
+			if (!int.TryParse(args[2], out amount))
+				return CommandResult.InvalidArgument;
+
+			stress = amount;
+			target.Vars.Perm["npc_memory_" + name] = stress;
+
+			Send.SystemMessage(sender, Localization.Get("Changed memory for {0}, new value: {1}"), name, stress);
+			if (sender != target)
+				Send.SystemMessage(target, Localization.Get("{2} changed how well {0} remembers you, new value: {1}"), name, stress, sender.Name);
 
 			return CommandResult.Okay;
 		}
