@@ -1305,11 +1305,11 @@ namespace Aura.Channel.Util
 				return CommandResult.InvalidArgument;
 
 			var name = args[1];
-			int stress = (target.Vars.Perm["npc_memory_" + name] ?? 0);
+			int memory = (target.Vars.Perm["npc_memory_" + name] ?? 0);
 
 			if (args.Count < 3)
 			{
-				Send.SystemMessage(sender, Localization.Get("Memory of {0}: {1}"), name, stress);
+				Send.SystemMessage(sender, Localization.Get("Memory of {0}: {1}"), name, memory);
 				return CommandResult.Okay;
 			}
 
@@ -1317,13 +1317,13 @@ namespace Aura.Channel.Util
 			if (!int.TryParse(args[2], out amount))
 				return CommandResult.InvalidArgument;
 
-			stress = amount;
-			target.Vars.Perm["npc_memory_" + name] = stress;
+			memory = amount;
+			target.Vars.Perm["npc_memory_" + name] = memory;
 			target.Vars.Perm["npc_memory_change_" + name] = DateTime.Now;
 
-			Send.SystemMessage(sender, Localization.Get("Changed memory for {0}, new value: {1}"), name, stress);
+			Send.SystemMessage(sender, Localization.Get("Changed memory for {0}, new value: {1}"), name, memory);
 			if (sender != target)
-				Send.SystemMessage(target, Localization.Get("{2} changed how well {0} remembers you, new value: {1}"), name, stress, sender.Name);
+				Send.SystemMessage(target, Localization.Get("{2} changed how well {0} remembers you, new value: {1}"), name, memory, sender.Name);
 
 			return CommandResult.Okay;
 		}
