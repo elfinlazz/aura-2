@@ -48,6 +48,7 @@ public class KristellScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
+				Player.Keywords.Give("temple");
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
 				if (Player.Titles.SelectedTitle == 11002)
@@ -67,7 +68,6 @@ public class KristellScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				Player.Keywords.Give("temple");
 				if (Memory == 1)
 				{
 					Msg("Nice to meet you, <username/>.");
