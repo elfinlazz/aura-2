@@ -54,27 +54,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public int Memory
 		{
-			get
-			{
-				// Get NPC memory and last change date
-				var memory = this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] ?? 0;
-				var change = this.Player.Vars.Perm["npc_memory_change_" + this.NPC.Name];
-
-				// Reduce memory by 1 each day
-				if (change != null && memory > 0)
-				{
-					TimeSpan diff = DateTime.Now - change;
-					memory = Math.Max(0, memory - Math.Floor(diff.TotalDays));
-				}
-
-				return (int)memory;
-			}
-			set
-			{
-				// Set new memory value and change date
-				this.Player.Vars.Perm["npc_memory_" + this.NPC.Name] = Math.Max(0, value);
-				this.Player.Vars.Perm["npc_memory_change_" + this.NPC.Name] = DateTime.Now;
-			}
+			get { return this.NPC.GetMemory(this.Player); }
+			set { this.NPC.SetMemory(this.Player, value); }
 		}
 
 		/// <summary>
@@ -82,57 +63,22 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public int Favor
 		{
-			get
-			{
-				// Get NPC favor and last change date
-				var favor = this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] ?? 0;
-				var change = this.Player.Vars.Perm["npc_favor_change_" + this.NPC.Name];
-
-				// Reduce favor by 1 each hour
-				if (change != null && favor > 0)
-				{
-					TimeSpan diff = DateTime.Now - change;
-					favor = Math.Max(0, favor - Math.Floor(diff.TotalHours));
-				}
-
-				return (int)favor;
-			}
-			set
-			{
-				// Set new favor value and change date
-				this.Player.Vars.Perm["npc_favor_" + this.NPC.Name] = value;
-				this.Player.Vars.Perm["npc_favor_change_" + this.NPC.Name] = DateTime.Now;
-			}
+			get { return this.NPC.GetFavor(this.Player); }
+			set { this.NPC.SetFavor(this.Player, value); }
 		}
 
 		/// <summary>
-		/// Gets or sets the NPC's stress.
+		/// Gets or sets how much the player stresses the NPC.
 		/// </summary>
 		public int Stress
 		{
-			get
-			{
-				// Get NPC stress and last change date
-				var stress = this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] ?? 0;
-				var change = this.Player.Vars.Perm["npc_stress_change_" + this.NPC.Name];
-
-				// Reduce stress by 1 each minute
-				if (change != null && stress > 0)
-				{
-					TimeSpan diff = DateTime.Now - change;
-					stress = Math.Max(0, stress - Math.Floor(diff.TotalMinutes));
-				}
-
-				return (int)stress;
-			}
-			set
-			{
-				// Set new stress value and change date
-				this.Player.Vars.Perm["npc_stress_" + this.NPC.Name] = Math.Max(0, value);
-				this.Player.Vars.Perm["npc_stress_change_" + this.NPC.Name] = DateTime.Now;
-			}
+			get { return this.NPC.GetStress(this.Player); }
+			set { this.NPC.SetStress(this.Player, value); }
 		}
 
+		/// <summary>
+		/// Initializes class
+		/// </summary>
 		protected NpcScript()
 		{
 			_resumeSignal = new SemaphoreSlim(0);

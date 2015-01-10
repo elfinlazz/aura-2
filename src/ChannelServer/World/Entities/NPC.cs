@@ -246,6 +246,151 @@ namespace Aura.Channel.World.Entities
 			return (min + ((max - min) * balance));
 		}
 
+		/// <summary>
+		/// Returns how well the NPC remembers the other creature.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public int GetMemory(Creature other)
+		{
+			// Get NPC memory and last change date
+			var memory = other.Vars.Perm["npc_memory_" + this.Name] ?? 0;
+			var change = other.Vars.Perm["npc_memory_change_" + this.Name];
+
+			// Reduce memory by 1 each day
+			if (change != null && memory > 0)
+			{
+				TimeSpan diff = DateTime.Now - change;
+				memory = Math.Max(0, memory - Math.Floor(diff.TotalDays));
+			}
+
+			return (int)memory;
+		}
+
+		/// <summary>
+		/// Modifies how well the NPC remembers the other creature.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="value"></param>
+		/// <returns>New memory value</returns>
+		public int SetMemory(Creature other, int value)
+		{
+			value = Math.Max(0, value);
+
+			other.Vars.Perm["npc_memory_" + this.Name] = value;
+			other.Vars.Perm["npc_memory_change_" + this.Name] = DateTime.Now;
+
+			return value;
+		}
+
+		/// <summary>
+		/// Sets how well the NPC remembers the other creature.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="value"></param>
+		/// <returns>New memory value</returns>
+		public int ModifyMemory(Creature other, int value)
+		{
+			return this.SetMemory(other, this.GetMemory(other) + value);
+		}
+
+		/// <summary>
+		/// Returns favor of the NPC towards the other creature.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public int GetFavor(Creature other)
+		{
+			// Get NPC favor and last change date
+			var favor = other.Vars.Perm["npc_favor_" + this.Name] ?? 0;
+			var change = other.Vars.Perm["npc_favor_change_" + this.Name];
+
+			// Reduce favor by 1 each hour
+			if (change != null && favor > 0)
+			{
+				TimeSpan diff = DateTime.Now - change;
+				favor = Math.Max(0, favor - Math.Floor(diff.TotalHours));
+			}
+
+			return (int)favor;
+		}
+
+		/// <summary>
+		/// Sets favor of the NPC towards the other creature.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="value"></param>
+		/// <returns>New favor value</returns>
+		public int SetFavor(Creature other, int value)
+		{
+			other.Vars.Perm["npc_favor_" + this.Name] = value;
+			other.Vars.Perm["npc_favor_change_" + this.Name] = DateTime.Now;
+
+			return value;
+		}
+
+		/// <summary>
+		/// Modifies favor of the NPC towards the other creature.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="value"></param>
+		/// <returns>New favor value</returns>
+		public int ModifyFavor(Creature other, int value)
+		{
+			return this.SetFavor(other, this.GetFavor(other) + value);
+		}
+
+		/// <summary>
+		/// Gets how much the other creature is stressing the NPC.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public int GetStress(Creature other)
+		{
+			// Get NPC stress and last change date
+			var stress = other.Vars.Perm["npc_stress_" + this.Name] ?? 0;
+			var change = other.Vars.Perm["npc_stress_change_" + this.Name];
+
+			// Reduce stress by 1 each minute
+			if (change != null && stress > 0)
+			{
+				TimeSpan diff = DateTime.Now - change;
+				stress = Math.Max(0, stress - Math.Floor(diff.TotalMinutes));
+			}
+
+			return (int)stress;
+		}
+
+		/// <summary>
+		/// Sets how much the other creature is stressing the NPC.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="value"></param>
+		/// <returns>New stress value</returns>
+		public int SetStress(Creature other, int value)
+		{
+			value = Math.Max(0, value);
+
+			other.Vars.Perm["npc_stress_" + this.Name] = value;
+			other.Vars.Perm["npc_stress_change_" + this.Name] = DateTime.Now;
+
+			return value;
+		}
+
+		/// <summary>
+		/// Modifies how much the other creature is stressing the NPC.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="value"></param>
+		/// <returns>New stress value</returns>
+		public int ModifyStress(Creature other, int value)
+		{
+			return this.SetStress(other, this.GetStress(other) + value);
+		}
+
+		/// <summary>
+		/// TODO: Move somewhere? =/
+		/// </summary>
 		public class GiftWeightInfo
 		{
 			public float Adult { get; set; }
@@ -281,6 +426,5 @@ namespace Aura.Channel.World.Entities
 				return (int)score;
 			}
 		}
-
 	}
 }
