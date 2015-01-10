@@ -7,6 +7,8 @@ using System.Linq;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
+using Aura.Shared.Mabi;
+using Aura.Data;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -30,7 +32,7 @@ namespace Aura.Channel.Scripting.Scripts
 	/// Pons overweights everything, but it's displayed alongside
 	/// other prices if they aren't 0.
 	/// </remarks>
-	public class NpcShopScript : IScript
+	public class NpcShopScript : IScript, IDisposable
 	{
 		protected Dictionary<string, NpcShopTab> _tabs;
 
@@ -40,14 +42,43 @@ namespace Aura.Channel.Scripting.Scripts
 		public NpcShopScript()
 		{
 			_tabs = new Dictionary<string, NpcShopTab>();
+			ChannelServer.Instance.Events.ErinnMidnightTick += this.OnErinnMidnightTick;
+		}
+
+		/// <summary>
+		/// Unsubscribes Shop from events.
+		/// </summary>
+		public void Dispose()
+		{
+			ChannelServer.Instance.Events.ErinnMidnightTick -= this.OnErinnMidnightTick;
+		}
+
+		/// <summary>
+		/// Called at midnight (Erinn time).
+		/// </summary>
+		/// <param name="time"></param>
+		protected virtual void OnErinnMidnightTick(ErinnTime time)
+		{
+			this.RandomizeItemColors();
+		}
+
+		/// <summary>
+		/// Randomizes colors of all items in all tabs.
+		/// </summary>
+		protected virtual void RandomizeItemColors()
+		{
+			var rand = RandomProvider.Get();
+
+			lock (_tabs)
+			{
+				foreach (var tab in _tabs.Values)
+					tab.RandomizeItemColors();
+			}
 		}
 
 		/// <summary>
 		/// Initializes shop, calling setup and adding it to the script manager.
 		/// </summary>
-		/// <remarks>
-		/// TODO: Uncouple.
-		/// </remarks>
 		/// <returns></returns>
 		public bool Init()
 		{
@@ -75,14 +106,26 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Adds empty tab.
 		/// </summary>
 		/// <param name="tabTitle">Tab title displayed in-game</param>
+		/// <param name="randomizeColors">Determines whether item colors are randomized on midnight.</param>
+		/// <param name="shouldDisplay">Function that determines whether tab should be displayed, set null if not used.</param>
+		/// <returns></returns>
+		public NpcShopTab Add(string tabTitle, bool randomizeColors, Func<Creature, NPC, bool> shouldDisplay = null)
+		{
+			var tab = new NpcShopTab(tabTitle, _tabs.Count, randomizeColors, shouldDisplay);
+			lock (_tabs)
+				_tabs.Add(tabTitle, tab);
+			return tab;
+		}
+
+		/// <summary>
+		/// Adds empty tab.
+		/// </summary>
+		/// <param name="tabTitle">Tab title displayed in-game</param>
 		/// <param name="shouldDisplay">Function that determines whether tab should be displayed, set null if not used.</param>
 		/// <returns></returns>
 		public NpcShopTab Add(string tabTitle, Func<Creature, NPC, bool> shouldDisplay = null)
 		{
-			NpcShopTab tab;
-			lock (_tabs)
-				_tabs.Add(tabTitle, (tab = new NpcShopTab(tabTitle, _tabs.Count, shouldDisplay)));
-			return tab;
+			return Add(tabTitle, true, shouldDisplay);
 		}
 
 		/// <summary>
@@ -243,11 +286,6 @@ namespace Aura.Channel.Scripting.Scripts
 		public Dictionary<long, Item> _items;
 
 		/// <summary>
-		/// All items in the tab.
-		/// </summary>
-		public ICollection<Item> Items { get { return _items.Values; } }
-
-		/// <summary>
 		/// Title of the tab.
 		/// </summary>
 		public string Title { get; protected set; }
@@ -263,17 +301,22 @@ namespace Aura.Channel.Scripting.Scripts
 		public Func<Creature, NPC, bool> ShouldDisplay { get; protected set; }
 
 		/// <summary>
+		/// Gets or sets whether item colors get randomized on RandomizeItemColors.
+		/// </summary>
+		public bool RandomizeColorsEnabled { get; set; }
+
+		/// <summary>
 		/// Creatures new NpcShopTab
 		/// </summary>
 		/// <param name="title">Tab title display in-game.</param>
 		/// <param name="order"></param>
 		/// <param name="display">Function that determines whether tab should be displayed, set null if not used.</param>
-		public NpcShopTab(string title, int order, Func<Creature, NPC, bool> display)
+		public NpcShopTab(string title, int order, bool randomizeColors, Func<Creature, NPC, bool> display)
 		{
 			_items = new Dictionary<long, Item>();
 			this.Title = title;
 			this.Order = order;
-
+			this.RandomizeColorsEnabled = randomizeColors;
 			this.ShouldDisplay = display ?? ((c, n) => true);
 		}
 
@@ -283,7 +326,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="item"></param>
 		public void Add(Item item)
 		{
-			_items[item.EntityId] = item;
+			lock (_items)
+				_items[item.EntityId] = item;
 		}
 
 		/// <summary>
@@ -294,8 +338,39 @@ namespace Aura.Channel.Scripting.Scripts
 		public Item Get(long entityId)
 		{
 			Item result;
-			_items.TryGetValue(entityId, out result);
+			lock (_items)
+				_items.TryGetValue(entityId, out result);
 			return result;
+		}
+
+		/// <summary>
+		/// Returns thread-safe list of all items in the tab.
+		/// </summary>
+		public ICollection<Item> GetItems()
+		{
+			lock (_items)
+				return _items.Values.ToList();
+		}
+
+		/// <summary>
+		/// Randomizes all item's colors.
+		/// </summary>
+		public void RandomizeItemColors()
+		{
+			if (!this.RandomizeColorsEnabled)
+				return;
+
+			var rand = RandomProvider.Get();
+
+			lock (_items)
+			{
+				foreach (var item in _items.Values)
+				{
+					item.Info.Color1 = AuraData.ColorMapDb.GetRandom(item.Data.ColorMap1, rand);
+					item.Info.Color2 = AuraData.ColorMapDb.GetRandom(item.Data.ColorMap2, rand);
+					item.Info.Color3 = AuraData.ColorMapDb.GetRandom(item.Data.ColorMap3, rand);
+				}
+			}
 		}
 	}
 }

@@ -121,8 +121,9 @@ namespace Aura.Channel.Network.Sending
 					packet.PutByte(0);
 				}
 
-				packet.PutShort((short)tab.Items.Count);
-				foreach (var item in tab.Items)
+				var items = tab.GetItems();
+				packet.PutShort((short)items.Count);
+				foreach (var item in items)
 					packet.AddItemInfo(item, ItemPacketType.Private);
 			}
 
