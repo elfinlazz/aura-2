@@ -104,15 +104,15 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="shop"></param>
-		public static void OpenNpcShop(Creature creature, NpcShopScript shop)
+		public static void OpenNpcShop(Creature creature, IList<NpcShopTab> tabs)
 		{
 			var packet = new Packet(Op.OpenNpcShop, creature.EntityId);
 			packet.PutString("shopname");
 			packet.PutByte(0);
 			packet.PutByte(0);
 			packet.PutInt(0);
-			packet.PutByte((byte)shop.Tabs.Count);
-			foreach (var tab in shop.VisibleTabs)
+			packet.PutByte((byte)tabs.Count);
+			foreach (var tab in tabs)
 			{
 				packet.PutString("[{0}]{1}", tab.Order, tab.Title);
 

@@ -230,7 +230,10 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Get item
-			var item = creature.Temp.CurrentShop.GetItem(entityId, true);
+			// In theory someone could buy an item without it being visible
+			// to him, but he would need the current entity id that
+			// changes on each restart. It's unlikely to ever be a problem.
+			var item = creature.Temp.CurrentShop.GetItem(entityId);
 			if (item == null)
 			{
 				Log.Warning("NpcShopBuyItem: Item '{0}' doesn't exist in shop.", entityId.ToString("X16"));
