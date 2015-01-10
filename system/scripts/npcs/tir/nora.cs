@@ -161,6 +161,7 @@ public class NoraShop : TailorShop
 	{
 		base.Setup();
 		
-		Add("Not so secret", 1082); // Resting Guide
+		Add("Skill Book", (c, o) => o.GetFavor(c) >= 50); // Allow access with >= 50 favor
+		Add("Skill Book", 1082); // Resting Guide
 	}
 }
