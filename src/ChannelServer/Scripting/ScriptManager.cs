@@ -469,23 +469,27 @@ namespace Aura.Channel.Scripting
 			try
 			{
 				types = asm.GetTypes();
-				foreach (var method in types.SelectMany(t => t.GetMethods(BindingFlags.DeclaredOnly |
-					BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)).Where(m => !m.IsAbstract))
-				{
+				foreach (var method in types.SelectMany(t => t.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)).Where(m => !m.IsAbstract && !m.ContainsGenericParameters))
 					RuntimeHelpers.PrepareMethod(method.MethodHandle);
-				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				// Happens if classes in source or other scripts change,
 				// i.e. a class name changes, or a parent class. Only
 				// fixable by recaching, so they can "sync" again.
 
-				Log.Error("GetJITtedTypes: Loading of one or multiple types in '{0}' failed, classes in this file won't be loaded. " +
-				"Restart your server to recompile the offending scripts. Delete your cache folder if this error persists.", filePath);
+				Log.Exception(ex, "GetJITtedTypes: Loading of one or multiple types in '{0}' failed, classes in this file won't be loaded. " +
+					"Restart your server to recompile the offending scripts. Delete your cache folder if this error persists.", filePath);
 
 				// Mark for recomp
-				new FileInfo(filePath).LastWriteTime = DateTime.Now;
+				try
+				{
+					new FileInfo(filePath).LastWriteTime = DateTime.Now;
+				}
+				catch
+				{
+					// Fails for DLLs, because they're loaded from where they are.
+				}
 
 				return Enumerable.Empty<Type>();
 			}
