@@ -360,6 +360,12 @@ namespace Aura.Channel.World
 			return this.GetCreature(entityId) as NPC;
 		}
 
+		/// <summary>
+		/// Returns NPC by entity id, throws SevereViolation exception if
+		/// NPC doesn't exist.
+		/// </summary>
+		/// <param name="npcId"></param>
+		/// <returns></returns>
 		public NPC GetNpcSafe(long npcId)
 		{
 			var npc = this.GetNpc(npcId);

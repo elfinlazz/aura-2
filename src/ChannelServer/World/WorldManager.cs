@@ -305,6 +305,16 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns NPC from any region by name, or null.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public NPC GetNpc(string name)
+		{
+			return (NPC)_regions.Values.Select(region => region.GetCreature(name)).FirstOrDefault(creature => creature != null && creature is NPC);
+		}
+
+		/// <summary>
 		/// Returns collection of all good, normal NPCs.
 		/// </summary>
 		/// <returns></returns>

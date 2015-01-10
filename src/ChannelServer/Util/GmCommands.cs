@@ -1247,7 +1247,14 @@ namespace Aura.Channel.Util
 				return CommandResult.InvalidArgument;
 
 			var name = args[1];
-			int favor = (target.Vars.Perm["npc_favor_" + name] ?? 0);
+			var npc = ChannelServer.Instance.World.GetNpc(name);
+			if (npc == null)
+			{
+				Send.SystemMessage(sender, Localization.Get("NPC '{0}' doesn't exist."), name);
+				return CommandResult.Fail;
+			}
+
+			int favor = npc.GetFavor(target);
 
 			if (args.Count < 3)
 			{
@@ -1259,9 +1266,7 @@ namespace Aura.Channel.Util
 			if (!int.TryParse(args[2], out amount))
 				return CommandResult.InvalidArgument;
 
-			favor = amount;
-			target.Vars.Perm["npc_favor_" + name] = favor;
-			target.Vars.Perm["npc_favor_change_" + name] = DateTime.Now;
+			favor = npc.SetFavor(target, amount);
 
 			Send.SystemMessage(sender, Localization.Get("Changed favor for {0}, new value: {1}"), name, favor);
 			if (sender != target)
@@ -1276,7 +1281,14 @@ namespace Aura.Channel.Util
 				return CommandResult.InvalidArgument;
 
 			var name = args[1];
-			int stress = (target.Vars.Perm["npc_stress_" + name] ?? 0);
+			var npc = ChannelServer.Instance.World.GetNpc(name);
+			if (npc == null)
+			{
+				Send.SystemMessage(sender, Localization.Get("NPC '{0}' doesn't exist."), name);
+				return CommandResult.Fail;
+			}
+
+			int stress = npc.GetStress(target);
 
 			if (args.Count < 3)
 			{
@@ -1288,9 +1300,7 @@ namespace Aura.Channel.Util
 			if (!int.TryParse(args[2], out amount))
 				return CommandResult.InvalidArgument;
 
-			stress = amount;
-			target.Vars.Perm["npc_stress_" + name] = stress;
-			target.Vars.Perm["npc_stress_change_" + name] = DateTime.Now;
+			stress = npc.SetStress(target, amount);
 
 			Send.SystemMessage(sender, Localization.Get("Changed stress for {0}, new value: {1}"), name, stress);
 			if (sender != target)
@@ -1305,7 +1315,14 @@ namespace Aura.Channel.Util
 				return CommandResult.InvalidArgument;
 
 			var name = args[1];
-			int memory = (target.Vars.Perm["npc_memory_" + name] ?? 0);
+			var npc = ChannelServer.Instance.World.GetNpc(name);
+			if (npc == null)
+			{
+				Send.SystemMessage(sender, Localization.Get("NPC '{0}' doesn't exist."), name);
+				return CommandResult.Fail;
+			}
+
+			int memory = npc.GetMemory(target);
 
 			if (args.Count < 3)
 			{
@@ -1317,9 +1334,7 @@ namespace Aura.Channel.Util
 			if (!int.TryParse(args[2], out amount))
 				return CommandResult.InvalidArgument;
 
-			memory = amount;
-			target.Vars.Perm["npc_memory_" + name] = memory;
-			target.Vars.Perm["npc_memory_change_" + name] = DateTime.Now;
+			memory = npc.SetMemory(target, amount);
 
 			Send.SystemMessage(sender, Localization.Get("Changed memory for {0}, new value: {1}"), name, memory);
 			if (sender != target)
