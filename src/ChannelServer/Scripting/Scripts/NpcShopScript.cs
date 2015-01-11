@@ -214,6 +214,31 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Removes all items from tab.
+		/// </summary>
+		/// <remarks>
+		/// This, just like adding items at run-time, does not live update
+		/// the currently open shops. Afaik it's not on officials either,
+		/// but it would be possible, if we create a list of open shop
+		/// instances and use the clear and fill shop packets.
+		/// </remarks>
+		/// <param name="tabTitle"></param>
+		/// <returns>Whether clearing was successful. Fails if tab doesn't exist.</returns>
+		protected bool ClearTab(string tabTitle)
+		{
+			NpcShopTab tab;
+			lock (_tabs)
+				_tabs.TryGetValue(tabTitle, out tab);
+
+			if (tab == null)
+				return false;
+
+			tab.Clear();
+
+			return true;
+		}
+
+		/// <summary>
 		/// Returns new item based on target item from one of the tabs by id,
 		/// or null.
 		/// </summary>
@@ -328,6 +353,15 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			lock (_items)
 				_items[item.EntityId] = item;
+		}
+
+		/// <summary>
+		/// Removes all items from tab.
+		/// </summary>
+		public void Clear()
+		{
+			lock (_items)
+				_items.Clear();
 		}
 
 		/// <summary>
