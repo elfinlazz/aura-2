@@ -308,7 +308,7 @@ namespace Aura.Channel.Scripting.Scripts
 	/// </summary>
 	public class NpcShopTab
 	{
-		public Dictionary<long, Item> _items;
+		private Dictionary<long, Item> _items;
 
 		/// <summary>
 		/// Title of the tab.
