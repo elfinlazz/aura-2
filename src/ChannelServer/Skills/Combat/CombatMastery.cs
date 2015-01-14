@@ -119,7 +119,10 @@ namespace Aura.Channel.Skills.Combat
 
 					aAction.Set(AttackerOptions.KnockBackHit2);
 
-					cap.MaxHits = cap.Hit;
+					// Remove dual wield option if last hit doesn't come from
+					// the second weapon.
+					if (cap.MaxHits != cap.Hit)
+						aAction.Options &= ~AttackerOptions.DualWield;
 				}
 
 				// Set stun time
