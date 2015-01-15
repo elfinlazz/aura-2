@@ -69,6 +69,12 @@ namespace Aura.Channel.Network.Sending.Helpers
 				//0613 [........00000004] Int    : 4
 
 				packet.PutLong(item.QuestId);
+
+				// [190100, NA200 (2015-01-15)] ?
+				{
+					packet.PutByte(0);
+					packet.PutByte(0);
+				}
 			}
 
 			return packet;

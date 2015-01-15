@@ -256,7 +256,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				{
 					packet.PutUShort(title.Key);
 					packet.PutByte((byte)title.Value);
-					packet.PutInt(0);
+					packet.PutLong(0); // [190100, NA200 (2014-01-15)] Changed from Int to Long
 				}
 			}
 			if (type == CreaturePacketType.Private || type == CreaturePacketType.Public)
