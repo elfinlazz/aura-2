@@ -123,6 +123,12 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Gets or sets whether the item is displayed as new in inv.
+		/// [190100, NA200 (2015-01-15)]
+		/// </summary>
+		public bool IsNew { get; set; }
+
+		/// <summary>
 		/// New item based on item id.
 		/// </summary>
 		/// <param name="itemId"></param>

@@ -529,6 +529,7 @@ namespace Aura.Channel.World.Inventory
 				// (SVN r67).
 
 				var newStackItem = new Item(item);
+				newStackItem.IsNew = true;
 				newStackItem.Info.Amount = Math.Min(item.Info.Amount, item.Data.StackMax);
 
 				// Stop if no new items can be added (no space left)

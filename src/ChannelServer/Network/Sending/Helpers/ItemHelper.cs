@@ -72,7 +72,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 
 				// [190100, NA200 (2015-01-15)] ?
 				{
-					packet.PutByte(0);
+					packet.PutByte(item.IsNew);
 					packet.PutByte(0);
 				}
 			}

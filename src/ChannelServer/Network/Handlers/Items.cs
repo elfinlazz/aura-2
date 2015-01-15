@@ -524,5 +524,23 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.MsgBox(creature, Localization.Get("Not supported yet."));
 		}
+
+		/// <summary>
+		/// Notification that player saw a new item in the inv,
+		/// sent when hovering an item that's highlighted as new.
+		/// </summary>
+		/// <example>
+		/// 001 [0050000000000066] Long   : 22517998136852582
+		/// </example>
+		[PacketHandler(Op.SawItemNotification)]
+		public void SawItemNotification(ChannelClient client, Packet packet)
+		{
+			var itemEntityId = packet.GetLong();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+			var item = creature.Inventory.GetItemSafe(itemEntityId);
+
+			item.IsNew = false;
+		}
 	}
 }
