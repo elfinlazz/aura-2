@@ -275,7 +275,7 @@ namespace Aura.Channel.Network.Handlers
 			// This might not be entirely correct, but works well.
 			// Robe is opened first, Helm secondly, then Robe and Helm are both closed.
 
-			foreach (var target in new [] { firstTarget, secondTarget })
+			foreach (var target in new[] { firstTarget, secondTarget })
 			{
 				if (target > 0)
 				{
@@ -508,6 +508,21 @@ namespace Aura.Channel.Network.Handlers
 
 			// Success
 			Send.UnequipBagR(creature, true);
+		}
+
+		/// <summary>
+		/// Request to combine similar items in stacks,
+		/// sent upon clicking button in inv.
+		/// </summary>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.ItemMagnet)]
+		public void ItemMagnet(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			Send.MsgBox(creature, Localization.Get("Not supported yet."));
 		}
 	}
 }

@@ -458,6 +458,9 @@ namespace Aura.Shared.Network
 		public const int ShamalaTransformationEnd = 0xAB1E;
 		public const int ShamalaTransformationEndR = 0xAB1F;
 
+		// [190100, NA200 (2015-01-15)]
+		public const int ItemMagnet = 0xABAB;
+
 		public const int NpcTalk = 0x13882;
 		public const int NpcTalkSelect = 0x13883;
 
