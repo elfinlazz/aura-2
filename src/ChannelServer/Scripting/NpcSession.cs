@@ -19,12 +19,24 @@ namespace Aura.Channel.Scripting
 	/// </summary>
 	public class NpcSession
 	{
+		/// <summary>
+		/// NPC the player is talking to
+		/// </summary>
 		public NPC Target { get; private set; }
+
+		/// <summary>
+		/// Unique session id
+		/// </summary>
 		public int Id { get; private set; }
 
+		/// <summary>
+		/// Current used NPC script
+		/// </summary>
 		public NpcScript Script { get; set; }
-		public Response Response { get; set; }
 
+		/// <summary>
+		/// Creatures new session.
+		/// </summary>
 		public NpcSession()
 		{
 			// We'll only set this once for every char, for the entire session.
@@ -34,7 +46,7 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
-		/// Starts a new session and calls talk
+		/// Starts a new session and calls Talk.
 		/// </summary>
 		/// <param name="target"></param>
 		/// <param name="creature"></param>
@@ -47,6 +59,12 @@ namespace Aura.Channel.Scripting
 		}
 
 
+		/// <summary>
+		/// Starts a new session and calls Gift.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="creature"></param>
+		/// <param name="gift"></param>
 		public void StartGift(NPC target, Creature creature, Item gift)
 		{
 			if (!this.Start(target, creature))
@@ -82,7 +100,6 @@ namespace Aura.Channel.Scripting
 			this.Script.Cancel();
 			this.Script = null;
 			this.Target = null;
-			this.Response = null;
 		}
 
 		/// <summary>
@@ -118,18 +135,5 @@ namespace Aura.Channel.Scripting
 			if (!this.IsValid())
 				throw new ModerateViolation("Invalid NPC session");
 		}
-	}
-
-	/// <summary>
-	/// Response to a conversation
-	/// </summary>
-	/// <remarks>
-	/// An instance of this class is returned from the NPCs on Select
-	/// to give the client something referenceable to write the response to.
-	/// (Options, Input, etc.)
-	/// </remarks>
-	public class Response
-	{
-		public string Value { get; set; }
 	}
 }
