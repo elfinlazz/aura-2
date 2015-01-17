@@ -92,7 +92,7 @@ namespace Aura.Shared.Mabi.Const
 		// Combat
 		Defense = 20001,
 		Smash = 20002,
-		MeleeCounterattack = 20003,
+		Counterattack = 20003,
 		NaturalShield = 20004,
 		HeavyStander = 20005,
 		ManaDeflector = 20006,
