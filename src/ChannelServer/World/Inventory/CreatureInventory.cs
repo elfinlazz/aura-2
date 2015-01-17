@@ -487,71 +487,57 @@ namespace Aura.Channel.World.Inventory
 		/// from the region the inventory's creature is in.
 		/// </summary>
 		/// <param name="item"></param>
-		/// <returns></returns>
+		/// <returns>Returns true if item was picked up completely.</returns>
 		public bool PickUp(Item item)
 		{
 			var originalAmount = item.Info.Amount;
 
-			// TODO: Couldn't this method use Insert?
+			// Making a copy of the item and generating a new temp id
+			// ensures that we can still remove the item from the ground
+			// after moving it (region, x, y) to the pocket.
+			// (Remove takes an id parameter, maybe this can be solved
+			//   properly, see pet invs.)
+			// We also need the new id to prevent conflicts in the db
+			// (SVN r67).
 
-			// Try stacks/sacs first
-			if (item.Data.StackType == StackType.Stackable)
+			var newItem = new Item(item);
+			newItem.IsNew = true;
+
+			var insertSuccess = this.Insert(newItem, false);
+			var success = false;
+
+			// Success is insert for normals, sacs and stacks that were added
+			// as a whole, or an amount changed for stacks that were added
+			// partially.
+			if (insertSuccess || newItem.Info.Amount != originalAmount)
 			{
-				List<Item> changed;
-
-				// Main inv
-				_pockets[Pocket.Inventory].FillStacks(item, out changed);
-				this.UpdateChangedItems(changed);
-
-				// Bags
-				for (var i = Pocket.ItemBags; i <= Pocket.ItemBagsMax; ++i)
+				if (_creature.IsPlayer)
 				{
-					if (item.Info.Amount == 0)
-						break;
+					// Notify everybody about receiving the item, amount being
+					// the amount of items actually picked up.
+					ChannelServer.Instance.Events.OnPlayerReceivesItem(_creature, newItem.Info.Id, (originalAmount - newItem.Info.Amount));
 
-					if (_pockets.ContainsKey(i))
-					{
-						_pockets[i].FillStacks(item, out changed);
-						this.UpdateChangedItems(changed);
-					}
+					// Notify everybout receiving the items in the sac.
+					if (newItem.Data.StackType == StackType.Sac)
+						ChannelServer.Instance.Events.OnPlayerReceivesItem(_creature, newItem.Data.StackItem, newItem.Info.Amount);
 				}
+
+				success = (insertSuccess || newItem.Info.Amount == 0);
 			}
 
-			// Add new items as long as needed
-			while (item.Info.Amount > 0)
+			// Remove original item from floor on full success.
+			if (success)
 			{
-				// Making a copy of the item and generating a new temp id
-				// ensures that we can still remove the item from the ground
-				// after moving it (region, x, y) to the pocket.
-				// (TODO: Remove takes an id parameter, this can be solved
-				//   properly, see pet invs.)
-				// We also need the new id to prevent conflicts in the db
-				// (SVN r67).
-
-				var newStackItem = new Item(item);
-				newStackItem.IsNew = true;
-				newStackItem.Info.Amount = Math.Min(item.Info.Amount, item.Data.StackMax);
-
-				// Stop if no new items can be added (no space left)
-				if (!this.TryAutoAdd(newStackItem, false))
-					break;
-
-				Send.ItemNew(_creature, newStackItem);
-				item.Info.Amount -= newStackItem.Info.Amount;
+				_creature.Region.RemoveItem(item);
 			}
-
-			if (item.Info.Amount != originalAmount && _creature.IsPlayer)
+			// Update original item's amount if it wasn't added completely.
+			else if (newItem.Info.Amount != originalAmount)
 			{
-				ChannelServer.Instance.Events.OnPlayerReceivesItem(_creature, item.Info.Id, (originalAmount - item.Info.Amount));
+				item.Info.Amount = newItem.Info.Amount;
+				// TODO: We need an update packet for items on the floor.
 			}
 
-			// Fail if not everything could be picked up.
-			if (item.Info.Amount > 0)
-				return false;
-
-			// Remove from map if item is in inv 100%
-			_creature.Region.RemoveItem(item);
-			return true;
+			return success;
 		}
 
 		// Adding
@@ -643,7 +629,7 @@ namespace Aura.Channel.World.Inventory
 		/// </summary>
 		/// <param name="item"></param>
 		/// <param name="tempFallback"></param>
-		/// <returns></returns>
+		/// <returns>Returns true if item was added to the inventory completely.</returns>
 		public bool Insert(Item item, bool tempFallback)
 		{
 			if (item.Data.StackType == StackType.Stackable)
