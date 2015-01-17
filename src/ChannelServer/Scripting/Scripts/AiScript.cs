@@ -847,6 +847,38 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 		}
 
+		/// <summary>
+		/// Makes creature prepare given skill. (DUMMY)
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <returns></returns>
+		protected IEnumerable PrepareSkill(SkillId skillId)
+		{
+			var skill = this.Creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("AI.PrepareSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.Race);
+				yield break;
+			}
+
+			this.ExecuteOnce(this.Say(skillId.ToString()));
+
+			foreach (var action in this.Wait(skill.RankData.LoadTime))
+				yield return action;
+		}
+
+		/// <summary>
+		/// Makes creature cancel currently loaded skill. (DUMMY?)
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable CancelSkill()
+		{
+			if (this.Creature.Skills.ActiveSkill != null)
+				this.Creature.Skills.CancelActiveSkill();
+
+			yield break;
+		}
+
 		// ------------------------------------------------------------------
 
 		/// <summary>
