@@ -126,11 +126,14 @@ namespace Aura.Channel.Skills
 					{
 						npc.AI.OnHit(tAction);
 					}
-				}
 
-				// Cancel defense if applicable
-				if (action.Is(CombatActionType.Defended))
-					action.Creature.Skills.CancelActiveSkill();
+					// Cancel target's skill
+					// TODO: Handle stackables.
+					if (action.Creature.Skills.ActiveSkill != null)
+					{
+						action.Creature.Skills.CancelActiveSkill();
+					}
+				}
 			}
 
 			// Send combat action

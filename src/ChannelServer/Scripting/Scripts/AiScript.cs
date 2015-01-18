@@ -798,21 +798,19 @@ namespace Aura.Channel.Scripting.Scripts
 				yield break;
 			}
 
-			var skillId = SkillId.CombatMastery;
-
 			// Get skill
-			var skill = this.Creature.Skills.Get(skillId);
-			if (skill == null)
+			var skill = this.Creature.Skills.ActiveSkill;
+			if (skill == null && (skill = this.Creature.Skills.Get(SkillId.CombatMastery)) == null)
 			{
-				Log.Error("AI.Attack: Skill '{0}' not found for '{1}'.", skillId, this.Creature.Race);
+				Log.Warning("AI.Attack: Creature '{0}' doesn't have Combat Mastery.", this.Creature.Race);
 				yield break;
 			}
 
 			// Get skill handler
-			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<ICombatSkill>(skillId);
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<ICombatSkill>(skill.Info.Id);
 			if (skillHandler == null)
 			{
-				Log.Error("AI.Attack: Skill handler not found for '{0}'.", skillId);
+				Log.Error("AI.Attack: Skill handler not found for '{0}'.", skill.Info.Id);
 				yield break;
 			}
 
@@ -825,9 +823,9 @@ namespace Aura.Channel.Scripting.Scripts
 				if (result == CombatSkillResult.Okay)
 				{
 					if (++i >= count)
-						yield break;
-					else
-						yield return true;
+						break;
+
+					yield return true;
 				}
 				else if (result == CombatSkillResult.OutOfRange)
 				{
@@ -845,6 +843,37 @@ namespace Aura.Channel.Scripting.Scripts
 					yield break;
 				}
 			}
+
+			// Handle completing of skills
+			if (skill.Info.Id != SkillId.CombatMastery)
+			{
+				// Get handler
+				var completeHandler = skillHandler as ICompletable;
+				if (completeHandler == null)
+				{
+					Log.Error("AI.Attack: Missing complete handler for {0}.", skill.Info.Id);
+				}
+				else
+				{
+					// Try completing
+					try
+					{
+						completeHandler.Complete(this.Creature, skill, null);
+					}
+					catch (NullReferenceException)
+					{
+						Log.Warning("AI.Attack: Null ref exception while completing '{0}', skill might have parameters.", skill.Info.Id);
+					}
+					catch (NotImplementedException)
+					{
+						Log.Unimplemented("AI.Attack: Skill complete method for '{0}'.", skill.Info.Id);
+					}
+				}
+
+				// Reset active skill in any case.
+				this.Creature.Skills.ActiveSkill = null;
+				this.Creature.Skills.SkillInProgress = false;
+			}
 		}
 
 		/// <summary>
@@ -854,6 +883,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected IEnumerable PrepareSkill(SkillId skillId)
 		{
+			// Get skill
 			var skill = this.Creature.Skills.Get(skillId);
 			if (skill == null)
 			{
@@ -861,10 +891,51 @@ namespace Aura.Channel.Scripting.Scripts
 				yield break;
 			}
 
+			// Get preparable handler
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<IPreparable>(skillId);
+			if (skillHandler == null)
+			{
+				Log.Unimplemented("AI.PrepareSkill: Missing handler or IPreparable for '{0}'.", skillId);
+				yield break;
+			}
+
+			// Get readyable handler.
+			var readyHandler = skillHandler as IReadyable;
+			if (readyHandler == null)
+			{
+				Log.Unimplemented("AI.PrepareSkill: Missing IReadyable for '{0}'.", skillId);
+				yield break;
+			}
+
+			// Cancel previous skill
+			if (this.Creature.Skills.ActiveSkill != null)
+				this.ExecuteOnce(this.CancelSkill());
+
+			// (Debug) Say skill name
 			this.ExecuteOnce(this.Say(skillId.ToString()));
 
+			// Prepare skill
+			try
+			{
+				skillHandler.Prepare(this.Creature, skill, skill.RankData.LoadTime, null);
+
+				this.Creature.Skills.SkillInProgress = true; // Probably not needed for AIs?
+			}
+			catch (NullReferenceException)
+			{
+				Log.Warning("AI.PrepareSkill: Null ref exception while preparing '{0}', skill might have parameters.", skillId);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("AI.PrepareSkill: Skill prepare method for '{0}'.", skillId);
+			}
+
+			// Wait for loading to be done
 			foreach (var action in this.Wait(skill.RankData.LoadTime))
 				yield return action;
+
+			// Call ready, in case it sets something important
+			readyHandler.Ready(this.Creature, skill, null);
 		}
 
 		/// <summary>
@@ -887,6 +958,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="action"></param>
 		public virtual void OnHit(TargetAction action)
 		{
+			// Aggro attacker if there is not current target,
+			// or if there is a target but it's not a player, and the attacker is one,
+			// or if the current target is not aggroed yet.
 			if (this.Creature.Target == null || (this.Creature.Target != null && action.Attacker != null && !this.Creature.Target.IsPlayer && action.Attacker.IsPlayer) || _state != AiState.Aggro)
 			{
 				this.AggroCreature(action.Attacker);
