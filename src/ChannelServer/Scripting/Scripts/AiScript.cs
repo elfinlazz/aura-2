@@ -790,13 +790,16 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Attacks target creature x times.
 		/// </summary>
 		/// <returns></returns>
-		protected IEnumerable Attack(int count)
+		protected IEnumerable Attack(int count, int timeout = 300000)
 		{
 			if (this.Creature.Target == null)
 			{
 				this.Reset();
 				yield break;
 			}
+
+			timeout = Math2.Clamp(0, 300000, timeout);
+			var timeoutDt = DateTime.Now.AddMilliseconds(timeout);
 
 			// Get skill
 			var skill = this.Creature.Skills.ActiveSkill;
@@ -816,13 +819,13 @@ namespace Aura.Channel.Scripting.Scripts
 
 			var attackRange = this.Creature.AttackRangeFor(this.Creature.Target);
 
-			// Each successful hit counts, attack until count is reached.
+			// Each successful hit counts, attack until count or timeout is reached.
 			for (int i = 0; ; )
 			{
 				var result = skillHandler.Use(this.Creature, skill, this.Creature.Target.EntityId);
 				if (result == CombatSkillResult.Okay)
 				{
-					if (++i >= count)
+					if (++i >= count || DateTime.Now >= timeoutDt)
 						break;
 
 					yield return true;

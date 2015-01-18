@@ -57,7 +57,7 @@ public class WolfAi : AiScript
 			else if(rndnum < 60) // 40%
 			{
 				Do(PrepareSkill(SkillId.Smash));
-				Do(Attack(1));
+				Do(Attack(1, 5000));
 				Do(Wait(3000, 8000));
 			}
 			else // 40%
@@ -69,7 +69,7 @@ public class WolfAi : AiScript
 		}
 		else
 		{
-			Do(Attack(3));
+			Do(Attack(3, 5000));
 			Do(Wait(3000, 8000));
 		}
 	}
