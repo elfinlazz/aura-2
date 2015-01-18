@@ -350,7 +350,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			Send.SkillCancel(_creature);
 
 			this.ActiveSkill = null;
-			_creature.Skills.SkillInProgress = false;
+			this.SkillInProgress = false;
 		}
 
 		/// <summary>
