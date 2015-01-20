@@ -42,6 +42,9 @@ namespace Aura.Channel.Scripting.Scripts
 		protected IEnumerator _curAction;
 		protected Creature _newAttackable;
 
+		// Heartbeat cache
+		protected IList<Creature> _playersInRange;
+
 		// Settings
 		protected int _aggroRadius, _aggroMaxRadius;
 		protected TimeSpan _alertDelay, _aggroDelay;
@@ -150,8 +153,8 @@ namespace Aura.Channel.Scripting.Scripts
 				var pos = this.Creature.GetPosition();
 
 				// Stop if no players in range
-				var players = this.Creature.Region.GetPlayersInRange(pos);
-				if (players.Count == 0 && now > _minRunTime)
+				_playersInRange = this.Creature.Region.GetPlayersInRange(pos);
+				if (_playersInRange.Count == 0 && now > _minRunTime)
 				{
 					this.Deactivate();
 					this.Reset();
@@ -528,12 +531,10 @@ namespace Aura.Channel.Scripting.Scripts
 
 		protected void SharpMind(SkillId skillId, SharpMindStatus status)
 		{
-			var range = this.Creature.Region.GetPlayersInRange(this.Creature.GetPosition());
-
 			// TODO: Is this the official behavior? Wiki says something about
 			//   a passwive Sharp Mind skill.
 			// TODO: Implement old Sharp Mind (optional).
-			foreach (var creature in range)
+			foreach (var creature in _playersInRange)
 			{
 				Log.Debug("Sending sharp mind " + creature.Name + " " + status);
 				if (status == SharpMindStatus.Cancelling || status == SharpMindStatus.None)
