@@ -526,6 +526,28 @@ namespace Aura.Channel.Scripting.Scripts
 			return this.Creature.Region.Collisions.Find(pos1, pos2, out intersection);
 		}
 
+		protected void SharpMind(SkillId skillId, SharpMindStatus status)
+		{
+			var range = this.Creature.Region.GetPlayersInRange(this.Creature.GetPosition());
+
+			// TODO: Is this the official behavior? Wiki says something about
+			//   a passwive Sharp Mind skill.
+			// TODO: Implement old Sharp Mind (optional).
+			foreach (var creature in range)
+			{
+				Log.Debug("Sending sharp mind " + creature.Name + " " + status);
+				if (status == SharpMindStatus.Cancelling || status == SharpMindStatus.None)
+				{
+					Send.SharpMind(this.Creature, creature, skillId, SharpMindStatus.Cancelling);
+					Send.SharpMind(this.Creature, creature, skillId, SharpMindStatus.None);
+				}
+				else
+				{
+					Send.SharpMind(this.Creature, creature, skillId, status);
+				}
+			}
+		}
+
 		// Flow control
 		// ------------------------------------------------------------------
 
@@ -873,6 +895,8 @@ namespace Aura.Channel.Scripting.Scripts
 					}
 				}
 
+				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
+
 				// Reset active skill in any case.
 				this.Creature.Skills.ActiveSkill = null;
 				this.Creature.Skills.SkillInProgress = false;
@@ -915,7 +939,8 @@ namespace Aura.Channel.Scripting.Scripts
 				this.ExecuteOnce(this.CancelSkill());
 
 			// (Debug) Say skill name
-			this.ExecuteOnce(this.Say(skillId.ToString()));
+			//this.ExecuteOnce(this.Say(skillId.ToString()));
+			this.SharpMind(skillId, SharpMindStatus.Loading);
 
 			// Prepare skill
 			try
@@ -939,6 +964,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 			// Call ready, in case it sets something important
 			readyHandler.Ready(this.Creature, skill, null);
+			this.SharpMind(skillId, SharpMindStatus.Loaded);
 		}
 
 		/// <summary>
@@ -948,7 +974,10 @@ namespace Aura.Channel.Scripting.Scripts
 		protected IEnumerable CancelSkill()
 		{
 			if (this.Creature.Skills.ActiveSkill != null)
+			{
+				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
 				this.Creature.Skills.CancelActiveSkill();
+			}
 
 			yield break;
 		}
@@ -968,6 +997,9 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				this.AggroCreature(action.Attacker);
 			}
+
+			if (this.Creature.Skills.ActiveSkill != null)
+				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
 		}
 
 		// ------------------------------------------------------------------
