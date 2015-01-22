@@ -127,4 +127,31 @@ namespace Aura.Shared.Mabi.Const
 		Slow,
 		VerySlow,
 	}
+
+	/// <summary>
+	/// ?
+	/// </summary>
+	/// <remarks>
+	/// Attr_ActionFlag in item db.
+	/// </remarks>
+	public enum ItemActionFlag
+	{
+		NormalItem = 0,
+		StaticItem = 1,
+		ImportantItem = 2,
+		AccountPersonalItem = 3,
+		DungeonItem = 4, // Special weapons for dungeons?
+		CharacterPersonalItem = 5, // Elsinore/Training Short Sword
+		RegionFixedItem = 6, // Keys?
+		BankBlockedItem = 7, // Gems?
+		NewBagItem = 8, // Events?
+		BankBlockedCharacterPersonalItem = 9,
+		GuildItem = 10, // Guild Robe
+		// 11
+		NotDealItem = 12,
+		Important2Item = 13, // Brionac
+		TradeLimitItem = 14,
+		// 15
+		LordKeyItem = 16,
+	}
 }
