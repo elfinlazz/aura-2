@@ -364,16 +364,32 @@ namespace Aura.Channel.World
 		/// Returns NPC by entity id, throws SevereViolation exception if
 		/// NPC doesn't exist.
 		/// </summary>
-		/// <param name="npcId"></param>
+		/// <param name="entityId"></param>
 		/// <returns></returns>
-		public NPC GetNpcSafe(long npcId)
+		public NPC GetNpcSafe(long entityId)
 		{
-			var npc = this.GetNpc(npcId);
+			var npc = this.GetNpc(entityId);
 
 			if (npc == null)
 				throw new SevereViolation("Tried to get a nonexistant NPC");
 
 			return npc;
+		}
+
+		/// <summary>
+		/// Returns creature by entity id, throws SevereViolation exception if
+		/// creature doesn't exist.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public Creature GetCreatureSafe(long entityId)
+		{
+			var creature = this.GetCreature(entityId);
+
+			if (creature == null)
+				throw new SevereViolation("Tried to get a nonexistant creature");
+
+			return creature;
 		}
 
 		/// <summary>

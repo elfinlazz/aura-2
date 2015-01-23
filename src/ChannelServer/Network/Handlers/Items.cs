@@ -454,8 +454,19 @@ namespace Aura.Channel.Network.Handlers
 			var npcId = packet.GetLong();
 			var itemId = packet.GetLong();
 
-			var npc = client.Controlling.Region.GetNpcSafe(npcId);
+			var creature = client.Controlling.Region.GetCreatureSafe(npcId);
 			var item = client.Controlling.Inventory.GetItemSafe(itemId);
+
+			// Temp check for pets, giving food to them uses the same packet
+			// as gifting to NPCs.
+			if (creature is Pet)
+			{
+				Send.SystemMessage(client.Controlling, Localization.Get("Unimplemented."));
+				Send.GiftItemR(client.Controlling, false);
+				return;
+			}
+
+			var npc = creature as NPC;
 
 			// TODO: If !Item is giftable..
 			// TODO: If !Npc in range...
@@ -463,7 +474,7 @@ namespace Aura.Channel.Network.Handlers
 			if (npc.ScriptType == null)
 				return;
 
-			Send.NpcTalkStartR(client.Controlling, npc.EntityId);
+			Send.NpcTalkStartR(client.Controlling, creature.EntityId);
 
 			client.NpcSession.StartGift(npc, client.Controlling, item);
 
