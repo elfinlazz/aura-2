@@ -536,7 +536,7 @@ namespace Aura.Login.Network
 				packet.PutLong(0);
 			}
 
-			packet.PutByte(0);	
+			packet.PutByte(0);
 			packet.PutByte(0);				// 1: 프리미엄 PC방 서비스 사용중, 16: Free Play Event
 			packet.PutByte(false);			// Free Beginner Service
 
@@ -627,6 +627,11 @@ namespace Aura.Login.Network
 		/// Only seen in KR
 		/// </summary>
 		KR = 0,
+
+		/// <summary>
+		/// Used to request disconnect when you're already logged in.
+		/// </summary>
+		RequestDisconnect = 1,
 
 		/// <summary>
 		/// Coming from channel (session key)
