@@ -529,14 +529,27 @@ namespace Aura.Channel.Scripting.Scripts
 			return this.Creature.Region.Collisions.Find(pos1, pos2, out intersection);
 		}
 
+		/// <summary>
+		/// Sends SharpMind to all applicable creatures.
+		/// </summary>
+		/// <remarks>
+		/// The Wiki is speaking of a passive Sharp Mind skill, but it doesn't
+		/// seem to be a skill at all anymore.
+		/// 
+		/// TODO: Implement old Sharp Mind (optional).
+		/// 
+		/// TODO: To implement the old Sharp Mind we have to figure out how
+		///   to display a failed Sharp Mind (X). "?" is shown for skill id 0.
+		///   Older logs make use of status 3 and 4, but the current NA client
+		///   doesn't seem to react to them.
+		///   If we can't get X to work we could use ? for both.
+		/// </remarks>
+		/// <param name="skillId"></param>
+		/// <param name="status"></param>
 		protected void SharpMind(SkillId skillId, SharpMindStatus status)
 		{
-			// TODO: Is this the official behavior? Wiki says something about
-			//   a passwive Sharp Mind skill.
-			// TODO: Implement old Sharp Mind (optional).
 			foreach (var creature in _playersInRange)
 			{
-				Log.Debug("Sending sharp mind " + creature.Name + " " + status);
 				if (status == SharpMindStatus.Cancelling || status == SharpMindStatus.None)
 				{
 					Send.SharpMind(this.Creature, creature, skillId, SharpMindStatus.Cancelling);
@@ -951,8 +964,6 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.Creature.Skills.ActiveSkill != null)
 				this.ExecuteOnce(this.CancelSkill());
 
-			// (Debug) Say skill name
-			//this.ExecuteOnce(this.Say(skillId.ToString()));
 			this.SharpMind(skillId, SharpMindStatus.Loading);
 
 			// Prepare skill

@@ -478,7 +478,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutLong(user.EntityId);
 			packet.PutByte(1);
 			packet.PutByte(1);
-			packet.PutUShort((ushort)skillId);
+			packet.PutShort(-1);
 			packet.PutInt((int)state);
 
 			target.Client.Send(packet);
