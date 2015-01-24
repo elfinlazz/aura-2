@@ -845,16 +845,26 @@ namespace Aura.Channel.Scripting.Scripts
 			// Each successful hit counts, attack until count or timeout is reached.
 			for (int i = 0; ; )
 			{
+				// Stop timeout was reached
+				if (DateTime.Now >= timeoutDt)
+				{
+					this.Creature.StopMove();
+					break;
+				}
+
+				// Attack
 				var result = skillHandler.Use(this.Creature, skill, this.Creature.Target.EntityId);
 				if (result == CombatSkillResult.Okay)
 				{
-					if (++i >= count || DateTime.Now >= timeoutDt)
+					// Stop when max attack count is reached
+					if (i >= count)
 						break;
 
 					yield return true;
 				}
 				else if (result == CombatSkillResult.OutOfRange)
 				{
+					// Run to target if out of range
 					var pos = this.Creature.GetPosition();
 					var targetPos = this.Creature.Target.GetPosition();
 
@@ -905,7 +915,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Makes creature prepare given skill. (DUMMY)
+		/// Makes creature prepare given skill.
 		/// </summary>
 		/// <param name="skillId"></param>
 		/// <returns></returns>
@@ -969,7 +979,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Makes creature cancel currently loaded skill. (DUMMY?)
+		/// Makes creature cancel currently loaded skill.
 		/// </summary>
 		/// <returns></returns>
 		protected IEnumerable CancelSkill()
