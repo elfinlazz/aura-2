@@ -870,7 +870,7 @@ namespace Aura.Channel.Scripting.Scripts
 				if (result == CombatSkillResult.Okay)
 				{
 					// Stop when max attack count is reached
-					if (i >= count)
+					if (++i >= count)
 						break;
 
 					yield return true;
