@@ -938,6 +938,8 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 
 			// Get readyable handler.
+			// TODO: There are skills that don't have ready, but go right to
+			//   use from Prepare. Handle somehow.
 			var readyHandler = skillHandler as IReadyable;
 			if (readyHandler == null)
 			{
