@@ -849,7 +849,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="maxDistance"></param>
 		/// <returns></returns>
-		protected IEnumerable Follow(int maxDistance)
+		protected IEnumerable Follow(int maxDistance, bool walk = false)
 		{
 			var pos = this.Creature.GetPosition();
 			var targetPos = this.Creature.Target.GetPosition();
@@ -857,7 +857,25 @@ namespace Aura.Channel.Scripting.Scripts
 			if (!pos.InRange(targetPos, maxDistance))
 			{
 				// Walk up to distance-50 (a buffer so it really walks into range)
-				this.ExecuteOnce(this.WalkTo(pos.GetRelative(targetPos, -maxDistance + 50)));
+				this.ExecuteOnce(this.MoveTo(pos.GetRelative(targetPos, -maxDistance + 50), walk));
+			}
+
+			yield return true;
+		}
+
+		/// <summary>
+		/// Creature tries to get away from target.
+		/// </summary>
+		/// <param name="minDistance"></param>
+		/// <returns></returns>
+		protected IEnumerable KeepDistance(int minDistance, bool walk = false)
+		{
+			Position pos, targetPos;
+
+			while ((pos = this.Creature.GetPosition()).InRange((targetPos = this.Creature.Target.GetPosition()), minDistance))
+			{
+				foreach (var action in this.MoveTo(pos.GetRelative(targetPos, minDistance + 50), walk))
+					yield return action;
 			}
 
 			yield return true;
