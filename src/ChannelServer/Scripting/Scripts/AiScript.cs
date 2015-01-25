@@ -318,7 +318,6 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 
 			// Switch to aggro from alert
-			//if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.IsInBattleStance) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
 			if (_state == AiState.Alert && (this.DoesHate(this.Creature.Target) || (_hatesBattleStance && this.Creature.Target.IsInBattleStance)))
 			{
 				// Check aggro limit
@@ -330,27 +329,6 @@ namespace Aura.Channel.Scripting.Scripts
 				_state = AiState.Aggro;
 				Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
 			}
-		}
-
-		/// <summary>
-		/// Returns a valid target or null.
-		/// </summary>
-		/// <param name="creatures"></param>
-		/// <returns></returns>
-		private Creature SelectRandomTarget(ICollection<Creature> creatures)
-		{
-			if (creatures == null || creatures.Count == 0)
-				return null;
-
-			// Random targetable creature
-			var potentialTargets = creatures.Where(target => this.Creature.CanTarget(target) &&
-															 (this.DoesHate(target) || this.DoesDoubt(target)) &&
-															 !this.DoesLove(target)).ToList();
-
-			if (potentialTargets.Count == 0)
-				return null;
-
-			return potentialTargets[Random(potentialTargets.Count)];
 		}
 
 		/// <summary>
