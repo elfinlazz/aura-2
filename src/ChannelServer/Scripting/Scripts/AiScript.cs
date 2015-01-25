@@ -851,19 +851,16 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected IEnumerable Follow(int maxDistance)
 		{
-			while (true)
+			var pos = this.Creature.GetPosition();
+			var targetPos = this.Creature.Target.GetPosition();
+
+			if (!pos.InRange(targetPos, maxDistance))
 			{
-				var pos = this.Creature.GetPosition();
-				var targetPos = this.Creature.Target.GetPosition();
-
-				if (!pos.InRange(targetPos, maxDistance))
-				{
-					// Walk up to distance-50 (a buffer so it really walks into range)
-					this.ExecuteOnce(this.WalkTo(pos.GetRelative(targetPos, -maxDistance + 50)));
-				}
-
-				yield return true;
+				// Walk up to distance-50 (a buffer so it really walks into range)
+				this.ExecuteOnce(this.WalkTo(pos.GetRelative(targetPos, -maxDistance + 50)));
 			}
+
+			yield return true;
 		}
 
 		/// <summary>
