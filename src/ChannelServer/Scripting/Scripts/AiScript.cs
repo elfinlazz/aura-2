@@ -190,6 +190,7 @@ namespace Aura.Channel.Scripting.Scripts
 							case AiState.Idle: this.SwitchAction(Idle); break;
 							case AiState.Alert: this.SwitchAction(Alert); break;
 							case AiState.Aggro: this.SwitchAction(Aggro); break;
+							case AiState.Love: this.SwitchAction(Love); break;
 						}
 
 						_curAction.MoveNext();
@@ -255,26 +256,39 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.Creature.Target == null)
 			{
 				// Get hated targets
-				var hated = potentialTargets.Where(cr => this.DoesHate(cr) && !this.DoesLove(cr));
+				var hated = potentialTargets.Where(cr => this.DoesHate(cr));
 				var hatedCount = hated.Count();
 
 				// Get doubted targets
-				var doubted = potentialTargets.Where(cr => this.DoesDoubt(cr) && !this.DoesLove(cr));
+				var doubted = potentialTargets.Where(cr => this.DoesDoubt(cr));
 				var doubtedCount = doubted.Count();
 
+				// Get loved targets
+				var loved = potentialTargets.Where(cr => this.DoesLove(cr));
+				var lovedCount = loved.Count();
+
+				// Handle hate and doubt
+				if (hatedCount != 0 || doubtedCount != 0)
+				{
+					// Try to hate first, then doubt
+					if (hatedCount != 0)
+						this.Creature.Target = hated.ElementAt(this.Random(hatedCount));
+					else
+						this.Creature.Target = doubted.ElementAt(this.Random(doubtedCount));
+
+					// Switch to aware
+					_state = AiState.Aware;
+					_awareTime = DateTime.Now;
+				}
+				// Handle love
+				else if (lovedCount != 0)
+				{
+					this.Creature.Target = loved.ElementAt(this.Random(lovedCount));
+
+					_state = AiState.Love;
+				}
 				// Stop if no targets were found
-				if (hatedCount == 0 && doubtedCount == 0)
-					return;
-
-				// Try to hate first, then doubt
-				if (hatedCount != 0)
-					this.Creature.Target = hated.ElementAt(this.Random(hatedCount));
-				else
-					this.Creature.Target = doubted.ElementAt(this.Random(doubtedCount));
-
-				// Switch to aware
-				_state = AiState.Aware;
-				_awareTime = DateTime.Now;
+				else return;
 
 				// Stop for this tick, the aware delay needs a moment anyway
 				return;
@@ -340,7 +354,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Aware state
+		/// Alert state
 		/// </summary>
 		protected virtual IEnumerable Alert()
 		{
@@ -351,6 +365,14 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Aggro state
 		/// </summary>
 		protected virtual IEnumerable Aggro()
+		{
+			yield break;
+		}
+
+		/// <summary>
+		/// Love state
+		/// </summary>
+		protected virtual IEnumerable Love()
 		{
 			yield break;
 		}
@@ -435,12 +457,6 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Adds a race tag that the AI likes and will not target unless
 		/// provoked.
 		/// </summary>
-		/// <remarks>
-		/// By default the AI will only target hated races. Loved races are
-		/// a white-list, to filter some races out. For example, when creating
-		/// an AI that hates everybody (*), but isn't supposed to target
-		/// players (/pc/).
-		/// </remarks>
 		/// <param name="tags"></param>
 		protected void Loves(params string[] tags)
 		{
@@ -1132,6 +1148,11 @@ namespace Aura.Channel.Scripting.Scripts
 			/// Aggroing target (!!)
 			/// </summary>
 			Aggro,
+
+			/// <summary>
+			/// Likes target
+			/// </summary>
+			Love,
 		}
 	}
 }
