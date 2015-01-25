@@ -8,9 +8,13 @@ public class WolfAi : AiScript
 {
 	public WolfAi()
 	{
-		SetAggroType(AggroType.CarefulAggressive);
-		Hates("/pc/", "/pet/");
-		Hates("/cattle/");
+		SetAggroRadius(650);
+		
+		Doubts("/pc/", "/pet/");
+		Doubts("/cow/");
+		Hates("/sheep/");
+		Hates("/dog/");
+		HatesBattleStance();
 	}
 
 	protected override IEnumerable Idle()
@@ -70,7 +74,6 @@ public class WolfAi : AiScript
 		else
 		{
 			Do(Attack(3, 5000));
-			Do(Wait(3000, 8000));
 		}
 	}
 }

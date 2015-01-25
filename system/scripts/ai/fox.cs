@@ -8,8 +8,7 @@ public class FoxAi : AiScript
 {
 	public FoxAi()
 	{
-		SetAggroType(AggroType.Careful);
-		Hates("/pc/", "/pet/");
+		Doubts("/pc/", "/pet/");
 		Hates("/chicken/");
 	}
 

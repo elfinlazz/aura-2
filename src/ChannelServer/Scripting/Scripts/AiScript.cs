@@ -47,11 +47,11 @@ namespace Aura.Channel.Scripting.Scripts
 
 		// Settings
 		protected int _aggroRadius, _aggroMaxRadius;
-		protected TimeSpan _alertDelay, _aggroDelay;
+		protected TimeSpan _alertDelay;
 		protected DateTime _awareTime, _alertTime;
-		protected AggroType _aggroType;
 		protected AggroLimit _aggroLimit;
-		protected Dictionary<string, string> _hateTags, _loveTags;
+		protected Dictionary<string, string> _hateTags, _loveTags, _doubtTags;
+		protected bool _hatesBattleStance;
 		protected int _maxDistanceFromSpawn;
 
 		/// <summary>
@@ -88,13 +88,12 @@ namespace Aura.Channel.Scripting.Scripts
 			_aggroRadius = 500;
 			_aggroMaxRadius = 3000;
 			_alertDelay = TimeSpan.FromMilliseconds(8000);
-			_aggroDelay = TimeSpan.FromMilliseconds(4000);
 			_hateTags = new Dictionary<string, string>();
 			_loveTags = new Dictionary<string, string>();
+			_doubtTags = new Dictionary<string, string>();
 
 			_maxDistanceFromSpawn = 3000;
 
-			_aggroType = AggroType.Passive;
 			_aggroLimit = AggroLimit.One;
 		}
 
@@ -241,72 +240,95 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		private void SelectState()
 		{
-			// Always goes back into idle if there's no target.
-			// Continue if neutral has a target, for the reset checks.
-			if (_aggroType == AggroType.Passive && this.Creature.Target == null)
+			var potentialTargets = this.Creature.Region.GetVisibleCreaturesInRange(this.Creature, _aggroRadius);
+
+			// Stay in idle if there's no visible creature in aggro range
+			if (potentialTargets.Count == 0 && this.Creature.Target == null)
 			{
-				_state = AiState.Idle;
+				if (_state != AiState.Idle)
+					this.Reset();
+
 				return;
 			}
 
-			// Find a target if you don't have one.
+			// Find a new target
 			if (this.Creature.Target == null)
 			{
-				// Try to find a target
-				this.Creature.Target = this.SelectRandomTarget(this.Creature.Region.GetVisibleCreaturesInRange(this.Creature, _aggroRadius));
-				if (this.Creature.Target != null)
-				{
-					_state = AiState.Aware;
-					_awareTime = DateTime.Now;
-				}
+				// Get hated targets
+				var hated = potentialTargets.Where(cr => this.DoesHate(cr) && !this.DoesLove(cr));
+				var hatedCount = hated.Count();
+
+				// Get doubted targets
+				var doubted = potentialTargets.Where(cr => this.DoesDoubt(cr) && !this.DoesLove(cr));
+				var doubtedCount = doubted.Count();
+
+				// Stop if no targets were found
+				if (hatedCount == 0 && doubtedCount == 0)
+					return;
+
+				// Try to hate first, then doubt
+				if (hatedCount != 0)
+					this.Creature.Target = hated.ElementAt(this.Random(hatedCount));
+				else
+					this.Creature.Target = doubted.ElementAt(this.Random(doubtedCount));
+
+				// Switch to aware
+				_state = AiState.Aware;
+				_awareTime = DateTime.Now;
+
+				// Stop for this tick, the aware delay needs a moment anyway
+				return;
 			}
-			// Got target.
-			else
+
+			// TODO: Monsters switch targets under certain circumstances,
+			//   e.g. a wolf will aggro a player, even if it has already
+			//   noticed a cow.
+
+			// Reset on...
+			if (this.Creature.Target.IsDead																 // target dead
+			|| !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) // out of aggro range
+			|| this.Creature.Target.Client.State == ClientState.Dead									 // target disconnected
+			|| (_state != AiState.Aggro && this.Creature.Target.Conditions.Has(ConditionsA.Invisible))	 // target hid before reaching aggro state
+			)
 			{
-				// Untarget on death, out of range, or disconnect
-				if (this.Creature.Target.IsDead || !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) || this.Creature.Target.Client.State == ClientState.Dead || (_state != AiState.Aggro && this.Creature.Target.Conditions.Has(ConditionsA.Invisible)))
+				this.Reset();
+				return;
+			}
+
+			// Switch to alert from aware after the delay
+			if (_state == AiState.Aware && DateTime.Now >= _awareTime + _alertDelay)
+			{
+				// Check if target is still in immediate range
+				if (this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroRadius))
+				{
+					this.Clear();
+
+					_state = AiState.Alert;
+					_alertTime = DateTime.Now;
+					this.Creature.IsInBattleStance = true;
+
+					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
+				}
+				// Reset if target ran away like a coward.
+				else
 				{
 					this.Reset();
 					return;
 				}
+			}
 
-				// Switch to alert from aware after the delay
-				if (_state == AiState.Aware && DateTime.Now >= _awareTime + _alertDelay)
-				{
-					// Check if target is still in range
-					if (this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroRadius))
-					{
-						this.Clear();
+			// Switch to aggro from alert
+			//if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.IsInBattleStance) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
+			if (_state == AiState.Alert && (this.DoesHate(this.Creature.Target) || (_hatesBattleStance && this.Creature.Target.IsInBattleStance)))
+			{
+				// Check aggro limit
+				var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
+				if (aggroCount >= (int)_aggroLimit) return;
 
-						_state = AiState.Alert;
-						_alertTime = DateTime.Now;
-						this.Creature.IsInBattleStance = true;
+				this.Clear();
 
-						Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
-					}
-					// Reset if target ran away like a coward.
-					else
-					{
-						this.Reset();
-					}
-
-					return;
-				}
-
-				// Switch to aggro from alert after the delay
-				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.IsInBattleStance) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
-				{
-					// Check aggro limit
-					var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
-					if (aggroCount >= (int)_aggroLimit) return;
-
-					this.Clear();
-
-					_state = AiState.Aggro;
-					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
-
-					return;
-				}
+				_state = AiState.Aggro;
+				Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
 			}
 		}
 
@@ -322,7 +344,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 			// Random targetable creature
 			var potentialTargets = creatures.Where(target => this.Creature.CanTarget(target) &&
-															 this.DoesHate(target) &&
+															 (this.DoesHate(target) || this.DoesDoubt(target)) &&
 															 !this.DoesLove(target)).ToList();
 
 			if (potentialTargets.Count == 0)
@@ -383,7 +405,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="time"></param>
 		protected void SetAggroDelay(int time)
 		{
-			_aggroDelay = TimeSpan.FromMilliseconds(time);
+			//_aggroDelay = TimeSpan.FromMilliseconds(time);
+			Log.Warning("{0}: SetAggroDelay is obsolete.", this.GetType().Name);
 		}
 
 		/// <summary>
@@ -401,7 +424,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="type"></param>
 		protected void SetAggroType(AggroType type)
 		{
-			_aggroType = type;
+			//_aggroType = type;
+			Log.Warning("{0}: SetAggroType is obsolete, use 'Doubts' and 'HatesBattleStance' instead.", this.GetType().Name);
 		}
 
 		/// <summary>
@@ -450,6 +474,31 @@ namespace Aura.Channel.Scripting.Scripts
 
 				_loveTags.Add(key, tag);
 			}
+		}
+
+		/// <summary>
+		/// Adds a race tag that the AI doubts.
+		/// </summary>
+		/// <param name="tags"></param>
+		protected void Doubts(params string[] tags)
+		{
+			foreach (var tag in tags)
+			{
+				var key = tag.Trim(' ', '/');
+				if (_hateTags.ContainsKey(key))
+					return;
+
+				_doubtTags.Add(key, tag);
+			}
+		}
+
+		/// <summary>
+		/// Specifies that the AI will go from alert into aggro when enemy
+		/// changes into battle mode.
+		/// </summary>
+		protected void HatesBattleStance()
+		{
+			_hatesBattleStance = true;
 		}
 
 		/// <summary>
@@ -515,6 +564,16 @@ namespace Aura.Channel.Scripting.Scripts
 		protected bool DoesLove(Creature target)
 		{
 			return _loveTags.Values.Any(tag => target.RaceData.HasTag(tag));
+		}
+
+		/// <summary>
+		/// Returns true if AI doubts target creature.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		protected bool DoesDoubt(Creature target)
+		{
+			return _doubtTags.Values.Any(tag => target.RaceData.HasTag(tag));
 		}
 
 		/// <summary>
