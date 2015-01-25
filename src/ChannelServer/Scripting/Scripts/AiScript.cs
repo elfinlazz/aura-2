@@ -860,10 +860,7 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				// Stop timeout was reached
 				if (DateTime.Now >= timeoutDt)
-				{
-					this.Creature.StopMove();
 					break;
-				}
 
 				// Attack
 				var result = skillHandler.Use(this.Creature, skill, this.Creature.Target.EntityId);
