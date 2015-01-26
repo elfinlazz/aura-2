@@ -11,6 +11,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
+using Aura.Channel.Skills.Life;
 
 namespace Aura.Channel.Skills
 {
@@ -132,6 +133,14 @@ namespace Aura.Channel.Skills
 					if (action.Creature.Skills.ActiveSkill != null)
 					{
 						action.Creature.Skills.CancelActiveSkill();
+					}
+
+					// Cancel rest
+					if (action.Creature.Has(CreatureStates.SitDown))
+					{
+						var restHandler = ChannelServer.Instance.SkillManager.GetHandler<Rest>(SkillId.Rest);
+						if (restHandler != null)
+							restHandler.Stop(action.Creature, action.Creature.Skills.Get(SkillId.Rest));
 					}
 				}
 			}
