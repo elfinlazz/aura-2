@@ -30,6 +30,8 @@ namespace Aura.Shared.Mabi
 			this.Parse(toParse);
 		}
 
+		public static MabiDictionary Empty { get { return new MabiDictionary(); } }
+
 		private void Set(string key, object val)
 		{
 			_values[key] = val;

@@ -16,6 +16,7 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.Skills.Life;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -1069,6 +1070,98 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 
 			yield break;
+		}
+
+		/// <summary>
+		/// Makes creature start given skill.
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <returns></returns>
+		protected IEnumerable StartSkill(SkillId skillId)
+		{
+			// Get skill
+			var skill = this.Creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("AI.StartSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.Race);
+				yield break;
+			}
+
+			// Get handler
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<IStartable>(skillId);
+			if (skillHandler == null)
+			{
+				Log.Unimplemented("AI.StartSkill: Missing handler or interface for '{0}'.", skillId);
+				yield break;
+			}
+
+			// Run handler
+			try
+			{
+				if (skillHandler is Rest)
+				{
+					var restHandler = (Rest)skillHandler;
+					restHandler.Start(this.Creature, skill, MabiDictionary.Empty);
+				}
+				else
+				{
+					skillHandler.Start(this.Creature, skill, null);
+				}
+			}
+			catch (NullReferenceException)
+			{
+				Log.Warning("AI.StartSkill: Null ref exception while starting '{0}', skill might have parameters.", skillId);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("AI.StartSkill: Skill start method for '{0}'.", skillId);
+			}
+		}
+
+		/// <summary>
+		/// Makes creature stop given skill.
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <returns></returns>
+		protected IEnumerable StopSkill(SkillId skillId)
+		{
+			// Get skill
+			var skill = this.Creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("AI.StopSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.Race);
+				yield break;
+			}
+
+			// Get handler
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<IStoppable>(skillId);
+			if (skillHandler == null)
+			{
+				Log.Unimplemented("AI.StopSkill: Missing handler or interface for '{0}'.", skillId);
+				yield break;
+			}
+
+			// Run handler
+			try
+			{
+				if (skillHandler is Rest)
+				{
+					var restHandler = (Rest)skillHandler;
+					restHandler.Stop(this.Creature, skill, MabiDictionary.Empty);
+				}
+				else
+				{
+					skillHandler.Stop(this.Creature, skill, null);
+				}
+			}
+			catch (NullReferenceException)
+			{
+				Log.Warning("AI.StopSkill: Null ref exception while stopping '{0}', skill might have parameters.", skillId);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("AI.StopSkill: Skill stop method for '{0}'.", skillId);
+			}
 		}
 
 		// ------------------------------------------------------------------
