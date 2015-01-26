@@ -17,7 +17,10 @@ public class ChickenAi : AiScript
 	protected override IEnumerable Idle()
 	{
 		Do(Wander());
-		Do(Wait(5000, 30000));
+		Do(Wait(8000));
+		Do(StartSkill(SkillId.Rest));
+		Do(Wait(2000, 30000));
+		Do(StopSkill(SkillId.Rest));
 	}
 	
 	protected override IEnumerable Aggro()
