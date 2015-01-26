@@ -64,6 +64,11 @@ namespace Aura.Channel.World.Entities
 		public MabiDictionary MetaData2 { get; protected set; }
 
 		/// <summary>
+		/// Spirit weapon information
+		/// </summary>
+		public EgoInfo EgoInfo { get; protected set; }
+
+		/// <summary>
 		/// Bank at which the item is currently lying around.
 		/// </summary>
 		public string Bank { get; set; }
@@ -190,6 +195,7 @@ namespace Aura.Channel.World.Entities
 			this.Info.Id = itemId;
 			this.MetaData1 = new MabiDictionary();
 			this.MetaData2 = new MabiDictionary();
+			this.EgoInfo = new EgoInfo();
 
 			this.LoadDefault();
 		}
