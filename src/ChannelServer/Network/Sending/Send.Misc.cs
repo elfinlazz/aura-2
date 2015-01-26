@@ -144,17 +144,20 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
-		/// Sends RemoveDeathScreen to creature's client.
+		/// Broadcasts RemoveDeathScreen in range of creature.
 		/// </summary>
 		/// <remarks>
 		/// Removes black bars and unlocks player.
+		/// 
+		/// Update: This has to be broadcasted, otherwise other players
+		///   are visually stuck in death mode. TODO: Maybe change name.
 		/// </remarks>
 		/// <param name="creature"></param>
 		public static void RemoveDeathScreen(Creature creature)
 		{
 			var packet = new Packet(Op.RemoveDeathScreen, creature.EntityId);
 
-			creature.Client.Send(packet);
+			creature.Region.Broadcast(packet);
 		}
 
 		/// <summary>
