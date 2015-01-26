@@ -50,7 +50,7 @@ namespace Aura.Channel.Skills.Combat
 			var rightWeapon = attacker.Inventory.RightHand;
 			var leftWeapon = attacker.Inventory.LeftHand;
 			var magazine = attacker.Inventory.Magazine;
-			var dualWield = (rightWeapon != null && leftWeapon != null);
+			var dualWield = (rightWeapon != null && leftWeapon != null && leftWeapon.Data.WeaponType != 0);
 			var maxHits = (byte)(dualWield ? 2 : 1);
 			int prevId = 0;
 
