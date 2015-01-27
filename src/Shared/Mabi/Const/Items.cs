@@ -157,6 +157,7 @@ namespace Aura.Shared.Mabi.Const
 
 	public enum EgoRace : byte
 	{
+		None = 0,
 		SwordM = 1,
 		SwordF = 2,
 		BluntM = 3,
