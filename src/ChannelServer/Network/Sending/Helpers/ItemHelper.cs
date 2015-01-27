@@ -35,8 +35,8 @@ namespace Aura.Channel.Network.Sending.Helpers
 				if (item.Data.HasTag("/ego_weapon/"))
 				{
 					packet.PutString(item.EgoInfo.Name);
-					packet.PutByte(item.EgoInfo.Id); // Ego "id"?
-					packet.PutByte(18);
+					packet.PutByte((byte)item.EgoInfo.Race);
+					packet.PutByte(0); // ? increased from 14 to 18 when I fed a bottle to a sword
 
 					packet.PutByte(item.EgoInfo.SocialLevel);
 					packet.PutInt(item.EgoInfo.SocialExp);
@@ -50,8 +50,8 @@ namespace Aura.Channel.Network.Sending.Helpers
 					packet.PutInt(item.EgoInfo.WillExp);
 					packet.PutByte(item.EgoInfo.LuckLevel);
 					packet.PutInt(item.EgoInfo.LuckExp);
-					packet.PutByte(0); // Another stat? o.o
-					packet.PutInt(0);
+					packet.PutByte(item.EgoInfo.AwakeningEnergy);
+					packet.PutInt(item.EgoInfo.AwakeningExp);
 
 					packet.PutLong(0);
 					packet.PutLong(item.EgoInfo.LastFeeding); // Last feeding time?
