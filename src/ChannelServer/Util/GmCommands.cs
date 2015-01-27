@@ -1341,7 +1341,7 @@ namespace Aura.Channel.Util
 
 			// Get ego race
 			EgoRace egoRace;
-			if (!EgoRace.TryParse(args[3], out egoRace))
+			if (!EgoRace.TryParse(args[3], out egoRace) || (egoRace <= EgoRace.None || egoRace > EgoRace.CylinderF))
 				return CommandResult.InvalidArgument;
 
 			// Check item data
