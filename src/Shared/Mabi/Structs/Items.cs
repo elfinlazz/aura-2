@@ -31,9 +31,14 @@ namespace Aura.Shared.Mabi.Structs
 		/// </summary>
 		public byte State; // FigureA
 
-		public byte uFigureB; // related to giant's beards
-		public byte uFigureC;
-		public byte uFigureD;
+		/// <summary>
+		/// - Ego aura level (0-21)
+		/// - Related to giant's beards
+		/// </summary>
+		public byte FigureB;
+
+		public byte FigureC;
+		public byte FigureD;
 		public byte KnockCount;
 		private byte __unknown12;
 		private byte __unknown13;
