@@ -381,7 +381,7 @@ namespace Aura.Channel.Scripting
 				return null;
 
 			var script = Activator.CreateInstance(type) as AiScript;
-			script.Creature = creature;
+			script.Attach(creature);
 
 			return script;
 		}

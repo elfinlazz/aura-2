@@ -58,7 +58,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature controlled by AI.
 		/// </summary>
-		public Creature Creature { get; set; }
+		public Creature Creature { get; protected set; }
 
 		/// <summary>
 		/// List of random phrases
@@ -132,6 +132,16 @@ namespace Aura.Channel.Scripting.Scripts
 				_curAction = null;
 				_heartbeatTimer.Change(-1, -1);
 			}
+		}
+
+		/// <summary>
+		/// Sets AI's creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		public void Attach(Creature creature)
+		{
+			this.Creature = creature;
+			this.Creature.Death += OnDeath;
 		}
 
 		/// <summary>
@@ -1180,6 +1190,18 @@ namespace Aura.Channel.Scripting.Scripts
 				this.AggroCreature(action.Attacker);
 			}
 
+			if (this.Creature.Skills.ActiveSkill != null)
+				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
+		}
+
+		/// <summary>
+		/// Raised from Creature.Kill when creature died,
+		/// before active skill is canceled.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="killer"></param>
+		private void OnDeath(Creature creature, Creature killer)
+		{
 			if (this.Creature.Skills.ActiveSkill != null)
 				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
 		}
