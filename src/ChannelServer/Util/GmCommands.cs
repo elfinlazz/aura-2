@@ -49,6 +49,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
 			Add(50, 50, "jump", "[x] [y]", HandleWarp);
 			Add(50, 50, "item", "<id|name> [amount|color1 [color2 [color 3]]]", HandleItem);
+			Add(50, 50, "ego", "<item id> <ego name> <ego race> [color1 [color2 [color 3]]]", HandleEgo);
 			Add(50, 50, "skill", "<id> [rank]", HandleSkill);
 			Add(50, 50, "title", "<id>", HandleTitle);
 			Add(50, 50, "speed", "[increase]", HandleSpeed);
@@ -385,6 +386,13 @@ namespace Aura.Channel.Util
 				return CommandResult.Fail;
 			}
 
+			// Check for egos
+			if (itemData.HasTag("/ego_weapon/"))
+			{
+				Send.ServerMessage(sender, Localization.Get("Egos can't be created with 'item', use 'ego' instead."));
+				return CommandResult.Fail;
+			}
+
 			var item = new Item(itemData.Id);
 
 			// Check amount for stackable items
@@ -404,44 +412,16 @@ namespace Aura.Channel.Util
 			// Parse colors
 			else if (itemData.StackType != StackType.Stackable && args.Count > 2)
 			{
-				for (int i = 0; i < 3; ++i)
+				uint color1, color2, color3;
+				if (!TryParseColorsFromArgs(args, 2, out color1, out color2, out color3))
 				{
-					if (args.Count < 3 + i)
-						break;
-
-					var sColor = args[2 + i];
-					uint color = 0;
-
-					// Hex color
-					if (sColor.StartsWith("0x"))
-					{
-						if (!uint.TryParse(sColor.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out color))
-						{
-							Send.ServerMessage(sender, Localization.Get("Invalid hex color '{0}'."), sColor);
-							return CommandResult.Fail;
-						}
-					}
-					else
-					{
-						switch (sColor)
-						{
-							case "0":
-							case "black": color = 0x00000000; break;
-							case "f":
-							case "white": color = 0xFFFFFFFF; break;
-							default:
-								Send.ServerMessage(sender, Localization.Get("Unknown color '{0}'."), sColor);
-								return CommandResult.Fail;
-						}
-					}
-
-					switch (i)
-					{
-						case 0: item.Info.Color1 = color; break;
-						case 1: item.Info.Color2 = color; break;
-						case 2: item.Info.Color3 = color; break;
-					}
+					Send.ServerMessage(sender, Localization.Get("Invalid or unknown color."));
+					return CommandResult.InvalidArgument;
 				}
+
+				item.Info.Color1 = color1;
+				item.Info.Color2 = color2;
+				item.Info.Color3 = color3;
 			}
 
 			// Create new pockets for bags
@@ -1341,6 +1321,121 @@ namespace Aura.Channel.Util
 				Send.SystemMessage(target, Localization.Get("{2} changed how well {0} remembers you, new value: {1}"), name, memory, sender.Name);
 
 			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleEgo(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (args.Count < 4)
+			{
+				Send.SystemMessage(sender, Localization.Get("Ego races:"));
+				foreach (EgoRace race in Enum.GetValues(typeof(EgoRace)))
+					Send.SystemMessage(sender, "{0}: {1}", (byte)race, race);
+
+				return CommandResult.InvalidArgument;
+			}
+
+			// Get item id
+			int itemId;
+			if (!int.TryParse(args[1], out itemId))
+				return CommandResult.InvalidArgument;
+
+			// Get ego race
+			EgoRace egoRace;
+			if (!EgoRace.TryParse(args[3], out egoRace))
+				return CommandResult.InvalidArgument;
+
+			// Check item data
+			var itemData = AuraData.ItemDb.Find(itemId);
+			if (itemData == null)
+			{
+				Send.ServerMessage(sender, Localization.Get("Item '{0}' not found in database."), args[1]);
+				return CommandResult.Fail;
+			}
+
+			// Check for ego weapon
+			if (!itemData.HasTag("/ego_weapon/"))
+			{
+				Send.ServerMessage(sender, Localization.Get("Item doesn't have the 'ego_weapon' tag."));
+				return CommandResult.Fail;
+			}
+
+			// Create item
+			var item = new Item(itemData.Id);
+			item.EgoInfo.Race = egoRace;
+			item.EgoInfo.Name = args[2];
+
+			// Parse colors
+			if (args.Count > 4)
+			{
+				uint color1, color2, color3;
+				if (!TryParseColorsFromArgs(args, 4, out color1, out color2, out color3))
+				{
+					Send.ServerMessage(sender, Localization.Get("Invalid or unknown color."));
+					return CommandResult.InvalidArgument;
+				}
+
+				item.Info.Color1 = color1;
+				item.Info.Color2 = color2;
+				item.Info.Color3 = color3;
+			}
+
+			// Add item
+			if (target.Inventory.Add(item, Pocket.Temporary))
+			{
+				if (sender != target)
+					Send.ServerMessage(target, Localization.Get("Ego '{0}' has been spawned by '{1}'."), itemData.Name, sender.Name);
+				Send.ServerMessage(sender, Localization.Get("Ego '{0}' has been spawned."), itemData.Name);
+				return CommandResult.Okay;
+			}
+			else
+			{
+				Send.ServerMessage(sender, Localization.Get("Failed to spawn ego."));
+				return CommandResult.Fail;
+			}
+		}
+
+		private static bool TryParseColorsFromArgs(IList<string> args, int offset, out uint color1, out uint color2, out uint color3)
+		{
+			color1 = 0;
+			color2 = 0;
+			color3 = 0;
+
+			for (int i = 0; i < 3; ++i)
+			{
+				if (args.Count < offset + 1 + i)
+					break;
+
+				var sColor = args[offset + i];
+				uint color = 0;
+
+				// Hex color
+				if (sColor.StartsWith("0x"))
+				{
+					if (!uint.TryParse(sColor.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out color))
+						return false;
+				}
+				else
+				{
+					switch (sColor)
+					{
+						case "0":
+						case "black": color = 0x00000000; break;
+						case "f":
+						case "white": color = 0xFFFFFFFF; break;
+						default:
+							return false;
+					}
+				}
+
+				switch (i)
+				{
+					case 0: color1 = color; break;
+					case 1: color2 = color; break;
+					case 2: color3 = color; break;
+				}
+			}
+
+			return true;
 		}
 	}
 
