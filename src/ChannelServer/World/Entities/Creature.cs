@@ -1308,5 +1308,26 @@ namespace Aura.Channel.World.Entities
 		{
 			return (this.CriticalBase - target.Protection);
 		}
+
+		/// <summary>
+		/// Returns Rest pose based on skill's rank.
+		/// </summary>
+		/// <returns></returns>
+		public byte GetRestPose()
+		{
+			byte pose = 0;
+
+			var skill = this.Skills.Get(SkillId.Rest);
+			if (skill != null)
+			{
+				if (skill.Info.Rank >= SkillRank.R9)
+					pose = 4;
+				// Deactivated until we know how to keep the pose up.
+				//if (skill.Info.Rank >= SkillRank.R1)
+				//	pose = 5;
+			}
+
+			return pose;
+		}
 	}
 }

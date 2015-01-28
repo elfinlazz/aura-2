@@ -33,6 +33,9 @@ namespace Aura.Channel.Skills.Life
 				this.SetUpChair(creature, chairItemEntityId);
 
 			creature.Activate(CreatureStates.SitDown);
+			if (skill.Info.Rank >= SkillRank.R9)
+				creature.Activate(CreatureStatesEx.RestR9);
+
 			Send.SitDown(creature);
 
 			creature.Regens.Add("Rest", Stat.Life, (0.12f * ((skill.RankData.Var1 - 100) / 100)), creature.LifeMax);
@@ -47,6 +50,9 @@ namespace Aura.Channel.Skills.Life
 		public override StartStopResult Stop(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			creature.Deactivate(CreatureStates.SitDown);
+			if (skill.Info.Rank >= SkillRank.R9)
+				creature.Deactivate(CreatureStatesEx.RestR9);
+
 			Send.StandUp(creature);
 
 			creature.Regens.Remove("Rest");

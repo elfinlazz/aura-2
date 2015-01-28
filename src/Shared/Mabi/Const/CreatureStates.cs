@@ -74,5 +74,9 @@ namespace Aura.Shared.Mabi.Const
 		UseUmbrella = 0x02000000,
 		ThrowingGold = 0x04000000,
 		ZombieWalk = 0x08000000,
+		// ? = 0x10000000,
+		// ? = 0x20000000,
+		RestR9 = 0x40000000,
+		// ? = 0x80000000, // Rest related? Makes human sit like a giant Oo
 	}
 }
