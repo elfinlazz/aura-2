@@ -650,6 +650,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="action"></param>
 		protected void SwitchAction(Func<IEnumerable> action)
 		{
+			this.ExecuteOnce(this.CancelSkill());
 			_curAction = action().GetEnumerator();
 		}
 
