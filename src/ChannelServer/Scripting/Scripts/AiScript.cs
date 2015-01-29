@@ -976,8 +976,8 @@ namespace Aura.Channel.Scripting.Scripts
 				}
 			}
 
-			// Handle completing of skills
-			if (skill.Info.Id != SkillId.CombatMastery)
+			// Handle completing of skill, if it hasn't been canceled
+			if (skill.Info.Id != SkillId.CombatMastery && this.Creature.Skills.ActiveSkill != null)
 			{
 				// Get handler
 				var completeHandler = skillHandler as ICompletable;
