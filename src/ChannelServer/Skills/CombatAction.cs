@@ -142,6 +142,9 @@ namespace Aura.Channel.Skills
 						if (restHandler != null)
 							restHandler.Stop(action.Creature, action.Creature.Skills.Get(SkillId.Rest));
 					}
+
+					// Remember knock back/down
+					tAction.Creature.WasKnockedBack = tAction.Has(TargetOptions.KnockBack) || tAction.Has(TargetOptions.KnockDown) || tAction.Has(TargetOptions.Smash);
 				}
 			}
 

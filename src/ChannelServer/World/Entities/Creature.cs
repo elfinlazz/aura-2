@@ -225,6 +225,8 @@ namespace Aura.Channel.World.Entities
 		public bool IsDead { get { return this.Has(CreatureStates.Dead); } }
 		public bool IsStunned { get { return (this.Stun > 0); } }
 
+		public bool WasKnockedBack { get; set; }
+
 		// Stats
 		// ------------------------------------------------------------------
 

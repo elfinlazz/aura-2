@@ -186,6 +186,13 @@ namespace Aura.Channel.Scripting.Scripts
 					return;
 				}
 
+				// Recover from knock back/down after stun ended
+				if (this.Creature.WasKnockedBack)
+				{
+					Send.RiseFromTheDead(this.Creature);
+					this.Creature.WasKnockedBack = false;
+				}
+
 				// Select and run state
 				var prevAction = _curAction;
 				if (_curAction == null || !_curAction.MoveNext())
