@@ -21,6 +21,9 @@ public class NerysScript : NpcScript
 		EquipItem(Pocket.Glove, 16008, 0x00818775, 0x00117C7D, 0x0000A3DC);
 		EquipItem(Pocket.Shoe, 17001, 0x00823021, 0x0082C991, 0x00F2597B);
 
+		AddGreeting(0, "What are you looking for?");
+		AddGreeting(1, "Wait... I think I've met you once before...<br/>If not, sorry.");
+
 		AddPhrase("There are so many weapon repair requests this month.");
 		AddPhrase("That fellow... I like the look in his eyes.");
 		AddPhrase("Wait, I shouldn't be doing this right now.");
@@ -49,33 +52,28 @@ public class NerysScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Msg(Hide.Name, "(<npcname/> is looking at me.)");
-				// Msg("<face name='normal'/>What are you looking for?");
-				// Msg(Hide.Name,"(<npcname/> is waiting for me to say something.)");
-				await StartConversation();
+				Greet();
+				Msg(Hide.Name, GetMoodString(), FavorExpression());
+				if (Player.Titles.SelectedTitle == 11002)
+					Msg("...Guardian of Erinn...?<br/>Well, as long as you didn't break anything, I guess that's a good thing.<br/>Anyway, good job.");
+				await Conversation();
 				break;
 
 			case "@shop":
 				Msg("You brought your money with you, right?<br/>");
 				OpenShop("NerysShop");
 				break;
-				
+
 			case "@repair":
-				Msg("You can repair weapons, armor, and equipment here.<br/>I use expensive repair tools, so the fee is fairly high. Is that okay with you?<br/>I do make fewer mistakes because of that, though.");
+				Msg("You can repair weapons, armor, and equipment here.<br/>I use expensive repair tools, so the fee is fairly high. Is that okay with you?<br/>I do make fewer mistakes because of that, though."); // <repair rate='95' stringid='(*/smith_repairable/*)' />");
 				Msg("Unimplemented");
-				// <repair rate='95' stringid='(*/smith_repairable/*)' />");
-				// Closing repair: Msg("If the repair fee is too much for you,<br/>try using some Holy Water of Lymilark.<br/>It should be a big help.<br/>Now, come again if there's anything that needs to be repaired.<repair hide='true'/>");
+				Msg("If the repair fee is too much for you,<br/>try using some Holy Water of Lymilark.<br/>It should be a big help.<br/>Now, come again if there's anything that needs to be repaired."); // <repair hide='true'/>
 				break;
-				
+
 			case "@upgrade":
-				Msg("Modification? Pick an item.<br/>I don't have to explain to you about<br/>the number of possible modification and the types, do I?");
+				Msg("Modification? Pick an item.<br/>I don't have to explain to you about<br/>the number of possible modification and the types, do I?"); // <upgrade />
 				Msg("Unimplemented");
-				// <upgrade /> at the end of above.
-				// Msg("Is that all for today?<br/>Well, come back anytime you need me.<br/><upgrade hide='true'/>");
-				break;
-				
-			default:
-				Msg("...");
+				Msg("Is that all for today?<br/>Well, come back anytime you need me."); // <br/><upgrade hide='true'/>
 				break;
 		}
 	}
@@ -86,23 +84,39 @@ public class NerysScript : NpcScript
 		{
 			case "personal_info":
 				Player.Keywords.Give("shop_armory");
-				Msg("I'm Nerys, the owner of this Weapons Shop. Nice to meet you.");
-				// Msg("<face name='normal'/>Aren't you here to buy weapons?<br/>Well, I guess having a chat buddy doesn't hurt.");
-				ModifyRelation(Random(2), 0, Random(2));
+				if (Memory == 1)
+				{
+					Msg("I'm Nerys, the owner of this Weapons Shop. Nice to meet you.");
+					ModifyRelation(1, 0, Random(2));
+				}
+				else
+				{
+					Msg(FavorExpression(), "Aren't you here to buy weapons?<br/>Well, I guess having a chat buddy doesn't hurt.");
+					ModifyRelation(Random(2), 0, Random(2));
+				}
 				break;
 
 			case "rumor":
-				Msg("<face name='normal'/>When going to a nearby dungeon, you must be adequately equipped with weapons.<br/>If not, you'll face a world of trouble.<br/>Try visiting Walter's General Shop or that idiot healer, Manus' place.");
+				Msg(FavorExpression(), "When going to a nearby dungeon, you must be adequately equipped with weapons.<br/>If not, you'll face a world of trouble.<br/>Try visiting Walter's General Shop or that idiot healer, Manus' place.");
 				Msg("Oh, and take your time talking to Aranwen at the School.<br/>She's rather irritable and high-flown,<br/>so she doesn't like to teach skills to those who don't have the basics down.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
-			
-			case "about_arbeit":
-				Msg("Unimplemented.");
-				// Wrong time: Msg("Come back during the business hours.");
+
+			case "about_skill":
+				Msg("Yeah, <username/>? You have something to ask me about skills?");
+				Msg("The only skill I know has to do with repairing items.<br/>It's not an easy skill to teach, though.<br/>But, if you're asking, <username/>, I suppose I could tell you.");
+				Msg("Okay, are you interested at all in the advanced skills that archers use?<br/>I have heard that Aranwen at the School teaches<br/>a skill that allows you to quickly load your arrows and shoot successively.<br/>If you're interested, it would probably do you good.");
+				Msg("But Aranwen tends to be a little irritable.<br/>She probably won't teach it to you simply by asking about skills.<br/>Knowing her, if you are to learn the advanced archery skills,<br/>you'll have to be fairly proficient at the basic archery skills first.");
+				Msg("And showing the appeal is a different matter altogether.<br/>Let's see... How could you do that without making it awkward?");
+				Msg("....Right. Try putting on the Fire Arrow title.");
+				Msg("It's inside information I told you,<br/>so make sure you do as I say.<br/>Fire Arrows and bow proficiency. Don't forget.");
 				break;
 
-			case "shop_misc": // General Shop
+			case "about_arbeit":
+				Msg("Unimplemented");
+				break;
+
+			case "shop_misc":
 				Msg("If you mean Walter's General Shop, go to the Square.<br/>This way is by the south entrance.<br/>I don't need to explain to you how to use the Minimap, do I?");
 				break;
 
@@ -125,62 +139,66 @@ public class NerysScript : NpcScript
 			case "shop_smith":
 				Msg("Hmm... This town doesn't have a Blacksmith's Shop.<br/>But we do simple repairs here<br/>so you can leave your items with me.");
 				break;
-				
-			case "about_skill":
-				Msg("Yeah, <username/>? You have something to ask me about skills?");
-				Msg("The only skill I know has to do with repairing items.<br/>It's not an easy skill to teach, though.<br/>But, if you're asking, <username/>, I suppose I could tell you.");
-				Msg("Okay, are you interested at all in the advanced skills that archers use?<br/>I have heard that Aranwen at the School teaches<br/>a skill that allows you to quickly load your arrows and shoot successively.<br/>If you're interested, it would probably do you good.");
-				Msg("But Aranwen tends to be a little irritable.<br/>She probably won't teach it to you simply by asking about skills.<br/>Knowing her, if you are to learn the advanced archery skills,<br/>you'll have to be fairly proficient at the basic archery skills first.");
-				Msg("And showing the appeal is a different matter altogether.<br/>Let's see... How could you do that without making it awkward?");
-				Msg("....Right. Try putting on the Fire Arrow title.");
-				Msg("It's inside information I told you,<br/>so make sure you do as I say.<br/>Fire Arrows and bow proficiency. Don't forget.");
-				break;
 
 			case "skill_range":
-				Msg("Missing.");
+				Msg("There is a variety of long range attacks.<br/>You can use a bow,<br/>cast a spell,<br/>or throw spears.");
+				Msg("So, is that what you're into?<br/>Why don't you buy a bow for now?");
 				break;
 
 			case "skill_instrument":
 				Msg("You are more romantic that I thought,<br/>asking me a question like that.<br/>Unfortunately, I'm not interested in it.");
 				break;
 
+			case "skill_composing":
+				Msg("Ha ha.<br/>I think Aeira just brought in some books that covers it.<br/>If you want one, why don't you get a copy?");
+				break;
+
 			case "skill_tailoring":
 				Msg("I don't know. I often buy clothes from Simon's Clothing Shop<br/>rather than making them on my own.<br/>Perhaps Simon knows more about this?");
 				break;
-			
-			case "skill_counter_attack":
-				Msg("Aranwen should know skills like that.<br/>She's rather irritable, though, so I'm not sure if she'll teach you.<br/>Anyhow, go see her at the School.");
+
+			case "skill_magnum_shot":
+				Msg("Don't you think you need to use the bow a little first?");
 				break;
-				
-			case "skill_campfire":
-				Msg("Hmm... I'm not sure there's anyone in this town<br/>who knows such a skill.");
+
+			case "skill_counter_attack":
+			case "skill_smash":
+				Msg("Aranwen should know skills like that.<br/>She's rather irritable, though, so I'm not sure if she'll teach you.<br/>Anyhow, go see her at the School.");
 				break;
 
 			case "square":
-				Msg("The Square is right there.<br/>You have no sense of direction, do you?");
+				Msg("Follow this road into the town.<br/>The town center is the Square, so you should be able to find it easily.");
 				break;
 
 			case "farmland":
 				Msg("Everything around here is all farm.<br/>I guess you haven't been outside yet.<br/>People are concerned because there have been<br/>an abnormally huge group of large rats attacking the area.");
 				break;
-				
-			case "shop_headman": // Chief's House
+
+			case "shop_headman":
 				Msg("Ha ha. A chief in this kind town?<br/>Don't you find that a little funny?");
 				break;
 
-			case "temple": // Church
+			case "temple":
 				Msg("If you want to see that holier-than-thou Kristell, you have to go straight northwest.<br/>She's on the exact opposite side of the town from here.<br/>You may find it rough going up there, so just make sure you're prepared.");
 				break;
 
 			case "school":
 				Msg("Follow this road up north just a little bit.");
 				break;
-				
+
+			case "skill_windmill":
+				Msg("Is that a type of combat?<br/>You should go speak to Aranwen at the School first.<br/>She might not teach you, so don't get your hopes up too high.");
+				break;
+
+			case "skill_campfire":
+				Msg("Hmm... I'm not sure there's anyone in this town<br/>who knows such a skill.");
+				break;
+
 			case "shop_restaurant":
 				Msg("You mean Glenis' Restaurant, right?<br/>That's around the corner of the alley, northwest of the Square.<br/>Well, they sell cooking ingredients, too.");
 				break;
 
-			case "shop_armory": // Weapon Shop
+			case "shop_armory":
 				Msg("This is the Weapons Shop.<br/>What? Do you want to go somewhere else?");
 				break;
 
@@ -192,76 +210,63 @@ public class NerysScript : NpcScript
 				Msg("Follow this road up north<br/>and go into the alley just before you reach the north entrance.<br/>You'll see a girl wearing glasses.<br/>That's the Bookstore.");
 				break;
 
-			case "shop_goverment_office": // Town Office
+			case "shop_goverment_office":
 				Msg("Hmm, the Town Office...<br/>It's the building made out of stone located at the north of the Square.<br/>You probably can't go inside the Town Office...");
 				Msg("But Eavan works at the registration.<br/>If you have any business there, she's the one to talk to.");
 				break;
 
 			default:
-				RndMsg(
-					"<face name='normal'/>You are rather grumpy.",
-					"<face name='normal'/>Hmm. You like to ask strange questions, don't you?",
-					"<face name='normal'/>I'm not sure.",
-					"<face name='normal'/>Well... I think I might have heard something about that.",
-					"<face name='normal'/>Don't ask me about stuff like that.",
-					"<face name='normal'/>Someone else probably knows.",
-					"<face name='normal'/>I don't know. It's news to me.",
-					"<face name='normal'/>People ask me about that a lot...<br/>But I'm not interested in that at all."
+				RndFavorMsg(
+					"I'm not sure.",
+					"You are rather grumpy.",
+					"Someone else probably knows.",
+					"I don't know. It's news to me.",
+					"Don't ask me about stuff like that.",
+					"Hmm. You like to ask strange questions, don't you?",
+					"Well... I think I might have heard something about that.",
+					"People ask me about that a lot...<br/>But I'm not interested in that at all."
 				);
 				ModifyRelation(0, 0, Random(2));
 				break;
 		}
 	}
-	
+
 	public override void EndConversation()
 	{
-		Close(Hide.Name, "(Thank you, Nerys. I'll see you later!)");
+		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 
-public class NerysShop : NpcShopScript 
+public class NerysShop : NpcShopScript
 {
-	public override void Setup() 
+	public override void Setup()
 	{
-		//----------------
-		// Weapon
-		//----------------
-		
-		// Page 1
-
-		Add("Weapon", 45001, 20); // Arrow (20)
+		Add("Weapon", 45001, 20);  // Arrow (20)
 		Add("Weapon", 45001, 100); // Arrow (100)
-		Add("Weapon", 40023); // Gathering Knife
-		Add("Weapon", 40022); // Gathering Axe
-		Add("Weapon", 45002, 50); // Bolt (20)
+		Add("Weapon", 40023);      // Gathering Knife
+		Add("Weapon", 40022);      // Gathering Axe
+		Add("Weapon", 45002, 50);  // Bolt (20)
 		Add("Weapon", 45002, 100); // Bolt (100)
-		Add("Weapon", 40027); // Weeding Hoe
-		Add("Weapon", 40003); // Shortbow
-		Add("Weapon", 40006); // Dagger
-		Add("Weapon", 40179); // Spiked Knuckle
-		Add("Weapon", 40243); // Battle Short Sword
-		Add("Weapon", 40013); // Longbow
-		Add("Weapon", 40015); // Fluted Short Sword
-		Add("Weapon", 40014); // Composite Bow
-		Add("Weapon", 40010); // Longsword
-		Add("Weapon", 40016); // Warhammer
-		Add("Weapon", 40244); // Bear Knuckle
-		Add("Weapon", 40011); // Broadsword
-		Add("Weapon", 40180); // Hobnail Knuckle
-		Add("Weapon", 40424); // Battle Sword
-		Add("Weapon", 40031); // Crossbow
-		Add("Weapon", 40745); // Basic Control Bar
-		Add("Weapon", 40841); // Shuriken
-		
-		// Page 2
-		
-		Add("Weapon", 40404); // Physis Wooden Lance
-		Add("Weapon", 46001); // Round Shield
-		Add("Weapon", 46006); // Kite Shield
-		
-		//----------------
-		// Shoes & Gloves
-		//----------------
+		Add("Weapon", 40027);      // Weeding Hoe
+		Add("Weapon", 40003);      // Shortbow
+		Add("Weapon", 40006);      // Dagger
+		Add("Weapon", 40179);      // Spiked Knuckle
+		Add("Weapon", 40243);      // Battle Short Sword
+		Add("Weapon", 40013);      // Longbow
+		Add("Weapon", 40015);      // Fluted Short Sword
+		Add("Weapon", 40014);      // Composite Bow
+		Add("Weapon", 40010);      // Longsword
+		Add("Weapon", 40016);      // Warhammer
+		Add("Weapon", 40244);      // Bear Knuckle
+		Add("Weapon", 40011);      // Broadsword
+		Add("Weapon", 40180);      // Hobnail Knuckle
+		Add("Weapon", 40424);      // Battle Sword
+		Add("Weapon", 40031);      // Crossbow
+		Add("Weapon", 40745);      // Basic Control Bar
+		Add("Weapon", 40841);      // Shuriken
+		Add("Weapon", 40404);      // Physis Wooden Lance
+		Add("Weapon", 46001);      // Round Shield
+		Add("Weapon", 46006);      // Kite Shield
 
 		Add("Shoes && Gloves", 16009); // Tork's Hunter Gloves
 		Add("Shoes && Gloves", 16005); // Wood Plate Cannon
@@ -273,12 +278,6 @@ public class NerysShop : NpcShopScript
 		Add("Shoes && Gloves", 17500); // High Polean Plate Boots
 		Add("Shoes && Gloves", 16504); // Counter Gauntlet
 		Add("Shoes && Gloves", 16505); // Fluted Gauntlet
-
-		//----------------
-		// Helmet
-		//----------------
-		
-		// Page 1
 
 		Add("Helmet", 18513); // Spiked Cap
 		Add("Helmet", 18500); // Ring Mail Helm
@@ -296,11 +295,7 @@ public class NerysShop : NpcShopScript
 		Add("Helmet", 18515); // Twin Horn Cap
 		Add("Helmet", 18524); // Four Wings Cap
 		Add("Helmet", 18519); // Panache Head Protector
-		
-		//----------------
-		// Armor
-		//----------------
-		
+
 		Add("Armor", 14006); // Linen Cuirass (F)
 		Add("Armor", 14009); // Linen Cuirass (M)
 		Add("Armor", 14007); // Padded Armor with Breastplate
@@ -313,16 +308,8 @@ public class NerysShop : NpcShopScript
 		Add("Armor", 13001); // Melka Chain Mail
 		Add("Armor", 13010); // Round Pauldron Chainmail
 
-		//----------------
-		// Event
-		//----------------
-		
-		// Currently empty.
-		
-		//----------------
-		// Arrowheads
-		//----------------
-		
+		Add("Event"); // Empty
+
 		Add("Arrowheads", 64011); // Bundle of Arrowheads
 		Add("Arrowheads", 64015); // Bundle of Bolt Heads
 		Add("Arrowheads", 64013); // Bundle of Fine Arrowheads

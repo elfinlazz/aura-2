@@ -21,6 +21,9 @@ public class EavanScript : NpcScript
 		EquipItem(Pocket.Glove, 16015, 0x00FFFFFF, 0x00E6F2E2, 0x006161AC);
 		EquipItem(Pocket.Shoe, 17008, 0x00DDAACC, 0x00F79B2F, 0x00E10175);
 
+		AddGreeting(0, "Welcome to Dunbarton.<br/>My name is Eavan, the Town Office worker who takes care of all the business related to the Adventurers' Association.");
+		AddGreeting(1, "Hmm. I've seen someone that looks like you before.");
+
 		AddPhrase("*Sigh* Back to work.");
 		AddPhrase("Hmm. This letter is fairly well done. B+.");
 		AddPhrase("Next person please!");
@@ -43,18 +46,17 @@ public class EavanScript : NpcScript
 			"Beneath are the lips that shine in the same color as her blouse."
 		);
 
-		Msg("This is the Adventurers' Association.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrieve Lost Items", "@lostandfound"), Button("About Daily Events", "@daily_quest"), Button("Daily Dungeon Quest", "@daily_dungeon_quest"));
+		Msg("This is the Adventurers' Association.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrieve Lost Items", "@lostandfound"), Button("About Daily Events", "@daily_quest") /*, Button("Daily Dungeon Quest", "@daily_dungeon_quest")*/);
 
 		switch (await Select())
 		{
 			case "@talk":
-				Msg("Welcome again, <username/>.");
-				//"Hmm. I've seen someone that looks like you before."
-				//"Welcome to Dunbarton.<br/>My name is Eavan, the Town Office worker who takes care of all the business related to the Adventuers' Association."
-
-				//if the player is wearing the Savior of Erinn title, she will say this after the first message
-				//Msg("The Guardian of Erinn, <username/>...<br/>You are always welcomed here.");
-				await StartConversation();
+				Player.Keywords.Give("shop_goverment_office");
+				Greet();
+				Msg(Hide.Name, GetMoodString(), FavorExpression());
+				if (Player.Titles.SelectedTitle == 11002)
+					Msg("The Guardian of Erinn, <username/>...<br/>You are always welcomed here.");
+				await Conversation();
 				break;
 
 			case "@shop":
@@ -74,27 +76,28 @@ public class EavanScript : NpcScript
 				Msg("Expired daily event quests will automatically disappear, so<br/>don't forget to do them!");
 				break;
 
-			case "@daily_dungeon_quest":
-				//Msg("Would you like to take on the once-a-day challenge of clearing Uladh Dungeon?", Button("Accept", "@ok"), Button("Refuse", "@no"));
-				//switch(await Select())
-				//{
-				//	case "@ok":
-				//		if (!QuestActive(70079))
-				//		{
-				//			StartQuest(70079); //[Daily Quest] Uladh Dungeon
-				//			Msg("Good luck.");
-				//		}
-				//		else
-				//		{
-				//			Msg("You already received the Daily Dungeon Quest. Come back tomorrow.");
-				//		}
-				//		break;
+			/*case "@daily_dungeon_quest":
+				Msg("Would you like to take on the once-a-day challenge of clearing Uladh Dungeon?", Button("Accept", "@ok"), Button("Refuse", "@no"));
 
-				//	case "@no":
+				switch(await Select())
+				{
+					case "@ok":
+						if (!QuestActive(70079))
+						{
+							StartQuest(70079); //[Daily Quest] Uladh Dungeon
+							Msg("Good luck.");
+						}
+						else
+						{
+							Msg("You already received the Daily Dungeon Quest. Come back tomorrow.");
+						}
+						break;
+
+					case "@no":
 						Msg("Guess you're too busy.");
-						//break;
-				//}
-				break;
+						break;
+				}
+				break;*/
 		}
 	}
 
@@ -102,21 +105,29 @@ public class EavanScript : NpcScript
 	{
 		switch (keyword)
 		{
-			case "personal_info": 
-				Msg("You said your name was... <username/>, right? Tell me what's going on.");
-				ModifyRelation(Random(2), 0, Random(2));
+			case "personal_info":
+				if (Memory == 1)
+				{
+					Msg("You said your name was... <username/>, right? Tell me what's going on.");
+					ModifyRelation(1, 0, Random(2));
+				}
+				else
+				{
+					Msg(FavorExpression(), "I've been kind of busy today.<br/>There are lots of people looking for work.");
+					ModifyRelation(Random(2), 0, Random(2));
+				}
 				break;
 
 			case "rumor": 
-				Msg("Dunbarton is a city located near the border of the Kingdom of Aliech.<br/>It attracts a lot of travelers who are looking for adventure.<br/>If you'd like to improve your skills, how about going to the school?");
+				Msg(FavorExpression(), "Dunbarton is a city located near the border of the Kingdom of Aliech.<br/>It attracts a lot of travelers who are looking for adventure.<br/>If you'd like to improve your skills, how about going to the school?");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_arbeit":
-				Msg("It's not time to start work yet.<br/>Can you come back and ask for a job later?"); 
+				Msg("Unimplemented"); 
 				break;
 
-			case "shop_misc": // General Shop
+			case "shop_misc":
 				Msg("Looking for the General Shop?<br/>It's to the west of the Town Office.<br/>It's just over there, so you should be able to find it easily.<br/>Once you're there, talk to Walter.");
 				break;
 
@@ -141,7 +152,7 @@ public class EavanScript : NpcScript
 				break;
 
 			case "skill_range":
-				Msg("Huh? What is that?"); // check
+				Msg("Huh? What is that?");
 				break;
 
 			case "skill_instrument":
@@ -160,7 +171,7 @@ public class EavanScript : NpcScript
 				Msg("Hmm. Do I look like a housewife<br/>who stays home all day working?");
 				break;
 
-			case "pool": // Reservoir
+			case "pool":
 				Msg("I don't know if we have one around here...<br/>All we have is a well. Nothing big like that.");
 				break;
 
@@ -168,15 +179,15 @@ public class EavanScript : NpcScript
 				Msg("It's just outside from here.<br/>Are you looking for anything in particular?");
 				break;
 
-			case "brook": // Adelia Stream
+			case "brook":
 				Msg("Well...<br/>I heard that there is a stream by that name<br/>somewhere far up north.");
 				break;
 
-			case "shop_headman": // Chief's House
+			case "shop_headman":
 				Msg("The leader of this town is a Lord.<br/>It's not proper to call him a chief.");
 				break;
 
-			case "temple": // Church
+			case "temple":
 				Msg("To get to the church, follow along the alley next to the Restaurant west of here.<br/>You'll see the Lymilark cross tower as well as Priestess Kristell,<br/>so you should be able to find it easily.");
 				break;
 
@@ -192,7 +203,7 @@ public class EavanScript : NpcScript
 				Msg("The Restaurant is right next to us.<br/>You might have missed it because of the alley...<br/>Talk to Glenis.");
 				break;
 
-			case "shop_armory": // Weapon Shop
+			case "shop_armory":
 				Msg("If you mean Nerys' Weapons Shop,<br/>follow the road down south and you'll see it.");
 				break;
 
@@ -204,16 +215,16 @@ public class EavanScript : NpcScript
 				Msg("Head east.<br/>Go down the alley when you see it.<br/>The Minimap should help you.");
 				break;
 
-			case "shop_goverment_office": // Town Office
+			case "shop_goverment_office":
 				Msg("Mmm? This is the Town Office.<br/>Oh... Sorry, but you are not allowed to enter.");
 				break;
 
 			default:
-				RndMsg(
+				RndFavorMsg(
 					"I don't know much about all that. <username/>, you do understand, don't you?",
-					"I'm feeling achy all over today.<br/>I think I need to get some rest now. I'm so sorry, <username/>.<br/>I feel like I've heard something like that before... Perhaps I can find some notes I've jotted down in my expedition journal?",
 					"You know, something's just come up and I'm a bit busy right now.<br/>Do you mind coming back another day?",
-					"Must be that you've been exploring for so long now, right?<br/><username/>, you can certainly know a whole lot."
+					"Must be that you've been exploring for so long now, right?<br/><username/>, you can certainly know a whole lot.",
+					"I'm feeling achy all over today.<br/>I think I need to get some rest now. I'm so sorry, <username/>.<br/>I feel like I've heard something like that before... Perhaps I can find some notes I've jotted down in my expedition journal?"
 				);
 				ModifyRelation(0, 0, Random(2));
 				break;
@@ -222,7 +233,7 @@ public class EavanScript : NpcScript
 
 	public override void EndConversation()
 	{
-		Close("Thank you, Eavan. I'll see you later!");
+		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 
@@ -230,11 +241,6 @@ public class EavanShop : NpcShopScript
 {
 	public override void Setup() 
 	{
-		//----------------
-		// Quest
-		//----------------
-
-		// Page 1
 		Add("Quest", 70080); // Hunting Quest - 10 Skeleton's Former Scrolls
 		Add("Quest", 70081); // Hunting Quest - 10 Red Skeleton's Former Scrolls
 		Add("Quest", 70082); // Hunting Quest - 10 Metal Skeleton's Former Scrolls
@@ -264,11 +270,6 @@ public class EavanShop : NpcShopScript
 		Add("Quest", 70138); // Hunting Quest - 10 Fire Sprite's Former Scrolls
 		Add("Quest", 70137); // Hunting Quest - 10 Ice Sprite's Former Scrolls
 
-		//----------------
-		// Party Quest
-		//----------------
-
-		// Page 1
 		Add("Party Quest", 70025); // Party Quest - 10 Gold Goblins
 		Add("Party Quest", 70025); // Party Quest - 30 Skeletons
 		Add("Party Quest", 70025); // Party Quest - 30 Red Skeletons
@@ -283,50 +284,25 @@ public class EavanShop : NpcShopScript
 		Add("Party Quest", 70025); // Party Quest - Red Succubus in Rabbie Adv. for 3
 		Add("Party Quest", 70025); // Party Quest - Red Succubus in Rabbie Adv.
 
-		//----------------
-		// Guild
-		//----------------
-
-		// Page 1
 		Add("Guild", 63040); // Guild Formation Permit
 		Add("Guild", 63041); // Guild Stone Installation Permit
 
-		//----------------
-		// Gift
-		//----------------
-
-		// Page 1
 		Add("Gift", 52014); // Teddy Bear
 		Add("Gift", 52016); // Bunny Doll
 		Add("Gift", 52015); // Pearl Necklace
 		Add("Gift", 52025); // Gift Ring
 
-		//----------------
-		// Arena
-		//----------------
-
-		// Page 1
 		Add("Arena", 63050, 10);  // Rabbie Battle Arena Coin x10
 		Add("Arena", 63050, 20);  // Rabbie Battle Arena Coin x20
 		Add("Arena", 63050, 50);  // Rabbie Battle Arena Coin x50
 		Add("Arena", 63050, 100); // Rabbie Battle Arena Coin x100
 
-		//----------------
-		// Guild Quest
-		//----------------
-
-		// Page 1
 		Add("Guild Quest", 70152); // Guild Quest - Demi Lich
 		Add("Guild Quest", 70152); // Guild Quest - Banshee
 		Add("Guild Quest", 70152); // Guild Quest - Goblin Bandits
 		Add("Guild Quest", 70152); // Guild Quest - Giant Ogre
 		Add("Guild Quest", 70152); // Guild Quest - Gaint Bear
 
-		//----------------
-		// Guild Robe
-		//----------------
-
-		// Page 1
 		Add("Guild Robe", 19047); // [Guild Name] Guild Robe
 	}
 }

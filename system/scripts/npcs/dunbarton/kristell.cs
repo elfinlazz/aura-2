@@ -75,19 +75,19 @@ public class KristellScript : NpcScript
 				}
 				else
 				{
-					Msg("I am the priestess at this Church.<br/>Have you ever heard about Lord Lymilark's deep love and compassion towards humans?<br/>You probably have.");
+					Msg(FavorExpression(), "I am the priestess at this Church.<br/>Have you ever heard about Lord Lymilark's deep love and compassion towards humans?<br/>You probably have.");
 					ModifyRelation(Random(2), 0, Random(2));
 				}
 				break;
 
 			case "rumor":
 				Player.Keywords.Give("shop_restaurant");
-				Msg("You can satisfy the hunger of the soul at the Church.<br/>For the hunger of the body, you should visit the Restaurant.<br/>Glenis' Restaurant is popular around here,<br/>so you should be able to find it easily.");
+				Msg(FavorExpression(), "You can satisfy the hunger of the soul at the Church.<br/>For the hunger of the body, you should visit the Restaurant.<br/>Glenis' Restaurant is popular around here,<br/>so you should be able to find it easily.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_arbeit":
-				Msg("Oh, no. It is not time for Church duties yet.<br/>Would you return later?");
+				Msg("Unimplemented");
 				break;
 
 			case "shop_misc":
@@ -207,7 +207,7 @@ public class KristellScript : NpcScript
 				break;
 
 			default:
-				RndMsg(
+				RndFavorMsg(
 					"Well, it is news to me.",
 					"I do not know such things very well. Ha ha.",
 					"Hmm. I'm not sure.<br/>Why don't you ask someone else?",
@@ -232,11 +232,6 @@ public class KristellShop : NpcShopScript
 {
 	public override void Setup()
 	{
-		//----------------
-		// Gift
-		//----------------
-
-		// Page 1
 		Add("Gift", 52012); // Candlestick
 		Add("Gift", 52024); // Bouquet
 		Add("Gift", 52013); // Flowerpot

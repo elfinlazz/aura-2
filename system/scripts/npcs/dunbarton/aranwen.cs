@@ -20,6 +20,9 @@ public class AranwenScript : NpcScript
 		EquipItem(Pocket.Glove, 16503, 0x00C6D8EA, 0x00B20859, 0x00A7131C);
 		EquipItem(Pocket.Shoe, 17504, 0x00C6D8EA, 0x00C6D8EA, 0x003F6577);
 		EquipItem(Pocket.RightHand1, 40012, 0x00C0C0C0, 0x008C84A4, 0x00403C47);
+
+		AddGreeting(0, "Yes? Please don't block my view.");
+		AddGreeting(1, "Hmm. <username/>, right?<br/>Of course.");
         
 		AddPhrase("...");
 		AddPhrase("A sword does not betray its own will.");
@@ -48,14 +51,14 @@ public class AranwenScript : NpcScript
 		switch (await Select()) 
 		{
 			case "@talk":
-				Msg("Hmm. <username/>, right?<br/>Of course.");
-				// Msg("Hmm. <username/>, right?");
-				// Msg("Yes? Please don't block my view.");
-
-				// if the player is wearing the Savior of Erinn title, she will say this after the first message
-				// Msg("Guardian of Erinn...<br/>If it were anyone else,<br/>I would tell them to stop being so arrogant...");
-				// Msg("But with you, <username/>, you are definitely qualified.<br/>Good job.");
-				await StartConversation();
+				Greet();
+				Msg(Hide.Name, GetMoodString(), FavorExpression());
+				if (Player.Titles.SelectedTitle == 11002)
+				{
+					Msg("Guardian of Erinn...<br/>If it were anyone else,<br/>I would tell them to stop being so arrogant...");
+					Msg("But with you, <username/>, you are definitely qualified.<br/>Good job.");
+				}
+				await Conversation();
 				break;
 
 			case "@shop":
@@ -75,12 +78,22 @@ public class AranwenScript : NpcScript
 	{
 		switch (keyword) {
 			case "personal_info":
-				Msg("Let me introduce myself.<br/>My name is Aranwen. I teach combat skills at the Dunbarton School.");
-				ModifyRelation(Random(2), 0, Random(2));
+				Player.Keywords.Give("school");
+				if (Memory == 1)
+				{
+					Msg("Let me introduce myself.<br/>My name is Aranwen. I teach combat skills at the Dunbarton School.");
+					ModifyRelation(1, 0, Random(2));
+				}
+				else
+				{
+					Msg(FavorExpression(), "If you are looking to learn combat arts, it's probably better<br/>to talk about classes or training rather than hold personal conversations.<br/>But then, I suppose there is lots to learn in this town other than combat skills.");
+					ModifyRelation(Random(2), 0, Random(2));
+				}
 				break;
 
 			case "rumor":
-				Msg("If you need a weapon for the training,<br/>why don't you go see Nerys in the south side?<br/>She runs the Weapons Shop.");
+				Player.Keywords.Give("shop_armory");
+				Msg(FavorExpression(), "If you need a weapon for the training,<br/>why don't you go see Nerys in the south side?<br/>She runs the Weapons Shop.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
@@ -89,7 +102,7 @@ public class AranwenScript : NpcScript
 				Msg("...if you are interested in high-leveled bowman skills, then<br/>you should at least master the Fire Arrow skill first.");
 				break;
 
-			case "shop_misc": // General Shop
+			case "shop_misc":
 				Msg("Hmm. Looking for the General Shop?<br/>You'll find it down there across the Square.");
 				Msg("Walter should be standing by the door.<br/>You can buy instruments, music scores, gifts, and tailoring goods such as sewing patterns.");
 				break;
@@ -148,16 +161,16 @@ public class AranwenScript : NpcScript
 				Msg("If you are willing,<br/>would you go and take some out?<br/>You'll be appreciated by many.");
 				break;
 
-			case "brook": // Adelia Stream
+			case "brook":
 				Msg("Adelia Stream...<br/>I believe you're speaking of the<br/>stream in Tir Chonaill...");
 				Msg("Shouldn't you be asking<br/>these questions<br/>in Tir Chonaill?");
 				break;
 
-			case "shop_headman": // Chief's House
+			case "shop_headman":
 				Msg("A chief?<br/>This town is ruled by a Lord,<br/>so there is no such person as a chief here.");
 				break;
 
-			case "temple": // Church
+			case "temple":
 				Msg("You must have something to discuss with Priestess Kristell.<br/>You'll find her at the Church up north.");
 				Msg("You can also take the stairs that head<br/>northwest to the Square.<br/>There are other ways to get there, too,<br/>so it shouldn't be too difficult to find it.");
 				break;
@@ -176,7 +189,7 @@ public class AranwenScript : NpcScript
 				Msg("The Restaurant is in the north alley of the Square.");
 				break;
 
-			case "shop_armory": // Weapon Shop
+			case "shop_armory":
 				Msg("Nerys is the owner of the Weapons Shop.<br/>Keep following the road that leads down south<br/>and you'll see her mending weapons outside.");
 				Msg("She may seem a little aloof,<br/>but don't let that get to you too much<br/>and you'll get used to it.");
 				break;
@@ -190,21 +203,21 @@ public class AranwenScript : NpcScript
 				Msg("Many types of books go through that place,<br/>so even if you don't find what you want right away,<br/>keep visiting and you'll soon get it.");
 				break;
 
-			case "shop_goverment_office": // Town Office
+			case "shop_goverment_office":
 				Msg("Are you looking for Eavan?<br/>The Lord and the Captain of the Royal Guards<br/>are very hard to reach. ");
 				Msg("If you're really looking for Eavan,<br/>go over to that large building to the north of the Square.");
 				break;
 
 			default:
-				RndMsg(
-					"I don't know anything about it. I'm sorry I can't be much help.",
-					"I don't know anything about it. Why don't you ask others?",
+				RndFavorMsg(
+					"Will you tell me about it when you find out more?",
 					"Being a teacher doesn't mean that I know everything.",
 					"Hey! Asking me about such things is a waste of time.",
-					"It doesn't seem bad but... I don't think I can help you with it.",
+					"I don't know anything about it. Why don't you ask others?",
 					"I don't know too much about anything other than combat skills.",
-					"If you keep bringing up topics like this, I can't say much to you.",
-					"Will you tell me about it when you find out more?"
+					"I don't know anything about it. I'm sorry I can't be much help.",
+					"It doesn't seem bad but... I don't think I can help you with it.",
+					"If you keep bringing up topics like this, I can't say much to you."
 				);
 				ModifyRelation(0, 0, Random(2));
 				break;
@@ -213,7 +226,7 @@ public class AranwenScript : NpcScript
 
 	public override void EndConversation() 
 	{
-		Close("Thank you, Aranwen. I'll see you later!");
+		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 
@@ -221,19 +234,14 @@ public class AranwenShop : NpcShopScript
 {
 	public override void Setup()
 	{
-		//----------------
-		// Party Quest
-		//----------------
-
-		// Page 1
-		Add("Party Quest", 70025); // Party Quest Scroll [10 Red Bears]
-		Add("Party Quest", 70025); // Party Quest Scroll [30 Red Bears]
-		Add("Party Quest", 70025); // Party Quest Scroll [30 Brown Grizzly Bears]
-		Add("Party Quest", 70025); // Party Quest Scroll [30 Red Grizzly Bears]
-		Add("Party Quest", 70025); // Party Quest Scroll [30 Black Grizzly Bears]
-		Add("Party Quest", 70025); // Party Quest Scroll [10 Black Grizzly Bears and 10 Brown Grizzly Bears]
-		Add("Party Quest", 70025); // Party Quest Scroll [15 Black Grizzly Bear Cubs and Brown Grizzly Bear Cubs]
-		Add("Party Quest", 70025); // Party Quest Scroll [10 Red Grizzly Bears and 10 Brown Grizzly Bears]
-		Add("Party Quest", 70025); // Party Quest Scroll [15 Red Grizzly Bear Cubs and Brown Grizzly Bear Cubs]
+		Add("Party Quest", 70025); // Party Quest Scroll - 10 Red Bears
+		Add("Party Quest", 70025); // Party Quest Scroll - 30 Red Bears
+		Add("Party Quest", 70025); // Party Quest Scroll - 30 Brown Grizzly Bears
+		Add("Party Quest", 70025); // Party Quest Scroll - 30 Red Grizzly Bears
+		Add("Party Quest", 70025); // Party Quest Scroll - 30 Black Grizzly Bears
+		Add("Party Quest", 70025); // Party Quest Scroll - 10 Black Grizzly Bears and 10 Brown Grizzly Bears
+		Add("Party Quest", 70025); // Party Quest Scroll - 15 Black Grizzly Bear Cubs and Brown Grizzly Bear Cubs
+		Add("Party Quest", 70025); // Party Quest Scroll - 10 Red Grizzly Bears and 10 Brown Grizzly Bears
+		Add("Party Quest", 70025); // Party Quest Scroll - 15 Red Grizzly Bear Cubs and Brown Grizzly Bear Cubs
 	}
 }

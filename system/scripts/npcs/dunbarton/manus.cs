@@ -87,7 +87,7 @@ public class ManusScript : NpcScript
 								await Select();
 								Close();
 							}
-					break;
+							break;
 					}
 				}
 				break;
@@ -148,14 +148,15 @@ public class ManusScript : NpcScript
 				}
 				else
 				{
-					Msg("I am the healer in this town. I'm good at what I do,<br/>so feel free to come by if you get sick.");
+					Player.Keywords.Give("shop_healing");
+					Msg(FavorExpression(), "I am the healer in this town. I'm good at what I do,<br/>so feel free to come by if you get sick.");
 					ModifyRelation(Random(2), 0, Random(2));
 				}
 				break;
 
 			case "rumor":
-				Player.Keywords.Add("shop_restaurant");
-				Msg("Have you been to Glenis' Restaurant yet?<br/>Make sure you pay a visit and order something.<br/>Eating well is the most important thing in maintaining good health. Hahaha!");
+				Player.Keywords.Give("shop_restaurant");
+				Msg(FavorExpression(), "Have you been to Glenis' Restaurant yet?<br/>Make sure you pay a visit and order something.<br/>Eating well is the most important thing in maintaining good health. Hahaha!");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
@@ -167,7 +168,7 @@ public class ManusScript : NpcScript
 				break;
 
 			case "about_arbeit":
-				Msg("Try again later.<br/>It's not time for work yet.");
+				Msg("Unimplemented");
 				break;
 
 			case "shop_misc":
@@ -214,7 +215,7 @@ public class ManusScript : NpcScript
 				break;
 
 			case "skill_counter_attack":
-				Player.Keywords.Add("school");
+				Player.Keywords.Give("school");
 				Msg("Go to the School and ask Aranwen there.");
 				break;
 
@@ -290,7 +291,7 @@ public class ManusScript : NpcScript
 				break;
 
 			default:
-				RndMsg(
+				RndFavorMsg(
 					"Well... I don't know.",
 					"Don't ask me about that.",
 					"I don't know what that is.",
@@ -314,11 +315,6 @@ public class ManusShop : NpcShopScript
 {
 	public override void Setup()
 	{
-		//----------------
-		// Potions
-		//----------------
-
-		// Page 1
 		Add("Potions", 51037);     // Base Potion
 		Add("Potions", 51001);     // HP 10 Potion
 		Add("Potions", 51011);     // Stamina 10 Potion
@@ -333,11 +329,6 @@ public class ManusShop : NpcShopScript
 		Add("Potions", 51012, 10); // Stamina 30 Potion x10
 		Add("Potions", 51012, 20); // Stamina 30 Potion x20
 
-		//----------------
-		// First Aid Kits
-		//----------------
-
-		// Page 1
 		Add("First Aid Kits", 60005, 10); // Bandage x10
 		Add("First Aid Kits", 60005, 20); // Bandage x20
 		Add("First Aid Kits", 63000, 10); // Phoenix Feather x10
@@ -346,11 +337,6 @@ public class ManusShop : NpcShopScript
 		Add("First Aid Kits", 63716, 10); // Marionette Repair Set x10
 		Add("First Aid Kits", 63716, 20); // Marionette Repair Set x20
 
-		//----------------
-		// Ect
-		//----------------
-
-		// Page 1
 		Add("Ect", 1044);     // Reshaping Your Body
 		Add("Ect", 1047);     // On Effective Treatment of Wounds
 		Add("Ect", 91563);    // Hot Spring Ticket x1

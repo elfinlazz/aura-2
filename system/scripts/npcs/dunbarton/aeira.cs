@@ -21,6 +21,9 @@ public class AeiraScript : NpcScript
 		EquipItem(Pocket.Shoe, 17024, 0x00A0505E, 0x00F8784F, 0x00006E41);
 		EquipItem(Pocket.Head, 18028, 0x00746C54, 0x00C0C0C0, 0x00007C8C);
 
+		AddGreeting(0, "I'm sorry, but your name is...?<br/>Mmm? <username/>? Nice to meet you.");
+		AddGreeting(1, "Hahaha. I... Umm... I think I've met you before...<br/>Your name was...<br/>Oh, I'm sorry, <username/>. My mind went blank for a second. Hehehe.");
+
 		AddPhrase("*cough* The books are too dusty...");
 		AddPhrase("*Whistle*");
 		AddPhrase("Hahaha.");
@@ -49,13 +52,11 @@ public class AeiraScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Msg("So, what can I help you with?");
-				//"Hahaha. I... Umm... I think I've met you before...<br/>Your name was...<br/>Oh, I'm sorry, <username/>. My mind went blank for a second. Hehehe."
-				//"<username/>, right?<br/>Hehe... I remember your name."
-
-				//if the player is wearing the Savior of Erinn title, she will say this after the first message
-				//Msg("Wow... <username/>, you really<br/>rescued Erinn?<br/>I wasn't sure before, but you really are an amazing person.<br/>Please continue to watch over my Bookstore!");
-				await StartConversation();
+				Greet();
+				Msg(Hide.Name, GetMoodString(), FavorExpression());
+				if (Player.Titles.SelectedTitle == 11002)
+					Msg("Wow... <username/>, you really<br/>rescued Erinn?<br/>I wasn't sure before, but you really are an amazing person.<br/>Please continue to watch over my Bookstore!");
+				await Conversation();
 				break;
 
 			case "@shop":
@@ -70,12 +71,22 @@ public class AeiraScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				ModifyRelation(Random(2), 0, Random(2));
-				Msg("Hehehe... I may not look the part, but I own this Bookstore.<br/>It's okay to be casual, but<br/>at least give me some respect as a store owner.");
+				if (Memory == 1)
+				{
+					Msg("My name? It's Aeira. We've never met before, have we?");
+					ModifyRelation(1, 0, Random(2));
+				}
+				else
+				{
+					Player.Keywords.Give("shop_bookstore");
+					Msg(FavorExpression(), "Hehehe... I may not look the part, but I own this Bookstore.<br/>It's okay to be casual, but<br/>at least give me some respect as a store owner.");
+					ModifyRelation(Random(2), 0, Random(2));
+				}
 				break;
 
 			case "rumor":
-				Msg("If you want to properly train the stuff that's written on the book,<br/>why don't you first read the book in detail, then visit the school?<br/>Oh, and don't forget to talk to Stewart when you're there.");
+				Player.Keywords.Give("school");
+				Msg(FavorExpression(), "If you want to properly train the stuff that's written on the book,<br/>why don't you first read the book in detail, then visit the school?<br/>Oh, and don't forget to talk to Stewart when you're there.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
@@ -84,15 +95,16 @@ public class AeiraScript : NpcScript
 				break;
 
 			case "about_arbeit":
-				Msg("Oh no. It's not time for a part-time job, yet.<br/>Please come back later.");
+				Msg("Unimplemented");
 				break;
 
-			case "shop_misc": //General Shop
+			case "shop_misc":
 				Msg("Hmm. The General Shop?<br/>That's where my father works at!<br/>To get to the General Shop,<br/>keep going straight towards the Square.");
 				Msg("The shop is reasonably priced, with plenty of quality items...<br/>And there's just about everything you may be looking for,<br/>so don't forget to pay a visit! Hehe.");
 				break;
 
 			case "shop_grocery":
+				Player.Keywords.Give("shop_restaurant");
 				Msg("A grocery store?<br/>In this town, you can find the food ingredients at the Restaurant, too,<br/>so try going there instead.");
 				break;
 
@@ -101,6 +113,7 @@ public class AeiraScript : NpcScript
 				break;
 
 			case "shop_inn":
+				Player.Keywords.Give("skill_campfire");
 				Msg("Oh, no. There is no inn in our town.<br/>There's really no good place to rest either.<br/>Why don't you stay with people who can use the Campfire skill for now?");
 				break;
 
@@ -141,17 +154,17 @@ public class AeiraScript : NpcScript
 				Msg("The farmland is near here but everyone is stressed out over<br/>all the rats that are showing up there. Yuck!<br/>If you see them, please get them out of there.");
 				break;
 
-			case "brook": //Adelia Stream
+			case "brook":
 				Msg("Adelia Stream?<br/>Yes, I've heard of it.");
 				Msg("It's supposed to be a stream that flows near a town called Tir Chonaill,<br/>which is located just up north.");
 				Msg("I don't think it flows<br/>all the way down here, though.");
 				break;
 
-			case "shop_headman": //Chief's House
+			case "shop_headman":
 				Msg("Hmm. Our town Chief?<br/>Never heard of one.<br/>Umm... Do we have one?");
 				break;
 
-			case "temple": //Church
+			case "temple":
 				Msg("Oh...<br/>Church is located in the<br/>northwest part of town.");
 				break;
 
@@ -171,7 +184,7 @@ public class AeiraScript : NpcScript
 				Msg("While you are on the way, make sure to<br/>visit the General Shop, too. Tee hee.");
 				break;
 
-			case "shop_armory": //Weapon Shop
+			case "shop_armory":
 				Msg("The Weapons Shop is over there by the south entrance.<br/>Nerys is usually outside the store so ask her.");
 				Msg("By the way, weapons or armor here might be<br/>really expensive...");
 				break;
@@ -186,24 +199,22 @@ public class AeiraScript : NpcScript
 				Msg("I know this place isn't that big so you may not find the book you like,<br/>but we often bring in new shipments so don't be too disappointed<br/>if you can't find what you like today, okay?");
 				break;
 
-			case "shop_goverment_office": //Town Office
+			case "shop_goverment_office":
 				Msg("The Town Office? Are you looking for Eavan?<br/>Are you close friends with her?<br/>What's the relationship between you two?");
 				Msg("Oh, nothing. It's just strange to see someone<br/>who's looking for someone who's as cold as ice. Hehe.<br/>...");
 				break;
 
 			default:
-				RndMsg(
+				RndFavorMsg(
+					"...?",
+					"Oh... Umm... That... I don't know.",
+					"I'm not sure I know. Maybe Stewart knows.",
 					"I don't know too much about that. Sorry...",
 					"I don't really understand what you just said...",
-					"Hahaha. Well, it's not really my area of expertise...",
-					"...?",
-					"I don't know too much about that. Sorry...",
-					"Oh... Umm... That... I don't know.",
-					"I don't know much about it, but let me know if you find out more.",
-					"I'm not sure exactly what that is but it seems important,<br/>seeing how so many people inquire about it...",
-					"I'm not sure I know. Maybe Stewart knows.",
 					"Yeah, but... I don't really know anything about that.",
-					"I don't really understand what you just said..."
+					"Hahaha. Well, it's not really my area of expertise...",
+					"I don't know much about it, but let me know if you find out more.",
+					"I'm not sure exactly what that is but it seems important,<br/>seeing how so many people inquire about it..."
 				);
 				ModifyRelation(0, 0, Random(2));
 				break;
@@ -212,7 +223,7 @@ public class AeiraScript : NpcScript
 
 	public override void EndConversation() 
 	{
-		Close("Thank you, Aeira. I'll see you later!");
+		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 
@@ -220,11 +231,6 @@ public class AeiraShop : NpcShopScript
 {
 	public override void Setup() 
 	{
-		//----------------
-		// Skill Book
-		//----------------
-
-		// Page 1
 		Add("Skill Book", 1006); // Introduction to Music Composition
 		Add("Skill Book", 1012); // Campfire Manual
 		Add("Skill Book", 1505); // The World of Handicrafts
@@ -246,12 +252,7 @@ public class AeiraShop : NpcShopScript
 		Add("Skill Book", 1114); // The History of Music in Erinn (3)
 		Add("Skill Book", 1111); // The Path of Composing
 		Add("Skill Book", 1013); // Music Theory
-		
-		//----------------
-		// Life Skill Book
-		//----------------
 
-		// Page 1
 		Add("Life Skill Book", 1055); // The Road to Becoming a Magic Warrior
 		Add("Life Skill Book", 1056); // How to Enjoy Field Hunting
 		Add("Life Skill Book", 1092); // Enchant, Another Mysterious Magic
@@ -279,25 +280,20 @@ public class AeiraShop : NpcShopScript
 		Add("Life Skill Book", 1072); // Cooking on Your Own Vol. 1
 		Add("Life Skill Book", 1073); // Cooking on Your Own Vol. 2
 
-		//----------------
-		// Literature
-		//----------------
-
-		//Page 1
-		Add("Literature", 1023); // The Story of Spiral Hill
-		Add("Literature", 1025); // Mystery of the Dungeon
-		Add("Literature", 1026); // A Report on Astralium
-		Add("Literature", 1027); // I Hate Cuteness
-		Add("Literature", 1028); // Tracy's Secret
-		Add("Literature", 1032); // The Shadow Mystery
-		Add("Literature", 1140); // It's a 'paper airplane' that flies.
-		Add("Literature", 1001); // The Story of a White Doe
-		Add("Literature", 1059); // A Campfire Story
-		Add("Literature", 1060); // Imp's Diary
-		Add("Literature", 1061); // The Tale of Ifan the Rich
-		Add("Literature", 1042); // Animal-loving Healer
-		Add("Literature", 1103); // The Story of a Lizard
-		Add("Literature", 1104); // The Origin of Moon Gates
+		Add("Literature", 1023);  // The Story of Spiral Hill
+		Add("Literature", 1025);  // Mystery of the Dungeon
+		Add("Literature", 1026);  // A Report on Astralium
+		Add("Literature", 1027);  // I Hate Cuteness
+		Add("Literature", 1028);  // Tracy's Secret
+		Add("Literature", 1032);  // The Shadow Mystery
+		Add("Literature", 1140);  // It's a 'paper airplane' that flies.
+		Add("Literature", 1001);  // The Story of a White Doe
+		Add("Literature", 1059);  // A Campfire Story
+		Add("Literature", 1060);  // Imp's Diary
+		Add("Literature", 1061);  // The Tale of Ifan the Rich
+		Add("Literature", 1042);  // Animal-loving Healer
+		Add("Literature", 1103);  // The Story of a Lizard
+		Add("Literature", 1104);  // The Origin of Moon Gates
 		Add("Literature", 74028); // The Forgotten Legend of Fiodh Forest
 		Add("Literature", 74029); // The Tragedy of Emain Macha
 		Add("Literature", 74027); // The Knight of Light Lugh, The Hero of Mag Tuireadh
