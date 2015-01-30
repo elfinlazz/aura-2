@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ namespace Aura.Channel.Scripting
 
 		private Dictionary<string, Compiler> _compilers;
 
+		private Dictionary<string, Type> _scripts;
 		private Dictionary<int, ItemScript> _itemScripts;
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<string, NpcShopScript> _shops;
@@ -55,6 +57,7 @@ namespace Aura.Channel.Scripting
 			_compilers.Add("cs", new CSharpCompiler());
 			_compilers.Add("boo", new BooCompiler());
 
+			_scripts = new Dictionary<string, Type>();
 			_itemScripts = new Dictionary<int, ItemScript>();
 			_aiScripts = new Dictionary<string, Type>();
 			_shops = new Dictionary<string, NpcShopScript>();
@@ -72,7 +75,7 @@ namespace Aura.Channel.Scripting
 
 		public void Init()
 		{
-			this.GlobalVars.Perm = ChannelDb.Instance.LoadVars("Aura System", 0);
+			this.GlobalVars.Perm = ChannelServer.Instance.Database.LoadVars("Aura System", 0);
 			ChannelServer.Instance.Events.MabiTick += OnMabiTick;
 		}
 
@@ -109,6 +112,7 @@ namespace Aura.Channel.Scripting
 		{
 			Log.Info("Loading scripts, this might take a few minutes...");
 
+			_scripts.Clear();
 			_creatureSpawns.Clear();
 			_questScripts.Clear();
 			_hooks.Clear();
@@ -122,27 +126,10 @@ namespace Aura.Channel.Scripting
 			}
 
 			// Read script list
-			var toLoad = new OrderedDictionary();
+			OrderedDictionary toLoad = null;
 			try
 			{
-				using (var fr = new FileReader(IndexPath))
-				{
-					foreach (var line in fr)
-					{
-						// Get script path for either user or system
-						var scriptPath = Path.Combine(UserIndexRoot, line);
-						if (!File.Exists(scriptPath))
-							scriptPath = Path.Combine(SystemIndexRoot, line);
-						if (!File.Exists(scriptPath))
-						{
-							Log.Warning("Script not found: {0}", line);
-							continue;
-						}
-
-						// Easiest way to get a unique, ordered list.
-						toLoad[line] = scriptPath;
-					}
-				}
+				toLoad = this.ReadScriptList(IndexPath);
 			}
 			catch (Exception ex)
 			{
@@ -154,7 +141,7 @@ namespace Aura.Channel.Scripting
 			int done = 0, loaded = 0;
 			foreach (string filePath in toLoad.Values)
 			{
-				var asm = this.Compile(filePath);
+				var asm = this.GetAssembly(filePath);
 				if (asm != null)
 				{
 					this.LoadScriptAssembly(asm, filePath);
@@ -168,10 +155,52 @@ namespace Aura.Channel.Scripting
 			}
 			Log.Progress(100, 100);
 
+			// Init scripts
+			this.InitializeScripts();
+
 			if (toLoad.Count > 0)
 				Log.WriteLine();
 
 			Log.Info("Done loading {0} scripts (of {1}).", loaded, toLoad.Count);
+		}
+
+		/// <summary>
+		/// Returns list of script files loaded from scripts.txt.
+		/// </summary>
+		/// <param name="rootList"></param>
+		/// <returns></returns>
+		private OrderedDictionary ReadScriptList(string rootList)
+		{
+			var result = new OrderedDictionary();
+
+			using (var fr = new FileReader(rootList))
+			{
+				foreach (var line in fr)
+				{
+					// Get path to file relative to "x/scripts/".
+					var relative = Path.GetFullPath(line.File);
+					relative = relative.Replace(Path.GetFullPath(UserIndexRoot), "");
+					relative = relative.Replace(Path.GetFullPath(SystemIndexRoot), "");
+					relative = Path.GetDirectoryName(relative);
+
+					var fileName = Path.Combine(relative, line.Value).Replace("\\", "/");
+
+					// Get script path for either user or system
+					var scriptPath = Path.Combine(UserIndexRoot, fileName);
+					if (!File.Exists(scriptPath))
+						scriptPath = Path.Combine(SystemIndexRoot, fileName);
+					if (!File.Exists(scriptPath))
+					{
+						Log.Warning("Script not found: {0}", fileName);
+						continue;
+					}
+
+					// Easiest way to get a unique, ordered list.
+					result[fileName] = scriptPath;
+				}
+			}
+
+			return result;
 		}
 
 		/// <summary>
@@ -248,7 +277,7 @@ namespace Aura.Channel.Scripting
 					continue;
 				}
 
-				var asm = this.Compile(scriptPath);
+				var asm = this.GetAssembly(scriptPath);
 				if (asm != null)
 					this.LoadItemScriptAssembly(asm, entry.Id);
 
@@ -263,7 +292,7 @@ namespace Aura.Channel.Scripting
 
 			// Compile will update assembly if generated script was updated
 			//foreach (string filePath in )
-			var inlineAsm = this.Compile(tmpPath);
+			var inlineAsm = this.GetAssembly(tmpPath);
 			if (inlineAsm != null)
 				this.LoadItemScriptAssembly(inlineAsm);
 
@@ -288,7 +317,7 @@ namespace Aura.Channel.Scripting
 				{
 					var fileName = Path.GetFileNameWithoutExtension(filePath);
 
-					var asm = this.Compile(filePath);
+					var asm = this.GetAssembly(filePath);
 					if (asm != null)
 					{
 						// Get first AiScript class and save the type
@@ -340,6 +369,7 @@ namespace Aura.Channel.Scripting
 		/// Returns new AI script by name for creature, or null.
 		/// </summary>
 		/// <param name="name"></param>
+		/// <param name="creature"></param>
 		/// <returns></returns>
 		public AiScript GetAi(string name, Creature creature)
 		{
@@ -355,22 +385,30 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
-		///  Compiles script and returns the resulting assembly, or null.
+		/// Loads assembly for script, compiles it if necessary.
+		/// Returns null if there was a problem.
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		private Assembly Compile(string path)
+		private Assembly GetAssembly(string path)
 		{
 			if (!File.Exists(path))
 			{
-				Log.Error("Script '{0}' not found.", path);
+				Log.Error("File '{0}' not found.", path);
 				return null;
 			}
 
+			var ext = Path.GetExtension(path).TrimStart('.');
+
+			// Load dlls directly
+			if (ext == "dll")
+				return Assembly.LoadFrom(path);
+
+			// Try to compile other files
 			var outPath = this.GetCachePath(path);
 
 			Compiler compiler;
-			_compilers.TryGetValue(Path.GetExtension(path).TrimStart('.'), out compiler);
+			_compilers.TryGetValue(ext, out compiler);
 			if (compiler == null)
 			{
 				Log.Error("No compiler found for script '{0}'.", path);
@@ -392,7 +430,7 @@ namespace Aura.Channel.Scripting
 				}
 				catch (UnauthorizedAccessException)
 				{
-					Log.Debug("Unable to delete '{0}'", outPath);
+					Log.Warning("Unable to delete '{0}'", outPath);
 				}
 
 				var lines = File.ReadAllLines(path);
@@ -425,6 +463,40 @@ namespace Aura.Channel.Scripting
 			return null;
 		}
 
+		private static IEnumerable<Type> GetJITtedTypes(Assembly asm, string filePath)
+		{
+			Type[] types;
+			try
+			{
+				types = asm.GetTypes();
+				foreach (var method in types.SelectMany(t => t.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)).Where(m => !m.IsAbstract && !m.ContainsGenericParameters))
+					RuntimeHelpers.PrepareMethod(method.MethodHandle);
+			}
+			catch (Exception ex)
+			{
+				// Happens if classes in source or other scripts change,
+				// i.e. a class name changes, or a parent class. Only
+				// fixable by recaching, so they can "sync" again.
+
+				Log.Exception(ex, "GetJITtedTypes: Loading of one or multiple types in '{0}' failed, classes in this file won't be loaded. " +
+					"Restart your server to recompile the offending scripts. Delete your cache folder if this error persists.", filePath);
+
+				// Mark for recomp
+				try
+				{
+					new FileInfo(filePath).LastWriteTime = DateTime.Now;
+				}
+				catch
+				{
+					// Fails for DLLs, because they're loaded from where they are.
+				}
+
+				return Enumerable.Empty<Type>();
+			}
+
+			return types;
+		}
+
 		/// <summary>
 		/// Loads script classes inside assembly.
 		/// </summary>
@@ -433,25 +505,63 @@ namespace Aura.Channel.Scripting
 		/// <returns></returns>
 		private void LoadScriptAssembly(Assembly asm, string filePath)
 		{
-			Type[] types = null;
-			try
-			{
-				types = asm.GetTypes();
-			}
-			catch (ReflectionTypeLoadException)
-			{
-				// Happens if classes in source or other scripts change,
-				// i.e. a class name changes, or a parent class. Only
-				// fixable by recaching, so they can "sync" again.
-
-				Log.Error("LoadScriptAssembly: Loading of one or multiple types in '{0}' failed, classes in this file won't be loaded. Delete your cache folder if this error persists.", filePath);
-				return;
-			}
-
-			if (types == null)
-				return;
+			var types = GetJITtedTypes(asm, filePath);
 
 			foreach (var type in types.Where(a => a.GetInterfaces().Contains(typeof(IScript)) && !a.IsAbstract && !a.Name.StartsWith("_")))
+			{
+				try
+				{
+					// Make sure there's only one copy of each script.
+					if (_scripts.ContainsKey(type.Name))
+					{
+						Log.Error("Script classes must have unique names, duplicate '{0}' found in '{1}'.", type.Name, Path.GetFileName(filePath));
+						continue;
+					}
+
+					// Check overrides
+					var overide = type.GetCustomAttribute<OverrideAttribute>();
+					if (overide != null)
+					{
+						if (_scripts.ContainsKey(overide.TypeName))
+						{
+							_scripts.Remove(overide.TypeName);
+						}
+						else
+							Log.Warning("Override: Script class '{0}' not found ({1} @ {2}).", overide.TypeName, type.Name, Path.GetFileName(filePath));
+					}
+
+					// Check removes
+					var removes = type.GetCustomAttribute<RemoveAttribute>();
+					if (removes != null)
+					{
+						foreach (var rm in removes.TypeNames)
+						{
+							if (_scripts.ContainsKey(rm))
+							{
+								_scripts.Remove(rm);
+							}
+							else
+								Log.Warning("Remove: Script class '{0}' not found ({1} @ {2}).", rm, type.Name, Path.GetFileName(filePath));
+						}
+					}
+
+					// Add class to load list, even if it's a dummy for remove,
+					// we can't be sure it's not supposed to get initialized.
+					_scripts[type.Name] = type;
+				}
+				catch (Exception ex)
+				{
+					Log.Exception(ex, "Error while loading script '{0}' ({1}).", type.Name, ex.Message);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Initializes all scripts loaded from assemblies.
+		/// </summary>
+		private void InitializeScripts()
+		{
+			foreach (var type in _scripts.Values)
 			{
 				try
 				{
@@ -463,19 +573,15 @@ namespace Aura.Channel.Scripting
 						continue;
 					}
 
-					// Obsolescence check
-					if (type.IsSubclassOf(typeof(BaseScript)))
-						Log.Warning("{0}: BaseScript is obsolete and will eventually be removed, use GeneralScript instead.", filePath);
-					if (type.IsSubclassOf(typeof(NpcShop)))
-						Log.Warning("{0}: NpcShop is obsolete and will eventually be removed, use NpcShopScript instead.", filePath);
+					// Register scripts implementing IDisposable as script to
+					// dispose on reload.
+					if (type.GetInterfaces().Contains(typeof(IDisposable)))
+						_scriptsToDispose.Add(script as IDisposable);
 
-					// Run default methods for base scripts.
-					if (type.IsSubclassOf(typeof(GeneralScript)))
-					{
-						var baseScript = script as GeneralScript;
-						baseScript.AutoLoadEvents();
-						this.RegisterDisposableScript(baseScript);
-					}
+					// Run auto loader. This has to be done after Init,
+					// because of how Load is called from GeneralScript.
+					if (type.GetInterfaces().Contains(typeof(IAutoLoader)))
+						(script as IAutoLoader).AutoLoad();
 				}
 				catch (Exception ex)
 				{
@@ -597,6 +703,7 @@ namespace Aura.Channel.Scripting
 		/// Spawns all creatures for spawn, or amount.
 		/// </summary>
 		/// <param name="spawn"></param>
+		/// <param name="amount"></param>
 		/// <returns></returns>
 		public int Spawn(CreatureSpawn spawn, int amount = 0)
 		{
@@ -624,6 +731,8 @@ namespace Aura.Channel.Scripting
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="spawnId"></param>
+		/// <param name="active"></param>
+		/// <param name="effect"></param>
 		/// <returns></returns>
 		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId, bool active, bool effect)
 		{
@@ -684,7 +793,7 @@ namespace Aura.Channel.Scripting
 		/// <param name="time"></param>
 		public void OnMabiTick(ErinnTime time)
 		{
-			ChannelDb.Instance.SaveVars("Aura System", 0, this.GlobalVars.Perm);
+			ChannelServer.Instance.Database.SaveVars("Aura System", 0, this.GlobalVars.Perm);
 			Log.Info("Saved global script variables.");
 		}
 
@@ -788,15 +897,6 @@ namespace Aura.Channel.Scripting
 				return null;
 
 			return result;
-		}
-
-		/// <summary>
-		/// Adds scriptt o list of scripts that are to disposed upon reload.
-		/// </summary>
-		/// <param name="script"></param>
-		public void RegisterDisposableScript(IDisposable script)
-		{
-			_scriptsToDispose.Add(script);
 		}
 	}
 

@@ -9,6 +9,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Channel.World;
 using Aura.Shared.Mabi.Const;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -116,6 +117,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="item"></param>
+		/// <param name="pocket"></param>
 		public static void ItemRemove(Creature creature, Item item, Pocket pocket)
 		{
 			var packet = new Packet(Op.ItemRemove, creature.EntityId);
@@ -304,6 +306,27 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(success);
 			if (success)
 				packet.PutBin(creature.Temp.RegularDyePickers);
+
+			creature.Client.Send(packet);
+		}
+
+		public static void GiftItemR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.GiftItemR, creature.EntityId);
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends UnequipBagR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void UnequipBagR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.UnequipBagR, creature.EntityId);
+			packet.PutByte(success);
 
 			creature.Client.Send(packet);
 		}

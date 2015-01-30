@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
@@ -14,6 +15,14 @@ namespace Aura.Channel.Network.Handlers
 {
 	public partial class ChannelServerHandlers : PacketHandlerManager<ChannelClient>
 	{
+		private void EnsureGmcpAuthority(ChannelClient client)
+		{
+			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
+			{
+				throw new ModerateViolation("Not authorized to use GMCP functions");
+			}
+		}
+
 		/// <summary>
 		/// Sent when closing the GMCP.
 		/// </summary>
@@ -37,14 +46,9 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var targetName = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
-			{
-				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
-				return;
-			}
+			this.EnsureGmcpAuthority(client);
 
 			var target = ChannelServer.Instance.World.GetPlayer(targetName);
 			if (target == null)
@@ -70,14 +74,9 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var targetName = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
-			{
-				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
-				return;
-			}
+			this.EnsureGmcpAuthority(client);
 
 			var target = ChannelServer.Instance.World.GetCreature(targetName);
 			if (target == null)
@@ -103,14 +102,9 @@ namespace Aura.Channel.Network.Handlers
 			var x = packet.GetInt();
 			var y = packet.GetInt();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
-			{
-				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
-				return;
-			}
+			this.EnsureGmcpAuthority(client);
 
 			creature.Warp(regionId, x, y);
 		}
@@ -124,14 +118,11 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.GmcpRevive)]
 		public void GmcpRevive(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null || !creature.IsDead) return;
-
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
-			{
-				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
+			var creature = client.GetCreatureSafe(packet.Id);
+			if (!creature.IsDead)
 				return;
-			}
+
+			this.EnsureGmcpAuthority(client);
 
 			creature.FullHeal();
 			creature.Revive();
@@ -148,14 +139,9 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var activate = packet.GetBool();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
-			{
-				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
-				return;
-			}
+			this.EnsureGmcpAuthority(client);
 
 			if (activate)
 				creature.Conditions.Activate(ConditionsA.Invisible);
@@ -176,14 +162,9 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var targetName = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
-			{
-				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
-				return;
-			}
+			this.EnsureGmcpAuthority(client);
 
 			var target = ChannelServer.Instance.World.GetPlayer(targetName);
 			if (target == null)
@@ -211,14 +192,9 @@ namespace Aura.Channel.Network.Handlers
 			var duration = packet.GetInt();
 			var reason = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
-			{
-				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
-				return;
-			}
+			this.EnsureGmcpAuthority(client);
 
 			var target = ChannelServer.Instance.World.GetPlayer(targetName);
 			if (target == null)
@@ -234,7 +210,7 @@ namespace Aura.Channel.Network.Handlers
 			// Better kill the connection, modders could bypass a dc request.
 			target.Client.Kill();
 
-			Send.MsgBox(creature, Localization.Get("'{0}' has been banned till '{1}'."), targetName, end);
+			Send.MsgBox(creature, Localization.Get("'{0}' has been banned till '{1}' UTC."), targetName, end.ToUniversalTime());
 		}
 
 		/// <summary>
@@ -251,14 +227,9 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.GmcpNpcList)]
 		public void GmcpNpcList(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (client.Account.Authority < ChannelServer.Instance.Conf.World.GmcpMinAuth)
-			{
-				Send.ServerMessage(creature, Localization.Get("You're not authorized to use the GMCP."));
-				return;
-			}
+			this.EnsureGmcpAuthority(client);
 
 			var npcs = ChannelServer.Instance.World.GetAllGoodNpcs();
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Channel.World;
 using Aura.Shared.Util;
@@ -30,9 +31,7 @@ namespace Aura.Channel.Network.Handlers
 			var x = packet.GetInt();
 			var y = packet.GetInt();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			var from = creature.GetPosition();
 			var to = new Position(x, y);
@@ -67,8 +66,7 @@ namespace Aura.Channel.Network.Handlers
 			var signalType = (SignalType)packet.GetInt();
 			var unkString = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Do something with this information?
 

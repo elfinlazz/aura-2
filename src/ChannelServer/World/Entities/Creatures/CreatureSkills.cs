@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.Skills;
 using Aura.Channel.Network.Sending;
@@ -34,6 +35,11 @@ namespace Aura.Channel.World.Entities.Creatures
 		public Skill ActiveSkill { get; set; }
 
 		/// <summary>
+		/// True if a Preparable skill is currently active.
+		/// </summary>
+		public bool SkillInProgress { get; set; }
+
+		/// <summary>
 		/// New skill manager for creature.
 		/// </summary>
 		/// <param name="creature"></param>
@@ -48,10 +54,14 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Returns new list of all skills.
 		/// </summary>
 		/// <returns></returns>
-		public ICollection<Skill> GetList()
+		public ICollection<Skill> GetList(Func<Skill, bool> predicate = null)
 		{
 			lock (_skills)
-				return _skills.Values.ToArray();
+			{
+				// Return all or only the ones matching the predicate.
+				var skills = (predicate == null ? _skills.Values : _skills.Values.Where(predicate));
+				return skills.ToArray();
+			}
 		}
 
 		/// <summary>
@@ -76,7 +86,9 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Adds skill silently. Returns false if the skill already exists,
 		/// with a rank that's equal or higher.
 		/// </summary>
-		/// <param name="skill"></param>
+		/// <param name="skillId"></param>
+		/// <param name="skillRank"></param>
+		/// <param name="raceId"></param>
 		public bool Add(SkillId skillId, SkillRank skillRank, int raceId)
 		{
 			if (!AuraData.SkillDb.Exists((int)skillId))
@@ -99,6 +111,16 @@ namespace Aura.Channel.World.Entities.Creatures
 			lock (_skills)
 				_skills.TryGetValue(id, out result);
 			return result;
+		}
+
+		public Skill GetSafe(SkillId id)
+		{
+			var r = this.Get(id);
+
+			if (r == null)
+				throw new ModerateViolation("Tried to get nonexistant skill {0}.", id);
+
+			return r;
 		}
 
 		/// <summary>
@@ -328,6 +350,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			Send.SkillCancel(_creature);
 
 			this.ActiveSkill = null;
+			_creature.Skills.SkillInProgress = false;
 		}
 
 		/// <summary>

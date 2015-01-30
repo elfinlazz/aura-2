@@ -40,17 +40,19 @@ namespace Aura.Channel.Network.Sending
 		/// Sends GmcpNpcListR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="success"></param>
+		/// <param name="npcs"></param>
 		public static void GmcpNpcListR(Creature creature, ICollection<Creature> npcs)
 		{
 			var packet = new Packet(Op.GmcpNpcListR, creature.EntityId);
 			packet.PutInt(npcs.Count);
 			foreach (var npc in npcs)
 			{
-				packet.PutInt(npc.Race); // RaceId
+				var pos = npc.GetPosition();
+
+				packet.PutInt(npc.RegionId);
 				packet.PutString(npc.Name); // Name
 				packet.PutString(npc.Name); // Local Name
-				packet.PutString(npc.RegionId.ToString()); // Location
+				packet.PutString("{0} @ {1}/{2}", npc.RegionId, pos.X, pos.Y); // Location
 			}
 
 			creature.Client.Send(packet);

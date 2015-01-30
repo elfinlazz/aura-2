@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Linq;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
 
@@ -84,13 +85,7 @@ namespace Aura.Channel.World.Quests
 			if (this.Prerequisites.Length == 0)
 				return true;
 
-			foreach (var p in this.Prerequisites)
-			{
-				if (!p.Met(character))
-					return false;
-			}
-
-			return true;
+			return this.Prerequisites.All(p => p.Met(character));
 		}
 	}
 
@@ -111,13 +106,25 @@ namespace Aura.Channel.World.Quests
 			if (this.Prerequisites.Length == 0)
 				return true;
 
-			foreach (var p in this.Prerequisites)
-			{
-				if (p.Met(character))
-					return true;
-			}
+			return this.Prerequisites.Any(p => p.Met(character));
+		}
+	}
 
-			return false;
+	/// <summary>
+	/// Inverts the return of a prerequisite's Met()
+	/// </summary>
+	public class QuestPrerequisiteNot : QuestPrerequisite
+	{
+		protected QuestPrerequisite _prereq;
+
+		public QuestPrerequisiteNot(QuestPrerequisite prerequiste)
+		{
+			_prereq = prerequiste;
+		}
+
+		public override bool Met(Creature character)
+		{
+			return !_prereq.Met(character);
 		}
 	}
 }

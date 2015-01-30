@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Shared.Mabi.Const;
 using System;
 
 namespace Aura.Login.Database
@@ -20,6 +21,7 @@ namespace Aura.Login.Database
 		public short EyeType { get; set; }
 		public byte EyeColor { get; set; }
 		public byte MouthType { get; set; }
+		public CreatureStates State { get; set; }
 		public float Height { get; set; }
 		public float Weight { get; set; }
 		public float Upper { get; set; }

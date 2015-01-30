@@ -10,6 +10,7 @@ using Aura.Shared.Network;
 using Aura.Channel.World;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -143,17 +144,20 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
-		/// Sends RemoveDeathScreen to creature's client.
+		/// Broadcasts RemoveDeathScreen in range of creature.
 		/// </summary>
 		/// <remarks>
 		/// Removes black bars and unlocks player.
+		/// 
+		/// Update: This has to be broadcasted, otherwise other players
+		///   are visually stuck in death mode. TODO: Maybe change name.
 		/// </remarks>
 		/// <param name="creature"></param>
 		public static void RemoveDeathScreen(Creature creature)
 		{
 			var packet = new Packet(Op.RemoveDeathScreen, creature.EntityId);
 
-			creature.Client.Send(packet);
+			creature.Region.Broadcast(packet);
 		}
 
 		/// <summary>
@@ -285,5 +289,38 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Sends SetBgm to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="file"></param>
+		/// <param name="type"></param>
+		public static void SetBgm(Creature creature, string file, BgmRepeat type)
+		{
+			var packet = new Packet(Op.SetBgm, creature.EntityId);
+			packet.PutString(file);
+			packet.PutInt((int)type);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends UnsetBgm to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="file"></param>
+		public static void UnsetBgm(Creature creature, string file)
+		{
+			var packet = new Packet(Op.UnsetBgm, creature.EntityId);
+			packet.PutString(file);
+
+			creature.Client.Send(packet);
+		}
 	}
+
+	/// <summary>
+	/// Repeat modes for SetBgm
+	/// </summary>
+	public enum BgmRepeat : int { Indefinitely = 0, Once = 1 }
 }

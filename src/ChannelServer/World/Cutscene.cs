@@ -62,7 +62,7 @@ namespace Aura.Channel.World
 		/// Adds new creature of race as actor.
 		/// </summary>
 		/// <param name="name"></param>
-		/// <param name="creature"></param>
+		/// <param name="raceId"></param>
 		public void AddActor(string name, int raceId)
 		{
 			var creature = new NPC();
@@ -107,10 +107,10 @@ namespace Aura.Channel.World
 			Send.CharacterUnlock(this.Leader, Locks.Default);
 			Send.CutsceneUnk(this);
 
+			this.Leader.Temp.CurrentCutscene = null;
+
 			if (_callback != null)
 				_callback(this);
-
-			this.Leader.Temp.CurrentCutscene = null;
 		}
 	}
 }

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Network.Sending;
+using Aura.Data;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Aura.Channel.Network.Sending;
-using Aura.Channel.World.Entities.Creatures;
-using Aura.Shared.Util;
-using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.World.Entities
 {
@@ -44,10 +44,33 @@ namespace Aura.Channel.World.Entities
 		public DateTime LastRebirth { get; set; }
 
 		/// <summary>
+		/// How many times the character rebirthed.
+		/// </summary>
+		public int RebirthCount { get; set; }
+
+		/// <summary>
+		/// Time of last login.
+		/// </summary>
+		public DateTime LastLogin { get; set; }
+
+		/// <summary>
+		/// Time of last aging.
+		/// </summary>
+		public DateTime LastAging { get; set; }
+
+		/// <summary>
+		/// Specifies whether to update visible creatures or not.
+		/// </summary>
+		public bool Watching { get; set; }
+
+		/// <summary>
 		/// Set to true if creature is supposed to be saved.
 		/// </summary>
 		public bool Save { get; set; }
 
+		/// <summary>
+		/// Player's CP, based on stats and skills.
+		/// </summary>
 		public override float CombatPower
 		{
 			get
@@ -73,6 +96,14 @@ namespace Aura.Channel.World.Entities
 		/// Returns whether creature is able to receive exp and level up.
 		/// </summary>
 		public override bool LevelingEnabled { get { return true; } }
+
+		/// <summary>
+		/// Creatures new PlayerCreature.
+		/// </summary>
+		public PlayerCreature()
+		{
+			this.Watching = true;
+		}
 
 		/// <summary>
 		/// Instructs client to move to target location.
@@ -105,6 +136,9 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public void LookAround()
 		{
+			if (!this.Watching)
+				return;
+
 			var currentlyVisible = this.Region.GetVisibleEntities(this);
 
 			var appear = currentlyVisible.Except(_visibleEntities);
@@ -116,6 +150,11 @@ namespace Aura.Channel.World.Entities
 			_visibleEntities = currentlyVisible;
 		}
 
+		/// <summary>
+		/// Returns whether player can target the given creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <returns></returns>
 		public override bool CanTarget(Creature creature)
 		{
 			if (!base.CanTarget(creature))
@@ -142,6 +181,83 @@ namespace Aura.Channel.World.Entities
 		protected override bool ShouldSurvive(float damage, Creature from, float lifeBefore)
 		{
 			return (lifeBefore >= this.LifeMax / 2);
+		}
+
+		/// <summary>
+		/// Increases age by years and sends update packets.
+		/// </summary>
+		/// <param name="years"></param>
+		public void AgeUp(short years)
+		{
+			if (years < 0 || this.Age + years > short.MaxValue)
+				return;
+
+			float life = 0, mana = 0, stamina = 0, str = 0, dex = 0, int_ = 0, will = 0, luck = 0;
+			short ap = 0;
+
+			var newAge = this.Age + years;
+			while (this.Age < newAge)
+			{
+				// Increase age before requestin statUp, we want the stats
+				// for the next age.
+				this.Age++;
+
+				var statUp = AuraData.StatsAgeUpDb.Find(this.Race, this.Age);
+				if (statUp == null)
+				{
+					// Continue silently, creatures age past 25 without
+					// bonuses, and if someone changes that we don't know what
+					// the max will be.
+					//Log.Debug("AgeUp: Missing stat data for race '{0}', age '{1}'.", this.Race, this.Age);
+					continue;
+				}
+
+				// Collect bonuses for multi aging
+				life += statUp.Life;
+				mana += statUp.Mana;
+				stamina += statUp.Stamina;
+				str += statUp.Str;
+				dex += statUp.Dex;
+				int_ += statUp.Int;
+				will += statUp.Will;
+				luck += statUp.Luck;
+				ap += statUp.AP;
+			}
+
+			// Apply stat bonuses
+			this.LifeMaxBase += life;
+			this.Life += life;
+			this.ManaMaxBase += mana;
+			this.Mana += mana;
+			this.StaminaMaxBase += stamina;
+			this.Stamina += stamina;
+			this.StrBase += str;
+			this.DexBase += dex;
+			this.IntBase += int_;
+			this.WillBase += will;
+			this.LuckBase += luck;
+			this.AbilityPoints += ap;
+
+			this.LastAging = DateTime.Now;
+
+			if (this is Character)
+				this.Height = Math.Min(1.0f, 1.0f / 7.0f * (this.Age - 10.0f)); // 0 ~ 1.0
+
+			// Send stat bonuses
+			if (life != 0) Send.SimpleAcquireInfo(this, "life", mana);
+			if (mana != 0) Send.SimpleAcquireInfo(this, "mana", mana);
+			if (stamina != 0) Send.SimpleAcquireInfo(this, "stamina", stamina);
+			if (str != 0) Send.SimpleAcquireInfo(this, "str", str);
+			if (dex != 0) Send.SimpleAcquireInfo(this, "dex", dex);
+			if (int_ != 0) Send.SimpleAcquireInfo(this, "int", int_);
+			if (will != 0) Send.SimpleAcquireInfo(this, "will", will);
+			if (luck != 0) Send.SimpleAcquireInfo(this, "luck", luck);
+			if (ap != 0) Send.SimpleAcquireInfo(this, "ap", ap);
+
+			Send.StatUpdateDefault(this);
+
+			// XXX: Replace with effect and notice to allow something to happen past age 25?
+			Send.AgeUpEffect(this, this.Age);
 		}
 	}
 }

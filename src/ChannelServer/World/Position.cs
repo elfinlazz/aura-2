@@ -31,6 +31,16 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// New Position based on location id (i.e. 0x3000RRRRXXXXYYYY).
+		/// </summary>
+		/// <param name="locationId"></param>
+		public Position(long locationId)
+		{
+			this.X = (short)(locationId >> 16) * 20;
+			this.Y = (short)(locationId >> 00) * 20;
+		}
+
+		/// <summary>
 		/// Returns distance between this and another position.
 		/// </summary>
 		/// <param name="otherPos"></param>
@@ -67,8 +77,9 @@ namespace Aura.Channel.World
 		/// Returns random position around this position,
 		/// not nearer than min, and not further than max.
 		/// </summary>
-		/// <param name="radius"></param>
+		/// <param name="distanceMax"></param>
 		/// <param name="rnd"></param>
+		/// <param name="distanceMin"></param>
 		/// <returns></returns>
 		public Position GetRandomInRange(int distanceMin, int distanceMax, Random rnd)
 		{
@@ -89,7 +100,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Returns random position in radius around this position.
 		/// </summary>
-		/// <param name="radius"></param>
+		/// <param name="distance"></param>
 		/// <param name="rnd"></param>
 		/// <returns></returns>
 		private Position GetRandom(int distance, Random rnd)

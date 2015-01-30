@@ -71,7 +71,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public AiState State { get { return _state; } }
 
-		public AiScript()
+		protected AiScript()
 		{
 			this.Phrases = new List<string>();
 
@@ -134,8 +134,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Main "loop"
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="args"></param>
+		/// <param name="state"></param>
 		private void Heartbeat(object state)
 		{
 			if (this.Creature == null || this.Creature.Region == null)
@@ -224,8 +223,8 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Clear();
 			_state = AiState.Idle;
 
-			if (this.Creature.BattleStance == BattleStance.Ready)
-				this.Creature.BattleStance = BattleStance.Idle;
+			if (this.Creature.IsInBattleStance)
+				this.Creature.IsInBattleStance = false;
 
 			if (this.Creature.Target != null)
 			{
@@ -278,7 +277,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 						_state = AiState.Alert;
 						_alertTime = DateTime.Now;
-						this.Creature.BattleStance = BattleStance.Ready;
+						this.Creature.IsInBattleStance = true;
 
 						Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
 					}
@@ -292,7 +291,7 @@ namespace Aura.Channel.Scripting.Scripts
 				}
 
 				// Switch to aggro from alert after the delay
-				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.BattleStance == BattleStance.Ready) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
+				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.IsInBattleStance) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
 				{
 					// Check aggro limit
 					var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
@@ -319,13 +318,9 @@ namespace Aura.Channel.Scripting.Scripts
 				return null;
 
 			// Random targetable creature
-			var potentialTargets = creatures.Where(target =>
-			{
-				return
-					this.Creature.CanTarget(target) &&
-					this.DoesHate(target) &&
-					!this.DoesLove(target);
-			}).ToList();
+			var potentialTargets = creatures.Where(target => this.Creature.CanTarget(target) &&
+															 this.DoesHate(target) &&
+															 !this.DoesLove(target)).ToList();
 
 			if (potentialTargets.Count == 0)
 				return null;
@@ -391,7 +386,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Radius in which creature become potential targets.
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="radius"></param>
 		protected void SetAggroRadius(int radius)
 		{
 			_aggroRadius = radius;
@@ -400,7 +395,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// The way the AI decides whether to go into Alert/Aggro.
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="type"></param>
 		protected void SetAggroType(AggroType type)
 		{
 			_aggroType = type;
@@ -409,7 +404,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Milliseconds before creature attacks.
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="limit"></param>
 		protected void SetAggroLimit(AggroLimit limit)
 		{
 			_aggroLimit = limit;
@@ -506,13 +501,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected bool DoesHate(Creature target)
 		{
-			foreach (var tag in _hateTags.Values)
-			{
-				if (target.RaceData.HasTag(tag))
-					return true;
-			}
-
-			return false;
+			return _hateTags.Values.Any(tag => target.RaceData.HasTag(tag));
 		}
 
 		/// <summary>
@@ -522,13 +511,19 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected bool DoesLove(Creature target)
 		{
-			foreach (var tag in _loveTags.Values)
-			{
-				if (target.RaceData.HasTag(tag))
-					return true;
-			}
+			return _loveTags.Values.Any(tag => target.RaceData.HasTag(tag));
+		}
 
-			return false;
+		/// <summary>
+		/// Returns true if there are collisions between the two positions.
+		/// </summary>
+		/// <param name="pos1"></param>
+		/// <param name="pos2"></param>
+		/// <returns></returns>
+		protected bool AnyCollisions(Position pos1, Position pos2)
+		{
+			Position intersection;
+			return this.Creature.Region.Collisions.Find(pos1, pos2, out intersection);
 		}
 
 		// Flow control
@@ -572,7 +567,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void AggroCreature(Creature creature)
 		{
 			_state = AiState.Aggro;
-			this.Creature.BattleStance = BattleStance.Ready;
+			this.Creature.IsInBattleStance = true;
 			this.Creature.Target = creature;
 			Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
 		}
@@ -667,8 +662,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature runs to destination.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="destination"></param>
 		/// <returns></returns>
 		protected IEnumerable RunTo(Position destination)
 		{
@@ -678,8 +672,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature walks to destination.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="destination"></param>
 		/// <returns></returns>
 		protected IEnumerable WalkTo(Position destination)
 		{
@@ -689,8 +682,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature moves to destination.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="destination"></param>
+		/// <param name="walk"></param>
 		/// <returns></returns>
 		protected IEnumerable MoveTo(Position destination, bool walk)
 		{
@@ -698,7 +691,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 			// Check for collision
 			Position intersection;
-			if (this.Creature.Region.Collissions.Find(pos, destination, out intersection))
+			if (this.Creature.Region.Collisions.Find(pos, destination, out intersection))
 				destination = pos.GetRelative(intersection, -10);
 
 			this.Creature.Move(destination, walk);
@@ -719,7 +712,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature circles around target.
 		/// </summary>
-		/// <param name="distance"></param>
+		/// <param name="radius"></param>
 		/// <param name="timeMin"></param>
 		/// <param name="timeMax"></param>
 		/// <returns></returns>
@@ -731,9 +724,10 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Creature circles around target.
 		/// </summary>
-		/// <param name="distance"></param>
+		/// <param name="radius"></param>
 		/// <param name="timeMin"></param>
 		/// <param name="timeMax"></param>
+		/// <param name="clockwise"></param>
 		/// <returns></returns>
 		protected IEnumerable Circle(int radius, int timeMin, int timeMax, bool clockwise)
 		{
@@ -851,6 +845,38 @@ namespace Aura.Channel.Scripting.Scripts
 					yield break;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Makes creature prepare given skill. (DUMMY)
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <returns></returns>
+		protected IEnumerable PrepareSkill(SkillId skillId)
+		{
+			var skill = this.Creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("AI.PrepareSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.Race);
+				yield break;
+			}
+
+			this.ExecuteOnce(this.Say(skillId.ToString()));
+
+			foreach (var action in this.Wait(skill.RankData.LoadTime))
+				yield return action;
+		}
+
+		/// <summary>
+		/// Makes creature cancel currently loaded skill. (DUMMY?)
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable CancelSkill()
+		{
+			if (this.Creature.Skills.ActiveSkill != null)
+				this.Creature.Skills.CancelActiveSkill();
+
+			yield break;
 		}
 
 		// ------------------------------------------------------------------

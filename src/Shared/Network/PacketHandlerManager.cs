@@ -17,7 +17,7 @@ namespace Aura.Shared.Network
 
 		private Dictionary<int, PacketHandlerFunc> _handlers;
 
-		public PacketHandlerManager()
+		protected PacketHandlerManager()
 		{
 			_handlers = new Dictionary<int, PacketHandlerFunc>();
 		}
@@ -56,7 +56,7 @@ namespace Aura.Shared.Network
 		/// </summary>
 		/// <param name="client"></param>
 		/// <param name="packet"></param>
-		public void Handle(TClient client, Packet packet)
+		public virtual void Handle(TClient client, Packet packet)
 		{
 			// Don't log internal packets
 			//if (packet.Op < Op.Internal.ServerIdentify)
@@ -69,14 +69,7 @@ namespace Aura.Shared.Network
 				return;
 			}
 
-			try
-			{
-				handler(client, packet);
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex, "There has been a problem while handling '{0:X4}'.", packet.Op);
-			}
+			handler(client, packet);
 		}
 
 		public virtual void UnknownPacket(TClient client, Packet packet)

@@ -73,7 +73,7 @@ namespace Aura.Shared.Mabi
 		/// <summary>
 		/// Returns true if it's not night, duh.
 		/// </summary>
-		public bool IsDay { get { return this.IsNight; ; } }
+		public bool IsDay { get { return !this.IsNight; ; } }
 
 		/// <summary>
 		/// Returns true if time of this instance is 0:00am.
@@ -103,6 +103,24 @@ namespace Aura.Shared.Mabi
 			this.Year = (int)Math.Floor((this.DateTime.Ticks - BeginOfTime.Ticks) / TicksPerMinute / 60 / 24 / 280f);
 			this.Month = (int)this.DateTime.DayOfWeek;
 			this.Day = (int)Math.Ceiling((this.DateTime.Hour * 60 + this.DateTime.Minute) / 36f);
+		}
+
+		/// <summary>
+		/// Returns the DateTime for last Saturday at 12:00.
+		/// </summary>
+		/// <returns></returns>
+		public DateTime GetLastSaturday()
+		{
+			var lastSaturday = DateTime.MinValue;
+
+			if (this.DateTime.DayOfWeek == DayOfWeek.Saturday)
+				lastSaturday = (this.DateTime.Hour < 12) ? this.DateTime.AddDays(-7) : this.DateTime;
+			else
+				lastSaturday = this.DateTime.AddDays(-(int)this.DateTime.DayOfWeek - 1);
+
+			lastSaturday = lastSaturday.Date.AddHours(12);
+
+			return lastSaturday;
 		}
 
 		/// <summary>

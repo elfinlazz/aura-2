@@ -54,6 +54,8 @@ namespace Aura.Shared.Network
 		public const int PartnerCreationOptionsRequestR = 0x56;
 		public const int LoginUnk = 0x5A;  // Sent on login
 		public const int LoginUnkR = 0x5B; // ^ Response, only known parameter: 0 byte.
+		public const int TradeCard = 0x5C;
+		public const int TradeCardR = 0x5D;
 
 		// Channel Server
 		// ------------------------------------------------------------------
@@ -63,8 +65,13 @@ namespace Aura.Shared.Network
 		public const int DisconnectRequestR = 0x4E25;
 		public const int RequestClientDisconnect = 0x4E26;
 		public const int Disappear = 0x4E2A;
-		//public const int GoRebirth = 0x4E32;
+		public const int SwitchChannel = 0x4E32;
+		public const int SwitchChannelR = 0x4E33;
+		public const int GetChannelList = 0x4E34;
+		public const int GetChannelListR = 0x4E35;
 		public const int WarpUnk1 = 0x4E39;
+		public const int RequestRebirth = 0x4E84;
+		public const int RequestRebirthR = 0x4E85;
 		public const int PonsUpdate = 0x4E8F; // b:2, i:amount, sent on login
 
 		public const int ChannelCharacterInfoRequest = 0x5208;
@@ -123,6 +130,10 @@ namespace Aura.Shared.Network
 		public const int ItemAmount = 0x59EA;
 		public const int UseItem = 0x59EB;
 		public const int UseItemR = 0x59EC;
+		public const int GiftItem = 0x59EF;
+		public const int GiftItemR = 0x59F0;
+		public const int UnequipBag = 0x59F4;
+		public const int UnequipBagR = 0x59F5;
 
 		// [180300, NA166 (18.09.2013)] 2 new ops
 		//public const int ? = 0x59F8; // Request for that --v ?
@@ -159,6 +170,11 @@ namespace Aura.Shared.Network
 		public const int ForceRunTo = 0x659A;
 		public const int ForceWalkTo = 0x659B;
 		public const int EnterRegionRequestR = 0x659C; // on login
+		public const int UrlUpdateChronicle = 0x65A2;
+		public const int UrlUpdateAdvertise = 0x65A3;
+		public const int UrlUpdateGuestbook = 0x65A4;
+		public const int UrlUpdatePvp = 0x65A5;
+		public const int UrlUpdateDungeonBoard = 0x65A6;
 		public const int TakeOff = 0x65A8;
 		public const int TakingOff = 0x65A9;
 		public const int TakeOffR = 0x65AA;
@@ -167,6 +183,7 @@ namespace Aura.Shared.Network
 		public const int Land = 0x65AB;
 		public const int Landing = 0x65AC;
 		public const int CanLand = 0x65AD;
+		public const int SawItemNotification = 0x65D7; // [190100, NA200 (2015-01-15)]
 		public const int SkillInfo = 0x6979;
 		public const int SkillTrainingUp = 0x697C;
 		public const int SkillAdvance = 0x697E;
@@ -186,6 +203,7 @@ namespace Aura.Shared.Network
 		public const int SkillStackSet = 0x6991;
 		public const int SkillStackUpdate = 0x6992;
 		public const int UseMotion = 0x6D62;
+		public const int PlayAnimation = 0x6D63; // s:data/.../anim/..., 1:0, 2:0, 1:0
 		public const int CancelMotion = 0x6D65;
 		public const int MotionCancel2 = 0x6D66; // Delayed?
 		public const int LevelUp = 0x6D69;
@@ -213,6 +231,21 @@ namespace Aura.Shared.Network
 		public const int ClearNpcShop = 0x7158; // Empties tabs
 		public const int AddToNpcShop = 0x7159; // Adds items while shop is open, works like open
 		public const int OpenNpcShop = 0x715E;
+		public const int RequestBankTabs = 0x7211;
+		public const int OpenBank = 0x7212;
+		public const int CloseBank = 0x7215;
+		public const int CloseBankR = 0x7216;
+		public const int BankWithdrawItem = 0x7217;
+		public const int BankWithdrawItemR = 0x7218;
+		public const int BankDepositItem = 0x7219;
+		public const int BankDepositItemR = 0x721A;
+		public const int BankDepositGold = 0x721B;
+		public const int BankDepositGoldR = 0x721C;
+		public const int BankWithdrawGold = 0x721D;
+		public const int BankWithdrawGoldR = 0x721E;
+		public const int BankUpdateGold = 0x721F;
+		public const int BankAddItem = 0x7220;
+		public const int BankRemoveItem = 0x7221;
 		public const int OpenMail = 0x7242;
 		public const int CloseMail = 0x7243;
 		public const int ConfirmMailRecipent = 0x7244;
@@ -328,17 +361,26 @@ namespace Aura.Shared.Network
 		public const int TouchPropR = 0x908C;
 		public const int PropInteraction = 0x908D; // Doors?
 		public const int PlaySound = 0x908F;
-		public const int Effect = 0x9090;
-		public const int EffectDelayed = 0x9091;
-		public const int QuestOwlComplete = 0x9093;
-		public const int QuestOwlNew = 0x9094;
-		public const int PartyWantedUpdate = 0x9095;
-		public const int PvPInformation = 0x9096;
-		public const int NaoRevivalExit = 0x9098;
-		public const int NaoRevivalEntrance = 0x909C;
+
+		// [190100, NA198 (11.12.2014)] Something added here?
+		// Effect~NaoRevivalEntrance definitely shifted by 1,
+		// prop hitting was still the same.
+
+		public const int Effect = 0x9091;
+		public const int EffectDelayed = 0x9092;
+		public const int QuestOwlComplete = 0x9094;
+		public const int QuestOwlNew = 0x9095;
+		public const int PartyWantedUpdate = 0x9096;
+		public const int PvPInformation = 0x9097;
+		public const int NaoRevivalExit = 0x9099;
+		public const int NaoRevivalEntrance = 0x909D;
+
+		// [190100, NA198 (11.12.2014)] End of above's shift?
+
 		public const int DungeonInfo = 0x9470;
 		public const int ArenaRoundInfo = 0x9667;
 		public const int ArenaRoundInfoCancel = 0x9668;
+		public const int AgeUpEffect = 0x9858;
 
 		public const int ConditionUpdate = 0xA028;
 		public const int DyePaletteReq = 0xA418;
@@ -376,45 +418,49 @@ namespace Aura.Shared.Network
 		public const int EnableRoyalAlchemist = 0xA9A3;
 		public const int SosButtonRequest = 0xA9A9;
 		public const int SosButtonRequestR = 0xA9AA;
+		public const int SkillTeleport = 0xA9F0;
 
 		// [150000~180000] Something was added? Next two ops changed.
+		// [180800, NA196] Something was added? Ops 0xAAXX - 0xABXX increased by 4.
 
-		public const int SubsribeStunMeter = 0xAA1D;
-		public const int StunMeterTotal = 0xAA1E;
-		public const int StunMeterUpdate = 0xAA1F;
+		public const int SubsribeStunMeter = 0xAA21;
+		public const int StunMeterTotal = 0xAA22;
+		public const int StunMeterUpdate = 0xAA23;
 
-		public const int HomesteadInfoRequest = 0xAA54;
-		public const int HomesteadInfoRequestR = 0xAA55;
+		public const int HomesteadInfoRequest = 0xAA58;
+		public const int HomesteadInfoRequestR = 0xAA59;
 
 		// [180300, NA166 (18.09.2013)] 2 new ops somewhere here, possibly the two below
 
-		public const int ChannelLoginUnk = 0xAA83;
-		public const int ChannelLoginUnkR = 0xAA84;
+		public const int ChannelLoginUnk = 0xAA87;
+		public const int ChannelLoginUnkR = 0xAA88;
 
-		public const int CollectionRequest = 0xAA87;
-		public const int CollectionRequestR = 0xAA88;
+		public const int CollectionRequest = 0xAA8B;
+		public const int CollectionRequestR = 0xAA8C;
 
-		public const int UnkEsc = 0xAAEE;
+		public const int UnkEsc = 0xAAF3;
+		public const int GoBeautyShop = 0xAAF8;
+		public const int GoBeautyShopR = 0xAAF9;
+		public const int LeaveBeautyShop = 0xAAFA;
+		public const int LeaveBeautyShopR = 0xAAFB;
+		public const int OpenBeautyShop = 0xAAFC;
+		//public const int ? = 0xAAFD;	// Buy looks?
+		//public const int ? = 0xAAFE;	// Buy looks R?
+		public const int CancelBeautyShop = 0xAAFF;
+		public const int CancelBeautyShopR = 0xAB00;
 
-		public const int GoBeautyShop = 0xAAF4;
-		public const int GoBeautyShopR = 0xAAF5;
-		public const int LeaveBeautyShop = 0xAAF6;
-		public const int LeaveBeautyShopR = 0xAAF7;
-		public const int OpenBeautyShop = 0xAAF8;
-		//public const int ? = 0xAAF9;	// Buy looks?
-		//public const int ? = 0xAAFA;	// Buy looks R?
-		public const int CancelBeautyShop = 0xAAFB;
-		public const int CancelBeautyShopR = 0xAAFC;
+		public const int TalentInfoUpdate = 0xAB17;
+		public const int TalentTitleChange = 0xAB18;
+		public const int TalentTitleUpdate = 0xAB19;
 
-		public const int TalentInfoUpdate = 0xAB13;
-		public const int TalentTitleChange = 0xAB14;
-		public const int TalentTitleUpdate = 0xAB15;
+		public const int ShamalaTransformationUpdate = 0xAB1B;
+		public const int ShamalaTransformationUse = 0xAB1C;
+		public const int ShamalaTransformation = 0xAB1D;
+		public const int ShamalaTransformationEnd = 0xAB1E;
+		public const int ShamalaTransformationEndR = 0xAB1F;
 
-		public const int ShamalaTransformationUpdate = 0xAB17;
-		public const int ShamalaTransformationUse = 0xAB18;
-		public const int ShamalaTransformation = 0xAB19;
-		public const int ShamalaTransformationEnd = 0xAB1A;
-		public const int ShamalaTransformationEndR = 0xAB1B;
+		// [190100, NA200 (2015-01-15)]
+		public const int ItemMagnet = 0xABAB;
 
 		public const int NpcTalk = 0x13882;
 		public const int NpcTalkSelect = 0x13883;

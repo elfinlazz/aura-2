@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Aura.Data;
 using Aura.Shared.Mabi.Structs;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -117,13 +118,14 @@ namespace Aura.Channel.Network.Sending
 		{
 			// Private
 			StatUpdate(creature, StatUpdateType.Private,
+				Stat.Height, Stat.Upper, Stat.Lower,
 				Stat.Life, Stat.LifeInjured, Stat.LifeMax, Stat.LifeMaxMod,
 				Stat.Stamina, Stat.Hunger, Stat.StaminaMax, Stat.StaminaMaxMod,
 				Stat.Mana, Stat.ManaMax, Stat.ManaMaxMod,
 				Stat.Str, Stat.Dex, Stat.Int, Stat.Luck, Stat.Will,
 				Stat.StrMod, Stat.DexMod, Stat.IntMod, Stat.LuckMod, Stat.WillMod,
 				Stat.DefenseBaseMod, Stat.DefenseMod, Stat.ProtectionBaseMod, Stat.ProtectionMod,
-				Stat.Level, Stat.Experience, Stat.AbilityPoints, Stat.CombatPower
+				Stat.Level, Stat.Experience, Stat.AbilityPoints, Stat.CombatPower, Stat.Age
 			);
 
 			// Public
@@ -258,6 +260,8 @@ namespace Aura.Channel.Network.Sending
 						case Stat.AttackMinMod: packet.PutShort((short)creature.AttackMinMod); break;
 						case Stat.AttackMaxMod: packet.PutShort((short)creature.AttackMaxMod); break;
 
+						case Stat.Age: packet.PutShort((short)creature.Age); break;
+
 						// Client might crash with a mismatching value, 
 						// take a chance and put an int by default.
 						default:
@@ -357,26 +361,16 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <remarks>
 		/// The byte parameter is the rest post to use, 0 being the default.
-		/// It seems like the creature reverts to the default upon appearing
-		/// though. Maybe we're missing something in 5334.
-		/// Old Aura code:
-		/// <code>
-		/// var skill = this.Skills.Get(SkillConst.Rest);
-		/// if (skill == null)
-		///		return 0;
-		/// 
-		/// byte pose = 0;
-		/// if (skill.Rank >= SkillRank.R9)
-		///		pose = 4;
-		/// if (skill.Rank >= SkillRank.R1)
-		///		pose = 5;
-		/// </code>
+		/// To keep sitting in that position for others, even if they run
+		/// out of range, CreatureStateEx is required to be set (see Rest).
+		/// It's unknown which state is the one for Rest R1 though,
+		/// it might not be implemented at all yet.
 		/// </remarks>
 		/// <param name="creature"></param>
 		public static void SitDown(Creature creature)
 		{
 			var packet = new Packet(Op.SitDown, creature.EntityId);
-			packet.PutByte(0);
+			packet.PutByte(creature.GetRestPose());
 
 			creature.Region.Broadcast(packet, creature);
 		}
@@ -424,4 +418,6 @@ namespace Aura.Channel.Network.Sending
 			creature.Region.Broadcast(packet, creature);
 		}
 	}
+
+	public enum StatUpdateType : byte { Private = 3, Public = 4 }
 }

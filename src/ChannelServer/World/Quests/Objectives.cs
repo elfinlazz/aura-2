@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Linq;
 using Aura.Data;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Mabi;
@@ -8,13 +9,6 @@ using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.World.Quests
 {
-	//Kill = 1,
-	//Collect = 2,
-	//Talk = 3,
-	//Deliver = 4,
-	//ReachRank = 9,
-	//ReachLevel = 15,
-
 	public abstract class QuestObjective
 	{
 		public string Ident { get; set; }
@@ -30,7 +24,7 @@ namespace Aura.Channel.World.Quests
 
 		public abstract ObjectiveType Type { get; }
 
-		public QuestObjective(int amount)
+		protected QuestObjective(int amount)
 		{
 			this.MetaData = new MabiDictionary();
 			this.Amount = amount;
@@ -63,12 +57,7 @@ namespace Aura.Channel.World.Quests
 		/// <returns></returns>
 		public bool Check(Creature killedCreature)
 		{
-			foreach (var type in this.RaceTypes)
-			{
-				if (killedCreature.RaceData.HasTag(type))
-					return true;
-			}
-			return false;
+			return this.RaceTypes.Any(type => killedCreature.RaceData.HasTag(type));
 		}
 	}
 

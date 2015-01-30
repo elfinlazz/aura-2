@@ -16,30 +16,61 @@ public class WolfAi : AiScript
 	protected override IEnumerable Idle()
 	{
 		Do(Wander());
-		Do(Wait(3000, 10000));
+		Do(Wait(2000, 5000));
 	}
 	
 	protected override IEnumerable Alert()
 	{
-		// 30% chance to circle
-		// 10% chance to active defense
-		// 10% chance to active counter
-		switch(Random(10))
+		if(Random() < 50)
 		{
-			case 0:
-			case 1:  
-			case 2:  Do(Circle(400, 1000, 5000)); break;
-			case 8:  Do(Say("Defense!")); break;
-			case 9:  Do(Say("Counter!")); break;
-			default: break;
+			if(Random() < 50)
+			{
+				Do(PrepareSkill(SkillId.Defense));
+				Do(Circle(500, 1000, 5000));
+				Do(CancelSkill());
+			}
+			else
+			{
+				Do(PrepareSkill(SkillId.Counterattack));
+				Do(Wait(5000));
+				Do(CancelSkill());
+			}
 		}
-			
-		Do(Wait(1000, 5000));
+		else
+		{
+			Do(Circle(400, 1000, 5000));
+			Do(Wait(1000, 5000));
+		}
 	}
 	
 	protected override IEnumerable Aggro()
 	{
-		Do(Attack(3));
-		Do(Wait(3000, 8000));
+		if(Random() < 50)
+		{
+			var rndnum = Random();
+			if(rndnum < 20) // 20%
+			{
+				Do(PrepareSkill(SkillId.Defense));
+				Do(Circle(500, 1000, 5000));
+				Do(CancelSkill());
+			}
+			else if(rndnum < 60) // 40%
+			{
+				Do(PrepareSkill(SkillId.Smash));
+				Do(Attack(1));
+				Do(Wait(3000, 8000));
+			}
+			else // 40%
+			{
+				Do(PrepareSkill(SkillId.Counterattack));
+				Do(Wait(5000));
+				Do(CancelSkill());
+			}
+		}
+		else
+		{
+			Do(Attack(3));
+			Do(Wait(3000, 8000));
+		}
 	}
 }

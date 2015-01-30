@@ -1,36 +1,28 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Network;
+using Aura.Channel.Scripting;
+using Aura.Channel.Skills;
+using Aura.Channel.Util;
+using Aura.Channel.World.Entities;
+using Aura.Channel.World.Entities.Creatures;
+using Aura.Channel.World.Inventory;
+using Aura.Channel.World.Quests;
+using Aura.Shared.Database;
+using Aura.Shared.Mabi.Const;
+using Aura.Shared.Util;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using Aura.Channel.Scripting;
-using Aura.Channel.Skills;
-using Aura.Channel.World;
-using Aura.Channel.World.Entities;
-using Aura.Channel.World.Entities.Creatures;
-using Aura.Channel.World.Quests;
-using Aura.Data;
-using Aura.Data.Database;
-using Aura.Shared.Database;
-using Aura.Shared.Mabi;
-using Aura.Shared.Mabi.Const;
-using Aura.Shared.Util;
-using MySql.Data.MySqlClient;
 
 namespace Aura.Channel.Database
 {
-	public class ChannelDb
+	public class ChannelDb : AuraDb
 	{
-		public static readonly ChannelDb Instance = new ChannelDb();
-
-		private ChannelDb()
-		{
-		}
-
 		/// <summary>
 		/// Returns account incl all characters or null, if it doesn't exist.
 		/// </summary>
@@ -40,7 +32,7 @@ namespace Aura.Channel.Database
 		{
 			var account = new Account();
 
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			{
 				// Account
 				// ----------------------------------------------------------
@@ -58,9 +50,31 @@ namespace Aura.Channel.Database
 						account.Id = reader.GetStringSafe("accountId");
 						account.SessionKey = reader.GetInt64("sessionKey");
 						account.Authority = reader.GetByte("authority");
+						account.AutobanCount = reader.GetInt32("autobanCount");
+						account.AutobanScore = reader.GetInt32("autobanScore");
+						account.LastAutobanReduction = reader.GetDateTimeSafe("lastAutobanReduction");
+						account.Bank.Gold = reader.GetInt32("bankGold");
+
+						// We don't need to decrease their score if it's already zero!
+						if (account.AutobanScore > 0 && ChannelServer.Instance.Conf.Autoban.ReductionTime.Ticks != 0)
+						{
+							var elapsed = DateTime.Now - account.LastAutobanReduction;
+							var delta = (int)(elapsed.TotalMinutes / ChannelServer.Instance.Conf.Autoban.ReductionTime.TotalMinutes);
+
+							// Adding a -delta means they're a time traveller! =*O*=
+							// It would also increase their score.
+							if (delta < 0)
+							{
+								account.AutobanScore -= delta;
+								// We add the delta to prevent rapid logins/outs from affecting the score
+								account.LastAutobanReduction = account.LastAutobanReduction.Add(
+									TimeSpan.FromMinutes((long)(ChannelServer.Instance.Conf.Autoban.ReductionTime.TotalMinutes * delta)));
+							}
+						}
 					}
 				}
 
+				// Read account variables
 				account.Vars.Perm = this.LoadVars(account.Id, 0);
 
 				// Characters
@@ -85,6 +99,7 @@ namespace Aura.Channel.Database
 							}
 						}
 					}
+
 				}
 				catch (Exception ex)
 				{
@@ -155,15 +170,18 @@ namespace Aura.Channel.Database
 		/// Returns creature by entityId from table.
 		/// </summary>
 		/// <typeparam name="TCreature"></typeparam>
+		/// <param name="account"></param>
 		/// <param name="entityId"></param>
+		/// <param name="table"></param>
 		/// <returns></returns>
 		private TCreature GetCharacter<TCreature>(Account account, long entityId, string table) where TCreature : PlayerCreature, new()
 		{
 			var character = new TCreature();
 			ushort title = 0, optionTitle = 0;
 			float lifeDelta = 0, manaDelta = 0, staminaDelta = 0;
+			int bankWidth = 12, bankHeight = 8;
 
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `" + table + "` AS c INNER JOIN `creatures` AS cr ON c.creatureId = cr.creatureId WHERE `entityId` = @entityId", conn))
 			{
 				mc.Parameters.AddWithValue("@entityId", entityId);
@@ -186,7 +204,7 @@ namespace Aura.Channel.Database
 					character.Height = reader.GetFloat("height");
 					character.Weight = reader.GetFloat("weight");
 					character.Upper = reader.GetFloat("upper");
-					character.Lower = reader.GetInt32("lower");
+					character.Lower = reader.GetFloat("lower");
 					character.Color1 = reader.GetUInt32("color1");
 					character.Color2 = reader.GetUInt32("color2");
 					character.Color3 = reader.GetUInt32("color3");
@@ -202,6 +220,12 @@ namespace Aura.Channel.Database
 					character.AbilityPoints = reader.GetInt16("ap");
 					character.Age = reader.GetInt16("age");
 					character.State = (CreatureStates)reader.GetUInt32("state");
+
+					character.CreationTime = reader.GetDateTimeSafe("creationTime");
+					character.LastRebirth = reader.GetDateTimeSafe("lastRebirth");
+					character.LastLogin = reader.GetDateTimeSafe("lastLogin");
+					character.LastAging = reader.GetDateTimeSafe("lastAging");
+					character.RebirthCount = reader.GetInt32("rebirthCount");
 
 					character.LifeFoodMod = reader.GetFloat("lifeFood");
 					character.ManaFoodMod = reader.GetFloat("manaFood");
@@ -229,6 +253,9 @@ namespace Aura.Channel.Database
 
 					title = reader.GetUInt16("title");
 					optionTitle = reader.GetUInt16("optionTitle");
+
+					bankWidth = reader.GetInt32("bankWidth");
+					bankHeight = reader.GetInt32("bankHeight");
 				}
 
 				character.LoadDefault();
@@ -240,6 +267,11 @@ namespace Aura.Channel.Database
 			this.GetCharacterTitles(character);
 			this.GetCharacterSkills(character);
 			this.GetCharacterQuests(character);
+
+			// Add bank tab for characters
+			// TODO: Bank tabs for pets?
+			if (character.IsCharacter)
+				this.AddBankTabForCharacter(account, character, bankWidth, bankHeight);
 
 			// Add GM titles for the characters of authority 50+ accounts
 			if (account != null)
@@ -270,26 +302,78 @@ namespace Aura.Channel.Database
 		private void GetCharacterItems(PlayerCreature character)
 		{
 			var items = this.GetItems(character.CreatureId);
+
+			// Create bag pockets
+			foreach (var item in items.Where(a => a.OptionInfo.LinkedPocketId != Pocket.None))
+				character.Inventory.Add(new InventoryPocketNormal(item.OptionInfo.LinkedPocketId, item.Data.BagWidth, item.Data.BagHeight));
+
+			// Add items
 			foreach (var item in items)
 			{
-				if (!character.Inventory.InitAdd(item))
+				// Ignore items that were in bags that don't exist anymore.
+				if (item.Info.Pocket >= Pocket.ItemBags && item.Info.Pocket <= Pocket.ItemBagsMax && !character.Inventory.Has(item.Info.Pocket))
 				{
-					Log.Error("GetCharacterItems: Unable to add item '{0}' ({1}) to inventory.", item.Info.Id, item.EntityId);
+					Log.Debug("GetCharacterItems: Item '{0}' ({1}) is inside a bag that hasn't been loaded yet.", item.Info.Id, item.EntityIdHex);
+					continue;
 				}
+
+				// Try to add item
+				if (!character.Inventory.InitAdd(item))
+					Log.Error("GetCharacterItems: Unable to add item '{0}' ({1}) to inventory.", item.Info.Id, item.EntityId);
+			}
+		}
+
+		/// <summary>
+		/// Reads bank tab for character from db and adds it to account.
+		/// </summary>
+		/// <param name="account"></param>
+		/// <param name="character"></param>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		private void AddBankTabForCharacter(Account account, PlayerCreature character, int width, int height)
+		{
+			// Add tab
+			var race = character.IsHuman ? BankTabRace.Human : character.IsElf ? BankTabRace.Elf : BankTabRace.Giant;
+			account.Bank.AddTab(character.Name, race, width, height);
+
+			// Read bank items
+			var items = this.GetItems(character.CreatureId, true);
+			foreach (var item in items)
+			{
+				if (!account.Bank.InitAdd(character.Name, item))
+					Log.Error("AddBankTabFromCharacter: Unable to add item '{0}' ({1}) to bank tab '{2}'.", item.Info.Id, item.EntityId, character.Name);
 			}
 		}
 
 		/// <summary>
 		/// Returns list of items for creature with the given id.
 		/// </summary>
+		/// <remarks>
+		/// TODO: This should be refactored to read all items in one go,
+		///   instead of reading two or more separate lists.
+		///   1) Make it "ReadItem"
+		///   2) Handle the items in the actual item loading methods
+		/// </remarks>
 		/// <param name="creatureId"></param>
 		/// <returns></returns>
-		private List<Item> GetItems(long creatureId)
+		private List<Item> GetItems(long creatureId, bool bank = false)
 		{
 			var result = new List<Item>();
 
-			using (var conn = AuraDb.Instance.Connection)
-			using (var mc = new MySqlCommand("SELECT * FROM `items` WHERE `creatureId` = @creatureId", conn))
+			var query = "SELECT * FROM `items` WHERE `creatureId` = @creatureId";
+
+			// Filter bank items
+			if (bank)
+				query += " AND `pocket` = 0 AND `bank` IS NOT NULL";
+			else
+				query += " AND `pocket` != 0 AND `bank` IS NULL";
+
+			// Sort descending by linkedPocket to get bags first, they have
+			// to be created before the items can be added.
+			query += " ORDER BY `linkedPocket` DESC";
+
+			using (var conn = this.Connection)
+			using (var mc = new MySqlCommand(query, conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", creatureId);
 
@@ -301,6 +385,7 @@ namespace Aura.Channel.Database
 						var entityId = reader.GetInt64("entityId");
 
 						var item = new Item(itemId, entityId);
+						item.Bank = reader.GetStringSafe("bank");
 						item.Info.Pocket = (Pocket)reader.GetInt32("pocket");
 						item.Info.X = reader.GetInt32("x");
 						item.Info.Y = reader.GetInt32("y");
@@ -325,6 +410,7 @@ namespace Aura.Channel.Database
 						item.OptionInfo.Experience = reader.GetInt16("experience");
 						item.MetaData1.Parse(reader.GetStringSafe("meta1"));
 						item.MetaData2.Parse(reader.GetStringSafe("meta2"));
+						item.OptionInfo.LinkedPocketId = (Pocket)reader.GetByte("linkedPocket");
 
 						result.Add(item);
 					}
@@ -340,7 +426,7 @@ namespace Aura.Channel.Database
 		/// <param name="character"></param>
 		private void GetCharacterKeywords(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `keywords` WHERE `creatureId` = @creatureId", conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
@@ -355,7 +441,7 @@ namespace Aura.Channel.Database
 				}
 			}
 
-			if (character.Is(EntityType.Character))
+			if (character is Character)
 			{
 				// Default
 				character.Keywords.Add("personal_info");
@@ -377,7 +463,7 @@ namespace Aura.Channel.Database
 		/// <param name="character"></param>
 		private void GetCharacterTitles(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `titles` WHERE `creatureId` = @creatureId", conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
@@ -401,7 +487,7 @@ namespace Aura.Channel.Database
 		/// <param name="character"></param>
 		private void GetCharacterSkills(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `skills` WHERE `creatureId` = @creatureId", conn))
 			{
 				mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
@@ -435,7 +521,7 @@ namespace Aura.Channel.Database
 			// hidden ones for now
 			// TODO: Move to race skill db.
 			character.Skills.Add(SkillId.CombatMastery, SkillRank.RF, character.Race);
-			if (character.Is(EntityType.Character))
+			if (character is Character)
 			{
 				character.Skills.Add(SkillId.HiddenEnchant, SkillRank.Novice, character.Race);
 				character.Skills.Add(SkillId.HiddenResurrection, SkillRank.Novice, character.Race);
@@ -496,7 +582,7 @@ namespace Aura.Channel.Database
 		/// <param name="character"></param>
 		public void GetCharacterQuests(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			{
 				using (var mc = new MySqlCommand("SELECT * FROM `quests` WHERE `creatureId` = @creatureId", conn))
 				{
@@ -506,30 +592,34 @@ namespace Aura.Channel.Database
 					{
 						while (reader.Read())
 						{
-							var uniqueId = reader.GetInt64("questIdUnique");
-							var id = reader.GetInt32("questId");
-							var state = (QuestState)reader.GetInt32("state");
-							var itemEntityId = reader.GetInt64("itemEntityId");
-
-							// TODO: Check if quests exist?
-							//  (Creating it will throw otherwise.)
-
-							var quest = new Quest(id, uniqueId, state);
-
-							if (quest.State == QuestState.InProgress)
+							try
 							{
-								// Don't add quest if quest item is missing
-								quest.QuestItem = character.Inventory.GetItem(itemEntityId);
-								if (quest.QuestItem == null)
+								var uniqueId = reader.GetInt64("questIdUnique");
+								var id = reader.GetInt32("questId");
+								var state = (QuestState)reader.GetInt32("state");
+								var itemEntityId = reader.GetInt64("itemEntityId");
+
+								var quest = new Quest(id, uniqueId, state);
+
+								if (quest.State == QuestState.InProgress)
 								{
-									Log.Error("Db.GetCharacterQuests: Unable to find quest item for '{0}'.", quest.Id);
-									continue;
+									// Don't add quest if quest item is missing
+									quest.QuestItem = character.Inventory.GetItem(itemEntityId);
+									if (quest.QuestItem == null)
+									{
+										Log.Error("Db.GetCharacterQuests: Unable to find quest item for '{0}'.", quest.Id);
+										continue;
+									}
+
+									quest.QuestItem.QuestId = quest.UniqueId;
 								}
 
-								quest.QuestItem.QuestId = quest.UniqueId;
+								character.Quests.Add(quest);
 							}
-
-							character.Quests.Add(quest);
+							catch (Exception ex)
+							{
+								Log.Warning(ex.Message);
+							}
 						}
 					}
 				}
@@ -567,13 +657,33 @@ namespace Aura.Channel.Database
 			}
 		}
 
+		public void LogSecurityIncident(ChannelClient client, IncidentSeverityLevel level, string report, string stacktrace)
+		{
+			if (client == null || client.Account == null)
+				return; // TODO: log?
+
+			using (var conn = this.Connection)
+			using (var cmd = new InsertCommand("INSERT INTO `log_security` {0}", conn))
+			{
+				cmd.Set("accountId", client.Account.Id);
+				cmd.Set("characterId", client.Controlling == null ? null : (long?)(client.Controlling.EntityId));
+				cmd.Set("ipAddress", client.Address);
+				cmd.Set("date", DateTime.Now);
+				cmd.Set("level", (int)level);
+				cmd.Set("report", report);
+				cmd.Set("stacktrace", stacktrace);
+
+				cmd.Execute();
+			}
+		}
+
 		/// <summary>
 		/// Saves all quests of character.
 		/// </summary>
 		/// <param name="character"></param>
 		public void SaveQuests(PlayerCreature character)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				// Delete quests
@@ -639,7 +749,7 @@ namespace Aura.Channel.Database
 		/// <param name="account"></param>
 		public void SaveAccount(Account account)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var cmd = new UpdateCommand("UPDATE `accounts` SET {0} WHERE `accountId` = @accountId", conn))
 			{
 				cmd.AddParameter("@accountId", account.Id);
@@ -647,6 +757,10 @@ namespace Aura.Channel.Database
 				cmd.Set("lastlogin", account.LastLogin);
 				cmd.Set("banReason", account.BanReason);
 				cmd.Set("banExpiration", account.BanExpiration);
+				cmd.Set("autobanCount", account.AutobanCount);
+				cmd.Set("autobanScore", account.AutobanScore);
+				cmd.Set("lastAutobanReduction", account.LastAutobanReduction);
+				cmd.Set("bankGold", account.Bank.Gold);
 
 				cmd.Execute();
 			}
@@ -664,9 +778,10 @@ namespace Aura.Channel.Database
 		/// Saves creature and all its data.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="account"></param>
 		public void SaveCharacter(PlayerCreature creature, Account account)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var cmd = new UpdateCommand("UPDATE `creatures` SET {0} WHERE `creatureId` = @creatureId", conn))
 			{
 				var characterLocation = creature.GetPosition();
@@ -713,6 +828,14 @@ namespace Aura.Channel.Database
 				cmd.Set("title", creature.Titles.SelectedTitle);
 				cmd.Set("optionTitle", creature.Titles.SelectedOptionTitle);
 				cmd.Set("state", (uint)creature.State);
+				cmd.Set("age", creature.Age);
+				cmd.Set("rebirthCount", creature.RebirthCount);
+
+				cmd.Set("lastAging", creature.LastAging);
+				if (creature.LastRebirth != DateTime.MinValue)
+					cmd.Set("lastRebirth", creature.LastRebirth);
+				if (creature.LastLogin != DateTime.MinValue)
+					cmd.Set("lastLogin", creature.LastLogin);
 
 				cmd.Execute();
 			}
@@ -733,7 +856,7 @@ namespace Aura.Channel.Database
 		/// <param name="creature"></param>
 		private void SaveCharacterKeywords(PlayerCreature creature)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var mc = new MySqlCommand("DELETE FROM `keywords` WHERE `creatureId` = @creatureId", conn, transaction))
@@ -763,7 +886,7 @@ namespace Aura.Channel.Database
 		/// <param name="creature"></param>
 		private void SaveCharacterTitles(PlayerCreature creature)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var mc = new MySqlCommand("DELETE FROM `titles` WHERE `creatureId` = @creatureId", conn, transaction))
@@ -800,7 +923,7 @@ namespace Aura.Channel.Database
 		/// <param name="creature"></param>
 		private void SaveCharacterItems(PlayerCreature creature)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var mc = new MySqlCommand("DELETE FROM `items` WHERE `creatureId` = @creatureId", conn, transaction))
@@ -809,7 +932,8 @@ namespace Aura.Channel.Database
 					mc.ExecuteNonQuery();
 				}
 
-				foreach (var item in creature.Inventory.Items)
+				var items = creature.Inventory.Items.Union(creature.Client.Account.Bank.GetTabItems(creature.Name));
+				foreach (var item in items)
 				{
 					using (var cmd = new InsertCommand("INSERT INTO `items` {0}", conn, transaction))
 					{
@@ -817,6 +941,7 @@ namespace Aura.Channel.Database
 						if (item.EntityId < MabiId.TmpItems)
 							cmd.Set("entityId", item.EntityId);
 						cmd.Set("itemId", item.Info.Id);
+						cmd.Set("bank", item.Bank);
 						cmd.Set("pocket", (byte)item.Info.Pocket);
 						cmd.Set("x", item.Info.X);
 						cmd.Set("y", item.Info.Y);
@@ -853,13 +978,14 @@ namespace Aura.Channel.Database
 				transaction.Commit();
 			}
 		}
+
 		/// <summary>
 		/// Writes all of creature's skills to the database.
 		/// </summary>
 		/// <param name="creature"></param>
 		private void SaveCharacterSkills(PlayerCreature creature)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var mc = new MySqlCommand("DELETE FROM `skills` WHERE `creatureId` = @creatureId", conn, transaction))
@@ -902,7 +1028,7 @@ namespace Aura.Channel.Database
 		/// <returns></returns>
 		public VariableManager LoadVars(string accountId, long creatureId)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM vars WHERE accountId = @accountId AND creatureId = @creatureId", conn))
 			{
 				mc.Parameters.AddWithValue("@accountId", accountId);
@@ -935,6 +1061,7 @@ namespace Aura.Channel.Database
 							case "d": vars[name] = double.Parse(val); break;
 							case "b": vars[name] = bool.Parse(val); break;
 							case "s": vars[name] = val; break;
+							case "dt": vars[name] = DateTime.Parse(val); break;
 							case "o":
 								var buffer = Convert.FromBase64String(val);
 								var bf = new BinaryFormatter();
@@ -963,7 +1090,7 @@ namespace Aura.Channel.Database
 		/// <param name="vars"></param>
 		public void SaveVars(string accountId, long creatureId, VariableManager vars)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var transaction = conn.BeginTransaction())
 			{
 				using (var deleteMc = new MySqlCommand("DELETE FROM vars WHERE accountId = @accountId AND creatureId = @creatureId", conn, transaction))
@@ -994,15 +1121,12 @@ namespace Aura.Channel.Database
 					else if (var.Value is double) type = "d";
 					else if (var.Value is bool) type = "b";
 					else if (var.Value is string) type = "s";
+					else if (var.Value is DateTime) type = "dt";
 					else type = "o";
 
 					// Get value
 					var val = string.Empty;
-					if (type != "o")
-					{
-						val = var.Value.ToString();
-					}
-					else
+					if (type == "o")
 					{
 						// Objects are serialized to a Base64 string,
 						// because we're storing as string for easier
@@ -1012,6 +1136,14 @@ namespace Aura.Channel.Database
 							bf.Serialize(ms, var.Value);
 							val = Convert.ToBase64String(ms.ToArray());
 						}
+					}
+					else if (type == "dt")
+					{
+						val = var.Value.ToString();
+					}
+					else
+					{
+						val = var.Value.ToString();
 					}
 
 					// Make sure value isn't too big for the mediumtext field
@@ -1045,7 +1177,7 @@ namespace Aura.Channel.Database
 		/// <returns></returns>
 		public bool TmpItemsExist()
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT itemId FROM `items` WHERE `entityId` >= @entityId", conn))
 			{
 				mc.Parameters.AddWithValue("@entityId", MabiId.TmpItems);
@@ -1061,7 +1193,7 @@ namespace Aura.Channel.Database
 		/// <returns></returns>
 		public string GetCouponScript(string code)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var mc = new MySqlCommand("SELECT * FROM `coupons` WHERE `code` = @code AND (`expiration` IS NULL OR `expiration` > NOW()) AND NOT `used`", conn))
 			{
 				mc.Parameters.AddWithValue("@code", code);
@@ -1088,7 +1220,7 @@ namespace Aura.Channel.Database
 		/// <returns></returns>
 		public bool UseCoupon(string code)
 		{
-			using (var conn = AuraDb.Instance.Connection)
+			using (var conn = this.Connection)
 			using (var cmd = new UpdateCommand("UPDATE `coupons` SET {0} WHERE `code` = @code", conn))
 			{
 				cmd.AddParameter("@code", code);

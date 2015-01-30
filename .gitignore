@@ -14,6 +14,12 @@
 /user/scripts/*
 !/user/scripts/scripts_custom-example.txt
 
+/user/resources/*
+!/user/resources/readme.txt
+
+/user/save/*
+!/user/save/readme.txt
+
 #################
 ## Visual Studio
 #################
@@ -25,6 +31,8 @@
 *.suo
 *.user
 *.sln.docstates
+# Mono user-preferences file
+*.userprefs
 
 # Build results
 

@@ -8,14 +8,19 @@ using Aura.Channel.World.Entities;
 using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 
-namespace Aura.Channel.World
+namespace Aura.Channel.World.Inventory
 {
 	public abstract class InventoryPocket
 	{
 		public Pocket Pocket { get; protected set; }
 		public abstract IEnumerable<Item> Items { get; }
 
-		public InventoryPocket(Pocket pocket)
+		/// <summary>
+		/// Returns amount of items.
+		/// </summary>
+		public abstract int Count { get; }
+
+		protected InventoryPocket(Pocket pocket)
 		{
 			this.Pocket = pocket;
 		}
@@ -48,7 +53,7 @@ namespace Aura.Channel.World
 
 		/// <summary>
 		/// Fills stacks that take this item. Returns true if item has been
-		/// was completely added to stacks/sacs.
+		/// completely added to stacks/sacs.
 		/// </summary>
 		/// <param name="item"></param>
 		/// <param name="changed"></param>
@@ -94,11 +99,11 @@ namespace Aura.Channel.World
 		public abstract int Remove(int itemId, int amount, ref List<Item> changed);
 
 		/// <summary>
-		/// Returns amount if items by item id.
+		/// Returns amount of items by item id.
 		/// </summary>
 		/// <param name="itemId"></param>
 		/// <returns></returns>
-		public abstract int Count(int itemId);
+		public abstract int CountItem(int itemId);
 	}
 
 	/// <summary>
@@ -106,9 +111,9 @@ namespace Aura.Channel.World
 	/// </summary>
 	public class InventoryPocketNormal : InventoryPocket
 	{
-		private Dictionary<long, Item> _items;
-		private Item[,] _map;
-		private int _width, _height;
+		protected Dictionary<long, Item> _items;
+		protected Item[,] _map;
+		protected int _width, _height;
 
 		public InventoryPocketNormal(Pocket pocket, int width, int height)
 			: base(pocket)
@@ -124,8 +129,7 @@ namespace Aura.Channel.World
 		{
 			get
 			{
-				foreach (var item in _items.Values)
-					yield return item;
+				return _items.Values;
 			}
 		}
 
@@ -392,15 +396,10 @@ namespace Aura.Channel.World
 			return result;
 		}
 
-		public override int Count(int itemId)
+		public override int CountItem(int itemId)
 		{
-			var result = 0;
-
-			foreach (var item in _items.Values)
-				if (item.Info.Id == itemId || item.Data.StackItem == itemId)
-					result += item.Info.Amount;
-
-			return result;
+			return _items.Values.Where(item => item.Info.Id == itemId || item.Data.StackItem == itemId)
+				.Aggregate(0, (current, item) => current + item.Info.Amount);
 		}
 
 		public override Item GetItem(long id)
@@ -408,6 +407,11 @@ namespace Aura.Channel.World
 			Item item;
 			_items.TryGetValue(id, out item);
 			return item;
+		}
+
+		public override int Count
+		{
+			get { return _items.Count; }
 		}
 	}
 
@@ -493,7 +497,7 @@ namespace Aura.Channel.World
 			return 0;
 		}
 
-		public override int Count(int itemId)
+		public override int CountItem(int itemId)
 		{
 			if (_item != null && _item.Info.Id == itemId)
 				return _item.Info.Amount;
@@ -505,6 +509,11 @@ namespace Aura.Channel.World
 			if (_item != null && _item.EntityId == id)
 				return _item;
 			return null;
+		}
+
+		public override int Count
+		{
+			get { return (_item != null ? 1 : 0); }
 		}
 	}
 
@@ -525,8 +534,7 @@ namespace Aura.Channel.World
 		{
 			get
 			{
-				foreach (var item in _items)
-					yield return item;
+				return _items;
 			}
 		}
 
@@ -575,20 +583,20 @@ namespace Aura.Channel.World
 			return 0;
 		}
 
-		public override int Count(int itemId)
+		public override int CountItem(int itemId)
 		{
-			var result = 0;
-
-			foreach (var item in _items)
-				if (item.Info.Id == itemId || item.Data.StackItem == itemId)
-					result += item.Info.Amount;
-
-			return result;
+			return _items.Where(item => item.Info.Id == itemId || item.Data.StackItem == itemId)
+				.Aggregate(0, (current, item) => current + item.Info.Amount);
 		}
 
 		public override Item GetItem(long id)
 		{
 			return _items.FirstOrDefault(a => a.EntityId == id);
+		}
+
+		public override int Count
+		{
+			get { return _items.Count; }
 		}
 	}
 }

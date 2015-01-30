@@ -21,8 +21,8 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 
 			// Check creature and region
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null || creature.Region == null || creature.IsDead)
+			var creature = client.GetCreatureSafe(packet.Id);
+			if (creature.Region == null || creature.IsDead)
 				return;
 
 			// Check prop
@@ -72,8 +72,8 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 
 			// Check creature and region
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null || creature.Region == null || creature.IsDead)
+			var creature = client.GetCreatureSafe(packet.Id);
+			if (creature.Region == null || creature.IsDead)
 				return;
 
 			// Check prop

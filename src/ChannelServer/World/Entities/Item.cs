@@ -14,23 +14,59 @@ namespace Aura.Channel.World.Entities
 {
 	public class Item : Entity
 	{
+		/// <summary>
+		/// Radius in which the item is dropped in Drop().
+		/// </summary>
 		private const int DropRadius = 50;
 
+		/// <summary>
+		/// Unique item id that is increased for every new item.
+		/// </summary>
 		private static long _itemId = MabiId.TmpItems;
 
-		public override EntityType EntityType { get { return EntityType.Item; } }
+		/// <summary>
+		/// Returns entity data type "Item".
+		/// </summary>
 		public override DataType DataType { get { return DataType.Item; } }
+
+		/// <summary>
+		/// Gets or sets the item's region, forwarding to Info.Region.
+		/// </summary>
 		public override int RegionId
 		{
 			get { return this.Info.Region; }
 			set { this.Info.Region = value; }
 		}
 
+		/// <summary>
+		/// Public item information
+		/// </summary>
 		public ItemInfo Info;
+
+		/// <summary>
+		/// Private item information
+		/// </summary>
 		public ItemOptionInfo OptionInfo;
+
+		/// <summary>
+		/// Aura database item data
+		/// </summary>
 		public ItemData Data { get; protected set; }
+
+		/// <summary>
+		/// Meta information 1
+		/// </summary>
 		public MabiDictionary MetaData1 { get; protected set; }
+
+		/// <summary>
+		/// Meta information 2
+		/// </summary>
 		public MabiDictionary MetaData2 { get; protected set; }
+
+		/// <summary>
+		/// Bank at which the item is currently lying around.
+		/// </summary>
+		public string Bank { get; set; }
 
 		private bool _firstTimeAppear = true;
 		/// <summary>
@@ -45,9 +81,11 @@ namespace Aura.Channel.World.Entities
 				_firstTimeAppear = false;
 				return result;
 			}
-			set { _firstTimeAppear = true; }
 		}
 
+		/// <summary>
+		/// Quest id, used for quest items.
+		/// </summary>
 		public long QuestId { get; set; }
 
 		/// <summary>
@@ -57,7 +95,7 @@ namespace Aura.Channel.World.Entities
 		public int Amount
 		{
 			get { return this.Info.Amount; }
-			set { this.Info.Amount = (ushort)Math2.MinMax(0, this.Data.StackMax, value); }
+			set { this.Info.Amount = (ushort)Math2.Clamp(0, this.Data.StackMax, value); }
 		}
 
 		/// <summary>
@@ -75,6 +113,20 @@ namespace Aura.Channel.World.Entities
 		{
 			get { return this.OptionInfo.Critical / 100f; }
 		}
+
+		/// <summary>
+		/// Returns true if tag contains "/pounch/bag/".
+		/// </summary>
+		public bool IsBag
+		{
+			get { return this.Data.HasTag("/pouch/bag/"); }
+		}
+
+		/// <summary>
+		/// Gets or sets whether the item is displayed as new in inv.
+		/// [190100, NA200 (2015-01-15)]
+		/// </summary>
+		public bool IsNew { get; set; }
 
 		/// <summary>
 		/// New item based on item id.
@@ -106,6 +158,7 @@ namespace Aura.Channel.World.Entities
 		/// Item based on item and entity id.
 		/// </summary>
 		/// <param name="itemId"></param>
+		/// <param name="entityId"></param>
 		public Item(int itemId, long entityId)
 		{
 			this.Init(itemId);
@@ -141,12 +194,21 @@ namespace Aura.Channel.World.Entities
 			this.LoadDefault();
 		}
 
+		/// <summary>
+		/// Returns item's position, based on Info.X and Y.
+		/// </summary>
+		/// <returns></returns>
 		public override Position GetPosition()
 		{
 			return new Position(this.Info.X, this.Info.Y);
 		}
 
-		// Modifies position in inventory.
+		/// <summary>
+		/// Modifies position in inventory.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
 		public void Move(Pocket pocket, int x, int y)
 		{
 			this.Info.Pocket = pocket;
@@ -181,6 +243,7 @@ namespace Aura.Channel.World.Entities
 		/// Drops item in location with a new entity id.
 		/// </summary>
 		/// <param name="region"></param>
+		/// <param name="pos"></param>
 		public void Drop(Region region, Position pos)
 		{
 			var rnd = RandomProvider.Get();
@@ -197,7 +260,7 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Loads data.
+		/// Loads default item information from data.
 		/// </summary>
 		public void LoadDefault()
 		{

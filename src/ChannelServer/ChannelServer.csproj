@@ -97,11 +97,22 @@
     <Compile Include="Network\Handlers\Pets.cs" />
     <Compile Include="Network\Handlers\Props.cs" />
     <Compile Include="Network\Handlers\Quests.cs" />
+    <Compile Include="Network\Handlers\Rebirth.cs" />
     <Compile Include="Network\Handlers\Skills.cs" />
     <Compile Include="Network\Handlers\LogInOut.cs" />
     <Compile Include="Network\Handlers\Misc.cs" />
     <Compile Include="Network\Handlers\Movement.cs" />
     <Compile Include="Network\Handlers\NPCs.cs" />
+    <Compile Include="Network\InternalClient.cs" />
+    <Compile Include="Network\Sending\Helpers\ConditionHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\CreatureHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\EntityHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\ItemHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\PropHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\PvpHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\QuestHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\RegenHelper.cs" />
+    <Compile Include="Network\Sending\Helpers\TalentHelper.cs" />
     <Compile Include="Network\Sending\Send.GMCP.cs" />
     <Compile Include="Network\Sending\Send.Quests.cs" />
     <Compile Include="Network\Sending\Send.Effects.cs" />
@@ -117,6 +128,7 @@
     <Compile Include="Network\Sending\Send.LogInOut.cs" />
     <Compile Include="Network\Sending\Send.Internal.cs" />
     <Compile Include="Network\Sending\Send.Messages.cs" />
+    <Compile Include="Network\Sending\Send.Rebirth.cs" />
     <Compile Include="Network\Sending\Send.Vehicles.cs" />
     <Compile Include="Network\Sending\Send.World.cs" />
     <Compile Include="Program.cs" />
@@ -124,6 +136,7 @@
     <Compile Include="Scripting\Compilers\BooCompiler.cs" />
     <Compile Include="Scripting\CreatureSpawn.cs" />
     <Compile Include="Scripting\NpcSession.cs" />
+    <Compile Include="Scripting\ScriptAttributes.cs" />
     <Compile Include="Scripting\Scripts\AiScript.cs" />
     <Compile Include="Scripting\Scripts\GeneralScript.cs" />
     <Compile Include="Scripting\Scripts\DialogElements.cs" />
@@ -138,7 +151,8 @@
     <Compile Include="Scripting\Scripts\RegionScript.cs" />
     <Compile Include="Scripting\ScriptVariables.cs" />
     <Compile Include="Scripting\MagicWordsScript.cs" />
-    <Compile Include="Skills\Actions\ContinentWarpSkillHandler.cs" />
+    <Compile Include="Skills\Actions\ContinentWarp.cs" />
+    <Compile Include="Skills\Actions\OutfitAction.cs" />
     <Compile Include="Skills\Base\CombatSkillHandler.cs" />
     <Compile Include="Skills\Base\Interfaces.cs" />
     <Compile Include="Skills\Base\StandardPrepareHandler.cs" />
@@ -147,22 +161,25 @@
     <Compile Include="Skills\Combat\CombatMastery.cs" />
     <Compile Include="Skills\Combat\Defense.cs" />
     <Compile Include="Skills\Combat\Smash.cs" />
-    <Compile Include="Skills\Hidden\DyeSkillHandler.cs" />
-    <Compile Include="Skills\Life\RestSkillHandler.cs" />
-    <Compile Include="Skills\Magic\ManaShieldSkillHandler.cs" />
-    <Compile Include="Skills\Music\ComposingSkillHandler.cs" />
-    <Compile Include="Skills\Music\PlayingInstrumentHandler.cs" />
-    <Compile Include="Skills\Music\SongSkillHandler.cs" />
+    <Compile Include="Skills\Hidden\Dye.cs" />
+    <Compile Include="Skills\Life\Rest.cs" />
+    <Compile Include="Skills\Magic\ManaShield.cs" />
+    <Compile Include="Skills\Magic\SilentMove.cs" />
+    <Compile Include="Skills\Music\Composing.cs" />
+    <Compile Include="Skills\Music\PlayingInstrument.cs" />
+    <Compile Include="Skills\Music\Song.cs" />
     <Compile Include="Skills\Skill.cs" />
     <Compile Include="Skills\SkillHelper.cs" />
     <Compile Include="Skills\SkillManager.cs" />
     <Compile Include="Util\Configuration\ChannelConf.cs" />
     <Compile Include="Util\ChannelConsoleCommands.cs" />
+    <Compile Include="Util\Configuration\Files\Autoban.cs" />
     <Compile Include="Util\Configuration\Files\Channel.cs" />
     <Compile Include="Util\Configuration\Files\Commands.cs" />
     <Compile Include="Util\Configuration\Files\World.cs" />
     <Compile Include="Util\GmCommands.cs" />
     <Compile Include="Util\Quadtree.cs" />
+    <Compile Include="Util\Security.cs" />
     <Compile Include="World\Cutscene.cs" />
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\Creature.cs" />
@@ -183,6 +200,7 @@
     <Compile Include="World\Entities\PlayerCreature.cs" />
     <Compile Include="World\Entities\Prop.cs" />
     <Compile Include="World\EventManager.cs" />
+    <Compile Include="World\Inventory\BankInventory.cs" />
     <Compile Include="World\Inventory\CreatureInventory.cs" />
     <Compile Include="World\Inventory\InventoryPockets.cs" />
     <Compile Include="World\Location.cs" />
@@ -198,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Compile Include="Network\Sending\Send.Adds.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">

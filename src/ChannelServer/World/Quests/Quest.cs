@@ -47,10 +47,7 @@ namespace Aura.Channel.World.Quests
 		{
 			get
 			{
-				foreach (var progress in _progresses.Values)
-					if (!progress.Done)
-						return false;
-				return true;
+				return _progresses.Values.All(progress => progress.Done);
 			}
 		}
 
@@ -62,10 +59,7 @@ namespace Aura.Channel.World.Quests
 		{
 			get
 			{
-				foreach (var progress in _progresses.Values)
-					if (!progress.Done)
-						return progress;
-				return null;
+				return _progresses.Values.FirstOrDefault(progress => !progress.Done);
 			}
 		}
 

@@ -3,6 +3,7 @@
 
 using System;
 using Newtonsoft.Json.Linq;
+
 namespace Aura.Data.Database
 {
 	[Serializable]

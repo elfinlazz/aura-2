@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `creatures` (
   `name` varchar(50) NOT NULL,
   `race` int(11) NOT NULL,
   `skinColor` tinyint(3) unsigned NOT NULL,
-  `eyeType` tinyint(3) unsigned NOT NULL,
+  `eyeType` smallint(6) NOT NULL,
   `eyeColor` tinyint(3) unsigned NOT NULL,
   `mouthType` tinyint(3) unsigned NOT NULL,
   `height` float NOT NULL DEFAULT '1',
@@ -99,11 +99,15 @@ CREATE TABLE IF NOT EXISTS `creatures` (
   `title` smallint(5) unsigned NOT NULL DEFAULT '0',
   `optionTitle` smallint(5) unsigned NOT NULL DEFAULT '0',
   `state` int(10) unsigned NOT NULL DEFAULT '0',
+  `creationTime` datetime NOT NULL,
+  `lastAging` datetime NOT NULL,
+  `lastRebirth` datetime DEFAULT NULL,
+  `lastLogin` datetime DEFAULT NULL,
   PRIMARY KEY (`creatureId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-INSERT INTO `creatures` (`creatureId`, `server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`, `region`, `x`, `y`, `direction`, `level`, `levelTotal`, `exp`, `ap`, `age`, `lifeMax`, `lifeDelta`, `injuries`, `manaMax`, `manaDelta`, `staminaMax`, `staminaDelta`, `hunger`, `str`, `int`, `dex`, `will`, `luck`, `lifeFood`, `manaFood`, `staminaFood`, `strFood`, `intFood`, `dexFood`, `willFood`, `luckFood`, `defense`, `protection`, `deletionTime`, `weaponSet`, `title`, `optionTitle`, `state`) VALUES
-(1, 'AuraSystem', '_Dummy', 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 12800, 38100, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0);
+INSERT INTO `creatures` (`creatureId`, `server`, `name`, `race`, `skinColor`, `eyeType`, `eyeColor`, `mouthType`, `height`, `weight`, `upper`, `lower`, `color1`, `color2`, `color3`, `region`, `x`, `y`, `direction`, `level`, `levelTotal`, `exp`, `ap`, `age`, `lifeMax`, `lifeDelta`, `injuries`, `manaMax`, `manaDelta`, `staminaMax`, `staminaDelta`, `hunger`, `str`, `int`, `dex`, `will`, `luck`, `lifeFood`, `manaFood`, `staminaFood`, `strFood`, `intFood`, `dexFood`, `willFood`, `luckFood`, `defense`, `protection`, `deletionTime`, `weaponSet`, `title`, `optionTitle`, `state`, `creationTime`, `lastAging`, `lastRebirth`, `lastLogin`) VALUES
+(1, 'AuraSystem', '_Dummy', 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 12800, 38100, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL);
 
 CREATE TABLE IF NOT EXISTS `coupons` (
   `code` varchar(19) NOT NULL,
@@ -205,6 +209,22 @@ CREATE TABLE IF NOT EXISTS `quests` (
 INSERT INTO `quests` (`questIdUnique`, `creatureId`, `questId`, `state`, `itemEntityId`) VALUES
 (27022628556374017, 1, 0, 1, 0);
 
+CREATE TABLE IF NOT EXISTS `updates` (
+  `path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `updates` (`path`) VALUES
+('main.sql'),
+('update_2014-02-26.sql'),
+('update_2014-02-27.sql'),
+('update_2014-07-26.sql'),
+('update_2014-07-27.sql'),
+('update_2014-07-28.sql'),
+('update_2014-07-31.sql');
+
+ALTER TABLE `updates`
+ ADD PRIMARY KEY (`path`);
+ 
 CREATE TABLE IF NOT EXISTS `skills` (
   `skillId` smallint(5) unsigned NOT NULL,
   `creatureId` bigint(20) NOT NULL,

@@ -22,7 +22,7 @@ namespace Aura.Channel.Network.Sending
 		public static void ChangeStance(Creature creature)
 		{
 			var packet = new Packet(Op.ChangeStance, creature.EntityId);
-			packet.PutByte((byte)creature.BattleStance);
+			packet.PutByte(creature.IsInBattleStance);
 			packet.PutByte(1);
 
 			creature.Region.Broadcast(packet, creature);
@@ -130,7 +130,7 @@ namespace Aura.Channel.Network.Sending
 		/// Broadcasts CombatActionEnd in range of creature.
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
+		/// <param name="combatActionId"></param>
 		public static void CombatActionEnd(Creature creature, int combatActionId)
 		{
 			var packet = new Packet(Op.CombatActionEnd, MabiId.Broadcast);
@@ -144,6 +144,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="targetEntityId"></param>
+		/// <param name="mode"></param>
 		public static void SetCombatTarget(Creature creature, long targetEntityId, TargetMode mode)
 		{
 			var packet = new Packet(Op.SetCombatTarget, creature.EntityId);
@@ -171,6 +172,7 @@ namespace Aura.Channel.Network.Sending
 		/// Sends CombatAttackR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="success"></param>
 		public static void CombatAttackR(Creature creature, bool success)
 		{
 			var packet = new Packet(Op.CombatAttackR, creature.EntityId);
@@ -187,6 +189,7 @@ namespace Aura.Channel.Network.Sending
 		/// so the client knows it has to adjust the creature's position.
 		/// </remarks>
 		/// <param name="creature"></param>
+		/// <param name="target"></param>
 		public static void CombatAttackR(Creature creature, Creature target)
 		{
 			var creaturePos = creature.GetPosition();

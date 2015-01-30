@@ -197,6 +197,7 @@ namespace Aura.Data.Database
 		}
 	}
 
+	[Flags]
 	public enum RaceStands : int
 	{
 		KnockBackable = 0x01,
@@ -261,8 +262,7 @@ namespace Aura.Data.Database
 					}
 					else if (obj[col].Type == JTokenType.Array)
 					{
-						foreach (var id in obj[col])
-							list.Add((int)id);
+						list.AddRange(obj[col].Select(id => (int) id));
 					}
 				}
 			};

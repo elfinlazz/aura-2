@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Aura.Channel.World.Entities;
 using Aura.Data;
@@ -11,6 +12,7 @@ using Aura.Shared.Util;
 using Aura.Channel.Util;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Network;
+using System.Threading.Tasks;
 
 namespace Aura.Channel.World
 {
@@ -47,8 +49,7 @@ namespace Aura.Channel.World
 		/// </summary>
 		private void AddRegionsFromData()
 		{
-			foreach (var region in AuraData.RegionDb.Entries.Values)
-				this.AddRegion(region.Id);
+			Parallel.ForEach(AuraData.RegionDb.Entries.Values, region => this.AddRegion(region.Id));
 		}
 
 		// ------------------------------------------------------------------
@@ -189,9 +190,11 @@ namespace Aura.Channel.World
 					Log.Warning("Region '{0}' already exists.", regionId);
 					return;
 				}
-
-				_regions.Add(regionId, new Region(regionId));
 			}
+
+			var region = new Region(regionId);
+			lock (_regions)
+				_regions.Add(regionId, region);
 		}
 
 		/// <summary>
@@ -235,14 +238,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public Prop GetProp(long id)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var prop = region.GetProp(id);
-				if (prop != null)
-					return prop;
-			}
-
-			return null;
+			return _regions.Values.Select(region => region.GetProp(id)).FirstOrDefault(prop => prop != null);
 		}
 
 		/// <summary>
@@ -252,14 +248,7 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public PlayerCreature GetPlayer(string name)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var creature = region.GetPlayer(name);
-				if (creature != null)
-					return creature;
-			}
-
-			return null;
+			return _regions.Values.Select(region => region.GetPlayer(name)).FirstOrDefault(creature => creature != null);
 		}
 
 		/// <summary>
@@ -277,37 +266,32 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns amount of players in all regions.
+		/// </summary>
+		/// <returns></returns>
+		public int CountPlayers()
+		{
+			return _regions.Values.Sum(region => region.CountPlayers());
+		}
+
+		/// <summary>
 		/// Returns creature from any region by id, or null.
 		/// </summary>
 		/// <param name="entityId"></param>
 		/// <returns></returns>
 		public Creature GetCreature(long entityId)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var creature = region.GetCreature(entityId);
-				if (creature != null)
-					return creature;
-			}
-
-			return null;
+			return _regions.Values.Select(region => region.GetCreature(entityId)).FirstOrDefault(creature => creature != null);
 		}
 
 		/// <summary>
 		/// Returns creature from any region by name, or null.
 		/// </summary>
-		/// <param name="entityId"></param>
+		/// <param name="name"></param>
 		/// <returns></returns>
 		public Creature GetCreature(string name)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var creature = region.GetCreature(name);
-				if (creature != null)
-					return creature;
-			}
-
-			return null;
+			return _regions.Values.Select(region => region.GetCreature(name)).FirstOrDefault(creature => creature != null);
 		}
 
 		/// <summary>
@@ -317,14 +301,17 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public NPC GetNpc(long entityId)
 		{
-			foreach (var region in _regions.Values)
-			{
-				var creature = region.GetNpc(entityId);
-				if (creature != null)
-					return creature;
-			}
+			return _regions.Values.Select(region => region.GetNpc(entityId)).FirstOrDefault(creature => creature != null);
+		}
 
-			return null;
+		/// <summary>
+		/// Returns NPC from any region by name, or null.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public NPC GetNpc(string name)
+		{
+			return (NPC)_regions.Values.Select(region => region.GetCreature(name)).FirstOrDefault(creature => creature != null && creature is NPC);
 		}
 
 		/// <summary>

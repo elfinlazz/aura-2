@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Shared.Mabi;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Skills;
@@ -13,6 +14,14 @@ namespace Aura.Channel.World
 {
 	public class EventManager
 	{
+		/// <summary>
+		/// Raised when there's a security violation
+		/// </summary>
+		public event Action<SecurityViolationEventArgs> SecurityViolation;
+		public void OnSecurityViolation(SecurityViolationEventArgs args) { SecurityViolation.Raise(args); }
+
+		// -------------------------------------------------------------
+
 		/// <summary>
 		/// Raised every second in real time.
 		/// </summary>

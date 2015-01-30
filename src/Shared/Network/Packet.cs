@@ -29,10 +29,10 @@ namespace Aura.Shared.Network
 		/// <summary>
 		/// Default size for the buffer
 		/// </summary>
-		private const int DefaultSize = 8192;
+		private const int DefaultSize = 1024 * 2;
 
 		/// <summary>
-		/// Size added, every time it runs out of space
+		/// Size added, every time the buffer runs out of space
 		/// </summary>
 		private const int AddSize = 1024;
 
@@ -399,6 +399,16 @@ namespace Aura.Shared.Network
 
 		// ------------------------------------------------------------------
 
+		/// <summary>
+		/// Reads variable lengthed number from buffer.
+		/// </summary>
+		/// <remarks>
+		/// Used for the counters after op and id.
+		/// http://en.wikipedia.org/wiki/LEB128
+		/// </remarks>
+		/// <param name="buffer"></param>
+		/// <param name="ptr"></param>
+		/// <returns></returns>
 		private int ReadVarInt(byte[] buffer, ref int ptr)
 		{
 			int result = 0;
@@ -414,6 +424,16 @@ namespace Aura.Shared.Network
 			return result;
 		}
 
+		/// <summary>
+		/// Writes variable lengthed number to buffer.
+		/// </summary>
+		/// <remarks>
+		/// Used for the counters after op and id.
+		/// http://en.wikipedia.org/wiki/LEB128
+		/// </remarks>
+		/// <param name="value"></param>
+		/// <param name="buffer"></param>
+		/// <param name="ptr"></param>
 		private void WriteVarInt(int value, byte[] buffer, ref int ptr)
 		{
 			do
@@ -491,6 +511,16 @@ namespace Aura.Shared.Network
 			Buffer.BlockCopy(_buffer, _bodyStart, buffer, offset, _bodyLen);
 		}
 
+		/// <summary>
+		/// Returns true if type is a valid value of the enum and not None.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		private bool IsValidType(PacketElementType type)
+		{
+			return (type >= PacketElementType.Byte && type <= PacketElementType.Bin);
+		}
+
 		public override string ToString()
 		{
 			var result = new StringBuilder();
@@ -500,7 +530,7 @@ namespace Aura.Shared.Network
 			result.AppendFormat("Op: {0:X08}, Id: {1:X016}" + Environment.NewLine, this.Op, this.Id);
 
 			PacketElementType type;
-			for (int i = 1; ((type = this.Peek()) != PacketElementType.None && _ptr < _buffer.Length); ++i)
+			for (int i = 1; (this.IsValidType(type = this.Peek()) && _ptr < _buffer.Length); ++i)
 			{
 				if (type == PacketElementType.Byte)
 				{

@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Shared.Mabi.Const
 {
+	[Flags]
 	public enum CreatureStates : uint
 	{
 		Initialized = 0x00000001,
@@ -14,7 +17,7 @@ namespace Aura.Shared.Mabi.Const
 		InventoryViewDisabled = 0x00000080,
 		PetFinishMode = 0x00000100,
 		FreeRebirth = 0x00000200,
-		JustRebirth = 0x00000400,
+		JustRebirthed = 0x00000400,
 		LevelResetRebirth = 0x00000800,
 		EnableCommonPvp = 0x00001000,
 		JournalVisible = 0x00002000,
@@ -41,6 +44,7 @@ namespace Aura.Shared.Mabi.Const
 		Npc = 0x80000000,
 	}
 
+	[Flags]
 	public enum CreatureStatesEx : uint
 	{
 		DefenceBonus = 0x00000001,
@@ -70,11 +74,9 @@ namespace Aura.Shared.Mabi.Const
 		UseUmbrella = 0x02000000,
 		ThrowingGold = 0x04000000,
 		ZombieWalk = 0x08000000,
-	}
-
-	public enum BattleStance : byte
-	{
-		Idle = 0,
-		Ready = 1,
+		// ? = 0x10000000,
+		// ? = 0x20000000,
+		RestR9 = 0x40000000,
+		// ? = 0x80000000, // Rest related? Makes human sit like a giant Oo
 	}
 }

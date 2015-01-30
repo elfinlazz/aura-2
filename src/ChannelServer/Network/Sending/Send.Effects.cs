@@ -23,6 +23,7 @@ namespace Aura.Channel.Network.Sending
 		/// Parameters have to be casted to the proper type, use carefully!
 		/// </remarks>
 		/// <param name="creature"></param>
+		/// <param name="effectId"></param>
 		/// <param name="parameters"></param>
 		public static void Effect(Creature creature, int effectId, params object[] parameters)
 		{
@@ -129,6 +130,19 @@ namespace Aura.Channel.Network.Sending
 			//packet.PutByte(1);
 
 			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Plays a sound file to all entities in range of <paramref name="source"/>.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="file">The file to play, eg "data/sound/Tarlach_change.wav"</param>
+		public static void PlaySound(Entity source, string file)
+		{
+			var packet = new Packet(Op.PlaySound, source.EntityId);
+			packet.PutString(file);
+
+			source.Region.Broadcast(packet, source);
 		}
 	}
 }

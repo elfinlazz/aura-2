@@ -99,7 +99,7 @@ namespace Aura.Login.Network.Handlers
 					if (loginType == LoginType.EU)
 						password = Password.RawToMD5(passbin);
 
-					// Upgrade MD5 to SHA1
+					// Upgrade MD5 to SHA1 (used by newer clients)
 					if (password.Length == 32) // MD5
 						password = Password.MD5ToSHA256(password);
 
@@ -108,9 +108,9 @@ namespace Aura.Login.Network.Handlers
 					{
 						accountId = accountId.Remove(0, 5);
 
-						if (!AuraDb.Instance.AccountExists(accountId) && password != "")
+						if (!LoginServer.Instance.Database.AccountExists(accountId) && password != "")
 						{
-							LoginDb.Instance.CreateAccount(accountId, password);
+							LoginServer.Instance.Database.CreateAccount(accountId, password);
 							Log.Info("New account '{0}' was created.", accountId);
 						}
 					}
@@ -122,7 +122,7 @@ namespace Aura.Login.Network.Handlers
 
 					break;
 
-				// Logging in, comming from a channel
+				// Logging in, coming from a channel
 				case LoginType.FromChannel:
 
 					// [160XXX] Double account name
@@ -150,7 +150,14 @@ namespace Aura.Login.Network.Handlers
 
 					// Triggered by people using their official accounts?
 					// Are those information cached somewhere?
+					// TODO: Rephrase? Sounds weird, as if we *know* their data.
 					Send.LoginR_Msg(client, Localization.Get("Please don't use your official login information."));
+					return;
+
+				// Unsupported/unknown type
+				case LoginType.CH:
+				default:
+					Send.LoginR_Msg(client, Localization.Get("Unsupported password encryption, please use the latest NA client."));
 					return;
 			}
 
@@ -160,7 +167,7 @@ namespace Aura.Login.Network.Handlers
 			var localClientIP = packet.GetString();
 
 			// Get account
-			var account = LoginDb.Instance.GetAccount(accountId);
+			var account = LoginServer.Instance.Database.GetAccount(accountId);
 			if (account == null)
 			{
 				Send.LoginR_Fail(client, LoginResult.IdOrPassIncorrect);
@@ -171,7 +178,7 @@ namespace Aura.Login.Network.Handlers
 			if (loginType == LoginType.SecondaryPassword && account.SecondaryPassword == null)
 			{
 				account.SecondaryPassword = secondaryPassword;
-				LoginDb.Instance.UpdateAccountSecondaryPassword(account);
+				LoginServer.Instance.Database.UpdateAccountSecondaryPassword(account);
 			}
 
 			// Check bans
@@ -195,7 +202,7 @@ namespace Aura.Login.Network.Handlers
 				if (account.SecondaryPassword == null)
 				{
 					account.SecondaryPassword = secondaryPassword;
-					LoginDb.Instance.UpdateAccountSecondaryPassword(account);
+					LoginServer.Instance.Database.UpdateAccountSecondaryPassword(account);
 				}
 				// Check secondary
 				else if (account.SecondaryPassword != secondaryPassword)
@@ -212,7 +219,7 @@ namespace Aura.Login.Network.Handlers
 				return;
 			}
 
-			account.SessionKey = LoginDb.Instance.CreateSession(account.Name);
+			account.SessionKey = LoginServer.Instance.Database.CreateSession(account.Name);
 
 			// Second password, please!
 			if (LoginServer.Instance.Conf.Login.EnableSecondaryPassword && loginType == LoginType.Normal)
@@ -224,14 +231,14 @@ namespace Aura.Login.Network.Handlers
 			// Update account
 			account.LastLogin = DateTime.Now;
 			account.LoggedIn = true;
-			LoginDb.Instance.UpdateAccount(account);
+			LoginServer.Instance.Database.UpdateAccount(account);
 
 			// Req. Info
-			account.CharacterCards = LoginDb.Instance.GetCharacterCards(account.Name);
-			account.PetCards = LoginDb.Instance.GetPetCards(account.Name);
-			account.Characters = LoginDb.Instance.GetCharacters(account.Name);
-			account.Pets = LoginDb.Instance.GetPetsAndPartners(account.Name);
-			account.Gifts = LoginDb.Instance.GetGifts(account.Name);
+			account.CharacterCards = LoginServer.Instance.Database.GetCharacterCards(account.Name);
+			account.PetCards = LoginServer.Instance.Database.GetPetCards(account.Name);
+			account.Characters = LoginServer.Instance.Database.GetCharacters(account.Name);
+			account.Pets = LoginServer.Instance.Database.GetPetsAndPartners(account.Name);
+			account.Gifts = LoginServer.Instance.Database.GetGifts(account.Name);
 
 			// Add free cards if there are none.
 			// If you don't have chars and char cards, you get a new free card,
@@ -239,13 +246,13 @@ namespace Aura.Login.Network.Handlers
 			if (account.CharacterCards.Count < 1 && account.Characters.Count < 1)
 			{
 				// Free card
-				var card = AuraDb.Instance.AddCard(account.Name, 147, 0);
+				var card = LoginServer.Instance.Database.AddCard(account.Name, 147, 0);
 				account.CharacterCards.Add(card);
 
 				if (account.PetCards.Count < 1 && account.Pets.Count < 1)
 				{
 					// 7-day Horse
-					card = AuraDb.Instance.AddCard(account.Name, MabiId.PetCardType, 260016);
+					card = LoginServer.Instance.Database.AddCard(account.Name, MabiId.PetCardType, 260016);
 					account.PetCards.Add(card);
 				}
 			}

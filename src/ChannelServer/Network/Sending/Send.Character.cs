@@ -8,6 +8,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.World.Entities.Creatures;
 using System.Globalization;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -64,7 +65,7 @@ namespace Aura.Channel.Network.Sending
 		/// </remarks>
 		/// <param name="client"></param>
 		/// <param name="creature">Negative response if null</param>
-		public static void EnterRegionRequestR(Creature creature)
+		public static void EnterRegionRequestR(ChannelClient client, Creature creature)
 		{
 			var packet = new Packet(Op.EnterRegionRequestR, MabiId.Channel);
 			packet.PutByte(creature != null);
@@ -75,7 +76,7 @@ namespace Aura.Channel.Network.Sending
 				packet.PutLong(DateTime.Now);
 			}
 
-			creature.Client.Send(packet);
+			client.Send(packet);
 		}
 
 		/// <summary>
@@ -224,7 +225,8 @@ namespace Aura.Channel.Network.Sending
 		/// Type can be various things, like "gold", "exp", or "ap".
 		/// </remarks>
 		/// <param name="creature"></param>
-		/// <param name="itemEntityId"></param>
+		/// <param name="type"></param>
+		/// <param name="amount"></param>
 		public static void AcquireInfo(Creature creature, string type, int amount)
 		{
 			var packet = new Packet(Op.AcquireInfo, creature.EntityId);
@@ -336,6 +338,23 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(creature.RegionId);
 			packet.PutInt(pos.X);
 			packet.PutInt(pos.Y);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends AgeUpEffect to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Notice + Light effect.
+		/// Effect is only played for ages 1~25.
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="age"></param>
+		public static void AgeUpEffect(Creature creature, short age)
+		{
+			var packet = new Packet(Op.AgeUpEffect, creature.EntityId);
+			packet.PutShort(age);
 
 			creature.Client.Send(packet);
 		}

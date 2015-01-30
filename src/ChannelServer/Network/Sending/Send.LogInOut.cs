@@ -4,7 +4,9 @@
 using System;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Shared.Network.Sending.Helpers;
 using Aura.Channel.World.Entities;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -77,6 +79,43 @@ namespace Aura.Channel.Network.Sending
 			var packet = new Packet(Op.LeaveSoulStreamR, MabiId.Channel);
 
 			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SwitchChannelR to creature's client
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="channel">Negative answer if null.</param>
+		public static void SwitchChannelR(Creature creature, ChannelInfo channel)
+		{
+			var packet = new Packet(Op.SwitchChannelR, MabiId.Channel);
+			packet.PutByte(channel != null);
+
+			if (channel != null)
+			{
+				packet.PutString(channel.ServerName);
+				packet.PutString(channel.Name);
+				packet.PutShort(1); // Channel id
+				packet.PutString(channel.Host);
+				packet.PutString(channel.Host);
+				packet.PutUShort((ushort)channel.Port);
+				packet.PutUShort((ushort)(channel.Port + 4));
+			}
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends GetChannelList to client.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="server"></param>
+		public static void GetChannelListR(ChannelClient client, ServerInfo server)
+		{
+			var packet = new Packet(Op.GetChannelListR, MabiId.Channel);
+			packet.AddServerInfo(server, ServerInfoType.Client);
+
+			client.Send(packet);
 		}
 	}
 }

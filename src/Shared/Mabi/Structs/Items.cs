@@ -43,49 +43,106 @@ namespace Aura.Shared.Mabi.Structs
 	/// <summary>
 	/// Private item info.
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	/// <remarks>
+	/// Explicit structure, to write LinkedPocketId as an int.
+	/// </remarks>
+	[StructLayout(LayoutKind.Explicit)]
 	public struct ItemOptionInfo
 	{
+		[FieldOffset(0)]
 		public byte Flag;
-		private byte __unknown15;
-		private byte __unknown16;
-		private byte __unknown17;
+		[FieldOffset(1)]
+		public byte __unknown15;
+		[FieldOffset(2)]
+		public byte __unknown16;
+		[FieldOffset(3)]
+		public byte __unknown17;
+
+		[FieldOffset(4)]
 		public int Price;
+		[FieldOffset(8)]
 		public int SellingPrice;
-		public int LinkedPocketId;
+
+		[FieldOffset(12)]
+		public Pocket LinkedPocketId;
+
+		[FieldOffset(16)]
 		public int Durability;
+		[FieldOffset(20)]
 		public int DurabilityMax;
+		[FieldOffset(24)]
 		public int DurabilityOriginal;
+
+		[FieldOffset(28)]
 		public ushort AttackMin;
+		[FieldOffset(30)]
 		public ushort AttackMax;
+
+		[FieldOffset(32)]
 		public ushort WAttackMin;
+		[FieldOffset(34)]
 		public ushort WAttackMax;
+
+		[FieldOffset(36)]
 		public byte Balance;
+		[FieldOffset(37)]
 		public byte Critical;
-		private byte __unknown24;
-		private byte __unknown25;
+		[FieldOffset(38)]
+		public byte __unknown24;
+		[FieldOffset(39)]
+		public byte __unknown25;
+
+		[FieldOffset(40)]
 		public int Defense;
+
+		[FieldOffset(44)]
 		public short Protection;
+		[FieldOffset(46)]
 		public short EffectiveRange;
+
+		[FieldOffset(48)]
 		public AttackSpeed AttackSpeed;
+		[FieldOffset(49)]
 		public byte KnockCount;
+		[FieldOffset(50)]
 		public short Experience;
+
+		[FieldOffset(52)]
 		public byte EP;
+		[FieldOffset(53)]
 		public byte Upgraded;
+		[FieldOffset(54)]
 		public byte UpgradeMax;
+		[FieldOffset(55)]
 		public byte WeaponType;
+
+		[FieldOffset(56)]
 		public int Grade;
+
+		[FieldOffset(60)]
 		public short Prefix;
+		[FieldOffset(62)]
 		public short Suffix;
+
+		[FieldOffset(64)]
 		public short Elemental;
-		private short __unknown31;
+		[FieldOffset(66)]
+		public short __unknown31;
+
+		[FieldOffset(68)]
 		public int ExpireTime;
+		[FieldOffset(72)]
 		public int StackRemainingTime;
+		[FieldOffset(76)]
 		public int JoustPointPrice;
+		[FieldOffset(80)]
 		public int DucatPrice;
+		[FieldOffset(84)]
 		public int StarPrice;
+		[FieldOffset(88)]
 		public int PonsPrice;
-		private int __unknown3;
+		[FieldOffset(92)]
+		public int __unknown3;
 	}
 
 	/// <summary>

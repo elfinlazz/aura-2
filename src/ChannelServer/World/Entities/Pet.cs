@@ -8,6 +8,6 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public class Pet : PlayerCreature
 	{
-		public override EntityType EntityType { get { return EntityType.Pet; } }
+
 	}
 }

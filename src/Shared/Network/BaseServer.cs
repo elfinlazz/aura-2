@@ -30,9 +30,10 @@ namespace Aura.Shared.Network
 		/// </summary>
 		public event ClientConnectionEventHandler ClientDisconnected;
 
-		public BaseServer()
+		protected BaseServer()
 		{
 			_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			_socket.NoDelay = true;
 			this.Clients = new List<TClient>();
 		}
 
@@ -79,7 +80,7 @@ namespace Aura.Shared.Network
 				_socket.Bind(endPoint);
 				_socket.Listen(10);
 
-				_socket.BeginAccept(new AsyncCallback(OnAccept), _socket);
+				_socket.BeginAccept(this.OnAccept, _socket);
 
 				Log.Status("Server ready, listening on {0}.", _socket.LocalEndPoint);
 			}
@@ -115,7 +116,11 @@ namespace Aura.Shared.Network
 			try
 			{
 				client.Socket = (result.AsyncState as Socket).EndAccept(result);
-				client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, new AsyncCallback(OnReceive), client);
+
+				// We don't need this here, since it's inherited from the parent
+				// client.Socket.NoDelay = true;
+
+				client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, this.OnReceive, client);
 
 				this.AddClient(client);
 				Log.Info("Connection established from '{0}.", client.Address);
@@ -131,7 +136,7 @@ namespace Aura.Shared.Network
 			}
 			finally
 			{
-				_socket.BeginAccept(new AsyncCallback(this.OnAccept), _socket);
+				_socket.BeginAccept(this.OnAccept, _socket);
 			}
 		}
 
@@ -141,7 +146,7 @@ namespace Aura.Shared.Network
 		/// <param name="client"></param>
 		public void AddReceivingClient(TClient client)
 		{
-			client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, new AsyncCallback(this.OnReceive), client);
+			client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, this.OnReceive, client);
 		}
 
 		/// <summary>
@@ -195,7 +200,7 @@ namespace Aura.Shared.Network
 				}
 
 				// Round $round+1, receive!
-				client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, new AsyncCallback(OnReceive), client);
+				client.Socket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, this.OnReceive, client);
 			}
 			catch (SocketException)
 			{

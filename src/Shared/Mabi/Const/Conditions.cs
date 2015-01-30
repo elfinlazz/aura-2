@@ -300,6 +300,10 @@ namespace Aura.Shared.Mabi.Const
 		Stun = 0x0000000000000400,
 		IriaSkyRacingWindBoost = 0x0000000000000800,
 		FreezeUsableItem = 0x0000000000001000,
+		AngryMonster = 0x0000000000002000,
+		CommerceSpeedUp = 0x0000000000004000,
+		RomanticCampfire = 0x0000000000008000,
+		FlyTogether = 0x0000000000010000,
 		All = 0xFFFFFFFFFFFFFFFF,
 	}
 }

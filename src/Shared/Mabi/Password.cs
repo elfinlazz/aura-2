@@ -34,9 +34,7 @@ namespace Aura.Shared.Mabi
 		/// </summary>
 		public static string RawToMD5(byte[] passbin)
 		{
-			var password = string.Empty;
-			foreach (var chr in passbin.TakeWhile(a => a != 0))
-				password += (char)chr;
+			var password = passbin.TakeWhile(a => a != 0).Aggregate(string.Empty, (current, chr) => current + (char) chr);
 
 			return RawToMD5(password);
 		}

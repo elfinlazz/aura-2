@@ -99,10 +99,10 @@ namespace Aura.Channel.Skills.Combat
 			target.Stun = tAction.Stun = StunTime;
 			target.KnockBack = Knockback;
 
-			// Check collissions
+			// Check collisions
 			Position intersection;
 			var knockbackPos = attacker.GetPosition().GetRelative(targetPosition, KnockbackDistance);
-			if (target.Region.Collissions.Find(targetPosition, knockbackPos, out intersection))
+			if (target.Region.Collisions.Find(targetPosition, knockbackPos, out intersection))
 				knockbackPos = targetPosition.GetRelative(intersection, -50);
 
 			// Set knockbacked position

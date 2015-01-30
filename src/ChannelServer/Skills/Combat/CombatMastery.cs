@@ -50,7 +50,7 @@ namespace Aura.Channel.Skills.Combat
 			var rightWeapon = attacker.Inventory.RightHand;
 			var leftWeapon = attacker.Inventory.LeftHand;
 			var magazine = attacker.Inventory.Magazine;
-			var dualWield = (rightWeapon != null && leftWeapon != null);
+			var dualWield = (rightWeapon != null && leftWeapon != null && leftWeapon.Data.WeaponType != 0);
 			var maxHits = (byte)(dualWield ? 2 : 1);
 			int prevId = 0;
 
@@ -112,14 +112,17 @@ namespace Aura.Channel.Skills.Combat
 					var newPos = attacker.GetPosition().GetRelative(targetPosition, KnockBackDistance);
 
 					Position intersection;
-					if (target.Region.Collissions.Find(targetPosition, newPos, out intersection))
+					if (target.Region.Collisions.Find(targetPosition, newPos, out intersection))
 						newPos = targetPosition.GetRelative(intersection, -50);
 
 					target.SetPosition(newPos.X, newPos.Y);
 
 					aAction.Set(AttackerOptions.KnockBackHit2);
 
-					cap.MaxHits = cap.Hit;
+					// Remove dual wield option if last hit doesn't come from
+					// the second weapon.
+					if (cap.MaxHits != cap.Hit)
+						aAction.Options &= ~AttackerOptions.DualWield;
 				}
 
 				// Set stun time
@@ -146,7 +149,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <summary>
 		/// Returns stun time for the attacker.
 		/// </summary>
-		/// <param name="weaponSpeed"></param>
+		/// <param name="weapon"></param>
 		/// <param name="knockback"></param>
 		/// <returns></returns>
 		public short GetAttackerStun(Item weapon, bool knockback)
@@ -167,7 +170,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <summary>
 		/// Returns stun time for the target.
 		/// </summary>
-		/// <param name="weaponSpeed"></param>
+		/// <param name="weapon"></param>
 		/// <param name="knockback"></param>
 		/// <returns></returns>
 		public short GetTargetStun(Item weapon, bool knockback)

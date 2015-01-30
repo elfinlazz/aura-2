@@ -9,6 +9,11 @@ namespace Aura.Channel.Util.Configuration
 	public sealed class ChannelConf : BaseConf
 	{
 		/// <summary>
+		/// autoban.conf
+		/// </summary>
+		public AutobanConfFile Autoban { get; private set; }
+
+		/// <summary>
 		/// channel.conf
 		/// </summary>
 		public ChannelConfFile Channel { get; private set; }
@@ -25,6 +30,7 @@ namespace Aura.Channel.Util.Configuration
 
 		public ChannelConf()
 		{
+			this.Autoban = new AutobanConfFile();
 			this.Channel = new ChannelConfFile();
 			this.Commands = new CommandsConfFile();
 			this.World = new WorldConfFile();
@@ -34,6 +40,7 @@ namespace Aura.Channel.Util.Configuration
 		{
 			this.LoadDefault();
 
+			this.Autoban.Load();
 			this.Channel.Load();
 			this.Commands.Load();
 			this.World.Load();

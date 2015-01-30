@@ -7,10 +7,34 @@
 npcs/nao.cs
 npcs/tin.cs
 
+npcs/dugald/tracy.cs
+
+npcs/tir/alissa.cs
 npcs/tir/bebhinn.cs
+npcs/tir/caitin.cs
+npcs/tir/devcat.cs
+npcs/tir/dilys.cs
 npcs/tir/duncan.cs
+npcs/tir/endelyon.cs
+npcs/tir/ferghus.cs
+npcs/tir/goro.cs
+npcs/tir/lassar.cs
+npcs/tir/malcolm.cs
+npcs/tir/meven.cs
 npcs/tir/nora.cs
+npcs/tir/piaras.cs
 npcs/tir/trefor.cs
 npcs/tir/ranald.cs
+npcs/tir/deian.cs
+
+npcs/dunbarton/aeira.cs
+npcs/dunbarton/aranwen.cs
+npcs/dunbarton/austeyn.cs
+npcs/dunbarton/eavan.cs
+npcs/dunbarton/glenis.cs
+npcs/dunbarton/kristell.cs
+npcs/dunbarton/manus.cs
+npcs/dunbarton/nerys.cs
+npcs/dunbarton/simon.cs
 
 include "/user/scripts/scripts_npcs.txt"

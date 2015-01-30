@@ -8,18 +8,43 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting
 {
+	/// <summary>
+	/// Defines area in which certain creatures are spawned.
+	/// </summary>
 	public class CreatureSpawn
 	{
 		private static int _id;
 
-		public int Id { get; private set; }
-		public int RaceId { get; private set; }
-		public int Amount { get; private set; }
-		public int RegionId { get; private set; }
-
 		private Point[] _points;
 		private int _minX = int.MaxValue, _minY = int.MaxValue, _maxX = 0, _maxY = 0;
 
+		/// <summary>
+		/// Unique id for the spawn.
+		/// </summary>
+		public int Id { get; private set; }
+
+		/// <summary>
+		/// Race spawned
+		/// </summary>
+		public int RaceId { get; private set; }
+
+		/// <summary>
+		/// Number of creatures spawned
+		/// </summary>
+		public int Amount { get; private set; }
+
+		/// <summary>
+		/// Region in which the creatures are spawned.
+		/// </summary>
+		public int RegionId { get; private set; }
+
+		/// <summary>
+		/// Creatures new CreatureSpawn
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="coordinates"></param>
 		public CreatureSpawn(int raceId, int amount, int regionId, params int[] coordinates)
 		{
 			this.Id = Interlocked.Increment(ref _id);
@@ -67,7 +92,9 @@ namespace Aura.Channel.Scripting
 
 			// Polygon
 			var result = new Point();
-			while (!this.IsPointInside(result = new Point(rnd.Next(_minX, _maxX), rnd.Next(_minY, _maxY)))) ;
+			while (!this.IsPointInside(result = new Point(rnd.Next(_minX, _maxX), rnd.Next(_minY, _maxY))))
+			{ }
+
 			return result;
 		}
 

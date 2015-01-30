@@ -15,7 +15,8 @@ namespace Aura.Channel.World
 	{
 		private Quadtree<LinePath> _tree;
 
-		public RegionCollision(int x, int y, int width, int height)
+		// TODO: What were those parameters used for o.o?
+		public RegionCollision(/*int x, int y, int width, int height*/)
 		{
 			_tree = new Quadtree<LinePath>(new Size(1000, 1000), 2);
 		}

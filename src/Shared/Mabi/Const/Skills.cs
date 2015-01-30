@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Shared.Mabi.Const
 {
 	/// <summary>
 	/// Flags for SkillInfo
 	/// </summary>
+	[Flags]
 	public enum SkillFlags : ushort
 	{
 		Shown = 0x01,
@@ -89,7 +92,7 @@ namespace Aura.Shared.Mabi.Const
 		// Combat
 		Defense = 20001,
 		Smash = 20002,
-		MeleeCounterattack = 20003,
+		Counterattack = 20003,
 		NaturalShield = 20004,
 		HeavyStander = 20005,
 		ManaDeflector = 20006,
@@ -372,14 +375,13 @@ namespace Aura.Shared.Mabi.Const
 		NameColorChange = 50047,
 		InstallUninstallCylinder = 50048,
 		HolyFlame = 50049,
-
+		OutfitAction = 50167,
 
 		UseMorrighansFeather = 50050,
 		CreateFaliasPortal = 50051,
 		UseItemChattingColorChange = 50052,
 		InstallPrivateFarmFacility = 50053,
 		ReorientHomesteadbuilding = 50054,
-
 
 		Paint = 50055,
 		MixPaint = 50056,
@@ -475,7 +477,6 @@ namespace Aura.Shared.Mabi.Const
 		TybaltsFencingSkills = 51005,
 		JulietsFeelings = 51006,
 		ShylocksStep = 51007,
-
 
 		MerrowSmash = 52000,
 		MerrowRisingDragon = 52001,

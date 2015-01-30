@@ -90,6 +90,11 @@ namespace Aura.Shared.Mabi.Const
 		public static readonly int IcespearBoom = 66;
 
 		/// <summary>
+		/// The teleport effect for Silent Move
+		/// </summary>
+		public static readonly int SilentMoveTeleport = 67;
+
+		/// <summary>
 		/// Chef Owl
 		/// </summary>
 		public static readonly int ChefOwl = 121;
@@ -131,6 +136,12 @@ namespace Aura.Shared.Mabi.Const
 		/// byte:1|0 (on/off)
 		/// </summary>
 		public static readonly int CherryBlossoms = 345;
+
+		/// <summary>
+		/// Used for Outfit Action.
+		/// byte:1|0 (on/off)
+		/// </summary>
+		public static readonly int OutfitAction = 365;
 	}
 
 	public enum SpawnEffect : byte

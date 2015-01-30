@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.Network.Sending;
@@ -15,6 +16,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Data;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Scripting.Scripts;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -32,18 +34,13 @@ namespace Aura.Channel.Network.Handlers
 			var npcEntityId = packet.GetLong();
 
 			// Check creature
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check NPC
 			var target = ChannelServer.Instance.World.GetNpc(npcEntityId);
 			if (target == null)
 			{
-				Send.NpcTalkStartR_Fail(creature);
-
-				Log.Warning("Creature '{0}' tried to talk to non-existing NPC '{1}'.", creature.Name, npcEntityId.ToString("X16"));
-				return;
+				throw new ModerateViolation("Tried to talk to non-existant NPC 0x{0:X}", npcEntityId);
 			}
 
 			// Special NPCs
@@ -58,14 +55,11 @@ namespace Aura.Channel.Network.Handlers
 			// Some special NPCs require special permission.
 			if (disallow)
 			{
-				Send.NpcTalkStartR_Fail(creature);
-
-				Log.Warning("NpcTalkStart: Creature '{0}' tried to talk to NPC '{1}' without permission.", creature.Name, target.Name);
-				return;
+				throw new ModerateViolation("Tried to talk to NPC 0x{0:X} ({1}) without permission.", npcEntityId, target.Name);
 			}
 
 			// Check script
-			if (target.Script == null)
+			if (target.ScriptType == null)
 			{
 				Send.NpcTalkStartR_Fail(creature);
 
@@ -85,7 +79,7 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.NpcTalkStartR(creature, npcEntityId);
 
-			client.NpcSession.Start(target, creature);
+			client.NpcSession.StartTalk(target, creature);
 		}
 
 		/// <summary>
@@ -107,9 +101,7 @@ namespace Aura.Channel.Network.Handlers
 			var unkByte = packet.GetByte();
 
 			// Check creature
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check session
 			if (!client.NpcSession.IsValid(npcId))
@@ -138,25 +130,16 @@ namespace Aura.Channel.Network.Handlers
 			var result = packet.GetString();
 			var sessionid = packet.GetInt();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check session
-			if (!client.NpcSession.IsValid())
-			{
-				Log.Warning("NpcTalkSelect: Player '{0}' is in invalid session.", creature.Name);
-				Send.NpcTalkEndR(creature, client.NpcSession.Target.EntityId);
-				return;
-			}
+			client.NpcSession.EnsureValid();
 
 			// Check result string
 			var match = Regex.Match(result, "<return type=\"string\">(?<result>[^<]*)</return>");
 			if (!match.Success)
 			{
-				Log.Warning("NpcTalkSelect: Player '{0}' sent invalid return ({1}).", creature.Name, result);
-				Send.NpcTalkEndR(creature, client.NpcSession.Target.EntityId);
-				return;
+				throw new ModerateViolation("Invalid NPC talk selection: {0}", result);
 			}
 
 			var response = match.Groups["result"].Value;
@@ -204,17 +187,10 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var keyword = packet.GetString();
 
-			var character = client.GetCreature(packet.Id);
-			if (character == null)
-				return;
+			var character = client.GetCreatureSafe(packet.Id);
 
 			// Check session
-			if (!client.NpcSession.IsValid())
-			{
-				Send.NpcTalkKeywordR_Fail(character);
-				Log.Warning("NpcTalkKeyword: Player '{0}' sent a keyword without valid NPC session.", character.Name);
-				return;
-			}
+			client.NpcSession.EnsureValid();
 
 			// Check keyword
 			if (!character.Keywords.Has(keyword))
@@ -242,25 +218,21 @@ namespace Aura.Channel.Network.Handlers
 			var targetPocket = packet.GetByte(); // 0:cursor, 1:inv
 			var unk = packet.GetByte(); // storage gold?
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check session
-			if (!client.NpcSession.IsValid())
-			{
-				Log.Warning("NpcShopBuyItem: Player '{0}' is in invalid session.", creature.Name);
-				goto L_Fail;
-			}
+			client.NpcSession.EnsureValid();
 
 			// Check open shop
 			if (creature.Temp.CurrentShop == null)
 			{
-				Log.Warning("NpcShopBuyItem: Player '' tried to buy something with cur shop being null.", creature.EntityIdHex);
-				goto L_Fail;
+				throw new ModerateViolation("Tried to buy an item with a null shop.");
 			}
 
 			// Get item
+			// In theory someone could buy an item without it being visible
+			// to him, but he would need the current entity id that
+			// changes on each restart. It's unlikely to ever be a problem.
 			var item = creature.Temp.CurrentShop.GetItem(entityId);
 			if (item == null)
 			{
@@ -314,34 +286,22 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 			var unk = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check session
-			if (!client.NpcSession.IsValid())
-			{
-				Log.Warning("NpcShopSellItem: Player '{0}' is in invalid session.", creature.Name);
-				goto L_End;
-			}
+			client.NpcSession.EnsureValid();
 
 			// Check open shop
 			if (creature.Temp.CurrentShop == null)
 			{
-				Log.Warning("NpcShopSellItem: Player '' tried to sell something with cur shop being null.", creature.EntityIdHex);
-				goto L_End;
+				throw new ModerateViolation("Tried to sell something with current shop being null");
 			}
 
 			// Get item
-			var item = creature.Inventory.GetItem(entityId);
-			if (item == null)
-			{
-				Log.Warning("NpcShopSellItem: Item '{0}' doesn't exist in '{1}'s inventory.", entityId.ToString("X16"), creature.Name);
-				goto L_End;
-			}
+			var item = creature.Inventory.GetItemSafe(entityId);
 
 			// Calculate selling price
-			int sellingPrice = sellingPrice = item.OptionInfo.SellingPrice;
+			var sellingPrice = item.OptionInfo.SellingPrice;
 			if (item.Data.StackType == StackType.Sac)
 			{
 				// Add costs of the items inside the sac
@@ -371,6 +331,171 @@ namespace Aura.Channel.Network.Handlers
 
 		L_End:
 			Send.NpcShopSellItemR(creature);
+		}
+
+		/// <summary>
+		/// Sent when clicking on close button in bank.
+		/// </summary>
+		/// <remarks>
+		/// Doesn't lock the character if response isn't sent.
+		/// </remarks>
+		/// <example>
+		/// 0001 [..............00] Byte   : 0
+		/// </example>
+		[PacketHandler(Op.CloseBank)]
+		public void CloseBank(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			Send.CloseBankR(creature);
+		}
+
+		/// <summary>
+		/// Sent when selecting which tabs to display (human, elf, giant).
+		/// </summary>
+		/// <remarks>
+		/// This packet is only sent when enabling Elf or Giant, it's not sent
+		/// on deactivating them and not for Human either.
+		/// It's to request data that was not sent initially,
+		/// i.e. send only Human first and Elf and Giant when ticked.
+		/// The client only requests those tabs once.
+		/// </remarks>
+		/// <example>
+		/// 0001 [..............01] Byte   : 1
+		/// </example>
+		[PacketHandler(Op.RequestBankTabs)]
+		public void RequestBankTabs(ChannelClient client, Packet packet)
+		{
+			var race = (BankTabRace)packet.GetByte();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			if (race < BankTabRace.Human || race > BankTabRace.Giant)
+				race = BankTabRace.Human;
+
+			Send.OpenBank(creature, client.Account.Bank, race);
+		}
+
+		/// <summary>
+		/// Sent when depositing gold in the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [........00000014] Int    : 20
+		/// </example>
+		[PacketHandler(Op.BankDepositGold)]
+		public void BankDepositGold(ChannelClient client, Packet packet)
+		{
+			var amount = packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			if (creature.Inventory.Gold < amount)
+				throw new ModerateViolation("BankDepositGold: '{0}' ({1}) tried to deposit more than he has.", creature.Name, creature.EntityIdHex);
+
+			var goldMax = Math.Min((long)int.MaxValue, client.Account.Characters.Count * (long)ChannelServer.Instance.Conf.World.BankGoldPerCharacter);
+
+			if ((long)client.Account.Bank.Gold + amount > goldMax)
+			{
+				Send.MsgBox(creature, Localization.Get("The maximum amount of gold you may store in the bank is {0:n0}."), goldMax);
+				Send.BankDepositGoldR(creature, false);
+				return;
+			}
+
+			creature.Inventory.RemoveGold(amount);
+			client.Account.Bank.AddGold(creature, amount);
+
+			Send.BankDepositGoldR(creature, true);
+		}
+
+		/// <summary>
+		/// Sent when withdrawing gold from the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [..............00] Byte   : 0
+		/// 0002 [........00000014] Int    : 20
+		/// </example>
+		[PacketHandler(Op.BankWithdrawGold)]
+		public void BankWithdrawGold(ChannelClient client, Packet packet)
+		{
+			var check = packet.GetBool();
+			var withdrawAmount = packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			var removeAmount = withdrawAmount;
+			if (check) removeAmount += withdrawAmount / 20; // +5%
+
+			if (client.Account.Bank.Gold < removeAmount)
+				throw new ModerateViolation("BankWithdrawGold: '{0}' ({1}) tried to withdraw more than he has ({2}/{3}).", creature.Name, creature.EntityIdHex, removeAmount, client.Account.Bank.Gold);
+
+			// Add gold to inventory if no check
+			if (!check)
+			{
+				creature.Inventory.AddGold(withdrawAmount);
+			}
+			// Add check item to creature's cursor pocket if check
+			else
+			{
+				var item = new Item(2004); // Check
+				item.MetaData1.SetInt("EVALUE", withdrawAmount);
+
+				// This shouldn't happen.
+				if (!creature.Inventory.Add(item, Pocket.Cursor))
+				{
+					Log.Debug("BankWithdrawGold: Unable to add check to cursor.");
+
+					Send.BankWithdrawGoldR(creature, false);
+					return;
+				}
+			}
+
+			client.Account.Bank.RemoveGold(creature, removeAmount);
+
+			Send.BankWithdrawGoldR(creature, true);
+		}
+
+		/// <summary>
+		/// Sent when putting an item into the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [005000CA6F3EE634] Long   : 22518867586639412
+		/// 0002 [................] String : Exec
+		/// 0003 [........0000000B] Int    : 11
+		/// 0004 [........00000004] Int    : 4
+		/// </example>
+		[PacketHandler(Op.BankDepositItem)]
+		public void BankDepositItem(ChannelClient client, Packet packet)
+		{
+			var itemEntityId = packet.GetLong();
+			var tabName = packet.GetString();
+			var posX = packet.GetInt();
+			var posY = packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			var success = client.Account.Bank.DepositItem(creature, itemEntityId, "Global", tabName, posX, posY);
+
+			Send.BankDepositItemR(creature, success);
+		}
+
+		/// <summary>
+		/// Sent when taking an item out of the bank.
+		/// </summary>
+		/// <example>
+		/// 0001 [................] String : Exec
+		/// 0002 [005000CA6F3EE634] Long   : 22518867586639412
+		/// </example>
+		[PacketHandler(Op.BankWithdrawItem)]
+		public void BankWithdrawItem(ChannelClient client, Packet packet)
+		{
+			var tabName = packet.GetString();
+			var itemEntityId = packet.GetLong();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			var success = client.Account.Bank.WithdrawItem(creature, tabName, itemEntityId);
+
+			Send.BankWithdrawItemR(creature, success);
 		}
 	}
 }

@@ -9,6 +9,7 @@ using Aura.Login.Util;
 using Aura.Shared.Database;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Login.Network.Handlers
 {
@@ -28,7 +29,7 @@ namespace Aura.Login.Network.Handlers
 			var server = packet.GetString();
 			var name = packet.GetString();
 
-			var result = AuraDb.Instance.NameOkay(name, server);
+			var result = LoginServer.Instance.Database.NameOkay(name, server);
 
 			Send.NameCheckR(client, result);
 		}
@@ -109,7 +110,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Check name
-			var nameCheck = AuraDb.Instance.NameOkay(name, serverName);
+			var nameCheck = LoginServer.Instance.Database.NameOkay(name, serverName);
 			if (nameCheck != NameCheckResult.Okay)
 			{
 				Log.Error("Character creation: Invalid name ({0}).", nameCheck);
@@ -204,7 +205,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Check name
-			var nameCheck = AuraDb.Instance.NameOkay(name, serverName);
+			var nameCheck = LoginServer.Instance.Database.NameOkay(name, serverName);
 			if (nameCheck != NameCheckResult.Okay)
 			{
 				Log.Error("Pet creation: Invalid name ({0}).", nameCheck);
@@ -217,6 +218,7 @@ namespace Aura.Login.Network.Handlers
 			pet.Race = card.Race;
 			pet.Age = 1;
 			pet.Server = serverName;
+			pet.State |= CreatureStates.Initialized;
 			pet.Height = petInfo.Height;
 			pet.Upper = petInfo.Upper;
 			pet.Lower = petInfo.Lower;
@@ -315,7 +317,7 @@ namespace Aura.Login.Network.Handlers
 			var skinColor = packet.GetByte();
 			var hair = packet.GetInt();
 			var hairColor = packet.GetByte();
-			var eyeType = packet.GetByte();
+			var eyeType = packet.GetShort();
 			var eyeColor = packet.GetByte();
 			var mouthType = packet.GetByte();
 			var face = packet.GetInt();
@@ -359,7 +361,7 @@ namespace Aura.Login.Network.Handlers
 			}
 
 			// Check name
-			var nameCheck = AuraDb.Instance.NameOkay(name, serverName);
+			var nameCheck = LoginServer.Instance.Database.NameOkay(name, serverName);
 			if (nameCheck != NameCheckResult.Okay)
 			{
 				Log.Error("Partner creation: Invalid name ({0}).", nameCheck);
@@ -378,6 +380,7 @@ namespace Aura.Login.Network.Handlers
 			partner.EyeColor = eyeColor;
 			partner.MouthType = mouthType;
 			partner.Server = serverName;
+			partner.State |= CreatureStates.Initialized;
 
 			partner.Height = height;
 			partner.Weight = weight;

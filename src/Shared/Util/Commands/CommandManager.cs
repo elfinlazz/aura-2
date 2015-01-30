@@ -18,7 +18,7 @@ namespace Aura.Shared.Util.Commands
 	{
 		protected Dictionary<string, TCommand> _commands;
 
-		public CommandManager()
+		protected CommandManager()
 		{
 			_commands = new Dictionary<string, TCommand>();
 		}
@@ -45,15 +45,15 @@ namespace Aura.Shared.Util.Commands
 		/// > command arg1 arg2 - 3 args, "command", "arg1", "arg2"
 		/// > command arg1 "arg2 arg3" - 3 args, "command", "arg1", "arg2 arg3"
 		/// </example>
-		protected string[] ParseLine(string line)
+		protected IList<string> ParseLine(string line)
 		{
 			// Find args, matching words and multiple words in quotation.
 			var matches = Regex.Matches(line, @"(""[a-z0-9_\-\.,\+': ]+""|[a-z0-9_\-\.,\+':]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 			// Convert matches
-			var args = new string[matches.Count];
-			for (int i = 0; i < args.Length; i++)
-				args[i] = matches[i].Groups[1].Value.Trim('"', ' ');
+			var args = new List<string>(matches.Count);
+			for (var i = 0; i < matches.Count; i++)
+				args.Add(matches[i].Groups[1].Value.Trim('"', ' '));
 
 			return args;
 		}
@@ -63,7 +63,7 @@ namespace Aura.Shared.Util.Commands
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		protected TCommand GetCommand(string name)
+		public TCommand GetCommand(string name)
 		{
 			TCommand command;
 			_commands.TryGetValue(name, out command);
@@ -82,7 +82,7 @@ namespace Aura.Shared.Util.Commands
 		public string Description { get; protected set; }
 		public TFunc Func { get; protected set; }
 
-		public Command(string name, string usage, string description, TFunc func)
+		protected Command(string name, string usage, string description, TFunc func)
 		{
 			if (!typeof(TFunc).IsSubclassOf(typeof(Delegate)))
 				throw new InvalidOperationException(typeof(TFunc).Name + " is not a delegate type");

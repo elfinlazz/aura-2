@@ -129,63 +129,79 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
-		/// Sends SkillStart to creature's client.
+		/// Sends SkillStart to creature's client or broadcasts it if skill is
+		/// of type "BroadcastStartStop".
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
+		/// <param name="skill"></param>
 		/// <param name="extra"></param>
-		public static void SkillStart(Creature creature, SkillId skillId, string extra)
+		public static void SkillStart(Creature creature, Skill skill, string extra)
 		{
 			var packet = new Packet(Op.SkillStart, creature.EntityId);
-			packet.PutUShort((ushort)skillId);
+			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutString(extra);
 
-			creature.Client.Send(packet);
+			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
+				creature.Client.Send(packet);
+			else
+				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
-		/// Sends SkillStart to creature's client.
+		/// Sends SkillStart to creature's client or broadcasts it if skill is
+		/// of type "BroadcastStartStop".
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
+		/// <param name="skill"></param>
 		/// <param name="unkByte"></param>
-		public static void SkillStart(Creature creature, SkillId skillId, byte unkByte)
+		public static void SkillStart(Creature creature, Skill skill, byte unkByte)
 		{
 			var packet = new Packet(Op.SkillStart, creature.EntityId);
-			packet.PutUShort((ushort)skillId);
+			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutByte(unkByte);
 
-			creature.Client.Send(packet);
+			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
+				creature.Client.Send(packet);
+			else
+				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
-		/// Sends SkillStop to creature's client.
+		/// Sends SkillStop to creature's client or broadcasts it if skill is
+		/// of type "BroadcastStartStop".
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
+		/// <param name="skill"></param>
 		/// <param name="extra"></param>
-		public static void SkillStop(Creature creature, SkillId skillId, string extra)
+		public static void SkillStop(Creature creature, Skill skill, string extra)
 		{
 			var packet = new Packet(Op.SkillStop, creature.EntityId);
-			packet.PutUShort((ushort)skillId);
+			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutString(extra);
 
-			creature.Client.Send(packet);
+			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
+				creature.Client.Send(packet);
+			else
+				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
-		/// Sends SkillStop to creature's client.
+		/// Sends SkillStop to creature's client or broadcasts it if skill is
+		/// of type "BroadcastStartStop".
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="skillId"></param>
+		/// <param name="skill"></param>
 		/// <param name="unkByte"></param>
-		public static void SkillStop(Creature creature, SkillId skillId, byte unkByte)
+		public static void SkillStop(Creature creature, Skill skill, byte unkByte)
 		{
 			var packet = new Packet(Op.SkillStop, creature.EntityId);
-			packet.PutUShort((ushort)skillId);
+			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutByte(unkByte);
 
-			creature.Client.Send(packet);
+			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
+				creature.Client.Send(packet);
+			else
+				creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
@@ -240,7 +256,8 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
-		/// <param name="unkByte"></param>
+		/// <param name="stun"></param>
+		/// <param name="unk"></param>
 		public static void SkillUseStun(Creature creature, SkillId skillId, int stun, int unk)
 		{
 			var packet = new Packet(Op.SkillUse, creature.EntityId);
@@ -306,8 +323,8 @@ namespace Aura.Channel.Network.Sending
 		/// Broadcasts Effect in range of creature.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
 		/// <param name="instrument"></param>
-		/// <param name="quality"></param>
 		/// <param name="compressedMML"></param>
 		/// <param name="rndScore"></param>
 		public static void SkillUsePlayingInstrument(Creature creature, SkillId skillId, InstrumentType instrument, string compressedMML, int rndScore)
@@ -429,6 +446,23 @@ namespace Aura.Channel.Network.Sending
 				packet.PutInt(castTime);
 
 			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts SkillTeleport to creature's region.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public static void SkillTeleport(Creature creature, int x, int y)
+		{
+			var packet = new Packet(Op.SkillTeleport, creature.EntityId);
+			packet.PutByte(0); //unk1
+			packet.PutInt(x);
+			packet.PutInt(y);
+			packet.PutByte(0); //unk2
+
+			creature.Region.Broadcast(packet);
 		}
 	}
 }

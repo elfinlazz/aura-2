@@ -6,8 +6,9 @@ using System.IO;
 using Aura.Data;
 using Aura.Shared.Database;
 using Aura.Shared.Util.Configuration;
+using Aura.Shared.Util;
 
-namespace Aura.Shared.Util
+namespace Aura.Shared
 {
 	/// <summary>
 	/// General methods needed by all servers.
@@ -55,13 +56,13 @@ namespace Aura.Shared.Util
 		/// Tries to initialize database with the information from conf,
 		/// exits on error.
 		/// </summary>
-		public virtual void InitDatabase(BaseConf conf)
+		public virtual void InitDatabase(AuraDb db, BaseConf conf)
 		{
 			Log.Info("Initializing database...");
 
 			try
 			{
-				AuraDb.Instance.Init(conf.Database.Host, conf.Database.User, conf.Database.Pass, conf.Database.Db);
+				db.Init(conf.Database.Host, conf.Database.User, conf.Database.Pass, conf.Database.Db);
 			}
 			catch (Exception ex)
 			{
@@ -99,6 +100,11 @@ namespace Aura.Shared.Util
 				if ((toLoad & DataLoad.StatsLevel) != 0)
 				{
 					this.LoadDb(AuraData.StatsLevelUpDb, "db/stats_levelup.txt", reload);
+				}
+
+				if ((toLoad & DataLoad.StatsAge) != 0)
+				{
+					this.LoadDb(AuraData.StatsAgeUpDb, "db/stats_ageup.txt", reload);
 				}
 
 				if ((toLoad & DataLoad.Motions) != 0)
@@ -244,6 +250,7 @@ namespace Aura.Shared.Util
 	/// <summary>
 	/// Used in LoadData, to specify which db files should be loaded.
 	/// </summary>
+	[Flags]
 	public enum DataLoad : uint
 	{
 		//Spawns = 0x01,
@@ -263,6 +270,7 @@ namespace Aura.Shared.Util
 		Weather = 0x4000,
 		Keywords = 0x8000,
 		Titles = 0x10000,
+		StatsAge = 0x20000,
 
 		All = 0xFFFFFFFF,
 

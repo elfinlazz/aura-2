@@ -10,20 +10,48 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public abstract class Entity
 	{
+		/// <summary>
+		/// Unique entity id
+		/// </summary>
 		public long EntityId { get; set; }
+
+		/// <summary>
+		/// Entity id formatted as X16
+		/// </summary>
 		public string EntityIdHex { get { return this.EntityId.ToString("X16"); } }
 
+		/// <summary>
+		/// The region id the entity is in.
+		/// </summary>
 		public abstract int RegionId { get; set; }
+
+		/// <summary>
+		/// Reference to the entity's region, if it is in one.
+		/// </summary>
 		public Region Region { get; set; }
 
-		public abstract EntityType EntityType { get; }
-		public abstract DataType DataType { get; }
-
-		public DateTime DisappearTime { get; set; }
-
+		/// <summary>
+		/// Entity's current position
+		/// </summary>
+		/// <returns></returns>
 		public abstract Position GetPosition();
 
-		public bool Is(EntityType type) { return (this.EntityType == type); }
+		/// <summary>
+		/// Entity type used in EntityAppears.
+		/// </summary>
+		public abstract DataType DataType { get; }
+
+		/// <summary>
+		/// Time at which the entity is supposed to disappear,
+		/// e.g. items and dead monsters.
+		/// </summary>
+		public DateTime DisappearTime { get; set; }
+
+		/// <summary>
+		/// Returns true if entity is of the given data type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 		public bool Is(DataType type) { return (this.DataType == type); }
 	}
 
@@ -31,9 +59,4 @@ namespace Aura.Channel.World.Entities
 	/// Vague entity data type, used in EntityAppears.
 	/// </summary>
 	public enum DataType : short { Creature = 16, Item = 80, Prop = 160 }
-
-	/// <summary>
-	/// More exact entity type, used only by Aura.
-	/// </summary>
-	public enum EntityType { Undefined, Character, Pet, Item, NPC, Prop }
 }

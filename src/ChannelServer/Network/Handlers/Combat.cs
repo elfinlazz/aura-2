@@ -26,20 +26,18 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.ChangeStanceRequest)]
 		public void ChangeStance(ChannelClient client, Packet packet)
 		{
-			var stance = (BattleStance)packet.GetByte();
+			var stance = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			if (stance > BattleStance.Ready)
+			if (stance > 1)
 			{
 				Log.Warning("HandleChangeStance: Unknown battle stance '{0}'.", stance);
 				return;
 			}
 
 			// Change stance
-			creature.BattleStance = stance;
+			creature.IsInBattleStance = Convert.ToBoolean(stance);
 
 			// Response (unlocks the char)
 			Send.ChangeStanceRequestR(creature);
@@ -70,9 +68,7 @@ namespace Aura.Channel.Network.Handlers
 			var mode = (TargetMode)packet.GetByte();
 			var unkString = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Id == 0 means untargetting, go with the null
 			Creature target = null;
@@ -110,8 +106,7 @@ namespace Aura.Channel.Network.Handlers
 			var targetEntityId = packet.GetLong();
 			var unkString = packet.GetString();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check target
 			var target = creature.Region.GetCreature(targetEntityId);

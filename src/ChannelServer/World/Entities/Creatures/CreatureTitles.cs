@@ -148,6 +148,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Tries to change title, returns false if anything goes wrong.
 		/// </summary>
 		/// <param name="titleId"></param>
+		/// <param name="option"></param>
 		/// <returns></returns>
 		public bool ChangeTitle(ushort titleId, bool option)
 		{
@@ -186,6 +187,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Removes previous stat mods and adds new ones.
 		/// </summary>
 		/// <param name="data"></param>
+		/// <param name="option"></param>
 		private void SwitchStatMods(TitleData data, bool option)
 		{
 			// Remove prev stat mods

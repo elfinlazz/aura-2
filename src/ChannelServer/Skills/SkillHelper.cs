@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
@@ -94,6 +95,7 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		/// <param name="aAction"></param>
 		/// <param name="tAction"></param>
+		/// <param name="damage"></param>
 		/// <returns></returns>
 		public static bool HandleDefense(AttackerAction aAction, TargetAction tAction, ref float damage)
 		{
@@ -112,6 +114,8 @@ namespace Aura.Channel.Skills
 			if (defenseSkill != null)
 				damage -= defenseSkill.RankData.Var3;
 
+			Send.SkillUseStun(tAction.Creature, SkillId.Defense, 1000, 0);
+
 			return true;
 		}
 
@@ -120,6 +124,8 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		/// <param name="target"></param>
 		/// <param name="damage"></param>
+		/// <param name="defense"></param>
+		/// <param name="protection"></param>
 		public static void HandleDefenseProtection(Creature target, ref float damage, bool defense = true, bool protection = true)
 		{
 			if (defense)

@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
+using Aura.Shared.Mabi;
 using MySql.Data.MySqlClient;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Aura.Shared.Database
 {
 	public class AuraDb
 	{
-		public static readonly AuraDb Instance = new AuraDb();
-
 		private string _connectionString;
 
 		private Regex _nameCheckRegex = new Regex(@"^[a-zA-Z][a-z0-9]{2,15}$", RegexOptions.Compiled);
@@ -29,10 +28,6 @@ namespace Aura.Shared.Database
 				result.Open();
 				return result;
 			}
-		}
-
-		private AuraDb()
-		{
 		}
 
 		/// <summary>
@@ -85,6 +80,26 @@ namespace Aura.Shared.Database
 		}
 
 		/// <summary>
+		/// Adds new account to the database.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="password"></param>
+		public void CreateAccount(string accountId, string password)
+		{
+			password = Password.Hash(password);
+
+			using (var conn = this.Connection)
+			using (var cmd = new InsertCommand("INSERT INTO `accounts` {0}", conn))
+			{
+				cmd.Set("accountId", accountId);
+				cmd.Set("password", password);
+				cmd.Set("creation", DateTime.Now);
+
+				cmd.Execute();
+			}
+		}
+
+		/// <summary>
 		/// Adds card to database and returns it as Card.
 		/// </summary>
 		/// <param name="accountId"></param>
@@ -110,6 +125,7 @@ namespace Aura.Shared.Database
 		/// Returns true if the name is valid and available.
 		/// </summary>
 		/// <param name="name"></param>
+		/// <param name="serverName"></param>
 		/// <returns></returns>
 		public NameCheckResult NameOkay(string name, string serverName)
 		{

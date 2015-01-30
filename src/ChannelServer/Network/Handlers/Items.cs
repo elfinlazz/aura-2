@@ -15,6 +15,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Mabi.Structs;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -30,21 +31,25 @@ namespace Aura.Channel.Network.Handlers
 		public void ItemMove(ChannelClient client, Packet packet)
 		{
 			var entityId = packet.GetLong();
-			var source = (Pocket)packet.GetByte();
+			var untrustedSource = (Pocket)packet.GetByte(); // Discard this, NA does too
 			var target = (Pocket)packet.GetByte();
 			var unk = packet.GetByte();
 			var targetX = packet.GetByte();
 			var targetY = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			// Get creature
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			var item = creature.Inventory.GetItem(entityId);
-			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
+			// Check item
+			var item = creature.Inventory.GetItemSafe(entityId);
+
+			var source = item.Info.Pocket;
+
+			// Check bag
+			if (item.IsBag && target.IsBag() && !ChannelServer.Instance.Conf.World.Bagception)
 			{
-				Send.ItemMoveR(creature, false);
-				return;
+				Send.ServerMessage(creature, Localization.Get("Item bags can't be stored inside other bags."));
+				goto L_Fail;
 			}
 
 			// Stop moving when changing weapons
@@ -53,12 +58,13 @@ namespace Aura.Channel.Network.Handlers
 
 			// Try to move item
 			if (!creature.Inventory.Move(item, target, targetX, targetY))
-			{
-				Send.ItemMoveR(creature, false);
-				return;
-			}
+				goto L_Fail;
 
 			Send.ItemMoveR(creature, true);
+			return;
+
+		L_Fail:
+			Send.ItemMoveR(creature, false);
 		}
 
 		/// <summary>
@@ -73,18 +79,22 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 			var unk = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null || creature.Region == null)
+			var creature = client.GetCreatureSafe(packet.Id);
+			if (creature.Region == null)
 				return;
 
-			var item = creature.Inventory.GetItem(entityId);
-			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
+			// Check item
+			var item = creature.Inventory.GetItemSafe(entityId);
+
+			// Check for filled bags
+			if (item.IsBag && item.OptionInfo.LinkedPocketId != Pocket.None && creature.Inventory.CountItemsInPocket(item.OptionInfo.LinkedPocketId) > 0)
 			{
-				Log.Warning("Player '{0}' ({1}) tried to drop invalid item.", creature.Name, creature.EntityIdHex);
+				Log.Warning("Player '{0}' ({1}) tried to drop filled item bag.", creature.Name, creature.EntityIdHex);
 				Send.ItemDropR(creature, false);
 				return;
 			}
 
+			// Try to remove item
 			if (!creature.Inventory.Remove(item))
 			{
 				Send.ItemDropR(creature, false);
@@ -112,8 +122,8 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var entityId = packet.GetLong();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null || creature.Region == null)
+			var creature = client.GetCreatureSafe(packet.Id);
+			if (creature.Region == null)
 				return;
 
 			var item = creature.Region.GetItem(entityId);
@@ -123,9 +133,24 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Add bag
+			if (item.IsBag)
+			{
+				if (item.Data.BagWidth == 0)
+					Send.ServerMessage(creature, Localization.Get("Beware, shaped bags aren't supported yet."));
+				else if (!creature.Inventory.AddBagPocket(item))
+				{
+					// TODO: Handle somehow? Without linked pocket the bag
+					//   won't open.
+				}
+			}
+
 			var success = creature.Inventory.PickUp(item);
 			if (!success)
+			{
 				Send.SystemMessage(creature, Localization.Get("Not enough space."));
+				creature.Inventory.Remove(item.OptionInfo.LinkedPocketId);
+			}
 
 			Send.ItemPickUpR(creature, success);
 		}
@@ -141,17 +166,9 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var itemId = packet.GetLong();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
-			var item = creature.Inventory.GetItem(itemId);
-			if (item == null || item.Data.Type == ItemType.Hair || item.Data.Type == ItemType.Face)
-			{
-				Log.Warning("Player '{0}' ({1}) tried to destroy invalid item.", creature.Name, creature.EntityIdHex);
-				Send.ItemDestroyR(creature, false);
-				return;
-			}
+			var item = creature.Inventory.GetItemSafe(itemId);
 
 			if (!creature.Inventory.Remove(item))
 			{
@@ -177,13 +194,11 @@ namespace Aura.Channel.Network.Handlers
 			var amount = packet.GetUShort();
 			var unk1 = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check item
-			var item = creature.Inventory.GetItem(itemId);
-			if (item == null || item.Data.StackType == StackType.None)
+			var item = creature.Inventory.GetItemSafe(itemId);
+			if (item.Data.StackType == StackType.None)
 			{
 				Send.ItemSplitR(creature, false);
 				return;
@@ -194,11 +209,7 @@ namespace Aura.Channel.Network.Handlers
 				amount = item.Info.Amount;
 
 			// Clone item or create new one based on stack item
-			Item splitItem;
-			if (item.Data.StackItem == 0)
-				splitItem = new Item(item);
-			else
-				splitItem = new Item(item.Data.StackItem);
+			var splitItem = item.Data.StackItem == 0 ? new Item(item) : new Item(item.Data.StackItem);
 			splitItem.Info.Amount = amount;
 
 			// New item on cursor
@@ -234,9 +245,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var set = (WeaponSet)packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			creature.StopMove();
 
@@ -261,14 +270,12 @@ namespace Aura.Channel.Network.Handlers
 			var secondTarget = (Pocket)packet.GetByte();
 			var unk = packet.GetByte();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// This might not be entirely correct, but works well.
 			// Robe is opened first, Helm secondly, then Robe and Helm are both closed.
 
-			foreach (var target in new Pocket[] { firstTarget, secondTarget })
+			foreach (var target in new[] { firstTarget, secondTarget })
 			{
 				if (target > 0)
 				{
@@ -300,8 +307,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var entityId = packet.GetLong();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check states
 			if (creature.IsDead)
@@ -311,12 +317,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Get item
-			var item = creature.Inventory.GetItem(entityId);
-			if (item == null)
-			{
-				Log.Warning("Player '{0}' tried to use item he doesn't possess.", creature.Name);
-				goto L_Fail;
-			}
+			var item = creature.Inventory.GetItemSafe(entityId);
 
 			// Meta Data Scripts
 			var gotMetaScript = false;
@@ -405,8 +406,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.DyePaletteReq)]
 		public void DyePaletteReq(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			Send.DyePaletteReqR(creature, 0, 0, 0, 0);
 		}
@@ -428,8 +428,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			var itemEntityId = packet.GetLong();
 
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null) return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			var pickers = new DyePickers();
 			//pickers.Picker2.X = 10;
@@ -440,6 +439,119 @@ namespace Aura.Channel.Network.Handlers
 			creature.Temp.RegularDyePickers = pickers;
 
 			Send.DyePickColorR(creature, true);
+		}
+
+		/// <summary>
+		/// Sent when "gifting" an item.
+		/// </summary>
+		/// <example>
+		/// 0001 [0010F000000005E7] Long   : 4767482418038247
+		/// 0002 [005000CC7FFA923C] Long   : 22518876457308732
+		/// </example>
+		[PacketHandler(Op.GiftItem)]
+		public void GiftItem(ChannelClient client, Packet packet)
+		{
+			var npcId = packet.GetLong();
+			var itemId = packet.GetLong();
+
+			var creature = client.Controlling.Region.GetCreatureSafe(npcId);
+			var item = client.Controlling.Inventory.GetItemSafe(itemId);
+
+			// Temp check for pets, giving food to them uses the same packet
+			// as gifting to NPCs.
+			if (creature is Pet)
+			{
+				Send.SystemMessage(client.Controlling, Localization.Get("Unimplemented."));
+				Send.GiftItemR(client.Controlling, false);
+				return;
+			}
+
+			var npc = creature as NPC;
+
+			// TODO: If !Item is giftable..
+			// TODO: If !Npc in range...
+
+			if (npc.ScriptType == null)
+				return;
+
+			Send.NpcTalkStartR(client.Controlling, creature.EntityId);
+
+			client.NpcSession.StartGift(npc, client.Controlling, item);
+
+			client.Controlling.Inventory.Remove(item);
+
+			Send.GiftItemR(client.Controlling, true);
+		}
+
+		/// <summary>
+		/// Sent when unequipping a filled bag.
+		/// </summary>
+		/// <example>
+		/// 001 [0050000000000066] Long   : 22517998136852582
+		/// </example>
+		[PacketHandler(Op.UnequipBag)]
+		public void UnequipBag(ChannelClient client, Packet packet)
+		{
+			var entityId = packet.GetLong();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			// Check bag
+			var bag = creature.Inventory.GetItemSafe(entityId);
+			if (!bag.IsBag || bag.OptionInfo.LinkedPocketId == Pocket.None)
+			{
+				Log.Warning("Player '{0}' ({1}) tried to unequip invalid bag.", creature.Name, creature.EntityIdHex);
+				Send.UnequipBagR(creature, false);
+				return;
+			}
+
+			// Remove items
+			var items = creature.Inventory.GetAllItemsFrom(bag.OptionInfo.LinkedPocketId);
+			foreach (var item in items)
+				creature.Inventory.Remove(item);
+
+			// Add items, temporarily remove bag pocket,
+			// so items aren't readded in there
+			creature.Inventory.Remove(bag.OptionInfo.LinkedPocketId);
+			foreach (var item in items)
+				creature.Inventory.Add(item, true);
+			creature.Inventory.AddBagPocket(bag);
+
+			// Success
+			Send.UnequipBagR(creature, true);
+		}
+
+		/// <summary>
+		/// Request to combine similar items in stacks,
+		/// sent upon clicking button in inv.
+		/// </summary>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.ItemMagnet)]
+		public void ItemMagnet(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			Send.MsgBox(creature, Localization.Get("Not supported yet."));
+		}
+
+		/// <summary>
+		/// Notification that player saw a new item in the inv,
+		/// sent when hovering an item that's highlighted as new.
+		/// </summary>
+		/// <example>
+		/// 001 [0050000000000066] Long   : 22517998136852582
+		/// </example>
+		[PacketHandler(Op.SawItemNotification)]
+		public void SawItemNotification(ChannelClient client, Packet packet)
+		{
+			var itemEntityId = packet.GetLong();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+			var item = creature.Inventory.GetItemSafe(itemEntityId);
+
+			item.IsNew = false;
 		}
 	}
 }

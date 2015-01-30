@@ -7,6 +7,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -19,9 +20,9 @@ namespace Aura.Channel.Network.Sending
 		public static void EntityAppears(Entity entity)
 		{
 			var op = Op.EntityAppears;
-			if (entity.Is(EntityType.Item))
+			if (entity is Item)
 				op = Op.ItemAppears;
-			else if (entity.Is(EntityType.Prop))
+			else if (entity is Prop)
 				op = Op.PropAppears;
 
 			var packet = new Packet(op, MabiId.Broadcast);
@@ -37,7 +38,7 @@ namespace Aura.Channel.Network.Sending
 		public static void EntityDisappears(Entity entity)
 		{
 			var op = Op.EntityDisappears;
-			if (entity.Is(EntityType.Item))
+			if (entity is Item)
 				op = Op.ItemDisappears;
 
 			var packet = new Packet(op, MabiId.Broadcast);
@@ -50,7 +51,7 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Broadcasts PropDisappears in prop's region.
 		/// </summary>
-		/// <param name="entity"></param>
+		/// <param name="prop"></param>
 		public static void PropDisappears(Prop prop)
 		{
 			var packet = new Packet(Op.PropDisappears, MabiId.Broadcast);
@@ -66,6 +67,8 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="entities"></param>
 		public static void EntitiesAppear(ChannelClient client, IEnumerable<Entity> entities)
 		{
+			// Count() is much faster then creating a list, speed being
+			// important in this method.
 			var count = (short)entities.Count();
 			if (count < 1)
 				return;

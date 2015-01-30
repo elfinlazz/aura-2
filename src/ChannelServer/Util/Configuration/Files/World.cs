@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Shared.Util.Configuration;
+using System;
 
 namespace Aura.Channel.Util.Configuration.Files
 {
@@ -19,10 +20,20 @@ namespace Aura.Channel.Util.Configuration.Files
 		public float PropDropChance { get; protected set; }
 
 		public bool EnableContinentWarp { get; protected set; }
+		public bool DeadlyNpcs { get; protected set; }
+		public bool EnableHunger { get; protected set; }
+		public bool YouAreWhatYouEat { get; protected set; }
 
 		public int GmcpMinAuth { get; protected set; }
 
+		public CombatSystem CombatSystem { get; protected set; }
 		public bool PerfectPlay { get; protected set; }
+
+		public bool Bagception { get; protected set; }
+
+		public TimeSpan RebirthTime { get; protected set; }
+
+		public int BankGoldPerCharacter { get; protected set; }
 
 		public void Load()
 		{
@@ -40,10 +51,23 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.PropDropChance = this.GetFloat("prop_drop_chance", 30) / 100.0f;
 
 			this.EnableContinentWarp = this.GetBool("enable_continent_warp", true);
+			this.DeadlyNpcs = this.GetBool("deadly_npcs", true);
+			this.EnableHunger = this.GetBool("enable_hunger", true);
+			this.YouAreWhatYouEat = this.GetBool("you_are_what_you_eat", true);
 
-			this.GmcpMinAuth = this.GetInt("gmcp_min_auth", 50);
+			var gmcpCommand = ChannelServer.Instance.CommandProcessor.GetCommand("gmcp");
+			this.GmcpMinAuth = gmcpCommand != null ? gmcpCommand.Auth : this.GetInt("gmcp_min_auth", 50);
 
 			this.PerfectPlay = this.GetBool("perfect_play", false);
+			this.CombatSystem = (this.GetString("combat_system", "dynamic") == "classic" ? CombatSystem.Classic : CombatSystem.Dynamic);
+
+			this.Bagception = this.GetBool("bagception", false);
+
+			this.RebirthTime = TimeSpan.FromDays(this.GetInt("rebirth_time", 6));
+
+			this.BankGoldPerCharacter = this.GetInt("gold_per_character", 5000000);
 		}
 	}
+
+	public enum CombatSystem { Dynamic, Classic }
 }

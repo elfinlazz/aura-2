@@ -13,6 +13,8 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Mabi.Structs;
 using Aura.Shared.Util;
 using Aura.Channel.Scripting;
+using Aura.Channel.World.Inventory;
+using Aura.Channel.Skills.Life;
 
 namespace Aura.Channel.World.Entities
 {
@@ -61,9 +63,9 @@ namespace Aura.Channel.World.Entities
 		public ScriptVariables Vars { get; protected set; }
 
 		public bool IsPlayer { get { return (this.IsCharacter || this.IsPet); } }
-		public bool IsCharacter { get { return (this.EntityType == EntityType.Character); } }
-		public bool IsPet { get { return (this.EntityType == EntityType.Pet); } }
-		public bool IsPartner { get { return (this.EntityType == EntityType.Pet && this.EntityId >= MabiId.Partners); } }
+		public bool IsCharacter { get { return (this is Character); } }
+		public bool IsPet { get { return (this is Pet); } }
+		public bool IsPartner { get { return (this.IsPet && this.EntityId >= MabiId.Partners); } }
 
 		public bool IsHuman { get { return (this.Race == 10001 || this.Race == 10002); } }
 		public bool IsElf { get { return (this.Race == 9001 || this.Race == 9002); } }
@@ -89,9 +91,9 @@ namespace Aura.Channel.World.Entities
 
 		private float _weight, _upper, _lower;
 		public float Height { get; set; }
-		public float Weight { get { return _weight; } set { _weight = Math2.MinMax(MinWeight, MaxWeight, value); } }
-		public float Upper { get { return _upper; } set { _upper = Math2.MinMax(MinWeight, MaxWeight, value); } }
-		public float Lower { get { return _lower; } set { _lower = Math2.MinMax(MinWeight, MaxWeight, value); } }
+		public float Weight { get { return _weight; } set { _weight = Math2.Clamp(MinWeight, MaxWeight, value); } }
+		public float Upper { get { return _upper; } set { _upper = Math2.Clamp(MinWeight, MaxWeight, value); } }
+		public float Lower { get { return _lower; } set { _lower = Math2.Clamp(MinWeight, MaxWeight, value); } }
 
 		public string StandStyle { get; set; }
 		public string StandStyleTalking { get; set; }
@@ -154,11 +156,11 @@ namespace Aura.Channel.World.Entities
 		// Combat
 		// ------------------------------------------------------------------
 
-		protected BattleStance _battleStance;
+		protected bool _battleStance;
 		/// <summary>
 		/// Changes stance and broadcasts update.
 		/// </summary>
-		public BattleStance BattleStance { get { return _battleStance; } set { _battleStance = value; Send.ChangeStance(this); } }
+		public bool IsInBattleStance { get { return _battleStance; } set { _battleStance = value; Send.ChangeStance(this); } }
 		public Creature Target { get; set; }
 
 		private int _stun;
@@ -184,7 +186,7 @@ namespace Aura.Channel.World.Entities
 			}
 			set
 			{
-				_stun = Math2.MinMax(0, short.MaxValue, value);
+				_stun = Math2.Clamp(0, short.MaxValue, value);
 				_stunChange = DateTime.Now;
 			}
 		}
@@ -398,14 +400,14 @@ namespace Aura.Channel.World.Entities
 		private float _lifeFoodMod, _manaFoodMod, _staminaFoodMod;
 		private float _strFoodMod, _intFoodMod, _dexFoodMod, _willFoodMod, _luckFoodMod;
 
-		public float LifeFoodMod { get { return _lifeFoodMod; } set { _lifeFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
-		public float ManaFoodMod { get { return _manaFoodMod; } set { _manaFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
-		public float StaminaFoodMod { get { return _staminaFoodMod; } set { _staminaFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
-		public float StrFoodMod { get { return _strFoodMod; } set { _strFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
-		public float IntFoodMod { get { return _intFoodMod; } set { _intFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
-		public float DexFoodMod { get { return _dexFoodMod; } set { _dexFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
-		public float WillFoodMod { get { return _willFoodMod; } set { _willFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
-		public float LuckFoodMod { get { return _luckFoodMod; } set { _luckFoodMod = Math2.MinMax(0, MaxFoodStatBonus, value); } }
+		public float LifeFoodMod { get { return _lifeFoodMod; } set { _lifeFoodMod = Math2.Clamp(0, MaxFoodStatBonus, value); } }
+		public float ManaFoodMod { get { return _manaFoodMod; } set { _manaFoodMod = Math2.Clamp(0, MaxFoodStatBonus, value); } }
+		public float StaminaFoodMod { get { return _staminaFoodMod; } set { _staminaFoodMod = Math2.Clamp(0, MaxFoodStatBonus, value); } }
+		public float StrFoodMod { get { return _strFoodMod; } set { _strFoodMod = Math2.Clamp(0, MaxFoodStatBonus, value); } }
+		public float IntFoodMod { get { return _intFoodMod; } set { _intFoodMod = Math2.Clamp(0, MaxFoodStatBonus, value); } }
+		public float DexFoodMod { get { return _dexFoodMod; } set { _dexFoodMod = Math2.Clamp(0, MaxFoodStatBonus, value); } }
+		public float WillFoodMod { get { return _willFoodMod; } set { _willFoodMod = Math2.Clamp(0, MaxFoodStatBonus, value); } }
+		public float LuckFoodMod { get { return _luckFoodMod; } set { _luckFoodMod = Math2.Clamp(0, MaxFoodStatBonus, value); } }
 
 		// Defense/Protection
 		// ------------------------------------------------------------------
@@ -450,7 +452,7 @@ namespace Aura.Channel.World.Entities
 			get { return _life; }
 			set
 			{
-				_life = Math2.MinMax(-this.LifeMax, this.LifeInjured, value);
+				_life = Math2.Clamp(-this.LifeMax, this.LifeInjured, value);
 
 				//if (_life < 0 && !this.Has(CreatureConditionA.Deadly))
 				//{
@@ -466,7 +468,7 @@ namespace Aura.Channel.World.Entities
 		public float Injuries
 		{
 			get { return _injuries; }
-			set { _injuries = Math2.MinMax(0, this.LifeMax, value); }
+			set { _injuries = Math2.Clamp(0, this.LifeMax, value); }
 		}
 		public float LifeMaxBase { get; set; }
 		public float LifeMaxBaseSkill { get; set; }
@@ -482,7 +484,7 @@ namespace Aura.Channel.World.Entities
 		public float Mana
 		{
 			get { return _mana; }
-			set { _mana = Math2.MinMax(0, this.ManaMax, value); }
+			set { _mana = Math2.Clamp(0, this.ManaMax, value); }
 		}
 		public float ManaMaxBase { get; set; }
 		public float ManaMaxBaseSkill { get; set; }
@@ -497,7 +499,7 @@ namespace Aura.Channel.World.Entities
 		public float Stamina
 		{
 			get { return _stamina; }
-			set { _stamina = Math2.MinMax(0, this.StaminaMax, value); }
+			set { _stamina = Math2.Clamp(0, this.StaminaMax, value); }
 		}
 		/// <summary>
 		/// The amount of stamina that's not usable because of hunger.
@@ -508,7 +510,7 @@ namespace Aura.Channel.World.Entities
 		public float Hunger
 		{
 			get { return _hunger; }
-			set { _hunger = Math2.MinMax(0, this.StaminaMax, value); }
+			set { _hunger = Math2.Clamp(0, this.StaminaMax, value); }
 		}
 		public float StaminaMaxBase { get; set; }
 		public float StaminaMaxBaseSkill { get; set; }
@@ -532,7 +534,7 @@ namespace Aura.Channel.World.Entities
 
 		// ------------------------------------------------------------------
 
-		public Creature()
+		protected Creature()
 		{
 			this.Client = new DummyClient();
 
@@ -581,7 +583,8 @@ namespace Aura.Channel.World.Entities
 				this.Regens.Add(Stat.Life, 0.12f, this.LifeMax);
 				this.Regens.Add(Stat.Mana, 0.05f, this.ManaMax);
 				this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
-				this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
+				if (ChannelServer.Instance.Conf.World.EnableHunger)
+					this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
 				this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
 
 				ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
@@ -596,6 +599,16 @@ namespace Aura.Channel.World.Entities
 		{
 			this.Regens.Dispose();
 			ChannelServer.Instance.Events.MabiTick -= this.OnMabiTick;
+
+			// Stop rest, so character doesn't appear sitting anymore
+			// and chair props are removed.
+			// Do this in dispose because we can't expect a clean logout.
+			if (this.Has(CreatureStates.SitDown))
+			{
+				var restHandler = ChannelServer.Instance.SkillManager.GetHandler<Rest>(SkillId.Rest);
+				if (restHandler != null)
+					restHandler.Stop(this, this.Skills.Get(SkillId.Rest));
+			}
 		}
 
 		public void Activate(CreatureStates state) { this.State |= state; }
@@ -768,25 +781,28 @@ namespace Aura.Channel.World.Entities
 
 			var sb = new StringBuilder();
 
-			if (weight != 0)
+			if (ChannelServer.Instance.Conf.World.YouAreWhatYouEat)
 			{
-				changes = true;
-				this.Weight += weight;
-				sb.Append(weight > 0 ? Localization.Get("You gained some weight.") : Localization.Get("You lost some weight.") + "\r\n");
-			}
+				if (weight != 0)
+				{
+					changes = true;
+					this.Weight += weight;
+					sb.Append(weight > 0 ? Localization.Get("You gained some weight.") : Localization.Get("You lost some weight.") + "\r\n");
+				}
 
-			if (upper != 0)
-			{
-				changes = true;
-				this.Upper += upper;
-				sb.Append(upper > 0 ? Localization.Get("Your upper body got bigger.") : Localization.Get("Your upper body got slimmer.") + "\r\n");
-			}
+				if (upper != 0)
+				{
+					changes = true;
+					this.Upper += upper;
+					sb.Append(upper > 0 ? Localization.Get("Your upper body got bigger.") : Localization.Get("Your upper body got slimmer.") + "\r\n");
+				}
 
-			if (lower != 0)
-			{
-				changes = true;
-				this.Lower += lower;
-				sb.Append(lower > 0 ? Localization.Get("Your legs got bigger.") : Localization.Get("Your legs got slimmer.") + "\r\n");
+				if (lower != 0)
+				{
+					changes = true;
+					this.Lower += lower;
+					sb.Append(lower > 0 ? Localization.Get("Your legs got bigger.") : Localization.Get("Your legs got slimmer.") + "\r\n");
+				}
 			}
 
 			if (life != 0)
@@ -1238,7 +1254,7 @@ namespace Aura.Channel.World.Entities
 		/// <param name="amount"></param>
 		public void GiveAp(int amount)
 		{
-			this.AbilityPoints += (short)Math2.MinMax(short.MinValue, short.MaxValue, amount);
+			this.AbilityPoints += (short)Math2.Clamp(short.MinValue, short.MaxValue, amount);
 			Send.StatUpdate(this, StatUpdateType.Private, Stat.AbilityPoints);
 		}
 
@@ -1291,6 +1307,27 @@ namespace Aura.Channel.World.Entities
 		public float GetCritChanceFor(Creature target)
 		{
 			return (this.CriticalBase - target.Protection);
+		}
+
+		/// <summary>
+		/// Returns Rest pose based on skill's rank.
+		/// </summary>
+		/// <returns></returns>
+		public byte GetRestPose()
+		{
+			byte pose = 0;
+
+			var skill = this.Skills.Get(SkillId.Rest);
+			if (skill != null)
+			{
+				if (skill.Info.Rank >= SkillRank.R9)
+					pose = 4;
+				// Deactivated until we know how to keep the pose up.
+				//if (skill.Info.Rank >= SkillRank.R1)
+				//	pose = 5;
+			}
+
+			return pose;
 		}
 	}
 }

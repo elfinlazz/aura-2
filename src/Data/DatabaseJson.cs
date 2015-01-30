@@ -50,7 +50,7 @@ namespace Aura.Data
 							this.Warnings.Add(new DatabaseWarningException(ex.Message + ", in " + Environment.NewLine + obj.ToString(), path));
 							continue;
 						}
-						catch (OverflowException ex)
+						catch (OverflowException)
 						{
 							this.Warnings.Add(new DatabaseWarningException("Number to big or too small for variable, in " + Environment.NewLine + obj.ToString(), path));
 							continue;
@@ -77,8 +77,7 @@ namespace Aura.Data
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
 		{
-			foreach (var entry in this.Entries)
-				yield return entry;
+			return ((IEnumerable<TInfo>) this.Entries).GetEnumerator();
 		}
 
 		public override void Clear()
@@ -96,8 +95,7 @@ namespace Aura.Data
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
 		{
-			foreach (var entry in this.Entries.Values)
-				yield return entry;
+			return ((IEnumerable<TInfo>) this.Entries.Values).GetEnumerator();
 		}
 
 		public TInfo Find(TIndex key)
@@ -145,13 +143,7 @@ namespace Aura.Data
 			if (keys.Length == 1)
 				return (obj[keys[0]] != null);
 
-			foreach (var key in keys)
-			{
-				if (obj[key] == null)
-					return false;
-			}
-
-			return true;
+			return keys.All(key => obj[key] != null);
 		}
 
 		internal static void AssertNotMissing(this JObject obj, params string[] keys)

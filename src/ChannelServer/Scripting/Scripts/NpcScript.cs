@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -16,6 +17,7 @@ using Aura.Data;
 using Aura.Shared.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
+using Aura.Channel.World.Inventory;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -27,9 +29,15 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public ConversationState ConversationState { get; private set; }
 
+		/// <summary>
+		/// The NPC associated with this instance of the NPC script.
+		/// </summary>
 		public NPC NPC { get; set; }
 
 		private Creature _player;
+		/// <summary>
+		/// The player associated with this instance of the NPC script.
+		/// </summary>
 		public Creature Player
 		{
 			get
@@ -41,21 +49,55 @@ namespace Aura.Channel.Scripting.Scripts
 			set { _player = value; }
 		}
 
-		public NpcScript()
+		/// <summary>
+		/// Gets or sets how well the NPC remembers the player.
+		/// </summary>
+		public int Memory
 		{
-			this.NPC = new NPC();
+			get { return this.NPC.GetMemory(this.Player); }
+			set { this.NPC.SetMemory(this.Player, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets how much the NPC likes the player.
+		/// </summary>
+		public int Favor
+		{
+			get { return this.NPC.GetFavor(this.Player); }
+			set { this.NPC.SetFavor(this.Player, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets how much the player stresses the NPC.
+		/// </summary>
+		public int Stress
+		{
+			get { return this.NPC.GetStress(this.Player); }
+			set { this.NPC.SetStress(this.Player, value); }
+		}
+
+		/// <summary>
+		/// Initializes class
+		/// </summary>
+		protected NpcScript()
+		{
 			_resumeSignal = new SemaphoreSlim(0);
 			_cancellation = new CancellationTokenSource();
 		}
 
+		/// <summary>
+		/// Initiates the NPC script, creating and placing the NPC.
+		/// </summary>
+		/// <returns></returns>
 		public override bool Init()
 		{
+			this.NPC = new NPC();
+			this.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
+			this.NPC.ScriptType = this.GetType();
+			this.NPC.LoadDefault();
 			this.NPC.AI = ChannelServer.Instance.ScriptManager.GetAi("npc_normal", this.NPC);
 
 			this.Load();
-			this.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
-			this.NPC.Script = this;
-			this.NPC.LoadDefault();
 
 			if (this.NPC.RegionId > 0)
 			{
@@ -88,7 +130,7 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 			catch (OperationCanceledException)
 			{
-				//Log.Debug(ex.Message);
+				// Thrown to get out of the async chain
 			}
 			this.ConversationState = ConversationState.Ended;
 		}
@@ -102,11 +144,90 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Called from packet handler when a player starts the conversation with a gift.
+		/// </summary>
+		public virtual async void GiftAsync(Item gift)
+		{
+			this.ConversationState = ConversationState.Ongoing;
+			try
+			{
+				var score = this.GetGiftReaction(gift);
+
+				await this.Gift(gift, score);
+			}
+			catch (OperationCanceledException)
+			{
+				// Thrown to get out of the async chain
+			}
+			this.ConversationState = ConversationState.Ended;
+		}
+
+		/// <summary>
+		/// Called from Gift, override to react to gifts.
+		/// </summary>
+		/// <param name="gift">Item gifted to the NPC by the player.</param>
+		/// <param name="reaction">NPCs reaction to the gift.</param>
+		/// <returns></returns>
+		protected virtual async Task Gift(Item gift, GiftReaction reaction)
+		{
+			this.Msg("Thank you.");
+
+			await Task.Yield();
+		}
+
+		/// <summary>
+		/// Returns NPCs reaction to gifted item.
+		/// </summary>
+		/// <param name="gift"></param>
+		/// <returns></returns>
+		protected virtual GiftReaction GetGiftReaction(Item gift)
+		{
+			var score = this.NPC.GiftWeights.CalculateScore(gift);
+
+			if (gift.Info.Id == 51046) // Likeability pot
+			{
+				score = 10;
+				this.Favor += 10; // Determined through a LOT of pots... RIP my bank :(
+				this.Memory += 4; // Gotta remember who gave you roofies!!
+			}
+			else
+			{
+				var delta = score;
+
+				if (gift.Data.StackType == Data.Database.StackType.Stackable)
+				{
+					delta *= gift.Amount * gift.Data.StackMax * 3;
+					delta /= (1 + 2 * (Random(4) + 7));
+				}
+				else
+				{
+					delta *= 3;
+					delta /= (Random(7) + 6);
+				}
+
+				this.Favor += delta;
+			}
+
+			// Reduce stress by 0 ~ score (or at least 4) - 1 for good gifts
+			if (score >= 0)
+				this.Stress -= this.Random(Math.Max(4, score));
+
+			if (score > 6)
+				return GiftReaction.Love;
+			if (score > 3)
+				return GiftReaction.Like;
+			if (score > -4)
+				return GiftReaction.Neutral;
+			else
+				return GiftReaction.Dislike;
+		}
+
+		/// <summary>
 		/// Sends Close, with the standard ending phrase.
 		/// </summary>
 		public virtual void EndConversation()
 		{
-			Close("<npcportrait name='NONE' /><title name='NONE' />(You ended your conversation with <npcname/>.)");
+			Close("(You ended your conversation with <npcname/>.)");
 		}
 
 		/// <summary>
@@ -128,26 +249,177 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Greets the player. **MODIFIES STATS**
+		/// </summary>
+		protected virtual void Greet()
+		{
+			// TODO: if (DoingPtj()) ...
+
+			var memory = this.Memory;
+			var stress = this.Stress;
+
+			if (memory <= 0)
+			{
+				this.Memory = 1;
+			}
+			else if (memory == 1)
+			{
+				// Do nothing. Keeps players from raising their familiarity
+				// just by talking.
+			}
+			else if (memory <= 6 && stress == 0)
+			{
+				this.Memory += 1;
+				this.Stress += 5;
+			}
+			else if (stress == 0)
+			{
+				this.Memory += 1;
+				this.Stress += 10;
+			}
+
+			var msg = Localization.Get("(No greeting messages defined.)");
+
+			// Take the highest greeting without going over their memory
+			foreach (var list in this.NPC.Greetings.TakeWhile(k => k.Key <= memory))
+			{
+				var msgs = list.Value;
+				msg = msgs[Random(msgs.Count)];
+			}
+
+			// Show relation values to devCATs for debugging
+			if (this.Player.Titles.SelectedTitle == 60001)
+			{
+				msg += "<br/>" + "Favor: " + this.Favor;
+				msg += "<br/>" + "Memory: " + this.Memory;
+				msg += "<br/>" + "Stress: " + this.Stress;
+			}
+
+			this.Msg(Hide.None, msg, FavorExpression());
+		}
+
+		/// <summary>
+		/// Gets the mood.
+		/// </summary>
+		/// <returns></returns>
+		public virtual NpcMood GetMood()
+		{
+			int stress = this.Stress;
+			int favor = this.Favor;
+			int memory = this.Memory;
+
+			if (stress > 12)
+				return NpcMood.VeryStressed;
+			if (stress > 8)
+				return NpcMood.Stressed;
+			if (favor > 40)
+				return NpcMood.Love;
+			if (favor > 30)
+				return NpcMood.ReallyLikes;
+			if (favor > 10)
+				return NpcMood.Likes;
+			if (favor < -20)
+				return NpcMood.Hates;
+			if (favor < -10)
+				return NpcMood.ReallyDislikes;
+			if (favor < -5)
+				return NpcMood.Dislikes;
+
+			if (memory > 15)
+				return NpcMood.BestFriends;
+			if (memory > 5)
+				return NpcMood.Friends;
+
+			return NpcMood.Neutral;
+
+		}
+
+		/// <summary>
+		/// Gets the mood string for the current mood.
+		/// </summary>
+		/// <returns></returns>
+		public string GetMoodString()
+		{
+			return this.GetMoodString(this.GetMood());
+		}
+
+		/// <summary>
+		/// Gets the mood string for the given mood.
+		/// </summary>
+		/// <param name="mood">The mood.</param>
+		/// <returns></returns>
+		public virtual string GetMoodString(NpcMood mood)
+		{
+			string moodStr;
+
+			switch (mood)
+			{
+				case NpcMood.VeryStressed:
+					moodStr = Localization.Get("(<npcname/> is giving me and impression that I am interruping something.)");
+					break;
+
+				case NpcMood.Stressed:
+					moodStr = Localization.Get("(<npcname/> is giving me a look that it may be better to stop this conversation.)");
+					break;
+
+				case NpcMood.BestFriends:
+					moodStr = Localization.Get("(<npcname/> is smiling at me as if we've known each other for years.)");
+					break;
+
+				case NpcMood.Friends:
+					moodStr = Localization.Get("(<npcname/> is really giving me a friendly vibe.)");
+					break;
+
+				case NpcMood.Hates:
+					moodStr = this.RndStr(
+						Localization.Get("(<npcname/> is looking at me like they don't want to see me.)"),
+						Localization.Get("(<npcname/> obviously hates me.)")
+					);
+					break;
+
+				case NpcMood.ReallyDislikes:
+					moodStr = Localization.Get("(<npcname/> is looking at me with obvious disgust.)");
+					break;
+
+				case NpcMood.Dislikes:
+					moodStr = Localization.Get("(<npcname/> looks like it's a bit unpleasent that I'm here.)");
+					break;
+
+				case NpcMood.Likes:
+					moodStr = Localization.Get("(<npcname/> is looking at me with great interest.)");
+					break;
+
+				case NpcMood.ReallyLikes:
+					moodStr = Localization.Get("(<npcname/> is giving me a friendly smile.)");
+					break;
+
+				case NpcMood.Love:
+					moodStr = Localization.Get("(<npcname/> is giving me a welcome look.)");
+					break;
+
+				default:
+					moodStr = this.RndStr(
+						Localization.Get("(<npcname/> is looking at me.)"),
+						Localization.Get("(<npcname/> is looking in my direction.)"),
+						Localization.Get("(<npcname/> is waiting for me to says something.)"),
+						Localization.Get("(<npcname/> is paying attention to me.)")
+					);
+					break;
+			}
+
+			// (<npcname/> is slowly looking me over.)
+
+			return moodStr;
+		}
+
+		/// <summary>
 		/// Conversation (keywords) loop with initial mood message.
 		/// </summary>
 		/// <returns></returns>
 		public virtual async Task StartConversation()
 		{
-			switch (this.Random(2))
-			{
-				case 0: this.Msg(Hide.Name, "(<npcname/> is looking in my direction.)"); break;
-				case 1: this.Msg(Hide.Name, "(<npcname/> is waiting for me to say something.)"); break;
-				//case 2: this.Msg(Hide.Name, "(<npcname/> is giving me a look that it may be better to stop this conversation.)"); break;
-			}
-
-			// (<npcname/> is looking in my direction)
-			// (<npcname/> is waiting for me to say something)
-			// (<npcname/> is giving me a look that it may be better to stop this conversation.)
-			// (<npcname/> is smiling at me as if we've known each other for years.)
-			// (<npcname/> is giving me a friendly smile.)
-			// (<npcname/> is giving me a welcome look.)
-			// (<npcname/> is looking at me with great interest.)
-			// (<npcname/> is really giving me a friendly vibe.) 
+			// Show mood once at the start of the conversation
+			this.Msg(Hide.Name, this.GetMoodString(), this.FavorExpression());
 
 			await Conversation();
 		}
@@ -155,9 +427,16 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Conversation (keywords) loop.
 		/// </summary>
+		/// <remarks>
+		/// This is a separate method so it can be called from hooks
+		/// that go into keyword handling after they're done,
+		/// without mood message.
+		/// </remarks>
 		/// <returns></returns>
 		public virtual async Task Conversation()
 		{
+			// Infinite keyword handling, conversation is closed
+			// via End Convo button
 			while (true)
 			{
 				this.ShowKeywords();
@@ -166,13 +445,6 @@ namespace Aura.Channel.Scripting.Scripts
 				await Hook("before_keywords", keyword);
 
 				await this.Keywords(keyword);
-
-				// (I think I left a good impression.)
-				// (The conversation drew a lot of interest.)
-				// (That was a great conversation!)
-
-				// mood message if mood changed? ...
-				// update intimicy, based on mood? ...
 			}
 		}
 
@@ -186,8 +458,62 @@ namespace Aura.Channel.Scripting.Scripts
 			await Task.Yield();
 		}
 
+		/// <summary>
+		/// Modifies memory, favor, and stress and sends random reaction
+		/// message based on the favor change.
+		/// </summary>
+		/// <param name="memory"></param>
+		/// <param name="favor"></param>
+		/// <param name="stress"></param>
+		protected virtual void ModifyRelation(int memory, int favor, int stress)
+		{
+			if (memory != 0) this.Memory += memory;
+			if (favor != 0) this.Favor += favor;
+			if (stress != 0) this.Stress += stress;
+
+			// Seem to be multiple levels? -5, -2, 0, 2, 5?
+
+			var msg = this.RndStr(
+				Localization.Get("(I think I left a good impression.)"),
+				Localization.Get("(The conversation drew a lot of interest.)"),
+				Localization.Get("(That was a great conversation!)")
+				// (It seems I left quite a good impression.)
+			);
+
+			this.Msg(Hide.Name, FavorExpression(), msg);
+		}
+
 		// Setup
-		// ------------------------------------------------------------------
+		// ------------------------------------------------------------------		
+
+		/// <summary>
+		/// Sets the gift weights.
+		/// </summary>
+		/// <param name="adult">How much the NPC likes "adult" items.</param>
+		/// <param name="anime">How much the NPC likes "anime" items.</param>
+		/// <param name="beauty">How much the NPC likes "beauty" items.</param>
+		/// <param name="individuality">How much the NPC likes "indiv" items.</param>
+		/// <param name="luxury">How much the NPC likes "luxury" items.</param>
+		/// <param name="maniac">How much the NPC likes "maniac" items.</param>
+		/// <param name="meaning">How much the NPC likes "meaning" items.</param>
+		/// <param name="rarity">How much the NPC likes "rarity" items.</param>
+		/// <param name="sexy">How much the NPC likes "sexy" items.</param>
+		/// <param name="toughness">How much the NPC likes "toughness" items.</param>
+		/// <param name="utility">How much the NPC likes "utility" items.</param>
+		protected void SetGiftWeights(float adult, float anime, float beauty, float individuality, float luxury, float maniac, float meaning, float rarity, float sexy, float toughness, float utility)
+		{
+			this.NPC.GiftWeights.Adult = adult;
+			this.NPC.GiftWeights.Anime = anime;
+			this.NPC.GiftWeights.Beauty = beauty;
+			this.NPC.GiftWeights.Individuality = individuality;
+			this.NPC.GiftWeights.Luxury = luxury;
+			this.NPC.GiftWeights.Maniac = maniac;
+			this.NPC.GiftWeights.Meaning = meaning;
+			this.NPC.GiftWeights.Rarity = rarity;
+			this.NPC.GiftWeights.Sexy = sexy;
+			this.NPC.GiftWeights.Toughness = toughness;
+			this.NPC.GiftWeights.Utility = utility;
+		}
 
 		/// <summary>
 		/// Sets NPC's name.
@@ -370,13 +696,25 @@ namespace Aura.Channel.Scripting.Scripts
 			this.NPC.AI = ai;
 		}
 
+		/// <summary>
+		/// Adds a greeting to the NPC.
+		/// </summary>
+		/// <param name="memory">Memory needed for this message to appear.</param>
+		/// <param name="greetingMessage">Message sent if the player's memory matches.</param>
+		protected void AddGreeting(int memory, string greetingMessage)
+		{
+			if (!this.NPC.Greetings.ContainsKey(memory))
+				this.NPC.Greetings.Add(memory, new List<string>());
+
+			this.NPC.Greetings[memory].Add(greetingMessage);
+		}
+
 		// Functions
 		// ------------------------------------------------------------------
 
 		/// <summary>
 		/// Sends Msg with Bgm element.
 		/// </summary>
-		/// <param name="creature"></param>
 		/// <param name="fileName"></param>
 		protected void SetBgm(string fileName)
 		{
@@ -392,27 +730,28 @@ namespace Aura.Channel.Scripting.Scripts
 			var shop = ChannelServer.Instance.ScriptManager.GetShop(shopType);
 			if (shop == null)
 			{
+				Log.Unimplemented("Missing shop: {0}", shopType);
 				this.Close("(Missing shop.)");
 				return;
 			}
 
-			shop.OpenFor(this.Player);
+			shop.OpenFor(this.Player, this.NPC);
 		}
 
 		/// <summary>
 		/// Joins lines and sends them as Msg,
-		/// but only once per creature and NPC.
+		/// but only once per creature and NPC per session.
 		/// </summary>
 		/// <param name="lines"></param>
 		protected async Task Intro(params object[] lines)
 		{
-			if (this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] == null)
+			if (this.Player.Vars.Temp["npc_intro:" + this.NPC.Name] == null)
 			{
 				// Explicit button and Select, so we don't get into the hooks
 				// (that might do more than sending msgs) without clicking.
 				this.Msg(Hide.Both, string.Join("<br/>", lines), this.Button("Continue"));
 				await Select();
-				this.Player.Vars.Perm["npc_intro:" + this.NPC.Name] = true;
+				this.Player.Vars.Temp["npc_intro:" + this.NPC.Name] = true;
 			}
 
 			await Hook("after_intro");
@@ -426,7 +765,47 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public bool GiveItem(int itemId, int amount = 1)
 		{
-			return Player.Inventory.Add(itemId, amount);
+			return this.Player.Inventory.Add(itemId, amount);
+		}
+
+		/// <summary>
+		/// Adds an item to player's inventory with specific colors.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="color1"></param>
+		/// <param name="color2"></param>
+		/// <param name="color3"></param>
+		/// <returns></returns>
+		public bool GiveItem(int itemId, uint color1, uint color2, uint color3)
+		{
+			var item = new Item(itemId);
+			item.Info.Color1 = color1;
+			item.Info.Color2 = color2;
+			item.Info.Color3 = color3;
+
+			return Player.Inventory.Add(item, true);
+		}
+
+		/// <summary>
+		/// Removes item(s) from a player's inventory.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public bool RemoveItem(int itemId, int amount = 1)
+		{
+			return this.Player.Inventory.Remove(itemId, amount);
+		}
+
+		/// <summary>
+		/// Checks if player has item(s) in their inventory.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public bool HasItem(int itemId, int amount = 1)
+		{
+			return this.Player.Inventory.Has(itemId, amount);
 		}
 
 		/// <summary>
@@ -436,6 +815,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Runs all hook funcs, one by one.
 		/// </remarks>
 		/// <param name="hookName"></param>
+		/// <param name="args"></param>
 		/// <returns></returns>
 		protected async Task Hook(string hookName, params object[] args)
 		{
@@ -536,7 +916,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="code"></param>
 		public bool RedeemCoupon(string code)
 		{
-			var script = ChannelDb.Instance.GetCouponScript(code);
+			var script = ChannelServer.Instance.Database.GetCouponScript(code);
 			if (script == null) return false;
 
 			if (string.IsNullOrWhiteSpace(script))
@@ -576,14 +956,14 @@ namespace Aura.Channel.Scripting.Scripts
 					int cardId;
 					if (!int.TryParse(splitted[1], out cardId))
 						return false;
-					AuraDb.Instance.AddCard(this.Player.Client.Account.Id, cardId, 0);
+					ChannelServer.Instance.Database.AddCard(this.Player.Client.Account.Id, cardId, 0);
 					break;
 
 				case "petcard":
 					int raceId;
 					if (!int.TryParse(splitted[1], out raceId))
 						return false;
-					AuraDb.Instance.AddCard(this.Player.Client.Account.Id, MabiId.PetCardType, raceId);
+					ChannelServer.Instance.Database.AddCard(this.Player.Client.Account.Id, MabiId.PetCardType, raceId);
 					break;
 
 				default:
@@ -591,49 +971,42 @@ namespace Aura.Channel.Scripting.Scripts
 					return false;
 			}
 
-			ChannelDb.Instance.UseCoupon(code);
+			ChannelServer.Instance.Database.UseCoupon(code);
 
 			return true;
+		}
+
+		/// <summary>
+		/// Opens bank window.
+		/// </summary>
+		public void OpenBank()
+		{
+			Send.OpenBank(this.Player, this.Player.Client.Account.Bank, BankTabRace.Human);
 		}
 
 		// Dialog
 		// ------------------------------------------------------------------
 
 		/// <summary>
-		/// Sends dialog to player's client.
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="elements"></param>
-		public void Msg(string message, params DialogElement[] elements)
-		{
-			this.Msg(Hide.None, message, elements);
-		}
-
-		/// <summary>
-		/// Sends dialog to player's client.
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="elements"></param>
-		public void Msg(Hide hide, string message, params DialogElement[] elements)
-		{
-			var mes = new DialogElement();
-
-			mes.Add(new DialogText(message));
-			mes.Add(elements);
-
-			this.Msg(hide, mes);
-		}
-
-		/// <summary>
-		/// Sends one of the passed messenges.
+		/// Sends one of the passed messages.
 		/// </summary>
 		/// <param name="msgs"></param>
 		public void RndMsg(params string[] msgs)
 		{
-			if (msgs == null || msgs.Length == 0)
-				return;
+			var msg = this.RndStr(msgs);
+			if (msg != null)
+				this.Msg(msgs[Random(msgs.Length)]);
+		}
 
-			this.Msg(msgs[Random(msgs.Length)]);
+		/// <summary>
+		/// Sends one of the passed messages + FavorExpression.
+		/// </summary>
+		/// <param name="msgs"></param>
+		public void RndFavorMsg(params string[] msgs)
+		{
+			var msg = this.RndStr(msgs);
+			if (msg != null)
+				this.Msg(Hide.None, msgs[Random(msgs.Length)], FavorExpression());
 		}
 
 		/// <summary>
@@ -648,6 +1021,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Sends dialog to player's client.
 		/// </summary>
+		/// <param name="hide"></param>
 		/// <param name="elements"></param>
 		public void Msg(Hide hide, params DialogElement[] elements)
 		{
@@ -685,7 +1059,17 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="message">Dialog closes immediately if null.</param>
 		public void Close(string message = null)
 		{
-			this.Close2(message);
+			this.Close(Hide.Both, message);
+		}
+
+		/// <summary>
+		/// Closes dialog box, by sending NpcTalkEndR, and leaves the NPC.
+		/// </summary>
+		/// <param name="hide"></param>
+		/// <param name="message">Dialog closes immediately if null.</param>
+		public void Close(Hide hide, string message)
+		{
+			this.Close2(hide, message);
 			this.Exit();
 		}
 
@@ -695,8 +1079,26 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="message">Dialog closes immediately if null.</param>
 		public void Close2(string message = null)
 		{
-			if (message != null && this.NPC.DialogPortrait != null)
-				message = new DialogPortrait(this.NPC.DialogPortrait).ToString() + message;
+			this.Close2(Hide.Both, message);
+		}
+
+		/// <summary>
+		/// Sends NpcTalkEndR but doesn't leave NPC.
+		/// </summary>
+		/// <param name="hide"></param>
+		/// <param name="message">Dialog closes immediately if null.</param>
+		public void Close2(Hide hide, string message)
+		{
+			if (message != null)
+			{
+				if (hide == Hide.Face || hide == Hide.Both)
+					message = new DialogPortrait(null).ToString() + message;
+				else if (this.NPC.DialogPortrait != null)
+					message = new DialogPortrait(this.NPC.DialogPortrait).ToString() + message;
+
+				if (hide == Hide.Name || hide == Hide.Both)
+					message = new DialogTitle(null).ToString() + message;
+			}
 
 			Send.NpcTalkEndR(this.Player, this.NPC.EntityId, message);
 		}
@@ -764,8 +1166,8 @@ namespace Aura.Channel.Scripting.Scripts
 		public DialogBgm Bgm(string file) { return new DialogBgm(file); }
 
 		public DialogImage Image(string name) { return new DialogImage(name, false, 0, 0); }
-		public DialogImage Image(string name, int width, int height) { return new DialogImage(name, false, width, height); }
-		public DialogImage Image(string name, bool localize, int width, int height) { return new DialogImage(name, localize, width, height); }
+		public DialogImage Image(string name, int width = 0, int height = 0) { return new DialogImage(name, false, width, height); }
+		public DialogImage Image(string name, bool localize = false, int width = 0, int height = 0) { return new DialogImage(name, localize, width, height); }
 
 		public DialogList List(string text, int height, string cancelKeyword, params DialogButton[] elements) { return new DialogList(text, height, cancelKeyword, elements); }
 		public DialogList List(string text, params DialogButton[] elements) { return this.List(text, (int)elements.Length, elements); }
@@ -777,20 +1179,60 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public DialogFaceExpression Expression(string expression) { return new DialogFaceExpression(expression); }
 
+		public DialogFaceExpression FavorExpression()
+		{
+			var favor = this.Favor;
+
+			if (favor > 40)
+				return Expression("love");
+			if (favor > 15)
+				return Expression("good");
+			if (favor > -15)
+				return Expression("normal");
+			if (favor > -40)
+				return Expression("bad");
+
+			return Expression("hate");
+		}
+
 		public DialogMovie Movie(string file, int width, int height, bool loop = true) { return new DialogMovie(file, width, height, loop); }
 
 		public DialogText Text(string format, params object[] args) { return new DialogText(format, args); }
 
 		public DialogHotkey Hotkey(string text) { return new DialogHotkey(text); }
 
+		public DialogMinimap Minimap(bool zoom, bool maxSize, bool center) { return new DialogMinimap(zoom, maxSize, center); }
+
+		public DialogShowPosition ShowPosition(int region, int x, int y, int remainingTime) { return new DialogShowPosition(region, x, y, remainingTime); }
+
+		public DialogShowDirection ShowDirection(int x, int y, int angle) { return new DialogShowDirection(x, y, angle); }
+
+		public DialogSetDefaultName SetDefaultName(string name) { return new DialogSetDefaultName(name); }
+
 		// ------------------------------------------------------------------
 
 		protected enum ItemState : byte { Up = 0, Down = 1 }
+		protected enum GiftReaction { Dislike, Neutral, Like, Love }
 	}
 
 	public enum Hide { None, Face, Name, Both }
 	public enum ConversationState { Ongoing, Select, Ended }
 	public enum HookResult { Continue, Break, End }
+
+	public enum NpcMood
+	{
+		VeryStressed,
+		Stressed,
+		BestFriends,
+		Friends,
+		Hates,
+		ReallyDislikes,
+		Dislikes,
+		Neutral,
+		Likes,
+		ReallyLikes,
+		Love,
+	}
 
 #if __MonoCS__
 	// Added in Mono 3.0.8, adding it here for convenience.

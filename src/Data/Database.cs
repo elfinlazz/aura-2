@@ -99,13 +99,9 @@ namespace Aura.Data
 			}
 			else
 			{
-				foreach (var file in files)
+				if (files.Any(file => File.GetLastWriteTime(file) > File.GetLastWriteTime(cache)))
 				{
-					if (File.GetLastWriteTime(file) > File.GetLastWriteTime(cache))
-					{
-						fromFiles = true;
-						break;
-					}
+					fromFiles = true;
 				}
 			}
 
@@ -147,17 +143,23 @@ namespace Aura.Data
 				// creating the cache.
 				return false;
 			}
+			catch (TypeInitializationException)
+			{
+				// Hotfix for issue #20
+
+				this.Warnings.Add(new DatabaseWarningException("MsgPack failed to deserialize cache. " +
+				"This is usually caused by an incorrect version of the MsgPack library. " +
+				"Please download and compile the latest version of MsgPack (https://github.com/msgpack/msgpack-cli), " +
+				"then place the generated dll in Aura's Lib folder. Lastly, recompile Aura."));
+
+				return false;
+			}
 
 			return true;
 		}
 
 		protected bool CreateCache(string path)
 		{
-			// Mono currently has a problem with MsgPack
-#if __MonoCS__
-			return false;
-#endif
-
 			// Only create cache if everything went smoothly.
 			if (this.Entries.Count > 0 && this.Warnings.Count == 0)
 			{

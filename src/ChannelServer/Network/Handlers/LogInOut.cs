@@ -9,6 +9,8 @@ using Aura.Shared.Util;
 using Aura.Channel.World;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.World.Entities;
+using System;
+using Aura.Shared.Mabi;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -39,22 +41,19 @@ namespace Aura.Channel.Network.Handlers
 				return;
 
 			// Check account
-			var account = ChannelDb.Instance.GetAccount(accountId);
+			var account = ChannelServer.Instance.Database.GetAccount(accountId);
 			if (account == null || account.SessionKey != sessionKey)
 			{
+				// This doesn't autoban because the client is not yet "authenticated",
+				// so an evil person might be able to use it to inflate someone's
+				// autoban score without knowing their password
 				Log.Warning("ChannelLogin handler: Invalid account ({0}) or session ({1}).", accountId, sessionKey);
 				client.Kill();
 				return;
 			}
 
 			// Check character
-			var character = account.GetCharacterOrPet(characterId);
-			if (character == null)
-			{
-				Log.Warning("ChannelLogin handler: Account ({0}) doesn't contain character ({1}).", accountId, characterId);
-				client.Kill();
-				return;
-			}
+			var character = account.GetCharacterOrPetSafe(characterId);
 
 			client.Account = account;
 			client.Controlling = character;
@@ -66,11 +65,13 @@ namespace Aura.Channel.Network.Handlers
 			Send.ChannelLoginR(client, character.EntityId);
 
 			// Log into world
-			if (character.Has(CreatureStates.EverEnteredWorld) || character.IsPet)
+			if (character.Has(CreatureStates.Initialized))
 			{
 				// Fallback for invalid region ids, like 0, dynamics, and dungeons.
 				if (character.RegionId == 0 || Math2.Between(character.RegionId, 35000, 40000) || Math2.Between(character.RegionId, 10000, 11000))
 					character.SetLocation(1, 12800, 38100);
+
+				character.Activate(CreatureStates.EverEnteredWorld);
 
 				Send.CharacterLock(character, Locks.Default);
 				Send.EnterRegion(character);
@@ -85,7 +86,7 @@ namespace Aura.Channel.Network.Handlers
 					Log.Warning("ChannelLogin: Intro NPC not found ({0}).", npcEntityId.ToString("X16"));
 
 				character.Temp.InSoulStream = true;
-				character.Activate(CreatureStates.EverEnteredWorld);
+				character.Activate(CreatureStates.Initialized);
 
 				Send.SpecialLogin(character, 1000, 3200, 3200, npcEntityId);
 			}
@@ -100,11 +101,10 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.EnterRegionRequest)]
 		public void EnterRegionRequest(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-				return;
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check permission
+			// This can happen from time to time, client lag?
 			if (!creature.Warping)
 			{
 				Log.Warning("Unauthorized warp attemp from '{0}'.", creature.Name);
@@ -135,7 +135,7 @@ namespace Aura.Channel.Network.Handlers
 			// Unlock and warp
 			Send.CharacterUnlock(creature, Locks.Default);
 			if (firstSpawn)
-				Send.EnterRegionRequestR(creature);
+				Send.EnterRegionRequestR(client, creature);
 			else
 				Send.WarpRegion(creature);
 
@@ -179,12 +179,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.ChannelCharacterInfoRequest)]
 		public void ChannelCharacterInfoRequest(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null)
-			{
-				Send.ChannelCharacterInfoRequestR_Fail(client);
-				return;
-			}
+			var creature = client.GetCreatureSafe(packet.Id);
 
 			if (creature.Master != null)
 			{
@@ -201,6 +196,21 @@ namespace Aura.Channel.Network.Handlers
 				// Send vehicle info to make mounts mountable
 				if (creature.RaceData.VehicleType > 0)
 					Send.VehicleInfo(creature);
+			}
+
+			var playerCreature = creature as PlayerCreature;
+			if (playerCreature != null)
+			{
+				// Update last login
+				playerCreature.LastLogin = DateTime.Now;
+
+				// Age check
+				var lastSaturday = ErinnTime.Now.GetLastSaturday();
+				var lastAging = playerCreature.LastAging;
+				var diff = (lastSaturday - lastAging).TotalDays;
+
+				if (lastAging < lastSaturday)
+					playerCreature.AgeUp((short)(1 + diff / 7));
 			}
 		}
 
@@ -250,8 +260,8 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.LeaveSoulStream)]
 		public void LeaveSoulStream(ChannelClient client, Packet packet)
 		{
-			var creature = client.GetCreature(packet.Id);
-			if (creature == null || !creature.Temp.InSoulStream)
+			var creature = client.GetCreatureSafe(packet.Id);
+			if (!creature.Temp.InSoulStream)
 				return;
 
 			creature.Temp.InSoulStream = false;
@@ -261,6 +271,63 @@ namespace Aura.Channel.Network.Handlers
 			Send.CharacterLock(creature, Locks.Default);
 			Send.EnterRegion(creature);
 			creature.Warping = true;
+		}
+
+		/// <summary>
+		/// Sent repeatedly while channel list is open to update it.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="packet"></param>
+		[PacketHandler(Op.GetChannelList)]
+		public void GetChannelList(ChannelClient client, Packet packet)
+		{
+			var server = ChannelServer.Instance.ServerList.GetServer(ChannelServer.Instance.Conf.Channel.ChannelServer);
+			if (server == null) return; // Should never happen
+
+			Send.GetChannelListR(client, server);
+		}
+
+		/// <summary>
+		/// Request for switching channels or entering rebirth from channel.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="packet"></param>
+		[PacketHandler(Op.SwitchChannel)]
+		public void SwitchChannel(ChannelClient client, Packet packet)
+		{
+			var channelName = packet.GetString();
+			var rebirth = packet.GetBool();
+
+			var creature = client.GetControlledCreatureSafe();
+
+			// Get channel
+			var channel = ChannelServer.Instance.ServerList.GetChannel(ChannelServer.Instance.Conf.Channel.ChannelServer, channelName);
+			if (channel == null)
+			{
+				Log.Debug("Warning: Player '{0}' tried to switch to non-existent channel '{1}'.", creature.Name, channelName);
+				Send.SwitchChannelR(creature, null);
+				return;
+			}
+
+			// XXX: Check for same channel switch?
+
+			// Deactivate Initialized state, so we can reach Nao.
+			if (rebirth)
+				creature.Deactivate(CreatureStates.Initialized);
+
+			// Make visible entities disappear, otherwise they will still
+			// be there after the channel switch. Can't be handled automatically
+			// like normal (dis)appearing because the other channel doesn't
+			// know what the player saw before.
+			var playerCreature = creature as PlayerCreature;
+			if (playerCreature != null)
+			{
+				playerCreature.Watching = false;
+				Send.EntitiesDisappear(playerCreature.Client, playerCreature.Region.GetVisibleEntities(playerCreature));
+			}
+
+			// Success
+			Send.SwitchChannelR(creature, channel);
 		}
 	}
 }

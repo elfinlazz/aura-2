@@ -21,7 +21,13 @@ namespace Aura.Channel.Scripting.Scripts
 			this.LoadSpawns();
 			this.LoadEvents();
 
+			this.InitializeRegion();
+
 			return true;
+		}
+
+		public virtual void InitializeRegion()
+		{
 		}
 
 		public virtual void LoadWarps()

@@ -8,6 +8,7 @@ using Aura.Shared.Database;
 using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Shared.Network.Sending.Helpers;
 
 namespace Aura.Login.Network
 {
@@ -68,8 +69,8 @@ namespace Aura.Login.Network
 		/// <param name="client"></param>
 		/// <param name="account"></param>
 		/// <param name="sessionKey"></param>
-		/// <param name="servers"></param>
-		public static void LoginR(LoginClient client, Account account, long sessionKey, List<ServerInfo> servers)
+		/// <param name="serverList"></param>
+		public static void LoginR(LoginClient client, Account account, long sessionKey, ICollection<ServerInfo> serverList)
 		{
 			var packet = new Packet(Op.LoginR, MabiId.Login);
 			packet.PutByte((byte)LoginResult.Success);
@@ -83,9 +84,7 @@ namespace Aura.Login.Network
 
 			// Servers
 			// --------------------------------------------------------------
-			packet.PutByte((byte)servers.Count);
-			foreach (var server in servers)
-				packet.Add(server);
+			packet.AddServerList(serverList, ServerInfoType.Client);
 
 			// Account Info
 			// --------------------------------------------------------------
@@ -150,7 +149,7 @@ namespace Aura.Login.Network
 				packet.PutShort(character.EyeType);
 				packet.PutByte(character.EyeColor);
 				packet.PutByte(character.MouthType);
-				packet.PutInt(0);
+				packet.PutUInt((uint)character.State);
 				packet.PutFloat(character.Height);
 				packet.PutFloat(character.Weight);
 				packet.PutFloat(character.Upper);
@@ -170,6 +169,10 @@ namespace Aura.Login.Network
 				packet.PutFloat(49.0f);
 				packet.PutFloat(0.0f);
 				packet.PutFloat(49.0f);
+				// [180800, NA196 (14.10.2014)] ?
+				{
+					packet.PutShort(0);
+				}
 				packet.PutInt(0);
 				packet.PutInt(0);
 				packet.PutShort(0);
@@ -329,6 +332,7 @@ namespace Aura.Login.Network
 		/// Sends AccountInfoRequestR to client, with client's account's data.
 		/// </summary>
 		/// <param name="client"></param>
+		/// <param name="success"></param>
 		public static void AccountInfoRequestR(LoginClient client, bool success)
 		{
 			var packet = new Packet(Op.AccountInfoRequestR, MabiId.Login);
@@ -387,6 +391,7 @@ namespace Aura.Login.Network
 		/// </summary>
 		/// <param name="client"></param>
 		/// <param name="info">Negative response if null.</param>
+		/// <param name="characterId"></param>
 		public static void ChannelInfoRequestR(LoginClient client, ChannelInfo info, long characterId)
 		{
 			var packet = new Packet(Op.ChannelInfoRequestR, MabiId.Channel);
@@ -422,17 +427,25 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
-		/// Sends server/channel status update to all connected clients,
-		/// incl channels.
+		/// Sends server/channel status update to all connected players.
 		/// </summary>
-		public static void ChannelUpdate()
+		public static void ChannelStatus(ICollection<ServerInfo> serverList)
 		{
 			var packet = new Packet(Op.ChannelStatus, MabiId.Login);
-			packet.PutByte((byte)LoginServer.Instance.ServerList.List.Count);
-			foreach (var server in LoginServer.Instance.ServerList.List)
-				packet.Add(server);
+			packet.AddServerList(serverList, ServerInfoType.Client);
 
-			LoginServer.Instance.Broadcast(packet);
+			LoginServer.Instance.BroadcastPlayers(packet);
+		}
+
+		/// <summary>
+		/// Sends server/channel status update to all connected channels.
+		/// </summary>
+		public static void Internal_ChannelStatus(ICollection<ServerInfo> serverList)
+		{
+			var packet = new Packet(Op.Internal.ChannelStatus, MabiId.Login);
+			packet.AddServerList(serverList, ServerInfoType.Internal);
+
+			LoginServer.Instance.BroadcastChannels(packet);
 		}
 
 		/// <summary>
@@ -460,32 +473,18 @@ namespace Aura.Login.Network
 		}
 
 		/// <summary>
-		/// Adds server and channel information to packet.
+		/// Sends negative TradeCardR to client (temp).
 		/// </summary>
-		/// <param name="packet"></param>
-		/// <param name="server"></param>
-		private static void Add(this Packet packet, ServerInfo server)
+		/// <param name="client"></param>
+		/// <param name="cardId">Negative response if 0.</param>
+		public static void TradeCardR(LoginClient client, long cardId)
 		{
-			packet.PutString(server.Name);
-			packet.PutShort(0); // Server type?
-			packet.PutShort(0);
-			packet.PutByte(1);
+			var packet = new Packet(Op.TradeCardR, MabiId.Login);
+			packet.PutByte(cardId != 0);
+			if (cardId != 0)
+				packet.PutLong(cardId);
 
-			// Channels
-			// ----------------------------------------------------------
-			packet.PutInt((int)server.Channels.Count);
-			foreach (var channel in server.Channels.Values)
-			{
-				var state = channel.State;
-				if ((DateTime.Now - channel.LastUpdate).TotalSeconds > 90)
-					state = ChannelState.Maintenance;
-
-				packet.PutString(channel.Name);
-				packet.PutInt((int)state);
-				packet.PutInt((int)channel.Events);
-				packet.PutInt(0); // 1 for Housing? Hidden?
-				packet.PutShort(channel.Stress);
-			}
+			client.Send(packet);
 		}
 
 		/// <summary>
@@ -531,6 +530,12 @@ namespace Aura.Login.Network
 				packet.PutLong(0);
 			}
 
+			// [180800, NA196 (14.10.2014)] ?
+			{
+				packet.PutByte(0);
+				packet.PutLong(0);
+			}
+
 			packet.PutByte(0);
 			packet.PutByte(0);				// 1: 프리미엄 PC방 서비스 사용중, 16: Free Play Event
 			packet.PutByte(false);			// Free Beginner Service
@@ -547,8 +552,8 @@ namespace Aura.Login.Network
 				packet.PutLong(0);
 				packet.PutInt(0);
 				packet.PutByte(0); // 0: Human, 1: Elf, 2: Giant
-				packet.PutByte(0);
-				packet.PutByte(0);
+				packet.PutByte(0); // Assist character ?
+				packet.PutByte(0); // >0 hides all characters?
 			}
 
 			// Pets
@@ -624,6 +629,11 @@ namespace Aura.Login.Network
 		KR = 0,
 
 		/// <summary>
+		/// Used to request disconnect when you're already logged in.
+		/// </summary>
+		RequestDisconnect = 1,
+
+		/// <summary>
 		/// Coming from channel (session key)
 		/// </summary>
 		FromChannel = 2,
@@ -652,6 +662,11 @@ namespace Aura.Login.Network
 		/// Password + Secondary password
 		/// </summary>
 		SecondaryPassword = 20,
+
+		/// <summary>
+		/// RSA password, used by CH
+		/// </summary>
+		CH = 23,
 	}
 
 	public enum LoginResult

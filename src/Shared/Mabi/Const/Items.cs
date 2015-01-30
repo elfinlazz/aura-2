@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
+
 namespace Aura.Shared.Mabi.Const
 {
 	/// <summary>
@@ -57,9 +59,30 @@ namespace Aura.Shared.Mabi.Const
 		PersonalInventory = 49,
 		VIPInventory = 50,
 		FarmStone = 81,
-		Inventory2 = 100,
+		ItemBags = 100,
+		ItemBagsMax = 199,
+	}
 
-		Max,
+	[Flags]
+	public enum BagTags
+	{
+		Equipment = 0x01,
+		RecoveryPotion = 0x02,
+		Artifact = 0x04,
+		AlchemyCrystal = 0x08,
+		Herb = 0x10,
+		ThreadBall = 0x20,
+		Cloth = 0x40,
+		Ore = 0x80,
+		Gem = 0x100,
+		CullinStone = 0x200,
+		Firewood = 0x400,
+		Fish = 0x800,
+		Food = 0x1000,
+		Enchants = 0x2000,
+		Pass = 0x4000,
+		FomorScroll = 0x8000,
+		AncientBook = 0x10000,
 	}
 
 	/// <summary>
@@ -78,6 +101,16 @@ namespace Aura.Shared.Mabi.Const
 				return true;
 			return false;
 		}
+
+		/// <summary>
+		/// Returns true if pocket is between min and max bag.
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		public static bool IsBag(this Pocket pocket)
+		{
+			return (pocket >= Pocket.ItemBags && pocket <= Pocket.ItemBagsMax);
+		}
 	}
 
 	/// <summary>
@@ -93,5 +126,32 @@ namespace Aura.Shared.Mabi.Const
 		Normal,
 		Slow,
 		VerySlow,
+	}
+
+	/// <summary>
+	/// ?
+	/// </summary>
+	/// <remarks>
+	/// Attr_ActionFlag in item db.
+	/// </remarks>
+	public enum ItemActionFlag
+	{
+		NormalItem = 0,
+		StaticItem = 1,
+		ImportantItem = 2,
+		AccountPersonalItem = 3,
+		DungeonItem = 4, // Special weapons for dungeons?
+		CharacterPersonalItem = 5, // Elsinore/Training Short Sword
+		RegionFixedItem = 6, // Keys?
+		BankBlockedItem = 7, // Gems?
+		NewBagItem = 8, // Events?
+		BankBlockedCharacterPersonalItem = 9,
+		GuildItem = 10, // Guild Robe
+		// 11
+		NotDealItem = 12,
+		Important2Item = 13, // Brionac
+		TradeLimitItem = 14,
+		// 15
+		LordKeyItem = 16,
 	}
 }

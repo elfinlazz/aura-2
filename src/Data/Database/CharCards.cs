@@ -14,6 +14,8 @@ namespace Aura.Data.Database
 		public string Name { get; set; }
 		public int SetId { get; set; }
 		public List<int> Races { get; set; }
+		public int TradeItem { get; set; }
+		public int TradePoints { get; set; }
 
 		public CharCardData()
 		{
@@ -38,6 +40,8 @@ namespace Aura.Data.Database
 			var info = new CharCardData();
 			info.Id = entry.ReadInt("id");
 			info.SetId = entry.ReadInt("set");
+			info.TradeItem = entry.ReadInt("tradeItem");
+			info.TradePoints = entry.ReadInt("tradePoints");
 
 			var races = entry.ReadInt("allowed");
 			if ((races & 0x01) != 0) info.Races.Add(10001);
