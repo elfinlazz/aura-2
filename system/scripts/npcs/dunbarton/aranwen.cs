@@ -81,7 +81,7 @@ public class AranwenScript : NpcScript
 				Player.Keywords.Give("school");
 				if (Memory == 1)
 				{
-					Msg("Let me introduce myself.<br/>My name is Aranwen. I teach combat skills at the Dunbarton School.");
+					Msg("Let me introduce myself.<br/>My name is <npcname/>. I teach combat skills at the Dunbarton School.");
 					ModifyRelation(1, 0, Random(2));
 				}
 				else

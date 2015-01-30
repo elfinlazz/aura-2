@@ -20,7 +20,7 @@ public class KristellScript : NpcScript
 		EquipItem(Pocket.Armor, 15009, 0x00303133, 0x00C6D8EA, 0x00DBC741);
 		EquipItem(Pocket.Shoe, 17015, 0x00303133, 0x007BCDB7, 0x006E6565);
 
-		AddGreeting(0, "I am Priestess Kristell. Nice to meet you.");
+		AddGreeting(0, "I am Priestess <npcname/>. Nice to meet you.");
 		AddGreeting(1, "Welcome to the Dunbarton church, <username/>.");
         
 		AddPhrase("...");

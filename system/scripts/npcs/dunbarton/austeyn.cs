@@ -97,13 +97,13 @@ public class AusteynScript : NpcScript
 			case "personal_info":
 				if (Memory == 1)
 				{
-					Msg("My name is Austeyn. Your name is?<br/><username/>, huh? Ahhh. <username/>... <username/>...");
+					Msg("My name is <npcname/>. Your name is?<br/><username/>, huh? Ahhh. <username/>... <username/>...");
 					ModifyRelation(1, 0, Random(2));
 				}
 				else
 				{
 					Player.Keywords.Give("shop_bank");
-					Msg(FavorExpression(), "That's right. I am Austeyn, the manager of this Dunbarton branch of the Erskin Bank. Nice to meet you.");
+					Msg(FavorExpression(), "That's right. I am <npcname/>, the manager of this Dunbarton branch of the Erskin Bank. Nice to meet you.");
 					ModifyRelation(Random(2), 0, Random(2));
 				}
 				break;
@@ -126,7 +126,7 @@ public class AusteynScript : NpcScript
 					case "@yes":
 						StartQuest("20118"); //For the Wealthy Only
 						Msg("I can sense your enthusiasm beneath<br/>your deceptively calm facade!<br/>Here, these Wings of a Goddess will take you to Tara.<br/>Find Keith at the Bank. He'll fill you in on the details.");
-						Msg("<npcportrait name='NONE'/>(Austeyn hands you a Wings of a Goddess,<br/>an excited look in his eyes.)");
+						Msg("<npcportrait name='NONE'/>(<npcname/> hands you a Wings of a Goddess,<br/>an excited look in his eyes.)");
 						break;
 					
 					case "@no":
@@ -221,7 +221,7 @@ public class AusteynScript : NpcScript
 				break;
 
 			case "shop_restaurant":
-				Msg("Oh, no! You haven't eaten yet, have you?<br/>Now, now, the food's available just around the corner, so don't get too antsy.<br/>When you get there, tell the lady that Austeyn sent you.");
+				Msg("Oh, no! You haven't eaten yet, have you?<br/>Now, now, the food's available just around the corner, so don't get too antsy.<br/>When you get there, tell the lady that <npcname/> sent you.");
 				Msg("She'll take real good care of you.<br/>She may not look it, but she has the heart of an angel. Hahaha!");
 				break;
 

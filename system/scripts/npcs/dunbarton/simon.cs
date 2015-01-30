@@ -84,7 +84,7 @@ public class SimonScript : NpcScript
 			case "personal_info":
 				if (Memory == 1)
 				{
-					Msg("I don't think we've met. I'm Simon.");
+					Msg("I don't think we've met. I'm <npcname/>.");
 					ModifyRelation(1, 0, Random(2));
 				}
 				else

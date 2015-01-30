@@ -21,7 +21,7 @@ public class EavanScript : NpcScript
 		EquipItem(Pocket.Glove, 16015, 0x00FFFFFF, 0x00E6F2E2, 0x006161AC);
 		EquipItem(Pocket.Shoe, 17008, 0x00DDAACC, 0x00F79B2F, 0x00E10175);
 
-		AddGreeting(0, "Welcome to Dunbarton.<br/>My name is Eavan, the Town Office worker who takes care of all the business related to the Adventurers' Association.");
+		AddGreeting(0, "Welcome to Dunbarton.<br/>My name is <npcname/>, the Town Office worker who takes care of all the business related to the Adventurers' Association.");
 		AddGreeting(1, "Hmm. I've seen someone that looks like you before.");
 
 		AddPhrase("*Sigh* Back to work.");

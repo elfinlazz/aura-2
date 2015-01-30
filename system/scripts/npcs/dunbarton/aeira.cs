@@ -73,7 +73,7 @@ public class AeiraScript : NpcScript
 			case "personal_info":
 				if (Memory == 1)
 				{
-					Msg("My name? It's Aeira. We've never met before, have we?");
+					Msg("My name? It's <npcname/>. We've never met before, have we?");
 					ModifyRelation(1, 0, Random(2));
 				}
 				else
