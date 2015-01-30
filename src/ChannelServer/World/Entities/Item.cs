@@ -64,7 +64,7 @@ namespace Aura.Channel.World.Entities
 		public MabiDictionary MetaData2 { get; protected set; }
 
 		/// <summary>
-		/// Spirit weapon information
+		/// Ego weapon information
 		/// </summary>
 		public EgoInfo EgoInfo { get; protected set; }
 

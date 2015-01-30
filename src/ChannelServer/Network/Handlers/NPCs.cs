@@ -499,7 +499,7 @@ namespace Aura.Channel.Network.Handlers
 		}
 
 		/// <summary>
-		/// Sent to speak to Spirit Weapon.
+		/// Sent to speak to ego weapon.
 		/// </summary>
 		/// <remarks>
 		/// The only parameter we get is the race of the ego the client selects.
@@ -509,6 +509,10 @@ namespace Aura.Channel.Network.Handlers
 		/// It only shows the correct aura if you have only one equipped
 		/// and since it starts looking for the ego to talk to in the inventory
 		/// you would have to equip the ego you *don't* want to talk to...
+		/// 
+		/// I fyou right click the ego to talk to a specific one you get the
+		/// correct ego race, but it will still show the stats of the auto-
+		/// selected one.
 		/// </remarks>
 		/// <param name="client"></param>
 		/// <param name="packet"></param>
@@ -531,6 +535,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check multi-ego
 			// TODO: We can implement multi-ego for the same ego race
 			//   once we know how the client selects them.
+			//   *Should* we implement that without proper support though?
 			if (creature.Inventory.Items.Count(item => item.EgoInfo.Race == egoRace) > 1)
 			{
 				Send.SystemMessage(creature, "Multiple egos of the same type are currently not supported.");
