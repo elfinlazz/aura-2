@@ -18,6 +18,9 @@ public class AusteynScript : NpcScript
 		EquipItem(Pocket.Hair, 4027, 0x00D1D9E3, 0x00D1D9E3, 0x00D1D9E3);
 		EquipItem(Pocket.Armor, 15003, 0x0036485A, 0x00BDC2B1, 0x00626C76);
 		EquipItem(Pocket.Shoe, 17009, 0x0036485A, 0x00FFE1B9, 0x009A004E);
+
+		AddGreeting(0, "Welcome. It must have been a long journey for you. Your legs must be hurting.");
+		AddGreeting(1, "You seem familiar. Have we met before?");
         
 		AddPhrase("*Doze off*");
 		AddPhrase("*Yawn*");
@@ -48,20 +51,17 @@ public class AusteynScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Msg("Good to see you again, <username/>.");
-				// "You seem familiar. Have we met before?"
-				// "I think I've already forgotten your name...<br/>Oh! <username/>! Yes."
-				// "Welcome. It must have been a long journey for you. Your legs must be hurting."
-
-				// if the player is wearing the Savior of Erinn title, she will say this after the first message
-				// Msg("Oh wow, you're the one who saved Erinn?<br/>While you're at it,<br/>can you take care of the economic state of Dunbarton as well? Hehe...");
-				await StartConversation();
+				Greet();
+				Msg(Hide.Name, GetMoodString(), FavorExpression());
+				if (Player.Titles.SelectedTitle == 11002)
+					Msg("Oh wow, you're the one who saved Erinn?<br/>While you're at it,<br/>can you take care of the economic state of Dunbarton as well? Hehe...");
+				await Conversation();
 				break;
 
 			case "@coupon":
 				Msg("Do you want to redeem your coupon?<br/>Then please give me the number of the coupon you want to redeem.<br/>Slowly, one digit at a time.", Input("Coupon Exchange", "Enter Coupon Number"));
 				var input = await Select();
-				
+
 				if(input == "@cancel")
 					return;
 
@@ -76,7 +76,7 @@ public class AusteynScript : NpcScript
 
 			case "@bank":
 				OpenBank();
-				return;
+				break;
 
 			case "@coin":
 				Msg("During the Coin event, you can collect 4 different kinds of coins");
@@ -95,12 +95,21 @@ public class AusteynScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				Msg("My name is Austeyn. Your name is?<br/><username/>, huh? Ahhh. <username/>... <username/>...");
-				ModifyRelation(Random(2), 0, Random(2));
+				if (Memory == 1)
+				{
+					Msg("My name is Austeyn. Your name is?<br/><username/>, huh? Ahhh. <username/>... <username/>...");
+					ModifyRelation(1, 0, Random(2));
+				}
+				else
+				{
+					Player.Keywords.Give("shop_bank");
+					Msg(FavorExpression(), "That's right. I am Austeyn, the manager of this Dunbarton branch of the Erskin Bank. Nice to meet you.");
+					ModifyRelation(Random(2), 0, Random(2));
+				}
 				break;
 
 			case "rumor":
-				Msg("Are you from the north?<br/>Then you must be from the Ulaid region.<br/>Ulaid region is where the folks at Tir Chonaill live.<br/>They are the descendants of Partholon.");
+				Msg(FavorExpression(), "Are you from the north?<br/>Then you must be from the Ulaid region.<br/>Ulaid region is where the folks at Tir Chonaill live.<br/>They are the descendants of Partholon.");
 				Msg("I hear they used to be a kingdom, even though it has since turned into a small village.<br/>If you get to go there, say hello to the young lady at the Bank for me. Her name is Bebhinn.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
@@ -108,25 +117,25 @@ public class AusteynScript : NpcScript
 			case "about_skill":
 				Msg("Hm? I'm not sure.");
 
-				//if user doesn't have gold strike
+				// If user doesn't have gold strike...
 
-				//Msg("What's sharper than a sword<br/>and more powerful than a hammer?<br/>Gold is! Gold can win battles,<br/>and I'm not talking about hiring goons<br/>to fight on your behalf.");
-				//Msg("I'm talking about taking shiny pieces of gold<br/>and pummeling your enemies with them.<br/>Nothing smells better than freshly-spilt blood<br/>coating your hard-earned gold pieces.<br/>Interested in trying learning the skill?<button title='Teach Me' keyword='@yes' /><button title='Maybe Later' keyword='@no' />");
-				//switch(await Select())
-				//{
-				//	case "@yes":
-				//		StartQuest("20118"); //For the Wealthy Only
-				//		Msg("I can sense your enthusiasm beneath<br/>your deceptively calm facade!<br/>Here, these Wings of a Goddess will take you to Tara.<br/>Find Keith at the Bank. He'll fill you in on the details.");
-				//		Msg("<npcportrait name='NONE'/>(Austeyn hands you a Wings of a Goddess,<br/>an excited look in his eyes.)");
-				//		break;
+				/*Msg("What's sharper than a sword<br/>and more powerful than a hammer?<br/>Gold is! Gold can win battles,<br/>and I'm not talking about hiring goons<br/>to fight on your behalf.");
+				Msg("I'm talking about taking shiny pieces of gold<br/>and pummeling your enemies with them.<br/>Nothing smells better than freshly-spilt blood<br/>coating your hard-earned gold pieces.<br/>Interested in trying learning the skill?<button title='Teach Me' keyword='@yes' /><button title='Maybe Later' keyword='@no' />");
+				switch(await Select())
+				{
+					case "@yes":
+						StartQuest("20118"); //For the Wealthy Only
+						Msg("I can sense your enthusiasm beneath<br/>your deceptively calm facade!<br/>Here, these Wings of a Goddess will take you to Tara.<br/>Find Keith at the Bank. He'll fill you in on the details.");
+						Msg("<npcportrait name='NONE'/>(Austeyn hands you a Wings of a Goddess,<br/>an excited look in his eyes.)");
+						break;
 					
-				//	case "@no":
-				//		Msg("Really? How disappointing.<br/>Well, let me know if you change your mind.<br/>I really hope you change your mind.");
-				//		break;
-				//	}
+					case "@no":
+						Msg("Really? How disappointing.<br/>Well, let me know if you change your mind.<br/>I really hope you change your mind.");
+						break;
+					}*/
 				break;
 
-			case "shop_misc": // General Shop
+			case "shop_misc":
 				Msg("Ah, do you need some items?<br/>Then exit here and go to the left.<br/>The shop with a frowning man in front is the General Shop.");
 				Msg("While you're there, talk to Walter for me and ask if he needs a loan.");
 				break;
@@ -149,6 +158,7 @@ public class AusteynScript : NpcScript
 				break;
 
 			case "shop_smith":
+				Player.Keywords.Give("shop_bookstore");
 				Msg("The Blacksmith's Shop?");
 				Msg("Do you know what a blacksmith's shop is by any chance?<br/>I happened to buy an expensive encyclopedia<br/>at the Bookstore over there the other day, and let's see...");
 				Msg("A blacksmith's shop is<br/>'...It's a place with bellows that treats pig iron...'<br/>That's what it says here.");
@@ -192,15 +202,15 @@ public class AusteynScript : NpcScript
 				Msg("By the way, there have been these<br/>strangely large packs of rats<br/>appearing rather frequently as of late,<br/>and I just can't figure out why...");
 				break;
 
-			case "brook": // Adelia Stream
+			case "brook":
 				Msg("Adelia Stream, huh?<br/>It's probably the stream that flows down<br/>from the northern region of Ulaid.");
 				break;
 
-			case "shop_headman": // Chief's House
+			case "shop_headman":
 				Msg("A chief? What, you think this is a tribal village?<br/>Hahaha. A chief? Hahaha.");
 				break;
 
-			case "temple": // Church
+			case "temple":
 				Msg("Ah-ha! Got a burden on your heart, do you?<br/>People usually seek God once they have<br/>tasted the bitterness of life,<br/>rather than when they are doing well for themselves.");
 				Msg("Anyway, whatever the case,<br/>Priestess Kristell won't<br/>turn you away or anything like that.<br/>Hahaha!");
 				break;
@@ -215,7 +225,7 @@ public class AusteynScript : NpcScript
 				Msg("She'll take real good care of you.<br/>She may not look it, but she has the heart of an angel. Hahaha!");
 				break;
 
-			case "shop_armory": // Weapon Shop
+			case "shop_armory":
 				Msg("The Weapons Shop is over there by the south entrance.<br/>Nerys is usually outside the store so ask her.");
 				Msg("By the way, weapons or armor here might be<br/>really expensive...");
 				break;
@@ -232,21 +242,21 @@ public class AusteynScript : NpcScript
 				Msg("I really wanted to ask what her<br/>idea of a \"full-grown lady\" was,<br/>but I decided not to. Hahaha!");
 				break;
 
-			case "shop_goverment_office": // Town Office
+			case "shop_goverment_office":
 				Msg("Hmm. The Lord and the Captain of the Royal Guards are there.<br/>They don't show their faces too often,<br/>but the office is just over there, so stop by.<br/>You'll also get to see the cute Eavan, too.");
 				Msg("Ah, before you get the wrong idea,<br/>Eavan is a girl, not a boy.<br/>Don't go looking for the wrong person.");
 				break;
 
 			default:
-				RndMsg(
+				RndFavorMsg(
 					"Hmm. I don't know.",
-					"Oh, I don't think it's a topic I'm familiar with.",
+					"Hmm? What is it you just said?",
 					"Ha ha. Why are you asking me? I don't know.",
 					"Shame. I probably can't help you with that.",
-					"Hmm? What is it you just said?",
-					"Hmm... It's news to me.<br/>I'll ask someone else for you when they come by.",
+					"Oh, I don't think it's a topic I'm familiar with.",
+					"You can't keep talking about something like that with me. Hahaha.",
 					"Heh. Don't think that I<br/>should know everything you talk about.",
-					"You can't keep talking about something like that with me. Hahaha."
+					"Hmm... It's news to me.<br/>I'll ask someone else for you when they come by."
 				);
 				ModifyRelation(0, 0, Random(2));
 				break;
@@ -255,7 +265,7 @@ public class AusteynScript : NpcScript
 
 	public override void EndConversation() 
 	{
-		Close("Thank you, Austeyn. I'll see you later!");
+		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 
@@ -263,12 +273,6 @@ public class AusteynShop : NpcShopScript
 {
 	public override void Setup()
 	{
-
-		//----------------
-		// License
-		//----------------
-
-		// Page 1
 		Add("License", 60102); // Dunbarton Merchant License
 		Add("License", 81010); // Purple Personal Shop Brownie Work-For-Hire Contract
 		Add("License", 81011); // Pink Personal Shop Brownie Work-For-Hire Contract

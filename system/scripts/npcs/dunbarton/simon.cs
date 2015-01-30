@@ -20,6 +20,9 @@ public class SimonScript : NpcScript
 		EquipItem(Pocket.Armor, 15045, 0x00D6D8DE, 0x0031208E, 0x00FF9B3B);
 		EquipItem(Pocket.Shoe, 17013, 0x009C7B6B, 0x00F79825, 0x00007335);
 
+		AddGreeting(0, "Is this your first time here?");
+		AddGreeting(1, "Haha. That's right.<br/>You have to come often to be recognized.");
+
 		AddPhrase("The fabric I ordered should be coming in any day now...");
 		AddPhrase("Time just flies today. Heh.");
 		AddPhrase("This... is too last-minute.");
@@ -45,10 +48,11 @@ public class SimonScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Msg(Hide.Name, "(<npcname/> is slowly looking me over.)");
-				// You are back <username />.
-				// Simon is smiling at me as if we've known each other for years.
-				await StartConversation();
+				Greet();
+				Msg(Hide.Name, GetMoodString(), FavorExpression());
+				if (Player.Titles.SelectedTitle == 11002)
+					Msg("...Doesn't a title like that overwhelm you at all?<br/>Well... Judging by your confident look,<br/>I guess you have the skills to back it up.");
+				await Conversation();
 				break;
 
 			case "@shop":
@@ -57,20 +61,18 @@ public class SimonScript : NpcScript
 				break;
 				
 			case "@repair":
-				Msg("Want to mend your clothes?<br/>Rest assured, I am the best this kingdom has to offer. I never make mistakes.<br/>Because of that, I charge a higher repair fee.<br/>If you can stomach a cheap repair, go find someone else. I only work with top quality.");
-				Msg("Unimplemented");
-				// Repair lines: It's a perfect repair job. 98% success.
+				Msg("Want to mend your clothes?<br/>Rest assured, I am the best this kingdom has to offer. I never make mistakes.<br/>Because of that, I charge a higher repair fee.<br/>If you can stomach a cheap repair, go find someone else. I only work with top quality."); 
 				// <repair rate='98' stringid='(*/cloth/*)|(*/glove/*)|(*/bracelet/*)|(*/shoes/*)|(*/headgear/*)|(*/robe/*)|(*/headband/*)' />
-				// Closing repair: No more?<br/>Then, bye!<repair hide='true'/>
+				Msg("Unimplemented");
+				Msg("No more?<br/>Then, bye!"); 
+				// <repair hide='true'/>
+
+				// Repair lines: It's a perfect repair job. 98% success.
 				break;
 				
 			case "@upgrade":
 				Msg("Hmm... You want to modify your clothes? Like custom-made?<br/>Well, show me what you want modified. I'll make sure it fits you like a glove.<br/>But, you know that once I modify it, no one else can wear it anymore, right?");
 				Msg("Unimplemented");
-				break;
-				
-			default:
-				Msg("...");
 				break;
 		}
 	}
@@ -80,32 +82,41 @@ public class SimonScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				Msg("I don't think we've met. I'm Simon.");
-				// Msg("<face name='normal'/>So, are you saying that you don't know the only<br/>Clothing Shop in Dunbarton that happens to be mine?<br/>You're denser than you look.");
-				// Msg("<title name='NONE'/>(The conversation drew a lot of interest.)");
-				ModifyRelation(Random(2), 0, Random(2));
+				if (Memory == 1)
+				{
+					Msg("I don't think we've met. I'm Simon.");
+					ModifyRelation(1, 0, Random(2));
+				}
+				else
+				{
+					Player.Keywords.Give("shop_cloth");
+					Msg(FavorExpression(), "So, are you saying that you don't know the only<br/>Clothing Shop in Dunbarton that happens to be mine?<br/>You're denser than you look.");
+					ModifyRelation(Random(2), 0, Random(2));
+				}
 				break;
 
 			case "rumor":
-				Msg("<face name='normal'/>I don't like to talk about people behind their backs.<br/>It's not a very good habit and you should get rid of it, too.<br/>Oh... You didn't mean that? Oh, I am so sorry.");
+				Player.Keywords.Give("shop_bookstore");
+				Msg(FavorExpression(), "I don't like to talk about people behind their backs.<br/>It's not a very good habit and you should get rid of it, too.<br/>Oh... You didn't mean that? Oh, I am so sorry.");
 				Msg("Aeira at the Bookstore seems to be very interested in music.<br/>If you happen to be interested in music, be nice to her.<br/>She'll give you something good if you become friends.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 			
 			case "about_arbeit":
-				Msg("Oh no. It's not time for a part-time job, yet.<br/>Please come back later.");
+				Msg("Unimplemented");
 				// "Do you have any experience in this line of work?<br/>The path of a designer is long and challenging.<br/>If you're feeling confident enough, though, I can entrust you with the work.<br/>
 				// <arbeit><name>Simon's Clothing Shop Part-time Job</name><id>510403</id><title>Looking for help with delivery of goods in Clothing Shop.</title><rewards id="1" type="0"><reward>* 285 Experience Point (+95)</reward><reward>* 225G (+75)</reward></rewards><rewards id="2" type="0"><reward>* 96 Experience Point (+32)</reward><reward>* 381G (+127)</reward></rewards><rewards id="6" type="2" special="true"><reward>* 6 Thick Thread Ball (+1)</reward><reward>* 432G (+144)</reward></rewards><desc>I&apos;d like to give some [clothes] to Manus at the Healer&apos;s House as a present. Can you give me a hand? - Simon -</desc><values maxcount="11" remaincount="11" remaintime="11" history="0"/></arbeit>");
 				// On return: Here to work again?
 				// Refusal: Oh well, then. Maybe next time.
 				// Refusal #2: Msg("Huh? Are you giving up that easily?<br/>");
 				// Wrong time: Msg("No, no, no. There is no work before or after the designated time.");
+				// Wrong time #2: Msg("Oh no. It's not time for a part-time job, yet.<br/>Please come back later.")
 				// @accept Msg("Alright. Finish the work and report back to me before the deadline.<br/>");
 				// @report Msg("Did you finish today's work?<br/>Then report now and let's wrap it up.<br/>I trust that the results live up to my name.<br/><button title='Report Now' keyword='@report' /><button title='Report Later' keyword='@later' />");
 				// @report Msg("You've done a good job with the task I gave you. Thanks.<br/>Well done. Now choose what you need,<br/>and I'll give it to you. <button title='Report Later' keyword='@later' /><arbeit_report result="0"/>");
 				break;
 
-			case "shop_misc": // General Shop
+			case "shop_misc":
 				Msg("It's right next door. Didn't you see it?<br/>Well, the owner does look intimidating.<br/>That look on his face drives away potential customers.");
 				Msg("But Walter is still a good man.<br/>Just try to get to know him a little.");
 				break;
@@ -134,7 +145,7 @@ public class SimonScript : NpcScript
 				break;
 
 			case "skill_range":
-				Msg("Missing.");
+				Msg("Well! What's the point of asking me that question?");
 				break;
 
 			case "skill_instrument":
@@ -142,10 +153,18 @@ public class SimonScript : NpcScript
 				Msg("Unfortunately, I don't really know much about it. Sorry.");
 				break;
 
+			case "skill_composing":
+				Msg("Hmm. I doubt there's<br/>anyone in this town who knows something like that.<br/>Sorry. I don't really know either.");
+				break;
+
 			case "skill_tailoring":
 				Msg("Ha! You want to make clothes?<br/>Why don't you stop by the General Shop first?");
 				Msg("You can simply buy the cheap tailoring kit<br/>and equip it to learn the skill.<br/>Did you ask me about the Tailoring skill<br/>so you can get it from me for free?");
 				Msg("Don't be so cheap!");
+				break;
+
+			case "skill_magnum_shot":
+				Msg("Well, I can't stand that sort of barbaric skill.");
 				break;
 			
 			case "skill_counter_attack":
@@ -165,23 +184,27 @@ public class SimonScript : NpcScript
 				Msg("It's all farmlands around this town.<br/>I guess you haven't been there yet, have you?<br/>There has been a crisis because of rats.");
 				break;
 				
-			case "shop_headman": // Chief's House
+			case "shop_headman":
 				Msg("There's a chief in this town?<br/>I've lived here for a while now,<br/>but that's news to me.");
 				break;
 
-			case "temple": // Church
+			case "temple":
 				Msg("The Church? Follow this alley and keep going up.<br/>You'll see the Church soon.<br/>If you need anything,<br/>Priestess Kristell will help you.");
 				break;
 
 			case "school":
 				Msg("The School is over there.<br/>Go to the opposite side of the town.<br/>Talk to Stewart or Aranwen and you'll pick up some useful information.");
 				break;
+                
+			case "skill_windmill":
+				Msg("Even the name of that skill sounds barbaric.<br/>Ask someone else about it.");
+				break;
 				
 			case "shop_restaurant":
 				Msg("The Restaurant? You mean Glenis' place?<br/>It's just over there, too.<br/>Well, I don't have anything to say about that place in particular.");
 				break;
 
-			case "shop_armory": // Weapon Shop
+			case "shop_armory":
 				Msg("The Weapons Shop? Are you looking to buy an armor?<br/>Then what are you doing at my Clothing Shop?<br/>How irritating...");
 				break;
 
@@ -194,17 +217,19 @@ public class SimonScript : NpcScript
 				Msg("The Bookstore? You mean that cute little Aeira's Bookstore?<br/>Heehee... She's up the north alley.<br/>If you see Aeira, tell her I said hi.");
 				break;
 
-			case "shop_goverment_office": // Town Office
+			case "shop_goverment_office":
 				Msg("Oh! You mean where that elegant lady Eavan works?<br/>The Town Office is just over there.<br/>Go left a little, then out to the edge of the Square.<br/>You'll see a large building there. That's the one.");
 				break;
 
 			default:
-				RndMsg(
-					"<face name='normal'/>Go ask someone else.",
-					"<face name='normal'/>So... what do you want me to do about that?",
-					"<face name='normal'/>Should I know about something like that?",
-					"<face name='normal'/>I don't know anything about that.",
-					"<face name='normal'/>Don't you think you've had enough? Let's talk about something else."
+				RndFavorMsg(
+					"Go ask someone else.",
+					"Hmm. What a boring topic.",
+					"I don't know anything about that.",
+					"How should I know anything about that?",
+					"Should I know about something like that?",
+					"So... what do you want me to do about that?",
+					"Don't you think you've had enough? Let's talk about something else."
 				);
 				ModifyRelation(0, 0, Random(2));
 				break;
@@ -213,7 +238,7 @@ public class SimonScript : NpcScript
 	
 	public override void EndConversation()
 	{
-		Close(Hide.Name, "(Thank you, Simon. I'll see you later!)");
+		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 
@@ -221,18 +246,10 @@ public class SimonShop : NpcShopScript
 {
 	public override void Setup() 
 	{
-		//----------------
-		// Robes
-		//----------------
-
 		Add("Robes", 19003); // Tri-color Robe
 		Add("Robes", 19003); // Tri-color Robe
 		Add("Robes", 19003); // Tri-color Robe
 		Add("Robes", 19003); // Tri-color Robe
-		
-		//----------------
-		// Hats
-		//----------------
 
 		Add("Hats", 18012); // Tork's Merchant Hat
 		Add("Hats", 18003); // Lirina's Cap
@@ -249,12 +266,6 @@ public class SimonShop : NpcShopScript
 		Add("Hats", 18000); // Tork's Cap
 		Add("Hats", 18042); // Cores' Oriental Hat
 		Add("Hats", 18009); // Mongo's Archer Cap
-
-		//----------------
-		// Shoes & Gloves
-		//----------------
-		
-		// Page 1
 
 		Add("Shoes && Gloves", 16015); // Bracelet
 		Add("Shoes && Gloves", 17017); // Leather Shoes
@@ -278,16 +289,9 @@ public class SimonShop : NpcShopScript
 		Add("Shoes && Gloves", 17024); // Open-toe Platform Sandal
 		Add("Shoes && Gloves", 17013); // Thick Sandals
 		Add("Shoes && Gloves", 17069); // Leo Shoes
-		
-		// Page 2
-		
 		Add("Shoes && Gloves", 16032); // Elven Glove
 		Add("Shoes && Gloves", 17041); // Vine-print Hunting Boots
-		
-		//----------------
-		// Clothes
-		//----------------
-		
+
 		Add("Clothes", 15022); // Popo's Skirt
 		Add("Clothes", 15044); // Carpenter's Clothes
 		Add("Clothes", 15023); // Tork's Hunter Suit (F)
@@ -300,12 +304,6 @@ public class SimonShop : NpcShopScript
 		Add("Clothes", 15027); // Mongo's Long Skirt
 		Add("Clothes", 15041); // Female Business Suit
 
-		//----------------
-		// Fine Clothes
-		//----------------
-		
-		// Page 1
-		
 		Add("Fine Clothes", 15016); // Ceremonial Stocking
 		Add("Fine Clothes", 15154); // Sandra's Sniper Suit (F)
 		Add("Fine Clothes", 15026); // Lirina's Long Skirt
@@ -318,19 +316,11 @@ public class SimonShop : NpcShopScript
 		Add("Fine Clothes", 15014); // Messenger Wear
 		Add("Fine Clothes", 15153); // Sandra's Sniper Suit (M)
 		Add("Fine Clothes", 15029); // Tork's Blacksmith Suit
-		
-		// Page 2
-		
 		Add("Fine Clothes", 15019); // Cores' Ninja Suit (F)
 		Add("Fine Clothes", 15017); // Chinese Dress
 		Add("Fine Clothes", 15067); // Oriental Warrior Suit
 		Add("Fine Clothes", 15064); // Idol Ribbon Dress
 
-		
-		//----------------
-		// Event
-		//----------------
-		
-		// Currently empty.
+		Add("Event"); // Empty
 	}
 }
