@@ -39,21 +39,30 @@ namespace Aura.Shared.Util.Commands
 		/// Returns arguments parsed from line.
 		/// </summary>
 		/// <remarks>
-		/// Matches words and multiple lines in quotation.
+		/// Matches words and multiple words in quotation.
 		/// </remarks>
 		/// <example>
-		/// > command arg1 arg2 - 3 args, "command", "arg1", "arg2"
-		/// > command arg1 "arg2 arg3" - 3 args, "command", "arg1", "arg2 arg3"
+		/// arg0 arg1 arg2 -- 3 args: "arg0", "arg1", and "arg2"
+		/// arg0 arg1 "arg2 arg3" -- 3 args: "arg0", "arg1", and "arg2 arg3"
 		/// </example>
 		protected IList<string> ParseLine(string line)
 		{
-			// Find args, matching words and multiple words in quotation.
-			var matches = Regex.Matches(line, @"(""[a-z0-9_\-\.,\+': ]+""|[a-z0-9_\-\.,\+':]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+			var args = new List<string>();
+			var quote = false;
+			for (int i = 0, n = 0; i <= line.Length; ++i)
+			{
+				if ((i == line.Length || line[i] == ' ') && !quote)
+				{
+					if (i - n > 0)
+						args.Add(line.Substring(n, i - n).Trim(' ', '"'));
 
-			// Convert matches
-			var args = new List<string>(matches.Count);
-			for (var i = 0; i < matches.Count; i++)
-				args.Add(matches[i].Groups[1].Value.Trim('"', ' '));
+					n = i + 1;
+					continue;
+				}
+
+				if (line[i] == '"')
+					quote = !quote;
+			}
 
 			return args;
 		}
