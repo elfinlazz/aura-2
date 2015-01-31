@@ -143,7 +143,7 @@ public class ManusScript : NpcScript
 			case "personal_info":
 				if (Memory == 1)
 				{
-					Msg("My name is Manus.");
+					Msg("My name is <npcname/>.");
 					ModifyRelation(1, 0, Random(2));
 				}
 				else

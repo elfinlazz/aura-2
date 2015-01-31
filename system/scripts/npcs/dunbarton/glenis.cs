@@ -44,7 +44,7 @@ public class GlenisScript : NpcScript
 			"Over her lace collar she wears an old but well-polished locket."
 		);
 
-		Msg("Welcome!<br/>This is Glenis' Restaurant.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"));
+		Msg("Welcome!<br/>This is <npcname/>' Restaurant.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"));
 
 		switch (await Select()) 
 		{
@@ -69,13 +69,13 @@ public class GlenisScript : NpcScript
 			case "personal_info":
 				if (Memory == 1)
 				{
-					Msg("Oh, my! Don't be so formal but just call me Glenis!");
+					Msg("Oh, my! Don't be so formal but just call me <npcname/>!");
 					ModifyRelation(1, 0, Random(2));
 				}
 				else
 				{
 					Player.Keywords.Give("shop_restaurant");
-					Msg(FavorExpression(), "What do I do for a living, you ask? Ha ha. I own this Restaurant, and my name is Glenis. I thought I told you all of this.");
+					Msg(FavorExpression(), "What do I do for a living, you ask? Ha ha. I own this Restaurant, and my name is <npcname/>. I thought I told you all of this.");
 					ModifyRelation(Random(2), 0, Random(2));
 				}
 				break;

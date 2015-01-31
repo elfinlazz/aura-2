@@ -86,7 +86,7 @@ public class NerysScript : NpcScript
 				Player.Keywords.Give("shop_armory");
 				if (Memory == 1)
 				{
-					Msg("I'm Nerys, the owner of this Weapons Shop. Nice to meet you.");
+					Msg("I'm <npcname/>, the owner of this Weapons Shop. Nice to meet you.");
 					ModifyRelation(1, 0, Random(2));
 				}
 				else
