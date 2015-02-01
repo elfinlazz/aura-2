@@ -278,7 +278,7 @@ namespace Aura.Channel.Database
 			{
 				if (account.Authority >= 50) character.Titles.Add(60000, TitleState.Usable); // GM
 				if (account.Authority >= 99) character.Titles.Add(60001, TitleState.Usable); // devCAT
-				if (account.Authority >= 99) character.Titles.Add(60002, TitleState.Usable); // devDOG
+				//if (account.Authority >= 99) character.Titles.Add(60002, TitleState.Usable); // devDOG
 			}
 
 			// Init titles
