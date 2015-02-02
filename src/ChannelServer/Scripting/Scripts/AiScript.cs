@@ -651,6 +651,15 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void SwitchAction(Func<IEnumerable> action)
 		{
 			this.ExecuteOnce(this.CancelSkill());
+
+			// Cancel rest
+			if (this.Creature.Has(CreatureStates.SitDown))
+			{
+				var restHandler = ChannelServer.Instance.SkillManager.GetHandler<Rest>(SkillId.Rest);
+				if (restHandler != null)
+					restHandler.Stop(this.Creature, this.Creature.Skills.Get(SkillId.Rest));
+			}
+
 			_curAction = action().GetEnumerator();
 		}
 
