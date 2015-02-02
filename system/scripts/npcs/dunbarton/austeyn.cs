@@ -53,7 +53,7 @@ public class AusteynScript : NpcScript
 			case "@talk":
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
-				if (Player.Titles.SelectedTitle == 11002)
+				if (Title == 11002)
 					Msg("Oh wow, you're the one who saved Erinn?<br/>While you're at it,<br/>can you take care of the economic state of Dunbarton as well? Hehe...");
 				await Conversation();
 				break;

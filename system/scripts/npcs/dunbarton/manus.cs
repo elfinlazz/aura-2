@@ -49,7 +49,7 @@ public class ManusScript : NpcScript
 			case "@talk":
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
-				if (Player.Titles.SelectedTitle == 11002)
+				if (Title == 11002)
 					Msg("Wow, what a title!<br/><username/>, I feel like<br/>I need to treat you differently. Haha!");
 				await Conversation();
 				break;

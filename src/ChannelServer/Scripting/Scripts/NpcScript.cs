@@ -77,6 +77,14 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Returns the player's current title.
+		/// </summary>
+		public int Title
+		{
+			get { return this.Player.Titles.SelectedTitle; }
+		}
+
+		/// <summary>
 		/// Initializes class
 		/// </summary>
 		protected NpcScript()

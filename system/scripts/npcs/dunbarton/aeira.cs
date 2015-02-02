@@ -54,7 +54,7 @@ public class AeiraScript : NpcScript
 			case "@talk":
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
-				if (Player.Titles.SelectedTitle == 11002)
+				if (Title == 11002)
 					Msg("Wow... <username/>, you really<br/>rescued Erinn?<br/>I wasn't sure before, but you really are an amazing person.<br/>Please continue to watch over my Bookstore!");
 				await Conversation();
 				break;

@@ -51,7 +51,7 @@ public class GlenisScript : NpcScript
 			case "@talk":
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
-				if (Player.Titles.SelectedTitle == 11002)
+				if (Title == 11002)
 					Msg("Erinn's Guardian, huh...?<br/>Sounds like my husband when he was young... Hehe.<br/>If you need anything, just let me know.");
 				await Conversation();
 				break;

@@ -53,7 +53,7 @@ public class AranwenScript : NpcScript
 			case "@talk":
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
-				if (Player.Titles.SelectedTitle == 11002)
+				if (Title == 11002)
 				{
 					Msg("Guardian of Erinn...<br/>If it were anyone else,<br/>I would tell them to stop being so arrogant...");
 					Msg("But with you, <username/>, you are definitely qualified.<br/>Good job.");

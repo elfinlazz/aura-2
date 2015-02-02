@@ -51,7 +51,7 @@ public class KristellScript : NpcScript
 				GiveKeyword("temple");
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
-				if (Player.Titles.SelectedTitle == 11002)
+				if (Title == 11002)
 					Msg("Guardian of Erinn... There's nothing wrong with someone like you<br/>being called that, <username/>.<br/>Thank you... For saving Erinn...");
 				await Conversation();
 				break;

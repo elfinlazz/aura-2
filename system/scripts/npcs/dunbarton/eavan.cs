@@ -54,7 +54,7 @@ public class EavanScript : NpcScript
 				GiveKeyword("shop_goverment_office");
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
-				if (Player.Titles.SelectedTitle == 11002)
+				if (Title == 11002)
 					Msg("The Guardian of Erinn, <username/>...<br/>You are always welcomed here.");
 				await Conversation();
 				break;
