@@ -27,12 +27,12 @@ public class NaoScript : NpcScript
 		);
 		
 		if(!Player.Has(CreatureStates.EverEnteredWorld))
-			await Initialization();
+			await FirstTime();
 		else
 			await Rebirth();
 	}
 	
-	private async Task Initialization()
+	private async Task FirstTime()
 	{
 		await Introduction();
 		await Questions();
