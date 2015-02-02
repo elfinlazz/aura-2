@@ -546,7 +546,7 @@ namespace Aura.Channel.Network.Handlers
 			// Get weapon by race
 			var weapon = creature.Inventory.Items.FirstOrDefault(item => item.EgoInfo.Race == egoRace);
 			if (weapon == null)
-				throw new SevereViolation("Player tried to talk to an ego he doesn't have ({1})", egoRace);
+				throw new SevereViolation("Player tried to talk to an ego he doesn't have ({0})", egoRace);
 
 			// Save reference for the NPC
 			creature.Vars.Temp["ego"] = weapon;
