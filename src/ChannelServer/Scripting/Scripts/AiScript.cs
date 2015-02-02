@@ -867,19 +867,26 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Creature follows its target.
 		/// </summary>
 		/// <param name="maxDistance"></param>
+		/// <param name="walk"></param>
+		/// <param name="timeout"></param>
 		/// <returns></returns>
-		protected IEnumerable Follow(int maxDistance, bool walk = false)
+		protected IEnumerable Follow(int maxDistance, bool walk = false, int timeout = 5000)
 		{
-			var pos = this.Creature.GetPosition();
-			var targetPos = this.Creature.Target.GetPosition();
+			var until = _timestamp + Math.Max(0, timeout);
 
-			if (!pos.InRange(targetPos, maxDistance))
+			while (_timestamp < until)
 			{
-				// Walk up to distance-50 (a buffer so it really walks into range)
-				this.ExecuteOnce(this.MoveTo(pos.GetRelative(targetPos, -maxDistance + 50), walk));
-			}
+				var pos = this.Creature.GetPosition();
+				var targetPos = this.Creature.Target.GetPosition();
 
-			yield return true;
+				if (!pos.InRange(targetPos, maxDistance))
+				{
+					// Walk up to distance-50 (a buffer so it really walks into range)
+					this.ExecuteOnce(this.MoveTo(pos.GetRelative(targetPos, -maxDistance + 50), walk));
+				}
+
+				yield return true;
+			}
 		}
 
 		/// <summary>
