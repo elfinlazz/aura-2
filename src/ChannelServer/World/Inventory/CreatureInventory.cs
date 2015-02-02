@@ -571,6 +571,19 @@ namespace Aura.Channel.World.Inventory
 		}
 
 		/// <summary>
+		/// Tries to add item to pocket and updates clients.
+		/// Returns false if the pocket doesn't exist or there was no space.
+		/// </summary>
+		public bool AddWithUpdate(Item item, Pocket pocket)
+		{
+			if (!this.Add(item, pocket))
+				return false;
+
+			this.CheckEquipMoved(item, Pocket.None, pocket);
+			return true;
+		}
+
+		/// <summary>
 		/// Tries to add item to pocket. Returns false if the pocket
 		/// doesn't exist or there was no space.
 		/// </summary>

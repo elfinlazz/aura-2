@@ -1360,9 +1360,7 @@ namespace Aura.Channel.Util
 			}
 
 			// Create item
-			var item = new Item(itemData.Id);
-			item.EgoInfo.Race = egoRace;
-			item.EgoInfo.Name = args[2];
+			var item = Item.CreateEgo(itemData.Id, egoRace, args[2]);
 
 			// Parse colors
 			if (args.Count > 4)

@@ -39,7 +39,15 @@ public class TirBeginnerRegionScript : RegionScript
 			{
 				// Give first weapon
 				if(creature.RightHand == null)
-					creature.Inventory.Add(40005, Pocket.RightHand1); // Short Sword
+				{
+					//if(!eiry)
+					//	creature.Inventory.Add(40005, Pocket.RightHand1); // Short Sword
+					//else
+					{
+						// Eiry Practice Short Sword
+						creature.Inventory.AddWithUpdate(Item.CreateEgo(40524, EgoRace.EirySword, "Eiry"), Pocket.RightHand1);
+					}
+				}
 
 				// Set as soon as the player got everything
 				creature.Vars.Perm["TinCutscene"] = true;

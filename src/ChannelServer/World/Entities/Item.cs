@@ -201,6 +201,22 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns new ego weapon.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="name"></param>
+		/// <param name="egoRace"></param>
+		/// <returns></returns>
+		public static Item CreateEgo(int itemId, EgoRace egoRace, string name)
+		{
+			var item = new Item(itemId);
+			item.EgoInfo.Race = egoRace;
+			item.EgoInfo.Name = name;
+
+			return item;
+		}
+
+		/// <summary>
 		/// Returns item's position, based on Info.X and Y.
 		/// </summary>
 		/// <returns></returns>
