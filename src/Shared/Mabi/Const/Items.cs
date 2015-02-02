@@ -154,4 +154,25 @@ namespace Aura.Shared.Mabi.Const
 		// 15
 		LordKeyItem = 16,
 	}
+
+	public enum EgoRace : byte
+	{
+		None = 0,
+		SwordM = 1,
+		SwordF = 2,
+		BluntM = 3,
+		BluntF = 4,
+		WandM = 5,
+		WandF = 6,
+		BowM = 7,
+		BowF = 8,
+		EirySword = 9,
+		EiryBow = 10,
+		EiryAxe = 11,
+		EiryLute = 12,
+		EiryCylinder = 13,
+		EiryWind = 14, // ?
+		CylinderM = 15,
+		CylinderF = 16,
+	}
 }

@@ -497,5 +497,95 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.BankWithdrawItemR(creature, success);
 		}
+
+		/// <summary>
+		/// Sent to speak to ego weapon.
+		/// </summary>
+		/// <remarks>
+		/// The only parameter we get is the race of the ego the client selects.
+		/// It seems to start looking for egos at the bottom right of the inv.
+		/// 
+		/// The client can handle multiple egos, but it's really made for one.
+		/// It only shows the correct aura if you have only one equipped
+		/// and since it starts looking for the ego to talk to in the inventory
+		/// you would have to equip the ego you *don't* want to talk to...
+		/// 
+		/// I fyou right click the ego to talk to a specific one you get the
+		/// correct ego race, but it will still show the stats of the auto-
+		/// selected one.
+		/// </remarks>
+		/// <param name="client"></param>
+		/// <param name="packet"></param>
+		[PacketHandler(Op.NpcTalkEgo)]
+		public void NpcTalkEgo(ChannelClient client, Packet packet)
+		{
+			var egoRace = (EgoRace)packet.GetInt();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			// Stop if race is somehow invalid
+			if (egoRace <= EgoRace.None || egoRace > EgoRace.CylinderF)
+			{
+				Log.Warning("NpcTalkEgo: Invalid ego race '{0}'.", egoRace);
+				Send.SystemMessage(creature, "Invalid ego race.");
+				Send.NpcTalkEgoR(creature, false, 0, null, null);
+				return;
+			}
+
+			// Check multi-ego
+			// TODO: We can implement multi-ego for the same ego race
+			//   once we know how the client selects them.
+			//   *Should* we implement that without proper support though?
+			if (creature.Inventory.Items.Count(item => item.EgoInfo.Race == egoRace) > 1)
+			{
+				Send.SystemMessage(creature, "Multiple egos of the same type are currently not supported.");
+				Send.NpcTalkEgoR(creature, false, 0, null, null);
+				return;
+			}
+
+			// Get weapon by race
+			var weapon = creature.Inventory.Items.FirstOrDefault(item => item.EgoInfo.Race == egoRace);
+			if (weapon == null)
+				throw new SevereViolation("Player tried to talk to an ego he doesn't have ({1})", egoRace);
+
+			// Save reference for the NPC
+			creature.Vars.Temp["ego"] = weapon;
+
+			// Get NPC name by race
+			var npcName = "ego_eiry";
+			switch (egoRace)
+			{
+				case EgoRace.SwordM: npcName = "ego_male_sword"; break;
+				case EgoRace.SwordF: npcName = "ego_female_sword"; break;
+				case EgoRace.BluntM: npcName = "ego_male_blunt"; break;
+				case EgoRace.BluntF: npcName = "ego_female_blunt"; break;
+				case EgoRace.WandM: npcName = "ego_male_wand"; break;
+				case EgoRace.WandF: npcName = "ego_female_wand"; break;
+				case EgoRace.BowM: npcName = "ego_male_bow"; break;
+				case EgoRace.BowF: npcName = "ego_female_bow"; break;
+				case EgoRace.CylinderM: npcName = "ego_male_cylinder"; break;
+				case EgoRace.CylinderF: npcName = "ego_female_cylinder"; break;
+			}
+
+			// Get display name
+			var displayName = "Eiry";
+			if (egoRace < EgoRace.EirySword || egoRace > EgoRace.EiryWind)
+				displayName = string.Format(Localization.Get("{0} of {1}"), weapon.EgoInfo.Name, creature.Name);
+
+			// Get NPC for dialog
+			var npc = ChannelServer.Instance.World.GetNpc("_" + npcName);
+			if (npc == null)
+			{
+				Log.Error("NpcTalkEgo: Ego NPC not found ({0})", npcName);
+				Send.NpcTalkEgoR(creature, false, 0, null, null);
+				return;
+			}
+
+			// Success
+			Send.NpcTalkEgoR(creature, true, npc.EntityId, npcName, displayName);
+
+			// Start dialog
+			client.NpcSession.StartTalk(npc, creature);
+		}
 	}
 }

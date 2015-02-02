@@ -30,30 +30,36 @@ namespace Aura.Channel.Network.Sending.Helpers
 			else if (type == ItemPacketType.Private)
 			{
 				packet.PutBin(item.OptionInfo);
+
+				// Ego data
+				if (item.Data.HasTag("/ego_weapon/"))
+				{
+					packet.PutString(item.EgoInfo.Name);
+					packet.PutByte((byte)item.EgoInfo.Race);
+					packet.PutByte(0); // ? increased from 14 to 18 when I fed a bottle to a sword
+
+					packet.PutByte(item.EgoInfo.SocialLevel);
+					packet.PutInt(item.EgoInfo.SocialExp);
+					packet.PutByte(item.EgoInfo.StrLevel);
+					packet.PutInt(item.EgoInfo.StrExp);
+					packet.PutByte(item.EgoInfo.IntLevel);
+					packet.PutInt(item.EgoInfo.IntExp);
+					packet.PutByte(item.EgoInfo.DexLevel);
+					packet.PutInt(item.EgoInfo.DexExp);
+					packet.PutByte(item.EgoInfo.WillLevel);
+					packet.PutInt(item.EgoInfo.WillExp);
+					packet.PutByte(item.EgoInfo.LuckLevel);
+					packet.PutInt(item.EgoInfo.LuckExp);
+					packet.PutByte(item.EgoInfo.AwakeningEnergy);
+					packet.PutInt(item.EgoInfo.AwakeningExp);
+
+					packet.PutLong(0);
+					packet.PutLong(item.EgoInfo.LastFeeding); // Last feeding time?
+					packet.PutInt(0);
+				}
+
 				packet.PutString(item.MetaData1.ToString());
 				packet.PutString(item.MetaData2.ToString());
-
-				// Egos (example)
-				//0969 [................] String : Navi
-				//0970 [..............02] Byte   : 2
-				//0971 [..............0E] Byte   : 14
-				//0972 [..............0E] Byte   : 14
-				//0973 [........00000F50] Int    : 3920
-				//0974 [..............11] Byte   : 17
-				//0975 [........000013B6] Int    : 5046
-				//0976 [..............05] Byte   : 5
-				//0977 [........00000092] Int    : 146
-				//0978 [..............04] Byte   : 4
-				//0979 [........000000C9] Int    : 201
-				//0980 [..............03] Byte   : 3
-				//0981 [........0000007E] Int    : 126
-				//0982 [..............03] Byte   : 3
-				//0983 [........000000B5] Int    : 181
-				//0984 [..............00] Byte   : 0
-				//0985 [........00000000] Int    : 0
-				//0986 [0000000000000000] Long   : 0
-				//0987 [000039C6DF641228] Long   : 63526314185256 (26.01.2014 06:23:05)
-				//0988 [........00000000] Int    : 0
 
 				// Upgrades?
 				packet.PutByte(0); // Count

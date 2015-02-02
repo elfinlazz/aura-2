@@ -109,6 +109,8 @@ namespace Aura.Shared.Network
 		public const int NpcTalkStartR = 0x55F1;
 		public const int NpcTalkEnd = 0x55F2;
 		public const int NpcTalkEndR = 0x55F3;
+		public const int NpcTalkEgo = 0x55F4;
+		public const int NpcTalkEgoR = 0x55F5;
 		public const int NpcTalkPartner = 0x55F8;
 		public const int NpcTalkPartnerR = 0x55F9;
 		public const int ItemMove = 0x59D8;

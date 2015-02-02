@@ -64,6 +64,11 @@ namespace Aura.Channel.World.Entities
 		public MabiDictionary MetaData2 { get; protected set; }
 
 		/// <summary>
+		/// Ego weapon information
+		/// </summary>
+		public EgoInfo EgoInfo { get; protected set; }
+
+		/// <summary>
 		/// Bank at which the item is currently lying around.
 		/// </summary>
 		public string Bank { get; set; }
@@ -190,8 +195,25 @@ namespace Aura.Channel.World.Entities
 			this.Info.Id = itemId;
 			this.MetaData1 = new MabiDictionary();
 			this.MetaData2 = new MabiDictionary();
+			this.EgoInfo = new EgoInfo();
 
 			this.LoadDefault();
+		}
+
+		/// <summary>
+		/// Returns new ego weapon.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="name"></param>
+		/// <param name="egoRace"></param>
+		/// <returns></returns>
+		public static Item CreateEgo(int itemId, EgoRace egoRace, string name)
+		{
+			var item = new Item(itemId);
+			item.EgoInfo.Race = egoRace;
+			item.EgoInfo.Name = name;
+
+			return item;
 		}
 
 		/// <summary>

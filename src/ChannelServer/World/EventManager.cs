@@ -140,6 +140,12 @@ namespace Aura.Channel.World
 		/// </summary>
 		public event Action<TargetAction> CreatureAttack;
 		public void OnCreatureAttack(TargetAction action) { CreatureAttack.Raise(action); }
+
+		/// <summary>
+		/// Raised when a creature's level increases.
+		/// </summary>
+		public event Action<Creature> CreatureLevelUp;
+		public void OnCreatureLevelUp(Creature creature) { CreatureLevelUp.Raise(creature); }
 	}
 
 	public static class EventHandlerExtensions

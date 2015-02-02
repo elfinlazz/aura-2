@@ -360,59 +360,100 @@ namespace Aura.Channel.Database
 		{
 			var result = new List<Item>();
 
-			var query = "SELECT * FROM `items` WHERE `creatureId` = @creatureId";
-
-			// Filter bank items
-			if (bank)
-				query += " AND `pocket` = 0 AND `bank` IS NOT NULL";
-			else
-				query += " AND `pocket` != 0 AND `bank` IS NULL";
-
-			// Sort descending by linkedPocket to get bags first, they have
-			// to be created before the items can be added.
-			query += " ORDER BY `linkedPocket` DESC";
-
 			using (var conn = this.Connection)
-			using (var mc = new MySqlCommand(query, conn))
 			{
-				mc.Parameters.AddWithValue("@creatureId", creatureId);
+				var query = "SELECT * FROM `items` WHERE `creatureId` = @creatureId";
 
-				using (var reader = mc.ExecuteReader())
+				// Filter bank items
+				if (bank)
+					query += " AND `pocket` = 0 AND `bank` IS NOT NULL";
+				else
+					query += " AND `pocket` != 0 AND `bank` IS NULL";
+
+				// Sort descending by linkedPocket to get bags first, they have
+				// to be created before the items can be added.
+				query += " ORDER BY `linkedPocket` DESC";
+
+				using (var mc = new MySqlCommand(query, conn))
 				{
-					while (reader.Read())
+					mc.Parameters.AddWithValue("@creatureId", creatureId);
+
+					using (var reader = mc.ExecuteReader())
 					{
-						var itemId = reader.GetInt32("itemId");
-						var entityId = reader.GetInt64("entityId");
+						while (reader.Read())
+						{
+							var itemId = reader.GetInt32("itemId");
+							var entityId = reader.GetInt64("entityId");
 
-						var item = new Item(itemId, entityId);
-						item.Bank = reader.GetStringSafe("bank");
-						item.Info.Pocket = (Pocket)reader.GetInt32("pocket");
-						item.Info.X = reader.GetInt32("x");
-						item.Info.Y = reader.GetInt32("y");
-						item.Info.Color1 = reader.GetUInt32("color1");
-						item.Info.Color2 = reader.GetUInt32("color2");
-						item.Info.Color3 = reader.GetUInt32("color3");
-						item.Info.Amount = reader.GetUInt16("amount");
-						item.Info.State = reader.GetByte("state");
-						item.OptionInfo.Price = reader.GetInt32("price");
-						item.OptionInfo.SellingPrice = reader.GetInt32("sellPrice");
-						item.OptionInfo.Durability = reader.GetInt32("durability");
-						item.OptionInfo.DurabilityMax = reader.GetInt32("durabilityMax");
-						item.OptionInfo.DurabilityOriginal = reader.GetInt32("durabilityOriginal");
-						item.OptionInfo.AttackMin = reader.GetUInt16("attackMin");
-						item.OptionInfo.AttackMax = reader.GetUInt16("attackMax");
-						item.OptionInfo.Balance = reader.GetByte("balance");
-						item.OptionInfo.Critical = reader.GetByte("critical");
-						item.OptionInfo.Defense = reader.GetInt32("defense");
-						item.OptionInfo.Protection = reader.GetInt16("protection");
-						item.OptionInfo.EffectiveRange = reader.GetInt16("range");
-						item.OptionInfo.AttackSpeed = (AttackSpeed)reader.GetByte("attackSpeed");
-						item.OptionInfo.Experience = reader.GetInt16("experience");
-						item.MetaData1.Parse(reader.GetStringSafe("meta1"));
-						item.MetaData2.Parse(reader.GetStringSafe("meta2"));
-						item.OptionInfo.LinkedPocketId = (Pocket)reader.GetByte("linkedPocket");
+							var item = new Item(itemId, entityId);
+							item.Bank = reader.GetStringSafe("bank");
+							item.Info.Pocket = (Pocket)reader.GetInt32("pocket");
+							item.Info.X = reader.GetInt32("x");
+							item.Info.Y = reader.GetInt32("y");
+							item.Info.Color1 = reader.GetUInt32("color1");
+							item.Info.Color2 = reader.GetUInt32("color2");
+							item.Info.Color3 = reader.GetUInt32("color3");
+							item.Info.Amount = reader.GetUInt16("amount");
+							item.Info.State = reader.GetByte("state");
+							item.Info.FigureB = reader.GetByte("figureB");
+							item.OptionInfo.Price = reader.GetInt32("price");
+							item.OptionInfo.SellingPrice = reader.GetInt32("sellPrice");
+							item.OptionInfo.Durability = reader.GetInt32("durability");
+							item.OptionInfo.DurabilityMax = reader.GetInt32("durabilityMax");
+							item.OptionInfo.DurabilityOriginal = reader.GetInt32("durabilityOriginal");
+							item.OptionInfo.AttackMin = reader.GetUInt16("attackMin");
+							item.OptionInfo.AttackMax = reader.GetUInt16("attackMax");
+							item.OptionInfo.Balance = reader.GetByte("balance");
+							item.OptionInfo.Critical = reader.GetByte("critical");
+							item.OptionInfo.Defense = reader.GetInt32("defense");
+							item.OptionInfo.Protection = reader.GetInt16("protection");
+							item.OptionInfo.EffectiveRange = reader.GetInt16("range");
+							item.OptionInfo.AttackSpeed = (AttackSpeed)reader.GetByte("attackSpeed");
+							item.OptionInfo.Experience = reader.GetInt16("experience");
+							item.MetaData1.Parse(reader.GetStringSafe("meta1"));
+							item.MetaData2.Parse(reader.GetStringSafe("meta2"));
+							item.OptionInfo.LinkedPocketId = (Pocket)reader.GetByte("linkedPocket");
 
-						result.Add(item);
+							result.Add(item);
+						}
+					}
+				}
+
+				// Load ego data
+				using (var mc = new MySqlCommand("SELECT * FROM `egos` WHERE itemEntityId = @itemEntityId", conn))
+				{
+					foreach (var item in result.Where(item => item.Data.HasTag("/ego_weapon/")))
+					{
+						mc.Parameters.AddWithValue("@itemEntityId", item.EntityId);
+
+						using (var reader = mc.ExecuteReader())
+						{
+							if (!reader.Read())
+							{
+								Log.Warning("ChannelDb.GetItems: No ego data for '{0}'.", item.EntityIdHex);
+								continue;
+							}
+
+							item.EgoInfo.Race = (EgoRace)reader.GetByte("egoRace");
+							item.EgoInfo.Name = reader.GetStringSafe("name");
+							item.EgoInfo.StrLevel = reader.GetByte("strLevel");
+							item.EgoInfo.StrExp = reader.GetInt32("strExp");
+							item.EgoInfo.IntLevel = reader.GetByte("intLevel");
+							item.EgoInfo.IntExp = reader.GetInt32("intExp");
+							item.EgoInfo.DexLevel = reader.GetByte("dexLevel");
+							item.EgoInfo.DexExp = reader.GetInt32("dexExp");
+							item.EgoInfo.WillLevel = reader.GetByte("willLevel");
+							item.EgoInfo.WillExp = reader.GetInt32("willExp");
+							item.EgoInfo.LuckLevel = reader.GetByte("luckLevel");
+							item.EgoInfo.LuckExp = reader.GetInt32("luckExp");
+							item.EgoInfo.SocialLevel = reader.GetByte("socialLevel");
+							item.EgoInfo.SocialExp = reader.GetInt32("socialExp");
+							item.EgoInfo.AwakeningEnergy = reader.GetByte("awakeningEnergy");
+							item.EgoInfo.AwakeningExp = reader.GetInt32("awakeningExp");
+							item.EgoInfo.LastFeeding = reader.GetDateTimeSafe("lastFeeding");
+						}
+
+						mc.Parameters.Clear();
 					}
 				}
 			}
@@ -953,6 +994,7 @@ namespace Aura.Channel.Database
 						cmd.Set("amount", item.Info.Amount);
 						cmd.Set("linkedPocket", item.OptionInfo.LinkedPocketId);
 						cmd.Set("state", item.Info.State);
+						cmd.Set("figureB", item.Info.FigureB);
 						cmd.Set("durability", item.OptionInfo.Durability);
 						cmd.Set("durabilityMax", item.OptionInfo.DurabilityMax);
 						cmd.Set("durabilityOriginal", item.OptionInfo.DurabilityOriginal);
@@ -972,6 +1014,34 @@ namespace Aura.Channel.Database
 
 						if (item.EntityId >= MabiId.TmpItems)
 							item.EntityId = cmd.LastId;
+					}
+
+					// Save ego data
+					if (item.Data.HasTag("/ego_weapon/"))
+					{
+						using (var cmd = new InsertCommand("INSERT INTO `egos` {0}", conn, transaction))
+						{
+							cmd.Set("itemEntityId", item.EntityId);
+							cmd.Set("egoRace", (byte)item.EgoInfo.Race);
+							cmd.Set("name", item.EgoInfo.Name);
+							cmd.Set("strLevel", item.EgoInfo.StrLevel);
+							cmd.Set("strExp", item.EgoInfo.StrExp);
+							cmd.Set("intLevel", item.EgoInfo.IntLevel);
+							cmd.Set("intExp", item.EgoInfo.IntExp);
+							cmd.Set("dexLevel", item.EgoInfo.DexLevel);
+							cmd.Set("dexExp", item.EgoInfo.DexExp);
+							cmd.Set("willLevel", item.EgoInfo.WillLevel);
+							cmd.Set("willExp", item.EgoInfo.WillExp);
+							cmd.Set("luckLevel", item.EgoInfo.LuckLevel);
+							cmd.Set("luckExp", item.EgoInfo.LuckExp);
+							cmd.Set("socialLevel", item.EgoInfo.SocialLevel);
+							cmd.Set("socialExp", item.EgoInfo.SocialExp);
+							cmd.Set("awakeningEnergy", item.EgoInfo.AwakeningEnergy);
+							cmd.Set("awakeningExp", item.EgoInfo.AwakeningExp);
+							cmd.Set("lastFeeding", item.EgoInfo.LastFeeding);
+
+							cmd.Execute();
+						}
 					}
 				}
 

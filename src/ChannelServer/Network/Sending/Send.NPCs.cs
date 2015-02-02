@@ -315,5 +315,28 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends NpcTalkEgoR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		/// <param name="npcEntityId"></param>
+		/// <param name="npcName"></param>
+		/// <param name="description"></param>
+		public static void NpcTalkEgoR(Creature creature, bool success, long npcEntityId, string npcName, string description)
+		{
+			var packet = new Packet(Op.NpcTalkEgoR, creature.EntityId);
+
+			packet.PutByte(success);
+			if (success)
+			{
+				packet.PutLong(npcEntityId);
+				packet.PutString(npcName);
+				packet.PutString(description);
+			}
+
+			creature.Client.Send(packet);
+		}
 	}
 }

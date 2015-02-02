@@ -135,6 +135,12 @@ namespace Aura.Channel.Scripting.Scripts
 				ChannelServer.Instance.Events.PlayerCompletesQuest -= this.OnPlayerCompletesQuest;
 				ChannelServer.Instance.Events.PlayerCompletesQuest += this.OnPlayerCompletesQuest;
 			}
+
+			if (prerequisite is QuestPrerequisiteReachedLevel || prerequisite is QuestPrerequisiteReachedTotalLevel)
+			{
+				ChannelServer.Instance.Events.CreatureLevelUp -= this.OnCreatureLevelUp;
+				ChannelServer.Instance.Events.CreatureLevelUp += this.OnCreatureLevelUp;
+			}
 		}
 
 		/// <summary>
@@ -193,6 +199,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		protected QuestPrerequisite Completed(int questId) { return new QuestPrerequisiteQuestCompleted(questId); }
 		protected QuestPrerequisite ReachedLevel(int level) { return new QuestPrerequisiteReachedLevel(level); }
+		protected QuestPrerequisite ReachedTotalLevel(int level) { return new QuestPrerequisiteReachedTotalLevel(level); }
 		protected QuestPrerequisite NotSkill(SkillId skillId, SkillRank rank = SkillRank.Novice) { return new QuestPrerequisiteNotSkill(skillId, rank); }
 		protected QuestPrerequisite And(params QuestPrerequisite[] prerequisites) { return new QuestPrerequisiteAnd(prerequisites); }
 		protected QuestPrerequisite Or(params QuestPrerequisite[] prerequisites) { return new QuestPrerequisiteOr(prerequisites); }
@@ -334,6 +341,16 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			if (this.CheckPrerequisites(character))
 				character.Quests.Start(this.Id);
+		}
+
+		/// <summary>
+		/// Checks prerequisites.
+		/// </summary>
+		/// <param name="creature"></param>
+		private void OnCreatureLevelUp(Creature creature)
+		{
+			if (this.CheckPrerequisites(creature))
+				creature.Quests.Start(this.Id);
 		}
 	}
 

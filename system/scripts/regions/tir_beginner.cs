@@ -27,11 +27,13 @@ public class TirBeginnerRegionScript : RegionScript
 		OnClientEvent(0x00B0007D0001009C, SignalType.Enter, (creature, eventData) =>
 		{
 			// Only do this once.
-			if (creature.Vars.Perm["TinCutscene"] != null) return;
+			if (creature.Keywords.Has("tin_tutorial_guide"))
+				return;
 
 			if (!creature.Quests.Has(202001))
 				creature.Quests.Start(202001); // Nao's Letter of Introduction
 
+			// TODO: Cutscene db
 			var cutscene = new Cutscene("tuto_meet_tin", creature);
 			cutscene.AddActor("me", creature);
 			cutscene.AddActor("#tin", creature.Region.GetCreature("_tin"));
@@ -39,10 +41,18 @@ public class TirBeginnerRegionScript : RegionScript
 			{
 				// Give first weapon
 				if(creature.RightHand == null)
-					creature.Inventory.Add(40005, Pocket.RightHand1); // Short Sword
+				{
+					//if(!eiry)
+					//	creature.Inventory.Add(40005, Pocket.RightHand1); // Short Sword
+					//else
+					{
+						// Eiry Practice Short Sword
+						creature.Inventory.AddWithUpdate(Item.CreateEgo(40524, EgoRace.EirySword, "Eiry"), Pocket.RightHand1);
+					}
+				}
 
-				// Set as soon as the player got everything
-				creature.Vars.Perm["TinCutscene"] = true;
+				// Give as soon as the player got everything
+				creature.Keywords.Give("tin_tutorial_guide");
 
 				// Required to remove the fade effect.
 				scene.Leader.Warp(125, 22930, 75423);
