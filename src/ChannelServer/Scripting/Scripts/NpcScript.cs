@@ -231,11 +231,12 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Sends Close, with the standard ending phrase.
+		/// Sends Close, using either the message or the standard ending phrase.
 		/// </summary>
-		public void End()
+		/// <param name="response"></param>
+		public void End(string message = null)
 		{
-			this.Close("(You ended your conversation with <npcname/>.)");
+			this.Close(message ?? "(You ended your conversation with <npcname/>.)");
 		}
 
 		/// <summary>
