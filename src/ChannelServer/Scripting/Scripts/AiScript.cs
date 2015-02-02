@@ -1042,53 +1042,64 @@ namespace Aura.Channel.Scripting.Scripts
 				yield break;
 			}
 
-			// Get preparable handler
-			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<IPreparable>(skillId);
-			if (skillHandler == null)
-			{
-				Log.Unimplemented("AI.PrepareSkill: Missing handler or IPreparable for '{0}'.", skillId);
-				yield break;
-			}
-
-			// Get readyable handler.
-			// TODO: There are skills that don't have ready, but go right to
-			//   use from Prepare. Handle somehow.
-			var readyHandler = skillHandler as IReadyable;
-			if (readyHandler == null)
-			{
-				Log.Unimplemented("AI.PrepareSkill: Missing IReadyable for '{0}'.", skillId);
-				yield break;
-			}
-
 			// Cancel previous skill
 			if (this.Creature.Skills.ActiveSkill != null)
 				this.ExecuteOnce(this.CancelSkill());
 
-			this.SharpMind(skillId, SharpMindStatus.Loading);
-
-			// Prepare skill
-			try
+			// Explicit handling
+			if (skillId == SkillId.WebSpinning)
 			{
-				skillHandler.Prepare(this.Creature, skill, skill.RankData.LoadTime, null);
-
-				this.Creature.Skills.SkillInProgress = true; // Probably not needed for AIs?
+				var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<WebSpinning>(skillId);
+				skillHandler.Prepare(this.Creature, skill, 0, null);
+				skillHandler.Complete(this.Creature, skill, null);
 			}
-			catch (NullReferenceException)
+			// Try to handle implicitly
+			else
 			{
-				Log.Warning("AI.PrepareSkill: Null ref exception while preparing '{0}', skill might have parameters.", skillId);
-			}
-			catch (NotImplementedException)
-			{
-				Log.Unimplemented("AI.PrepareSkill: Skill prepare method for '{0}'.", skillId);
-			}
+				// Get preparable handler
+				var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<IPreparable>(skillId);
+				if (skillHandler == null)
+				{
+					Log.Unimplemented("AI.PrepareSkill: Missing handler or IPreparable for '{0}'.", skillId);
+					yield break;
+				}
 
-			// Wait for loading to be done
-			foreach (var action in this.Wait(skill.RankData.LoadTime))
-				yield return action;
+				// Get readyable handler.
+				// TODO: There are skills that don't have ready, but go right to
+				//   use from Prepare. Handle somehow.
+				var readyHandler = skillHandler as IReadyable;
+				if (readyHandler == null)
+				{
+					Log.Unimplemented("AI.PrepareSkill: Missing IReadyable for '{0}'.", skillId);
+					yield break;
+				}
 
-			// Call ready, in case it sets something important
-			readyHandler.Ready(this.Creature, skill, null);
-			this.SharpMind(skillId, SharpMindStatus.Loaded);
+				this.SharpMind(skillId, SharpMindStatus.Loading);
+
+				// Prepare skill
+				try
+				{
+					skillHandler.Prepare(this.Creature, skill, skill.RankData.LoadTime, null);
+
+					this.Creature.Skills.SkillInProgress = true; // Probably not needed for AIs?
+				}
+				catch (NullReferenceException)
+				{
+					Log.Warning("AI.PrepareSkill: Null ref exception while preparing '{0}', skill might have parameters.", skillId);
+				}
+				catch (NotImplementedException)
+				{
+					Log.Unimplemented("AI.PrepareSkill: Skill prepare method for '{0}'.", skillId);
+				}
+
+				// Wait for loading to be done
+				foreach (var action in this.Wait(skill.RankData.LoadTime))
+					yield return action;
+
+				// Call ready, in case it sets something important
+				readyHandler.Ready(this.Creature, skill, null);
+				this.SharpMind(skillId, SharpMindStatus.Loaded);
+			}
 		}
 
 		/// <summary>
