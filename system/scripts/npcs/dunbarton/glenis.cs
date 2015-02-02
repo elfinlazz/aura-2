@@ -44,7 +44,7 @@ public class GlenisScript : NpcScript
 			"Over her lace collar she wears an old but well-polished locket."
 		);
 
-		Msg("Welcome!<br/>This is <npcname/>' Restaurant.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"));
+		Msg("Welcome!<br/>This is Glenis' Restaurant.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"));
 
 		switch (await Select()) 
 		{
@@ -59,8 +59,10 @@ public class GlenisScript : NpcScript
 			case "@shop":
 				Msg("Are you looking for any kind of food in particular?<br/>Take your pick.");
 				OpenShop("GlenisShop");
-				break;
+				return;
 		}
+		
+		End("Thank you, <npcname/>. I'll see you later!");
 	}
 	protected override async Task Keywords(string keyword)
 	{
@@ -210,11 +212,6 @@ public class GlenisScript : NpcScript
 				ModifyRelation(0, 0, Random(2));
 				break;
 		}
-	}
-
-	public override void EndConversation()
-	{
-		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 

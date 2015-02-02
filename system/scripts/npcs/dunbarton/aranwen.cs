@@ -64,7 +64,7 @@ public class AranwenScript : NpcScript
 			case "@shop":
 				Msg("Are you looking for a party quest scroll?");
 				OpenShop("AranwenShop");
-				break;
+				return;
 
 			case "@upgrade":
 				Msg("Please select the weapon you'd like to modify.<br/>Each weapon can be modified according to its kind.<upgrade />");
@@ -72,6 +72,8 @@ public class AranwenScript : NpcScript
 				Msg("A bow is weaker than a crossbow?<br/>That's because you don't know a bow very well.<br/>Crossbows are advanced weapons for sure,<br/>but a weapon that reflects your strength and senses is closer to nature than machinery.");
 				break;
 		}
+		
+		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
 	protected override async Task Keywords(string keyword) 
@@ -222,11 +224,6 @@ public class AranwenScript : NpcScript
 				ModifyRelation(0, 0, Random(2));
 				break;
 		}
-	}
-
-	public override void EndConversation() 
-	{
-		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 

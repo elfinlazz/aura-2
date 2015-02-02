@@ -62,8 +62,10 @@ public class AeiraScript : NpcScript
 			case "@shop":
 				Msg("Welcome to the Bookstore.");
 				OpenShop("AeiraShop");
-				break;
+				return;
 		}
+		
+		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
 	protected override async Task Keywords(string keyword)
@@ -219,11 +221,6 @@ public class AeiraScript : NpcScript
 				ModifyRelation(0, 0, Random(2));
 				break;
 		}
-	}
-
-	public override void EndConversation() 
-	{
-		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 

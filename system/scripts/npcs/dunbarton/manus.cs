@@ -57,37 +57,28 @@ public class ManusScript : NpcScript
 			case "@shop":
 				Msg("Is there something I can help you with?");
 				OpenShop("ManusShop");
-				break;
+				return;
 
 			case "@healerscare":
 				if (Player.Life == Player.LifeMax)
 				{
-					Msg("Huh? What's this? You are fine. What do you mean you need treatment?<br/>Foot fungus, by any chance? Hahaha!", Button("Continue", "@end"));
-					await Select();
-					Close();
+					Msg("Huh? What's this? You are fine. What do you mean you need treatment?<br/>Foot fungus, by any chance? Hahaha!");
 				}
 				else
 				{
-					Msg("My, how did you manage to get hurt this badly?! We'll have to bandage it right now!<br/>Oh, but don't forget that you have to pay the fee. It's 90 Gold.",
-						Button("Receive Treatment", "@gethealing"), Button("Decline", "@cancel"));
-					switch (await Select())
+					Msg("My, how did you manage to get hurt this badly?! We'll have to bandage it right now!<br/>Oh, but don't forget that you have to pay the fee. It's 90 Gold.", Button("Receive Treatment", "@gethealing"), Button("Decline", "@cancel"));
+					if(await Select() == "@gethealing")
 					{
-						case "@gethealing":
-							if (Player.Inventory.Gold >= 90)
-							{
-								Player.Inventory.RemoveGold(90);
-								Player.FullLifeHeal();
-								Msg("There, how do you like my skills?! Don't be so careless with your body.", Button("Continue", "@end"));
-								await Select();
-								Close();
-							}
-							else
-							{
-								Msg("Gee, that's not enough money.<br/>I may be generous, but I can't do this for free.", Button("Continue", "@end"));
-								await Select();
-								Close();
-							}
-							break;
+						if (Player.Inventory.Gold >= 90)
+						{
+							Player.Inventory.RemoveGold(90);
+							Player.FullLifeHeal();
+							Msg("There, how do you like my skills?! Don't be so careless with your body.");
+						}
+						else
+						{
+							Msg("Gee, that's not enough money.<br/>I may be generous, but I can't do this for free.");
+						}
 					}
 				}
 				break;
@@ -95,45 +86,37 @@ public class ManusScript : NpcScript
 			case "@petheal":
 				if (Player.Pet == null)
 				{
-					Msg("You'll need to show me your pet first before I can diagnose it.<br/>Don't you think so?", Button("Continue", "@end"));
-					await Select();
-					Close();
+					Msg("You'll need to show me your pet first before I can diagnose it.<br/>Don't you think so?");
 				}
 				else if (Player.Pet.IsDead)
 				{
-					Msg("Your pet is already knocked unconscious! Revive it first, immediately.", Button("Continue", "@end"));
-					await Select();
-					Close();
+					Msg("Your pet is already knocked unconscious! Revive it first, immediately.");
 				}
 				else if (Player.Pet.Life == Player.Pet.LifeMax)
 				{
-					Msg("What? Your pet seems perfectly fine. Why would it need to be treated?", Button("Continue", "@end"));
-					await Select();
-					Close();
+					Msg("What? Your pet seems perfectly fine. Why would it need to be treated?");
 				}
-				Msg("How did you get your pet to be hurt this badly?! I'll treat it right now!<br/>By the way, it will cost you 180 Gold. Don't forget that.",
-						Button("Recieve Treatment", "@recieveheal"), Button("Decline the Treatment", "@end"));
-				switch (await Select())
+				else
 				{
-					case "@recieveheal":
+					Msg("How did you get your pet to be hurt this badly?! I'll treat it right now!<br/>By the way, it will cost you 180 Gold. Don't forget that.", Button("Recieve Treatment", "@recieveheal"), Button("Decline the Treatment", "@end"));
+					if(await Select() == "@recieveheal")
+					{
 						if (!Player.Inventory.HasGold(180))
 						{
-							Msg("Hmmm...I think you are short.<br/>I may be a generous person, but I can't do business like this... for free...", Button("Continue", "@end"));
-							await Select();
-							Close();
+							Msg("Hmmm...I think you are short.<br/>I may be a generous person, but I can't do business like this... for free...");
 						}
 						else
 						{
 							Player.Inventory.RemoveGold(180);
 							Player.Pet.FullLifeHeal();
-							Msg("Your pet is fixed, and ready to go! Take care of your pet as much as you'd take care of yourself.", Button("Continue", "@end"));
-							await Select();
-							Close();
+							Msg("Your pet is fixed, and ready to go! Take care of your pet as much as you'd take care of yourself.");
 						}
-						break;
+					}
 				}
 				break;
 		}
+		
+		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
 	protected override async Task Keywords(string keyword)
@@ -303,11 +286,6 @@ public class ManusScript : NpcScript
 				);
 				break;
 		}
-	}
-
-	public override void EndConversation()
-	{
-		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 

@@ -59,8 +59,10 @@ public class KristellScript : NpcScript
 			case "@shop":
 				Msg("What is it that you are looking for?");
 				OpenShop("KristellShop");
-				break;
+				return;
 		}
+		
+		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
 	protected override async Task Keywords(string keyword)
@@ -220,11 +222,6 @@ public class KristellScript : NpcScript
 				ModifyRelation(0, 0, Random(2));
 				break;
 		}
-	}
-
-	public override void EndConversation()
-	{
-		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 

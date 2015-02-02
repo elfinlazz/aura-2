@@ -68,15 +68,17 @@ public class AusteynScript : NpcScript
 				if(!RedeemCoupon(input))
 				{
 					Msg("Strange coupon number.<br/>Are you sure that's the right number?<br/>Think about it one more time... carefully.");
-					return;
 				}
-				// Unofficial response.
-				Msg("There you go, have a nice day.");
+				else
+				{
+					// Unofficial response.
+					Msg("There you go, have a nice day.");
+				}
 				break;
 
 			case "@bank":
 				OpenBank();
-				break;
+				return;
 
 			case "@coin":
 				Msg("During the Coin event, you can collect 4 different kinds of coins");
@@ -86,8 +88,10 @@ public class AusteynScript : NpcScript
 			case "@shop":
 				Msg("Ah, so you need a Personal Shop License?<br/>You must have one if you want to sell<br/>merchandise around here, so keep it with you.");
 				OpenShop("AusteynShop");
-				break;
+				return;
 		}
+		
+		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
 	protected override async Task Keywords(string keyword)
@@ -261,11 +265,6 @@ public class AusteynScript : NpcScript
 				ModifyRelation(0, 0, Random(2));
 				break;
 		}
-	}
-
-	public override void EndConversation() 
-	{
-		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 

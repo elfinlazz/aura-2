@@ -58,7 +58,7 @@ public class SimonScript : NpcScript
 			case "@shop":
 				Msg("Hmm. Take your time to look around.");
 				OpenShop("SimonShop");
-				break;
+				return;
 				
 			case "@repair":
 				Msg("Want to mend your clothes?<br/>Rest assured, I am the best this kingdom has to offer. I never make mistakes.<br/>Because of that, I charge a higher repair fee.<br/>If you can stomach a cheap repair, go find someone else. I only work with top quality."); 
@@ -75,6 +75,8 @@ public class SimonScript : NpcScript
 				Msg("Unimplemented");
 				break;
 		}
+		
+		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
 	protected override async Task Keywords(string keyword)
@@ -234,11 +236,6 @@ public class SimonScript : NpcScript
 				ModifyRelation(0, 0, Random(2));
 				break;
 		}
-	}
-	
-	public override void EndConversation()
-	{
-		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 
