@@ -1215,7 +1215,7 @@ namespace Aura.Channel.World.Entities
 				if ((diff = (this.WillBase - (int)will)) >= 1) Send.SimpleAcquireInfo(this, "will", diff);
 				if ((diff = (this.LuckBase - (int)luck)) >= 1) Send.SimpleAcquireInfo(this, "luck", diff);
 
-				//EventManager.CreatureEvents.OnCreatureLevelsUp(this);
+				ChannelServer.Instance.Events.OnCreatureLevelUp(this);
 			}
 			else
 				Send.StatUpdate(this, StatUpdateType.Private, Stat.Experience);
