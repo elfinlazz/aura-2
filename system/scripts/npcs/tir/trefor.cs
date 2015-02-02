@@ -54,7 +54,7 @@ public class TreforBaseScript : NpcScript
 				Msg("Hmm? Are you a new traveler?");
 				//Msg("Hello <username/>, nice to see you.");
 				await StartConversation();
-				return;
+				break;
 				
 			case "@shop":
 				Msg("Do you need a Quest Scroll?");
@@ -64,18 +64,16 @@ public class TreforBaseScript : NpcScript
 			case "@upgrade":
 				Msg("Do you want to modify an item?<br/>You don't need to go too far; I'll do it for you. Select an item that you'd like me to modify.<br/>I'm sure you know that the number of times it can be modified, as well as the types of modifications available depend on the item, right?");
 				Msg("(Unimplemented)");
-				return;
+				break;
 
 			case "@pass":
 				GiveItem(63140);
 				Notice("Recieved Alby Beginner Dungeon Pass from Trefor");
 				Msg("Do you need an Alby Beginner Dungeon Pass?<br/>No problem. Here you go.<br/>Drop by anytime when you need more.<br/>I'm a generous man, ha ha.");
-				return;
-			
-			default:
-				Msg("...");
-				return;
+				break;
 		}
+		
+		End("Goodbye, Trefor. I'll see you later!");
 	}
 	
 	protected override async Task Keywords(string keyword)

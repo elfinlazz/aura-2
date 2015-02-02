@@ -57,7 +57,7 @@ public class LassarBaseScript : NpcScript
 			case "@shop":
 				Msg("If you want to learn magic, you've come to the right place.");
 				OpenShop("LassarShop");
-				break;
+				return;
 				
 			case "@repair":
 				Msg("You want to repair a magic weapon?<br/>Don't ask Ferghus to repair magic weapons. Although he won't even do it..<br/>I can't imagine what would happen...if you tried to repair it like a regular weapon.<br/>");
@@ -68,11 +68,9 @@ public class LassarBaseScript : NpcScript
 				Msg("You're looking to upgrade something?<br/>Hehe, how smart of you to come to a magic school teacher.<br/>Let me see what you're trying to upgrade.<br/>You know that the amount and type of upgrade available differs with each item, right?");
 				Msg("Unimplemented");
 				break;
-				
-			default:
-				Msg("...");
-				break;
 		}
+		
+		End("Goodbye, Lassar. I'll see you later!");
 	}
 	
 	protected override async Task Keywords(string keyword)
@@ -103,7 +101,6 @@ public class LassarBaseScript : NpcScript
 				//Msg("So, you already know Icebolt, do you? Did you have any trouble using it?<br/>Since you know the basics already, I'll give you a tuition discount.<br/>Tuition is a lump sum that includes three days of lessons including today.<br/>This tuition covers up to the end of Basic Sorcery Chapter One.");
 				//Msg("Class has started long ago.<br/>You should come back later.");
 				Msg("Sorry, my classes aren't ready to be studied.");
-				EndConversation();
 				break;
 				
 			case "shop_misc":
@@ -216,11 +213,6 @@ public class LassarBaseScript : NpcScript
 				break;
 		}
 	}
-	
-	public override void EndConversation()
-	{
-		Close("Goodbye, Lassar. I'll see you later!");
-	}	
 }
 
 public class LassarShop : NpcShopScript

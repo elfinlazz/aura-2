@@ -50,12 +50,10 @@ public class CaitinBaseScript : NpcScript
 			case "@shop":
 				Msg("Welcome to the Grocery Store.<br/>There is a variety of fresh food and ingredients for you to choose from.");
 				OpenShop("GroceryShop");
-				break;
-			
-			default:
-				Msg("...");
-				break;
+				return;
 		}
+		
+		End();
 	}
 	
 	protected override async Task Keywords(string keyword)

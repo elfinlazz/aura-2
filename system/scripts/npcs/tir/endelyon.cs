@@ -43,7 +43,7 @@ public class EndelyonBaseScript : NpcScript
 				//Msg("I don't think we've ever met. Nice to meet you.");
 				Msg("Glad to see you again.");
 				await StartConversation();
-				return;
+				break;
 				
 			case "@shop":
 				Msg("What are you looking for?");
@@ -53,22 +53,11 @@ public class EndelyonBaseScript : NpcScript
 			case "@upgrade":
 				Msg("Are you asking me...to modify your item?<br/>Honestly, I am not sure if I can, but if you still want me to, I'll give it a try.<br/>Please choose an item to modify.");
 				Msg("(Unimplemented)");
-				switch(await Select())
-				{
-					case "@end":
-						Msg("Do you want me to stop...? Well, then... Next time...");
-						break;
-
-					default:
-						Msg("...");
-						break;
-				}
-				return;
-
-			default:
-				Msg("...");
-				return;
+				// @end: Msg("Do you want me to stop...? Well, then... Next time...");
+				break;
 		}
+		
+		End();
 	}
 	
 	protected override async Task Keywords(string keyword)

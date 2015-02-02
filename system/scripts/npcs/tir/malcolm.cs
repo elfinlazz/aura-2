@@ -50,11 +50,11 @@ public class MalcolmBaseScript : NpcScript
 				//Msg("Ah, my VIP customer, <username/>! Welcome.");
 				//Alternate messages as you talk to him more? Apparently it logs your visits at least to this shop
 				await StartConversation();
-				return;
+				break;
 				
 			case "@shop":
 				Msg("Welcome to Malcolm's General Shop.<br/>Look around as much as you wish. Clothes, accessories and other goods are in stock.");
-				Msg("(Unimplemented)");
+				OpenShop("MalcolmShop");
 				return;
 				
 			case "@repair":
@@ -62,12 +62,10 @@ public class MalcolmBaseScript : NpcScript
 				Msg("(Unimplemented)");
 				//Next message happens after you close repair window
 				//Msg("Let me give you a tip.<br/>If you bless your item with Holy Water of Lymilark,<br/>you can reduce abrasion which means your item will wear off more slowly over time.");
-				return;
-
-			default:
-				Msg("...");
-				return;
+				break;
 		}
+		
+		End("Goodbye, Malcolm. I'll see you later!");
 	}
 	
 	protected override async Task Keywords(string keyword)

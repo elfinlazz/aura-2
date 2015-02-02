@@ -48,28 +48,26 @@ public class RanaldBaseScript : NpcScript
 				//Msg("Hmm...<br/>Nice to meet you.");
 				Msg("My name is Ranald."); // "<br/>I assume you remember my name?"
 				await StartConversation();
-				return;
+				break;
 				
 			case "@shop":
 				Msg("Tell me if you need a Quest Scroll.<br/>Working on these quests can also be a good way to train yourself.");
 				Msg("(Unimplemented)");
-				return;
+				break;
 				
 			case "@upgrade":
 				Msg("Hmm... You want me to modify your item? You got some nerve!<br/>Ha ha. Just joking. Do you need to modify an item? Count on Ranald.<br/>Pick an item to modify.<br/>Oh, before that. Types or numbers of modifications are different depending on what item you want to modify. Always remember that.");
 				Msg("(Unimplemented)");
-				return;
+				break;
 				
 			case "@ciarpass":
 				GiveItem(63139); // Ciar Beginner Dungeon Pass
 				Notice("Recieved Ciar Beginner Dungeon Pass from Ranald.");
 				Msg("Ok, here's the pass.<br/>You can ask for it again if you need it.<br/>That doesn't mean you can fill up the iventory with a pile of passes.");
-				return;
-
-			default:
-				Msg("...");
-				return;
+				break;
 		}
+		
+		End("Goodbye, Ranald. I'll see you later!");
 	}
 	
 	protected override async Task Keywords(string keyword)

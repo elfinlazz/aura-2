@@ -40,12 +40,10 @@ public class MevenBaseScript : NpcScript
 			case "@talk":
 				Msg("It's nice to see you again.");
 				await StartConversation();
-				return;
-			
-			default:
-				Msg("...");
-				return;
+				break;
 		}
+		
+		End("Goodbye Meven. I'll see you later!");
 	}
 	
 	protected override async Task Keywords(string keyword)

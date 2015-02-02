@@ -44,12 +44,10 @@ public class GoroBaseScript : NpcScript
 			case "@shop":
 				Msg("What do you need?<br/>You must be fully prepared if you wish to enter the Battle Arena.");
 				OpenShop("GoroShop");
-				break;
-			
-			default:
-				Msg("...");
-				break;
+				return;
 		}
+		
+		End("Goodbye, Goro. I'll see you later!");
 	}
 	
 	public override async Task Conversation()
@@ -101,11 +99,6 @@ public class GoroBaseScript : NpcScript
 			"I do not know anything about that kind of story."
 		);
 	}
-	
-	public override void EndConversation()
-	{
-		Close("Goodbye, Goro. I'll see you later!");
-	}	
 }
 
 public class GoroShop : NpcShopScript
