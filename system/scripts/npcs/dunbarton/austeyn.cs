@@ -102,7 +102,7 @@ public class AusteynScript : NpcScript
 				}
 				else
 				{
-					Player.Keywords.Give("shop_bank");
+					GiveKeyword("shop_bank");
 					Msg(FavorExpression(), "That's right. I am <npcname/>, the manager of this Dunbarton branch of the Erskin Bank. Nice to meet you.");
 					ModifyRelation(Random(2), 0, Random(2));
 				}
@@ -158,7 +158,7 @@ public class AusteynScript : NpcScript
 				break;
 
 			case "shop_smith":
-				Player.Keywords.Give("shop_bookstore");
+				GiveKeyword("shop_bookstore");
 				Msg("The Blacksmith's Shop?");
 				Msg("Do you know what a blacksmith's shop is by any chance?<br/>I happened to buy an expensive encyclopedia<br/>at the Bookstore over there the other day, and let's see...");
 				Msg("A blacksmith's shop is<br/>'...It's a place with bellows that treats pig iron...'<br/>That's what it says here.");

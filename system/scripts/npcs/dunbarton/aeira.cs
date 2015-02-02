@@ -78,14 +78,14 @@ public class AeiraScript : NpcScript
 				}
 				else
 				{
-					Player.Keywords.Give("shop_bookstore");
+					GiveKeyword("shop_bookstore");
 					Msg(FavorExpression(), "Hehehe... I may not look the part, but I own this Bookstore.<br/>It's okay to be casual, but<br/>at least give me some respect as a store owner.");
 					ModifyRelation(Random(2), 0, Random(2));
 				}
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("school");
+				GiveKeyword("school");
 				Msg(FavorExpression(), "If you want to properly train the stuff that's written on the book,<br/>why don't you first read the book in detail, then visit the school?<br/>Oh, and don't forget to talk to Stewart when you're there.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
@@ -104,7 +104,7 @@ public class AeiraScript : NpcScript
 				break;
 
 			case "shop_grocery":
-				Player.Keywords.Give("shop_restaurant");
+				GiveKeyword("shop_restaurant");
 				Msg("A grocery store?<br/>In this town, you can find the food ingredients at the Restaurant, too,<br/>so try going there instead.");
 				break;
 
@@ -113,7 +113,7 @@ public class AeiraScript : NpcScript
 				break;
 
 			case "shop_inn":
-				Player.Keywords.Give("skill_campfire");
+				GiveKeyword("skill_campfire");
 				Msg("Oh, no. There is no inn in our town.<br/>There's really no good place to rest either.<br/>Why don't you stay with people who can use the Campfire skill for now?");
 				break;
 

@@ -77,14 +77,14 @@ public class RanaldBaseScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				Player.Keywords.Give("school");
+				GiveKeyword("school");
 				Msg("Hello, there. I teach combat skills at the School in Tir Chonaill.<br/>If you're interested, talk to me with the 'Classes and Training' keyword.");
 				Msg("Hey, hey... This is not free. You'll need to pay tuition for my classes...<br/>");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("complicity");
+				GiveKeyword("complicity");
 				Msg("Hmm... Did you hear the news?<br/>Ferghus can't stop smiling these days.<br/>I heard his arrow sales have jumped up lately.");
 				Msg("It seems like Trefor received a huge gift from Ferghus.<br/>People are assuming that Trefor is helping Ferghus with something.");
 				//Msg("A dinner with Ferghus usually leads to a bit of drinking at the end.<br/>You know he loves to drink, right? As a matter of fact, I like to drink, too. Hahaha...");
@@ -102,7 +102,7 @@ public class RanaldBaseScript : NpcScript
 				break;
 
 			case "shop_misc":
-				Player.Keywords.Give("shop_armory");
+				GiveKeyword("shop_armory");
 				Msg("You're not going to the General Shop for weapons, are you?<br/>For weapons, you would need to go to the Blacksmith's Shop.<br/>");
 				break;
 
@@ -128,14 +128,14 @@ public class RanaldBaseScript : NpcScript
 				break;
 
 			case "skill_instrument":
-				Player.Keywords.Give("church");
+				GiveKeyword("church");
 				Msg("You want to learn the Instrument Playing skill?<br/>Hmm... Did you forget that I am a combat instructor?<br/>I can't believe you are asking me for that. I am a little disappointed");
 				Msg("Ha ha... Don't be so disheartened about what I said, though.<br/>I didn't know you would be easily affected by my words. Hahaha.<br/>You're just like Malcolm when he was a kid.");
 				Msg("OK, about the Instrument Playing skill...<br/>Go ask Priestess Endelyon at the Church about it.<br/>I'm sure she will teach you well.");
 				break;
 
 			case "skill_tailoring":
-				Player.Keywords.Give("shop_grocery");
+				GiveKeyword("shop_grocery");
 				Msg("You want to make clothes for yourself?<br/>Hmm... Why would you come to the School to ask me, a combat instructor,<br/>how to make clothes?<br/>I just don't get it. But, anyway...");
 				Msg("You have asked me a question, and as a teacher, I feel obligated to answer it.<br/>Talk to Caitin at the Grocery Store.<br/>She knows more about that skill than anyone else.");
 				Msg("From what I've heard, most of the clothes at Malcolm's shop<br/>were either designed or tailored by her...");
@@ -162,13 +162,13 @@ public class RanaldBaseScript : NpcScript
 				break;
 
 			case "farmland":
-				Player.Keywords.Give("shop_grocery");
+				GiveKeyword("shop_grocery");
 				Msg("The farmland?<br/>Well, it's right in front of the School. You didn't see it?<br/>If you're talking about another farmland,<br/>there's a small one next to Caitin's Grocery Store, but...");
 				Msg("Don't step on those crops!<br/>Let the scarecrow take care of it.");
 				break;
 
 			case "windmill":
-				Player.Keywords.Give("shop_inn");
+				GiveKeyword("shop_inn");
 				Msg("Hmm... are you looking for the windmill?<br/>I see... The windmill here is well worth a visit. It's picturesque.");
 				Msg("If you want to see the windmill up close, go near the Inn.");
 				break;
@@ -207,13 +207,13 @@ public class RanaldBaseScript : NpcScript
 				break;
 
 			case "shop_restaurant":
-				Player.Keywords.Give("shop_grocery");
+				GiveKeyword("shop_grocery");
 				Msg("Hmm... As far as I know, there are no restaurants in Tir Chonaill.<br/>If you're looking for something to eat, then talk to Caitin.");
 				Msg("She spends most of her time working at the Grocery Store,<br/>so why don't you go there and say hi to her?");
 				break;
 
 			case "shop_armory":
-				Player.Keywords.Give("shop_smith");
+				GiveKeyword("shop_smith");
 				Msg("You can't find the Weapons Shop?<br/>Hmm... Well, this is very heartbreaking to say, but there is no Weapons Shop in this town.<br/>You will need to go to the Blacksmith's Shop if you need a weapon.");
 				Msg("All weapons and armor are made at the Blacksmith's Shop by Ferghus himself.");
 				Msg("There's not much of a variety there,<br/>but talk to Ferghus if you need something.");
@@ -234,7 +234,7 @@ public class RanaldBaseScript : NpcScript
 				break;
 
 			case "graveyard":
-				Player.Keywords.Give("shop_headman");
+				GiveKeyword("shop_headman");
 				Msg("The graveyard? Hmm...<br/>There is one located over the hill behind the Chief's House but...");
 				Msg("If I were you,<br/>I would stay away from that place.<br/>It's not right to cause a commotion literally on top of the dead.<br/>It is simply not the right thing to do.");
 				Msg("I want you to respect the dead,<br/>and let them rest in peace.");
@@ -246,7 +246,7 @@ public class RanaldBaseScript : NpcScript
 				break;
 
 			case "lute":
-				Player.Keywords.Give("shop_misc");
+				GiveKeyword("shop_misc");
 				Msg("Do you want to know where to buy a lute?<br/>You must have seen some people carrying them around, didn't you?");
 				Msg("You know, you could have just gone over to one of them and ask where they bought it.");
 				Msg("Go to Malcolm at the General Shop if you want one of those.<br/>lute is the cheapest instrument you can buy,<br/>so I think you can easily afford it.");

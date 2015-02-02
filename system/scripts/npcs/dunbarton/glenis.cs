@@ -74,14 +74,14 @@ public class GlenisScript : NpcScript
 				}
 				else
 				{
-					Player.Keywords.Give("shop_restaurant");
+					GiveKeyword("shop_restaurant");
 					Msg(FavorExpression(), "What do I do for a living, you ask? Ha ha. I own this Restaurant, and my name is <npcname/>. I thought I told you all of this.");
 					ModifyRelation(Random(2), 0, Random(2));
 				}
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("shop_healing");
+				GiveKeyword("shop_healing");
 				Msg(FavorExpression(), "Rumors around here? Well...<br/>Do I look like I would be keen on other people's affairs? Ha ha.<br/>You seem pretty tired.<br/>Why don't you go to the Healer's House down there and talk to Manus.");
 				Msg("If you have the Resting skill handy, he'll give you some helpful tips.");
 				ModifyRelation(Random(2), 0, Random(2));

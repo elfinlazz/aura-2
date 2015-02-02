@@ -83,7 +83,7 @@ public class NerysScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				Player.Keywords.Give("shop_armory");
+				GiveKeyword("shop_armory");
 				if (Memory == 1)
 				{
 					Msg("I'm <npcname/>, the owner of this Weapons Shop. Nice to meet you.");

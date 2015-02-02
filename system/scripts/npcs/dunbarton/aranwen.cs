@@ -78,7 +78,7 @@ public class AranwenScript : NpcScript
 	{
 		switch (keyword) {
 			case "personal_info":
-				Player.Keywords.Give("school");
+				GiveKeyword("school");
 				if (Memory == 1)
 				{
 					Msg("Let me introduce myself.<br/>My name is <npcname/>. I teach combat skills at the Dunbarton School.");
@@ -92,7 +92,7 @@ public class AranwenScript : NpcScript
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("shop_armory");
+				GiveKeyword("shop_armory");
 				Msg(FavorExpression(), "If you need a weapon for the training,<br/>why don't you go see Nerys in the south side?<br/>She runs the Weapons Shop.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
@@ -180,7 +180,7 @@ public class AranwenScript : NpcScript
 				break;
 
 			case "skill_windmill":
-				Player.Keywords.Remove("skill_windmill");
+				RemoveKeyword("skill_windmill");
 				Msg("Are you curious about the Windmill skill?<br/>It is a useful skill to have when you're surrounded by enemies.<br/>Very well. I will teach you the Windmill skill.");
 				break;
 

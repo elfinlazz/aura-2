@@ -255,7 +255,7 @@ public class TracyScript : NpcScript
 				break;
 
 			case "musicsheet":
-				Player.Keywords.Give("shop_misc");
+				GiveKeyword("shop_misc");
 				Msg("Music Scores are sold at the General Shop.<br/>If you have one with you,<br/>you can play the music written on it.");
 				Msg("But what's wrong with those morons<br/>complaining they can't play music with Music Scores<br/>when they don't have any instruments!");
 				break;

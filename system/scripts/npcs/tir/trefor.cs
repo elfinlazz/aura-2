@@ -93,7 +93,7 @@ public class TreforBaseScript : NpcScript
 				break;
 				
 			case "about_skill":
-				Player.Keywords.Give("skill_range");
+				GiveKeyword("skill_range");
 				Msg("I've been observing your combat style for some time now.<br/>If you want to be a warrior, you shouldn't limit yourself to just melee attacks.<p/>I'm sure Ranald at the School can teach you some things about ranged attacks<br/>which will allow you to attack monsters from a distance.");
 				//Msg("Since you've learned the Support Shot skill now,<br/>why don't you start your training by going back to Alby Dungeon.<br/>You can hone your archery skills there.<p/>If you form a party,<br/>you'll be able to learn how archers assist warriors engaged in melee combat.<br/>I guarantee it, in the name of the number one town guard of Tir Chonaill.");
 				/* Check archery skill... Requirement unknown (Ranged Attack Rank E?)
@@ -147,12 +147,12 @@ public class TreforBaseScript : NpcScript
 				break;
 
 			case "skill_range":
-				Player.Keywords.Give("school");
+				GiveKeyword("school");
 				Msg("Well, I'm quite busy right now.<br/>Why don't you ask Ranald at the School?<br/>I CAN say that Ranged Attack is really useful, though.<br/>I strongly recommend you master it... It's THAT useful.");
 				break;
 				
 			case "skill_counter_attack":
-				Player.Keywords.Remove("skill_counter_attack");
+				RemoveKeyword("skill_counter_attack");
 				Msg("So you're aware of the Counterattack skill.<br/>Counterattack is a skill that utilizes your enemy's power.<br/>This means the more powerful the enemy's attack is, the more damage it will deliver.");
 				Msg("The way to use Counterattack is actually very simple.<br/>All you need to do is turn on the skill and just wait. Wait until the enemy attacks you.<br/>As soon as the enemy attacks, you know you will have the last laugh!", Image("Tutorial_dungeon_skill_06", 200, 200));
 				Msg("This skill, however, requires a high level of concentration<br/>in that you'll have to accurately anticipate your enemy's next move.<br/>The main drawbacks of using this skill is that your Stamina will be continually spent,<br/>and you won't be able to move during the skill.");
@@ -163,7 +163,7 @@ public class TreforBaseScript : NpcScript
 				break;
 
 			case "skill_smash":
-				Player.Keywords.Give("school");
+				GiveKeyword("school");
 				Msg("Hmm... Lassar teaches Magic at the School,<br/>and yet she seems to be very interested in the Smash skill.<p/>Isn't it funny that a magic teacher is interested in a melee skill?<br/>She is a friend of Dilys, yet they are so different when it comes to their femininity.");
 				break;
 				
@@ -172,7 +172,7 @@ public class TreforBaseScript : NpcScript
 				break;
 
 			case "pool":
-				Player.Keywords.Give("shop_bank");
+				GiveKeyword("shop_bank");
 				Msg("Looking for the reservoir?<br/>The reservoir will be on your left when you go down the path near the Bank.");
 				break;
 				
@@ -197,7 +197,7 @@ public class TreforBaseScript : NpcScript
 				break;
 
 			case "school":
-				Player.Keywords.Give("temple");
+				GiveKeyword("temple");
 				Msg("The School... Hmm... Go right from the Bank,<br/>then straight down past the Church.<p/>You can find my mentor Ranald at School.<br/>He's a really tough combat instructor.<br/>If you ask him about combat in general,<br/>he'll be able to teach you a lot about it.<p/>If you go to the back,<br/>there is another teacher named Lassar.<br/>She's really beautiful, but not as much as Dilys.<p/>Um... Don't tell Lassar that, though.<br/>She might cast a Firebolt on me if she finds out.");
 				break;
 
@@ -218,7 +218,7 @@ public class TreforBaseScript : NpcScript
 				break;
 
 			case "shop_bookstore":
-				Player.Keywords.Give("shop_misc");
+				GiveKeyword("shop_misc");
 				Msg("You need a book?<br/>Malcolm at the General Shop is an avid reader with a collection of books at his shop.<br/>It looks like he's selling some of them, too.<p/>Why don't you go there and talk to him about it?<br/>He's not selling too many books and chances are, you might have read them all...<p/>Just so you know, Malcolm absolutely HATES lending his stuff.<br/>If you want one of his books, you'll probably have to pay for it.");
 				break;
 				

@@ -984,6 +984,35 @@ namespace Aura.Channel.Scripting.Scripts
 			Send.OpenBank(this.Player, this.Player.Client.Account.Bank, BankTabRace.Human);
 		}
 
+		/// <summary>
+		/// Returns true if player has the keyword.
+		/// </summary>
+		/// <param name="keyword"></param>
+		public bool HasKeyword(string keyword)
+		{
+			return this.Player.Keywords.Has(keyword);
+		}
+
+		/// <summary>
+		/// Returns true if player has the keyword.
+		/// </summary>
+		/// <param name="keyword"></param>
+		public void GiveKeyword(string keyword)
+		{
+			if (!this.HasKeyword(keyword))
+				this.Player.Keywords.Give(keyword);
+		}
+
+		/// <summary>
+		/// Returns true if player has the keyword.
+		/// </summary>
+		/// <param name="keyword"></param>
+		public void RemoveKeyword(string keyword)
+		{
+			if (this.HasKeyword(keyword))
+				this.Player.Keywords.Remove(keyword);
+		}
+
 		// Dialog
 		// ------------------------------------------------------------------
 

@@ -76,19 +76,19 @@ public class EndelyonBaseScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				Player.Keywords.Give("temple");
+				GiveKeyword("temple");
 				Msg("I don't have much knowledge, but I am here if you need help.<br/>");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("shop_healing");
+				GiveKeyword("shop_healing");
 				Msg("<face name='normal'/>Have you met Dilys? She's the town's Healer.<br/>Walk along the road heading northeast, and you will find the Healer's House.<br/>Make sure to meet her if you pass by there.<br/>");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_skill":
-				Player.Keywords.Give("skill_tailoring");
+				GiveKeyword("skill_tailoring");
 				Msg("I'm sorry, but I don't know much about skills.<br/>The only skill I know is tailoring.<br/>If you want to know more about making clothes,<br/>talk with Caitin at the Grocery Store.<br/>She's the best tailor in town.<br/>");
 				break;
 
@@ -128,17 +128,17 @@ public class EndelyonBaseScript : NpcScript
 
 			case "skill_composing":
 				//StartQuest(20002);		// Buy a Music Score
-				//Player.Keywords.Remove("skill_composing");
+				//RemoveKeyword("skill_composing");
 				Msg("What? Bebhinn told you to ask me about the Composing skill?<br/>I like composing music, sure, but I started not too long ago.<br/>I can't even imagine how I could actually teach someone.<p/>Hmm... Now that we're talking about composing music,<br/>would you do me a favor?");
 				break;
 
 			case "skill_tailoring":
-				Player.Keywords.Give("shop_grocery");
+				GiveKeyword("shop_grocery");
 				Msg("You sure have a lot of doubts. Hahaha...<br/>All you need to do is ask Caitin at the Grocery Store.<br/>You couldn't possibly think that I don't tell you all I know?<br/>Hahaha. I hope you don't feel that way. Now, go to the Grocery Store.");
 				break;
 
 			case "skill_counter_attack":
-				Player.Keywords.Give("school");
+				GiveKeyword("school");
 				Msg("Hmm... I think you should talk with Ranald about that.<br/>He must be at the School right below where we are right now.");
 				break;
 
@@ -151,7 +151,7 @@ public class EndelyonBaseScript : NpcScript
 				break;
 
 			case "pool":
-				Player.Keywords.Give("windmill");
+				GiveKeyword("windmill");
 				Msg("The reservoir is near here.<br/>The Windmill draws water out of the reservoir to irrigate the farmland.");
 				break;
 
@@ -180,17 +180,17 @@ public class EndelyonBaseScript : NpcScript
 				break;
 
 			case "skill_windmill":
-				Player.Keywords.Give("windmill");
+				GiveKeyword("windmill");
 				Msg("There is a Windmill in this town,<br/>but I don't know if the skill you mentioned has anything to do with that.");
 				break;
 
 			case "skill_campfire":
-				Player.Keywords.Give("shop_inn");
+				GiveKeyword("shop_inn");
 				Msg("Hmm... sounds like a useful skill,<br/>but you should be careful before starting a campfire in town.<br/>There's always a risk of fire getting out of control,<br/>and it's not very easy to clean up afterwards.<br/>If you need rest, why not just go to the Inn?");
 				break;
 
 			case "shop_restaurant":
-				Player.Keywords.Give("shop_grocery");
+				GiveKeyword("shop_grocery");
 				Msg("A restaurant? Are you looking for something to eat?<br/>I'd love to share what we have at the Church, but we recently ran out of food.<br/>Why don't you go to Caitin's Grocery Store?<br/>Everyone in town buys food from her store.");
 				break;
 
@@ -207,12 +207,12 @@ public class EndelyonBaseScript : NpcScript
 				break;
 
 			case "graveyard":
-				Player.Keywords.Give("shop_headman");
+				GiveKeyword("shop_headman");
 				Msg("Have you been to Duncan's house? The graveyard is right behind it.<br/>It may look a little creepy,<br/>but it's the resting place for the people who died defending Tir Chonaill.<br/>Oh, there are some big spiders roaming around the graveyard. Be careful.");
 				break;
 
 			case "lute":
-				Player.Keywords.Give("shop_misc");
+				GiveKeyword("shop_misc");
 				Msg("The lute is a musical instrument with a neck and musical strings attached to a deep, round soundbox.<br/>To play it, simply pluck the strings.<br/>It's an easily accessible instrument. You should try it!<br/>You can find one at Malcolm's General Shop.");
 				break;
 
@@ -225,7 +225,7 @@ public class EndelyonBaseScript : NpcScript
 				break;
 
 			case "musicsheet":
-				Player.Keywords.Give("shop_misc");
+				GiveKeyword("shop_misc");
 				Msg("For casual notes, you may not need a music score,<br/>but if you want to play a serious tune, you'll need one.<br/>You can even create your own music score<br/>by writing what you've composed on a blank score sheet.<br/>Go to Malcolm's General Shop to buy a blank score.");
 				break;
 

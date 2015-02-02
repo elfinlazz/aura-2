@@ -75,7 +75,7 @@ public class MalcolmBaseScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
-				Player.Keywords.Give("shop_misc");
+				GiveKeyword("shop_misc");
 				Msg("I run this General Shop. I sell various goods.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
@@ -121,7 +121,7 @@ public class MalcolmBaseScript : NpcScript
 				break;
 
 			case "pool":
-				Player.Keywords.Give("shop_grocery");
+				GiveKeyword("shop_grocery");
 				Msg("Go down the road behind Caitin's Grocery Store and you'll find it soon.<br/>If it weren't for the reservoir,<br/>the crops wouldn't grow.<br/>It sure does play a vital role in our town's agriculture.");
 				break;
 
@@ -138,7 +138,7 @@ public class MalcolmBaseScript : NpcScript
 				break;
 
 			case "school":
-				Player.Keywords.Give("pool");
+				GiveKeyword("pool");
 				Msg("The School?<br/>You can get there by going down the road towards the Bank and to the reservoir.<br/>If you still can't find it, right-click your mouse and look around.<br/>Scrolling the mouse wheel would help too.<p/>By the way, are you a student?");
 				break;
 

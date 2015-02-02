@@ -106,7 +106,7 @@ public class AlissaBaseScript : NpcScript
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("shop_smith");
+				GiveKeyword("shop_smith");
 				Msg("Ferghus?<br/>I don't know if he's a good blacksmith, but he's a nice person.<br/>Usually, when you ask him a question, he kindly answers everything...<br/>Go find out for yourself.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;

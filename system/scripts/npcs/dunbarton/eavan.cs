@@ -51,7 +51,7 @@ public class EavanScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Player.Keywords.Give("shop_goverment_office");
+				GiveKeyword("shop_goverment_office");
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
 				if (Player.Titles.SelectedTitle == 11002)

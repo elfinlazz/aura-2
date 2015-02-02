@@ -43,7 +43,7 @@ public class BeginnerUladhRestQuestScript : QuestScript
 		if(keyword == "about_skill" && !npc.Player.Skills.Has(SkillId.Rest))
 		{
 			npc.Player.Skills.Give(SkillId.Rest, SkillRank.Novice);
-			npc.Player.Keywords.Give("skill_rest");
+			npc.GiveKeyword("skill_rest");
 			
 			npc.Msg("You are at the Inn. This is where weary travelers rest.<br/>It's important to rejuvenate yourself both mentally and physically by resting.<br/>Do you know about the Resting skill?<br/>If not, I'll tell you about it.");
 			npc.Msg("Now, open the Skill window. Press the 'Skills' button at the bottom of the screen.<br/>Or, just press 'S'.");

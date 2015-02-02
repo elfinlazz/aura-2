@@ -84,14 +84,14 @@ public class FerghusBaseScript : NpcScript
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("windmill");
+				GiveKeyword("windmill");
 				Msg("The wind around Tir Chonaill is very strong. It even breaks the windmill blades.<br/>And I'm the one to fix them.<br/>Malcolm's got some skills,<br/>but I'm the one who deals with iron.");
 				Msg("I made those extra blades out there just in case.<br/>When the Windmill stops working, it's really inconvenient around here.<br/>It's always better to be prepared, isn't it?<br/>");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 				
 			case "about_skill":
-				Player.Keywords.Give("skill_fishing");
+				GiveKeyword("skill_fishing");
 				Msg("Hmm... Well, <username/>, since you ask,<br/>I might as well answer you. Let's see.<br/>Fishing. Do you know about the Fishing skill?");
 				Msg("I'm not sure about the details, but<br/>I've seen a lot of people fishing up there.<br/>I'm not sure if fishing would be considered a skill, though.");
 				Msg("From what I've seen, all you need is<br/>a Fishing Rod and a Bait Tin.");
@@ -163,7 +163,7 @@ public class FerghusBaseScript : NpcScript
 				break;
 				
 			case "school":
-				Player.Keywords.Give("farmland");
+				GiveKeyword("farmland");
 				Msg("Did you ask because you want to know the location of the School?<br/>Then I will give you an answer.<br/>Cross the bridge first,<br/>and there's a road. Just go to the left until you see the farmland.");
 				Msg("If you pass the farmland, the School is very near you.<br/>The School gate is pretty big so you can't miss it.");
 				Msg("When you get there, can you tell Ranald<br/>we should get a drink together?<br/>Lassar must not find out about it, alright?");

@@ -48,7 +48,7 @@ public class KristellScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Player.Keywords.Give("temple");
+				GiveKeyword("temple");
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
 				if (Player.Titles.SelectedTitle == 11002)
@@ -81,7 +81,7 @@ public class KristellScript : NpcScript
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("shop_restaurant");
+				GiveKeyword("shop_restaurant");
 				Msg(FavorExpression(), "You can satisfy the hunger of the soul at the Church.<br/>For the hunger of the body, you should visit the Restaurant.<br/>Glenis' Restaurant is popular around here,<br/>so you should be able to find it easily.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
@@ -91,7 +91,7 @@ public class KristellScript : NpcScript
 				break;
 
 			case "shop_misc":
-				Player.Keywords.Give("musicsheet");
+				GiveKeyword("musicsheet");
 				Msg("Looking for the General Shop?<br/>The General Shop is down this way.<br/>Go down to the Square from here<br/>and look for Walter.");
 				Msg("It might be useful for you to know that<br/>the General Shop also carries music scores and instruments.");
 				break;

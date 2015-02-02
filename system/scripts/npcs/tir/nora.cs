@@ -123,12 +123,12 @@ public class NoraBaseScript : NpcScript
 				break;
 			
 			case "shop_restaurant":
-				Player.Keywords.Give("shop_grocery");
+				GiveKeyword("shop_grocery");
 				Msg("Are you looking for a place to have a nice meal?<br/>Many people buy food at the Grocery Store<br/>and come here to eat with others.<br/>Didn't Caitin at the Grocery Store<br/>tell you?");
 				break;
 			
 			case "shop_armory":
-				Player.Keywords.Give("shop_smith");
+				GiveKeyword("shop_smith");
 				Msg("Are you looking for a Weapons Shop?<br/>Hmm... I can't remember...<br/>Oh, right! Head to the Blacksmith's Shop.<br/>Ferghus is good at making things.<br/>I'm sure he can make all sorts of weapons.");
 				break;
 			

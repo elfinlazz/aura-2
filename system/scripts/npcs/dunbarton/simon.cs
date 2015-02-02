@@ -89,14 +89,14 @@ public class SimonScript : NpcScript
 				}
 				else
 				{
-					Player.Keywords.Give("shop_cloth");
+					GiveKeyword("shop_cloth");
 					Msg(FavorExpression(), "So, are you saying that you don't know the only<br/>Clothing Shop in Dunbarton that happens to be mine?<br/>You're denser than you look.");
 					ModifyRelation(Random(2), 0, Random(2));
 				}
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("shop_bookstore");
+				GiveKeyword("shop_bookstore");
 				Msg(FavorExpression(), "I don't like to talk about people behind their backs.<br/>It's not a very good habit and you should get rid of it, too.<br/>Oh... You didn't mean that? Oh, I am so sorry.");
 				Msg("Aeira at the Bookstore seems to be very interested in music.<br/>If you happen to be interested in music, be nice to her.<br/>She'll give you something good if you become friends.");
 				ModifyRelation(Random(2), 0, Random(2));

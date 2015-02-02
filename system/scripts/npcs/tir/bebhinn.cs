@@ -109,7 +109,7 @@ public class BebhinnBaseScript : NpcScript
 				break;
 				
 			case "shop_grocery":
-				Player.Keywords.Give("skill_gathering");
+				GiveKeyword("skill_gathering");
 				Msg("The Grocery Store is next to the Bank.<br/>There's a big chef sign next to it.<br/>And chat with Caitin while you're there.<p/>Her food is fresh because she uses ingredients harvested directly<br/>from the farm next to the shop.");
 				break;
 				

@@ -148,14 +148,14 @@ public class ManusScript : NpcScript
 				}
 				else
 				{
-					Player.Keywords.Give("shop_healing");
+					GiveKeyword("shop_healing");
 					Msg(FavorExpression(), "I am the healer in this town. I'm good at what I do,<br/>so feel free to come by if you get sick.");
 					ModifyRelation(Random(2), 0, Random(2));
 				}
 				break;
 
 			case "rumor":
-				Player.Keywords.Give("shop_restaurant");
+				GiveKeyword("shop_restaurant");
 				Msg(FavorExpression(), "Have you been to Glenis' Restaurant yet?<br/>Make sure you pay a visit and order something.<br/>Eating well is the most important thing in maintaining good health. Hahaha!");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
@@ -215,7 +215,7 @@ public class ManusScript : NpcScript
 				break;
 
 			case "skill_counter_attack":
-				Player.Keywords.Give("school");
+				GiveKeyword("school");
 				Msg("Go to the School and ask Aranwen there.");
 				break;
 
