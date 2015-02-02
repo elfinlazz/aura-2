@@ -49,6 +49,24 @@ namespace Aura.Channel.World.Quests
 	}
 
 	/// <summary>
+	/// Total Level prerequisite, met if character's total level is greater or equal.
+	/// </summary>
+	public class QuestPrerequisiteReachedTotalLevel : QuestPrerequisite
+	{
+		public int Level { get; protected set; }
+
+		public QuestPrerequisiteReachedTotalLevel(int level)
+		{
+			this.Level = level;
+		}
+
+		public override bool Met(Creature character)
+		{
+			return (character.LevelTotal + character.Level - 1 >= this.Level);
+		}
+	}
+
+	/// <summary>
 	/// Skill prerequisite, met if character doesn't have the skill or rank yet.
 	/// </summary>
 	public class QuestPrerequisiteNotSkill : QuestPrerequisite
