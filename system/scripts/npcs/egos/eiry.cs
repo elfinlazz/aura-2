@@ -35,10 +35,61 @@ public class EiryScript : NpcScript
 			}
 			else if(reply == "@tips_point")
 			{
-				if(Player.RegionId == 1)
-					Msg("This is Tir Chonaill, the town where everything started.<br/>It is like a hometown for everyone, so try to have lots of conversations with the residents.");
-				else
-					Msg("...");
+				switch(Player.RegionId)
+				{
+					case 1: // Tir
+						Msg("This is Tir Chonaill, the town where everything started.<br/>It is like a hometown for everyone, so try to have lots of conversations with the residents.");
+						break;
+						
+					case 2: // Tir Bank
+						Msg("This is the place where you can store your money and/or items for a small fee.<br/>You can even request a Personal Shop License from the bank teller.<br/>But it requires a Personal Shop Bag,<br/>so think about it after you make a lot of money.");
+						break;
+						
+					case 4: // Tir Church
+						Msg("This is the Church that worships Lymilark.<br/>The Church not only provides people spiritual comfort,<br/>but also provides adventurers with the Holy Water of Lymilark.<br/>If you want to know more about the Holy Water of Lymilark, ask Endelyon for part-time Jobs.");
+						break;
+						
+					case 5: // Tir Grocery Store
+						Msg("This store sells food and ingredients for cooking.<br/>It's tough to concentrate when you are hungry, right?<br/>Oh, this place also sells simple Quest Scrolls,<br/>so if you have some time, try purchasing one.");
+						break;
+						
+					case 8: // Tir General Shop
+						Msg("This is the General Shop which sells various goods including clothes, hats, shoes and musical instruments.<br/>This is where you can learn the Weaving skill,<br/>so talk to Malcolm about it.");
+						break;
+						
+					case 9: // Tir School
+						Msg("Lassar works here in magic classroom at the School.<br/>Once you pay tuition, you'll be able to learn magic,<br/>but I recommend learning magic at your own pace.<br/>You'll understand when you find out how much it costs to learn magic.");
+						break;
+					
+					case 13: // Alby
+						Msg("This is the lobby of Alby Dungeon!<br/>To enter the dungeon, open your Inventory, choose any item to drop,<br/>and use your mouse to drag and drop it on the dungeon altar.");
+						Msg("You seem primed to enter Alby Beginner Dungeon.<br/>The dungeon is not too difficult, but please enter with caution.");
+						break;
+					
+					case 14: // Dunbarton
+						Msg("This is Dunbarton, the commercial center of the northern continent.<br/>Um... And...<br/>That's pretty much what I heard from other people.<br/>I don't know anything else, so let's just go back to Tir Chonaill!");
+						break;
+					
+					case 16: // Dugald
+						Msg("This is Dugald Aisle, which connects Tir Chonaill and Dunbarton.<br/>Follow along the path down south,  and you will reach Dunbarton.");
+						Msg(Image("map_dugald_aisle_N", true, 270, 274), "But if you stray from the path, even just a little bit, you will likely meet some dangerous animals such as bears and wolves.<br/>Please be careful when traveling, and...<br/>unless you have something to do there, let's return to Tir Chonaill.");
+						break;
+					
+					case 52: // Emain
+						Msg("Wow, what a big city!<br/>This city is called Emain Macha.<br/>Master, isn't it dangerous for you to go this far?<br/>It might be better for you to return to Tir Chonaill.");
+						break;
+					
+					case 70: // Osna Snail
+						Msg("This place is called Osna Sail, and it's a narrow path connecting Dunbarton and Emain Macha.<br/>There are many wild animals living here, ready to attack any minute.<br/>Master, you are going back to Tir Chonaill, right? Right?");
+						break;
+					
+					default:
+						RndMsg(
+							"Well, master, I don't know where we are either.<br/>It would be better for you not to go to places beyond my knowledge.",
+							"Um, where are we?<br/>I have no idea where we are.<br/>Don't go to places that I don't know."
+						);
+						break;
+				}
 			}
 			else if(reply == "@tips_general")
 			{
