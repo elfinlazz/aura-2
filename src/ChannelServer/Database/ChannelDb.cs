@@ -215,7 +215,7 @@ namespace Aura.Channel.Database
 					character.Direction = reader.GetByte("direction");
 					character.Inventory.WeaponSet = (WeaponSet)reader.GetByte("weaponSet");
 					character.Level = reader.GetInt16("level");
-					character.LevelTotal = reader.GetInt32("levelTotal");
+					character.TotalLevel = reader.GetInt32("levelTotal");
 					character.Exp = reader.GetInt64("exp");
 					character.AbilityPoints = reader.GetInt16("ap");
 					character.Age = reader.GetInt16("age");
@@ -849,7 +849,7 @@ namespace Aura.Channel.Database
 				cmd.Set("staminaMax", creature.StaminaMaxBase);
 				cmd.Set("hunger", creature.Hunger);
 				cmd.Set("level", creature.Level);
-				cmd.Set("levelTotal", creature.LevelTotal);
+				cmd.Set("levelTotal", creature.TotalLevel);
 				cmd.Set("exp", creature.Exp);
 				cmd.Set("str", creature.StrBase);
 				cmd.Set("dex", creature.DexBase);

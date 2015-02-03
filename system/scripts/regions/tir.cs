@@ -58,7 +58,7 @@ public class TirRegionScript : RegionScript
 		SetPropBehavior(0x00A000790001000A, PropWarp(121,3202,1795, 11,3193,4319));
 		SetPropBehavior(0x00A0000B00010025, (creature, prop) =>
 		{
-			if(creature.LevelTotal >= 250)
+			if(creature.TotalLevel >= 250)
 				creature.Warp(121, 3206, 2085);
 			else
 				Send.Notice(creature, "You need a cumulative level of at least 250.");
@@ -72,7 +72,7 @@ public class TirRegionScript : RegionScript
 		SetPropBehavior(0x00A0001B00000009, PropWarp(27,3203,1814, 13,3198,4319));
 		SetPropBehavior(0x00A0000D00010007, (creature, prop) =>
 		{
-			if(creature.LevelTotal >= 250)
+			if(creature.TotalLevel >= 250)
 				creature.Warp(27, 3209, 2084);
 			else
 				Send.Notice(creature, "You need a cumulative level of at least 250.");

@@ -114,7 +114,6 @@ namespace Aura.Channel.Network.Handlers
 			// Reset level and stats
 			if (resetLevel)
 			{
-				creature.LevelTotal += creature.Level;
 				creature.Level = 1;
 				creature.Exp = 0;
 

@@ -87,7 +87,7 @@ public class EmainRegionScript : RegionScript
 		SetPropBehavior(0x00A0007B00010003, PropWarp(123,5599,3776, 64,5601,9813));
 		SetPropBehavior(0x00A0004000000016, (creature, prop) =>
 		{
-			if(creature.LevelTotal >= 250)
+			if(creature.TotalLevel >= 250)
 				creature.Warp(123, 5600, 4373);
 			else
 				Send.Notice(creature, "You need a cumulative level of at least 250.");

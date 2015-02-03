@@ -82,7 +82,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutFloat(creature.StaminaHunger);
 				packet.PutFloat(0.5f);
 				packet.PutShort(creature.Level);
-				packet.PutInt(creature.LevelTotal);
+				packet.PutInt(creature.TotalLevel - creature.Level);
 				packet.PutShort(0);                  // Max Level (reached ever?)
 				packet.PutShort((short)character.RebirthCount);
 				packet.PutShort(0);

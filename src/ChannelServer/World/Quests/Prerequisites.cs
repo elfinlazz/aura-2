@@ -62,7 +62,7 @@ namespace Aura.Channel.World.Quests
 
 		public override bool Met(Creature character)
 		{
-			return (character.LevelTotal + character.Level - 1 >= this.Level);
+			return (character.TotalLevel >= this.Level);
 		}
 	}
 

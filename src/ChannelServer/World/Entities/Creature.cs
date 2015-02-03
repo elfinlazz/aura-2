@@ -229,7 +229,7 @@ namespace Aura.Channel.World.Entities
 		// ------------------------------------------------------------------
 
 		public short Level { get; set; }
-		public int LevelTotal { get; set; }
+		public int TotalLevel { get; set; }
 		public long Exp { get; set; }
 
 		public short Age { get; set; }
@@ -1176,6 +1176,7 @@ namespace Aura.Channel.World.Entities
 			while (this.Level < AuraData.ExpDb.MaxLevel && this.Exp >= AuraData.ExpDb.GetTotalForNextLevel(this.Level))
 			{
 				this.Level++;
+				this.TotalLevel++;
 
 				if (levelStats == null)
 					continue;
