@@ -684,6 +684,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void AggroCreature(Creature creature)
 		{
 			_state = AiState.Aggro;
+			this.Clear();
 			this.Creature.IsInBattleStance = true;
 			this.Creature.Target = creature;
 			Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
