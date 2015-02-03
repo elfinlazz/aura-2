@@ -9,6 +9,8 @@ public class SpiderAi : AiScript
 	public SpiderAi()
 	{
 		Doubts("/pc/", "/pet/");
+		
+		On(AiState.Aggro, AiEvent.DefenseHit, OnDefenseHit);
 	}
 
 	protected override IEnumerable Idle()
@@ -26,8 +28,6 @@ public class SpiderAi : AiScript
 	
 	protected override IEnumerable Aggro()
 	{
-		On(AiEvent.DefenseHit, OnDefenseHit);
-		
 		if(Random() < 50)
 		{
 			Do(PrepareSkill(SkillId.Defense));

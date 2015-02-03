@@ -15,6 +15,8 @@ public class WolfAi : AiScript
 		Hates("/sheep/");
 		Hates("/dog/");
 		HatesBattleStance();
+		
+		On(AiState.Aggro, AiEvent.DefenseHit, OnDefenseHit);
 	}
 
 	protected override IEnumerable Idle()
@@ -49,8 +51,6 @@ public class WolfAi : AiScript
 	
 	protected override IEnumerable Aggro()
 	{
-		On(AiEvent.DefenseHit, OnDefenseHit);
-	
 		if(Random() < 50)
 		{
 			var rndnum = Random();

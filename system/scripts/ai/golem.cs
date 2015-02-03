@@ -9,6 +9,8 @@ public class GolemAi : AiScript
 	public GolemAi()
 	{
 		Hates("/pc/", "/pet/");
+		
+		On(AiState.Aggro, AiEvent.DefenseHit, OnDefenseHit);
 	}
 
 	protected override IEnumerable Idle()
@@ -19,8 +21,6 @@ public class GolemAi : AiScript
 	
 	protected override IEnumerable Aggro()
 	{
-		On(AiEvent.DefenseHit, OnDefenseHit);
-		
 		var rndn = Random();
 		if(rndn < 10) // 10%
 		{

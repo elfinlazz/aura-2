@@ -43,7 +43,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected IEnumerator _curAction;
 		protected Creature _newAttackable;
 
-		protected Dictionary<AiEvent, Func<IEnumerable>> _reactions;
+		protected Dictionary<AiState, Dictionary<AiEvent, Func<IEnumerable>>> _reactions;
 
 		// Heartbeat cache
 		protected IList<Creature> _playersInRange;
@@ -86,7 +86,11 @@ namespace Aura.Channel.Scripting.Scripts
 			_heartbeatTimer = new Timer(this.Heartbeat, null, -1, -1);
 
 			_rnd = new Random(RandomProvider.Get().Next());
-			_reactions = new Dictionary<AiEvent, Func<IEnumerable>>();
+			_reactions = new Dictionary<AiState, Dictionary<AiEvent, Func<IEnumerable>>>();
+			_reactions[AiState.Idle] = new Dictionary<AiEvent, Func<IEnumerable>>();
+			_reactions[AiState.Alert] = new Dictionary<AiEvent, Func<IEnumerable>>();
+			_reactions[AiState.Aggro] = new Dictionary<AiEvent, Func<IEnumerable>>();
+			_reactions[AiState.Love] = new Dictionary<AiEvent, Func<IEnumerable>>();
 
 			_state = AiState.Idle;
 			_aggroRadius = 500;
@@ -530,10 +534,10 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="ev">The event on which func should be executed.</param>
 		/// <param name="func">The reaction to the event.</param>
-		protected void On(AiEvent ev, Func<IEnumerable> func)
+		protected void On(AiState state, AiEvent ev, Func<IEnumerable> func)
 		{
 			lock (_reactions)
-				_reactions[ev] = func;
+				_reactions[state][ev] = func;
 		}
 
 		// Functions
@@ -673,9 +677,6 @@ namespace Aura.Channel.Scripting.Scripts
 				if (restHandler != null)
 					restHandler.Stop(this.Creature, this.Creature.Skills.Get(SkillId.Rest));
 			}
-
-			lock (_reactions)
-				_reactions.Clear();
 
 			_curAction = action().GetEnumerator();
 		}
@@ -1253,17 +1254,17 @@ namespace Aura.Channel.Scripting.Scripts
 
 			lock (_reactions)
 			{
-				if (activeSkillWas == SkillId.Defense && _reactions.ContainsKey(AiEvent.DefenseHit))
+				if (activeSkillWas == SkillId.Defense && _reactions[_state].ContainsKey(AiEvent.DefenseHit))
 				{
-					this.SwitchAction(_reactions[AiEvent.DefenseHit]);
+					this.SwitchAction(_reactions[_state][AiEvent.DefenseHit]);
 				}
-				else if (action.Has(TargetOptions.KnockDown) && _reactions.ContainsKey(AiEvent.KnockDown))
+				else if (action.Has(TargetOptions.KnockDown) && _reactions[_state].ContainsKey(AiEvent.KnockDown))
 				{
-					this.SwitchAction(_reactions[AiEvent.KnockDown]);
+					this.SwitchAction(_reactions[_state][AiEvent.KnockDown]);
 				}
-				else if (_reactions.ContainsKey(AiEvent.Hit))
+				else if (_reactions[_state].ContainsKey(AiEvent.Hit))
 				{
-					this.SwitchAction(_reactions[AiEvent.Hit]);
+					this.SwitchAction(_reactions[_state][AiEvent.Hit]);
 				}
 			}
 		}

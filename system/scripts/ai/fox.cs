@@ -10,6 +10,8 @@ public class FoxAi : AiScript
 	{
 		Doubts("/pc/", "/pet/");
 		Hates("/chicken/");
+		
+		On(AiState.Aggro, AiEvent.DefenseHit, OnDefenseHit);
 	}
 
 	protected override IEnumerable Idle()
@@ -29,8 +31,6 @@ public class FoxAi : AiScript
 	
 	protected override IEnumerable Aggro()
 	{
-		On(AiEvent.DefenseHit, OnDefenseHit);
-		
 		if(Random() < 50)
 			Do(PrepareSkill(SkillId.Defense));
 		else
