@@ -397,6 +397,7 @@ namespace Aura.Shared.Network
 		public const int MoonGateMap = 0xA42D;
 		public const int MoonGateUse = 0xA42E;
 		public const int MoonGateUseR = 0xA42F;
+		public const int MusicEventInform = 0xA431;
 		public const int ItemShopInfo = 0xA436;
 		public const int PartyWindowUpdate = 0xA43C;
 		public const int ContinentWarpCoolDown = 0xA43D;

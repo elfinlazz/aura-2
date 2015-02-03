@@ -96,5 +96,27 @@ namespace Aura.Channel.Network.Handlers
 			// Run
 			clientEvent(creature, eventData);
 		}
+
+		/// <summary>
+		/// Sent when a client side music event is triggered.
+		/// </summary>
+		/// <remarks>
+		/// This is sent since 190X? It contains the names of the events
+		/// that change the BGM, why this is sent is unknown.
+		/// It's also untested whether you still get EventInform,
+		/// which seems to do almost the same...
+		/// </remarks>
+		/// <example>
+		/// 001 [................] String : TirChonaill_North3_ambient
+		/// </example>
+		[PacketHandler(Op.MusicEventInform)]
+		public void MusicEventInform(ChannelClient client, Packet packet)
+		{
+			var eventName = packet.GetString();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			// Do something with this information?
+		}
 	}
 }
