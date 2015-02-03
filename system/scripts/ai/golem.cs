@@ -19,6 +19,8 @@ public class GolemAi : AiScript
 	
 	protected override IEnumerable Aggro()
 	{
+		On(AiEvent.DefenseHit, OnDefenseHit);
+		
 		var rndn = Random();
 		if(rndn < 10) // 10%
 		{
@@ -44,5 +46,11 @@ public class GolemAi : AiScript
 		{
 			Do(Attack());
 		}
+	}
+	
+	private IEnumerable OnDefenseHit()
+	{
+		Do(Attack());
+		Do(Wait(3000));
 	}
 }

@@ -26,6 +26,8 @@ public class SpiderAi : AiScript
 	
 	protected override IEnumerable Aggro()
 	{
+		On(AiEvent.DefenseHit, OnDefenseHit);
+		
 		if(Random() < 50)
 		{
 			Do(PrepareSkill(SkillId.Defense));
@@ -36,5 +38,11 @@ public class SpiderAi : AiScript
 		{
 			Do(Attack());
 		}
+	}
+	
+	private IEnumerable OnDefenseHit()
+	{
+		Do(Attack());
+		Do(Wait(3000));
 	}
 }

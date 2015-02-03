@@ -29,6 +29,8 @@ public class FoxAi : AiScript
 	
 	protected override IEnumerable Aggro()
 	{
+		On(AiEvent.DefenseHit, OnDefenseHit);
+		
 		if(Random() < 50)
 			Do(PrepareSkill(SkillId.Defense));
 		else
@@ -40,5 +42,11 @@ public class FoxAi : AiScript
 			Do(Wait(3000));
 		
 		Do(CancelSkill());
+	}
+	
+	private IEnumerable OnDefenseHit()
+	{
+		Do(Attack());
+		Do(Wait(3000));
 	}
 }

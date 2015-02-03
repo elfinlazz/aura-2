@@ -49,6 +49,8 @@ public class WolfAi : AiScript
 	
 	protected override IEnumerable Aggro()
 	{
+		On(AiEvent.DefenseHit, OnDefenseHit);
+	
 		if(Random() < 50)
 		{
 			var rndnum = Random();
@@ -75,5 +77,11 @@ public class WolfAi : AiScript
 		{
 			Do(Attack(3, 5000));
 		}
+	}
+	
+	private IEnumerable OnDefenseHit()
+	{
+		Do(Attack());
+		Do(Wait(3000));
 	}
 }
