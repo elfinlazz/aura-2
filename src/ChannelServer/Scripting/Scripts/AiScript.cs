@@ -20,6 +20,8 @@ using Aura.Channel.Skills.Life;
 
 namespace Aura.Channel.Scripting.Scripts
 {
+	// TODO: Rewrite into the new tree design before we make more
+	//   of a mess out of this than necessary.
 	public abstract class AiScript : IDisposable
 	{
 		// Official heartbeat while following a target seems
