@@ -48,12 +48,10 @@ public class PiarasBaseScript : NpcScript
 			case "@shop":
 				Msg("May I ask what you are looking for?");
 				OpenShop("PiarasShop");
-				break;
-				
-			default:
-				Msg("...");
-				break;
+				return;
 		}
+		
+		End("Goodbye, Piaras. I'll see you later!");
 	}
 	
 	protected override async Task Keywords(string keyword)

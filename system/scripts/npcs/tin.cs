@@ -51,11 +51,8 @@ public class TinScript : NpcScript
 		
 		Msg("Was there something else you wanted to talk about?");
 		await StartConversation();
-	}
-	
-	public override void EndConversation()
-	{
-		Close("Go all the way to the right and you will find Tir Chonaill. <br/>I wish you the best of luck.<br/>Have a great journey. <br/>I'll see you around...");
+		
+		End("Go all the way to the right and you will find Tir Chonaill. <br/>I wish you the best of luck.<br/>Have a great journey. <br/>I'll see you around...");
 	}
 	
 	protected override async Task Keywords(string keyword)

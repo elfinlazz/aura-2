@@ -48,7 +48,7 @@ public class BebhinnBaseScript : NpcScript
 				Msg("Is this your first time here? Nice to meet you.");
 				//Msg("I think we've met before... nice to see you again.");
 				await StartConversation();
-				return;
+				break;
 				
 			case "@bank":
 				OpenBank();
@@ -64,22 +64,21 @@ public class BebhinnBaseScript : NpcScript
 				if(!RedeemCoupon(input))
 				{
 					Msg("I checked the number at our Head Office, and they say this coupon does not exist.<br/>Please double check the coupon number.");
-					return;
 				}
-				
-				// Unofficial response.
-				Msg("There you go, have a nice day.");
-				return;
+				else
+				{
+					// Unofficial response.
+					Msg("There you go, have a nice day.");
+				}
+				break;
 				
 			case "@shop":
 				Msg("So, does that mean you're looking for a Personal Shop License then?<br/>You must have something you want to sell around here!<br/>Hahaha...");
 				OpenShop("BebhinnShop");
 				return;
-				
-			default:
-				Msg("...");
-				return;
 		}
+		
+		End();
 	}
 	
 	protected override async Task Keywords(string keyword)

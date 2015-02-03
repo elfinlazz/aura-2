@@ -50,7 +50,7 @@ public class NoraBaseScript : NpcScript
 				//Msg("We've met before, right? I remember you!");
 				//Msg("Nice to see you, <username/>.");
 				await StartConversation();
-				return;
+				break;
 				
 			case "@shop":
 				Msg("Are you looking for a Tailoring Kit and materials?<br/>If so, you've come to the right place.");
@@ -60,12 +60,10 @@ public class NoraBaseScript : NpcScript
 			case "@repair":
 				Msg("Do you want to repair your clothes?<br/>Well I can't say I'm perfect at it,<br/>but I'll do my best.<br/>Just in case, when in doubt, you can always go to a professional tailor.");
 				Msg("(Unimplemented)");
-				return;
-
-			default:
-				Msg("...");
-				return;
+				break;
 		}
+		
+		End();
 	}
 	
 	protected override async Task Keywords(string keyword)

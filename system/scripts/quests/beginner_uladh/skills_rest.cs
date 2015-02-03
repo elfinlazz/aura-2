@@ -52,6 +52,9 @@ public class BeginnerUladhRestQuestScript : QuestScript
 			
 			npc.Msg("Anyway, I don't understand why so many people ask me about skills.");
 			await npc.Conversation();
+			npc.End();
+			
+			return HookResult.End;
 		}
 		
 		return HookResult.Continue;

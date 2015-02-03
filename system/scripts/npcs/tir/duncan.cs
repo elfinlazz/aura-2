@@ -48,7 +48,6 @@ public class DuncanBaseScript : NpcScript
 			"As he speaks, his voice resonates with a kind of gentle authority."
 		);
 		
-
 		Msg("Please let me know if you need anything.", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Retrive Lost Items", "@lostandfound"));
 		
 		switch(await Select())
@@ -56,7 +55,7 @@ public class DuncanBaseScript : NpcScript
 			case "@talk":
 				Greet();
 				await StartConversation();
-				return;
+				break;
 				
 			case "@shop":
 				Msg("Choose a quest you would like to do.");
@@ -67,12 +66,10 @@ public class DuncanBaseScript : NpcScript
 				Msg("If you are knocked unconcious in a dungeon or field, any item you've dropped will be lost unless you get resurrected right at the spot.<br/>Lost items can usually be recovered from a Town Office or a Lost-and-Found.");
 				Msg("Unfortunatly, Tir Chonaill does not have a Town Office, so I run the Lost-and-Found myself.<br/>The lost items are recovered with magic,<br/>so unless you've dropped them on purpose, you can recover those items with their blessings intact.<br/>You will, however, need to pay a fee.");
 				Msg("As you can see, I have limited space in my home. So I can only keep 20 items for you.<br/>If there are more than 20 lost items, I'll have to throw out the oldest items to make room.<br/>I strongly suggest you retrieve any lost items you don't want to lose as soon as possible.");
-				return;
-			
-			default:
-				Msg("...");
-				return;
+				break;
 		}
+		
+		End();
 	}
 	
 	protected override async Task Keywords(string keyword)

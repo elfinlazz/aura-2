@@ -46,11 +46,8 @@ public class DuncansCallQuestScript : QuestScript
 			npc.Msg("This may be a small town,<br/>but Tir Chonaill has long boasted a tradition<br/>of growing resolute and sturdy warriors<br/>that don't have to worry about the kingdom's control.");
 			npc.Msg("You have now completed all our missions<br/>and have earned the right to join the rank of Tir Chonaill's warriors.<br/>Well done, and congratulations.");
 			npc.Msg("Wherever you go, don't forget who you are and what you have become.<br/>Since you have become strong enough to survive alone,<br/>your ego guide must have already parted ways with you.<br/>There is no one to look after you now, so befriend as many people as you can.");
-			
-			// TODO: Fix after implicit @end was removed
-			npc.Msg("If you have anything else to ask, let me know.", npc.Button("End Conversation"));
-			await npc.Select();
-			//await npc.Conversation();
+			npc.Msg("If you have anything else to ask, let me know.");
+			await npc.Conversation();
 			
 			npc.Close2();
 			

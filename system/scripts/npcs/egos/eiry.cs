@@ -96,7 +96,6 @@ public class EiryScript : NpcScript
 				while(true)
 				{
 					Msg("What would you like to know more of?<br/>Choose a category<br/>and click it.",
-						Button("End Conversation", "@breakloop"),
 						List("Game Tips", 5, "@breakloop",
 							Button("How do I fight?", "@goodfighting"),
 							Button("What are hunger and camping penalties?", "@parameters"),
@@ -108,7 +107,7 @@ public class EiryScript : NpcScript
 					
 					var category = await Select();
 					
-					if(category == "@breakloop")
+					if(category == "@breakloop" || category == "@end")
 						break;
 					
 					if(category == "@goodfighting")
@@ -129,7 +128,7 @@ public class EiryScript : NpcScript
 						
 							category = await Select();
 							
-							if(category == "@breakloop")
+							if(category == "@breakloop" || category == "@end")
 								break;
 							
 							if(category == "@howtocombat")
@@ -204,7 +203,7 @@ public class EiryScript : NpcScript
 						
 							category = await Select();
 							
-							if(category == "@breakloop")
+							if(category == "@breakloop" || category == "@end")
 								break;
 							
 							if(category == "@stamina")
@@ -249,7 +248,7 @@ public class EiryScript : NpcScript
 						
 							category = await Select();
 							
-							if(category == "@breakloop")
+							if(category == "@breakloop" || category == "@end")
 								break;
 							
 							if(category == "@questmarker")
@@ -292,7 +291,7 @@ public class EiryScript : NpcScript
 						
 							category = await Select();
 							
-							if(category == "@breakloop")
+							if(category == "@breakloop" || category == "@end")
 								break;
 							
 							if(category == "@howtotalkothers")
@@ -336,7 +335,7 @@ public class EiryScript : NpcScript
 						
 							category = await Select();
 							
-							if(category == "@breakloop")
+							if(category == "@breakloop" || category == "@end")
 								break;
 							
 							if(category == "@seeminimap")

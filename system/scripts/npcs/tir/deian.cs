@@ -59,7 +59,7 @@ public class DeianScript : NpcScript
 			case "@shop":
 				Msg("I got nothing much, except for some quest scrolls. Are you interested?");
 				OpenShop("DeianShop");
-				break;
+				return;
 
 			case "@upgrade":
 				Msg("Upgrades! Who else would know more about that than the great Deian? Hehe...<br/>Now, what do you want to upgrade?<br/>Don't forget to check how many times you can upgrade that tiem and what type of upgrade it is before you give it to me... <upgrade />",
@@ -73,11 +73,9 @@ public class DeianScript : NpcScript
 						break;
 				}
 				break;
-
-			default:
-				Msg("...");
-				break;
 		}
+		
+		End();
 	}
 
 	protected override async Task Keywords(string keyword)

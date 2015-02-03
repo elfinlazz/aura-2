@@ -144,19 +144,20 @@ namespace Aura.Channel.Network.Handlers
 
 			var response = match.Groups["result"].Value;
 
-			if (response == "@end")
-			{
-				try
-				{
-					client.NpcSession.Script.EndConversation();
-				}
-				catch (OperationCanceledException)
-				{
-					//Log.Debug("Received @end");
-				}
-				client.NpcSession.Clear();
-				return;
-			}
+			// Obsolete, implicit @end handling
+			//if (response == "@end")
+			//{
+			//	try
+			//	{
+			//		client.NpcSession.Script.EndConversation();
+			//	}
+			//	catch (OperationCanceledException)
+			//	{
+			//		//Log.Debug("Received @end");
+			//	}
+			//	client.NpcSession.Clear();
+			//	return;
+			//}
 
 			// Cut @input "prefix" added for <input> element.
 			if (response.StartsWith("@input"))

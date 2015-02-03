@@ -67,8 +67,7 @@ public class AlissaBaseScript : NpcScript
 					break;
 				}
 				
-				Msg("How long do you want to use the Mill?<br/>It's 100 Gold for one minute and 450 Gold for 5 minutes.<br/>Once it starts working, anyone can use the Mill.",
-					Button("1 Minute", "@1minute"), Button("5 Minutes", "@5minute"), Button("Forget It", "@quit"));
+				Msg("How long do you want to use the Mill?<br/>It's 100 Gold for one minute and 450 Gold for 5 minutes.<br/>Once it starts working, anyone can use the Mill.", Button("1 Minute", "@1minute"), Button("5 Minutes", "@5minute"), Button("Forget It", "@quit"));
 
 				switch (await Select())
 				{
@@ -83,17 +82,11 @@ public class AlissaBaseScript : NpcScript
 					case "@quit":
 						Msg("Whatever, it's your choice...<br/>Just remember that this is the only place where you can grind your crops into flour.");
 						break;
-					
-					default:
-						Msg("...");
-						break;
 				}
 				break;
-
-			default:
-				Msg("...");
-				break;
 		}
+		
+		End();
 	}
 
 	protected override async Task Keywords(string keyword)

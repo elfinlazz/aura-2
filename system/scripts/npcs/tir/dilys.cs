@@ -47,7 +47,7 @@ public class DilysScript : NpcScript
 				//Msg("Have you been here before?<br/>You look familiar.");
 				//Msg("You're back.<br/>Nice to see you again, <username/>.<br/>");
 				await StartConversation();
-				return;
+				break;
 				
 			case "@shop":
 				Msg("What potion do you need?");
@@ -62,42 +62,34 @@ public class DilysScript : NpcScript
 				else
 				{
 					Msg("Goodness, <username/>! Are you hurt? I must treat your wounds immediately.<br/>I can't understand why everyone gets injured so much around here...<br/>The fee is 90 Gold but don't think about money right now. What's important is that you get treated.", Button("Receive Treatment", "@gethealing"), Button("Decline", "@end"));
-					switch (await Select())
+					if(await Select() == "@gethealing")
 					{
-						case "@gethealing":
-							if (Player.Inventory.Gold >= 90)
+						if (Player.Inventory.Gold >= 90)
+						{
+							Player.Inventory.RemoveGold(90);
+							Player.FullLifeHeal();
+							Player.Mana = Player.ManaMax;
+							Msg("Good, I've put on some bandages and your treatment is done.<br/>If you get injured again, don't hesitate to visit me.");
+							if (!Player.Skills.Has(SkillId.FirstAid))
 							{
-								Player.Inventory.RemoveGold(90);
-								Player.FullLifeHeal();
-								Player.Mana = Player.ManaMax;
-								Msg("Good, I've put on some bandages and your treatment is done.<br/>If you get injured again, don't hesitate to visit me.");
-								if (!Player.Skills.Has(SkillId.FirstAid))
-								{
-									Player.Skills.Give(SkillId.FirstAid, SkillRank.Novice);
-									Msg("I see you haven't learned the First Aid skill yet.<br/>Since you can't come to me every time you get hurt,<br/>you should learn how to apply a bandage to yourself.<p/>I will teach you the First Aid skill.<br/>This skill requires bandages<br/>so always keep them handy in your inventory.");
-								}
+								Player.Skills.Give(SkillId.FirstAid, SkillRank.Novice);
+								Msg("I see you haven't learned the First Aid skill yet.<br/>Since you can't come to me every time you get hurt,<br/>you should learn how to apply a bandage to yourself.<p/>I will teach you the First Aid skill.<br/>This skill requires bandages<br/>so always keep them handy in your inventory.");
 							}
-							else
-							{
-								Msg("Oh, hm...you're short on money.<br/>I need the gold to pay for the bandages and medince you need...<br/>Why don't you go do some part-time jobs and then come back?");
-							}
-							break;
-
-						default:
-							Msg("...");
-							break;
+						}
+						else
+						{
+							Msg("Oh, hm...you're short on money.<br/>I need the gold to pay for the bandages and medince you need...<br/>Why don't you go do some part-time jobs and then come back?");
+						}
 					}
 				}
-				return;
+				break;
 			
 			case "@petheal":
 				Msg("You may want to summon your animal friend first.<br/>If you don't have a pet, then please don't waste my time.");
-				return;
-
-			default:
-				Msg("...");
-				return;
+				break;
 		}
+		
+		End();
 	}
 	
 	protected override async Task Keywords(string keyword)

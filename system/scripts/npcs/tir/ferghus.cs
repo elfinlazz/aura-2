@@ -56,7 +56,7 @@ public class FerghusBaseScript : NpcScript
 			case "@shop":
 				Msg("Looking for a weapon?<br/>Or armor?");
 				OpenShop("FerghusShop");
-				break;
+				return;
 				
 			case "@repair":
 				Msg("If you want to have armor, kits or weapons repaired, you've come to the right place.<br/>I sometimes make mistakes, but I offer the best deal for repair work.<br/>For rare and expensive items, I think you should go to a big city. I can't guarantee anything.");
@@ -67,11 +67,9 @@ public class FerghusBaseScript : NpcScript
 				Msg("Will you select items to be modified?<br/>The number and types of modifications are different depending on the items.<br/>When I modify them, my hands never slip or make mistakes. So don't worry. Trust me.");
 				Msg("Unimplemented");
 				break;
-				
-			default:
-				Msg("...");
-				break;
 		}
+		
+		End("Goodbye, Ferghus. I'll see you later!");
 	}
 
 	protected override async Task Keywords(string keyword)

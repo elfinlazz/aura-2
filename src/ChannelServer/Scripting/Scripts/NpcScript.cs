@@ -231,11 +231,12 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Sends Close, with the standard ending phrase.
+		/// Sends Close, using either the message or the standard ending phrase.
 		/// </summary>
-		public virtual void EndConversation()
+		/// <param name="response"></param>
+		public void End(string message = null)
 		{
-			Close("(You ended your conversation with <npcname/>.)");
+			this.Close(message ?? "(You ended your conversation with <npcname/>.)");
 		}
 
 		/// <summary>
@@ -443,12 +444,14 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public virtual async Task Conversation()
 		{
-			// Infinite keyword handling, conversation is closed
-			// via End Convo button
+			// Infinite keyword handling until End is clicked.
 			while (true)
 			{
 				this.ShowKeywords();
 				var keyword = await Select();
+
+				if (keyword == "@end")
+					break;
 
 				await Hook("before_keywords", keyword);
 
@@ -832,8 +835,9 @@ namespace Aura.Channel.Scripting.Scripts
 				var result = await hook(this, args);
 				switch (result)
 				{
-					case HookResult.Break: return;
-					case HookResult.End: this.Exit(); return;
+					case HookResult.Continue: continue; // Run next hook
+					case HookResult.Break: return; // Stop and go back into the NPC
+					case HookResult.End: this.Exit(); return; // Exit script
 				}
 
 			}

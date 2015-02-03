@@ -62,7 +62,7 @@ public class EavanScript : NpcScript
 			case "@shop":
 				Msg("Welcome to the Adventurers' Association.");
 				OpenShop("EavanShop");
-				break;
+				return;
 
 			case "@lostandfound":
 				Msg("At the Town Office, you can retrieve the items you've lost during your adventure.<br/>Unless you dropped an item on purpose while using Magical powers,<br/>you can usually retrieve it here with the blessing still cast on it.");
@@ -99,6 +99,8 @@ public class EavanScript : NpcScript
 				}
 				break;*/
 		}
+		
+		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
 	protected override async Task Keywords(string keyword)
@@ -229,11 +231,6 @@ public class EavanScript : NpcScript
 				ModifyRelation(0, 0, Random(2));
 				break;
 		}
-	}
-
-	public override void EndConversation()
-	{
-		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 

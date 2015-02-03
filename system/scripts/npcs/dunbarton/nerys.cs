@@ -62,7 +62,7 @@ public class NerysScript : NpcScript
 			case "@shop":
 				Msg("You brought your money with you, right?<br/>");
 				OpenShop("NerysShop");
-				break;
+				return;
 
 			case "@repair":
 				Msg("You can repair weapons, armor, and equipment here.<br/>I use expensive repair tools, so the fee is fairly high. Is that okay with you?<br/>I do make fewer mistakes because of that, though."); // <repair rate='95' stringid='(*/smith_repairable/*)' />");
@@ -76,6 +76,8 @@ public class NerysScript : NpcScript
 				Msg("Is that all for today?<br/>Well, come back anytime you need me."); // <br/><upgrade hide='true'/>
 				break;
 		}
+		
+		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
 	protected override async Task Keywords(string keyword)
@@ -229,11 +231,6 @@ public class NerysScript : NpcScript
 				ModifyRelation(0, 0, Random(2));
 				break;
 		}
-	}
-
-	public override void EndConversation()
-	{
-		Close("Thank you, <npcname/>. I'll see you later!");
 	}
 }
 
