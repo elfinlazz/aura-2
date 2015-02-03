@@ -212,6 +212,7 @@ namespace Aura.Channel.World.Entities
 			var item = new Item(itemId);
 			item.EgoInfo.Race = egoRace;
 			item.EgoInfo.Name = name;
+			item.Info.FigureB = 1;
 
 			return item;
 		}

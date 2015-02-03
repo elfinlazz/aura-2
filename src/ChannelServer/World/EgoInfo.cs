@@ -93,5 +93,19 @@ namespace Aura.Channel.World
 		/// Time the ego was fed last
 		/// </summary>
 		public DateTime LastFeeding { get; set; }
+
+		/// <summary>
+		/// Creates and initializes new EgoInfo.
+		/// </summary>
+		public EgoInfo()
+		{
+			this.StrLevel = 1;
+			this.IntLevel = 1;
+			this.DexLevel = 1;
+			this.WillLevel = 1;
+			this.LuckLevel = 1;
+			this.SocialLevel = 1;
+			this.LastFeeding = DateTime.Now;
+		}
 	}
 }
