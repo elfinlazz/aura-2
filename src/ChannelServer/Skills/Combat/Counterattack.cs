@@ -11,8 +11,13 @@ using Aura.Shared.Network;
 namespace Aura.Channel.Skills.Combat
 {
 	/// <summary>
-	/// Handle for the Counterattack skill.
+	/// Handler for the Counterattack skill.
 	/// </summary>
+	/// <remarks>
+	/// Var 1: Target damage rate
+	/// Var 2: Attacker damage rate
+	/// Var 3: Crit bonus
+	/// </remarks>
 	[Skill(SkillId.Counterattack)]
 	public class Counterattack : StandardPrepareHandler, IInitiableSkillHandler
 	{
