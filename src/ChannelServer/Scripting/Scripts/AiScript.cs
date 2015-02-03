@@ -43,6 +43,8 @@ namespace Aura.Channel.Scripting.Scripts
 		protected IEnumerator _curAction;
 		protected Creature _newAttackable;
 
+		protected Dictionary<AiEvent, Func<IEnumerable>> _reactions;
+
 		// Heartbeat cache
 		protected IList<Creature> _playersInRange;
 
@@ -84,6 +86,7 @@ namespace Aura.Channel.Scripting.Scripts
 			_heartbeatTimer = new Timer(this.Heartbeat, null, -1, -1);
 
 			_rnd = new Random(RandomProvider.Get().Next());
+			_reactions = new Dictionary<AiEvent, Func<IEnumerable>>();
 
 			_state = AiState.Idle;
 			_aggroRadius = 500;
@@ -522,6 +525,17 @@ namespace Aura.Channel.Scripting.Scripts
 			_maxDistanceFromSpawn = distance;
 		}
 
+		/// <summary>
+		/// Reigsters a reaction.
+		/// </summary>
+		/// <param name="ev">The event on which func should be executed.</param>
+		/// <param name="func">The reaction to the event.</param>
+		protected void On(AiEvent ev, Func<IEnumerable> func)
+		{
+			lock (_reactions)
+				_reactions[ev] = func;
+		}
+
 		// Functions
 		// ------------------------------------------------------------------
 
@@ -659,6 +673,9 @@ namespace Aura.Channel.Scripting.Scripts
 				if (restHandler != null)
 					restHandler.Stop(this.Creature, this.Creature.Skills.Get(SkillId.Rest));
 			}
+
+			lock (_reactions)
+				_reactions.Clear();
 
 			_curAction = action().GetEnumerator();
 		}
@@ -1226,8 +1243,29 @@ namespace Aura.Channel.Scripting.Scripts
 				this.AggroCreature(action.Attacker);
 			}
 
+			var activeSkillWas = SkillId.None;
+
 			if (this.Creature.Skills.ActiveSkill != null)
+			{
+				activeSkillWas = this.Creature.Skills.ActiveSkill.Info.Id;
 				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
+			}
+
+			lock (_reactions)
+			{
+				if (activeSkillWas == SkillId.Defense && _reactions.ContainsKey(AiEvent.DefenseHit))
+				{
+					this.SwitchAction(_reactions[AiEvent.DefenseHit]);
+				}
+				else if (action.Has(TargetOptions.KnockDown) && _reactions.ContainsKey(AiEvent.KnockDown))
+				{
+					this.SwitchAction(_reactions[AiEvent.KnockDown]);
+				}
+				else if (_reactions.ContainsKey(AiEvent.Hit))
+				{
+					this.SwitchAction(_reactions[AiEvent.Hit]);
+				}
+			}
 		}
 
 		/// <summary>
@@ -1319,6 +1357,13 @@ namespace Aura.Channel.Scripting.Scripts
 			/// Likes target
 			/// </summary>
 			Love,
+		}
+
+		public enum AiEvent
+		{
+			Hit,
+			DefenseHit,
+			KnockDown,
 		}
 	}
 }
