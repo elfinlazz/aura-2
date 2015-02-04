@@ -204,7 +204,7 @@ public class TinSoulStreamScript : NpcScript
 		SetLocation(22, 6313, 5712);
 	}
 
-	protected override async Task Talk()
+	protected override async Task TalkPet()
 	{
 		Msg("Hi. <username/>.<br/>Nice to meet you..");
 		Msg("I wish you the best of luck with all that you do here in Erinn...<br/>See ya.", Button("End Conversation"));

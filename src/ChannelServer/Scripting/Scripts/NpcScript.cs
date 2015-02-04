@@ -135,7 +135,10 @@ namespace Aura.Channel.Scripting.Scripts
 			this.ConversationState = ConversationState.Ongoing;
 			try
 			{
-				await this.Talk();
+				if (!this.Player.IsPet)
+					await this.Talk();
+				else
+					await this.TalkPet();
 			}
 			catch (OperationCanceledException)
 			{
@@ -149,6 +152,45 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		protected virtual async Task Talk()
 		{
+			await Task.Yield();
+		}
+
+		/// <summary>
+		/// Called when a pet starts the conversation.
+		/// </summary>
+		protected virtual async Task TalkPet()
+		{
+			// Officials don't use random messages, but one message for every NPC,
+			// which is usually the default one below. However, some NPCs have a
+			// different message, ones added later in particular, so we'll just
+			// RNG it for the default message, less overriding for something
+			// nobody cares about.
+
+			switch (this.Random(3))
+			{
+				default:
+					if (this.NPC.IsMale)
+					{
+						this.Close(Hide.None, "(I don't think he can understand me)");
+						break;
+					}
+					else if (this.NPC.IsFemale)
+					{
+						this.Close(Hide.None, "(I don't think she can understand me)");
+						break;
+					}
+
+					// Go to next case if gender isn't clear
+					goto case 1;
+
+				case 1: this.Close(Hide.None, "(This conversation doesn't seem to be going anywhere.)"); break;
+				case 2: this.Close(Hide.None, "(I don't think we'll see things eye to eye.)"); break;
+			}
+
+			// Messages for "things", like book shelves.
+			//this.Close("<title name='NONE'/>(I don't think I can talk to this.)");
+			//this.Close("<title name='NONE'/>(I don't think we'll see things eye to eye.)");
+
 			await Task.Yield();
 		}
 
