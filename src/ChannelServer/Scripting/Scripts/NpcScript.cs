@@ -102,10 +102,11 @@ namespace Aura.Channel.Scripting.Scripts
 			this.NPC = new NPC();
 			this.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
 			this.NPC.ScriptType = this.GetType();
-			this.NPC.LoadDefault();
 			this.NPC.AI = ChannelServer.Instance.ScriptManager.GetAi("npc_normal", this.NPC);
 
+			// Load script first, to get race set and stuff, then load the NPC data.
 			this.Load();
+			this.NPC.LoadDefault();
 
 			if (this.NPC.RegionId > 0)
 			{
