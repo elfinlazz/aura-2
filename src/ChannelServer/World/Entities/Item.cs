@@ -170,6 +170,14 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns true if item is a able to receive proficiency.
+		/// </summary>
+		public bool IsTrainableWeapon
+		{
+			get { return this.Data.WeaponType != 0; }
+		}
+
+		/// <summary>
 		/// Gets or sets whether the item is displayed as new in inv.
 		/// [190100, NA200 (2015-01-15)]
 		/// </summary>

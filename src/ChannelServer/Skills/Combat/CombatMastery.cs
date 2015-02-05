@@ -140,6 +140,9 @@ namespace Aura.Channel.Skills.Combat
 				if (cap.Hit == 2 && !tAction.IsKnockBack)
 					aAction.Stun *= 2;
 
+				// Update current weapon
+				SkillHelper.UpdateWeapon(attacker, target, weapon);
+
 				cap.Handle();
 
 				// No second hit if target was knocked back

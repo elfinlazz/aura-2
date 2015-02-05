@@ -113,6 +113,9 @@ namespace Aura.Channel.Skills.Combat
 			// Response
 			Send.SkillUseStun(attacker, skill.Info.Id, AfterUseStun, 1);
 
+			// Update both weapons
+			SkillHelper.UpdateWeapon(attacker, target, attacker.RightHand, attacker.LeftHand);
+
 			// Action!
 			cap.Handle();
 

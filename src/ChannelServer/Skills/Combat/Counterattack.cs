@@ -82,6 +82,9 @@ namespace Aura.Channel.Skills.Combat
 
 			target.SetPosition(knockbackPos.X, knockbackPos.Y);
 
+			// Update both weapons
+			SkillHelper.UpdateWeapon(attacker, target, attacker.RightHand, attacker.LeftHand);
+
 			Send.SkillUseStun(attacker, skill.Info.Id, StunTime, 1);
 
 			cap.Handle();
