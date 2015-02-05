@@ -1139,6 +1139,44 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Makes creature cancel currently loaded skill.
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable CompleteSkill()
+		{
+			if (this.Creature.Skills.ActiveSkill == null)
+				yield break;
+
+			var skill = this.Creature.Skills.ActiveSkill;
+			var skillId = this.Creature.Skills.ActiveSkill.Info.Id;
+
+			this.Creature.Skills.ActiveSkill = null;
+			this.Creature.Skills.SkillInProgress = false;
+
+			this.SharpMind(skillId, SharpMindStatus.Cancelling);
+
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<ICompletable>(skillId);
+			if (skillHandler == null)
+			{
+				Log.Unimplemented("AI.CompleteSkill: Missing handler or ICompletable for '{0}'.", skillId);
+				yield break;
+			}
+
+			try
+			{
+				skillHandler.Complete(this.Creature, skill, null);
+			}
+			catch (NullReferenceException)
+			{
+				Log.Warning("AI.CompleteSkill: Null ref exception while preparing '{0}', skill might have parameters.", skillId);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("AI.CompleteSkill: Skill complete method for '{0}'.", skillId);
+			}
+		}
+
+		/// <summary>
 		/// Makes creature start given skill.
 		/// </summary>
 		/// <param name="skillId"></param>
@@ -1281,6 +1319,16 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			if (this.Creature.Skills.ActiveSkill != null)
 				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
+		}
+
+		/// <summary>
+		/// Called when the AI hit someone with a skill.
+		/// </summary>
+		/// <param name="aAction"></param>
+		public void OnUsedSkill(AttackerAction aAction)
+		{
+			if (this.Creature.Skills.ActiveSkill != null)
+				this.ExecuteOnce(this.CompleteSkill());
 		}
 
 		// ------------------------------------------------------------------

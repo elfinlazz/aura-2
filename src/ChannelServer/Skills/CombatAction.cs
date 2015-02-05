@@ -146,6 +146,14 @@ namespace Aura.Channel.Skills
 					// Remember knock back/down
 					tAction.Creature.WasKnockedBack = tAction.Has(TargetOptions.KnockBack) || tAction.Has(TargetOptions.KnockDown) || tAction.Has(TargetOptions.Smash);
 				}
+
+				// If attacker action
+				if (action.Category == CombatActionCategory.Attack)
+				{
+					var npc = action.Creature as NPC;
+					if (npc != null && npc.AI != null && action.SkillId != SkillId.CombatMastery)
+						npc.AI.OnUsedSkill(action as AttackerAction);
+				}
 			}
 
 			// Send combat action
