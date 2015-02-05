@@ -165,11 +165,21 @@ namespace Aura.Channel.World.Inventory
 		public Item Magazine { get; protected set; }
 
 		/// <summary>
-		/// Returns the amount of gold items in the inventory.
+		/// Gets or sets the amount of gold, by modifying the inventory.
 		/// </summary>
 		public int Gold
 		{
 			get { return this.Count(GoldItemId); }
+			set
+			{
+				var curGold = this.Gold;
+				var newGold = Math.Max(0, value);
+
+				if (newGold < curGold)
+					this.RemoveGold(curGold - newGold);
+				else if (newGold > curGold)
+					this.AddGold(newGold - curGold);
+			}
 		}
 
 		public CreatureInventory(Creature creature)
