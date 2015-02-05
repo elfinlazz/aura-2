@@ -3,6 +3,7 @@
 
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills.Base;
+using Aura.Channel.Skills.Combat;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
@@ -132,6 +133,23 @@ namespace Aura.Channel.Skills
 				damage = Math.Max(1, damage - target.Defense);
 			if (protection && damage > 1)
 				damage = Math.Max(1, damage - (damage * target.Protection));
+		}
+
+		/// <summary>
+		/// Returns true if target has counter active and used it.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="attacker"></param>
+		/// <returns></returns>
+		public static bool HandleCounter(Creature target, Creature attacker)
+		{
+			if (!target.Skills.IsActive(SkillId.Counterattack))
+				return false;
+
+			var handler = ChannelServer.Instance.SkillManager.GetHandler<Counterattack>(SkillId.Counterattack);
+			handler.Use(target, attacker);
+
+			return true;
 		}
 	}
 }

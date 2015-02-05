@@ -64,6 +64,10 @@ namespace Aura.Channel.Skills.Combat
 			attacker.StopMove();
 			target.StopMove();
 
+			// Counter
+			if (SkillHelper.HandleCounter(target, attacker))
+				return CombatSkillResult.Okay;
+
 			// Prepare combat actions
 			var aAction = new AttackerAction(CombatActionType.HardHit, attacker, skill.Info.Id, targetEntityId);
 			aAction.Set(AttackerOptions.Result | AttackerOptions.KnockBackHit2);
@@ -85,8 +89,6 @@ namespace Aura.Channel.Skills.Combat
 
 			// Mana Shield
 			SkillHelper.HandleManaShield(target, ref damage, tAction);
-
-			// Counter...
 
 			// Apply damage
 			target.TakeDamage(tAction.Damage = damage, attacker);

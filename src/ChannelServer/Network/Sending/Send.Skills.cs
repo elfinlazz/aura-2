@@ -464,5 +464,24 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet);
 		}
+
+		/// <summary>
+		/// Sends SharpMind to all creatures in range of user.
+		/// </summary>
+		/// <param name="user"></param>
+		/// <param name="target"></param>
+		/// <param name="skillId"></param>
+		/// <param name="state"></param>
+		public static void SharpMind(Creature user, Creature target, SkillId skillId, SharpMindStatus state)
+		{
+			var packet = new Packet(Op.SharpMind, target.EntityId);
+			packet.PutLong(user.EntityId);
+			packet.PutByte(1);
+			packet.PutByte(1);
+			packet.PutUShort((ushort)skillId);
+			packet.PutInt((int)state);
+
+			target.Client.Send(packet);
+		}
 	}
 }

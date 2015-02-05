@@ -92,7 +92,7 @@ namespace Aura.Channel.Network.Sending
 					var tAction = action as TargetAction;
 
 					// Target used Defense or Counter
-					if (tAction.Is(CombatActionType.Defended) || tAction.Is(CombatActionType.CounteredHit))
+					if (tAction.Is(CombatActionType.Defended) || tAction.Is(CombatActionType.CounteredHit) || tAction.Is(CombatActionType.CounteredHit2))
 					{
 						actionPacket.PutLong(tAction.Attacker.EntityId);
 						actionPacket.PutInt(0);

@@ -759,8 +759,13 @@ namespace Aura.Channel.World
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-				return _creatures.Values.OfType<NPC>()
-					.Count(npc => npc.AI != null && npc.AI.State == Scripting.Scripts.AiScript.AiState.Aggro && npc.Race == raceId && npc.Target == target);
+				return _creatures.Values.OfType<NPC>().Count(npc =>
+					!npc.IsDead &&
+					npc.AI != null &&
+					npc.AI.State == Scripting.Scripts.AiScript.AiState.Aggro &&
+					npc.Race == raceId &&
+					npc.Target == target
+				);
 			}
 			finally
 			{

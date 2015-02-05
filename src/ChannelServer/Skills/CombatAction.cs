@@ -11,6 +11,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
+using Aura.Channel.Skills.Life;
 
 namespace Aura.Channel.Skills
 {
@@ -126,11 +127,33 @@ namespace Aura.Channel.Skills
 					{
 						npc.AI.OnHit(tAction);
 					}
+
+					// Cancel target's skill
+					// TODO: Handle stackables.
+					if (action.Creature.Skills.ActiveSkill != null)
+					{
+						action.Creature.Skills.CancelActiveSkill();
+					}
+
+					// Cancel rest
+					if (action.Creature.Has(CreatureStates.SitDown))
+					{
+						var restHandler = ChannelServer.Instance.SkillManager.GetHandler<Rest>(SkillId.Rest);
+						if (restHandler != null)
+							restHandler.Stop(action.Creature, action.Creature.Skills.Get(SkillId.Rest));
+					}
+
+					// Remember knock back/down
+					tAction.Creature.WasKnockedBack = tAction.Has(TargetOptions.KnockBack) || tAction.Has(TargetOptions.KnockDown) || tAction.Has(TargetOptions.Smash);
 				}
 
-				// Cancel defense if applicable
-				if (action.Is(CombatActionType.Defended))
-					action.Creature.Skills.CancelActiveSkill();
+				// If attacker action
+				if (action.Category == CombatActionCategory.Attack)
+				{
+					var npc = action.Creature as NPC;
+					if (npc != null && npc.AI != null && action.SkillId != SkillId.CombatMastery)
+						npc.AI.OnUsedSkill(action as AttackerAction);
+				}
 			}
 
 			// Send combat action

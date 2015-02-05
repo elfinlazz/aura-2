@@ -320,8 +320,10 @@ namespace Aura.Channel.Scripting
 					var asm = this.GetAssembly(filePath);
 					if (asm != null)
 					{
+						var types = GetJITtedTypes(asm, filePath);
+
 						// Get first AiScript class and save the type
-						foreach (var type in asm.GetTypes().Where(a => a.IsSubclassOf(typeof(AiScript))))
+						foreach (var type in types.Where(a => a.IsSubclassOf(typeof(AiScript))))
 						{
 							_aiScripts[fileName] = type;
 							break;
@@ -379,7 +381,7 @@ namespace Aura.Channel.Scripting
 				return null;
 
 			var script = Activator.CreateInstance(type) as AiScript;
-			script.Creature = creature;
+			script.Attach(creature);
 
 			return script;
 		}
@@ -463,6 +465,17 @@ namespace Aura.Channel.Scripting
 			return null;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// TODO: We might want to stop loading if this is a problem,
+		/// scripts might depend on each other, which could lead to more
+		/// errors.
+		/// </remarks>
+		/// <param name="asm"></param>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
 		private static IEnumerable<Type> GetJITtedTypes(Assembly asm, string filePath)
 		{
 			Type[] types;

@@ -159,10 +159,12 @@
     <Compile Include="Skills\Base\StartStopSkillHandler.cs" />
     <Compile Include="Skills\CombatAction.cs" />
     <Compile Include="Skills\Combat\CombatMastery.cs" />
+    <Compile Include="Skills\Combat\Counterattack.cs" />
     <Compile Include="Skills\Combat\Defense.cs" />
     <Compile Include="Skills\Combat\Smash.cs" />
     <Compile Include="Skills\Hidden\Dye.cs" />
     <Compile Include="Skills\Life\Rest.cs" />
+    <Compile Include="Skills\Life\WebSpinning.cs" />
     <Compile Include="Skills\Magic\ManaShield.cs" />
     <Compile Include="Skills\Magic\SilentMove.cs" />
     <Compile Include="Skills\Music\Composing.cs" />

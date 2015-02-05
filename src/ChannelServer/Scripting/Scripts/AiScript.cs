@@ -16,9 +16,12 @@ using Aura.Shared.Mabi;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
+using Aura.Channel.Skills.Life;
 
 namespace Aura.Channel.Scripting.Scripts
 {
+	// TODO: Rewrite into the new tree design before we make more
+	//   of a mess out of this than necessary.
 	public abstract class AiScript : IDisposable
 	{
 		// Official heartbeat while following a target seems
@@ -42,19 +45,24 @@ namespace Aura.Channel.Scripting.Scripts
 		protected IEnumerator _curAction;
 		protected Creature _newAttackable;
 
+		protected Dictionary<AiState, Dictionary<AiEvent, Func<IEnumerable>>> _reactions;
+
+		// Heartbeat cache
+		protected IList<Creature> _playersInRange;
+
 		// Settings
 		protected int _aggroRadius, _aggroMaxRadius;
-		protected TimeSpan _alertDelay, _aggroDelay;
+		protected TimeSpan _alertDelay;
 		protected DateTime _awareTime, _alertTime;
-		protected AggroType _aggroType;
 		protected AggroLimit _aggroLimit;
-		protected Dictionary<string, string> _hateTags, _loveTags;
+		protected Dictionary<string, string> _hateTags, _loveTags, _doubtTags;
+		protected bool _hatesBattleStance;
 		protected int _maxDistanceFromSpawn;
 
 		/// <summary>
 		/// Creature controlled by AI.
 		/// </summary>
-		public Creature Creature { get; set; }
+		public Creature Creature { get; protected set; }
 
 		/// <summary>
 		/// List of random phrases
@@ -80,18 +88,22 @@ namespace Aura.Channel.Scripting.Scripts
 			_heartbeatTimer = new Timer(this.Heartbeat, null, -1, -1);
 
 			_rnd = new Random(RandomProvider.Get().Next());
+			_reactions = new Dictionary<AiState, Dictionary<AiEvent, Func<IEnumerable>>>();
+			_reactions[AiState.Idle] = new Dictionary<AiEvent, Func<IEnumerable>>();
+			_reactions[AiState.Alert] = new Dictionary<AiEvent, Func<IEnumerable>>();
+			_reactions[AiState.Aggro] = new Dictionary<AiEvent, Func<IEnumerable>>();
+			_reactions[AiState.Love] = new Dictionary<AiEvent, Func<IEnumerable>>();
 
 			_state = AiState.Idle;
 			_aggroRadius = 500;
 			_aggroMaxRadius = 3000;
 			_alertDelay = TimeSpan.FromMilliseconds(8000);
-			_aggroDelay = TimeSpan.FromMilliseconds(4000);
 			_hateTags = new Dictionary<string, string>();
 			_loveTags = new Dictionary<string, string>();
+			_doubtTags = new Dictionary<string, string>();
 
 			_maxDistanceFromSpawn = 3000;
 
-			_aggroType = AggroType.Passive;
 			_aggroLimit = AggroLimit.One;
 		}
 
@@ -132,6 +144,16 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Sets AI's creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		public void Attach(Creature creature)
+		{
+			this.Creature = creature;
+			this.Creature.Death += OnDeath;
+		}
+
+		/// <summary>
 		/// Main "loop"
 		/// </summary>
 		/// <param name="state"></param>
@@ -150,8 +172,8 @@ namespace Aura.Channel.Scripting.Scripts
 				var pos = this.Creature.GetPosition();
 
 				// Stop if no players in range
-				var players = this.Creature.Region.GetPlayersInRange(pos);
-				if (players.Count == 0 && now > _minRunTime)
+				_playersInRange = this.Creature.Region.GetPlayersInRange(pos);
+				if (_playersInRange.Count == 0 && now > _minRunTime)
 				{
 					this.Deactivate();
 					this.Reset();
@@ -173,6 +195,13 @@ namespace Aura.Channel.Scripting.Scripts
 					return;
 				}
 
+				// Recover from knock back/down after stun ended
+				if (this.Creature.WasKnockedBack)
+				{
+					Send.RiseFromTheDead(this.Creature);
+					this.Creature.WasKnockedBack = false;
+				}
+
 				// Select and run state
 				var prevAction = _curAction;
 				if (_curAction == null || !_curAction.MoveNext())
@@ -188,6 +217,7 @@ namespace Aura.Channel.Scripting.Scripts
 							case AiState.Idle: this.SwitchAction(Idle); break;
 							case AiState.Alert: this.SwitchAction(Alert); break;
 							case AiState.Aggro: this.SwitchAction(Aggro); break;
+							case AiState.Love: this.SwitchAction(Love); break;
 						}
 
 						_curAction.MoveNext();
@@ -238,94 +268,108 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		private void SelectState()
 		{
-			// Always goes back into idle if there's no target.
-			// Continue if neutral has a target, for the reset checks.
-			if (_aggroType == AggroType.Passive && this.Creature.Target == null)
+			var potentialTargets = this.Creature.Region.GetVisibleCreaturesInRange(this.Creature, _aggroRadius);
+
+			// Stay in idle if there's no visible creature in aggro range
+			if (potentialTargets.Count == 0 && this.Creature.Target == null)
 			{
-				_state = AiState.Idle;
+				if (_state != AiState.Idle)
+					this.Reset();
+
 				return;
 			}
 
-			// Find a target if you don't have one.
+			// Find a new target
 			if (this.Creature.Target == null)
 			{
-				// Try to find a target
-				this.Creature.Target = this.SelectRandomTarget(this.Creature.Region.GetVisibleCreaturesInRange(this.Creature, _aggroRadius));
-				if (this.Creature.Target != null)
+				// Get hated targets
+				var hated = potentialTargets.Where(cr => this.DoesHate(cr));
+				var hatedCount = hated.Count();
+
+				// Get doubted targets
+				var doubted = potentialTargets.Where(cr => this.DoesDoubt(cr));
+				var doubtedCount = doubted.Count();
+
+				// Get loved targets
+				var loved = potentialTargets.Where(cr => this.DoesLove(cr));
+				var lovedCount = loved.Count();
+
+				// Handle hate and doubt
+				if (hatedCount != 0 || doubtedCount != 0)
 				{
+					// Try to hate first, then doubt
+					if (hatedCount != 0)
+						this.Creature.Target = hated.ElementAt(this.Random(hatedCount));
+					else
+						this.Creature.Target = doubted.ElementAt(this.Random(doubtedCount));
+
+					// Switch to aware
 					_state = AiState.Aware;
 					_awareTime = DateTime.Now;
 				}
+				// Handle love
+				else if (lovedCount != 0)
+				{
+					this.Creature.Target = loved.ElementAt(this.Random(lovedCount));
+
+					_state = AiState.Love;
+				}
+				// Stop if no targets were found
+				else return;
+
+				// Stop for this tick, the aware delay needs a moment anyway
+				return;
 			}
-			// Got target.
-			else
+
+			// TODO: Monsters switch targets under certain circumstances,
+			//   e.g. a wolf will aggro a player, even if it has already
+			//   noticed a cow.
+
+			// Reset on...
+			if (this.Creature.Target.IsDead																 // target dead
+			|| !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) // out of aggro range
+			|| this.Creature.Target.Client.State == ClientState.Dead									 // target disconnected
+			|| (_state != AiState.Aggro && this.Creature.Target.Conditions.Has(ConditionsA.Invisible))	 // target hid before reaching aggro state
+			)
 			{
-				// Untarget on death, out of range, or disconnect
-				if (this.Creature.Target.IsDead || !this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroMaxRadius) || this.Creature.Target.Client.State == ClientState.Dead || (_state != AiState.Aggro && this.Creature.Target.Conditions.Has(ConditionsA.Invisible)))
+				this.Reset();
+				return;
+			}
+
+			// Switch to alert from aware after the delay
+			if (_state == AiState.Aware && DateTime.Now >= _awareTime + _alertDelay)
+			{
+				// Check if target is still in immediate range
+				if (this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroRadius))
+				{
+					this.Clear();
+
+					_state = AiState.Alert;
+					_alertTime = DateTime.Now;
+					this.Creature.IsInBattleStance = true;
+
+					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
+				}
+				// Reset if target ran away like a coward.
+				else
 				{
 					this.Reset();
 					return;
 				}
-
-				// Switch to alert from aware after the delay
-				if (_state == AiState.Aware && DateTime.Now >= _awareTime + _alertDelay)
-				{
-					// Check if target is still in range
-					if (this.Creature.GetPosition().InRange(this.Creature.Target.GetPosition(), _aggroRadius))
-					{
-						this.Clear();
-
-						_state = AiState.Alert;
-						_alertTime = DateTime.Now;
-						this.Creature.IsInBattleStance = true;
-
-						Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Alert);
-					}
-					// Reset if target ran away like a coward.
-					else
-					{
-						this.Reset();
-					}
-
-					return;
-				}
-
-				// Switch to aggro from alert after the delay
-				if (_state == AiState.Alert && (_aggroType == AggroType.Aggressive || (_aggroType == AggroType.CarefulAggressive && this.Creature.Target.IsInBattleStance) || (_aggroType > AggroType.Passive && !this.Creature.Target.IsPlayer)) && DateTime.Now >= _alertTime + _aggroDelay)
-				{
-					// Check aggro limit
-					var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
-					if (aggroCount >= (int)_aggroLimit) return;
-
-					this.Clear();
-
-					_state = AiState.Aggro;
-					Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
-
-					return;
-				}
 			}
-		}
 
-		/// <summary>
-		/// Returns a valid target or null.
-		/// </summary>
-		/// <param name="creatures"></param>
-		/// <returns></returns>
-		private Creature SelectRandomTarget(ICollection<Creature> creatures)
-		{
-			if (creatures == null || creatures.Count == 0)
-				return null;
+			// Switch to aggro from alert
+			if (_state == AiState.Alert && (this.DoesHate(this.Creature.Target) || (_hatesBattleStance && this.Creature.Target.IsInBattleStance)))
+			{
+				// Check aggro limit
+				var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
+				if (aggroCount >= (int)_aggroLimit) return;
 
-			// Random targetable creature
-			var potentialTargets = creatures.Where(target => this.Creature.CanTarget(target) &&
-															 this.DoesHate(target) &&
-															 !this.DoesLove(target)).ToList();
+				this.Clear();
 
-			if (potentialTargets.Count == 0)
-				return null;
-
-			return potentialTargets[Random(potentialTargets.Count)];
+				_state = AiState.Aggro;
+				Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
+			}
 		}
 
 		/// <summary>
@@ -337,7 +381,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Aware state
+		/// Alert state
 		/// </summary>
 		protected virtual IEnumerable Alert()
 		{
@@ -348,6 +392,14 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Aggro state
 		/// </summary>
 		protected virtual IEnumerable Aggro()
+		{
+			yield break;
+		}
+
+		/// <summary>
+		/// Love state
+		/// </summary>
+		protected virtual IEnumerable Love()
 		{
 			yield break;
 		}
@@ -380,7 +432,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="time"></param>
 		protected void SetAggroDelay(int time)
 		{
-			_aggroDelay = TimeSpan.FromMilliseconds(time);
+			//_aggroDelay = TimeSpan.FromMilliseconds(time);
+			Log.Warning("{0}: SetAggroDelay is obsolete.", this.GetType().Name);
 		}
 
 		/// <summary>
@@ -398,7 +451,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="type"></param>
 		protected void SetAggroType(AggroType type)
 		{
-			_aggroType = type;
+			//_aggroType = type;
+			Log.Warning("{0}: SetAggroType is obsolete, use 'Doubts' and 'HatesBattleStance' instead.", this.GetType().Name);
 		}
 
 		/// <summary>
@@ -430,12 +484,6 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Adds a race tag that the AI likes and will not target unless
 		/// provoked.
 		/// </summary>
-		/// <remarks>
-		/// By default the AI will only target hated races. Loved races are
-		/// a white-list, to filter some races out. For example, when creating
-		/// an AI that hates everybody (*), but isn't supposed to target
-		/// players (/pc/).
-		/// </remarks>
 		/// <param name="tags"></param>
 		protected void Loves(params string[] tags)
 		{
@@ -450,12 +498,48 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Adds a race tag that the AI doubts.
+		/// </summary>
+		/// <param name="tags"></param>
+		protected void Doubts(params string[] tags)
+		{
+			foreach (var tag in tags)
+			{
+				var key = tag.Trim(' ', '/');
+				if (_hateTags.ContainsKey(key))
+					return;
+
+				_doubtTags.Add(key, tag);
+			}
+		}
+
+		/// <summary>
+		/// Specifies that the AI will go from alert into aggro when enemy
+		/// changes into battle mode.
+		/// </summary>
+		protected void HatesBattleStance()
+		{
+			_hatesBattleStance = true;
+		}
+
+		/// <summary>
 		/// Sets the max distance an NPC can wander away from its spawn.
 		/// </summary>
 		/// <param name="distance"></param>
 		protected void SetMaxDistanceFromSpawn(int distance)
 		{
 			_maxDistanceFromSpawn = distance;
+		}
+
+		/// <summary>
+		/// Reigsters a reaction.
+		/// </summary>
+		/// <param name="ev">The event on which func should be executed.</param>
+		/// <param name="func">The reaction to the event.</param>
+		protected void On(AiState state, AiEvent ev, Func<IEnumerable> func)
+		{
+			lock (_reactions)
+				_reactions[state][ev] = func;
 		}
 
 		// Functions
@@ -515,6 +599,16 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Returns true if AI doubts target creature.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		protected bool DoesDoubt(Creature target)
+		{
+			return _doubtTags.Values.Any(tag => target.RaceData.HasTag(tag));
+		}
+
+		/// <summary>
 		/// Returns true if there are collisions between the two positions.
 		/// </summary>
 		/// <param name="pos1"></param>
@@ -524,6 +618,39 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			Position intersection;
 			return this.Creature.Region.Collisions.Find(pos1, pos2, out intersection);
+		}
+
+		/// <summary>
+		/// Sends SharpMind to all applicable creatures.
+		/// </summary>
+		/// <remarks>
+		/// The Wiki is speaking of a passive Sharp Mind skill, but it doesn't
+		/// seem to be a skill at all anymore.
+		/// 
+		/// TODO: Implement old Sharp Mind (optional).
+		/// 
+		/// TODO: To implement the old Sharp Mind we have to figure out how
+		///   to display a failed Sharp Mind (X). "?" is shown for skill id 0.
+		///   Older logs make use of status 3 and 4, but the current NA client
+		///   doesn't seem to react to them.
+		///   If we can't get X to work we could use ? for both.
+		/// </remarks>
+		/// <param name="skillId"></param>
+		/// <param name="status"></param>
+		protected void SharpMind(SkillId skillId, SharpMindStatus status)
+		{
+			foreach (var creature in _playersInRange)
+			{
+				if (status == SharpMindStatus.Cancelling || status == SharpMindStatus.None)
+				{
+					Send.SharpMind(this.Creature, creature, skillId, SharpMindStatus.Cancelling);
+					Send.SharpMind(this.Creature, creature, skillId, SharpMindStatus.None);
+				}
+				else
+				{
+					Send.SharpMind(this.Creature, creature, skillId, status);
+				}
+			}
 		}
 
 		// Flow control
@@ -543,6 +670,16 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="action"></param>
 		protected void SwitchAction(Func<IEnumerable> action)
 		{
+			this.ExecuteOnce(this.CancelSkill());
+
+			// Cancel rest
+			if (this.Creature.Has(CreatureStates.SitDown))
+			{
+				var restHandler = ChannelServer.Instance.SkillManager.GetHandler<Rest>(SkillId.Rest);
+				if (restHandler != null)
+					restHandler.Stop(this.Creature, this.Creature.Skills.Get(SkillId.Rest));
+			}
+
 			_curAction = action().GetEnumerator();
 		}
 
@@ -567,6 +704,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void AggroCreature(Creature creature)
 		{
 			_state = AiState.Aggro;
+			this.Clear();
 			this.Creature.IsInBattleStance = true;
 			this.Creature.Target = creature;
 			Send.SetCombatTarget(this.Creature, this.Creature.Target.EntityId, TargetMode.Aggro);
@@ -759,10 +897,14 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Creature follows its target.
 		/// </summary>
 		/// <param name="maxDistance"></param>
+		/// <param name="walk"></param>
+		/// <param name="timeout"></param>
 		/// <returns></returns>
-		protected IEnumerable Follow(int maxDistance)
+		protected IEnumerable Follow(int maxDistance, bool walk = false, int timeout = 5000)
 		{
-			while (true)
+			var until = _timestamp + Math.Max(0, timeout);
+
+			while (_timestamp < until)
 			{
 				var pos = this.Creature.GetPosition();
 				var targetPos = this.Creature.Target.GetPosition();
@@ -770,11 +912,29 @@ namespace Aura.Channel.Scripting.Scripts
 				if (!pos.InRange(targetPos, maxDistance))
 				{
 					// Walk up to distance-50 (a buffer so it really walks into range)
-					this.ExecuteOnce(this.WalkTo(pos.GetRelative(targetPos, -maxDistance + 50)));
+					this.ExecuteOnce(this.MoveTo(pos.GetRelative(targetPos, -maxDistance + 50), walk));
 				}
 
 				yield return true;
 			}
+		}
+
+		/// <summary>
+		/// Creature tries to get away from target.
+		/// </summary>
+		/// <param name="minDistance"></param>
+		/// <returns></returns>
+		protected IEnumerable KeepDistance(int minDistance, bool walk = false)
+		{
+			Position pos, targetPos;
+
+			while ((pos = this.Creature.GetPosition()).InRange((targetPos = this.Creature.Target.GetPosition()), minDistance))
+			{
+				foreach (var action in this.MoveTo(pos.GetRelative(targetPos, minDistance + 50), walk))
+					yield return action;
+			}
+
+			yield return true;
 		}
 
 		/// <summary>
@@ -790,7 +950,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Attacks target creature x times.
 		/// </summary>
 		/// <returns></returns>
-		protected IEnumerable Attack(int count)
+		protected IEnumerable Attack(int count, int timeout = 300000)
 		{
 			if (this.Creature.Target == null)
 			{
@@ -798,39 +958,47 @@ namespace Aura.Channel.Scripting.Scripts
 				yield break;
 			}
 
-			var skillId = SkillId.CombatMastery;
+			timeout = Math2.Clamp(0, 300000, timeout);
+			var timeoutDt = DateTime.Now.AddMilliseconds(timeout);
 
 			// Get skill
-			var skill = this.Creature.Skills.Get(skillId);
-			if (skill == null)
+			var skill = this.Creature.Skills.ActiveSkill;
+			if (skill == null && (skill = this.Creature.Skills.Get(SkillId.CombatMastery)) == null)
 			{
-				Log.Error("AI.Attack: Skill '{0}' not found for '{1}'.", skillId, this.Creature.Race);
+				Log.Warning("AI.Attack: Creature '{0}' doesn't have Combat Mastery.", this.Creature.Race);
 				yield break;
 			}
 
 			// Get skill handler
-			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<ICombatSkill>(skillId);
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<ICombatSkill>(skill.Info.Id);
 			if (skillHandler == null)
 			{
-				Log.Error("AI.Attack: Skill handler not found for '{0}'.", skillId);
+				Log.Error("AI.Attack: Skill handler not found for '{0}'.", skill.Info.Id);
 				yield break;
 			}
 
 			var attackRange = this.Creature.AttackRangeFor(this.Creature.Target);
 
-			// Each successful hit counts, attack until count is reached.
+			// Each successful hit counts, attack until count or timeout is reached.
 			for (int i = 0; ; )
 			{
+				// Stop timeout was reached
+				if (DateTime.Now >= timeoutDt)
+					break;
+
+				// Attack
 				var result = skillHandler.Use(this.Creature, skill, this.Creature.Target.EntityId);
 				if (result == CombatSkillResult.Okay)
 				{
+					// Stop when max attack count is reached
 					if (++i >= count)
-						yield break;
-					else
-						yield return true;
+						break;
+
+					yield return true;
 				}
 				else if (result == CombatSkillResult.OutOfRange)
 				{
+					// Run to target if out of range
 					var pos = this.Creature.GetPosition();
 					var targetPos = this.Creature.Target.GetPosition();
 
@@ -845,15 +1013,49 @@ namespace Aura.Channel.Scripting.Scripts
 					yield break;
 				}
 			}
+
+			// Handle completing of skill, if it hasn't been canceled
+			if (skill.Info.Id != SkillId.CombatMastery && this.Creature.Skills.ActiveSkill != null)
+			{
+				// Get handler
+				var completeHandler = skillHandler as ICompletable;
+				if (completeHandler == null)
+				{
+					Log.Error("AI.Attack: Missing complete handler for {0}.", skill.Info.Id);
+				}
+				else
+				{
+					// Try completing
+					try
+					{
+						completeHandler.Complete(this.Creature, skill, null);
+					}
+					catch (NullReferenceException)
+					{
+						Log.Warning("AI.Attack: Null ref exception while completing '{0}', skill might have parameters.", skill.Info.Id);
+					}
+					catch (NotImplementedException)
+					{
+						Log.Unimplemented("AI.Attack: Skill complete method for '{0}'.", skill.Info.Id);
+					}
+				}
+
+				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
+
+				// Reset active skill in any case.
+				this.Creature.Skills.ActiveSkill = null;
+				this.Creature.Skills.SkillInProgress = false;
+			}
 		}
 
 		/// <summary>
-		/// Makes creature prepare given skill. (DUMMY)
+		/// Makes creature prepare given skill.
 		/// </summary>
 		/// <param name="skillId"></param>
 		/// <returns></returns>
 		protected IEnumerable PrepareSkill(SkillId skillId)
 		{
+			// Get skill
 			var skill = this.Creature.Skills.Get(skillId);
 			if (skill == null)
 			{
@@ -861,22 +1063,209 @@ namespace Aura.Channel.Scripting.Scripts
 				yield break;
 			}
 
-			this.ExecuteOnce(this.Say(skillId.ToString()));
+			// Cancel previous skill
+			if (this.Creature.Skills.ActiveSkill != null)
+				this.ExecuteOnce(this.CancelSkill());
 
-			foreach (var action in this.Wait(skill.RankData.LoadTime))
-				yield return action;
+			// Explicit handling
+			if (skillId == SkillId.WebSpinning)
+			{
+				var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<WebSpinning>(skillId);
+				skillHandler.Prepare(this.Creature, skill, 0, null);
+				skillHandler.Complete(this.Creature, skill, null);
+			}
+			// Try to handle implicitly
+			else
+			{
+				// Get preparable handler
+				var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<IPreparable>(skillId);
+				if (skillHandler == null)
+				{
+					Log.Unimplemented("AI.PrepareSkill: Missing handler or IPreparable for '{0}'.", skillId);
+					yield break;
+				}
+
+				// Get readyable handler.
+				// TODO: There are skills that don't have ready, but go right to
+				//   use from Prepare. Handle somehow.
+				var readyHandler = skillHandler as IReadyable;
+				if (readyHandler == null)
+				{
+					Log.Unimplemented("AI.PrepareSkill: Missing IReadyable for '{0}'.", skillId);
+					yield break;
+				}
+
+				this.SharpMind(skillId, SharpMindStatus.Loading);
+
+				// Prepare skill
+				try
+				{
+					skillHandler.Prepare(this.Creature, skill, skill.RankData.LoadTime, null);
+
+					this.Creature.Skills.SkillInProgress = true; // Probably not needed for AIs?
+				}
+				catch (NullReferenceException)
+				{
+					Log.Warning("AI.PrepareSkill: Null ref exception while preparing '{0}', skill might have parameters.", skillId);
+				}
+				catch (NotImplementedException)
+				{
+					Log.Unimplemented("AI.PrepareSkill: Skill prepare method for '{0}'.", skillId);
+				}
+
+				// Wait for loading to be done
+				foreach (var action in this.Wait(skill.RankData.LoadTime))
+					yield return action;
+
+				// Call ready, in case it sets something important
+				readyHandler.Ready(this.Creature, skill, null);
+				this.SharpMind(skillId, SharpMindStatus.Loaded);
+			}
 		}
 
 		/// <summary>
-		/// Makes creature cancel currently loaded skill. (DUMMY?)
+		/// Makes creature cancel currently loaded skill.
 		/// </summary>
 		/// <returns></returns>
 		protected IEnumerable CancelSkill()
 		{
 			if (this.Creature.Skills.ActiveSkill != null)
+			{
+				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
 				this.Creature.Skills.CancelActiveSkill();
+			}
 
 			yield break;
+		}
+
+		/// <summary>
+		/// Makes creature cancel currently loaded skill.
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable CompleteSkill()
+		{
+			if (this.Creature.Skills.ActiveSkill == null)
+				yield break;
+
+			var skill = this.Creature.Skills.ActiveSkill;
+			var skillId = this.Creature.Skills.ActiveSkill.Info.Id;
+
+			this.Creature.Skills.ActiveSkill = null;
+			this.Creature.Skills.SkillInProgress = false;
+
+			this.SharpMind(skillId, SharpMindStatus.Cancelling);
+
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<ICompletable>(skillId);
+			if (skillHandler == null)
+			{
+				Log.Unimplemented("AI.CompleteSkill: Missing handler or ICompletable for '{0}'.", skillId);
+				yield break;
+			}
+
+			try
+			{
+				skillHandler.Complete(this.Creature, skill, null);
+			}
+			catch (NullReferenceException)
+			{
+				Log.Warning("AI.CompleteSkill: Null ref exception while preparing '{0}', skill might have parameters.", skillId);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("AI.CompleteSkill: Skill complete method for '{0}'.", skillId);
+			}
+		}
+
+		/// <summary>
+		/// Makes creature start given skill.
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <returns></returns>
+		protected IEnumerable StartSkill(SkillId skillId)
+		{
+			// Get skill
+			var skill = this.Creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("AI.StartSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.Race);
+				yield break;
+			}
+
+			// Get handler
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<IStartable>(skillId);
+			if (skillHandler == null)
+			{
+				Log.Unimplemented("AI.StartSkill: Missing handler or interface for '{0}'.", skillId);
+				yield break;
+			}
+
+			// Run handler
+			try
+			{
+				if (skillHandler is Rest)
+				{
+					var restHandler = (Rest)skillHandler;
+					restHandler.Start(this.Creature, skill, MabiDictionary.Empty);
+				}
+				else
+				{
+					skillHandler.Start(this.Creature, skill, null);
+				}
+			}
+			catch (NullReferenceException)
+			{
+				Log.Warning("AI.StartSkill: Null ref exception while starting '{0}', skill might have parameters.", skillId);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("AI.StartSkill: Skill start method for '{0}'.", skillId);
+			}
+		}
+
+		/// <summary>
+		/// Makes creature stop given skill.
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <returns></returns>
+		protected IEnumerable StopSkill(SkillId skillId)
+		{
+			// Get skill
+			var skill = this.Creature.Skills.Get(skillId);
+			if (skill == null)
+			{
+				Log.Warning("AI.StopSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.Race);
+				yield break;
+			}
+
+			// Get handler
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<IStoppable>(skillId);
+			if (skillHandler == null)
+			{
+				Log.Unimplemented("AI.StopSkill: Missing handler or interface for '{0}'.", skillId);
+				yield break;
+			}
+
+			// Run handler
+			try
+			{
+				if (skillHandler is Rest)
+				{
+					var restHandler = (Rest)skillHandler;
+					restHandler.Stop(this.Creature, skill, MabiDictionary.Empty);
+				}
+				else
+				{
+					skillHandler.Stop(this.Creature, skill, null);
+				}
+			}
+			catch (NullReferenceException)
+			{
+				Log.Warning("AI.StopSkill: Null ref exception while stopping '{0}', skill might have parameters.", skillId);
+			}
+			catch (NotImplementedException)
+			{
+				Log.Unimplemented("AI.StopSkill: Skill stop method for '{0}'.", skillId);
+			}
 		}
 
 		// ------------------------------------------------------------------
@@ -887,10 +1276,59 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="action"></param>
 		public virtual void OnHit(TargetAction action)
 		{
+			// Aggro attacker if there is not current target,
+			// or if there is a target but it's not a player, and the attacker is one,
+			// or if the current target is not aggroed yet.
 			if (this.Creature.Target == null || (this.Creature.Target != null && action.Attacker != null && !this.Creature.Target.IsPlayer && action.Attacker.IsPlayer) || _state != AiState.Aggro)
 			{
 				this.AggroCreature(action.Attacker);
 			}
+
+			var activeSkillWas = SkillId.None;
+
+			if (this.Creature.Skills.ActiveSkill != null)
+			{
+				activeSkillWas = this.Creature.Skills.ActiveSkill.Info.Id;
+				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
+			}
+
+			lock (_reactions)
+			{
+				if (activeSkillWas == SkillId.Defense && _reactions[_state].ContainsKey(AiEvent.DefenseHit))
+				{
+					this.SwitchAction(_reactions[_state][AiEvent.DefenseHit]);
+				}
+				else if (action.Has(TargetOptions.KnockDown) && _reactions[_state].ContainsKey(AiEvent.KnockDown))
+				{
+					this.SwitchAction(_reactions[_state][AiEvent.KnockDown]);
+				}
+				else if (_reactions[_state].ContainsKey(AiEvent.Hit))
+				{
+					this.SwitchAction(_reactions[_state][AiEvent.Hit]);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Raised from Creature.Kill when creature died,
+		/// before active skill is canceled.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="killer"></param>
+		private void OnDeath(Creature creature, Creature killer)
+		{
+			if (this.Creature.Skills.ActiveSkill != null)
+				this.SharpMind(this.Creature.Skills.ActiveSkill.Info.Id, SharpMindStatus.Cancelling);
+		}
+
+		/// <summary>
+		/// Called when the AI hit someone with a skill.
+		/// </summary>
+		/// <param name="aAction"></param>
+		public void OnUsedSkill(AttackerAction aAction)
+		{
+			if (this.Creature.Skills.ActiveSkill != null)
+				this.ExecuteOnce(this.CompleteSkill());
 		}
 
 		// ------------------------------------------------------------------
@@ -965,6 +1403,18 @@ namespace Aura.Channel.Scripting.Scripts
 			/// Aggroing target (!!)
 			/// </summary>
 			Aggro,
+
+			/// <summary>
+			/// Likes target
+			/// </summary>
+			Love,
+		}
+
+		public enum AiEvent
+		{
+			Hit,
+			DefenseHit,
+			KnockDown,
 		}
 	}
 }

@@ -8,9 +8,15 @@ public class WolfAi : AiScript
 {
 	public WolfAi()
 	{
-		SetAggroType(AggroType.CarefulAggressive);
-		Hates("/pc/", "/pet/");
-		Hates("/cattle/");
+		SetAggroRadius(650);
+		
+		Doubts("/pc/", "/pet/");
+		Doubts("/cow/");
+		Hates("/sheep/");
+		Hates("/dog/");
+		HatesBattleStance();
+		
+		On(AiState.Aggro, AiEvent.DefenseHit, OnDefenseHit);
 	}
 
 	protected override IEnumerable Idle()
@@ -57,7 +63,7 @@ public class WolfAi : AiScript
 			else if(rndnum < 60) // 40%
 			{
 				Do(PrepareSkill(SkillId.Smash));
-				Do(Attack(1));
+				Do(Attack(1, 5000));
 				Do(Wait(3000, 8000));
 			}
 			else // 40%
@@ -69,8 +75,13 @@ public class WolfAi : AiScript
 		}
 		else
 		{
-			Do(Attack(3));
-			Do(Wait(3000, 8000));
+			Do(Attack(3, 5000));
 		}
+	}
+	
+	private IEnumerable OnDefenseHit()
+	{
+		Do(Attack());
+		Do(Wait(3000));
 	}
 }

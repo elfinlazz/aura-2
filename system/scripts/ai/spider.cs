@@ -1,15 +1,14 @@
 //--- Aura Script -----------------------------------------------------------
-//  Fox AI
+//  Spider AI
 //--- Description -----------------------------------------------------------
-//  AI for foxes and fox-like creatures.
+//  AI for normal spiders.
 //---------------------------------------------------------------------------
 
-public class FoxAi : AiScript
+public class SpiderAi : AiScript
 {
-	public FoxAi()
+	public SpiderAi()
 	{
 		Doubts("/pc/", "/pet/");
-		Hates("/chicken/");
 		
 		On(AiState.Aggro, AiEvent.DefenseHit, OnDefenseHit);
 	}
@@ -17,31 +16,28 @@ public class FoxAi : AiScript
 	protected override IEnumerable Idle()
 	{
 		Do(Wander());
+		if(Random() < 25)
+			Do(PrepareSkill(SkillId.WebSpinning));
 		Do(Wait(2000, 5000));
 	}
 	
 	protected override IEnumerable Alert()
 	{
-		if(Random() < 50)
-			Do(PrepareSkill(SkillId.Defense));
-		Do(Circle(400, 1000, 5000));
-		Do(Wait(2000, 5000));
-		Do(CancelSkill());
+		Do(Follow(400, true));
 	}
 	
 	protected override IEnumerable Aggro()
 	{
 		if(Random() < 50)
+		{
 			Do(PrepareSkill(SkillId.Defense));
-		else
-			Do(Attack());
-			
-		if(Random() < 50)
 			Do(Circle(400, 1000, 5000));
+			Do(CancelSkill());
+		}
 		else
-			Do(Wait(3000));
-		
-		Do(CancelSkill());
+		{
+			Do(Attack());
+		}
 	}
 	
 	private IEnumerable OnDefenseHit()
