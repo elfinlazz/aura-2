@@ -276,6 +276,21 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends ItemExpUpdate to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		public static void ItemExpUpdate(Creature creature, Item item)
+		{
+			var packet = new Packet(Op.ItemExpUpdate, creature.EntityId);
+			packet.PutLong(item.EntityId);
+			packet.PutShort(item.OptionInfo.Experience);
+			packet.PutByte(item.OptionInfo.EP);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends DyePaletteReqR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>

@@ -20,6 +20,11 @@ namespace Aura.Channel.World.Entities
 		private const int DropRadius = 50;
 
 		/// <summary>
+		/// Maximum item experience (proficiency).
+		/// </summary>
+		private const int MaxProficiency = 101000;
+
+		/// <summary>
 		/// Unique item id that is increased for every new item.
 		/// </summary>
 		private static long _itemId = MabiId.TmpItems;
@@ -125,6 +130,43 @@ namespace Aura.Channel.World.Entities
 		public bool IsBag
 		{
 			get { return this.Data.HasTag("/pouch/bag/"); }
+		}
+
+		/// <summary>
+		/// Gets or sets item's durability, capping it at 0~DuraMax.
+		/// </summary>
+		public int Durability
+		{
+			get { return this.OptionInfo.Durability; }
+			set { this.OptionInfo.Durability = Math2.Clamp(0, this.OptionInfo.DurabilityMax, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets item's experience (proficiency), capping it at 0~100.
+		/// </summary>
+		/// <remarks>
+		/// Officially two fields are used, Experience and EP, EP being the points
+		/// and Exp the value in the parentheses. But using only one value
+		/// seems much easier. Makes it work more like Durability. This
+		/// requires some fixing for the client though.
+		/// </remarks>
+		public int Proficiency
+		{
+			get { return this.OptionInfo.Experience + this.OptionInfo.EP * 1000; }
+			set
+			{
+				var newValue = Math2.Clamp(0, MaxProficiency, value);
+				if (newValue == MaxProficiency)
+				{
+					this.OptionInfo.Experience = 1000;
+					this.OptionInfo.EP = 100;
+				}
+				else
+				{
+					this.OptionInfo.Experience = (short)(newValue % 1000);
+					this.OptionInfo.EP = (byte)(newValue / 1000);
+				}
+			}
 		}
 
 		/// <summary>
