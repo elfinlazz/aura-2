@@ -85,6 +85,16 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Gets and set the player's amount of gold,
+		/// by modifying the inventory.
+		/// </summary>
+		public int Gold
+		{
+			get { return this.Player.Inventory.Gold; }
+			set { this.Player.Inventory.Gold = value; }
+		}
+
+		/// <summary>
 		/// Initializes class
 		/// </summary>
 		protected NpcScript()

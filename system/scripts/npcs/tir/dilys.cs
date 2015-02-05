@@ -64,9 +64,9 @@ public class DilysScript : NpcScript
 					Msg("Goodness, <username/>! Are you hurt? I must treat your wounds immediately.<br/>I can't understand why everyone gets injured so much around here...<br/>The fee is 90 Gold but don't think about money right now. What's important is that you get treated.", Button("Receive Treatment", "@gethealing"), Button("Decline", "@end"));
 					if(await Select() == "@gethealing")
 					{
-						if (Player.Inventory.Gold >= 90)
+						if (Gold >= 90)
 						{
-							Player.Inventory.RemoveGold(90);
+							Gold -= 90;
 							Player.FullLifeHeal();
 							Player.Mana = Player.ManaMax;
 							Msg("Good, I've put on some bandages and your treatment is done.<br/>If you get injured again, don't hesitate to visit me.");

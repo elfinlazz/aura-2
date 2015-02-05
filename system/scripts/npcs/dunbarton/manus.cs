@@ -69,9 +69,9 @@ public class ManusScript : NpcScript
 					Msg("My, how did you manage to get hurt this badly?! We'll have to bandage it right now!<br/>Oh, but don't forget that you have to pay the fee. It's 90 Gold.", Button("Receive Treatment", "@gethealing"), Button("Decline", "@cancel"));
 					if(await Select() == "@gethealing")
 					{
-						if (Player.Inventory.Gold >= 90)
+						if (Gold >= 90)
 						{
-							Player.Inventory.RemoveGold(90);
+							Gold -= 90;
 							Player.FullLifeHeal();
 							Msg("There, how do you like my skills?! Don't be so careless with your body.");
 						}
@@ -101,13 +101,13 @@ public class ManusScript : NpcScript
 					Msg("How did you get your pet to be hurt this badly?! I'll treat it right now!<br/>By the way, it will cost you 180 Gold. Don't forget that.", Button("Recieve Treatment", "@recieveheal"), Button("Decline the Treatment", "@end"));
 					if(await Select() == "@recieveheal")
 					{
-						if (!Player.Inventory.HasGold(180))
+						if (Gold < 180)
 						{
 							Msg("Hmmm...I think you are short.<br/>I may be a generous person, but I can't do business like this... for free...");
 						}
 						else
 						{
-							Player.Inventory.RemoveGold(180);
+							Gold -= 180;
 							Player.Pet.FullLifeHeal();
 							Msg("Your pet is fixed, and ready to go! Take care of your pet as much as you'd take care of yourself.");
 						}
