@@ -145,7 +145,7 @@ namespace Aura.Channel.Util
 
 			// Parse arguments
 			var args = this.ParseLine(message);
-			var cmdName = args[0].TrimStart(ChannelServer.Instance.Conf.Commands.Prefix);
+			args[0] = args[0].TrimStart(ChannelServer.Instance.Conf.Commands.Prefix);
 
 			var sender = creature;
 			var target = creature;
@@ -166,7 +166,7 @@ namespace Aura.Channel.Util
 			}
 
 			// Get command
-			var command = this.GetCommand(cmdName);
+			var command = this.GetCommand(args[0]);
 			if (command == null)
 			{
 				// Don't send invalid command message because it'll interfere with
@@ -181,13 +181,13 @@ namespace Aura.Channel.Util
 			// Check auth
 			if ((!isCharCommand && client.Account.Authority < commandConf.Auth) || (isCharCommand && client.Account.Authority < commandConf.CharAuth))
 			{
-				Send.ServerMessage(creature, Localization.Get("You're not authorized to use '{0}'."), cmdName);
+				Send.ServerMessage(creature, Localization.Get("You're not authorized to use '{0}'."), args[0]);
 				return true;
 			}
 
 			if (isCharCommand && commandConf.CharAuth < 0)
 			{
-				Send.ServerMessage(creature, Localization.Get("Command '{0}' cannot be used on another character."), cmdName);
+				Send.ServerMessage(creature, Localization.Get("Command '{0}' cannot be used on another character."), args[0]);
 				return true;
 			}
 
