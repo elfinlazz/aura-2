@@ -30,6 +30,7 @@ namespace Aura.Channel.Util.Configuration.Files
 		public bool PerfectPlay { get; protected set; }
 
 		public bool Bagception { get; protected set; }
+		public bool NoDurabilityLoss { get; protected set; }
 
 		public TimeSpan RebirthTime { get; protected set; }
 
@@ -62,6 +63,7 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.CombatSystem = (this.GetString("combat_system", "dynamic") == "classic" ? CombatSystem.Classic : CombatSystem.Dynamic);
 
 			this.Bagception = this.GetBool("bagception", false);
+			this.NoDurabilityLoss = this.GetBool("no_durability_loss", false);
 
 			this.RebirthTime = TimeSpan.FromDays(this.GetInt("rebirth_time", 6));
 

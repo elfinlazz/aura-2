@@ -168,8 +168,11 @@ namespace Aura.Channel.Skills
 			foreach (var weapon in weapons.Where(a => a != null && a.IsTrainableWeapon))
 			{
 				// Durability
-				weapon.Durability -= rnd.Next(1, 30);
-				Send.ItemDurabilityUpdate(attacker, weapon);
+				if (!ChannelServer.Instance.Conf.World.NoDurabilityLoss)
+				{
+					weapon.Durability -= rnd.Next(1, 30);
+					Send.ItemDurabilityUpdate(attacker, weapon);
+				}
 
 				// Proficiency
 				// Only if the weapon isn't broken and the target is not "Weakest".
