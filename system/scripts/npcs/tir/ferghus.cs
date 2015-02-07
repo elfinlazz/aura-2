@@ -71,7 +71,11 @@ public class FerghusBaseScript : NpcScript
 					var result = Repair(repair, 90, "/smith_repairable/");
 					if(!result.HadGold)
 					{
-						Msg("Hmm... you can come back back later if you don't have enough money."); // Unofficial
+						RndMsg(
+							"Haha. You don't have enough Gold to repair that.",
+							"Well, you have to bring more money to have it fixed.",
+							"Do you have the Gold?"
+						);
 					}
 					else if(result.Points == 1)
 					{
@@ -86,10 +90,10 @@ public class FerghusBaseScript : NpcScript
 					}
 					else if(result.Points > 1)
 					{
-						// TODO: Use string format once we have XML dialogues.
 						if(result.Fails == 0)
-							Msg("Alright! " + result.Successes + " Points repaired!"); // Unofficial?
+							Msg("Alright! It's perfectly repaired.");
 						else
+							// TODO: Use string format once we have XML dialogues.
 							Msg("Repair is over.<br/>Unfortunately, I made " + result.Fails + " mistake(s).<br/>Only " + result.Successes + " point(s) got repaired.");
 					}
 				}
