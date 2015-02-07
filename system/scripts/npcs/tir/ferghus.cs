@@ -59,8 +59,43 @@ public class FerghusBaseScript : NpcScript
 				return;
 				
 			case "@repair":
-				Msg("If you want to have armor, kits or weapons repaired, you've come to the right place.<br/>I sometimes make mistakes, but I offer the best deal for repair work.<br/>For rare and expensive items, I think you should go to a big city. I can't guarantee anything.");
-				Msg("Unimplemented");
+				Msg("If you want to have armor, kits or weapons repaired, you've come to the right place.<br/>I sometimes make mistakes, but I offer the best deal for repair work.<br/>For rare and expensive items, I think you should go to a big city. I can't guarantee anything.<br/><repair rate='90' stringid='(*/smith_repairable/*)' />");
+				
+				while(true)
+				{
+					var repair = await Select();
+				
+					if(!repair.StartsWith("@repair"))
+						break;
+					
+					var result = Repair(repair, 90, "/smith_repairable/");
+					if(!result.HadGold)
+					{
+						Msg("Hmm... you can come back back later if you don't have enough money."); // Unofficial
+					}
+					else if(result.Points == 1)
+					{
+						if(result.Fails == 0)
+							RndMsg(
+								"Alright! 1 Point repaired!",
+								"Durability rose 1 point.",
+								"Finished 1 point repair."
+							);
+						else
+							Msg("Hmm... The repair didn't go well. Sorry...");
+					}
+					else if(result.Points > 1)
+					{
+						// TODO: Use string format once we have XML dialogues.
+						if(result.Fails == 0)
+							Msg("Alright! " + result.Successes + " Points repaired!"); // Unofficial?
+						else
+							Msg("Repair is over.<br/>Unfortunately, I made " + result.Fails + " mistake(s).<br/>Only " + result.Successes + " point(s) got repaired.");
+					}
+				}
+				
+				Msg("<repair hide='true'/>By the way, do you know you can bless your items with the Holy Water of Lymilark?<br/>I don't know why but I make fewer mistakes<br/>while repairing blessed items. Haha.");
+				Msg("Well, come again when you have items to fix.");
 				break;
 				
 			case "@upgrade":
