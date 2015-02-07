@@ -373,5 +373,232 @@ namespace Aura.Channel.World.Entities
 
 			this.OptionInfo.Flag = 1;
 		}
+
+		/// <summary>
+		/// Returns repair cost for the given rate.
+		/// </summary>
+		/// <param name="repairRate">90~100%</param>
+		/// <param name="points">Amount of points to repair, set to 0 to calculate the missing durability points.</param>
+		/// <returns></returns>
+		public int GetRepairCost(int repairRate, int points)
+		{
+			var price = 0f;
+			var rate = 1f;
+			var val = 1000000;
+
+			if (points == 0)
+				points = (int)Math.Floor((this.OptionInfo.DurabilityMax - this.OptionInfo.Durability) / 1000f);
+
+			if (this.Data.HasTag("/weapon/edged/") ||
+				this.Data.HasTag("/weapon/bow01/") ||
+				this.Data.HasTag("/weapon/axe/") ||
+				this.Data.HasTag("/weapon/bow/") ||
+				this.Data.HasTag("/weapon/blunt/") ||
+				this.Data.HasTag("/weapon/crossbow/") ||
+				this.Data.HasTag("/weapon/wood/") ||
+				this.Data.HasTag("/weapon/knuckle/") ||
+				this.Data.HasTag("/weapon/atlatl/") ||
+				this.Data.HasTag("/weapon/inverse_transmutator/") ||
+				this.Data.HasTag("/weapon/cylinder_turret/") ||
+				this.Data.HasTag("/weapon/lance/") ||
+				this.Data.HasTag("/weapon/scythe/") ||
+				this.Data.HasTag("/weapon/pillow/") ||
+				this.Data.HasTag("/weapon/handle/") ||
+				this.Data.HasTag("/weapon/dreamcatcher/") ||
+				this.Data.HasTag("/weapon/gun/")
+			)
+			{
+				switch (repairRate)
+				{
+					case 090: val = 100; rate = 0.005f; break;
+					case 091: val = 150; rate = 0.010f; break;
+					case 092: val = 200; rate = 0.015f; break;
+					case 093: val = 250; rate = 0.020f; break;
+					case 094: val = 300; rate = 0.025f; break;
+					case 095: val = 350; rate = 0.050f; break;
+					case 096: val = 400; rate = 0.070f; break;
+					case 097: val = 450; rate = 0.100f; break;
+					case 098: val = 500; rate = 0.130f; break;
+					case 099: val = 550; rate = 0.300f; break;
+					case 100: val = 700; rate = 1.000f; break;
+				}
+			}
+			else if (
+				this.Data.HasTag("/tool/") ||
+				this.Data.HasTag("/shield/") ||
+				this.Data.HasTag("/heulwen_tool/") ||
+				this.Data.HasTag("/thunderstruck_oak_staff/")
+			)
+			{
+				switch (repairRate)
+				{
+					case 090: val = 100; rate = 0.005f; break;
+					case 091: val = 150; rate = 0.010f; break;
+					case 092: val = 200; rate = 0.015f; break;
+					case 093: val = 250; rate = 0.020f; break;
+					case 094: val = 300; rate = 0.025f; break;
+					case 095: val = 350; rate = 0.030f; break;
+					case 096: val = 400; rate = 0.035f; break;
+					case 097: val = 450; rate = 0.050f; break;
+					case 098: val = 500; rate = 0.070f; break;
+					case 099: val = 550; rate = 0.100f; break;
+					case 100: val = 700; rate = 0.140f; break;
+				}
+			}
+			else if (this.Data.HasTag("/weapon/") && (this.Data.HasTag("/wand/") || this.Data.HasTag("/staff/")))
+			{
+				switch (repairRate)
+				{
+					case 090: val = 0100; rate = 0.01f; break;
+					case 091: val = 0200; rate = 0.02f; break;
+					case 092: val = 0300; rate = 0.03f; break;
+					case 093: val = 0400; rate = 0.04f; break;
+					case 094: val = 0500; rate = 0.05f; break;
+					case 095: val = 0600; rate = 0.06f; break;
+					case 096: val = 0700; rate = 0.07f; break;
+					case 097: val = 0800; rate = 0.08f; break;
+					case 098: val = 1000; rate = 0.09f; break;
+					case 099: val = 1200; rate = 0.10f; break;
+					case 100: val = 1500; rate = 0.15f; break;
+				}
+			}
+			else if (
+				this.Data.HasTag("/armor/cloth/") ||
+				this.Data.HasTag("/hand/glove/") ||
+				this.Data.HasTag("/hand/bracelet/") ||
+				this.Data.HasTag("/foot/shoes/") ||
+				this.Data.HasTag("/head/headgear/") ||
+				this.Data.HasTag("/robe/") ||
+				this.Data.HasTag("/agelimit_robe/") ||
+				this.Data.HasTag("/agelimit_cloth/") ||
+				this.Data.HasTag("/pouch/bag/") ||
+				this.Data.HasTag("/agelimit_glove/") ||
+				this.Data.HasTag("/agelimit_shoes/") ||
+				this.Data.HasTag("/wing/")
+			)
+			{
+				switch (repairRate)
+				{
+					case 090: val = 100; rate = 0.0005f; break;
+					case 091: val = 110; rate = 0.0010f; break;
+					case 092: val = 120; rate = 0.0015f; break;
+					case 093: val = 130; rate = 0.0020f; break;
+					case 094: val = 140; rate = 0.0025f; break;
+					case 095: val = 150; rate = 0.0030f; break;
+					case 096: val = 160; rate = 0.0035f; break;
+					case 097: val = 170; rate = 0.0040f; break;
+					case 098: val = 200; rate = 0.0050f; break;
+					case 099: val = 300; rate = 0.0060f; break;
+					case 100: val = 500; rate = 0.0100f; break;
+				}
+			}
+			else if (
+				this.Data.HasTag("/hand/gauntlet/") ||
+				this.Data.HasTag("/agelimit_gauntlet/")
+			)
+			{
+				switch (repairRate)
+				{
+					case 090: val = 0200; rate = 0.0010f; break;
+					case 091: val = 0300; rate = 0.0015f; break;
+					case 092: val = 0400; rate = 0.0020f; break;
+					case 093: val = 0500; rate = 0.0025f; break;
+					case 094: val = 0600; rate = 0.0030f; break;
+					case 095: val = 0700; rate = 0.0035f; break;
+					case 096: val = 0800; rate = 0.0040f; break;
+					case 097: val = 0900; rate = 0.0050f; break;
+					case 098: val = 1000; rate = 0.0070f; break;
+					case 099: val = 1500; rate = 0.0100f; break;
+					case 100: val = 2000; rate = 0.0150f; break;
+				}
+			}
+			else if (
+				this.Data.HasTag("/foot/armorboots/") ||
+				this.Data.HasTag("/head/helmet/") ||
+				this.Data.HasTag("/agelimit_armorboots/")
+			)
+			{
+				switch (repairRate)
+				{
+					case 090: val = 0400; rate = 0.0010f; break;
+					case 091: val = 0600; rate = 0.0015f; break;
+					case 092: val = 0800; rate = 0.0020f; break;
+					case 093: val = 1000; rate = 0.0025f; break;
+					case 094: val = 1500; rate = 0.0030f; break;
+					case 095: val = 2000; rate = 0.0035f; break;
+					case 096: val = 2500; rate = 0.0040f; break;
+					case 097: val = 3000; rate = 0.0060f; break;
+					case 098: val = 4000; rate = 0.0090f; break;
+					case 099: val = 5000; rate = 0.0150f; break;
+					case 100: val = 7000; rate = 0.0200f; break;
+				}
+			}
+			else if (this.Data.HasTag("/armor/lightarmor/"))
+			{
+				switch (repairRate)
+				{
+					case 090: val = 0200; rate = 0.0005f; break;
+					case 091: val = 0220; rate = 0.0010f; break;
+					case 092: val = 0240; rate = 0.0015f; break;
+					case 093: val = 0260; rate = 0.0020f; break;
+					case 094: val = 0280; rate = 0.0025f; break;
+					case 095: val = 0300; rate = 0.0030f; break;
+					case 096: val = 0320; rate = 0.0035f; break;
+					case 097: val = 0340; rate = 0.0040f; break;
+					case 098: val = 0400; rate = 0.0050f; break;
+					case 099: val = 0600; rate = 0.0060f; break;
+					case 100: val = 1000; rate = 0.0100f; break;
+				}
+			}
+			else if (this.Data.HasTag("/armor/heavyarmor/"))
+			{
+				switch (repairRate)
+				{
+					case 090: val = 0700; rate = 0.0005f; break;
+					case 091: val = 0770; rate = 0.0010f; break;
+					case 092: val = 0840; rate = 0.0015f; break;
+					case 093: val = 0910; rate = 0.0020f; break;
+					case 094: val = 0980; rate = 0.0025f; break;
+					case 095: val = 1050; rate = 0.0030f; break;
+					case 096: val = 1120; rate = 0.0035f; break;
+					case 097: val = 1190; rate = 0.0040f; break;
+					case 098: val = 1400; rate = 0.0050f; break;
+					case 099: val = 2100; rate = 0.0060f; break;
+					case 100: val = 3500; rate = 0.0100f; break;
+				}
+			}
+			else if (this.Data.HasTag("/equip/accessary/") || this.Data.HasTag("/install_instrument/"))
+			{
+				switch (repairRate)
+				{
+					case 090: val = 0100; rate = 0.150f; break;
+					case 091: val = 0200; rate = 0.152f; break;
+					case 092: val = 0300; rate = 0.154f; break;
+					case 093: val = 0400; rate = 0.156f; break;
+					case 094: val = 0500; rate = 0.158f; break;
+					case 095: val = 0600; rate = 0.160f; break;
+					case 096: val = 0700; rate = 0.165f; break;
+					case 097: val = 0800; rate = 0.170f; break;
+					case 098: val = 0900; rate = 0.200f; break;
+					case 099: val = 1000; rate = 0.250f; break;
+					case 100: val = 1500; rate = 0.300f; break;
+				}
+			}
+			else if (this.Data.HasTag("/falias_treasure/"))
+				return 30000;
+
+			price = this.OptionInfo.Price * rate;
+			price += (price <= val ? price : val);
+
+			var duraPoints = Math.Max(5, this.OptionInfo.DurabilityOriginal / 1000);
+
+			var result = (int)(5.0 / Math.Sqrt(duraPoints) * price);
+			if (result == 0)
+				result = 1;
+
+			// TODO: modifiers
+
+			return result * points;
+		}
 	}
 }

@@ -276,6 +276,34 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends ItemMaxDurabilityUpdate to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		public static void ItemMaxDurabilityUpdate(Creature creature, Item item)
+		{
+			var packet = new Packet(Op.ItemMaxDurabilityUpdate, creature.EntityId);
+			packet.PutLong(item.EntityId);
+			packet.PutInt(item.OptionInfo.DurabilityMax);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends ItemRepairResult to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		public static void ItemRepairResult(Creature creature, Item item, int successes)
+		{
+			var packet = new Packet(Op.ItemRepairResult, creature.EntityId);
+			packet.PutLong(item.EntityId);
+			packet.PutInt(successes);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends ItemExpUpdate to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>

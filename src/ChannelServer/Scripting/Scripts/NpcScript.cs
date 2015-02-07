@@ -1078,6 +1078,92 @@ namespace Aura.Channel.Scripting.Scripts
 				this.Player.Keywords.Remove(keyword);
 		}
 
+		/// <summary>
+		/// Tries to repair item specified in the repair reply.
+		/// </summary>
+		/// <param name="repairReply"></param>
+		/// <param name="rate"></param>
+		/// <param name="tags"></param>
+		/// <returns></returns>
+		public RepairResult Repair(string repairReply, int rate, params string[] tags)
+		{
+			var result = new RepairResult();
+
+			// Get item id: @repair(_all):123456789
+			int pos = -1;
+			if ((pos = repairReply.IndexOf(':')) == -1 || !long.TryParse(repairReply.Substring(pos + 1), out result.ItemEntityId))
+			{
+				Log.Warning("NpcScript.Repair: Player '{0}' (Account: {1}) sent invalid repair reply.", this.Player.EntityIdHex, this.Player.Client.Account.Id);
+				return result;
+			}
+
+			// Perfect repair?
+			var all = repairReply.StartsWith("@repair_all");
+
+			// Get item
+			result.Item = this.Player.Inventory.GetItem(result.ItemEntityId);
+			if (result.Item == null || !tags.Any(a => result.Item.Data.HasTag(a)))
+			{
+				Log.Warning("NpcScript.Repair: Player '{0}' (Account: {1}) tried to repair invalid item.", this.Player.EntityIdHex, this.Player.Client.Account.Id);
+				return result;
+			}
+
+			// Calculate points to repair
+			result.Points = (!all ? 1000 : result.Item.OptionInfo.DurabilityMax - result.Item.OptionInfo.Durability);
+			result.Points = (int)Math.Floor(result.Points / 1000f);
+
+			// Check gold
+			var cost = result.Item.GetRepairCost(rate, 1);
+			if (this.Gold < cost * result.Points)
+			{
+				result.HadGold = false;
+				return result;
+			}
+
+			// Take gold
+			result.HadGold = true;
+			this.Gold -= cost;
+
+			// TODO: Luck?
+
+			// TODO: Holy Water
+
+			// Repair x times
+			for (int i = 0; i < result.Points; ++i)
+			{
+				// Success
+				if (this.Random(100) < rate)
+				{
+					result.Item.Durability += 1000;
+					result.Successes++;
+				}
+				// Fail
+				else
+				{
+					result.Item.OptionInfo.DurabilityMax = Math.Max(1000, result.Item.OptionInfo.DurabilityMax - 1000);
+					if (result.Item.OptionInfo.DurabilityMax < result.Item.OptionInfo.Durability)
+						result.Item.Durability -= 1000;
+					result.Fails++;
+				}
+			}
+
+			// Reduce gold, but only for successes
+			this.Gold -= cost * result.Successes;
+
+			// Update max dura
+			if (result.Fails != 0)
+				Send.ItemMaxDurabilityUpdate(this.Player, result.Item);
+
+			// Update  dura
+			if (result.Successes != 0)
+				Send.ItemDurabilityUpdate(this.Player, result.Item);
+
+			// Send result
+			Send.ItemRepairResult(this.Player, result.Item, result.Successes);
+
+			return result;
+		}
+
 		// Dialog
 		// ------------------------------------------------------------------
 
@@ -1326,6 +1412,16 @@ namespace Aura.Channel.Scripting.Scripts
 		Likes,
 		ReallyLikes,
 		Love,
+	}
+
+	public struct RepairResult
+	{
+		public bool HadGold;
+		public long ItemEntityId;
+		public Item Item;
+		public int Points;
+		public int Successes;
+		public int Fails;
 	}
 
 #if __MonoCS__
