@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Linq;
 using System.Text;
 using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
@@ -15,6 +16,7 @@ using Aura.Shared.Util;
 using Aura.Channel.Scripting;
 using Aura.Channel.World.Inventory;
 using Aura.Channel.Skills.Life;
+using System.Collections.Generic;
 
 namespace Aura.Channel.World.Entities
 {
@@ -767,6 +769,77 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		/// <param name="time"></param>
 		public void OnMabiTick(ErinnTime time)
+		{
+			this.UpdateBody();
+			this.EquipmentDecay();
+		}
+
+		/// <summary>
+		/// Called regularly to reduce equipments durability.
+		/// </summary>
+		/// <remarks>
+		/// http://wiki.mabinogiworld.com/view/Durability#Per_Tick
+		/// The loss actually doesn't seem to be fixed, I've logged
+		/// varying values on NA. However, *most* of the time the
+		/// values below are used.
+		/// </remarks>
+		private void EquipmentDecay()
+		{
+			if (ChannelServer.Instance.Conf.World.NoDurabilityLoss)
+				return;
+
+			var equipment = this.Inventory.ActualEquipment.ToList();
+			var update = new List<Item>();
+			var loss = 0;
+
+			foreach (var item in equipment.Where(a => a.Durability > 0))
+			{
+				switch (item.Info.Pocket)
+				{
+					case Pocket.Head: loss = 3; break;
+					case Pocket.Armor: loss = 16; break; // 6
+					case Pocket.Shoe: loss = 14; break; // 13
+					case Pocket.Glove: loss = 10; break; // 9
+					case Pocket.Robe: loss = 10; break;
+
+					case Pocket.RightHand1:
+						if (this.Inventory.WeaponSet != WeaponSet.First)
+							continue;
+						loss = 3;
+						break;
+					case Pocket.RightHand2:
+						if (this.Inventory.WeaponSet != WeaponSet.Second)
+							continue;
+						loss = 3;
+						break;
+
+					case Pocket.LeftHand1:
+						if (this.Inventory.WeaponSet != WeaponSet.First)
+							continue;
+						loss = 6;
+						break;
+					case Pocket.LeftHand2:
+						if (this.Inventory.WeaponSet != WeaponSet.Second)
+							continue;
+						loss = 6;
+						break;
+
+					default:
+						continue;
+				}
+
+				item.Durability -= loss;
+				update.Add(item);
+			}
+
+			if (update.Count != 0)
+				Send.ItemDurabilityUpdate(this, update);
+		}
+
+		/// <summary>
+		/// Called regularly to update body, based on what the creature ate.
+		/// </summary>
+		private void UpdateBody()
 		{
 			var weight = this.Temp.WeightFoodChange;
 			var upper = this.Temp.UpperFoodChange;

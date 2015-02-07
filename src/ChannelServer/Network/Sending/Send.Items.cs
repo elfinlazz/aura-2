@@ -276,6 +276,23 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends ItemDurabilityUpdate to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		public static void ItemDurabilityUpdate(Creature creature, IList<Item> items)
+		{
+			var packet = new Packet(Op.ItemDurabilityUpdate, creature.EntityId);
+			foreach (var item in items)
+			{
+				packet.PutLong(item.EntityId);
+				packet.PutInt(item.OptionInfo.Durability);
+			}
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends ItemMaxDurabilityUpdate to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
