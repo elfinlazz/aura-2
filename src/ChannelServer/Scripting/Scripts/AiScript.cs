@@ -283,11 +283,11 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.Creature.Target == null)
 			{
 				// Get hated targets
-				var hated = potentialTargets.Where(cr => this.DoesHate(cr));
+				var hated = potentialTargets.Where(cr => this.DoesHate(cr) && !cr.Has(CreatureStates.NamedNpc));
 				var hatedCount = hated.Count();
 
 				// Get doubted targets
-				var doubted = potentialTargets.Where(cr => this.DoesDoubt(cr));
+				var doubted = potentialTargets.Where(cr => this.DoesDoubt(cr) && !cr.Has(CreatureStates.NamedNpc));
 				var doubtedCount = doubted.Count();
 
 				// Get loved targets
