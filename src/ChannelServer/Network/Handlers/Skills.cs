@@ -189,11 +189,7 @@ namespace Aura.Channel.Network.Handlers
 
 			try
 			{
-				var loadtime = ChannelServer.Instance.Conf.World.CombatSystem == Util.Configuration.Files.CombatSystem.Dynamic
-					? skill.RankData.NewLoadTime
-					: skill.RankData.LoadTime;
-
-				handler.Prepare(creature, skill, loadtime, packet);
+				handler.Prepare(creature, skill, packet);
 
 				creature.Skills.SkillInProgress = true;
 			}

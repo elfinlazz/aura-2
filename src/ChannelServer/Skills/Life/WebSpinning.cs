@@ -25,7 +25,7 @@ namespace Aura.Channel.Skills.Life
 	[Skill(SkillId.WebSpinning)]
 	public class WebSpinning : IPreparable, ICompletable, ICancelable
 	{
-		public void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
+		public void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillUse(creature, skill.Info.Id, 0);
 		}

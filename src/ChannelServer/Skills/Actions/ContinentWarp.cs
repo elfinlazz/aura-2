@@ -45,7 +45,7 @@ namespace Aura.Channel.Skills.Actions
 			Belvast = 2,
 		}
 
-		public void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
+		public void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			if (!ChannelServer.Instance.Conf.World.EnableContinentWarp)
 			{

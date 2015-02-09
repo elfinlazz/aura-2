@@ -24,10 +24,10 @@ namespace Aura.Channel.Skills.Combat
 		private const short StunTime = 3000;
 		private const int KnockbackDistance = 450;
 
-		public override void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
+		public override void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillFlashEffect(creature);
-			Send.SkillPrepare(creature, skill.Info.Id, castTime);
+			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
 			creature.Skills.ActiveSkill = skill;
 		}

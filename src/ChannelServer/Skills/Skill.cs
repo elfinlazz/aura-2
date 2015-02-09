@@ -12,6 +12,7 @@ using Aura.Data.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Mabi.Structs;
 using Aura.Shared.Util;
+using Aura.Channel.Util.Configuration.Files;
 
 namespace Aura.Channel.Skills
 {
@@ -194,6 +195,22 @@ namespace Aura.Channel.Skills
 		public bool Has(SkillFlags flags)
 		{
 			return ((this.Info.Flag & flags) != 0);
+		}
+
+		/// <summary>
+		/// Returns cast time of skill, specific for its creature.
+		/// </summary>
+		/// <returns></returns>
+		public int GetCastTime()
+		{
+			var dynamic = (ChannelServer.Instance.Conf.World.CombatSystem == CombatSystem.Dynamic);
+
+			// Characters/Dynamic
+			if (_creature.IsCharacter && dynamic)
+				return this.RankData.NewLoadTime;
+
+			// Monsters/Pets
+			return this.RankData.LoadTime;
 		}
 	}
 }

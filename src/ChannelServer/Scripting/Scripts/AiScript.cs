@@ -1071,7 +1071,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (skillId == SkillId.WebSpinning)
 			{
 				var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<WebSpinning>(skillId);
-				skillHandler.Prepare(this.Creature, skill, 0, null);
+				skillHandler.Prepare(this.Creature, skill, null);
 				skillHandler.Complete(this.Creature, skill, null);
 			}
 			// Try to handle implicitly
@@ -1100,7 +1100,7 @@ namespace Aura.Channel.Scripting.Scripts
 				// Prepare skill
 				try
 				{
-					skillHandler.Prepare(this.Creature, skill, skill.RankData.LoadTime, null);
+					skillHandler.Prepare(this.Creature, skill, null);
 
 					this.Creature.Skills.SkillInProgress = true; // Probably not needed for AIs?
 				}

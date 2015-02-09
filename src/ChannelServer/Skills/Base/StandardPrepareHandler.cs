@@ -10,7 +10,7 @@ namespace Aura.Channel.Skills.Base
 {
 	public class StandardPrepareHandler : IPreparable, IReadyable, ICompletable, ICancelable
 	{
-		public virtual void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
+		public virtual void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			throw new NotImplementedException();
 		}

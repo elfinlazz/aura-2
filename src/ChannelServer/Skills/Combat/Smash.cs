@@ -31,10 +31,10 @@ namespace Aura.Channel.Skills.Combat
 			ChannelServer.Instance.Events.CreatureAttackedByPlayer += this.OnCreatureAttackedByPlayer;
 		}
 
-		public override void Prepare(Creature creature, Skill skill, int castTime, Packet packet)
+		public override void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillFlashEffect(creature);
-			Send.SkillPrepare(creature, skill.Info.Id, castTime);
+			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
 			creature.Skills.ActiveSkill = skill;
 		}
