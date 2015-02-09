@@ -35,11 +35,6 @@ namespace Aura.Channel.World.Entities.Creatures
 		public Skill ActiveSkill { get; set; }
 
 		/// <summary>
-		/// True if a Preparable skill is currently active.
-		/// </summary>
-		public bool SkillInProgress { get { return (this.ActiveSkill != null); } }
-
-		/// <summary>
 		/// New skill manager for creature.
 		/// </summary>
 		/// <param name="creature"></param>
