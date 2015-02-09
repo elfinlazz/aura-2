@@ -26,13 +26,26 @@ namespace Aura.Channel.Skills.Combat
 	[Skill(SkillId.CombatMastery)]
 	public class CombatMastery : ICombatSkill, IInitiableSkillHandler
 	{
+		/// <summary>
+		/// Units an enemy is knocked back.
+		/// </summary>
 		private const int KnockBackDistance = 450;
 
+		/// <summary>
+		/// Subscribes skill to events needed for training.
+		/// </summary>
 		public void Init()
 		{
 			ChannelServer.Instance.Events.CreatureAttackedByPlayer += this.OnCreatureAttackedByPlayer;
 		}
 
+		/// <summary>
+		/// Handles attack.
+		/// </summary>
+		/// <param name="attacker">The creature attacking.</param>
+		/// <param name="skill">The skill being used.</param>
+		/// <param name="targetEntityId">The entity id of the target.</param>
+		/// <returns></returns>
 		public CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId)
 		{
 			if (attacker.IsStunned)

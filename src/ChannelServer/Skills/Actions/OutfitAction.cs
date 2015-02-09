@@ -16,6 +16,13 @@ namespace Aura.Channel.Skills.Actions
 	[Skill(SkillId.OutfitAction)]
 	public class OutfitAction : StartStopSkillHandler
 	{
+		/// <summary>
+		/// Starts skill.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="dict"></param>
+		/// <returns></returns>
 		public override StartStopResult Start(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			Send.Effect(creature, Effect.OutfitAction, true);
@@ -23,6 +30,13 @@ namespace Aura.Channel.Skills.Actions
 			return StartStopResult.Okay;
 		}
 
+		/// <summary>
+		/// Stop skills.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="dict"></param>
+		/// <returns></returns>
 		public override StartStopResult Stop(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			return StartStopResult.Okay;

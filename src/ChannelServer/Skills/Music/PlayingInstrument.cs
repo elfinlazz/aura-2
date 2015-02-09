@@ -25,14 +25,35 @@ namespace Aura.Channel.Skills.Music
 	[Skill(SkillId.PlayingInstrument)]
 	public class PlayingInstrument : IPreparable, ICompletable, ICancelable, IInitiableSkillHandler
 	{
-		private const int RandomScoreMin = 1, RandomScoreMax = 52;
+		/// <summary>
+		/// Minimum random score id.
+		/// </summary>
+		private const int RandomScoreMin = 1;
+
+		/// <summary>
+		/// Maximum random score id.
+		/// </summary>
+		private const int RandomScoreMax = 52;
+
+		/// <summary>
+		/// Amount of Durability used every time playing a scroll.
+		/// </summary>
 		private const int DurabilityUse = 1000;
 
+		/// <summary>
+		/// Subscribes handler to events required for training.
+		/// </summary>
 		public virtual void Init()
 		{
 			ChannelServer.Instance.Events.CreatureAttackedByPlayer += this.OnCreatureAttackedByPlayer;
 		}
 
+		/// <summary>
+		/// Prepares skill, goes straight to Use and starts playing.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			var rnd = RandomProvider.Get();
@@ -96,10 +117,14 @@ namespace Aura.Channel.Skills.Music
 			creature.Regens.Add("PlayingInstrument", Stat.Stamina, skill.RankData.StaminaActive, creature.StaminaMax);
 		}
 
+		/// <summary>
+		/// Completes skill, called when done playing the current song.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
-			creature.Skills.ActiveSkill = null;
-
 			this.Cancel(creature, skill);
 
 			creature.Skills.Callback(skill.Info.Id);
@@ -107,6 +132,11 @@ namespace Aura.Channel.Skills.Music
 			Send.SkillComplete(creature, skill.Info.Id);
 		}
 
+		/// <summary>
+		/// Cancales skill.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
 		public virtual void Cancel(Creature creature, Skill skill)
 		{
 			Send.Effect(creature, Effect.StopMusic);

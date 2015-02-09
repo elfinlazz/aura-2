@@ -18,11 +18,22 @@ namespace Aura.Channel.Skills
 {
 	public class Skill
 	{
-		public Creature _creature;
+		private Creature _creature;
 		private int _race;
 
+		/// <summary>
+		/// Information about the skill, serialized to packets.
+		/// </summary>
 		public SkillInfo Info;
+
+		/// <summary>
+		/// Data about the skill, loaded from the db.
+		/// </summary>
 		public SkillData SkillData { get; protected set; }
+
+		/// <summary>
+		/// Data about the skill's current rank, loaded from the db.
+		/// </summary>
 		public SkillRankData RankData { get; protected set; }
 
 		/// <summary>
@@ -30,6 +41,13 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public bool IsRankable { get { return (this.Info.Experience >= 100000 && this.Info.Rank < this.Info.MaxRank); } }
 
+		/// <summary>
+		/// New Skill.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="id"></param>
+		/// <param name="rank"></param>
+		/// <param name="race"></param>
 		public Skill(Creature creature, SkillId id, SkillRank rank, int race)
 		{
 			_creature = creature;

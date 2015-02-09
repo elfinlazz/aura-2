@@ -25,18 +25,44 @@ namespace Aura.Channel.Skills.Life
 	[Skill(SkillId.WebSpinning)]
 	public class WebSpinning : IPreparable, ICompletable, ICancelable
 	{
+		/// <summary>
+		/// Id of the item to be dropped.
+		/// </summary>
+		private const int ItemId = 60008;
+
+		/// <summary>
+		/// Prepares skill, goes straight to use to skip readying and using it.
+		/// </summary>
+		/// <remarks>
+		/// The client will take a moment to send the Complete packet,
+		/// as if it would cast the skill first.
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillUse(creature, skill.Info.Id, 0);
 		}
 
+		/// <summary>
+		/// Cancels skill (do nothing).
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
 		public void Cancel(Creature creature, Skill skill)
 		{
 		}
 
+		/// <summary>
+		/// Completes skill, dropping a cobweb.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
-			var cobweb = new Item(60008);
+			var cobweb = new Item(ItemId);
 			cobweb.Drop(creature.Region, creature.GetPosition().GetRandomInRange(200, RandomProvider.Get()));
 
 			Send.SkillComplete(creature, skill.Info.Id);

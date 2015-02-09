@@ -21,14 +21,30 @@ namespace Aura.Channel.Skills.Combat
 	[Skill(SkillId.Defense)]
 	public class Defense : StandardPrepareHandler, IInitiableSkillHandler
 	{
+		/// <summary>
+		/// Stuntime in ms for the attacker.
+		/// </summary>
 		private const int DefenseAttackerStun = 2500;
+
+		/// <summary>
+		/// Stuntime in ms for the target.
+		/// </summary>
 		private const int DefenseTargetStun = 1000;
 
+		/// <summary>
+		/// Subscribes the handler to events required for training.
+		/// </summary>
 		public void Init()
 		{
 			ChannelServer.Instance.Events.CreatureAttack += this.OnCreatureAttack;
 		}
 
+		/// <summary>
+		/// Prepares the skill, called to start casting.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public override void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillFlashEffect(creature);
@@ -37,6 +53,12 @@ namespace Aura.Channel.Skills.Combat
 			creature.Skills.ActiveSkill = skill;
 		}
 
+		/// <summary>
+		/// Readies the skill, called when casting is done.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public override void Ready(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillReady(creature, skill.Info.Id);

@@ -27,6 +27,12 @@ namespace Aura.Channel.Skills.Hidden
 	[Skill(SkillId.Dye)]
 	public class Dye : IPreparable, IUseable, ICompletable, ICancelable
 	{
+		/// <summary>
+		/// Prepares skill, goes straight to being ready.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			var itemEntityId = packet.GetLong();
@@ -46,6 +52,12 @@ namespace Aura.Channel.Skills.Hidden
 			Send.SkillReadyDye(creature, skill.Info.Id, itemEntityId, dyeEntityId);
 		}
 
+		/// <summary>
+		/// Handles usage of the skill, called once a part was selected.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Use(Creature creature, Skill skill, Packet packet)
 		{
 			var part = packet.GetInt();
@@ -56,6 +68,13 @@ namespace Aura.Channel.Skills.Hidden
 				this.UseFixed(creature, skill, packet, part);
 		}
 
+		/// <summary>
+		/// Handles usage of the skill if it's a regular dye.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
+		/// <param name="part"></param>
 		private void UseRegular(Creature creature, Skill skill, Packet packet, int part)
 		{
 			var x = packet.GetShort();
@@ -64,6 +83,13 @@ namespace Aura.Channel.Skills.Hidden
 			Send.SkillUseDye(creature, skill.Info.Id, part, x, y);
 		}
 
+		/// <summary>
+		/// Handles usage of the skill if it's a fixed dye.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
+		/// <param name="part"></param>
 		private void UseFixed(Creature creature, Skill skill, Packet packet, int part)
 		{
 			var unk = packet.GetByte();
@@ -71,6 +97,12 @@ namespace Aura.Channel.Skills.Hidden
 			Send.SkillUseDye(creature, skill.Info.Id, part, unk);
 		}
 
+		/// <summary>
+		/// Completes skill usage, called once the dyeing is completed.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
 			var part = packet.GetInt();
@@ -86,6 +118,13 @@ namespace Aura.Channel.Skills.Hidden
 				this.CompleteFixed(creature, packet, skill, part);
 		}
 
+		/// <summary>
+		/// Completes skill usage if it was a regular dye.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="packet"></param>
+		/// <param name="skill"></param>
+		/// <param name="part"></param>
 		private void CompleteRegular(Creature creature, Packet packet, Skill skill, int part)
 		{
 			var x = packet.GetShort();
@@ -97,6 +136,13 @@ namespace Aura.Channel.Skills.Hidden
 			Send.SkillCompleteDye(creature, skill.Info.Id, part);
 		}
 
+		/// <summary>
+		/// Completes skill usage if it was a fixed dye.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="packet"></param>
+		/// <param name="skill"></param>
+		/// <param name="part"></param>
 		private void CompleteFixed(Creature creature, Packet packet, Skill skill, int part)
 		{
 			// Older logs seem to have an additional byte (like Use?)
@@ -134,6 +180,11 @@ namespace Aura.Channel.Skills.Hidden
 			Send.Effect(creature, 2, (byte)4);
 		}
 
+		/// <summary>
+		/// Called when canceling the skill (do nothing).
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
 		public void Cancel(Creature creature, Skill skill)
 		{
 		}

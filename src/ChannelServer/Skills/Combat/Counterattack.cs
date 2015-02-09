@@ -21,9 +21,23 @@ namespace Aura.Channel.Skills.Combat
 	[Skill(SkillId.Counterattack)]
 	public class Counterattack : StandardPrepareHandler
 	{
+		/// <summary>
+		/// Time in milliseconds that attacker and creature are stunned for
+		/// after use.
+		/// </summary>
 		private const short StunTime = 3000;
+
+		/// <summary>
+		/// Units the enemy is knocked back.
+		/// </summary>
 		private const int KnockbackDistance = 450;
 
+		/// <summary>
+		/// Handles skill preparation.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public override void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillFlashEffect(creature);
@@ -32,6 +46,12 @@ namespace Aura.Channel.Skills.Combat
 			creature.Skills.ActiveSkill = skill;
 		}
 
+		/// <summary>
+		/// Handles redying the skill, called when finishing casting it.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public override void Ready(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillReady(creature, skill.Info.Id);
@@ -58,6 +78,11 @@ namespace Aura.Channel.Skills.Combat
 			return true;
 		}
 
+		/// <summary>
+		/// Handles usage of the skill.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="target"></param>
 		public void Use(Creature attacker, Creature target)
 		{
 			var skill = attacker.Skills.Get(SkillId.Counterattack);
@@ -104,6 +129,11 @@ namespace Aura.Channel.Skills.Combat
 			cap.Handle();
 		}
 
+		/// <summary>
+		/// Trains the skill for attacker and target, based on what happened.
+		/// </summary>
+		/// <param name="aAction"></param>
+		/// <param name="tAction"></param>
 		public void Training(AttackerAction aAction, TargetAction tAction)
 		{
 			var attackerSkill = aAction.Creature.Skills.Get(SkillId.Counterattack);

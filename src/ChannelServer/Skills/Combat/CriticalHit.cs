@@ -16,11 +16,18 @@ namespace Aura.Channel.Skills.Combat
 	[Skill(SkillId.CriticalHit)]
 	public class CriticalHit : ISkillHandler, IInitiableSkillHandler
 	{
+		/// <summary>
+		/// Subscribes handler to required events.
+		/// </summary>
 		public void Init()
 		{
 			ChannelServer.Instance.Events.CreatureAttack += this.OnCreatureAttack;
 		}
 
+		/// <summary>
+		/// Handles training based on what happened in the combat action.
+		/// </summary>
+		/// <param name="tAction"></param>
 		private void OnCreatureAttack(TargetAction tAction)
 		{
 			if (!tAction.Has(TargetOptions.Critical))

@@ -21,16 +21,41 @@ namespace Aura.Channel.Skills.Combat
 	[Skill(SkillId.Smash)]
 	public class Smash : CombatSkillHandler, IInitiableSkillHandler
 	{
+		/// <summary>
+		/// Stuntime in ms for attacker and target.
+		/// </summary>
 		private const int StunTime = 3000;
+
+		/// <summary>
+		/// Stuntime in ms after usage...?
+		/// (Really? Then what's that ^?)
+		/// </summary>
 		private const int AfterUseStun = 600;
+
+		/// <summary>
+		/// Amount added to the Knockback meter.
+		/// </summary>
 		private const float Knockback = 120;
+
+		/// <summary>
+		/// Units the enemy is knocked back.
+		/// </summary>
 		private const int KnockbackDistance = 450;
 
+		/// <summary>
+		/// Subscribes handlers to events required for training.
+		/// </summary>
 		public void Init()
 		{
 			ChannelServer.Instance.Events.CreatureAttackedByPlayer += this.OnCreatureAttackedByPlayer;
 		}
 
+		/// <summary>
+		/// Prepares skill, called to start casting it.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public override void Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillFlashEffect(creature);
@@ -39,16 +64,35 @@ namespace Aura.Channel.Skills.Combat
 			creature.Skills.ActiveSkill = skill;
 		}
 
+		/// <summary>
+		/// Readies skill, called when casting is done.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public override void Ready(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillReady(creature, skill.Info.Id);
 		}
 
+		/// <summary>
+		/// Completes skill usage, called after it was used successfully.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public override void Complete(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillComplete(creature, skill.Info.Id);
 		}
 
+		/// <summary>
+		/// Handles skill usage.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skill"></param>
+		/// <param name="targetEntityId"></param>
+		/// <returns></returns>
 		public override CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId)
 		{
 			// Check target
@@ -123,6 +167,12 @@ namespace Aura.Channel.Skills.Combat
 			return CombatSkillResult.Okay;
 		}
 
+		/// <summary>
+		/// Returns the raw damage to be done.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skill"></param>
+		/// <returns></returns>
 		protected float GetDamage(Creature attacker, Skill skill)
 		{
 			var result = attacker.GetRndTotalDamage();
@@ -135,6 +185,13 @@ namespace Aura.Channel.Skills.Combat
 			return result;
 		}
 
+		/// <summary>
+		/// Returns the chance for a critical hit to happen.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="target"></param>
+		/// <param name="skill"></param>
+		/// <returns></returns>
 		protected float GetCritChance(Creature attacker, Creature target, Skill skill)
 		{
 			var result = attacker.GetCritChanceFor(target);

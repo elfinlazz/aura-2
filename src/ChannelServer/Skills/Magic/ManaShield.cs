@@ -22,6 +22,13 @@ namespace Aura.Channel.Skills.Magic
 	[Skill(SkillId.ManaShield)]
 	public class ManaShield : StartStopSkillHandler
 	{
+		/// <summary>
+		/// Starts the skill.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="dict"></param>
+		/// <returns></returns>
 		public override StartStopResult Start(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			creature.Conditions.Activate(ConditionsA.ManaShield);
@@ -32,6 +39,13 @@ namespace Aura.Channel.Skills.Magic
 			return StartStopResult.Okay;
 		}
 
+		/// <summary>
+		/// Stops the skill.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="dict"></param>
+		/// <returns></returns>
 		public override StartStopResult Stop(Creature creature, Skill skill, MabiDictionary dict)
 		{
 			creature.Conditions.Deactivate(ConditionsA.ManaShield);
