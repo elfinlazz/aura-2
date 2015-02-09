@@ -41,6 +41,23 @@ namespace Aura.Channel.Skills.Combat
 				skill.Train(1); // Use Counterattack.
 		}
 
+		/// <summary>
+		/// Returns true if target has counter active and used it.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="attacker"></param>
+		/// <returns></returns>
+		public static bool Handle(Creature target, Creature attacker)
+		{
+			if (!target.Skills.IsActive(SkillId.Counterattack))
+				return false;
+
+			var handler = ChannelServer.Instance.SkillManager.GetHandler<Counterattack>(SkillId.Counterattack);
+			handler.Use(target, attacker);
+
+			return true;
+		}
+
 		public void Use(Creature attacker, Creature target)
 		{
 			var skill = attacker.Skills.Get(SkillId.Counterattack);
@@ -58,7 +75,7 @@ namespace Aura.Channel.Skills.Combat
 				(attacker.GetRndTotalDamage() * (skill.RankData.Var2 / 100f)) +
 				(target.GetRndTotalDamage() * (skill.RankData.Var1 / 100f));
 
-			SkillHelper.HandleCritical(attacker, (target.GetCritChanceFor(attacker) + skill.RankData.Var3), ref damage, tAction, true);
+			CriticalHit.Handle(attacker, (target.GetCritChanceFor(attacker) + skill.RankData.Var3), ref damage, tAction, true);
 			SkillHelper.HandleDefenseProtection(target, ref damage, true, true);
 
 			target.TakeDamage(tAction.Damage = damage, attacker);

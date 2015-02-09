@@ -21,6 +21,9 @@ namespace Aura.Channel.Skills.Combat
 	[Skill(SkillId.Defense)]
 	public class Defense : StandardPrepareHandler, IInitiableSkillHandler
 	{
+		private const int DefenseAttackerStun = 2500;
+		private const int DefenseTargetStun = 1000;
+
 		public void Init()
 		{
 			ChannelServer.Instance.Events.CreatureAttack += this.OnCreatureAttack;
@@ -41,6 +44,36 @@ namespace Aura.Channel.Skills.Combat
 			// Training
 			if (skill.Info.Rank == SkillRank.RF)
 				skill.Train(1); // Use the Defense skill.
+		}
+
+		/// <summary>
+		/// Checks if target has Defense skill activated and makes the necessary
+		/// changes to the actions, stun times, and damage.
+		/// </summary>
+		/// <param name="aAction"></param>
+		/// <param name="tAction"></param>
+		/// <param name="damage"></param>
+		/// <returns></returns>
+		public static bool Handle(AttackerAction aAction, TargetAction tAction, ref float damage)
+		{
+			// Defense
+			if (!tAction.Creature.Skills.IsActive(SkillId.Defense))
+				return false;
+
+			// Update actions
+			tAction.Type = CombatActionType.Defended;
+			tAction.SkillId = SkillId.Defense;
+			tAction.Creature.Stun = tAction.Stun = DefenseTargetStun;
+			aAction.Creature.Stun = aAction.Stun = DefenseAttackerStun;
+
+			// Reduce damage
+			var defenseSkill = tAction.Creature.Skills.Get(SkillId.Defense);
+			if (defenseSkill != null)
+				damage -= defenseSkill.RankData.Var3;
+
+			Send.SkillUseStun(tAction.Creature, SkillId.Defense, 1000, 0);
+
+			return true;
 		}
 
 		/// <summary>

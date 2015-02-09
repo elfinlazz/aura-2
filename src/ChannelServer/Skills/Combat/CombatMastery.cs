@@ -13,6 +13,7 @@ using Aura.Data.Database;
 using Aura.Channel.World;
 using Aura.Channel.Skills.Life;
 using Aura.Shared.Mabi;
+using Aura.Channel.Skills.Magic;
 
 namespace Aura.Channel.Skills.Combat
 {
@@ -48,7 +49,7 @@ namespace Aura.Channel.Skills.Combat
 			var targetPosition = target.StopMove();
 
 			// Counter
-			if (SkillHelper.HandleCounter(target, attacker))
+			if (Counterattack.Handle(target, attacker))
 				return CombatSkillResult.Okay;
 
 			var rightWeapon = attacker.Inventory.RightHand;
@@ -80,16 +81,16 @@ namespace Aura.Channel.Skills.Combat
 				var damage = attacker.GetRndDamage(weapon);
 
 				// Critical Hit
-				SkillHelper.HandleCritical(attacker, attacker.GetCritChanceFor(target), ref damage, tAction);
+				CriticalHit.Handle(attacker, attacker.GetCritChanceFor(target), ref damage, tAction);
 
 				// Subtract target def/prot
 				SkillHelper.HandleDefenseProtection(target, ref damage);
 
 				// Defense
-				SkillHelper.HandleDefense(aAction, tAction, ref damage);
+				Defense.Handle(aAction, tAction, ref damage);
 
 				// Mana Shield
-				SkillHelper.HandleManaShield(target, ref damage, tAction);
+				ManaShield.Handle(target, ref damage, tAction);
 
 				// Deal with it!
 				if (damage > 0)

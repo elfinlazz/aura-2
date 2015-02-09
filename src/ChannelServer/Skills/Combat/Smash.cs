@@ -3,6 +3,7 @@
 
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills.Base;
+using Aura.Channel.Skills.Magic;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Data.Database;
@@ -65,7 +66,7 @@ namespace Aura.Channel.Skills.Combat
 			target.StopMove();
 
 			// Counter
-			if (SkillHelper.HandleCounter(target, attacker))
+			if (Counterattack.Handle(target, attacker))
 				return CombatSkillResult.Okay;
 
 			// Prepare combat actions
@@ -82,13 +83,13 @@ namespace Aura.Channel.Skills.Combat
 			var critChance = this.GetCritChance(attacker, target, skill);
 
 			// Critical Hit
-			SkillHelper.HandleCritical(attacker, critChance, ref damage, tAction);
+			CriticalHit.Handle(attacker, critChance, ref damage, tAction);
 
 			// Subtract target def/prot
 			SkillHelper.HandleDefenseProtection(target, ref damage);
 
 			// Mana Shield
-			SkillHelper.HandleManaShield(target, ref damage, tAction);
+			ManaShield.Handle(target, ref damage, tAction);
 
 			// Apply damage
 			target.TakeDamage(tAction.Damage = damage, attacker);
