@@ -42,6 +42,11 @@ namespace Aura.Channel.Skills
 		public SkillState State { get; set; }
 
 		/// <summary>
+		/// Holds time at which the skill is fully loaded.
+		/// </summary>
+		public DateTime CastEnd { get; set; }
+
+		/// <summary>
 		/// Returns true if skill has enough experience and is below max rank.
 		/// </summary>
 		public bool IsRankable { get { return (this.Info.Experience >= 100000 && this.Info.Rank < this.Info.MaxRank); } }

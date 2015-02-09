@@ -198,6 +198,7 @@ namespace Aura.Channel.Network.Handlers
 
 				creature.Skills.ActiveSkill = skill;
 				skill.State = SkillState.Prepared;
+				skill.CastEnd = DateTime.Now.AddMilliseconds(skill.GetCastTime());
 			}
 			catch (NotImplementedException)
 			{
@@ -237,6 +238,16 @@ namespace Aura.Channel.Network.Handlers
 			{
 				Log.Error("SkillReady: Skill '{0}' wasn't prepared first.", skillId);
 				Send.ServerMessage(creature, Localization.Get("Error: Skill wasn't prepared."));
+				// Cancel?
+				return;
+			}
+
+			// Check if cast is over
+			if (skill.CastEnd > DateTime.Now)
+			{
+				// Only an error for now, unsure if this could happen accidentally.
+				Log.Error("SkillReady: Skill '{0}' wasn't fully casted yet.", skillId);
+				Send.ServerMessage(creature, Localization.Get("Error: Skill wasn't fully casted yet."));
 				// Cancel?
 				return;
 			}
