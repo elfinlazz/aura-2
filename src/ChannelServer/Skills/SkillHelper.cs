@@ -71,11 +71,11 @@ namespace Aura.Channel.Skills
 		/// <param name="critChance"></param>
 		/// <param name="damage"></param>
 		/// <param name="tAction"></param>
-		public static void HandleCritical(Creature attacker, float critChance, ref float damage, TargetAction tAction)
+		public static void HandleCritical(Creature attacker, float critChance, ref float damage, TargetAction tAction, bool bypassNoviceCheck = false)
 		{
 			// Check if attacker actually has critical hit
 			var critSkill = attacker.Skills.Get(SkillId.CriticalHit);
-			if (critSkill == null)
+			if (critSkill == null || (critSkill.Info.Rank == SkillRank.Novice && !bypassNoviceCheck))
 				return;
 
 			// Does the crit happen?

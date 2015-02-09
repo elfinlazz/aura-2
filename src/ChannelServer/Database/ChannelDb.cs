@@ -562,6 +562,8 @@ namespace Aura.Channel.Database
 			// hidden ones for now
 			// TODO: Move to race skill db.
 			character.Skills.Add(SkillId.CombatMastery, SkillRank.RF, character.Race);
+			// According to the Wiki you get Crit upon advancing CM to RF, should CM be Novice?
+			character.Skills.Add(SkillId.CriticalHit, SkillRank.Novice, character.Race);
 			if (character is Character)
 			{
 				character.Skills.Add(SkillId.HiddenEnchant, SkillRank.Novice, character.Race);
