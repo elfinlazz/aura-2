@@ -344,6 +344,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		L_Cancel:
 			Send.SkillCancel(_creature);
 
+			this.ActiveSkill.State = SkillState.Canceled;
 			this.ActiveSkill = null;
 		}
 
@@ -411,6 +412,16 @@ namespace Aura.Channel.World.Entities.Creatures
 		public bool IsActive(SkillId skillId)
 		{
 			return (this.ActiveSkill != null && this.ActiveSkill.Info.Id == skillId);
+		}
+
+		/// <summary>
+		/// Returns true if the specified skill is active and on state "Ready".
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <returns></returns>
+		public bool IsReady(SkillId skillId)
+		{
+			return (this.IsActive(skillId) && this.ActiveSkill.State == SkillState.Ready);
 		}
 	}
 }

@@ -71,7 +71,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <returns></returns>
 		public static bool Handle(Creature target, Creature attacker)
 		{
-			if (!target.Skills.IsActive(SkillId.Counterattack))
+			if (!target.Skills.IsReady(SkillId.Counterattack))
 				return false;
 
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<Counterattack>(SkillId.Counterattack);
@@ -92,7 +92,7 @@ namespace Aura.Channel.Skills.Combat
 			var aAction = new AttackerAction(CombatActionType.RangeHit, attacker, SkillId.Counterattack, target.EntityId);
 			aAction.Options |= AttackerOptions.Result | AttackerOptions.KnockBackHit2;
 
-			var tAction = new TargetAction(CombatActionType.CounteredHit2, target, attacker, target.Skills.IsActive(SkillId.Smash) ? SkillId.Smash : SkillId.CombatMastery);
+			var tAction = new TargetAction(CombatActionType.CounteredHit2, target, attacker, target.Skills.IsReady(SkillId.Smash) ? SkillId.Smash : SkillId.CombatMastery);
 			tAction.Options |= TargetOptions.Result | TargetOptions.Smash;
 
 			var cap = new CombatActionPack(attacker, skill.Info.Id);

@@ -11,6 +11,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.Skills.Base;
+using Aura.Channel.Skills;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -175,6 +176,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			var skill = creature.Skills.GetSafe(skillId);
+			skill.State = SkillState.None;
 
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<IPreparable>(skillId);
 			if (handler == null)
@@ -195,6 +197,7 @@ namespace Aura.Channel.Network.Handlers
 				}
 
 				creature.Skills.ActiveSkill = skill;
+				skill.State = SkillState.Prepared;
 			}
 			catch (NotImplementedException)
 			{
@@ -229,11 +232,22 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Can only ready prepared skills
+			if (skill.State != SkillState.Prepared)
+			{
+				Log.Error("SkillReady: Skill '{0}' wasn't prepared first.", skillId);
+				Send.ServerMessage(creature, Localization.Get("Error: Skill wasn't prepared."));
+				// Cancel?
+				return;
+			}
+
 			try
 			{
 				var success = handler.Ready(creature, skill, packet);
 				if (!success)
 					return;
+
+				skill.State = SkillState.Ready;
 			}
 			catch (NotImplementedException)
 			{
@@ -271,9 +285,19 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Can only use ready skills
+			if (skill.State != SkillState.Ready)
+			{
+				Log.Error("SkillUse: Skill '{0}' wasn't readied first.", skillId);
+				Send.ServerMessage(creature, Localization.Get("Error: Skill wasn't ready."));
+				Send.SkillUseSilentCancel(creature);
+				return;
+			}
+
 			try
 			{
 				handler.Use(creature, skill, packet);
+				skill.State = SkillState.Used;
 			}
 			catch (NotImplementedException)
 			{
@@ -325,6 +349,7 @@ namespace Aura.Channel.Network.Handlers
 		L_End:
 			// Always set active skill to null after complete.
 			creature.Skills.ActiveSkill = null;
+			skill.State = SkillState.Completed;
 		}
 
 		/// <summary>

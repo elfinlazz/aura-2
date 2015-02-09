@@ -37,6 +37,11 @@ namespace Aura.Channel.Skills
 		public SkillRankData RankData { get; protected set; }
 
 		/// <summary>
+		/// The skills current state.
+		/// </summary>
+		public SkillState State { get; set; }
+
+		/// <summary>
 		/// Returns true if skill has enough experience and is below max rank.
 		/// </summary>
 		public bool IsRankable { get { return (this.Info.Experience >= 100000 && this.Info.Rank < this.Info.MaxRank); } }
@@ -230,5 +235,18 @@ namespace Aura.Channel.Skills
 			// Monsters/Pets
 			return this.RankData.LoadTime;
 		}
+	}
+
+	/// <summary>
+	/// Current state of a skill.
+	/// </summary>
+	public enum SkillState
+	{
+		None,
+		Prepared,
+		Ready,
+		Used,
+		Completed,
+		Canceled,
 	}
 }

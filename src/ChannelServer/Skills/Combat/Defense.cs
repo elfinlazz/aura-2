@@ -81,7 +81,7 @@ namespace Aura.Channel.Skills.Combat
 		public static bool Handle(AttackerAction aAction, TargetAction tAction, ref float damage)
 		{
 			// Defense
-			if (!tAction.Creature.Skills.IsActive(SkillId.Defense))
+			if (!tAction.Creature.Skills.IsReady(SkillId.Defense))
 				return false;
 
 			// Update actions
@@ -107,7 +107,7 @@ namespace Aura.Channel.Skills.Combat
 		public void OnCreatureAttack(TargetAction tAction)
 		{
 			// We're only interested in hits on creatures using Defense
-			if (!tAction.Creature.Skills.IsActive(SkillId.Defense))
+			if (!tAction.Creature.Skills.IsReady(SkillId.Defense))
 				return;
 
 			// Did the target successfully defend itself?

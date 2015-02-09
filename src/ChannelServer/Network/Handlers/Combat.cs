@@ -137,10 +137,21 @@ namespace Aura.Channel.Network.Handlers
 			try
 			{
 				var result = handler.Use(creature, skill, targetEntityId);
-				if (result == CombatSkillResult.OutOfRange)
+
+				if (result == CombatSkillResult.Okay)
+				{
+					Send.CombatAttackR(creature, true);
+					skill.State = SkillState.Used;
+				}
+				else if (result == CombatSkillResult.OutOfRange)
+				{
 					Send.CombatAttackR(creature, target);
+				}
 				else
-					Send.CombatAttackR(creature, result == CombatSkillResult.Okay);
+				{
+					Send.CombatAttackR(creature, false);
+				}
+
 				return;
 			}
 			catch (NotImplementedException)
