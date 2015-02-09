@@ -48,6 +48,7 @@ namespace Aura.Channel.Skills.Hidden
 			creature.Temp.SkillItem2 = dye;
 
 			Send.SkillReadyDye(creature, skill.Info.Id, itemEntityId, dyeEntityId);
+			skill.State = SkillState.Ready;
 
 			return true;
 		}

@@ -43,6 +43,7 @@ namespace Aura.Channel.Skills.Life
 		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillUse(creature, skill.Info.Id, 0);
+			skill.State = SkillState.Used;
 
 			return true;
 		}

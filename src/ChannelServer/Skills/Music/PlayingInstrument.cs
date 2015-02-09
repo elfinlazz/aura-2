@@ -103,6 +103,7 @@ namespace Aura.Channel.Skills.Music
 			Send.PlayEffect(creature, instrumentType, effectQuality, mml, rndScore);
 			this.OnPlay(creature, skill, quality);
 			Send.SkillUsePlayingInstrument(creature, skill.Info.Id, instrumentType, mml, rndScore);
+			skill.State = SkillState.Used;
 
 			creature.Skills.Callback(skill.Info.Id, () =>
 			{

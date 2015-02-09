@@ -84,6 +84,7 @@ namespace Aura.Channel.Skills.Music
 
 			// Finish
 			Send.SkillUseEntity(creature, skill.Info.Id, scrollId);
+			skill.State = SkillState.Used;
 			return true;
 
 		L_Fail:

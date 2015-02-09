@@ -63,6 +63,7 @@ namespace Aura.Channel.Skills.Actions
 			}
 
 			Send.SkillReady(creature, skill.Info.Id);
+			skill.State = SkillState.Ready;
 
 			return true;
 		}
