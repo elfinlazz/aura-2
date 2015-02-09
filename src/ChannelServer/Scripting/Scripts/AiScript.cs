@@ -1044,7 +1044,6 @@ namespace Aura.Channel.Scripting.Scripts
 
 				// Reset active skill in any case.
 				this.Creature.Skills.ActiveSkill = null;
-				this.Creature.Skills.SkillInProgress = false;
 			}
 		}
 
@@ -1101,8 +1100,6 @@ namespace Aura.Channel.Scripting.Scripts
 				try
 				{
 					skillHandler.Prepare(this.Creature, skill, null);
-
-					this.Creature.Skills.SkillInProgress = true; // Probably not needed for AIs?
 				}
 				catch (NullReferenceException)
 				{
@@ -1151,7 +1148,6 @@ namespace Aura.Channel.Scripting.Scripts
 			var skillId = this.Creature.Skills.ActiveSkill.Info.Id;
 
 			this.Creature.Skills.ActiveSkill = null;
-			this.Creature.Skills.SkillInProgress = false;
 
 			this.SharpMind(skillId, SharpMindStatus.Cancelling);
 

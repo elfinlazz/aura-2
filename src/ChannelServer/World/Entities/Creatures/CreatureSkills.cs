@@ -37,7 +37,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <summary>
 		/// True if a Preparable skill is currently active.
 		/// </summary>
-		public bool SkillInProgress { get; set; }
+		public bool SkillInProgress { get { return (this.ActiveSkill != null); } }
 
 		/// <summary>
 		/// New skill manager for creature.
@@ -350,7 +350,6 @@ namespace Aura.Channel.World.Entities.Creatures
 			Send.SkillCancel(_creature);
 
 			this.ActiveSkill = null;
-			this.SkillInProgress = false;
 		}
 
 		/// <summary>
