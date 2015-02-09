@@ -34,7 +34,7 @@ namespace Aura.Channel.Skills.Base
 	/// </summary>
 	public interface IPreparable : ISkillHandler
 	{
-		void Prepare(Creature creature, Skill skill, Packet packet);
+		bool Prepare(Creature creature, Skill skill, Packet packet);
 	}
 
 	/// <summary>
@@ -42,7 +42,7 @@ namespace Aura.Channel.Skills.Base
 	/// </summary>
 	public interface IReadyable : ISkillHandler
 	{
-		void Ready(Creature creature, Skill skill, Packet packet);
+		bool Ready(Creature creature, Skill skill, Packet packet);
 	}
 
 	/// <summary>

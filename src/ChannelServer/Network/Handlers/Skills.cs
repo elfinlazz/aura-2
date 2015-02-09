@@ -187,7 +187,14 @@ namespace Aura.Channel.Network.Handlers
 
 			try
 			{
-				handler.Prepare(creature, skill, packet);
+				var success = handler.Prepare(creature, skill, packet);
+				if (!success)
+				{
+					Send.SkillPrepareSilentCancel(creature, skillId);
+					return;
+				}
+
+				creature.Skills.ActiveSkill = skill;
 			}
 			catch (NotImplementedException)
 			{
@@ -224,7 +231,9 @@ namespace Aura.Channel.Network.Handlers
 
 			try
 			{
-				handler.Ready(creature, skill, packet);
+				var success = handler.Ready(creature, skill, packet);
+				if (!success)
+					return;
 			}
 			catch (NotImplementedException)
 			{

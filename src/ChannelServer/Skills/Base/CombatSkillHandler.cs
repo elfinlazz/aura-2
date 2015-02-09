@@ -19,12 +19,12 @@ namespace Aura.Channel.Skills.Base
 	/// </remarks>
 	public abstract class CombatSkillHandler : IPreparable, IReadyable, ICompletable, ICancelable, ICombatSkill
 	{
-		public virtual void Prepare(Creature creature, Skill skill, Packet packet)
+		public virtual bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			throw new NotImplementedException();
 		}
 
-		public virtual void Ready(Creature creature, Skill skill, Packet packet)
+		public virtual bool Ready(Creature creature, Skill skill, Packet packet)
 		{
 			throw new NotImplementedException();
 		}

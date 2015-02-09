@@ -1071,6 +1071,7 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<WebSpinning>(skillId);
 				skillHandler.Prepare(this.Creature, skill, null);
+				this.Creature.Skills.ActiveSkill = skill;
 				skillHandler.Complete(this.Creature, skill, null);
 			}
 			// Try to handle implicitly
@@ -1099,7 +1100,10 @@ namespace Aura.Channel.Scripting.Scripts
 				// Prepare skill
 				try
 				{
-					skillHandler.Prepare(this.Creature, skill, null);
+					if (!skillHandler.Prepare(this.Creature, skill, null))
+						yield break;
+
+					this.Creature.Skills.ActiveSkill = skill;
 				}
 				catch (NullReferenceException)
 				{

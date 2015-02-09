@@ -40,9 +40,11 @@ namespace Aura.Channel.Skills.Life
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
-		public void Prepare(Creature creature, Skill skill, Packet packet)
+		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillUse(creature, skill.Info.Id, 0);
+
+			return true;
 		}
 
 		/// <summary>

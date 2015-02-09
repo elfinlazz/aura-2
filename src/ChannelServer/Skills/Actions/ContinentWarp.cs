@@ -54,17 +54,17 @@ namespace Aura.Channel.Skills.Actions
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
-		public void Prepare(Creature creature, Skill skill, Packet packet)
+		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			if (!ChannelServer.Instance.Conf.World.EnableContinentWarp)
 			{
 				Send.ServerMessage(creature, Localization.Get("Continent Warp has been disabled by the Admin."));
-				Send.SkillPrepareSilentCancel(creature, skill.Info.Id);
-				return;
+				return false;
 			}
 
-			creature.Skills.ActiveSkill = skill;
 			Send.SkillReady(creature, skill.Info.Id);
+
+			return true;
 		}
 
 		/// <summary>

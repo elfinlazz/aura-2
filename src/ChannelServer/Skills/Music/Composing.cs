@@ -41,7 +41,7 @@ namespace Aura.Channel.Skills.Music
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
-		public void Prepare(Creature creature, Skill skill, Packet packet)
+		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			var scrollId = packet.GetLong();
 			var title = packet.GetString();
@@ -82,14 +82,12 @@ namespace Aura.Channel.Skills.Music
 				Send.SkillCompleteEntity(creature, skill.Info.Id, item.EntityId);
 			});
 
-			creature.Skills.ActiveSkill = skill;
-
 			// Finish
 			Send.SkillUseEntity(creature, skill.Info.Id, scrollId);
-			return;
+			return true;
 
 		L_Fail:
-			Send.SkillPrepareSilentCancel(creature, skill.Info.Id);
+			return false;
 		}
 
 		/// <summary>
@@ -100,7 +98,6 @@ namespace Aura.Channel.Skills.Music
 		/// <param name="packet"></param>
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
-			creature.Skills.ActiveSkill = null;
 			creature.Skills.Callback(SkillId.Composing);
 		}
 

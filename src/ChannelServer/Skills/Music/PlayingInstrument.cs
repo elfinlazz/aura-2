@@ -54,16 +54,13 @@ namespace Aura.Channel.Skills.Music
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
-		public void Prepare(Creature creature, Skill skill, Packet packet)
+		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			var rnd = RandomProvider.Get();
 
 			// Check for instrument
 			if (creature.RightHand == null || creature.RightHand.Data.Type != ItemType.Instrument)
-			{
-				Send.SkillPrepareSilentCancel(creature, skill.Info.Id);
-				return;
-			}
+				return false;
 
 			creature.StopMove();
 
@@ -107,7 +104,6 @@ namespace Aura.Channel.Skills.Music
 			this.OnPlay(creature, skill, quality);
 			Send.SkillUsePlayingInstrument(creature, skill.Info.Id, instrumentType, mml, rndScore);
 
-			creature.Skills.ActiveSkill = skill;
 			creature.Skills.Callback(skill.Info.Id, () =>
 			{
 				Send.Notice(creature, this.GetRandomQualityMessage(quality));
@@ -115,6 +111,8 @@ namespace Aura.Channel.Skills.Music
 			});
 
 			creature.Regens.Add("PlayingInstrument", Stat.Stamina, skill.RankData.StaminaActive, creature.StaminaMax);
+
+			return true;
 		}
 
 		/// <summary>

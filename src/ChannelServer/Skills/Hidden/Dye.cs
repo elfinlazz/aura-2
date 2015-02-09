@@ -33,23 +33,23 @@ namespace Aura.Channel.Skills.Hidden
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
-		public void Prepare(Creature creature, Skill skill, Packet packet)
+		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			var itemEntityId = packet.GetLong();
 			var dyeEntityId = packet.GetLong();
 
 			var item = creature.Inventory.GetItem(itemEntityId);
 			var dye = creature.Inventory.GetItem(dyeEntityId);
-			if (item == null || dye == null) return;
+			if (item == null || dye == null) return false;
 
-			if (!dye.Data.HasTag("/*dye_ampul/")) return;
+			if (!dye.Data.HasTag("/*dye_ampul/")) return false;
 
 			creature.Temp.SkillItem1 = item;
 			creature.Temp.SkillItem2 = dye;
 
-			creature.Skills.ActiveSkill = skill;
-
 			Send.SkillReadyDye(creature, skill.Info.Id, itemEntityId, dyeEntityId);
+
+			return true;
 		}
 
 		/// <summary>
@@ -109,8 +109,6 @@ namespace Aura.Channel.Skills.Hidden
 
 			if (creature.Skills.ActiveSkill != skill) return;
 			if (creature.Temp.SkillItem1 == null || creature.Temp.SkillItem2 == null) return;
-
-			creature.Skills.ActiveSkill = null;
 
 			if (packet.Peek() == PacketElementType.Short)
 				this.CompleteRegular(creature, packet, skill, part);

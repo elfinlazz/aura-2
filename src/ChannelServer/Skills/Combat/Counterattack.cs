@@ -38,12 +38,12 @@ namespace Aura.Channel.Skills.Combat
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
-		public override void Prepare(Creature creature, Skill skill, Packet packet)
+		public override bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
-			creature.Skills.ActiveSkill = skill;
+			return true;
 		}
 
 		/// <summary>
@@ -52,13 +52,15 @@ namespace Aura.Channel.Skills.Combat
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
-		public override void Ready(Creature creature, Skill skill, Packet packet)
+		public override bool Ready(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillReady(creature, skill.Info.Id);
 
 			// Training
 			if (skill.Info.Rank == SkillRank.RF)
 				skill.Train(1); // Use Counterattack.
+
+			return true;
 		}
 
 		/// <summary>

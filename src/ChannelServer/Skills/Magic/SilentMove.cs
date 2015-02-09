@@ -24,17 +24,19 @@ namespace Aura.Channel.Skills.Magic
 		// Buffer to compensate for using the skill while moving
 		private const int DistanceBuffer = 250;
 
-		public void Prepare(Creature creature, Skill skill, Packet packet)
+		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
-			creature.Skills.ActiveSkill = skill;
+			return true;
 		}
 
-		public void Ready(Creature creature, Skill skill, Packet packet)
+		public bool Ready(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillReady(creature, skill.Info.Id);
+
+			return true;
 		}
 
 		public void Complete(Creature creature, Skill skill, Packet packet)
