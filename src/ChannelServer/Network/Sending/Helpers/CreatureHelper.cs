@@ -384,7 +384,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				// packets being broadcasted.
 				// It's possible that it was two shorts originally,
 				// the skill id + the flags. [exec]
-				var skills = creature.Skills.GetList(s => s.SkillData.Type == SkillType.BroadcastStartStop);
+				var skills = creature.Skills.GetList(s => s.Data.Type == SkillType.BroadcastStartStop);
 				packet.PutInt(skills.Count);
 				foreach (var skill in skills)
 					packet.PutBin(skill.Info);

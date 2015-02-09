@@ -141,7 +141,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutString(extra);
 
-			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
+			if (skill.Data.Type != SkillType.BroadcastStartStop)
 				creature.Client.Send(packet);
 			else
 				creature.Region.Broadcast(packet, creature);
@@ -160,7 +160,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutByte(unkByte);
 
-			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
+			if (skill.Data.Type != SkillType.BroadcastStartStop)
 				creature.Client.Send(packet);
 			else
 				creature.Region.Broadcast(packet, creature);
@@ -179,7 +179,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutString(extra);
 
-			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
+			if (skill.Data.Type != SkillType.BroadcastStartStop)
 				creature.Client.Send(packet);
 			else
 				creature.Region.Broadcast(packet, creature);
@@ -198,7 +198,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutUShort((ushort)skill.Info.Id);
 			packet.PutByte(unkByte);
 
-			if (skill.SkillData.Type != SkillType.BroadcastStartStop)
+			if (skill.Data.Type != SkillType.BroadcastStartStop)
 				creature.Client.Send(packet);
 			else
 				creature.Region.Broadcast(packet, creature);
