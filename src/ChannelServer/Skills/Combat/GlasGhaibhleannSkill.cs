@@ -138,6 +138,7 @@ namespace Aura.Channel.Skills.Combat
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
 				tAction.Options = TargetOptions.Result | TargetOptions.KnockDown;
 				tAction.Stun = TargetStun;
+				tAction.Delay = 1200;
 				cap.Add(tAction);
 
 				// Var2: 300/1000, based on rank. Could be damage?
