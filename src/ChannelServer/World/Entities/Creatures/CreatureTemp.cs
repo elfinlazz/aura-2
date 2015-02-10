@@ -33,5 +33,7 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		// Random dyeing cursors for regular dyes
 		public DyePickers RegularDyePickers;
+
+		public int FinalHitKillCount, FinalHitKillCountStrong, FinalHitKillCountAwful, FinalHitKillCountBoss;
 	}
 }
