@@ -256,6 +256,23 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
+		/// <param name="unkByte"></param>
+		public static void SkillUse(Creature creature, SkillId skillId, long entityId, int unk1, int unk2)
+		{
+			var packet = new Packet(Op.SkillUse, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutLong(entityId);
+			packet.PutInt(unk1);
+			packet.PutInt(unk2);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillUse to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
 		/// <param name="stun"></param>
 		/// <param name="unk"></param>
 		public static void SkillUseStun(Creature creature, SkillId skillId, int stun, int unk)
@@ -482,6 +499,22 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt((int)state);
 
 			target.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillStackSet to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="stacks"></param>
+		public static void SkillStackSet(Creature creature, SkillId skillId, int stacks)
+		{
+			var packet = new Packet(Op.SkillStackSet, creature.EntityId);
+			packet.PutByte((byte)stacks);
+			packet.PutByte(1);
+			packet.PutUShort((ushort)skillId);
+
+			creature.Client.Send(packet);
 		}
 	}
 }

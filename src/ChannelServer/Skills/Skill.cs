@@ -46,6 +46,20 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public DateTime CastEnd { get; set; }
 
+		private int _stack = 0;
+		/// <summary>
+		/// Loaded stack count.
+		/// </summary>
+		public int Stacks
+		{
+			get { return _stack; }
+			set
+			{
+				_stack = Math2.Clamp(0, sbyte.MaxValue, value);
+				Send.SkillStackSet(_creature, this.Info.Id, _stack);
+			}
+		}
+
 		/// <summary>
 		/// Returns true if skill has enough experience and is below max rank.
 		/// </summary>

@@ -115,7 +115,8 @@ namespace Aura.Channel.Skills.Combat
 					if (tAction.Type != CombatActionType.Defended)
 					{
 						target.KnockBack += this.GetKnockBack(weapon) / maxHits;
-						if (target.KnockBack >= 100 && target.Is(RaceStands.KnockBackable))
+
+						if (target.KnockBack >= 100 && target.Is(RaceStands.KnockBackable) && (skill.Info.Id != SkillId.FinalHit || !dualWield))
 							tAction.Set(tAction.Has(TargetOptions.Critical) ? TargetOptions.KnockDown : TargetOptions.KnockBack);
 					}
 				}
@@ -146,7 +147,7 @@ namespace Aura.Channel.Skills.Combat
 				// Set stun time
 				if (tAction.Type != CombatActionType.Defended)
 				{
-					aAction.Stun = this.GetAttackerStun(weapon, tAction.IsKnockBack);
+					aAction.Stun = this.GetAttackerStun(weapon, tAction.IsKnockBack && (skill.Info.Id != SkillId.FinalHit || !dualWield));
 					tAction.Stun = this.GetTargetStun(weapon, tAction.IsKnockBack);
 				}
 

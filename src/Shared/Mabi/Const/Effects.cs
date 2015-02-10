@@ -89,6 +89,8 @@ namespace Aura.Shared.Mabi.Const
 
 		public static readonly int IcespearBoom = 66;
 
+		public static readonly int FinalHit = 69;
+
 		/// <summary>
 		/// The teleport effect for Silent Move
 		/// </summary>

@@ -342,6 +342,8 @@ namespace Aura.Channel.World.Entities.Creatures
 			}
 
 		L_Cancel:
+			this.ActiveSkill.Stacks = 0;
+
 			Send.SkillCancel(_creature);
 
 			this.ActiveSkill.State = SkillState.Canceled;

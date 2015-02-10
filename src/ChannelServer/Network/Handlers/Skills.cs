@@ -358,9 +358,12 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 		L_End:
-			// Always set active skill to null after complete.
-			creature.Skills.ActiveSkill = null;
-			skill.State = SkillState.Completed;
+			// Reset active skill if all stacks are used up
+			if (skill.Stacks == 0)
+			{
+				creature.Skills.ActiveSkill = null;
+				skill.State = SkillState.Completed;
+			}
 		}
 
 		/// <summary>
@@ -376,7 +379,7 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.SkillCancel)]
 		public void SkillCancel(ChannelClient client, Packet packet)
 		{
-			var unkByte1 = packet.GetByte();
+			var unkByte1 = packet.GetByte(); // true/false: automatic?
 			var unkByte2 = packet.GetByte();
 
 			var creature = client.GetCreatureSafe(packet.Id);
