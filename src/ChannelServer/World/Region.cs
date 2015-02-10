@@ -15,6 +15,7 @@ using Aura.Shared.Util;
 using System.Threading;
 using Aura.Data.Database;
 using Boo.Lang.Compiler.TypeSystem;
+using System.Drawing;
 
 namespace Aura.Channel.World
 {
@@ -682,6 +683,46 @@ namespace Aura.Channel.World
 			finally
 			{
 				_propsRWLS.ExitReadLock();
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Returns new list of all creatures within range of position.
+		/// </summary>
+		public List<Creature> GetCreaturesInRange(Position pos, int range)
+		{
+			var result = new List<Creature>();
+
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				result.AddRange(_creatures.Values.Where(a => a.GetPosition().InRange(pos, range)));
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Returns new list of all creatures within the specified polygon.
+		/// </summary>
+		public List<Creature> GetCreaturesInPolygon(params Point[] points)
+		{
+			var result = new List<Creature>();
+
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				result.AddRange(_creatures.Values.Where(a => a.GetPosition().InPolygon(points)));
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
 			}
 
 			return result;

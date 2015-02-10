@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Drawing;
 
 namespace Aura.Channel.World
 {
@@ -135,6 +136,22 @@ namespace Aura.Channel.World
 			var newY = other.Y + (distance / deltaXY) * (deltaY);
 
 			return new Position((int)newX, (int)newY);
+		}
+
+		/// <summary>
+		/// Returns whether the position is inside the given points.
+		/// </summary>
+		public bool InPolygon(params Point[] points)
+		{
+			var result = false;
+
+			for (int i = 0, j = points.Length - 1; i < points.Length; j = i++)
+			{
+				if (((points[i].Y > this.Y) != (points[j].Y > this.Y)) && (this.X < (points[j].X - points[i].X) * (this.Y - points[i].Y) / (points[j].Y - points[i].Y) + points[i].X))
+					result = !result;
+			}
+
+			return result;
 		}
 
 		public static bool operator ==(Position pos1, Position pos2)

@@ -52,9 +52,19 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="creature"></param>
 		public static void SkillFlashEffect(Creature creature)
 		{
+			Send.SkillInitEffect(creature, "flashing");
+		}
+
+		/// <summary>
+		/// Broadcasts skill init effect.
+		/// in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void SkillInitEffect(Creature creature, string type)
+		{
 			var packet = new Packet(Op.Effect, creature.EntityId);
 			packet.PutInt(E.SkillInit);
-			packet.PutString("flashing");
+			packet.PutString(type);
 
 			creature.Region.Broadcast(packet, creature);
 		}
