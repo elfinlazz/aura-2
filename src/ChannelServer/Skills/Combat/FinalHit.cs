@@ -121,17 +121,6 @@ namespace Aura.Channel.Skills.Combat
 
 				var result = _cm.Use(creature, skill, targetEntityId);
 				Send.CombatAttackR(creature, result == CombatSkillResult.Okay);
-
-				if (target.IsDead)
-				{
-					switch (creature.GetPowerRating(target))
-					{
-						case PowerRating.Strong: creature.Temp.FinalHitKillCountStrong++; goto default;
-						case PowerRating.Awful: creature.Temp.FinalHitKillCountAwful++; goto default;
-						case PowerRating.Boss: creature.Temp.FinalHitKillCountBoss++; break;
-						default: creature.Temp.FinalHitKillCount++; break;
-					}
-				}
 			}
 			else
 			{
@@ -149,6 +138,18 @@ namespace Aura.Channel.Skills.Combat
 		{
 			if (tAction.AttackerSkillId != SkillId.FinalHit)
 				return;
+
+			// Increase counters for collective kill conditions
+			if (tAction.Creature.IsDead)
+			{
+				switch (tAction.Attacker.GetPowerRating(tAction.Creature))
+				{
+					case PowerRating.Strong: tAction.Attacker.Temp.FinalHitKillCountStrong++; goto default;
+					case PowerRating.Awful: tAction.Attacker.Temp.FinalHitKillCountAwful++; goto default;
+					case PowerRating.Boss: tAction.Attacker.Temp.FinalHitKillCountBoss++; goto default;
+					default: tAction.Attacker.Temp.FinalHitKillCount++; break;
+				}
+			}
 
 			var attackerSkill = tAction.Attacker.Skills.Get(SkillId.FinalHit);
 
