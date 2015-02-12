@@ -188,8 +188,25 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Check Mana
+			if (creature.Mana < skill.RankData.ManaCost)
+			{
+				Send.SystemMessage(creature, Localization.Get("Insufficient Mana"));
+				Send.SkillPrepareSilentCancel(creature, skillId);
+				return;
+			}
+
+			// Check Stamina
+			if (creature.Stamina < skill.RankData.StaminaCost)
+			{
+				Send.SystemMessage(creature, Localization.Get("Insufficient Stamina"));
+				Send.SkillPrepareSilentCancel(creature, skillId);
+				return;
+			}
+
 			try
 			{
+				// Run handler
 				var success = handler.Prepare(creature, skill, packet);
 				if (!success)
 				{
@@ -197,6 +214,16 @@ namespace Aura.Channel.Network.Handlers
 					return;
 				}
 
+				// Reduce Mana/Stamina
+				// TODO: Use regens, for shiny gradually depleting bars
+				if (skill.RankData.ManaCost != 0 || skill.RankData.StaminaCost != 0)
+				{
+					creature.Mana -= skill.RankData.ManaCost;
+					creature.Stamina -= skill.RankData.StaminaCost;
+					Send.StatUpdate(creature, StatUpdateType.Private, Stat.Mana, Stat.Stamina);
+				}
+
+				// Set active skill
 				creature.Skills.ActiveSkill = skill;
 
 				// Only set state if the handler didn't skip states.
@@ -264,6 +291,9 @@ namespace Aura.Channel.Network.Handlers
 				if (!success)
 					return;
 
+				creature.Regens.Add("ActiveSkillWait", Stat.Mana, skill.RankData.ManaWait, creature.ManaMax);
+				creature.Regens.Add("ActiveSkillWait", Stat.Stamina, skill.RankData.StaminaWait, creature.StaminaMax);
+
 				skill.State = SkillState.Ready;
 			}
 			catch (NotImplementedException)
@@ -315,6 +345,8 @@ namespace Aura.Channel.Network.Handlers
 			{
 				handler.Use(creature, skill, packet);
 				skill.State = SkillState.Used;
+
+				creature.Regens.Remove("ActiveSkillWait");
 			}
 			catch (NotImplementedException)
 			{
@@ -389,6 +421,8 @@ namespace Aura.Channel.Network.Handlers
 			var unkByte2 = packet.GetByte();
 
 			var creature = client.GetCreatureSafe(packet.Id);
+
+			creature.Regens.Remove("ActiveSkillWait");
 
 			creature.Skills.CancelActiveSkill();
 		}

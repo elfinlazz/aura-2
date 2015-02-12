@@ -77,6 +77,11 @@ namespace Aura.Channel.Skills.Combat
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<Counterattack>(SkillId.Counterattack);
 			handler.Use(target, attacker);
 
+			// TODO: Centralize this so we don't have to maintain the active
+			//   skill and the regens in multiple places.
+			target.Skills.ActiveSkill.State = SkillState.Used;
+			target.Regens.Remove("ActiveSkillWait");
+
 			return true;
 		}
 

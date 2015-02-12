@@ -142,6 +142,8 @@ namespace Aura.Channel.Network.Handlers
 				{
 					Send.CombatAttackR(creature, true);
 					skill.State = SkillState.Used;
+
+					creature.Regens.Remove("ActiveSkillWait");
 				}
 				else if (result == CombatSkillResult.OutOfRange)
 				{
