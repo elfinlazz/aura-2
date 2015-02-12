@@ -15,6 +15,14 @@ using System.Threading.Tasks;
 
 namespace Aura.Channel.Skills.Combat
 {
+	/// <summary>
+	/// Final Hit handler
+	/// </summary>
+	/// <remarks>
+	/// Var1: Duration
+	/// Var2: Cooldown (not using the new system)
+	/// Var3: Teleport Distance
+	/// </remarks>
 	[Skill(SkillId.FinalHit)]
 	public class FinalHit : StandardPrepareHandler, IUseable, IInitiableSkillHandler
 	{
@@ -103,29 +111,42 @@ namespace Aura.Channel.Skills.Combat
 			if (_cm == null)
 				_cm = ChannelServer.Instance.SkillManager.GetHandler<CombatMastery>(SkillId.CombatMastery);
 
-			var target = ChannelServer.Instance.World.GetCreature(targetEntityId);
+			// TODO: Check duration
+
+			var attackResult = false;
+
+			var target = creature.Region.GetCreature(targetEntityId);
 			if (target != null && !creature.IsStunned)
 			{
 				var pos = creature.GetPosition();
 				var targetPos = target.GetPosition();
+				var inRange = pos.InRange(targetPos, creature.AttackRangeFor(target));
 
-				if (!pos.InRange(targetPos, creature.AttackRangeFor(target)))
+				if (!inRange)
 				{
 					var telePos = pos.GetRelative(targetPos, -creature.AttackRangeFor(target) + 100);
 
-					Send.Effect(creature, Effect.SilentMoveTeleport, targetEntityId, (byte)0);
+					// Check teleport distance
+					if (pos.GetDistance(telePos) > skill.RankData.Var3 + 100)
+					{
+						Send.Notice(creature, "Out of range");
+					}
+					else
+					{
+						Send.Effect(creature, Effect.SilentMoveTeleport, targetEntityId, (byte)0);
 
-					creature.SetPosition(telePos.X, telePos.Y);
-					Send.SkillTeleport(creature, telePos.X, telePos.Y);
+						creature.SetPosition(telePos.X, telePos.Y);
+						Send.SkillTeleport(creature, telePos.X, telePos.Y);
+
+						inRange = true;
+					}
 				}
 
-				var result = _cm.Use(creature, skill, targetEntityId);
-				Send.CombatAttackR(creature, result == CombatSkillResult.Okay);
+				if (inRange)
+					attackResult = (_cm.Use(creature, skill, targetEntityId) == CombatSkillResult.Okay);
 			}
-			else
-			{
-				Send.CombatAttackR(creature, false);
-			}
+
+			Send.CombatAttackR(creature, attackResult);
 
 			Send.SkillUse(creature, skill.Info.Id, targetEntityId, unk1, unk2);
 		}
