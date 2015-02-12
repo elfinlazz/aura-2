@@ -274,10 +274,10 @@ namespace Aura.Channel.World.Inventory
 			var result = this.GetItem(entityId);
 
 			if (result == null)
-				throw new SevereViolation("Creature does not have a item 0x{0:X}", entityId);
+				throw new SevereViolation("Creature does not have an item with entity id 0x{0:X16}", entityId);
 
 			if (!AccessiblePockets.Contains(result.Info.Pocket))
-				throw new SevereViolation("Item 0x{0:X} is located in inaccessible pocket {1}", entityId, result.Info.Pocket);
+				throw new SevereViolation("Item 0x{0:X16} is located in inaccessible pocket {1}", entityId, result.Info.Pocket);
 
 			// TODO: Check item data type?
 
@@ -387,12 +387,12 @@ namespace Aura.Channel.World.Inventory
 				return false;
 
 			// If amount differs (item was added to stack)
-			if (collidingItem != null && item.Info.Amount != amount)
+			if (collidingItem != null && (item.Info.Amount != amount || item.Info.Amount == 0))
 			{
 				Send.ItemAmount(_creature, collidingItem);
 
-				// Left overs, update
-				if (item.Info.Amount > 0)
+				// Left overs or sac, update
+				if (item.Info.Amount > 0 || item.Data.Type == ItemType.Sac)
 				{
 					Send.ItemAmount(_creature, item);
 				}
