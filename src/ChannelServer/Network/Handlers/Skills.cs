@@ -169,7 +169,8 @@ namespace Aura.Channel.Network.Handlers
 			// Don't start another while one is active. If you cast another
 			// skill with one already active the client sends Cancel first.
 			// This should prevent a simultaneous Prepare.
-			if (creature.Skills.ActiveSkill != null)
+			// If it's the same skill as the active one it *probably* is stackable.
+			if (creature.Skills.ActiveSkill != null && creature.Skills.ActiveSkill.Info.Id != skillId)
 			{
 				Send.SkillPrepareSilentCancel(creature, skillId);
 				return;
