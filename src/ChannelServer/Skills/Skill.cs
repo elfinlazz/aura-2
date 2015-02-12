@@ -13,6 +13,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Mabi.Structs;
 using Aura.Shared.Util;
 using Aura.Channel.Util.Configuration.Files;
+using System.Globalization;
 
 namespace Aura.Channel.Skills
 {
@@ -162,6 +163,15 @@ namespace Aura.Channel.Skills
 			if (!_creature.IsCharacter)
 				return;
 
+			var bonus = "";
+
+			// Apply skill exp multiplier
+			if (ChannelServer.Instance.Conf.World.SkillExpRate != 1)
+			{
+				amount = (int)(amount * ChannelServer.Instance.Conf.World.SkillExpRate);
+				bonus = string.Format(Localization.Get(" (Skill Exp Rate Bonus: x{0})"), ChannelServer.Instance.Conf.World.SkillExpRate.ToString(CultureInfo.InvariantCulture));
+			}
+
 			// Change count and reveal the condition
 			if (amount > 0)
 			{
@@ -184,7 +194,7 @@ namespace Aura.Channel.Skills
 
 			var exp = this.UpdateExperience();
 			if (exp > 0)
-				Send.SkillTrainingUp(_creature, this, exp);
+				Send.SkillTrainingUp(_creature, this, exp, bonus);
 		}
 
 		/// <summary>

@@ -10,6 +10,7 @@ namespace Aura.Channel.Util.Configuration.Files
 	{
 		public float ExpRate { get; protected set; }
 		public float QuestExpRate { get; protected set; }
+		public float SkillExpRate { get; protected set; }
 
 		public float DropRate { get; protected set; }
 		public float GoldDropChance { get; protected set; }
@@ -42,6 +43,7 @@ namespace Aura.Channel.Util.Configuration.Files
 
 			this.ExpRate = this.GetFloat("exp_rate", 100) / 100.0f;
 			this.QuestExpRate = this.GetFloat("quest_exp_rate", 100) / 100.0f;
+			this.SkillExpRate = this.GetFloat("skill_exp_rate", 100) / 100.0f;
 
 			this.DropRate = this.GetFloat("drop_rate", 100) / 100.0f;
 			this.GoldDropChance = this.GetFloat("gold_drop_chance", 30) / 100.0f;

@@ -367,13 +367,13 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <param name="exp">Exp gained</param>
-		public static void SkillTrainingUp(Creature creature, Skill skill, float exp)
+		public static void SkillTrainingUp(Creature creature, Skill skill, float exp, string bonus = "")
 		{
 			var packet = new Packet(Op.SkillTrainingUp, creature.EntityId);
 			packet.PutBin(skill.Info);
 			packet.PutFloat(exp);
 			packet.PutByte(1);
-			packet.PutString("" /* (Specialized Skill Bonus: x2) */);
+			packet.PutString(bonus); // (Specialized Skill Bonus: x2)
 
 			creature.Client.Send(packet);
 		}
