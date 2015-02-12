@@ -197,8 +197,13 @@ namespace Aura.Channel.Network.Handlers
 				}
 
 				creature.Skills.ActiveSkill = skill;
-				skill.State = SkillState.Prepared;
-				skill.CastEnd = DateTime.Now.AddMilliseconds(skill.GetCastTime());
+
+				// Only set state if the handler didn't skip states.
+				if (skill.State == SkillState.None)
+				{
+					skill.CastEnd = DateTime.Now.AddMilliseconds(skill.GetCastTime());
+					skill.State = SkillState.Prepared;
+				}
 			}
 			catch (NotImplementedException)
 			{
