@@ -116,7 +116,7 @@ namespace Aura.Channel.Skills.Combat
 			var attackResult = false;
 
 			var target = creature.Region.GetCreature(targetEntityId);
-			if (target != null && !creature.IsStunned)
+			if (target != null && !creature.IsStunned && creature.CanTarget(target))
 			{
 				var pos = creature.GetPosition();
 				var targetPos = target.GetPosition();
