@@ -104,7 +104,7 @@ namespace Aura.Channel.Skills.Combat
 				_cm = ChannelServer.Instance.SkillManager.GetHandler<CombatMastery>(SkillId.CombatMastery);
 
 			var target = ChannelServer.Instance.World.GetCreature(targetEntityId);
-			if (target != null)
+			if (target != null && !creature.IsStunned)
 			{
 				var pos = creature.GetPosition();
 				var targetPos = target.GetPosition();
