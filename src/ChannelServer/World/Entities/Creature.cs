@@ -1405,5 +1405,28 @@ namespace Aura.Channel.World.Entities
 
 			return pose;
 		}
+
+		/// <summary>
+		/// Sets new position for target, based on attacker's position
+		/// and the distance, takes collision into consideration.
+		/// </summary>
+		/// <param name="target">Entity to be knocked back</param>
+		/// <param name="distance">Distance to knock back the target</param>
+		/// <returns>New position</returns>
+		public Position Shove(Creature target, int distance)
+		{
+			var attackerPosition = this.GetPosition();
+			var targetPosition = target.GetPosition();
+
+			var newPos = attackerPosition.GetRelative(targetPosition, distance);
+
+			Position intersection;
+			if (target.Region.Collisions.Find(targetPosition, newPos, out intersection))
+				newPos = targetPosition.GetRelative(intersection, -50);
+
+			target.SetPosition(newPos.X, newPos.Y);
+
+			return newPos;
+		}
 	}
 }

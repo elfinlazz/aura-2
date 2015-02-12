@@ -148,14 +148,8 @@ namespace Aura.Channel.Skills.Combat
 			target.Stun = tAction.Stun = StunTime;
 			target.KnockBack = Knockback;
 
-			// Check collisions
-			Position intersection;
-			var knockbackPos = attacker.GetPosition().GetRelative(targetPosition, KnockbackDistance);
-			if (target.Region.Collisions.Find(targetPosition, knockbackPos, out intersection))
-				knockbackPos = targetPosition.GetRelative(intersection, -50);
-
 			// Set knockbacked position
-			target.SetPosition(knockbackPos.X, knockbackPos.Y);
+			attacker.Shove(target, KnockbackDistance);
 
 			// Response
 			Send.SkillUseStun(attacker, skill.Info.Id, AfterUseStun, 1);

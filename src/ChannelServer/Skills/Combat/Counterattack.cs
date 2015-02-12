@@ -113,13 +113,7 @@ namespace Aura.Channel.Skills.Combat
 			aAction.Stun = StunTime;
 			tAction.Stun = StunTime;
 
-			var targetPosition = target.GetPosition();
-			Position intersection;
-			var knockbackPos = attacker.GetPosition().GetRelative(targetPosition, KnockbackDistance);
-			if (target.Region.Collisions.Find(targetPosition, knockbackPos, out intersection))
-				knockbackPos = targetPosition.GetRelative(intersection, -50);
-
-			target.SetPosition(knockbackPos.X, knockbackPos.Y);
+			attacker.Shove(target, KnockbackDistance);
 
 			// Update both weapons
 			SkillHelper.UpdateWeapon(attacker, target, attacker.RightHand, attacker.LeftHand);

@@ -160,12 +160,7 @@ namespace Aura.Channel.Skills.Combat
 					tAction.Options |= TargetOptions.FinishingKnockDown;
 
 				// Knock back
-				Position intersection;
-				var knockbackPos = attackerPosition.GetRelative(targetPosition, KnockbackDistance);
-				if (target.Region.Collisions.Find(targetPosition, knockbackPos, out intersection))
-					knockbackPos = targetPosition.GetRelative(intersection, -50);
-
-				target.SetPosition(knockbackPos.X, knockbackPos.Y);
+				attacker.Shove(target, KnockbackDistance);
 			}
 
 			cap.Handle();

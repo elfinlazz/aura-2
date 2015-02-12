@@ -128,13 +128,7 @@ namespace Aura.Channel.Skills.Combat
 				// React to knock back
 				if (tAction.IsKnockBack)
 				{
-					var newPos = attacker.GetPosition().GetRelative(targetPosition, KnockBackDistance);
-
-					Position intersection;
-					if (target.Region.Collisions.Find(targetPosition, newPos, out intersection))
-						newPos = targetPosition.GetRelative(intersection, -50);
-
-					target.SetPosition(newPos.X, newPos.Y);
+					attacker.Shove(target, KnockBackDistance);
 
 					aAction.Set(AttackerOptions.KnockBackHit2);
 
