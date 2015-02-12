@@ -116,8 +116,18 @@ namespace Aura.Channel.Skills.Combat
 					{
 						target.KnockBack += this.GetKnockBack(weapon) / maxHits;
 
-						if (target.KnockBack >= 100 && target.Is(RaceStands.KnockBackable) && (skill.Info.Id != SkillId.FinalHit || !dualWield))
-							tAction.Set(tAction.Has(TargetOptions.Critical) ? TargetOptions.KnockDown : TargetOptions.KnockBack);
+						// React normal for CombatMastery, knock down if 
+						// FH and not dual wield, don't knock at all if dual.
+						if (skill.Info.Id != SkillId.FinalHit)
+						{
+							if (target.KnockBack >= 100 && target.Is(RaceStands.KnockBackable))
+								tAction.Set(tAction.Has(TargetOptions.Critical) ? TargetOptions.KnockDown : TargetOptions.KnockBack);
+						}
+						else if (!dualWield)
+						{
+							target.KnockBack = 120;
+							tAction.Set(TargetOptions.KnockDown);
+						}
 					}
 				}
 				else
