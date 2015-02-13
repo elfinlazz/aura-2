@@ -16,7 +16,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			packet.PutInt(0);
 			packet.PutByte(0);
 			packet.PutByte(0);
-			packet.PutByte(1);
+			packet.PutByte(0); // 1 enables PvP in fields
 			packet.PutLong(0);
 			packet.PutLong(0);
 			packet.PutInt(0);
