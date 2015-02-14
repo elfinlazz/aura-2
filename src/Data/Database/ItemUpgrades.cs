@@ -69,7 +69,7 @@ namespace Aura.Data.Database
 				}
 			}
 
-			this.Entries[data.Name] = data;
+			this.Entries[data.Ident] = data;
 		}
 	}
 }
