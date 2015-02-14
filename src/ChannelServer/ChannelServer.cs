@@ -10,6 +10,7 @@ using Aura.Channel.Skills;
 using Aura.Channel.Util;
 using Aura.Channel.Util.Configuration;
 using Aura.Channel.World;
+using Aura.Channel.World.Weather;
 using Aura.Shared;
 using Aura.Shared.Database;
 using Aura.Shared.Network;
@@ -64,6 +65,7 @@ namespace Aura.Channel
 		public ScriptManager ScriptManager { get; private set; }
 		public SkillManager SkillManager { get; private set; }
 		public EventManager Events { get; private set; }
+		public WeatherManager Weather { get; private set; }
 
 		public WorldManager World { get; private set; }
 
@@ -84,6 +86,7 @@ namespace Aura.Channel
 			this.ScriptManager = new ScriptManager();
 			this.SkillManager = new SkillManager();
 			this.Events = new EventManager();
+			this.Weather = new WeatherManager();
 		}
 
 		/// <summary>
@@ -119,6 +122,9 @@ namespace Aura.Channel
 
 			// Skills
 			this.LoadSkills();
+
+			// Weather
+			this.Weather.Initialize();
 
 			// Autoban
 			if (this.Conf.Autoban.Enabled)
