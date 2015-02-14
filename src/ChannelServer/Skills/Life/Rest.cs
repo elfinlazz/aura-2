@@ -136,7 +136,7 @@ namespace Aura.Channel.Skills.Life
 
 			// Effect
 			if (creature.Temp.CurrentChairData.Effect != 0)
-				Send.Effect(creature, Effect.CherryBlossoms, false);
+				Send.Effect(creature, creature.Temp.CurrentChairData.Effect, false);
 
 			// Update chair
 			creature.Temp.SittingProp.Xml.SetAttributeValue("OWNER", 0);

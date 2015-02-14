@@ -89,64 +89,72 @@ namespace Aura.Shared.Mabi.Const
 
 		public static readonly int IcespearBoom = 66;
 
+		// [190100, NA201 (2015-02-14)] Something was added somewhere,
+		// which increased all following values by 1. Yay enums. Spawn
+		// and Flash still worked though, it was afterwards.
+
+		/// <summary>
+		/// The teleport effect for Silent Move and Final Hit
+		/// </summary>
+		public static readonly int SilentMoveTeleport = 68;
+
 		/// <summary>
 		/// Effect shown while Final Hit is active.
 		/// </summary>
-		public static readonly int FinalHit = 70; // [190100, NA201 (2015-02-14)] Changed from 69 to 70
-
-		/// <summary>
-		/// The teleport effect for Silent Move
-		/// </summary>
-		public static readonly int SilentMoveTeleport = 67;
+		public static readonly int FinalHit = 70;
 
 		/// <summary>
 		/// Chef Owl
 		/// </summary>
-		public static readonly int ChefOwl = 121;
+		public static readonly int ChefOwl = 122;
 
 		/// <summary>
-		/// According to older logs, this should've been 121.
+		/// Blue Aura used when activating Mana Shield
 		/// </summary>
-		public static readonly int ManaShield = 122;
+		/// <remarks>
+		/// According to older logs, this should've been 121,
+		/// something had been added when we got to implement it.
+		/// </remarks>
+		public static readonly int ManaShield = 123;
 
 		/// <summary>
 		/// Parameters: None
 		/// </summary>
-		public static readonly int AwakeningOfLight1 = 173;
+		public static readonly int AwakeningOfLight1 = 174;
 
 		/// <summary>
 		/// Parameters: None
 		/// </summary>
-		public static readonly int AwakeningOfLight2 = 176;
+		public static readonly int AwakeningOfLight2 = 177;
 
-		public static readonly int SupportShot = 240;
+		public static readonly int SupportShot = 241;
 
 		/// <summary>
 		/// ?
 		/// </summary>
-		public static readonly int Casting = 247;
+		public static readonly int Casting = 248;
 
 		/// <summary>
 		/// Shadow Bunshin casting, clones, etc.
 		/// </summary>
-		public static readonly int ShadowBunshin = 262;
+		public static readonly int ShadowBunshin = 263;
 
 		/// <summary>
 		/// Used in thunder's final stage
 		/// </summary>
-		public static readonly int Thunderbolt = 297;
+		public static readonly int Thunderbolt = 298;
 
 		/// <summary>
 		/// Cherry blossoms falling onto the character.
 		/// byte:1|0 (on/off)
 		/// </summary>
-		public static readonly int CherryBlossoms = 345;
+		public static readonly int CherryBlossoms = 346;
 
 		/// <summary>
 		/// Used for Outfit Action.
 		/// byte:1|0 (on/off)
 		/// </summary>
-		public static readonly int OutfitAction = 365;
+		public static readonly int OutfitAction = 366;
 	}
 
 	public enum SpawnEffect : byte

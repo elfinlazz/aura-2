@@ -14,7 +14,7 @@
 { itemId: 50095, name: "Shroom Buddy Chair", propId: 44266, giantPropId: 44267 },
 { itemId: 50096, name: "Loyal Royal Yeti Chair", propId: 44260, giantPropId: 44261 },
 { itemId: 50097, name: "King Pepe Chair", propId: 44258, giantPropId: 44259 },
-{ itemId: 50098, name: "Rainy Fox Chair", propId: 44262, giantPropId: 44263, effect: 345 },
+{ itemId: 50098, name: "Rainy Fox Chair", propId: 44262, giantPropId: 44263, effect: 346 },
 { itemId: 50099, name: "Single Sunbed", propId: 44323, giantPropId: 44325 },
 { itemId: 50100, name: "Double Sunbed", propId: 44324, giantPropId: 44326 },
 { itemId: 50496, name: "Gold Medal Podium", propId: 44603, giantPropId: 44603 },
