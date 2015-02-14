@@ -103,8 +103,22 @@ public class FerghusBaseScript : NpcScript
 				break;
 				
 			case "@upgrade":
-				Msg("Will you select items to be modified?<br/>The number and types of modifications are different depending on the items.<br/>When I modify them, my hands never slip or make mistakes. So don't worry. Trust me.");
-				Msg("Unimplemented");
+				Msg("Will you select items to be modified?<br/>The number and types of modifications are different depending on the items.<br/>When I modify them, my hands never slip or make mistakes. So don't worry. Trust me.<upgrade />");
+				
+				while(true)
+				{
+					var reply = await Select();
+					
+					if(!reply.StartsWith("@upgrade:"))
+						break;
+						
+					var result = Upgrade(reply);
+					if(result.Success)
+						Msg("The modification you've asked for has been done.<br/>Is there anything you want to modify?");
+					else
+						Msg("(Error)");
+				}
+				Msg("If you have something to modify, let me know anytime.<upgrade hide='true'/>");
 				break;
 		}
 		
