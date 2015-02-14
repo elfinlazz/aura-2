@@ -4,7 +4,7 @@
 // type:
 //   - table: Official random weather based on weathercommon.xml.
 //
-// Values: regions, type, name|values
+// Values: regions, type, name
 //---------------------------------------------------------------------------
 
 [
