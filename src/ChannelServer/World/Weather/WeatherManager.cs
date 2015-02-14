@@ -53,10 +53,10 @@ namespace Aura.Channel.World.Weather
 		{
 			if (time.DateTime.Minute % 20 == 0)
 			{
-				foreach (var provider in _providers)
+				var ev = this.WeatherChange;
+				if (ev != null)
 				{
-					var ev = this.WeatherChange;
-					if (ev != null)
+					foreach (var provider in _providers)
 						ev(provider.Key, provider.Value.GetWeather(time.DateTime));
 				}
 			}
