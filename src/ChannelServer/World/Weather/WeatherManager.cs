@@ -71,7 +71,6 @@ namespace Aura.Channel.World.Weather
 		{
 			ChannelServer.Instance.Events.MinutesTimeTick += this.OnMinutesTimeTick;
 			ChannelServer.Instance.Events.PlayerEntersRegion += this.OnPlayerEntersRegion;
-			this.WeatherChange += (regionId, details) => { Log.Debug(regionId + ": " + details); };
 
 			foreach (var data in AuraData.WeatherDb.Entries.Values)
 				_providers[data.RegionId] = new WeatherProviderTable(data.Name);
