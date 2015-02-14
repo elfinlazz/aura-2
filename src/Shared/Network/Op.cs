@@ -156,6 +156,7 @@ namespace Aura.Shared.Network
 		public const int ItemStateChanged = 0x5BD9;
 		public const int ItemExpUpdate = 0x5BDA;
 		public const int ItemRepairResult = 0x5BDB;
+		public const int ItemUpgradeResult = 0x5BDC;
 		public const int ViewEquipment = 0x5BDF;
 		public const int ViewEquipmentR = 0x5BE0;
 		public const int OptionSet = 0x5BE7;
