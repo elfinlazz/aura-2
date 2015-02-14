@@ -71,6 +71,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "favor", "<npc name> [amount]", HandleFavor);
 			Add(50, 50, "stress", "<npc name> [amount]", HandleStress);
 			Add(50, 50, "memory", "<npc name> [amount]", HandleMemory);
+			Add(50, 50, "weather", "", HandleWeather);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -1435,6 +1436,20 @@ namespace Aura.Channel.Util
 			}
 
 			return true;
+		}
+
+		private CommandResult HandleWeather(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			var weather = ChannelServer.Instance.Weather.GetWeather(target.RegionId);
+
+			if (weather == null)
+				Send.ServerMessage(sender, Localization.Get("No weather specified for your region."));
+			else
+				Send.ServerMessage(sender, Localization.Get("Current weather: {0}"), weather);
+
+			// TODO: Changing weather.
+
+			return CommandResult.Okay;
 		}
 	}
 
