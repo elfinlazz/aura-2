@@ -120,5 +120,58 @@ namespace Aura.Channel.World.Weather
 
 			return provider.GetWeather(DateTime.Now);
 		}
+
+		/// <summary>
+		/// Returns the current weather type for the region.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <returns></returns>
+		public WeatherType GetWeatherType(int regionId)
+		{
+			var provider = this.GetProvider(regionId);
+			if (provider == null)
+				return WeatherType.Clear;
+
+			var weather = provider.GetWeather(DateTime.Now);
+			return weather.Type;
+		}
+
+		/// <summary>
+		/// Returns the current rain strength for the region.
+		/// </summary>
+		/// <remarks>
+		/// Return value ranges from 0 (light) to 20 (thunder),
+		/// returns 0 even if it's not raining or there's no weather defined.
+		/// </remarks>
+		/// <param name="regionId"></param>
+		/// <returns></returns>
+		public int GetRainStrength(int regionId)
+		{
+			var provider = this.GetProvider(regionId);
+			if (provider == null)
+				return 0;
+
+			var weather = provider.GetWeather(DateTime.Now);
+			return weather.RainStrength;
+		}
+
+		/// <summary>
+		/// Returns the current weather as float, as used in some weather packets.
+		/// </summary>
+		/// <remarks>
+		/// Value ranges from 0.0 to 2.0, 0.5 is the default, clouds start
+		/// at 1.5, rain starts at 1.95, and 2.0 is thunder. Values above that
+		/// don't do much.
+		/// </remarks>
+		/// <param name="regionId"></param>
+		/// <returns></returns>
+		public float GetWeatherAsFloat(int regionId)
+		{
+			var provider = this.GetProvider(regionId);
+			if (provider == null)
+				return 0.5f;
+
+			return provider.GetWeatherAsFloat(DateTime.Now);
+		}
 	}
 }
