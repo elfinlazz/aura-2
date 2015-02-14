@@ -23,9 +23,19 @@ namespace Aura.Data.Database
 		Table,
 
 		/// <summary>
-		/// Official random weather based on seed (unsupported)
+		/// Official random weather based on seed
 		/// </summary>
-		Random,
+		//Random,
+
+		/// <summary>
+		/// Official constant weather
+		/// </summary>
+		//Constant,
+
+		/// <summary>
+		/// Official constant weather with transition?
+		/// </summary>
+		//ConstantSmooth,
 	}
 
 	/// <summary>
