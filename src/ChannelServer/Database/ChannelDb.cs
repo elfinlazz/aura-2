@@ -410,6 +410,7 @@ namespace Aura.Channel.Database
 							item.OptionInfo.EffectiveRange = reader.GetInt16("range");
 							item.OptionInfo.AttackSpeed = (AttackSpeed)reader.GetByte("attackSpeed");
 							item.Proficiency = reader.GetInt32("experience");
+							item.OptionInfo.Upgraded = reader.GetByte("upgrades");
 							item.MetaData1.Parse(reader.GetStringSafe("meta1"));
 							item.MetaData2.Parse(reader.GetStringSafe("meta2"));
 							item.OptionInfo.LinkedPocketId = (Pocket)reader.GetByte("linkedPocket");
@@ -1009,6 +1010,7 @@ namespace Aura.Channel.Database
 						cmd.Set("range", item.OptionInfo.EffectiveRange);
 						cmd.Set("attackSpeed", (byte)item.OptionInfo.AttackSpeed);
 						cmd.Set("experience", item.Proficiency);
+						cmd.Set("upgrades", item.OptionInfo.Upgraded);
 						cmd.Set("meta1", item.MetaData1.ToString());
 						cmd.Set("meta2", item.MetaData2.ToString());
 
