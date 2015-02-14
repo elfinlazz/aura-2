@@ -357,6 +357,7 @@ namespace Aura.Channel.World.Entities
 				this.OptionInfo.WeaponType = this.Data.WeaponType;
 				this.OptionInfo.AttackSpeed = (AttackSpeed)this.Data.AttackSpeed;
 				this.OptionInfo.EffectiveRange = this.Data.Range;
+				this.OptionInfo.UpgradeMax = (byte)this.Data.MaxUpgrades;
 
 				var rand = RandomProvider.Get();
 				this.Info.Color1 = AuraData.ColorMapDb.GetRandom(this.Data.ColorMap1, rand);

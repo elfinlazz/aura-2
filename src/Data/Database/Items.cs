@@ -42,6 +42,7 @@ namespace Aura.Data.Database
 
 		public byte WeaponType { get; set; }
 		public InstrumentType InstrumentType { get; set; }
+		public int MaxUpgrades { get; set; }
 
 		public short Range { get; set; }
 		public ushort AttackMin { get; set; }
@@ -125,6 +126,7 @@ namespace Aura.Data.Database
 			info.Defense = entry.ReadInt("defense");
 			info.Protection = entry.ReadShort("protection");
 			info.InstrumentType = (InstrumentType)entry.ReadInt("instrumentType");
+			info.MaxUpgrades = entry.ReadInt("maxUpgrades");
 
 			info.WeaponType = entry.ReadByte("weaponType");
 			if (info.WeaponType != 0)
