@@ -152,8 +152,8 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutLong(0);			         // Score
 				packet.PutShort((short)creature.AttackMinBaseMod);
 				packet.PutShort((short)creature.AttackMaxBaseMod);
-				packet.PutShort((short)creature.InjuryMinBase);
-				packet.PutShort((short)creature.InjuryMaxBase);
+				packet.PutShort((short)creature.InjuryMinBaseMod);
+				packet.PutShort((short)creature.InjuryMaxBaseMod);
 				packet.PutFloat(creature.CriticalBase * 100);
 				packet.PutFloat(creature.ProtectionBaseMod);
 				packet.PutShort((short)creature.DefenseBaseMod);
