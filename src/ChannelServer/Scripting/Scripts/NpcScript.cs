@@ -1262,9 +1262,19 @@ namespace Aura.Channel.Scripting.Scripts
 							result.Item.OptionInfo.Durability = result.Item.OptionInfo.DurabilityMax;
 						break;
 
+					case "MagicDefense":
+						// MDEF:f:1.000000;MPROT:f:1.000000;MTWR:1:1;
+						var mdef = result.Item.MetaData1.GetFloat("MDEF");
+						result.Item.MetaData1.SetFloat("MDEF", Math2.Clamp(0, int.MaxValue, mdef + effect.Value[0]));
+						break;
+
+					case "MagicProtection":
+						// MDEF:f:1.000000;MPROT:f:1.000000;MTWR:1:1;
+						var mprot = result.Item.MetaData1.GetFloat("MPROT");
+						result.Item.MetaData1.SetFloat("MPROT", Math2.Clamp(0, int.MaxValue, mprot + effect.Value[0]));
+						break;
+
 					// TODO:
-					// - MagicDefense
-					// - MagicProtection
 					// - CollectionSpeed
 					// - CollectionBonus
 					// - SplashRadius
