@@ -1234,6 +1234,8 @@ namespace Aura.Channel.Scripting.Scripts
 				{
 					case "MinAttack": result.Item.OptionInfo.AttackMin += (ushort)effect.Value[0]; break;
 					case "MaxAttack": result.Item.OptionInfo.AttackMax += (ushort)effect.Value[0]; break;
+					case "MinInjury": result.Item.OptionInfo.InjuryMin += (ushort)effect.Value[0]; break;
+					case "MaxInjury": result.Item.OptionInfo.InjuryMax += (ushort)effect.Value[0]; break;
 					case "Balance": result.Item.OptionInfo.Balance += (byte)effect.Value[0]; break;
 					case "Critical": result.Item.OptionInfo.Critical += (byte)effect.Value[0]; break;
 					case "Defense": result.Item.OptionInfo.Defense += (int)effect.Value[0]; break;
