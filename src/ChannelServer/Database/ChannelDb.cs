@@ -403,6 +403,8 @@ namespace Aura.Channel.Database
 							item.OptionInfo.DurabilityOriginal = reader.GetInt32("durabilityOriginal");
 							item.OptionInfo.AttackMin = reader.GetUInt16("attackMin");
 							item.OptionInfo.AttackMax = reader.GetUInt16("attackMax");
+							item.OptionInfo.InjuryMin = reader.GetUInt16("injuryMin");
+							item.OptionInfo.InjuryMax = reader.GetUInt16("injuryMax");
 							item.OptionInfo.Balance = reader.GetByte("balance");
 							item.OptionInfo.Critical = reader.GetByte("critical");
 							item.OptionInfo.Defense = reader.GetInt32("defense");
@@ -1003,6 +1005,8 @@ namespace Aura.Channel.Database
 						cmd.Set("durabilityOriginal", item.OptionInfo.DurabilityOriginal);
 						cmd.Set("attackMin", item.OptionInfo.AttackMin);
 						cmd.Set("attackMax", item.OptionInfo.AttackMax);
+						cmd.Set("injuryMin", item.OptionInfo.InjuryMin);
+						cmd.Set("injuryMax", item.OptionInfo.InjuryMax);
 						cmd.Set("balance", item.OptionInfo.Balance);
 						cmd.Set("critical", item.OptionInfo.Critical);
 						cmd.Set("defense", item.OptionInfo.Defense);
