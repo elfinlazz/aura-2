@@ -1,57 +1,52 @@
 // Aura
 // Database file
-// 
-// Region:
-//   One region, or multiple ones, seperated by colons ":".
-// 
-// Type:
-//   0 Official (not supported yet)
-//   1 Custom Seed
-//       Takes one value, the seed.
-//   2 Pattern
-//       Takes multiple values, making up the pattern.
-//   3 Open Weather Map
-//       Takes one value, the city id.
 //
-// Structure:
-// Region  Type  Values...
+// type:
+//   - table: Official random weather based on weathercommon.xml.
+//            Requires value "name", e.g. "type1".
+//   - constant: Constant weather.
+//            Requires value "weather", float from 0.0 to 2.0.
+//
+// Values: regions, type, [name], [weather]
 //---------------------------------------------------------------------------
 
+[
 // 1 - Tir, Dugald, Sliab Cuilin
-1:16:301, 1, 116301
+{ regions: [1, 16, 301], type: "table", name: "type1" },
 
 // 2 - Dunbarton, Gairech, Fiodh 
-14:30:49:50, 1, 14304950
+{ regions: [14, 30, 49, 50], type: "table", name: "type2" },
 
 // 3 - Bangor
-31, 1, 311
+{ regions: [31], type: "table", name: "type3" },
 
 // 4 - Emain, Coill
-52:54:55, 1, 525455
+{ regions: [52, 54, 55], type: "table", name: "type4" },
 
 // 5 - Sen Mag, Dugald Residential, Sen Mag Residential
-53:200:201:202:203, 1, 53200201
+{ regions: [53, 200, 201, 202, 203], type: "table", name: "type5" },
 
 // 6 - Morva Aisle, Port Ceann
-96:100, 1, 96100
+{ regions: [96, 100], type: "table", name: "type6" },
 
 // 7 - Rano
-3001, 1, 30011
+{ regions: [3001], type: "table", name: "type7" },
 
 // 8 - Connous
-3100, 1, 31001
+{ regions: [3100], type: "table", name: "type8" },
 
 // 9 - Courcle
-3300, 1, 33001
+{ regions: [3300], type: "table", name: "type9" },
 
 // 10 - Zardine
-3400, 1, 34001
+{ regions: [3400], type: "table", name: "type10" },
 
 // 11 - Shadow Missions
-// -
+// ?, 0, type11
 
 // 12 - Taillteann, Abb Neagh, Corrib, Tara, Blago
-300:302:400:401:402, 1, 300302400
+{ regions: [300, 302, 400, 401, 402], type: "table", name: "type12" },
 
 // 13 - Sidhe Sneachta, Physis
-47:48:3200, 1, 47483200
+// 47:48:3200, 0, type13?
+]

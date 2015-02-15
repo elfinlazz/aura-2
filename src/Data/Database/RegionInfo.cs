@@ -12,6 +12,7 @@ namespace Aura.Data.Database
 	public class RegionData
 	{
 		public int Id { get; set; }
+		public int GroupId { get; set; }
 		public int X1 { get; set; }
 		public int Y1 { get; set; }
 		public int X2 { get; set; }
@@ -213,6 +214,20 @@ namespace Aura.Data.Database
 			return 0;
 		}
 
+		/// <summary>
+		/// Returns group id for the given region.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <returns></returns>
+		public int GetGroupId(int regionId)
+		{
+			var data = this.Find(regionId);
+			if (data == null)
+				return -1;
+
+			return data.GroupId;
+		}
+
 		protected override void Read(BinaryReader br)
 		{
 			var cRegions = br.ReadInt32();
@@ -221,6 +236,7 @@ namespace Aura.Data.Database
 				var ri = new RegionData();
 
 				ri.Id = br.ReadInt32();
+				ri.GroupId = br.ReadInt32();
 				ri.X1 = br.ReadInt32();
 				ri.Y1 = br.ReadInt32();
 				ri.X2 = br.ReadInt32();

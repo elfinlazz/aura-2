@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 
@@ -9,41 +10,82 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class WeatherData
 	{
-		public int Region { get; set; }
-		public WeatherInfoType Type { get; set; }
-		public List<float> Values { get; set; }
+		public int RegionId { get; set; }
+		public WeatherDataType Type { get; set; }
+		public string Name { get; set; }
+		public float Weather { get; set; }
+	}
+
+	public enum WeatherDataType
+	{
+		/// <summary>
+		/// Official random weather based on XML data
+		/// </summary>
+		Table,
+
+		/// <summary>
+		/// Official random weather based on seed
+		/// </summary>
+		//Random,
+
+		/// <summary>
+		/// Official constant weather
+		/// </summary>
+		Constant,
+
+		/// <summary>
+		/// Official constant weather with transition?
+		/// </summary>
+		//ConstantSmooth,
 	}
 
 	/// <summary>
-	/// Indexed by region.
+	/// Weather database
 	/// </summary>
-	public class WeatherDb : DatabaseCsvIndexed<int, WeatherData>
+	/// <remarks>
+	/// Indexed by region id.
+	/// </remarks>
+	public class WeatherDb : DatabaseJsonIndexed<int, WeatherData>
 	{
-		[MinFieldCount(3)]
-		protected override void ReadEntry(CsvEntry entry)
+		protected override void ReadEntry(JObject entry)
 		{
-			// Read everything first, we might need it for multiple regions.
-			var regions = entry.ReadStringList();
-			var type = (WeatherInfoType)entry.ReadByte();
-			var values = new List<float>();
-			while (!entry.End)
-				values.Add(entry.ReadFloat());
+			entry.AssertNotMissing("regions", "type");
 
-			// Every type has at least 1 value.
-			if (values.Count < 1)
-				throw new CsvDatabaseWarningException("Too few values.");
+			var regions = new List<int>();
+			foreach (var region in entry["regions"])
+				regions.Add((int)region);
+
+			var stype = entry.ReadString("type");
+			var name = entry.ReadString("name");
+			var weather = entry.ReadFloat("weather");
+			WeatherDataType type;
+
+			switch (stype)
+			{
+				case "table":
+					entry.AssertNotMissing("name");
+					type = WeatherDataType.Table;
+					break;
+
+				case "constant":
+					entry.AssertNotMissing("weather");
+					type = WeatherDataType.Constant;
+					break;
+
+				default:
+					throw new ArgumentException("Unknown weather type '" + stype + "'");
+			}
 
 			foreach (var region in regions)
 			{
-				var info = new WeatherData();
-				info.Region = Convert.ToInt32(region);
-				info.Type = type;
-				info.Values = values;
+				var data = new WeatherData();
+				data.RegionId = region;
+				data.Type = type;
+				data.Name = name;
+				data.Weather = weather;
 
-				this.Entries[info.Region] = info;
+				this.Entries[data.RegionId] = data;
 			}
 		}
 	}
-
-	public enum WeatherInfoType { Official, Custom, Pattern, OWM }
 }

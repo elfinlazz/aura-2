@@ -5,6 +5,7 @@ using Aura.Channel.Network;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Channel.World.Entities.Creatures;
+using Aura.Channel.World.Weather;
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared;
@@ -71,6 +72,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "favor", "<npc name> [amount]", HandleFavor);
 			Add(50, 50, "stress", "<npc name> [amount]", HandleStress);
 			Add(50, 50, "memory", "<npc name> [amount]", HandleMemory);
+			Add(50, 50, "weather", "[0.0~2.0|clear|rain|storm|type1~type12]", HandleWeather);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -1435,6 +1437,48 @@ namespace Aura.Channel.Util
 			}
 
 			return true;
+		}
+
+		private CommandResult HandleWeather(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			var weather = ChannelServer.Instance.Weather.GetWeather(target.RegionId);
+
+			if (args.Count == 1)
+			{
+				if (weather == null)
+					Send.ServerMessage(sender, Localization.Get("No weather specified for your region."));
+				else
+					Send.ServerMessage(sender, Localization.Get("Current weather: {0}"), weather);
+
+				return CommandResult.InvalidArgument;
+			}
+
+			if (args[1].StartsWith("type"))
+			{
+				Send.ServerMessage(sender, Localization.Get("Changing weather to table (typeX) requires a relog."));
+
+				ChannelServer.Instance.Weather.SetProviderAndUpdate(target.RegionId, new WeatherProviderTable(target.RegionId, args[1]));
+			}
+			else
+			{
+				float val;
+				if (!float.TryParse(args[1], out val))
+				{
+					switch (args[1])
+					{
+						case "clear": val = 0.5f; break;
+						case "clouds": val = 1.5f; break;
+						case "rain": val = 1.95f; break;
+						case "storm": val = 2.0f; break;
+
+						default: return CommandResult.InvalidArgument;
+					}
+				}
+
+				ChannelServer.Instance.Weather.SetProviderAndUpdate(target.RegionId, new WeatherProviderConstant(target.RegionId, val));
+			}
+
+			return CommandResult.Okay;
 		}
 	}
 
