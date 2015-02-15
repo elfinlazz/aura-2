@@ -61,7 +61,7 @@ namespace Aura.Channel.World.Weather
 				}
 			}
 
-			// TODO: Custom weather.
+			// TODO: Custom weather?
 		}
 
 		/// <summary>
@@ -78,6 +78,10 @@ namespace Aura.Channel.World.Weather
 				{
 					case WeatherDataType.Table:
 						_providers[data.RegionId] = new WeatherProviderTable(data.RegionId, data.Name);
+						break;
+
+					case WeatherDataType.Constant:
+						_providers[data.RegionId] = new WeatherProviderConstant(data.RegionId, data.Weather);
 						break;
 
 					default:
@@ -97,15 +101,10 @@ namespace Aura.Channel.World.Weather
 			if (provider == null)
 				return;
 
-			var regionId = creature.RegionId;
-			var groupId = AuraData.RegionInfoDb.GetGroupId(regionId);
-
 			if (provider is IWeatherProviderTable)
 				Send.Weather(creature, (IWeatherProviderTable)provider);
 			else if (provider is IWeatherProviderConstant)
 				Send.Weather(creature, (IWeatherProviderConstant)provider);
-			else if (provider is IWeatherProviderConstantSmooth)
-				Send.Weather(creature, (IWeatherProviderConstantSmooth)provider);
 			else
 				Log.Warning("WeatherManager.Update: Unknown provider type '{0}'.", provider.GetType().Name);
 		}
