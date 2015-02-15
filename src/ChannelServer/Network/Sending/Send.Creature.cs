@@ -256,7 +256,7 @@ namespace Aura.Channel.Network.Sending
 						case Stat.AttackMinBaseMod: packet.PutShort((short)creature.AttackMinBaseMod); break;
 						case Stat.AttackMaxBaseMod: packet.PutShort((short)creature.AttackMaxBaseMod); break;
 						case Stat.InjuryMinBaseMod: packet.PutShort((short)creature.InjuryMinBase); break;
-						case Stat.InjuryMaxBaseMod: packet.PutShort((short)creature.InjuryMinBaseMaxBase); break;
+						case Stat.InjuryMaxBaseMod: packet.PutShort((short)creature.InjuryMaxBase); break;
 						case Stat.AttackMinMod: packet.PutShort((short)creature.AttackMinMod); break;
 						case Stat.AttackMaxMod: packet.PutShort((short)creature.AttackMaxMod); break;
 

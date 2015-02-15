@@ -375,7 +375,7 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		public int InjuryMinBaseMaxBase
+		public int InjuryMaxBase
 		{
 			get
 			{
