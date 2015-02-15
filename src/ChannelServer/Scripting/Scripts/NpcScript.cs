@@ -1276,6 +1276,8 @@ namespace Aura.Channel.Scripting.Scripts
 					// - MusicBuffBonus
 					// - MusicBuffDuration
 					// - MaxBullets
+					// - Artisan
+					// - ChainCast
 
 					default:
 						Log.Unimplemented("Item upgrade '{0}'", effect.Key);
