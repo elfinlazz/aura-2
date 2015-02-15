@@ -49,7 +49,7 @@ namespace Aura.Data.Database
 		public ushort AttackMax { get; set; }
 		public byte InjuryMin { get; set; }
 		public byte InjuryMax { get; set; }
-		public byte Critical { get; set; }
+		public sbyte Critical { get; set; }
 		public byte Balance { get; set; }
 		public byte AttackSpeed { get; set; }
 		public byte KnockCount { get; set; }
@@ -138,7 +138,7 @@ namespace Aura.Data.Database
 				info.AttackMax = entry.ReadUShort("attackMax");
 				info.InjuryMin = entry.ReadByte("injuryMin");
 				info.InjuryMax = entry.ReadByte("injuryMax");
-				info.Critical = entry.ReadByte("critical");
+				info.Critical = entry.ReadSByte("critical");
 				info.Balance = entry.ReadByte("balance");
 				info.AttackSpeed = entry.ReadByte("attackSpeed");
 				info.KnockCount = entry.ReadByte("knockCount");

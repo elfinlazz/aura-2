@@ -91,7 +91,7 @@ namespace Aura.Shared.Mabi.Structs
 		[FieldOffset(36)]
 		public byte Balance;
 		[FieldOffset(37)]
-		public byte Critical;
+		public sbyte Critical;
 		[FieldOffset(38)]
 		public byte __unknown24;
 		[FieldOffset(39)]

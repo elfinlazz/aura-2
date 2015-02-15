@@ -1236,18 +1236,28 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				switch (effect.Key)
 				{
-					case "MinAttack": result.Item.OptionInfo.AttackMin += (ushort)effect.Value[0]; break;
-					case "MaxAttack": result.Item.OptionInfo.AttackMax += (ushort)effect.Value[0]; break;
-					case "MinInjury": result.Item.OptionInfo.InjuryMin += (ushort)effect.Value[0]; break;
-					case "MaxInjury": result.Item.OptionInfo.InjuryMax += (ushort)effect.Value[0]; break;
-					case "Balance": result.Item.OptionInfo.Balance += (byte)effect.Value[0]; break;
-					case "Critical": result.Item.OptionInfo.Critical += (byte)effect.Value[0]; break;
-					case "Defense": result.Item.OptionInfo.Defense += (int)effect.Value[0]; break;
-					case "Protection": result.Item.OptionInfo.Protection += (short)effect.Value[0]; break;
-					case "AttackRange": result.Item.OptionInfo.EffectiveRange += (short)effect.Value[0]; break;
+					case "MinAttack": result.Item.OptionInfo.AttackMin = (ushort)Math2.Clamp(1, result.Item.OptionInfo.AttackMax, result.Item.OptionInfo.AttackMin + effect.Value[0]); break;
+					case "MaxAttack":
+						result.Item.OptionInfo.AttackMax = (ushort)Math2.Clamp(1, ushort.MaxValue, result.Item.OptionInfo.AttackMax + effect.Value[0]);
+						if (result.Item.OptionInfo.AttackMax < result.Item.OptionInfo.AttackMin)
+							result.Item.OptionInfo.AttackMin = result.Item.OptionInfo.AttackMax;
+						break;
+
+					case "MinInjury": result.Item.OptionInfo.InjuryMin = (ushort)Math2.Clamp(0, result.Item.OptionInfo.InjuryMax, result.Item.OptionInfo.InjuryMin + effect.Value[0]); break;
+					case "MaxInjury":
+						result.Item.OptionInfo.InjuryMax = (ushort)Math2.Clamp(0, ushort.MaxValue, result.Item.OptionInfo.InjuryMax + effect.Value[0]);
+						if (result.Item.OptionInfo.InjuryMax < result.Item.OptionInfo.InjuryMin)
+							result.Item.OptionInfo.InjuryMin = result.Item.OptionInfo.InjuryMax;
+						break;
+
+					case "Balance": result.Item.OptionInfo.Balance = (byte)Math2.Clamp(0, byte.MaxValue, result.Item.OptionInfo.Balance + effect.Value[0]); break;
+					case "Critical": result.Item.OptionInfo.Critical = (sbyte)Math2.Clamp(0, sbyte.MaxValue, result.Item.OptionInfo.Critical + effect.Value[0]); break;
+					case "Defense": result.Item.OptionInfo.Defense = (int)Math2.Clamp(0, int.MaxValue, result.Item.OptionInfo.Defense + (long)effect.Value[0]); break;
+					case "Protection": result.Item.OptionInfo.Protection = (short)Math2.Clamp(0, short.MaxValue, result.Item.OptionInfo.Protection + effect.Value[0]); break;
+					case "AttackRange": result.Item.OptionInfo.EffectiveRange = (short)Math2.Clamp(0, short.MaxValue, result.Item.OptionInfo.EffectiveRange + effect.Value[0]); break;
 
 					case "MaxDurability":
-						result.Item.OptionInfo.DurabilityMax = Math.Max(1000, result.Item.OptionInfo.DurabilityMax + (effect.Value[0] * 1000));
+						result.Item.OptionInfo.DurabilityMax = (int)Math2.Clamp(1000, int.MaxValue, result.Item.OptionInfo.DurabilityMax + (long)(effect.Value[0] * 1000));
 						if (result.Item.OptionInfo.DurabilityMax < result.Item.OptionInfo.Durability)
 							result.Item.OptionInfo.Durability = result.Item.OptionInfo.DurabilityMax;
 						break;

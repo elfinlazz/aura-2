@@ -406,7 +406,7 @@ namespace Aura.Channel.Database
 							item.OptionInfo.InjuryMin = reader.GetUInt16("injuryMin");
 							item.OptionInfo.InjuryMax = reader.GetUInt16("injuryMax");
 							item.OptionInfo.Balance = reader.GetByte("balance");
-							item.OptionInfo.Critical = reader.GetByte("critical");
+							item.OptionInfo.Critical = reader.GetSByte("critical");
 							item.OptionInfo.Defense = reader.GetInt32("defense");
 							item.OptionInfo.Protection = reader.GetInt16("protection");
 							item.OptionInfo.EffectiveRange = reader.GetInt16("range");
