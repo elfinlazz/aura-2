@@ -101,12 +101,7 @@ namespace Aura.Channel.World.Weather
 			if (provider == null)
 				return;
 
-			if (provider is IWeatherProviderTable)
-				Send.Weather(creature, (IWeatherProviderTable)provider);
-			else if (provider is IWeatherProviderConstant)
-				Send.Weather(creature, (IWeatherProviderConstant)provider);
-			else
-				Log.Warning("WeatherManager.Update: Unknown provider type '{0}'.", provider.GetType().Name);
+			Send.Weather(creature, provider);
 		}
 
 		/// <summary>
@@ -123,12 +118,7 @@ namespace Aura.Channel.World.Weather
 			if (region == null)
 				return;
 
-			if (provider is IWeatherProviderTable)
-				Send.Weather(region, (IWeatherProviderTable)provider);
-			else if (provider is IWeatherProviderConstant)
-				Send.Weather(region, (IWeatherProviderConstant)provider);
-			else
-				Log.Warning("WeatherManager.Update: Unknown provider type '{0}'.", provider.GetType().Name);
+			Send.Weather(region, provider);
 		}
 
 		/// <summary>

@@ -19,139 +19,79 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Sends Weather to creature's client.
 		/// </summary>
-		public static void Weather(Creature creature, IWeatherProviderTable provider)
+		public static void Weather(Creature creature, IWeatherProvider provider)
 		{
-			var packet = new Packet(Op.Weather, MabiId.Broadcast);
-			packet.PutByte(0);
-			packet.PutInt(provider.RegionId);
-			packet.PutByte(0);
-			packet.PutInt(provider.GroupId);
-			packet.PutByte(2);
-			packet.PutByte(1);
-			packet.PutString("table");
-			packet.PutString(provider.Name);
-			packet.PutLong(0);
-			packet.PutByte(0);
-
-			creature.Client.Send(packet);
-		}
-
-		/// <summary>
-		/// Sends Weather to creature's client.
-		/// </summary>
-		/// <remarks>
-		/// Packet structure is guessed, even though it works,
-		/// based on constant_smooth.
-		/// </remarks>
-		public static void Weather(Creature creature, IWeatherProviderConstant provider)
-		{
-			var packet = new Packet(Op.Weather, MabiId.Broadcast);
-			packet.PutByte(0);
-			packet.PutInt(provider.RegionId);
-			packet.PutByte(2);
-			packet.PutByte(0);
-			packet.PutByte(1);
-			packet.PutString("constant");
-			packet.PutFloat(provider.Weather);
-			packet.PutLong(0);
-			packet.PutByte(0);
-
-			creature.Client.Send(packet);
-		}
-
-		/// <summary>
-		/// Sends Weather to creature's client.
-		/// </summary>
-		public static void Weather(Creature creature, IWeatherProviderConstantSmooth provider)
-		{
-			var packet = new Packet(Op.Weather, MabiId.Broadcast);
-			packet.PutByte(0);
-			packet.PutInt(provider.RegionId);
-			packet.PutByte(2);
-			packet.PutByte(0);
-			packet.PutByte(1);
-			packet.PutString("constant_smooth");
-			packet.PutFloat(provider.Weather);
-			packet.PutLong(DateTime.Now);
-			packet.PutLong(DateTime.MinValue);
-			packet.PutFloat(provider.WeatherBefore);
-			packet.PutFloat(provider.WeatherBefore);
-			packet.PutLong(provider.TransitionTime);
-			packet.PutByte(false);
-			packet.PutLong(DateTime.MinValue);
-			packet.PutInt(2);
-			packet.PutByte(0);
-
-			creature.Client.Send(packet);
+			Send.Weather(creature.Client.Send, provider);
 		}
 
 		/// <summary>
 		/// Broadcasts Weather in region.
 		/// </summary>
-		public static void Weather(Region region, IWeatherProviderTable provider)
+		public static void Weather(Region region, IWeatherProvider provider)
 		{
-			var packet = new Packet(Op.Weather, MabiId.Broadcast);
-			packet.PutByte(0);
-			packet.PutInt(provider.RegionId);
-			packet.PutByte(0);
-			packet.PutInt(provider.GroupId);
-			packet.PutByte(2);
-			packet.PutByte(1);
-			packet.PutString("table");
-			packet.PutString(provider.Name);
-			packet.PutLong(0);
-			packet.PutByte(0);
-
-			region.Broadcast(packet);
+			Send.Weather(region.Broadcast, provider);
 		}
 
 		/// <summary>
-		/// Broadcasts Weather in region.
+		/// Sends Weather.
 		/// </summary>
-		/// <remarks>
-		/// Packet structure is guessed, even though it works,
-		/// based on constant_smooth.
-		/// </remarks>
-		public static void Weather(Region region, IWeatherProviderConstant provider)
+		private static void Weather(Action<Packet> sender, IWeatherProvider provider)
 		{
 			var packet = new Packet(Op.Weather, MabiId.Broadcast);
 			packet.PutByte(0);
 			packet.PutInt(provider.RegionId);
-			packet.PutByte(2);
-			packet.PutByte(0);
-			packet.PutByte(1);
-			packet.PutString("constant");
-			packet.PutFloat(provider.Weather);
-			packet.PutLong(0);
-			packet.PutByte(0);
 
-			region.Broadcast(packet);
-		}
+			if (provider is IWeatherProviderTable)
+			{
+				var table = (IWeatherProviderTable)provider;
 
-		/// <summary>
-		/// Broadcasts Weather in region.
-		/// </summary>
-		public static void Weather(Region region, IWeatherProviderConstantSmooth provider)
-		{
-			var packet = new Packet(Op.Weather, MabiId.Broadcast);
-			packet.PutByte(0);
-			packet.PutInt(provider.RegionId);
-			packet.PutByte(2);
-			packet.PutByte(0);
-			packet.PutByte(1);
-			packet.PutString("constant_smooth");
-			packet.PutFloat(provider.Weather);
-			packet.PutLong(DateTime.Now);
-			packet.PutLong(DateTime.MinValue);
-			packet.PutFloat(provider.WeatherBefore);
-			packet.PutFloat(provider.WeatherBefore);
-			packet.PutLong(provider.TransitionTime);
-			packet.PutByte(false);
-			packet.PutLong(DateTime.MinValue);
-			packet.PutInt(2);
-			packet.PutByte(0);
+				packet.PutByte(0);
+				packet.PutInt(table.GroupId);
+				packet.PutByte(2);
+				packet.PutByte(1);
+				packet.PutString("table");
+				packet.PutString(table.Name);
+				packet.PutLong(0);
+				packet.PutByte(0);
+			}
+			else if (provider is IWeatherProviderConstant)
+			{
+				var constant = (IWeatherProviderConstant)provider;
 
-			region.Broadcast(packet);
+				// Packet structure is guessed, even though it works,
+				// based on constant_smooth.
+				packet.PutByte(2);
+				packet.PutByte(0);
+				packet.PutByte(1);
+				packet.PutString("constant");
+				packet.PutFloat(constant.Weather);
+				packet.PutLong(0);
+				packet.PutByte(0);
+			}
+			else if (provider is IWeatherProviderConstantSmooth)
+			{
+				var constantSmooth = (IWeatherProviderConstantSmooth)provider;
+
+				packet.PutByte(2);
+				packet.PutByte(0);
+				packet.PutByte(1);
+				packet.PutString("constant_smooth");
+				packet.PutFloat(constantSmooth.Weather);
+				packet.PutLong(DateTime.Now); // Start
+				packet.PutLong(DateTime.MinValue); // End
+				packet.PutFloat(constantSmooth.WeatherBefore);
+				packet.PutFloat(constantSmooth.WeatherBefore);
+				packet.PutLong(constantSmooth.TransitionTime);
+				packet.PutByte(false); // bool? Is table appended? byte? Appended type?
+				packet.PutLong(DateTime.MinValue); // End
+				packet.PutInt(2);
+
+				// Append a table packet here to go back to that after end
+
+				packet.PutByte(0);
+			}
+
+			sender(packet);
 		}
 	}
 }

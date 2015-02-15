@@ -12,6 +12,7 @@ namespace Aura.Channel.World.Weather
 {
 	public interface IWeatherProvider
 	{
+		int RegionId { get; }
 		float GetWeatherAsFloat(DateTime dt);
 		WeatherDetails GetWeather(DateTime dt);
 	}
@@ -19,7 +20,6 @@ namespace Aura.Channel.World.Weather
 	public interface IWeatherProviderTable : IWeatherProvider
 	{
 		string Name { get; }
-		int RegionId { get; }
 		int GroupId { get; }
 	}
 
