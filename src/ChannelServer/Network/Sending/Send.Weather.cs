@@ -66,7 +66,7 @@ namespace Aura.Channel.Network.Sending
 		{
 			var packet = new Packet(Op.Weather, MabiId.Broadcast);
 			packet.PutByte(0);
-			packet.PutInt(creature.Region.Id);
+			packet.PutInt(provider.RegionId);
 			packet.PutByte(2);
 			packet.PutByte(0);
 			packet.PutByte(1);
@@ -83,6 +83,75 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(0);
 
 			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts Weather in region.
+		/// </summary>
+		public static void Weather(Region region, IWeatherProviderTable provider)
+		{
+			var packet = new Packet(Op.Weather, MabiId.Broadcast);
+			packet.PutByte(0);
+			packet.PutInt(provider.RegionId);
+			packet.PutByte(0);
+			packet.PutInt(provider.GroupId);
+			packet.PutByte(2);
+			packet.PutByte(1);
+			packet.PutString("table");
+			packet.PutString(provider.Name);
+			packet.PutLong(0);
+			packet.PutByte(0);
+
+			region.Broadcast(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts Weather in region.
+		/// </summary>
+		/// <remarks>
+		/// Packet structure is guessed, even though it works,
+		/// based on constant_smooth.
+		/// </remarks>
+		public static void Weather(Region region, IWeatherProviderConstant provider)
+		{
+			var packet = new Packet(Op.Weather, MabiId.Broadcast);
+			packet.PutByte(0);
+			packet.PutInt(provider.RegionId);
+			packet.PutByte(2);
+			packet.PutByte(0);
+			packet.PutByte(1);
+			packet.PutString("constant");
+			packet.PutFloat(provider.Weather);
+			packet.PutLong(0);
+			packet.PutByte(0);
+
+			region.Broadcast(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts Weather in region.
+		/// </summary>
+		public static void Weather(Region region, IWeatherProviderConstantSmooth provider)
+		{
+			var packet = new Packet(Op.Weather, MabiId.Broadcast);
+			packet.PutByte(0);
+			packet.PutInt(provider.RegionId);
+			packet.PutByte(2);
+			packet.PutByte(0);
+			packet.PutByte(1);
+			packet.PutString("constant_smooth");
+			packet.PutFloat(provider.Weather);
+			packet.PutLong(DateTime.Now);
+			packet.PutLong(DateTime.MinValue);
+			packet.PutFloat(provider.WeatherBefore);
+			packet.PutFloat(provider.WeatherBefore);
+			packet.PutLong(provider.TransitionTime);
+			packet.PutByte(false);
+			packet.PutLong(DateTime.MinValue);
+			packet.PutInt(2);
+			packet.PutByte(0);
+
+			region.Broadcast(packet);
 		}
 	}
 }

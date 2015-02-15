@@ -110,6 +110,28 @@ namespace Aura.Channel.World.Weather
 		}
 
 		/// <summary>
+		/// Updates clients in region with current weather.
+		/// </summary>
+		/// <param name="regionId"></param>
+		public void Update(int regionId)
+		{
+			var provider = this.GetProvider(regionId);
+			if (provider == null)
+				return;
+
+			var region = ChannelServer.Instance.World.GetRegion(regionId);
+			if (region == null)
+				return;
+
+			if (provider is IWeatherProviderTable)
+				Send.Weather(region, (IWeatherProviderTable)provider);
+			else if (provider is IWeatherProviderConstant)
+				Send.Weather(region, (IWeatherProviderConstant)provider);
+			else
+				Log.Warning("WeatherManager.Update: Unknown provider type '{0}'.", provider.GetType().Name);
+		}
+
+		/// <summary>
 		/// Returns the provider for the region.
 		/// </summary>
 		/// <param name="regionId"></param>
@@ -120,6 +142,17 @@ namespace Aura.Channel.World.Weather
 				return null;
 
 			return _providers[regionId];
+		}
+
+		/// <summary>
+		/// Sets provider for region and updates clients in it.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="provider"></param>
+		public void SetProviderAndUpdate(int regionId, IWeatherProvider provider)
+		{
+			_providers[regionId] = provider;
+			this.Update(regionId);
 		}
 
 		/// <summary>
