@@ -84,9 +84,9 @@ namespace Aura.Shared.Mabi.Structs
 		public ushort AttackMax;
 
 		[FieldOffset(32)]
-		public ushort WAttackMin;
+		public ushort InjuryMin;
 		[FieldOffset(34)]
-		public ushort WAttackMax;
+		public ushort InjuryMax;
 
 		[FieldOffset(36)]
 		public byte Balance;
