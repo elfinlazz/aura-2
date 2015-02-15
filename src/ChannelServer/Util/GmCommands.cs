@@ -1457,7 +1457,7 @@ namespace Aura.Channel.Util
 			{
 				Send.ServerMessage(sender, Localization.Get("Changing weather to table (typeX) requires a relog."));
 
-				ChannelServer.Instance.Weather.SetProviderAndUpdate(new WeatherProviderTable(target.RegionId, args[1]));
+				ChannelServer.Instance.Weather.SetProviderAndUpdate(target.RegionId, new WeatherProviderTable(target.RegionId, args[1]));
 			}
 			else
 			{
@@ -1475,7 +1475,7 @@ namespace Aura.Channel.Util
 					}
 				}
 
-				ChannelServer.Instance.Weather.SetProviderAndUpdate(new WeatherProviderConstant(target.RegionId, val));
+				ChannelServer.Instance.Weather.SetProviderAndUpdate(target.RegionId, new WeatherProviderConstant(target.RegionId, val));
 			}
 
 			return CommandResult.Okay;
