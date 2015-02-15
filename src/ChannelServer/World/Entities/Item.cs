@@ -25,6 +25,11 @@ namespace Aura.Channel.World.Entities
 		private const int MaxProficiency = 101000;
 
 		/// <summary>
+		/// Maximum item experience (proficiency).
+		/// </summary>
+		private const int UncappedMaxProficiency = 251000;
+
+		/// <summary>
 		/// Unique item id that is increased for every new item.
 		/// </summary>
 		private static long _itemId = MabiId.TmpItems;
@@ -155,11 +160,15 @@ namespace Aura.Channel.World.Entities
 			get { return this.OptionInfo.Experience + this.OptionInfo.EP * 1000; }
 			set
 			{
-				var newValue = Math2.Clamp(0, MaxProficiency, value);
-				if (newValue == MaxProficiency)
+				var max = MaxProficiency;
+				if (ChannelServer.Instance.Conf.World.UncapProficiency)
+					max = UncappedMaxProficiency;
+
+				var newValue = Math2.Clamp(0, max, value);
+				if (newValue == max)
 				{
 					this.OptionInfo.Experience = 1000;
-					this.OptionInfo.EP = 100;
+					this.OptionInfo.EP = (byte)((newValue / 1000) - 1);
 				}
 				else
 				{
