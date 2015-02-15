@@ -13,6 +13,7 @@ namespace Aura.Data.Database
 		public int RegionId { get; set; }
 		public WeatherDataType Type { get; set; }
 		public string Name { get; set; }
+		public float Weather { get; set; }
 	}
 
 	public enum WeatherDataType
@@ -30,7 +31,7 @@ namespace Aura.Data.Database
 		/// <summary>
 		/// Official constant weather
 		/// </summary>
-		//Constant,
+		Constant,
 
 		/// <summary>
 		/// Official constant weather with transition?
@@ -56,6 +57,7 @@ namespace Aura.Data.Database
 
 			var stype = entry.ReadString("type");
 			var name = entry.ReadString("name");
+			var weather = entry.ReadFloat("weather");
 			WeatherDataType type;
 
 			switch (stype)
@@ -63,6 +65,11 @@ namespace Aura.Data.Database
 				case "table":
 					entry.AssertNotMissing("name");
 					type = WeatherDataType.Table;
+					break;
+
+				case "constant":
+					entry.AssertNotMissing("weather");
+					type = WeatherDataType.Constant;
 					break;
 
 				default:
@@ -75,6 +82,7 @@ namespace Aura.Data.Database
 				data.RegionId = region;
 				data.Type = type;
 				data.Name = name;
+				data.Weather = weather;
 
 				this.Entries[data.RegionId] = data;
 			}

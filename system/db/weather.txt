@@ -3,8 +3,11 @@
 //
 // type:
 //   - table: Official random weather based on weathercommon.xml.
+//            Requires value "name", e.g. "type1".
+//   - constant: Constant weather.
+//            Requires value "weather", float from 0.0 to 2.0.
 //
-// Values: regions, type, name
+// Values: regions, type, [name], [weather]
 //---------------------------------------------------------------------------
 
 [
