@@ -1247,10 +1247,25 @@ namespace Aura.Channel.Scripting.Scripts
 					case "AttackRange": result.Item.OptionInfo.EffectiveRange += (short)effect.Value[0]; break;
 
 					case "MaxDurability":
-						result.Item.OptionInfo.DurabilityMax += effect.Value[0] * 1000;
+						result.Item.OptionInfo.DurabilityMax = Math.Max(1000, result.Item.OptionInfo.DurabilityMax + (effect.Value[0] * 1000));
 						if (result.Item.OptionInfo.DurabilityMax < result.Item.OptionInfo.Durability)
 							result.Item.OptionInfo.Durability = result.Item.OptionInfo.DurabilityMax;
 						break;
+
+					// TODO:
+					// - MagicDefense
+					// - MagicProtection
+					// - CollectionSpeed
+					// - CollectionBonus
+					// - SplashRadius
+					// - ManaUse
+					// - ManaBurn
+					// - MagicDamage
+					// - CastingSpeed
+					// - LancePiercing
+					// - MusicBuffBonus
+					// - MusicBuffDuration
+					// - MaxBullets
 
 					default:
 						Log.Unimplemented("Item upgrade '{0}'", effect.Key);
