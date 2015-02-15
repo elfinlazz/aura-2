@@ -348,6 +348,8 @@ namespace Aura.Channel.World.Entities
 				this.OptionInfo.DurabilityOriginal = this.Data.Durability;
 				this.OptionInfo.AttackMin = this.Data.AttackMin;
 				this.OptionInfo.AttackMax = this.Data.AttackMax;
+				this.OptionInfo.InjuryMin = this.Data.InjuryMin;
+				this.OptionInfo.InjuryMax = this.Data.InjuryMax;
 				this.OptionInfo.Balance = this.Data.Balance;
 				this.OptionInfo.Critical = this.Data.Critical;
 				this.OptionInfo.Defense = this.Data.Defense;
