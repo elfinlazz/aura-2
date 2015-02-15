@@ -25,7 +25,6 @@ namespace Aura.Channel.World.Weather
 
 	public interface IWeatherProviderConstant : IWeatherProvider
 	{
-		int RegionId { get; }
 		float Weather { get; }
 	}
 
