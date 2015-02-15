@@ -1226,8 +1226,12 @@ namespace Aura.Channel.Scripting.Scripts
 			result.Item.Proficiency -= result.Upgrade.Exp;
 			this.Gold -= result.Upgrade.Gold;
 
-			// Upgrade
+			// Increase upgrade count
 			result.Item.OptionInfo.Upgraded++;
+			if (ChannelServer.Instance.Conf.World.UnlimitedUpgrades && result.Item.OptionInfo.Upgraded == result.Item.OptionInfo.UpgradeMax)
+				result.Item.OptionInfo.Upgraded = 0;
+
+			// Upgrade
 			foreach (var effect in result.Upgrade.Effects)
 			{
 				switch (effect.Key)
