@@ -15,4 +15,23 @@ namespace Aura.Channel.World.Weather
 		float GetWeatherAsFloat(DateTime dt);
 		WeatherDetails GetWeather(DateTime dt);
 	}
+
+	public interface IWeatherProviderTable : IWeatherProvider
+	{
+		string Name { get; }
+		int RegionId { get; }
+		int GroupId { get; }
+	}
+
+	public interface IWeatherProviderConstant : IWeatherProvider
+	{
+		int RegionId { get; }
+		float Weather { get; }
+	}
+
+	public interface IWeatherProviderConstantSmooth : IWeatherProviderConstant
+	{
+		float WeatherBefore { get; }
+		int TransitionTime { get; }
+	}
 }

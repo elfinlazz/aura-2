@@ -11,16 +11,21 @@ namespace Aura.Channel.World.Weather
 	/// <summary>
 	/// Official random weather pattern, based on data loaded from db.
 	/// </summary>
-	public class WeatherProviderTable : IWeatherProvider
+	public class WeatherProviderTable : IWeatherProviderTable
 	{
 		private int _tableId;
 
 		public string Name { get; private set; }
+		public int RegionId { get; private set; }
+		public int GroupId { get; private set; }
 
-		public WeatherProviderTable(string name)
+		public WeatherProviderTable(int regionId, string name)
 		{
-			_tableId = Convert.ToInt32(name.Substring("type".Length)) - 1;
+			_tableId = this.NameToId(name);
+
 			this.Name = name;
+			this.RegionId = regionId;
+			this.GroupId = AuraData.RegionInfoDb.GetGroupId(regionId);
 		}
 
 		private int NameToId(string name)
