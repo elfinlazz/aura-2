@@ -139,10 +139,10 @@ namespace Aura.Channel.World.Weather
 		/// </summary>
 		/// <param name="regionId"></param>
 		/// <param name="provider"></param>
-		public void SetProviderAndUpdate(int regionId, IWeatherProvider provider)
+		public void SetProviderAndUpdate(IWeatherProvider provider)
 		{
-			_providers[regionId] = provider;
-			this.Update(regionId);
+			_providers[provider.RegionId] = provider;
+			this.Update(provider.RegionId);
 		}
 
 		/// <summary>
