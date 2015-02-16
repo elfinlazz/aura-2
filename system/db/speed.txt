@@ -432,3 +432,7 @@ disciple/*/run,                549.530300
 disciple/*/walk,               549.530300
 miniskeleton/*/run,            373.850600
 miniskeleton/*/walk,           207.689200
+PetLamb/*/Run,                 649.672000
+PetLamb/*/Walk,                262.500000
+albangolem/*/run,              900.000000
+albangolem/*/walk,             207.689000

@@ -21,7 +21,7 @@
 { itemId: 50497, name: "Silver Medal Podium", propId: 44604, giantPropId: 44604 },
 { itemId: 50498, name: "Bronze Medal Podium", propId: 44605, giantPropId: 44605 },
 { itemId: 50499, name: "Tin Medal Podium", propId: 44608, giantPropId: 44608 },
-{ itemId: 50838, name: "Couple Heart Statue", propId: 44618, giantPropId: 44618 },
+{ itemId: 50838, name: "Statue of Love", propId: 44618, giantPropId: 44618 },
 { itemId: 50839, name: "Thinking Chair", propId: 44633, giantPropId: 44635 },
 { itemId: 50840, name: "Golden Thinking Chair", propId: 44634, giantPropId: 44636 },
 { itemId: 50841, name: "Gold Crown Thinking Chair", propId: 44668, giantPropId: 44667 },

@@ -134,9 +134,10 @@
 { raceId: 471006, name: "Skeleton Maid", timeLimit: 117, exp: 1.8, height: 0.46, upper: 1.7, lower: 0.8, life: 68, mana: 32, stamina: 68, str: 38, int: 10, dex: 22, will: 18, luck: 2, defense: 0, protection: 2 },
 { raceId: 471007, name: "Shark Robe Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
 { raceId: 471010, name: "Lite Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
-{ raceId: 471011, name: "Lite Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
+{ raceId: 471011, name: "Cone Hat Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
 { raceId: 490025, name: "Warp Imp", timeLimit: 112, exp: 1.7, height: 0.2, upper: 3.6, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
 { raceId: 490030, name: "Lite Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
+{ raceId: 490031, name: "Knitwear Penguin", timeLimit: 92, exp: 1.8, height: 0.8, upper: 1.4, lower: 1.2, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
 { raceId: 500001, name: "Black Mud Crab", timeLimit: 90, exp: 1.6, height: 0.75, upper: 1.0, lower: 1.0, life: 50, mana: 33, stamina: 34, str: 33, int: 40, dex: 27, will: 27, luck: 28, defense: 0, protection: 2 },
 { raceId: 500002, name: "Red Rock Crab", timeLimit: 111, exp: 1.7, height: 0.75, upper: 1.0, lower: 1.0, life: 45, mana: 40, stamina: 39, str: 27, int: 38, dex: 24, will: 30, luck: 29, defense: 0, protection: 2 },
 { raceId: 511001, name: "Monkey", timeLimit: 105, exp: 1.5, height: 0.26, upper: 1.37, lower: 1.3, life: 66, mana: 51, stamina: 44, str: 28, int: 30, dex: 31, will: 14, luck: 17, defense: 0, protection: 2 },
@@ -298,12 +299,23 @@
 // Chef Carriage
 //---------------------------------------------------------------------------
 { raceId: 270902, name: "Flying Food Truck", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 24, stamina: 120, str: 80, int: 40, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
+{ raceId: 490041, name: "Gingerbread Truck", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 24, stamina: 120, str: 80, int: 40, dex: 20, will: 20, luck: 35, defense: 15, protection: 8, color1: 0x00DF7272, color2: 0x00CAAA66, color3: 0x00472827 },
 
 // Floral Fairies
 //---------------------------------------------------------------------------
 { raceId: 270903, name: "Floral Fairy", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 40, str: 40, int: 60, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 { raceId: 270904, name: "Floral Fairy (M)", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 40, str: 40, int: 60, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 { raceId: 270905, name: "Floral Fairy (F)", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 40, str: 40, int: 60, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
+
+// The 7 sheeps
+//---------------------------------------------------------------------------
+{ raceId: 490033, name: "Brainy Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
+{ raceId: 490035, name: "Smarmy Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
+{ raceId: 490036, name: "Grumpy Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
+{ raceId: 490037, name: "Cutie Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
+{ raceId: 490038, name: "Gloomy Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
+{ raceId: 490039, name: "Cranky Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
+{ raceId: 490040, name: "Meany Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
 
 // Partners
 //---------------------------------------------------------------------------
