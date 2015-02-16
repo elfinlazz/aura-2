@@ -84,7 +84,7 @@ namespace Aura.Shared.Mabi
 		public uint GetUInt(string key) { return (uint)this.Get<int>(key); }
 		public long GetLong(string key) { return this.Get<long>(key); }
 		public ulong GetULong(string key) { return (ulong)this.Get<long>(key); }
-		public float GetFLoat(string key) { return this.Get<float>(key); }
+		public float GetFloat(string key) { return this.Get<float>(key); }
 		public string GetString(string key) { return this.Get<string>(key); }
 		public bool GetBool(string key) { return this.Get<bool>(key); }
 

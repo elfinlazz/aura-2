@@ -111,18 +111,18 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutShort((short)creature.AttackMinMod);
 				packet.PutShort(0);			         // AttackMaxBase
 				packet.PutShort((short)creature.AttackMaxMod);
-				packet.PutShort(0);			         // WAttackMinBase
-				packet.PutShort(0);			         // WAttackMinMod
-				packet.PutShort(0);			         // WAttackMaxBase
-				packet.PutShort(0);			         // WAttackMaxMod
+				packet.PutShort(0);			         // InjuryMinBase
+				packet.PutShort(0);			         // InjuryMinMod
+				packet.PutShort(0);			         // InjuryMaxBase
+				packet.PutShort(0);			         // InjuryMaxMod
 				packet.PutShort(0);			         // LeftAttackMinMod
 				packet.PutShort(0);			         // LeftAttackMaxMod
 				packet.PutShort(0);			         // RightAttackMinMod
 				packet.PutShort(0);			         // RightAttackMaxMod
-				packet.PutShort(0);			         // LeftWAttackMinMod
-				packet.PutShort(0);			         // LeftWAttackMaxMod
-				packet.PutShort(0);			         // RightWAttackMinMod
-				packet.PutShort(0);			         // RightWAttackMaxMod
+				packet.PutShort(0);			         // LeftInjuryMinMod
+				packet.PutShort(0);			         // LeftInjuryMaxMod
+				packet.PutShort(0);			         // RightInjuryMinMod
+				packet.PutShort(0);			         // RightInjuryMaxMod
 				packet.PutFloat(0);			         // LeftCriticalMod
 				packet.PutFloat(0);			         // RightCriticalMod
 				packet.PutShort(0);			         // LeftRateMod
@@ -152,8 +152,8 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutLong(0);			         // Score
 				packet.PutShort((short)creature.AttackMinBaseMod);
 				packet.PutShort((short)creature.AttackMaxBaseMod);
-				packet.PutShort((short)creature.WAttackMinBase);
-				packet.PutShort((short)creature.WAttackMaxBase);
+				packet.PutShort((short)creature.InjuryMinBaseMod);
+				packet.PutShort((short)creature.InjuryMaxBaseMod);
 				packet.PutFloat(creature.CriticalBase * 100);
 				packet.PutFloat(creature.ProtectionBaseMod);
 				packet.PutShort((short)creature.DefenseBaseMod);
@@ -164,25 +164,25 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutShort(0);                  // MeleeAttackMinBaseMod (8 / 3)
 				packet.PutShort(0);                  // MeleeAttackMaxBaseMod (18 / 4)
 
-				packet.PutShort(0);                  // MeleeWAttackMinBaseMod
-				packet.PutShort(0);                  // MeleeWAttackMaxBaseMod
+				packet.PutShort(0);                  // MeleeInjuryMinBaseMod
+				packet.PutShort(0);                  // MeleeInjuryMaxBaseMod
 				packet.PutShort(0);                  // RangeAttackMinBaseMod (10)
 				packet.PutShort(0);                  // RangeAttackMaxBaseMod (25)
-				packet.PutShort(0);                  // RangeWAttackMinBaseMod
-				packet.PutShort(0);                  // RangeWAttackMaxBaseMod
+				packet.PutShort(0);                  // RangeInjuryMinBaseMod
+				packet.PutShort(0);                  // RangeInjuryMaxBaseMod
 				// [180100] Guns
 				{
 					packet.PutShort(0);			     // DualgunAttackMinBaseMod
 					packet.PutShort(0);			     // DualgunAttackMaxBaseMod
-					packet.PutShort(0);			     // DualgunWAttackMinBaseMod
-					packet.PutShort(0);			     // DualgunWAttackMaxBaseMod
+					packet.PutShort(0);			     // DualgunInjuryMinBaseMod
+					packet.PutShort(0);			     // DualgunInjuryMaxBaseMod
 				}
 				// [180800, NA189 (23.07.2014)] Ninja?
 				{
 					packet.PutShort(0);			     // ? AttackMinBaseMod
 					packet.PutShort(0);			     // ? AttackMaxBaseMod
-					packet.PutShort(0);			     // ? WAttackMinBaseMod
-					packet.PutShort(0);			     // ? WAttackMaxBaseMod
+					packet.PutShort(0);			     // ? InjuryMinBaseMod
+					packet.PutShort(0);			     // ? InjuryMaxBaseMod
 				}
 				packet.PutShort(0);			         // PoisonBase
 				packet.PutShort(0);			         // PoisonMod

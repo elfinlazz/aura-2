@@ -42,11 +42,14 @@ namespace Aura.Data.Database
 
 		public byte WeaponType { get; set; }
 		public InstrumentType InstrumentType { get; set; }
+		public int MaxUpgrades { get; set; }
 
 		public short Range { get; set; }
 		public ushort AttackMin { get; set; }
 		public ushort AttackMax { get; set; }
-		public byte Critical { get; set; }
+		public byte InjuryMin { get; set; }
+		public byte InjuryMax { get; set; }
+		public sbyte Critical { get; set; }
 		public byte Balance { get; set; }
 		public byte AttackSpeed { get; set; }
 		public byte KnockCount { get; set; }
@@ -125,6 +128,7 @@ namespace Aura.Data.Database
 			info.Defense = entry.ReadInt("defense");
 			info.Protection = entry.ReadShort("protection");
 			info.InstrumentType = (InstrumentType)entry.ReadInt("instrumentType");
+			info.MaxUpgrades = entry.ReadInt("maxUpgrades");
 
 			info.WeaponType = entry.ReadByte("weaponType");
 			if (info.WeaponType != 0)
@@ -132,7 +136,9 @@ namespace Aura.Data.Database
 				info.Range = entry.ReadShort("range");
 				info.AttackMin = entry.ReadUShort("attackMin");
 				info.AttackMax = entry.ReadUShort("attackMax");
-				info.Critical = entry.ReadByte("critical");
+				info.InjuryMin = entry.ReadByte("injuryMin");
+				info.InjuryMax = entry.ReadByte("injuryMax");
+				info.Critical = entry.ReadSByte("critical");
 				info.Balance = entry.ReadByte("balance");
 				info.AttackSpeed = entry.ReadByte("attackSpeed");
 				info.KnockCount = entry.ReadByte("knockCount");

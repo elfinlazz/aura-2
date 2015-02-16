@@ -355,7 +355,7 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		public int WAttackMinBase
+		public int InjuryMinBaseMod
 		{
 			get
 			{
@@ -363,10 +363,10 @@ namespace Aura.Channel.World.Entities
 
 				if (this.RightHand != null)
 				{
-					result = this.RightHand.OptionInfo.WAttackMin;
+					result = this.RightHand.OptionInfo.InjuryMin;
 					if (this.LeftHand != null)
 					{
-						result += this.LeftHand.OptionInfo.WAttackMin;
+						result += this.LeftHand.OptionInfo.InjuryMin;
 						result /= 2; // average
 					}
 				}
@@ -375,7 +375,7 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		public int WAttackMaxBase
+		public int InjuryMaxBaseMod
 		{
 			get
 			{
@@ -383,10 +383,10 @@ namespace Aura.Channel.World.Entities
 
 				if (this.RightHand != null)
 				{
-					result = this.RightHand.OptionInfo.WAttackMax;
+					result = this.RightHand.OptionInfo.InjuryMax;
 					if (this.LeftHand != null)
 					{
-						result += this.LeftHand.OptionInfo.WAttackMax;
+						result += this.LeftHand.OptionInfo.InjuryMax;
 						result /= 2; // average
 					}
 				}

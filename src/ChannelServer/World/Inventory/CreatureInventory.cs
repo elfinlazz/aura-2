@@ -142,7 +142,7 @@ namespace Aura.Channel.World.Inventory
 				this.UpdateEquipReferences(Pocket.RightHand1, Pocket.LeftHand1, Pocket.Magazine1);
 				Send.StatUpdate(_creature, StatUpdateType.Private,
 					Stat.AttackMinBaseMod, Stat.AttackMaxBaseMod,
-					Stat.WAttackMinBaseMod, Stat.WAttackMaxBaseMod,
+					Stat.InjuryMinBaseMod, Stat.InjuryMaxBaseMod,
 					Stat.BalanceBaseMod, Stat.CriticalBaseMod,
 					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
 				);
@@ -1091,7 +1091,7 @@ namespace Aura.Channel.World.Inventory
 			{
 				Send.StatUpdate(_creature, StatUpdateType.Private,
 					Stat.AttackMinBaseMod, Stat.AttackMaxBaseMod,
-					Stat.WAttackMinBaseMod, Stat.WAttackMaxBaseMod,
+					Stat.InjuryMinBaseMod, Stat.InjuryMaxBaseMod,
 					Stat.BalanceBaseMod, Stat.CriticalBaseMod,
 					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
 				);

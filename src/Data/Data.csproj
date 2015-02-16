@@ -61,6 +61,7 @@
     <Compile Include="Database\ColorMaps.cs" />
     <Compile Include="Database\Exp.cs" />
     <Compile Include="Database\Items.cs" />
+    <Compile Include="Database\ItemUpgrades.cs" />
     <Compile Include="Database\Keywords.cs" />
     <Compile Include="Database\StatsAgeUp.cs" />
     <Compile Include="Database\Titles.cs" />

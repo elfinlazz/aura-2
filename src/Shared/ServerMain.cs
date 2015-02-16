@@ -175,6 +175,11 @@ namespace Aura.Shared
 				{
 					this.LoadDb(AuraData.TitleDb, "db/titles.txt", reload);
 				}
+
+				if ((toLoad & DataLoad.ItemUpgrades) != 0)
+				{
+					this.LoadDb(AuraData.ItemUpgradesDb, "db/itemupgrades.txt", reload);
+				}
 			}
 			catch (DatabaseErrorException ex)
 			{
@@ -272,6 +277,7 @@ namespace Aura.Shared
 		Keywords = 0x8000,
 		Titles = 0x10000,
 		StatsAge = 0x20000,
+		ItemUpgrades = 0x40000,
 
 		All = 0xFFFFFFFF,
 

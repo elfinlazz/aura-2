@@ -18,6 +18,7 @@ using Aura.Shared.Database;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using Aura.Channel.World.Inventory;
+using Aura.Data.Database;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -1164,6 +1165,147 @@ namespace Aura.Channel.Scripting.Scripts
 			return result;
 		}
 
+		/// <summary>
+		/// Tries to upgrade item specified in the reply.
+		/// </summary>
+		/// <param name="upgradeReply"></param>
+		/// <returns></returns>
+		/// <remarks>
+		/// Only warn when something goes wrong because problems can be caused
+		/// by replies unknown to us or an outdated database.
+		/// 
+		/// The NPCs don't have replies for failed upgrades, because the client
+		/// disables invalid upgrades, you shouldn't be able to get a fail,
+		/// unless you "hacked", modified client files, or Aura is outdated.
+		/// </remarks>
+		public UpgradeResult Upgrade(string upgradeReply)
+		{
+			var result = new UpgradeResult();
+
+			// Example: @upgrade:22518872341757176:broad_sword_balance1
+			var args = upgradeReply.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+			if (args.Length != 3 || !long.TryParse(args[1], out result.ItemEntityId))
+			{
+				Log.Warning("NpcScript.Upgrade: Player '{0}' (Account: {1}) sent invalid reply.", this.Player.EntityIdHex, this.Player.Client.Account.Id);
+				return result;
+			}
+
+			// Get item
+			result.Item = this.Player.Inventory.GetItem(result.ItemEntityId);
+			if (result.Item == null || result.Item.OptionInfo.Upgraded == result.Item.OptionInfo.UpgradeMax)
+			{
+				Log.Warning("NpcScript.Upgrade: Player '{0}' (Account: {1}) tried to upgrade invalid item.", this.Player.EntityIdHex, this.Player.Client.Account.Id);
+				return result;
+			}
+
+			// Get upgrade and check item and NPCs
+			result.Upgrade = AuraData.ItemUpgradesDb.Find(args[2]);
+			if (result.Upgrade == null)
+			{
+				Log.Warning("NpcScript.Upgrade: Player '{0}' (Account: {1}) tried to apply an unknown upgrade ({2}).", this.Player.EntityIdHex, this.Player.Client.Account.Id, args[2]);
+				return result;
+			}
+
+			// Check upgrade and item
+			if (!result.Item.Data.HasTag(result.Upgrade.Filter) || result.Item.Proficiency < result.Upgrade.Exp || !Math2.Between(result.Item.OptionInfo.Upgraded, result.Upgrade.UpgradeMin, result.Upgrade.UpgradeMax))
+			{
+				Log.Warning("NpcScript.Upgrade: Player '{0}' (Account: {1}) tried to apply upgrade to invalid item.", this.Player.EntityIdHex, this.Player.Client.Account.Id);
+				return result;
+			}
+			if (!result.Upgrade.Npcs.Contains(this.NPC.Name.TrimStart('_').ToLower()))
+			{
+				Log.Warning("NpcScript.Upgrade: Player '{0}' (Account: {1}) tried to apply upgrade '{2}' at an invalid NPC ({3}).", this.Player.EntityIdHex, this.Player.Client.Account.Id, result.Upgrade.Ident, this.NPC.Name.TrimStart('_').ToLower());
+				return result;
+			}
+
+			// Check gold
+			if (this.Gold < result.Upgrade.Gold)
+				return result;
+
+			// Take gold and exp
+			result.Item.Proficiency -= result.Upgrade.Exp;
+			this.Gold -= result.Upgrade.Gold;
+
+			// Increase upgrade count
+			result.Item.OptionInfo.Upgraded++;
+			if (ChannelServer.Instance.Conf.World.UnlimitedUpgrades && result.Item.OptionInfo.Upgraded == result.Item.OptionInfo.UpgradeMax)
+				result.Item.OptionInfo.Upgraded = 0;
+
+			// Upgrade
+			foreach (var effect in result.Upgrade.Effects)
+			{
+				switch (effect.Key)
+				{
+					case "MinAttack": result.Item.OptionInfo.AttackMin = (ushort)Math2.Clamp(1, result.Item.OptionInfo.AttackMax, result.Item.OptionInfo.AttackMin + effect.Value[0]); break;
+					case "MaxAttack":
+						result.Item.OptionInfo.AttackMax = (ushort)Math2.Clamp(1, ushort.MaxValue, result.Item.OptionInfo.AttackMax + effect.Value[0]);
+						if (result.Item.OptionInfo.AttackMax < result.Item.OptionInfo.AttackMin)
+							result.Item.OptionInfo.AttackMin = result.Item.OptionInfo.AttackMax;
+						break;
+
+					case "MinInjury": result.Item.OptionInfo.InjuryMin = (ushort)Math2.Clamp(0, result.Item.OptionInfo.InjuryMax, result.Item.OptionInfo.InjuryMin + effect.Value[0]); break;
+					case "MaxInjury":
+						result.Item.OptionInfo.InjuryMax = (ushort)Math2.Clamp(0, ushort.MaxValue, result.Item.OptionInfo.InjuryMax + effect.Value[0]);
+						if (result.Item.OptionInfo.InjuryMax < result.Item.OptionInfo.InjuryMin)
+							result.Item.OptionInfo.InjuryMin = result.Item.OptionInfo.InjuryMax;
+						break;
+
+					case "Balance": result.Item.OptionInfo.Balance = (byte)Math2.Clamp(0, byte.MaxValue, result.Item.OptionInfo.Balance + effect.Value[0]); break;
+					case "Critical": result.Item.OptionInfo.Critical = (sbyte)Math2.Clamp(0, sbyte.MaxValue, result.Item.OptionInfo.Critical + effect.Value[0]); break;
+					case "Defense": result.Item.OptionInfo.Defense = (int)Math2.Clamp(0, int.MaxValue, result.Item.OptionInfo.Defense + (long)effect.Value[0]); break;
+					case "Protection": result.Item.OptionInfo.Protection = (short)Math2.Clamp(0, short.MaxValue, result.Item.OptionInfo.Protection + effect.Value[0]); break;
+					case "AttackRange": result.Item.OptionInfo.EffectiveRange = (short)Math2.Clamp(0, short.MaxValue, result.Item.OptionInfo.EffectiveRange + effect.Value[0]); break;
+
+					case "MaxDurability":
+						result.Item.OptionInfo.DurabilityMax = (int)Math2.Clamp(1000, int.MaxValue, result.Item.OptionInfo.DurabilityMax + (long)(effect.Value[0] * 1000));
+						if (result.Item.OptionInfo.DurabilityMax < result.Item.OptionInfo.Durability)
+							result.Item.OptionInfo.Durability = result.Item.OptionInfo.DurabilityMax;
+						break;
+
+					case "MagicDefense":
+						// MDEF:f:1.000000;MPROT:f:1.000000;MTWR:1:1;
+						var mdef = result.Item.MetaData1.GetFloat("MDEF");
+						result.Item.MetaData1.SetFloat("MDEF", Math2.Clamp(0, int.MaxValue, mdef + effect.Value[0]));
+						break;
+
+					case "MagicProtection":
+						// MDEF:f:1.000000;MPROT:f:1.000000;MTWR:1:1;
+						var mprot = result.Item.MetaData1.GetFloat("MPROT");
+						result.Item.MetaData1.SetFloat("MPROT", Math2.Clamp(0, int.MaxValue, mprot + effect.Value[0]));
+						break;
+
+					// TODO:
+					// - CollectionSpeed
+					// - CollectionBonus
+					// - SplashRadius
+					// - ManaUse
+					// - ManaBurn
+					// - MagicDamage
+					// - CastingSpeed
+					// - LancePiercing
+					// - MusicBuffBonus
+					// - MusicBuffDuration
+					// - MaxBullets
+					// - Artisan
+					// - ChainCast
+
+					default:
+						Log.Unimplemented("Item upgrade '{0}'", effect.Key);
+						break;
+				}
+			}
+
+			// Update item
+			Send.ItemUpdate(this.Player, result.Item);
+
+			// Send result
+			Send.ItemUpgradeResult(this.Player, result.Item, result.Upgrade.Ident);
+
+			result.Success = true;
+
+			return result;
+		}
+
 		// Dialog
 		// ------------------------------------------------------------------
 
@@ -1422,6 +1564,21 @@ namespace Aura.Channel.Scripting.Scripts
 		public int Points;
 		public int Successes;
 		public int Fails;
+	}
+
+	/// <summary>
+	/// Information about upgrade process
+	/// </summary>
+	/// <remarks>
+	/// Does not require HadGold or something, the client disables
+	/// upgrades you can't use because of insufficient gold or prof.
+	/// </remarks>
+	public struct UpgradeResult
+	{
+		public long ItemEntityId;
+		public Item Item;
+		public ItemUpgradeData Upgrade;
+		public bool Success;
 	}
 
 #if __MonoCS__

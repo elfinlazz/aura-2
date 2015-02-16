@@ -25,6 +25,11 @@ namespace Aura.Channel.World.Entities
 		private const int MaxProficiency = 101000;
 
 		/// <summary>
+		/// Maximum item experience (proficiency).
+		/// </summary>
+		private const int UncappedMaxProficiency = 251000;
+
+		/// <summary>
 		/// Unique item id that is increased for every new item.
 		/// </summary>
 		private static long _itemId = MabiId.TmpItems;
@@ -155,11 +160,15 @@ namespace Aura.Channel.World.Entities
 			get { return this.OptionInfo.Experience + this.OptionInfo.EP * 1000; }
 			set
 			{
-				var newValue = Math2.Clamp(0, MaxProficiency, value);
-				if (newValue == MaxProficiency)
+				var max = MaxProficiency;
+				if (ChannelServer.Instance.Conf.World.UncapProficiency)
+					max = UncappedMaxProficiency;
+
+				var newValue = Math2.Clamp(0, max, value);
+				if (newValue == max)
 				{
 					this.OptionInfo.Experience = 1000;
-					this.OptionInfo.EP = 100;
+					this.OptionInfo.EP = (byte)((newValue / 1000) - 1);
 				}
 				else
 				{
@@ -348,6 +357,8 @@ namespace Aura.Channel.World.Entities
 				this.OptionInfo.DurabilityOriginal = this.Data.Durability;
 				this.OptionInfo.AttackMin = this.Data.AttackMin;
 				this.OptionInfo.AttackMax = this.Data.AttackMax;
+				this.OptionInfo.InjuryMin = this.Data.InjuryMin;
+				this.OptionInfo.InjuryMax = this.Data.InjuryMax;
 				this.OptionInfo.Balance = this.Data.Balance;
 				this.OptionInfo.Critical = this.Data.Critical;
 				this.OptionInfo.Defense = this.Data.Defense;
@@ -357,6 +368,7 @@ namespace Aura.Channel.World.Entities
 				this.OptionInfo.WeaponType = this.Data.WeaponType;
 				this.OptionInfo.AttackSpeed = (AttackSpeed)this.Data.AttackSpeed;
 				this.OptionInfo.EffectiveRange = this.Data.Range;
+				this.OptionInfo.UpgradeMax = (byte)this.Data.MaxUpgrades;
 
 				var rand = RandomProvider.Get();
 				this.Info.Color1 = AuraData.ColorMapDb.GetRandom(this.Data.ColorMap1, rand);
