@@ -45,15 +45,22 @@ namespace Aura.Channel.Skills.Life
 
 			// You shall stop
 			creature.StopMove();
-			var pos = creature.GetPosition();
+			var creaturePosition = creature.GetPosition();
 
 			// Get target (either prop or creature)
 			var targetEntity = this.GetTargetEntity(creature.Region, entityId);
 			if (targetEntity != null)
 				creature.Temp.GatheringTargetPosition = targetEntity.GetPosition();
 
+			// Check distance
+			if (!creaturePosition.InRange(creature.Temp.GatheringTargetPosition, 400))
+			{
+				Send.Notice(creature, Localization.Get("It is too far to gather."));
+				return false;
+			}
+
 			// ? (sets creatures position on the client side)
-			Send.CollectUnk(creature, entityId, collectId, pos);
+			Send.CollectUnk(creature, entityId, collectId, creaturePosition);
 
 			// Use
 			Send.SkillUse(creature, skill.Info.Id, entityId, collectId);
@@ -116,7 +123,7 @@ namespace Aura.Channel.Skills.Life
 
 			if (!creaturePosition.InRange(targetPosition, 400))
 			{
-				Send.Notice(creature, Localization.Get("You are too far away."));
+				Send.Notice(creature, Localization.Get("It is too far to gather."));
 				this.DoComplete(creature, entityId, collectId, false, 1);
 				return;
 			}
