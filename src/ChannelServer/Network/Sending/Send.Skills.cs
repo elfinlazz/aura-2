@@ -568,26 +568,37 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(1);
 			packet.PutUShort((ushort)skillId);
 
-			creature.Region.Broadcast(packet, creature);
+			creature.Client.Send(packet);
 		}
 
 		/// <summary>
-		/// Sends CollectUnk to creature's client.
+		/// Broadcasts CollectAnimation in creature's range.
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="entityId"></param>
 		/// <param name="collectId"></param>
 		/// <param name="pos"></param>
-		public static void CollectUnk(Creature creature, long entityId, int collectId, Position pos)
+		public static void CollectAnimation(Creature creature, long entityId, int collectId, Position pos)
 		{
-			var packet = new Packet(Op.CollectUnk, creature.EntityId);
+			var packet = new Packet(Op.CollectAnimation, creature.EntityId);
 			packet.PutLong(entityId);
 			packet.PutInt(collectId);
 			packet.PutFloat(pos.X);
 			packet.PutFloat(pos.Y);
 			packet.PutFloat(1);
 
-			creature.Client.Send(packet);
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Broadcasts CollectAnimationCancel in creature's range.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void CollectAnimationCancel(Creature creature)
+		{
+			var packet = new Packet(Op.CollectAnimationCancel, creature.EntityId);
+
+			creature.Region.Broadcast(packet, creature);
 		}
 	}
 }

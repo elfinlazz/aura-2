@@ -60,7 +60,7 @@ namespace Aura.Channel.Skills.Life
 			}
 
 			// ? (sets creatures position on the client side)
-			Send.CollectUnk(creature, entityId, collectId, creaturePosition);
+			Send.CollectAnimation(creature, entityId, collectId, creaturePosition);
 
 			// Use
 			Send.SkillUse(creature, skill.Info.Id, entityId, collectId);
@@ -283,12 +283,13 @@ namespace Aura.Channel.Skills.Life
 		}
 
 		/// <summary>
-		/// Cancels skill, nothing special to do here.
+		/// Cancels skill, or rather the animation.
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		public void Cancel(Creature creature, Skill skill)
 		{
+			Send.CollectAnimationCancel(creature);
 		}
 	}
 }
