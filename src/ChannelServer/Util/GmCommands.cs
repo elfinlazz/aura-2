@@ -73,6 +73,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "stress", "<npc name> [amount]", HandleStress);
 			Add(50, 50, "memory", "<npc name> [amount]", HandleMemory);
 			Add(50, 50, "weather", "[0.0~2.0|clear|rain|storm|type1~type12]", HandleWeather);
+			Add(50, 50, "telewalk", "", HandleTeleWalk);
 
 			// Admins
 			Add(99, 99, "variant", "<xml_file>", HandleVariant);
@@ -1476,6 +1477,28 @@ namespace Aura.Channel.Util
 				}
 
 				ChannelServer.Instance.Weather.SetProviderAndUpdate(target.RegionId, new WeatherProviderConstant(target.RegionId, val));
+			}
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleTeleWalk(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (target.Vars.Temp["telewalk"] == null)
+			{
+				target.Vars.Temp["telewalk"] = true;
+
+				if (sender != target)
+					Send.ServerMessage(target, Localization.Get("'{0}' has enabled telewalk for you."), sender.Name);
+				Send.ServerMessage(sender, Localization.Get("Telewalk enabled."));
+			}
+			else
+			{
+				target.Vars.Temp["telewalk"] = null;
+
+				if (sender != target)
+					Send.ServerMessage(target, Localization.Get("'{0}' has disabled telewalk for you."), sender.Name);
+				Send.ServerMessage(sender, Localization.Get("Telewalk disabled."));
 			}
 
 			return CommandResult.Okay;
