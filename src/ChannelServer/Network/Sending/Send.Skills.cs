@@ -570,5 +570,24 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends CollectUnk to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="entityId"></param>
+		/// <param name="collectId"></param>
+		/// <param name="pos"></param>
+		public static void CollectUnk(Creature creature, long entityId, int collectId, Position pos)
+		{
+			var packet = new Packet(Op.CollectUnk, creature.EntityId);
+			packet.PutLong(entityId);
+			packet.PutInt(collectId);
+			packet.PutFloat(pos.X);
+			packet.PutFloat(pos.Y);
+			packet.PutFloat(1);
+
+			creature.Client.Send(packet);
+		}
 	}
 }
