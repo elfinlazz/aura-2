@@ -760,6 +760,7 @@ namespace Aura.Channel.Scripting
 			creature.Color3 = creature.RaceData.Color3;
 			creature.Height = creature.RaceData.Size;
 			creature.Life = creature.LifeMaxBase = creature.RaceData.Life;
+			creature.Mana = creature.ManaMaxBase = creature.RaceData.Mana;
 			creature.State = (CreatureStates)creature.RaceData.DefaultState;
 			creature.Direction = (byte)RandomProvider.Get().Next(256);
 
