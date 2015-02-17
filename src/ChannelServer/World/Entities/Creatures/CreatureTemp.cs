@@ -34,6 +34,10 @@ namespace Aura.Channel.World.Entities.Creatures
 		// Random dyeing cursors for regular dyes
 		public DyePickers RegularDyePickers;
 
+		// Final Hit training counters
 		public int FinalHitKillCount, FinalHitKillCountStrong, FinalHitKillCountAwful, FinalHitKillCountBoss;
+
+		// Backup of target's position when gathering, for run away check
+		public Position GatheringTargetPosition;
 	}
 }

@@ -47,6 +47,11 @@ namespace Aura.Channel.Skills.Life
 			creature.StopMove();
 			var pos = creature.GetPosition();
 
+			// Get target (either prop or creature)
+			var targetEntity = this.GetTargetEntity(creature.Region, entityId);
+			if (targetEntity != null)
+				creature.Temp.GatheringTargetPosition = targetEntity.GetPosition();
+
 			// ? (sets creatures position on the client side)
 			Send.CollectUnk(creature, entityId, collectId, pos);
 
@@ -95,8 +100,7 @@ namespace Aura.Channel.Skills.Life
 			}
 
 			// Get target (either prop or creature)
-			var isProp = (entityId >= MabiId.ClientProps && entityId < MabiId.AreaEvents);
-			var targetEntity = (isProp ? (Entity)creature.Region.GetProp(entityId) : (Entity)creature.Region.GetCreature(entityId));
+			var targetEntity = this.GetTargetEntity(creature.Region, entityId);
 
 			// Check target
 			if (targetEntity == null || !targetEntity.HasTag(collectData.Target))
@@ -117,6 +121,13 @@ namespace Aura.Channel.Skills.Life
 				return;
 			}
 
+			// Check if moved
+			if (creature.Temp.GatheringTargetPosition != targetPosition)
+			{
+				this.DoComplete(creature, entityId, collectId, false, 3);
+				return;
+			}
+
 			// Determine success
 			var successChance = ProductionMastery.IncreaseChance(creature, collectData.SuccessRate);
 			var collectSuccess = rnd.NextDouble() * 100 < successChance;
@@ -127,7 +138,7 @@ namespace Aura.Channel.Skills.Life
 				reduction += collectData.ResourceReductionRainBonus;
 
 			// Check resource
-			if (isProp)
+			if (targetEntity is Prop)
 			{
 				var targetProp = (Prop)targetEntity;
 
@@ -214,6 +225,19 @@ namespace Aura.Channel.Skills.Life
 
 			// Complete
 			this.DoComplete(creature, entityId, collectId, collectSuccess, 0);
+		}
+
+		/// <summary>
+		/// Returns entity by id or null.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		private Entity GetTargetEntity(Region region, long entityId)
+		{
+			var isProp = (entityId >= MabiId.ClientProps && entityId < MabiId.AreaEvents);
+			var targetEntity = (isProp ? (Entity)region.GetProp(entityId) : (Entity)region.GetCreature(entityId));
+
+			return targetEntity;
 		}
 
 		/// <summary>
