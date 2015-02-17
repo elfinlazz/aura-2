@@ -20,8 +20,6 @@ namespace Aura.Data.Database
 		public int SkillId { get; set; }
 		public int Delay { get; set; }
 		public int DurabilityLoss { get; set; }
-		public int MotionCategory { get; set; }
-		public int MotionElement { get; set; }
 		public float SuccessRate { get; set; }
 		public float ResourceReduction { get; set; }
 		public float ResourceRecovering { get; set; }
@@ -90,7 +88,7 @@ namespace Aura.Data.Database
 	{
 		protected override void ReadEntry(JObject entry)
 		{
-			entry.AssertNotMissing("id", "target", "rightHand", "leftHand", "skillId", "delay", "durabilityLoss", "motionCategory", "motionElement", "successRate", "resourceReduction", "resourceRecovering", "resourceReductionRainBonus");
+			entry.AssertNotMissing("id", "target", "rightHand", "leftHand", "skillId", "delay", "durabilityLoss", "successRate", "resourceReduction", "resourceRecovering", "resourceReductionRainBonus");
 
 			var data = new CollectingData();
 			data.Id = entry.ReadInt("id");
@@ -100,8 +98,6 @@ namespace Aura.Data.Database
 			data.SkillId = entry.ReadInt("skillId");
 			data.Delay = entry.ReadInt("delay");
 			data.DurabilityLoss = entry.ReadInt("durabilityLoss");
-			data.MotionCategory = entry.ReadInt("motionCategory");
-			data.MotionElement = entry.ReadInt("motionElement");
 			data.SuccessRate = entry.ReadFloat("successRate");
 			data.ResourceReduction = entry.ReadFloat("resourceReduction");
 			data.ResourceRecovering = entry.ReadFloat("resourceRecovering");
