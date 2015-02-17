@@ -18,7 +18,7 @@ namespace Aura.Channel.Skills.Life
 	/// Handles Production Mastery training.
 	/// </summary>
 	[Skill(SkillId.ProductionMastery)]
-	public class ProductionMastery : IInitiableSkillHandler
+	public class ProductionMastery : IInitiableSkillHandler, ISkillHandler
 	{
 		/// <summary>
 		/// Subscribes to events required for training.
