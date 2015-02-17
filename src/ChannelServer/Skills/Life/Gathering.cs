@@ -158,7 +158,8 @@ namespace Aura.Channel.Skills.Life
 
 				if (collectSuccess)
 				{
-					targetProp.Resource -= collectData.ResourceReduction;
+					if (!ChannelServer.Instance.Conf.World.InfiniteResources)
+						targetProp.Resource -= collectData.ResourceReduction;
 					targetProp.LastCollect = DateTime.Now;
 				}
 			}
@@ -172,7 +173,7 @@ namespace Aura.Channel.Skills.Life
 					return;
 				}
 
-				if (collectSuccess)
+				if (collectSuccess && !ChannelServer.Instance.Conf.World.InfiniteResources)
 					targetCreature.Mana -= collectData.ResourceReduction;
 			}
 
