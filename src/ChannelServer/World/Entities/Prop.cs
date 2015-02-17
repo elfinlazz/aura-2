@@ -12,6 +12,7 @@ using System.Threading;
 using Aura.Data;
 using Aura.Channel.Network;
 using Aura.Shared.Util;
+using Aura.Data.Database;
 
 namespace Aura.Channel.World.Entities
 {
@@ -41,6 +42,11 @@ namespace Aura.Channel.World.Entities
 		/// Marshable prop information used for packets.
 		/// </summary>
 		public PropInfo Info;
+
+		/// <summary>
+		/// Data about the prop from the db.
+		/// </summary>
+		public PropsDbData Data;
 
 		/// <summary>
 		/// True if this prop was spawned by the server.
@@ -170,6 +176,17 @@ namespace Aura.Channel.World.Entities
 			this.Info.Color7 =
 			this.Info.Color8 =
 			this.Info.Color9 = 0xFF808080;
+
+			this.LoadDefault();
+		}
+
+		/// <summary>
+		/// Loads prop data from db.
+		/// </summary>
+		private void LoadDefault()
+		{
+			if ((this.Data = AuraData.PropsDb.Find(this.Info.Id)) == null)
+				Log.Warning("Prop.LoadDefault: No data found for '{0}'.", this.Info.Id);
 		}
 
 		/// <summary>
