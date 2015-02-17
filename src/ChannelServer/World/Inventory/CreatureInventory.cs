@@ -149,6 +149,9 @@ namespace Aura.Channel.World.Inventory
 			}
 		}
 
+		public Pocket RightHandPocket { get { return (this.WeaponSet == WeaponSet.First ? Pocket.RightHand1 : Pocket.RightHand2); } }
+		public Pocket LeftHandPocket { get { return (this.WeaponSet == WeaponSet.First ? Pocket.LeftHand1 : Pocket.LeftHand2); } }
+
 		/// <summary>
 		/// Reference to the item currently equipped in the right hand.
 		/// </summary>

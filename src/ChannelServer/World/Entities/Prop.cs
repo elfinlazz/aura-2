@@ -76,6 +76,17 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public string Title { get; set; }
 
+		public float _resource;
+		/// <summary>
+		/// Remaining resource amount
+		/// </summary>
+		public float Resource { get { return _resource; } set { _resource = Math2.Clamp(0, 100, value); } }
+
+		/// <summary>
+		/// Time at which something was collected from the prop last.
+		/// </summary>
+		public DateTime LastCollect { get; set; }
+
 		/// <summary>
 		/// Prop's state (only supported by specific props)
 		/// </summary>
@@ -176,6 +187,9 @@ namespace Aura.Channel.World.Entities
 			this.Info.Color7 =
 			this.Info.Color8 =
 			this.Info.Color9 = 0xFF808080;
+
+			_resource = 100;
+			this.LastCollect = DateTime.Now;
 
 			this.LoadDefault();
 		}

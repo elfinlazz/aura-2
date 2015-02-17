@@ -29,6 +29,7 @@ namespace Aura.Shared.Mabi.Const
 		public const long TmpItems = 0x0050F00000000001;
 
 		// 00XX<short:region><short:area><short:id>
+		public const long ClientProps = 0x00A0000000000000;
 		public const long ServerProps = 0x00A1000000000000;
 		public const long AreaEvents = 0x00B0000000000000;
 
