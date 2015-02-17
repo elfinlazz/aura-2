@@ -29,6 +29,21 @@ namespace Aura.Channel.Skills.Life
 		}
 
 		/// <summary>
+		/// Returns success chance, increased according to creature's
+		/// Production Mastery rank.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="chance"></param>
+		public static float IncreaseChance(Creature creature, float chance)
+		{
+			var skill = creature.Skills.Get(SkillId.ProductionMastery);
+			if (skill != null)
+				chance += skill.RankData.Var1;
+
+			return chance;
+		}
+
+		/// <summary>
 		/// Raised when creature collects something, handles gathering conditions.
 		/// </summary>
 		/// <param name="args"></param>

@@ -118,7 +118,8 @@ namespace Aura.Channel.Skills.Life
 			}
 
 			// Determine success
-			var collectSuccess = rnd.NextDouble() * 100 < collectData.SuccessRate;
+			var successChance = ProductionMastery.IncreaseChance(creature, collectData.SuccessRate);
+			var collectSuccess = rnd.NextDouble() * 100 < successChance;
 
 			// Get reduction
 			var reduction = collectData.ResourceReduction;
