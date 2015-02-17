@@ -180,6 +180,11 @@ namespace Aura.Shared
 				{
 					this.LoadDb(AuraData.ItemUpgradesDb, "db/itemupgrades.txt", reload);
 				}
+
+				if ((toLoad & DataLoad.Props) != 0)
+				{
+					this.LoadDb(AuraData.PropsDb, "db/props.txt", reload);
+				}
 			}
 			catch (DatabaseErrorException ex)
 			{
@@ -278,6 +283,7 @@ namespace Aura.Shared
 		Titles = 0x10000,
 		StatsAge = 0x20000,
 		ItemUpgrades = 0x40000,
+		Props = 0x80000,
 
 		All = 0xFFFFFFFF,
 

@@ -22,6 +22,7 @@ namespace Aura.Data
 		public static KeywordDb KeywordDb = new KeywordDb();
 		public static MotionDb MotionDb = new MotionDb();
 		public static PetDb PetDb = new PetDb();
+		public static PropsDb PropsDb = new PropsDb();
 		public static PropDropDb PropDropDb = new PropDropDb();
 		public static RaceDb RaceDb = new RaceDb();
 		public static RegionDb RegionDb = new RegionDb();
