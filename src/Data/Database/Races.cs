@@ -51,6 +51,7 @@ namespace Aura.Data.Database
 		public string AI { get; set; }
 		public float CombatPower { get; set; }
 		public float Life { get; set; }
+		public float Mana { get; set; }
 		public int Defense { get; set; }
 		public int Protection { get; set; }
 		public int Exp { get; set; }
@@ -262,7 +263,7 @@ namespace Aura.Data.Database
 					}
 					else if (obj[col].Type == JTokenType.Array)
 					{
-						list.AddRange(obj[col].Select(id => (int) id));
+						list.AddRange(obj[col].Select(id => (int)id));
 					}
 				}
 			};
@@ -275,6 +276,7 @@ namespace Aura.Data.Database
 			// Stat Info
 			raceData.CombatPower = entry.ReadFloat("cp");
 			raceData.Life = entry.ReadFloat("life");
+			raceData.Mana = entry.ReadFloat("mana");
 			raceData.Defense = entry.ReadInt("defense");
 			raceData.Protection = (int)entry.ReadFloat("protection");
 			raceData.Element = (Element)entry.ReadByte("element");
