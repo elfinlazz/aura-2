@@ -158,10 +158,11 @@ namespace Aura.Channel.Skills.Life
 			}
 
 			// Drop
+			var receiveItemId = 0;
 			if (collectSuccess)
 			{
 				// Product
-				var itemId = collectData.GetRndProduct(rnd);
+				var itemId = receiveItemId = collectData.GetRndProduct(rnd);
 				if (itemId != 0)
 				{
 					var item = new Item(itemId);
@@ -185,7 +186,7 @@ namespace Aura.Channel.Skills.Life
 			else
 			{
 				// FailProduct
-				var itemId = collectData.GetRndFailProduct(rnd);
+				var itemId = receiveItemId = collectData.GetRndFailProduct(rnd);
 				if (itemId != 0)
 				{
 					var item = new Item(itemId);
@@ -207,6 +208,10 @@ namespace Aura.Channel.Skills.Life
 				}
 			}
 
+			// Events
+			ChannelServer.Instance.Events.OnCreatureCollected(new CollectEventArgs(creature, collectData, collectSuccess, receiveItemId));
+
+			// Complete
 			this.DoComplete(creature, entityId, collectId, collectSuccess, 0);
 		}
 
