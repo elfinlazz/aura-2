@@ -186,7 +186,18 @@ namespace Aura.Channel.World.Entities
 		private void LoadDefault()
 		{
 			if ((this.Data = AuraData.PropsDb.Find(this.Info.Id)) == null)
+			{
 				Log.Warning("Prop.LoadDefault: No data found for '{0}'.", this.Info.Id);
+				return;
+			}
+
+			// Add state for wells, otherwise they aren't interactable
+			// and you can walk through them o,o
+			// TODO: Can we generalize this somehow?
+			// They also have XML, but that doesn't seem to be needed.
+			// <xml _RESOURCE="100.000000" _LAST_COLLECT_TIME="63559712423945"/>
+			if (this.Data.HasTag("/water/well/"))
+				this.State = "default";
 		}
 
 		/// <summary>
