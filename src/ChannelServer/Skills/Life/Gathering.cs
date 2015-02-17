@@ -99,9 +99,9 @@ namespace Aura.Channel.Skills.Life
 			var targetEntity = (isProp ? (Entity)creature.Region.GetProp(entityId) : (Entity)creature.Region.GetCreature(entityId));
 
 			// Check target
-			if (targetEntity == null)
+			if (targetEntity == null || !targetEntity.HasTag(collectData.Target))
 			{
-				Log.Warning("Gathering.Complete: Collecting from target creature '{0:X16}'", entityId);
+				Log.Warning("Gathering.Complete: Collecting from invalid entity '{0:X16}'", entityId);
 				this.DoComplete(creature, entityId, collectId, false, 1);
 				return;
 			}
