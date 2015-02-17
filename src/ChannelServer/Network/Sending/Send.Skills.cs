@@ -568,7 +568,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutByte(1);
 			packet.PutUShort((ushort)skillId);
 
-			creature.Client.Send(packet);
+			creature.Region.Broadcast(packet, creature);
 		}
 
 		/// <summary>
