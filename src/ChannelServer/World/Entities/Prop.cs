@@ -263,6 +263,19 @@ namespace Aura.Channel.World.Entities
 				creature.Warp(region, x, y);
 			};
 		}
+
+		/// <summary>
+		///  Returns true if prop's data has the tag.
+		/// </summary>
+		/// <param name="tag"></param>
+		/// <returns></returns>
+		public override bool HasTag(string tag)
+		{
+			if (this.Data == null)
+				return false;
+
+			return this.Data.HasTag(tag);
+		}
 	}
 
 	public delegate void PropFunc(Creature creature, Prop prop);
