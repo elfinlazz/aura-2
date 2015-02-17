@@ -11,8 +11,6 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class CollectingData
 	{
-		private Random _rnd;
-
 		public int Id { get; set; }
 		public string Target { get; set; }
 		public string RightHand { get; set; }
@@ -30,50 +28,39 @@ namespace Aura.Data.Database
 		public List<CollectingItemData> FailProducts { get; set; }
 		public List<CollectingItemData> FailProducts2 { get; set; }
 
-		public CollectingData()
+		public int GetRndProduct(Random rnd)
 		{
-			_rnd = new Random(Environment.TickCount + this.GetHashCode());
+			return this.GetRndFrom(this.Products, rnd);
 		}
 
-		public int GetRndProduct(Random rand)
+		public int GetRndProduct2(Random rnd)
 		{
-			return this.GetRndFrom(this.Products);
+			return this.GetRndFrom(this.Products2, rnd);
 		}
 
-		public int GetRndProduct2(Random rand)
+		public int GetRndFailProduct(Random rnd)
 		{
-			return this.GetRndFrom(this.Products2);
+			return this.GetRndFrom(this.FailProducts, rnd);
 		}
 
-		public int GetRndFailProduct(Random rand)
+		public int GetRndFailProduct2(Random rnd)
 		{
-			return this.GetRndFrom(this.FailProducts);
+			return this.GetRndFrom(this.FailProducts2, rnd);
 		}
 
-		public int GetRndFailProduct2(Random rand)
-		{
-			return this.GetRndFrom(this.FailProducts2);
-		}
-
-		private int GetRndFrom(List<CollectingItemData> items)
+		private int GetRndFrom(List<CollectingItemData> items, Random rnd)
 		{
 			if (items.Count == 0)
 				return 0;
 
 			var total = items.Sum(cls => cls.Chance);
 
-			var randVal = GetRandomDouble() * total;
+			var randVal = rnd.NextDouble() * total;
 			var i = 0;
 			for (; randVal > 0; ++i)
 				randVal -= items[i].Chance;
 
 			return items[i - 1].Id;
-		}
-
-		private double GetRandomDouble()
-		{
-			lock (_rnd)
-				return _rnd.NextDouble();
 		}
 	}
 
