@@ -53,7 +53,7 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Returns true if prop is not server sided and has a state or extra data.
 		/// </summary>
-		public bool ModifiedClientSide { get { return !this.ServerSide && (this.State != "" || this.HasXml); } }
+		public bool ModifiedClientSide { get { return !this.ServerSide && (!string.IsNullOrWhiteSpace(this.State) || this.HasXml); } }
 
 		/// <summary>
 		/// Called when a player interacts with the prop (touch, attack).
