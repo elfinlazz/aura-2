@@ -216,30 +216,31 @@ namespace Aura.Channel.Skills.Life
 					item.Drop(creature.Region, creaturePosition.GetRandomInRange(DropRange, rnd));
 				}
 			}
-			else
-			{
-				// FailProduct
-				var itemId = receiveItemId = collectData.GetRndFailProduct(rnd);
-				if (itemId != 0)
-				{
-					var item = new Item(itemId);
-					if (collectData.Source == 0)
-						item.Drop(creature.Region, creaturePosition.GetRandomInRange(DropRange, rnd));
-					else
-					{
-						creature.Inventory.Remove(creature.RightHand);
-						creature.Inventory.Add(item, creature.Inventory.RightHandPocket);
-					}
-				}
+			// TODO: Figure out how fail products work.
+			//else
+			//{
+			//	// FailProduct
+			//	var itemId = receiveItemId = collectData.GetRndFailProduct(rnd);
+			//	if (itemId != 0)
+			//	{
+			//		var item = new Item(itemId);
+			//		if (collectData.Source == 0)
+			//			item.Drop(creature.Region, creaturePosition.GetRandomInRange(DropRange, rnd));
+			//		else
+			//		{
+			//			creature.Inventory.Remove(creature.RightHand);
+			//			creature.Inventory.Add(item, creature.Inventory.RightHandPocket);
+			//		}
+			//	}
 
-				// FailProduct2
-				itemId = collectData.GetRndFailProduct2(rnd);
-				if (itemId != 0)
-				{
-					var item = new Item(itemId);
-					item.Drop(creature.Region, creaturePosition.GetRandomInRange(DropRange, rnd));
-				}
-			}
+			//	// FailProduct2
+			//	itemId = collectData.GetRndFailProduct2(rnd);
+			//	if (itemId != 0)
+			//	{
+			//		var item = new Item(itemId);
+			//		item.Drop(creature.Region, creaturePosition.GetRandomInRange(DropRange, rnd));
+			//	}
+			//}
 
 			// Events
 			ChannelServer.Instance.Events.OnCreatureCollected(new CollectEventArgs(creature, collectData, collectSuccess, receiveItemId));
