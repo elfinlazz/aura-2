@@ -204,7 +204,7 @@ namespace Aura.Channel.World
 		public CollectEventArgs(Creature creature, CollectingData collectData, bool success, int itemId)
 		{
 			this.Creature = creature;
-			this.CollectData = CollectData;
+			this.CollectData = collectData;
 			this.Success = success;
 			this.ItemId = itemId;
 		}
