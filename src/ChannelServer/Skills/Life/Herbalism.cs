@@ -39,6 +39,105 @@ namespace Aura.Channel.Skills.Life
 		}
 
 		/// <summary>
+		/// Calculates bonus chance for Herbalism, based on rank.
+		/// </summary>
+		/// <remarks>
+		/// Reference: http://wiki.mabinogiworld.com/view/Herbalism#Details
+		/// 
+		/// This actually seems to be incorrect and will require more research.
+		/// Base patches on fields have a 15% chance with Herbalism on Novice
+		/// and 50% with Herbalism on rF, according to the devCAT title debug
+		/// output. With what we have here we'd get 0% on Novice and 75% on rF
+		/// (plus the Production Mastery bonus.)
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="collectData"></param>
+		/// <returns></returns>
+		public static float GetChance(Creature creature, CollectingData collectData)
+		{
+			var successChance = 0f;
+
+			var herbalism = creature.Skills.Get(SkillId.Herbalism);
+			if (herbalism == null)
+				return successChance;
+
+			if (collectData.Target.Contains("/baseherb"))
+			{
+				if (herbalism.Info.Rank >= SkillRank.RF)
+				{
+					successChance += HerbalismPickBonus;
+					successChance += HerbalismIdentifyBonus;
+				}
+			}
+			else if (collectData.Target.Contains("/bloodyherb"))
+			{
+				if (herbalism.Info.Rank >= SkillRank.RF)
+					successChance += HerbalismPickBonus;
+
+				if (herbalism.Info.Rank >= SkillRank.RC)
+					successChance += HerbalismIdentifyBonus;
+			}
+			else if (collectData.Target.Contains("/sunlightherb"))
+			{
+				if (herbalism.Info.Rank >= SkillRank.RF)
+					successChance += HerbalismPickBonus;
+
+				if (herbalism.Info.Rank >= SkillRank.RB)
+					successChance += HerbalismIdentifyBonus;
+			}
+			else if (collectData.Target.Contains("/manaherb"))
+			{
+				if (herbalism.Info.Rank >= SkillRank.RF)
+					successChance += HerbalismPickBonus;
+
+				if (herbalism.Info.Rank >= SkillRank.R9)
+					successChance += HerbalismIdentifyBonus;
+			}
+			else if (collectData.Target.Contains("/whiteherb"))
+			{
+				if (herbalism.Info.Rank >= SkillRank.RE)
+					successChance += HerbalismPickBonus;
+
+				if (herbalism.Info.Rank >= SkillRank.R6)
+					successChance += HerbalismIdentifyBonus;
+			}
+			else if (collectData.Target.Contains("/goldherb"))
+			{
+				if (herbalism.Info.Rank >= SkillRank.RD)
+					successChance += HerbalismPickBonus;
+
+				if (herbalism.Info.Rank >= SkillRank.R3)
+					successChance += HerbalismIdentifyBonus;
+			}
+			else if (collectData.Target.Contains("/ivoryherb"))
+			{
+				if (herbalism.Info.Rank >= SkillRank.RC)
+					successChance += HerbalismPickBonus;
+
+				if (herbalism.Info.Rank >= SkillRank.R5)
+					successChance += HerbalismIdentifyBonus;
+			}
+			else if (collectData.Target.Contains("/purpleherb"))
+			{
+				if (herbalism.Info.Rank >= SkillRank.RB)
+					successChance += HerbalismPickBonus;
+
+				if (herbalism.Info.Rank >= SkillRank.R3)
+					successChance += HerbalismIdentifyBonus;
+			}
+			else if (collectData.Target.Contains("/orangeherb/"))
+			{
+				if (herbalism.Info.Rank >= SkillRank.RA)
+					successChance += HerbalismPickBonus;
+
+				if (herbalism.Info.Rank >= SkillRank.R1)
+					successChance += HerbalismIdentifyBonus;
+			}
+
+			return successChance;
+		}
+
+		/// <summary>
 		/// Raised when creature collects something, handles gathering conditions.
 		/// </summary>
 		/// <param name="args"></param>

@@ -168,6 +168,7 @@
     <Compile Include="Skills\Combat\Smash.cs" />
     <Compile Include="Skills\Hidden\Dye.cs" />
     <Compile Include="Skills\Life\Gathering.cs" />
+    <Compile Include="Skills\Life\Herbalism.cs" />
     <Compile Include="Skills\Life\ProductionMastery.cs" />
     <Compile Include="Skills\Life\Rest.cs" />
     <Compile Include="Skills\Life\WebSpinning.cs" />
