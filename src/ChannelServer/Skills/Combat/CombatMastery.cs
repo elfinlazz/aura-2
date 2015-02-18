@@ -251,7 +251,7 @@ namespace Aura.Channel.Skills.Combat
 				case 1:
 					switch (speed)
 					{
-						case AttackSpeed.VerySlow: return 2500;
+						case AttackSpeed.VerySlow: return 3000;
 					}
 					break;
 
