@@ -180,17 +180,53 @@ namespace Aura.Channel.Skills.Combat
 		/// <returns></returns>
 		public short GetAttackerStun(Item weapon, bool knockback)
 		{
-			if (weapon == null)
-				return (!knockback ? (short)CombatStunAttacker.Normal : (short)CombatKnockbackStunAttacker.Normal);
+			//public enum CombatStunAttacker { VeryFast = 450, Fast = 520, Normal = 600, Slow = 800, VerySlow = 1000 }
+			//public enum CombatKnockbackStunAttacker { VeryFast = 2500, Fast = 2500, Normal = 2500, Slow = 2500, VerySlow = 2500 }
 
-			switch (weapon.Data.AttackSpeed)
+			var count = weapon != null ? weapon.Info.KnockCount + 1 : 3;
+			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : AttackSpeed.Normal;
+
+			if (knockback)
+				return 2500;
+
+			switch (count)
 			{
-				case 00: return (!knockback ? (short)CombatStunAttacker.VeryFast : (short)CombatKnockbackStunAttacker.VeryFast);
-				case 01: return (!knockback ? (short)CombatStunAttacker.Fast : (short)CombatKnockbackStunAttacker.Fast);
-				case 02: return (!knockback ? (short)CombatStunAttacker.Normal : (short)CombatKnockbackStunAttacker.Normal);
-				case 03: return (!knockback ? (short)CombatStunAttacker.Slow : (short)CombatKnockbackStunAttacker.Slow);
-				default: return (!knockback ? (short)CombatStunAttacker.VerySlow : (short)CombatKnockbackStunAttacker.VerySlow);
+				case 1:
+					switch (speed)
+					{
+						case AttackSpeed.VerySlow: return 2500;
+					}
+					break;
+
+				case 2:
+					switch (speed)
+					{
+						case AttackSpeed.VerySlow: return 1000;
+						case AttackSpeed.Slow: return 800;
+					}
+					break;
+
+				case 3:
+					switch (speed)
+					{
+						case AttackSpeed.VerySlow: return 1000;
+						case AttackSpeed.Slow: return 800;
+						case AttackSpeed.Normal: return 600;
+						case AttackSpeed.Fast: return 520;
+					}
+					break;
+
+				case 5:
+					switch (speed)
+					{
+						case AttackSpeed.VeryFast: return 450;
+					}
+					break;
 			}
+
+			Log.Unimplemented("GetAttackerStun: Combination {0} {1} Hit", speed, count);
+
+			return 600;
 		}
 
 		/// <summary>
@@ -201,17 +237,53 @@ namespace Aura.Channel.Skills.Combat
 		/// <returns></returns>
 		public short GetTargetStun(Item weapon, bool knockback)
 		{
-			if (weapon == null)
-				return (!knockback ? (short)CombatStunTarget.Normal : (short)CombatKnockbackStunTarget.Normal);
+			//public enum CombatStunTarget { VeryFast = 1200, Fast = 1700, Normal = 2000, Slow = 2800, VerySlow = 3000 }
+			//public enum CombatKnockbackStunTarget { VeryFast = 3000, Fast = 3000, Normal = 3000, Slow = 3000, VerySlow = 3000 }
 
-			switch (weapon.Data.AttackSpeed)
+			var count = weapon != null ? weapon.Info.KnockCount + 1 : 3;
+			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : AttackSpeed.Normal;
+
+			if (knockback)
+				return 3000;
+
+			switch (count)
 			{
-				case 00: return (!knockback ? (short)CombatStunTarget.VeryFast : (short)CombatKnockbackStunTarget.VeryFast);
-				case 01: return (!knockback ? (short)CombatStunTarget.Fast : (short)CombatKnockbackStunTarget.Fast);
-				case 02: return (!knockback ? (short)CombatStunTarget.Normal : (short)CombatKnockbackStunTarget.Normal);
-				case 03: return (!knockback ? (short)CombatStunTarget.Slow : (short)CombatKnockbackStunTarget.Slow);
-				default: return (!knockback ? (short)CombatStunTarget.VerySlow : (short)CombatKnockbackStunTarget.VerySlow);
+				case 1:
+					switch (speed)
+					{
+						case AttackSpeed.VerySlow: return 2500;
+					}
+					break;
+
+				case 2:
+					switch (speed)
+					{
+						case AttackSpeed.VerySlow: return 3000;
+						case AttackSpeed.Slow: return 2800;
+					}
+					break;
+
+				case 3:
+					switch (speed)
+					{
+						case AttackSpeed.VerySlow: return 2200;
+						case AttackSpeed.Slow: return 2100;
+						case AttackSpeed.Normal: return 2000;
+						case AttackSpeed.Fast: return 1700;
+					}
+					break;
+
+				case 5:
+					switch (speed)
+					{
+						case AttackSpeed.VeryFast: return 1200;
+					}
+					break;
 			}
+
+			Log.Unimplemented("GetAttackerStun: Combination {0} {1} Hit", speed, count);
+
+			return 2000;
 		}
 
 		/// <summary>
