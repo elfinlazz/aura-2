@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CRandom.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="DatabaseDat.cs" />
     <Compile Include="DatabaseJson.cs" />
