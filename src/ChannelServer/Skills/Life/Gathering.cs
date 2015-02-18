@@ -306,7 +306,7 @@ namespace Aura.Channel.Skills.Life
 			if (herbalism == null)
 				return successChance;
 
-			if (collectData.Target.Contains("/baseherb/"))
+			if (collectData.Target.Contains("/baseherb"))
 			{
 				if (herbalism.Info.Rank >= SkillRank.RF)
 				{
@@ -314,7 +314,7 @@ namespace Aura.Channel.Skills.Life
 					successChance += HerbalismIdentifyBonus;
 				}
 			}
-			else if (collectData.Target.Contains("/bloodyherb/"))
+			else if (collectData.Target.Contains("/bloodyherb"))
 			{
 				if (herbalism.Info.Rank >= SkillRank.RF)
 					successChance += HerbalismPickBonus;
@@ -322,7 +322,7 @@ namespace Aura.Channel.Skills.Life
 				if (herbalism.Info.Rank >= SkillRank.RC)
 					successChance += HerbalismIdentifyBonus;
 			}
-			else if (collectData.Target.Contains("/sunlightherb/"))
+			else if (collectData.Target.Contains("/sunlightherb"))
 			{
 				if (herbalism.Info.Rank >= SkillRank.RF)
 					successChance += HerbalismPickBonus;
@@ -330,7 +330,7 @@ namespace Aura.Channel.Skills.Life
 				if (herbalism.Info.Rank >= SkillRank.RB)
 					successChance += HerbalismIdentifyBonus;
 			}
-			else if (collectData.Target.Contains("/manaherb/"))
+			else if (collectData.Target.Contains("/manaherb"))
 			{
 				if (herbalism.Info.Rank >= SkillRank.RF)
 					successChance += HerbalismPickBonus;
@@ -338,7 +338,7 @@ namespace Aura.Channel.Skills.Life
 				if (herbalism.Info.Rank >= SkillRank.R9)
 					successChance += HerbalismIdentifyBonus;
 			}
-			else if (collectData.Target.Contains("/whiteherb/"))
+			else if (collectData.Target.Contains("/whiteherb"))
 			{
 				if (herbalism.Info.Rank >= SkillRank.RE)
 					successChance += HerbalismPickBonus;
@@ -346,7 +346,7 @@ namespace Aura.Channel.Skills.Life
 				if (herbalism.Info.Rank >= SkillRank.R6)
 					successChance += HerbalismIdentifyBonus;
 			}
-			else if (collectData.Target.Contains("/goldherb/"))
+			else if (collectData.Target.Contains("/goldherb"))
 			{
 				if (herbalism.Info.Rank >= SkillRank.RD)
 					successChance += HerbalismPickBonus;
@@ -354,7 +354,7 @@ namespace Aura.Channel.Skills.Life
 				if (herbalism.Info.Rank >= SkillRank.R3)
 					successChance += HerbalismIdentifyBonus;
 			}
-			else if (collectData.Target.Contains("/ivoryherb/"))
+			else if (collectData.Target.Contains("/ivoryherb"))
 			{
 				if (herbalism.Info.Rank >= SkillRank.RC)
 					successChance += HerbalismPickBonus;
@@ -362,7 +362,7 @@ namespace Aura.Channel.Skills.Life
 				if (herbalism.Info.Rank >= SkillRank.R5)
 					successChance += HerbalismIdentifyBonus;
 			}
-			else if (collectData.Target.Contains("/purpleherb/"))
+			else if (collectData.Target.Contains("/purpleherb"))
 			{
 				if (herbalism.Info.Rank >= SkillRank.RB)
 					successChance += HerbalismPickBonus;
