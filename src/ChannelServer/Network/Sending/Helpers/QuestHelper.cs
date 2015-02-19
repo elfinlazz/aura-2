@@ -75,7 +75,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			packet.PutInt(0);     // 4, x y ?
 			packet.PutInt(0);
 			packet.PutString(""); // <xml soundset="4" npc="GUI_NPCportrait_Lanier"/>
-			packet.PutString("QMBEXP:f:1.000000;QMBGLD:f:1.000000;QMSMEXP:f:1.000000;QMSMGLD:f:1.000000;QMAMEXP:f:1.000000;QMAMGLD:f:1.000000;QMBHDCTADD:4:0;QMGNRB:f:1.000000;QMGNRB:f:1.000000;");
+			packet.PutString(quest.MetaData.ToString());
 
 			switch (quest.Data.Type)
 			{

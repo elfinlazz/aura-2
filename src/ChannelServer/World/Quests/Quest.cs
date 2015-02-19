@@ -11,6 +11,7 @@ using Aura.Shared.Mabi.Const;
 using Aura.Shared.Util;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
+using Aura.Shared.Mabi;
 
 namespace Aura.Channel.World.Quests
 {
@@ -39,6 +40,11 @@ namespace Aura.Channel.World.Quests
 		/// Returns quest script
 		/// </summary>
 		public QuestScript Data { get; protected set; }
+
+		/// <summary>
+		/// Additional information
+		/// </summary>
+		public MabiDictionary MetaData { get; set; }
 
 		/// <summary>
 		/// Returns true if all objectives are done.
@@ -83,7 +89,22 @@ namespace Aura.Channel.World.Quests
 		/// </summary>
 		public Item QuestItem { get; set; }
 
-		public Quest(int questId, long uniqueId, QuestState state)
+		/// <summary>
+		/// Initializer constructor
+		/// </summary>
+		private Quest()
+		{
+			this.MetaData = new MabiDictionary();
+		}
+
+		/// <summary>
+		/// Creates Quest based on existing data.
+		/// </summary>
+		/// <param name="questId"></param>
+		/// <param name="uniqueId"></param>
+		/// <param name="state"></param>
+		public Quest(int questId, long uniqueId, QuestState state, string metaData)
+			: this()
 		{
 			this.Data = ChannelServer.Instance.ScriptManager.GetQuestScript(questId);
 			if (this.Data == null)
@@ -92,6 +113,7 @@ namespace Aura.Channel.World.Quests
 			this.Id = questId;
 			this.UniqueId = uniqueId;
 			this.State = state;
+			this.MetaData.Parse(metaData);
 
 			_progresses = new OrderedDictionary<string, QuestObjectiveProgress>();
 			foreach (var objective in this.Data.Objectives)
@@ -99,10 +121,24 @@ namespace Aura.Channel.World.Quests
 			_progresses[0].Unlocked = true;
 		}
 
+		/// <summary>
+		/// Creates new Quest based on script data.
+		/// </summary>
+		/// <param name="questId"></param>
 		public Quest(int questId)
-			: this(questId, Interlocked.Increment(ref _questId), QuestState.InProgress)
+			: this(questId, Interlocked.Increment(ref _questId), QuestState.InProgress, "")
 		{
 			this.GenerateQuestItem();
+
+			// Default meta data entries
+			this.MetaData.SetFloat("QMBEXP", 1);
+			this.MetaData.SetFloat("QMBGLD", 1);
+			this.MetaData.SetFloat("QMSMEXP", 1);
+			this.MetaData.SetFloat("QMSMGLD", 1);
+			this.MetaData.SetFloat("QMAMEXP", 1);
+			this.MetaData.SetFloat("QMAMGLD", 1);
+			this.MetaData.SetInt("QMBHDCTADD", 0);
+			this.MetaData.SetFloat("QMGNRB", 1);
 		}
 
 		/// <summary>
