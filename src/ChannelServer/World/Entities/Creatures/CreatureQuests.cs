@@ -102,7 +102,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public ICollection<Quest> GetList()
 		{
-			return _quests.Values.ToArray();
+			lock (_quests)
+				return _quests.Values.ToArray();
 		}
 
 		/// <summary>
@@ -111,7 +112,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public ICollection<Quest> GetIncompleteList()
 		{
-			return _quests.Values.Where(a => a.State != QuestState.Complete).ToArray();
+			lock (_quests)
+				return _quests.Values.Where(a => a.State != QuestState.Complete).ToArray();
 		}
 
 		/// <summary>
