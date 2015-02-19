@@ -47,6 +47,11 @@ namespace Aura.Channel.World.Quests
 		public MabiDictionary MetaData { get; set; }
 
 		/// <summary>
+		/// Deadline used for PTJs.
+		/// </summary>
+		public DateTime Deadline { get; set; }
+
+		/// <summary>
 		/// Returns true if all objectives are done.
 		/// </summary>
 		public bool IsDone

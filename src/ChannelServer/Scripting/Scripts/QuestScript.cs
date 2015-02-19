@@ -25,6 +25,11 @@ namespace Aura.Channel.Scripting.Scripts
 		public string Description { get; set; }
 
 		public QuestType Type { get; set; }
+		public PtjType PtjType { get; set; }
+
+		public int StartHour { get; protected set; }
+		public int ReportHour { get; protected set; }
+		public int DeadlineHour { get; protected set; }
 
 		public Receive ReceiveMethod { get; set; }
 		public bool Cancelable { get; set; }
@@ -124,6 +129,28 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void SetType(QuestType type)
 		{
 			this.Type = type;
+		}
+
+		/// <summary>
+		/// Sets PTJ hours.
+		/// </summary>
+		/// <param name="start"></param>
+		/// <param name="report"></param>
+		/// <param name="report"></param>
+		protected void SetHours(int start, int report, int deadline)
+		{
+			this.StartHour = start;
+			this.ReportHour = report;
+			this.DeadlineHour = deadline;
+		}
+
+		/// <summary>
+		/// Sets type for PTJs.
+		/// </summary>
+		/// <param name="type"></param>
+		protected void SetPtjType(PtjType type)
+		{
+			this.PtjType = type;
 		}
 
 		/// <summary>
