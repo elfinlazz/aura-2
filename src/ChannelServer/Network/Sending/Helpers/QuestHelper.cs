@@ -3,6 +3,7 @@
 
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Quests;
+using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using System;
 
@@ -79,7 +80,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 
 			switch (quest.Data.Type)
 			{
-				case QuestType.PTJ:
+				case QuestType.Deliver:
 					packet.PutInt(2);
 					packet.PutInt(12);
 					packet.PutInt(16);

@@ -372,10 +372,4 @@ namespace Aura.Channel.Scripting.Scripts
 		Manually,
 		Automatically,
 	}
-
-	public enum QuestType : byte
-	{
-		PTJ = 1,
-		Normal = 2,
-	}
 }
