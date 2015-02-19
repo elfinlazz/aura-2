@@ -644,8 +644,9 @@ namespace Aura.Channel.Database
 								var id = reader.GetInt32("questId");
 								var state = (QuestState)reader.GetInt32("state");
 								var itemEntityId = reader.GetInt64("itemEntityId");
+								var metaData = reader.GetStringSafe("metaData");
 
-								var quest = new Quest(id, uniqueId, state);
+								var quest = new Quest(id, uniqueId, state, metaData);
 
 								if (quest.State == QuestState.InProgress)
 								{
@@ -763,6 +764,7 @@ namespace Aura.Channel.Database
 						cmd.Set("questId", quest.Id);
 						cmd.Set("state", (int)quest.State);
 						cmd.Set("itemEntityId", (quest.State == QuestState.InProgress ? quest.QuestItem.EntityId : 0));
+						cmd.Set("metaData", quest.MetaData);
 
 						cmd.Execute();
 
