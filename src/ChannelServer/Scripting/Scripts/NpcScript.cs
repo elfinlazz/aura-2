@@ -958,9 +958,9 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				this.Player.Quests.Start(questId, false);
 			}
-			catch
+			catch (Exception ex)
 			{
-				Log.Warning("NpcScript.StartQuest: Quest '{0}' doesn't exist.", questId);
+				Log.Exception(ex, "NpcScript.StartQuest: Quest '{0}'", questId);
 				this.Msg("(Error)");
 			}
 		}
@@ -971,7 +971,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="questId"></param>
 		public void CompleteQuest(int questId)
 		{
-			this.Player.Quests.Complete(questId,false);
+			this.Player.Quests.Complete(questId, false);
 		}
 
 		/// <summary>
