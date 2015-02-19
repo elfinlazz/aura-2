@@ -129,6 +129,16 @@ namespace Aura.Channel.World.Entities.Creatures
 				this.GiveUp(existingQuest);
 
 			var quest = new Quest(questId);
+			this.Start(quest, owl);
+		}
+
+		/// <summary>
+		/// Starts quest, sending it to the client and adding the quest item
+		/// to the creature's inventory.
+		/// </summary>
+		/// <param name="quest"></param>
+		public void Start(Quest quest, bool owl)
+		{
 			this.Add(quest);
 
 			// Owl
