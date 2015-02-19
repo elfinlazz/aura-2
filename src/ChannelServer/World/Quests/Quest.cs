@@ -85,13 +85,13 @@ namespace Aura.Channel.World.Quests
 
 		public Quest(int questId, long uniqueId, QuestState state)
 		{
+			this.Data = ChannelServer.Instance.ScriptManager.GetQuestScript(questId);
+			if (this.Data == null)
+				throw new Exception("Quest '" + questId.ToString() + "' does not exist.");
+
 			this.Id = questId;
 			this.UniqueId = uniqueId;
 			this.State = state;
-
-			this.Data = ChannelServer.Instance.ScriptManager.GetQuestScript(this.Id);
-			if (this.Data == null)
-				throw new Exception("Quest '" + questId.ToString() + "' does not exist.");
 
 			_progresses = new OrderedDictionary<string, QuestObjectiveProgress>();
 			foreach (var objective in this.Data.Objectives)

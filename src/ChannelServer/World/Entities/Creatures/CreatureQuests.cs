@@ -126,11 +126,6 @@ namespace Aura.Channel.World.Entities.Creatures
 			if (existingQuest != null && existingQuest.State < QuestState.Complete)
 				this.GiveUp(existingQuest);
 
-			// Check for quest script
-			var questScript = ChannelServer.Instance.ScriptManager.GetQuestScript(questId);
-			if (questScript == null)
-				throw new Exception("Quest '" + questId.ToString() + "' does not exist.");
-
 			var quest = new Quest(questId);
 			this.Add(quest);
 
