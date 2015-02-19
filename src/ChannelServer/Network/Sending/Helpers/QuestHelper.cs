@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Quests;
 using Aura.Shared.Network;
 using System;
@@ -19,7 +20,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 
 			packet.PutLong(quest.QuestItem.EntityId);
 
-			packet.PutByte(2); // 0 = blue icon, 2 = normal, 4 = exploration, 7 = shadow (changes structure slightly)
+			packet.PutByte((byte)quest.Data.Type); // 0 = blue icon, 2 = normal, 4 = exploration, 7 = shadow (changes structure slightly)
 			// Client values that might make sense:
 			// Delivery: 1? (id == 506401?)
 			// Event: 1? ((this + 80) == 18?)
@@ -76,14 +77,21 @@ namespace Aura.Channel.Network.Sending.Helpers
 			packet.PutString(""); // <xml soundset="4" npc="GUI_NPCportrait_Lanier"/>
 			packet.PutString("QMBEXP:f:1.000000;QMBGLD:f:1.000000;QMSMEXP:f:1.000000;QMSMGLD:f:1.000000;QMAMEXP:f:1.000000;QMAMGLD:f:1.000000;QMBHDCTADD:4:0;QMGNRB:f:1.000000;QMGNRB:f:1.000000;");
 
-			packet.PutInt(0);
-			packet.PutInt(0);
-			// Alternative, PTJ
-			//020 [........00000002] Int    : 2
-			//021 [........0000000C] Int    : 12
-			//022 [........00000010] Int    : 16
-			//023 [........00000015] Int    : 21
-			//024 [000039BF89671150] Long   : 63494806770000 // Timestamp
+			switch (quest.Data.Type)
+			{
+				case QuestType.PTJ:
+					packet.PutInt(2);
+					packet.PutInt(12);
+					packet.PutInt(16);
+					packet.PutInt(21);
+					packet.PutLong(DateTime.Now.AddMinutes(2));
+					break;
+
+				default:
+					packet.PutInt(0);
+					packet.PutInt(0);
+					break;
+			}
 
 			packet.PutInt(quest.Data.Objectives.Count);
 			foreach (var objectiveData in quest.Data.Objectives)

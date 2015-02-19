@@ -24,6 +24,8 @@ namespace Aura.Channel.Scripting.Scripts
 		public string Name { get; set; }
 		public string Description { get; set; }
 
+		public QuestType Type { get; set; }
+
 		public Receive ReceiveMethod { get; set; }
 		public bool Cancelable { get; set; }
 
@@ -43,6 +45,8 @@ namespace Aura.Channel.Scripting.Scripts
 			this.Rewards = new List<QuestReward>();
 
 			this.MetaData = new MabiDictionary();
+
+			this.Type = QuestType.Normal;
 		}
 
 		public override bool Init()
@@ -111,6 +115,15 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void SetDescription(string description)
 		{
 			this.Description = description;
+		}
+
+		/// <summary>
+		/// Sets type of quest.
+		/// </summary>
+		/// <param name="type"></param>
+		protected void SetType(QuestType type)
+		{
+			this.Type = type;
 		}
 
 		/// <summary>
@@ -358,5 +371,11 @@ namespace Aura.Channel.Scripting.Scripts
 	{
 		Manually,
 		Automatically,
+	}
+
+	public enum QuestType : byte
+	{
+		PTJ = 1,
+		Normal = 2,
 	}
 }
