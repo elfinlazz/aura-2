@@ -241,6 +241,7 @@ namespace Aura.Channel.World.Entities
 			this.MetaData1 = new MabiDictionary(baseItem.MetaData1.ToString());
 			this.MetaData2 = new MabiDictionary(baseItem.MetaData2.ToString());
 			this.QuestId = baseItem.QuestId;
+			this.EgoInfo = baseItem.EgoInfo.Copy();
 
 			this.SetNewEntityId();
 		}

@@ -1,4 +1,7 @@
-﻿using Aura.Shared.Mabi.Const;
+﻿// Copyright (c) Aura development team - Licensed under GNU GPL
+// For more information, see license file in the main folder
+
+using Aura.Shared.Mabi.Const;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,7 @@ namespace Aura.Channel.World
 	public class EgoInfo
 	{
 		/// <summary>
-		/// Ego's race,  displayed in stat window.
+		/// Ego's race, displayed in stat window.
 		/// </summary>
 		public EgoRace Race { get; set; }
 
@@ -106,6 +109,35 @@ namespace Aura.Channel.World
 			this.LuckLevel = 1;
 			this.SocialLevel = 1;
 			this.LastFeeding = DateTime.Now;
+		}
+
+		/// <summary>
+		/// Creates a copy of this object.
+		/// </summary>
+		/// <returns></returns>
+		public EgoInfo Copy()
+		{
+			var result = new EgoInfo();
+
+			result.Name = this.Name;
+			result.Race = this.Race;
+			result.StrLevel = this.StrLevel;
+			result.StrExp = this.StrExp;
+			result.IntLevel = this.IntLevel;
+			result.IntExp = this.IntExp;
+			result.DexLevel = this.DexLevel;
+			result.DexExp = this.DexExp;
+			result.WillLevel = this.WillLevel;
+			result.WillExp = this.WillExp;
+			result.LuckLevel = this.LuckLevel;
+			result.LuckExp = this.LuckExp;
+			result.SocialLevel = this.SocialLevel;
+			result.SocialExp = this.SocialExp;
+			result.AwakeningEnergy = this.AwakeningEnergy;
+			result.AwakeningExp = this.AwakeningExp;
+			result.LastFeeding = this.LastFeeding;
+
+			return result;
 		}
 	}
 }
