@@ -79,7 +79,11 @@ namespace Aura.Channel.Skills.Combat
 
 			// TODO: Centralize this so we don't have to maintain the active
 			//   skill and the regens in multiple places.
-			target.Skills.ActiveSkill.State = SkillState.Used;
+			// TODO: Remove the need for this null check... AIs reset ActiveSkill
+			//   in Complete, which is called from the combat action handler
+			//   before we get back here.
+			if (target.Skills.ActiveSkill != null)
+				target.Skills.ActiveSkill.State = SkillState.Used;
 			target.Regens.Remove("ActiveSkillWait");
 
 			return true;
