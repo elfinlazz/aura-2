@@ -954,7 +954,15 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="questId"></param>
 		public void StartQuest(int questId)
 		{
-			this.Player.Quests.Start(questId);
+			try
+			{
+				this.Player.Quests.Start(questId);
+			}
+			catch
+			{
+				Log.Warning("NpcScript.StartQuest: Quest '{0}' doesn't exist.", questId);
+				this.Msg("(Error)");
+			}
 		}
 
 		/// <summary>
