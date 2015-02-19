@@ -28,7 +28,7 @@ namespace Aura.Channel.Network.Handlers
 			var quest = creature.Quests.GetSafe(uniqueQuestId);
 			if (!quest.IsDone) goto L_Fail;
 
-			if (!creature.Quests.Complete(quest)) goto L_Fail;
+			if (!creature.Quests.Complete(quest, true)) goto L_Fail;
 
 			Send.CompleteQuestR(creature, true);
 			return;

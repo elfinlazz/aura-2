@@ -956,7 +956,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			try
 			{
-				this.Player.Quests.Start(questId);
+				this.Player.Quests.Start(questId, false);
 			}
 			catch
 			{
@@ -971,7 +971,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="questId"></param>
 		public void CompleteQuest(int questId)
 		{
-			this.Player.Quests.Complete(questId);
+			this.Player.Quests.Complete(questId,false);
 		}
 
 		/// <summary>

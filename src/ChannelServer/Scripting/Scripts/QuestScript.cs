@@ -245,7 +245,7 @@ namespace Aura.Channel.Scripting.Scripts
 		private void OnPlayerLoggedIn(Creature character)
 		{
 			if (this.CheckPrerequisites(character))
-				character.Quests.Start(this.Id);
+				character.Quests.Start(this.Id, true);
 		}
 
 		/// <summary>
@@ -353,7 +353,7 @@ namespace Aura.Channel.Scripting.Scripts
 		private void OnPlayerCompletesQuest(Creature character, int questId)
 		{
 			if (this.CheckPrerequisites(character))
-				character.Quests.Start(this.Id);
+				character.Quests.Start(this.Id, true);
 		}
 
 		/// <summary>
@@ -363,7 +363,7 @@ namespace Aura.Channel.Scripting.Scripts
 		private void OnCreatureLevelUp(Creature creature)
 		{
 			if (this.CheckPrerequisites(creature))
-				creature.Quests.Start(this.Id);
+				creature.Quests.Start(this.Id, true);
 		}
 	}
 

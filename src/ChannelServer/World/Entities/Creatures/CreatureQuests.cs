@@ -118,7 +118,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Starts quest
 		/// </summary>
 		/// <param name="questId"></param>
-		public void Start(int questId)
+		public void Start(int questId, bool owl)
 		{
 			// Remove quest if it's aleady there and not completed,
 			// or it will be shown twice till next relog.
@@ -135,7 +135,8 @@ namespace Aura.Channel.World.Entities.Creatures
 			this.Add(quest);
 
 			// Owl
-			Send.QuestOwlNew(_creature, quest.UniqueId);
+			if (owl)
+				Send.QuestOwlNew(_creature, quest.UniqueId);
 
 			// Quest item (required to complete quests)
 			_creature.Inventory.Add(quest.QuestItem, Pocket.Quests);
@@ -170,21 +171,21 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Completes and removes quest, if it exists.
 		/// </summary>
 		/// <param name="questId"></param>
-		public bool Complete(int questId)
+		public bool Complete(int questId, bool owl)
 		{
 			var quest = this.Get(questId);
 			if (quest == null) return false;
 
-			return this.Complete(quest);
+			return this.Complete(quest, owl);
 		}
 
 		/// <summary>
 		/// Completes and removes quest, if it exists.
 		/// </summary>
 		/// <param name="quest"></param>
-		public bool Complete(Quest quest)
+		public bool Complete(Quest quest, bool owl)
 		{
-			var success = this.Complete(quest, true);
+			var success = this.Complete(quest, true, owl);
 			if (success)
 			{
 				quest.State = QuestState.Complete;
@@ -201,7 +202,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public bool GiveUp(Quest quest)
 		{
-			var success = this.Complete(quest, false);
+			var success = this.Complete(quest, false, false);
 			if (success)
 				lock (_quests)
 					_quests.Remove(quest.Id);
@@ -213,7 +214,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// </summary>
 		/// <param name="quest"></param>
 		/// <param name="rewards">Shall rewards be given?</param>
-		private bool Complete(Quest quest, bool rewards)
+		private bool Complete(Quest quest, bool rewards, bool owl)
 		{
 			if (!_quests.ContainsValue(quest))
 				return false;
@@ -221,7 +222,8 @@ namespace Aura.Channel.World.Entities.Creatures
 			if (rewards)
 			{
 				// Owl
-				Send.QuestOwlComplete(_creature, quest.UniqueId);
+				if (owl)
+					Send.QuestOwlComplete(_creature, quest.UniqueId);
 
 				// Rewards
 				foreach (var reward in quest.Data.Rewards)
