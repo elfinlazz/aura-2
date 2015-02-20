@@ -214,6 +214,7 @@
     <Compile Include="World\Position.cs" />
     <Compile Include="World\Quests\Objectives.cs" />
     <Compile Include="World\Quests\Prerequisites.cs" />
+    <Compile Include="World\Quests\PtjTrackRecord.cs" />
     <Compile Include="World\Quests\Quest.cs" />
     <Compile Include="World\Quests\Rewards.cs" />
     <Compile Include="World\Region.cs" />
