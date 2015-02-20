@@ -19,10 +19,13 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		private Dictionary<int, Quest> _quests;
 
+		private Dictionary<PtjType, PtjTrackRecord> _ptjRecords;
+
 		public CreatureQuests(Creature creature)
 		{
 			_creature = creature;
 			_quests = new Dictionary<int, Quest>();
+			_ptjRecords = new Dictionary<PtjType, PtjTrackRecord>();
 		}
 
 		/// <summary>
@@ -272,6 +275,45 @@ namespace Aura.Channel.World.Entities.Creatures
 				return false;
 
 			return (quest.State == QuestState.InProgress);
+		}
+
+		/// <summary>
+		/// Modifies track record, changing success, done, and last change.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="success"></param>
+		/// <param name="done"></param>
+		public void ModifyPtjTrackRecord(PtjType type, int success, int done)
+		{
+			var record = this.GetPtjTrackRecord(type);
+
+			record.Success += success;
+			record.Done += done;
+			record.LastChange = DateTime.Now;
+		}
+
+		/// <summary>
+		/// Returns new list of all track records.
+		/// </summary>
+		/// <returns></returns>
+		public PtjTrackRecord[] GetPtjTrackRecords()
+		{
+			lock (_ptjRecords)
+				return _ptjRecords.Values.ToArray();
+		}
+
+		/// <summary>
+		/// Returns track record for type.
+		/// </summary>
+		/// <returns></returns>
+		public PtjTrackRecord GetPtjTrackRecord(PtjType type)
+		{
+			PtjTrackRecord record;
+			lock (_ptjRecords)
+				if (!_ptjRecords.TryGetValue(type, out record))
+					_ptjRecords[type] = (record = new PtjTrackRecord(type, 0, 0, DateTime.Now));
+
+			return record;
 		}
 	}
 }
