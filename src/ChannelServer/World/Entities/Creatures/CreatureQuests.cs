@@ -74,6 +74,17 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
+		/// Returns quest or null.
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
+		public Quest Get(Func<Quest, bool> predicate)
+		{
+			lock (_quests)
+				return _quests.Values.FirstOrDefault(predicate);
+		}
+
+		/// <summary>
 		/// Calls <see cref="Get(long)"/>. If the result is null, throws <see cref="SevereViolation"/>.
 		/// </summary>
 		/// <param name="uniqueId"></param>
