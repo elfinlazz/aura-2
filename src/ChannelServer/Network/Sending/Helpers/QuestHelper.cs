@@ -81,7 +81,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			switch (quest.Data.Type)
 			{
 				case QuestType.Deliver:
-					packet.PutInt((int)quest.Data.Type);
+					packet.PutInt((int)quest.Data.PtjType);
 					packet.PutInt(quest.Data.StartHour);
 					packet.PutInt(quest.Data.ReportHour);
 					packet.PutInt(quest.Data.DeadlineHour);
