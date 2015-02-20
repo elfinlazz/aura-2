@@ -19,20 +19,21 @@ namespace Aura.Channel.Scripting.Scripts
 {
 	public class QuestScript : GeneralScript
 	{
-		public int Id { get; set; }
+		public int Id { get; protected set; }
 
-		public string Name { get; set; }
-		public string Description { get; set; }
+		public string Name { get; protected set; }
+		public string Description { get; protected set; }
 
-		public QuestType Type { get; set; }
-		public PtjType PtjType { get; set; }
+		public QuestType Type { get; protected set; }
+		public PtjType PtjType { get; protected set; }
+		public QuestLevel Level { get; protected set; }
 
 		public int StartHour { get; protected set; }
 		public int ReportHour { get; protected set; }
 		public int DeadlineHour { get; protected set; }
 
-		public Receive ReceiveMethod { get; set; }
-		public bool Cancelable { get; set; }
+		public Receive ReceiveMethod { get; protected set; }
+		public bool Cancelable { get; protected set; }
 
 		public List<QuestPrerequisite> Prerequisites { get; protected set; }
 		public OrderedDictionary<string, QuestObjective> Objectives { get; protected set; }
@@ -151,6 +152,15 @@ namespace Aura.Channel.Scripting.Scripts
 		protected void SetPtjType(PtjType type)
 		{
 			this.PtjType = type;
+		}
+
+		/// <summary>
+		/// Sets quest's level (required for PTJ).
+		/// </summary>
+		/// <param name="level"></param>
+		protected void SetLevel(QuestLevel level)
+		{
+			this.Level = level;
 		}
 
 		/// <summary>
@@ -398,5 +408,13 @@ namespace Aura.Channel.Scripting.Scripts
 	{
 		Manually,
 		Automatically,
+	}
+
+	public enum QuestLevel
+	{
+		None,
+		Basic,
+		Int,
+		Adv,
 	}
 }
