@@ -13,11 +13,11 @@ namespace Aura.Shared.Mabi
 		/// <summary>
 		/// 1,500ms (1.5 seconds)
 		/// </summary>
-		public const int TicksPerMinute = 15000000;
+		public const long TicksPerMinute = 15000000;
 		/// <summary>
 		/// 90,000ms (1.5 minutes)
 		/// </summary>
-		public const int TicksPerHour = TicksPerMinute * 60;
+		public const long TicksPerHour = TicksPerMinute * 60;
 
 		/// <summary>
 		/// Erinn months in English, starting on Imbolic (Sunday).
