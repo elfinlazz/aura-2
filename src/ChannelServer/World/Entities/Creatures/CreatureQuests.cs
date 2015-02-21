@@ -164,6 +164,10 @@ namespace Aura.Channel.World.Entities.Creatures
 
 			// Quest info
 			Send.NewQuest(_creature, quest);
+
+			// Start PTJ clock
+			if (quest.Data.Type == QuestType.Deliver)
+				Send.QuestStartPtj(_creature, quest.UniqueId);
 		}
 
 		/// <summary>
@@ -215,6 +219,9 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <param name="quest"></param>
 		public bool Complete(Quest quest, int rewardGroup, QuestResult result, bool owl)
 		{
+			if (quest.Data.Type == QuestType.Deliver)
+				this.ModifyPtjTrackRecord(quest.Data.PtjType, +1, (result == QuestResult.Perfect ? +1 : 0));
+
 			var success = this.EndQuest(quest, rewardGroup, QuestResult.Perfect, owl);
 			if (success)
 			{
@@ -232,6 +239,9 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public bool GiveUp(Quest quest)
 		{
+			if (quest.Data.Type == QuestType.Deliver)
+				this.ModifyPtjTrackRecord(quest.Data.PtjType, +1, 0);
+
 			var success = this.EndQuest(quest, -1, QuestResult.None, false);
 			if (success)
 				lock (_quests)
@@ -285,6 +295,15 @@ namespace Aura.Channel.World.Entities.Creatures
 
 			// Remove from quest log.
 			Send.QuestClear(_creature, quest.UniqueId);
+
+			// Update PTJ stuff and stop clock
+			if (quest.Data.Type == QuestType.Deliver)
+			{
+				var record = this.GetPtjTrackRecord(quest.Data.PtjType);
+
+				Send.QuestUpdatePtj(_creature, quest.Data.PtjType, record.Done, record.Success);
+				Send.QuestEndPtj(_creature);
+			}
 
 			return true;
 		}
