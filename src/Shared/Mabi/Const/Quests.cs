@@ -82,8 +82,9 @@ namespace Aura.Shared.Mabi.Const
 	/// </summary>
 	public enum QuestResult : byte
 	{
-		Perfect,
-		Mid,
-		Low,
+		Perfect = 0,
+		Mid = 1,
+		Low = 2,
+		None = 99,
 	}
 }
