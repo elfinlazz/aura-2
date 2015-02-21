@@ -165,7 +165,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				{
 					packet.PutByte((byte)reward.Type);
 					packet.PutString(reward.ToString());
-					packet.PutByte(0); // necessary result? (ptj, groups rewards by how much has to get done)
+					packet.PutByte((byte)reward.Result);
 					packet.PutByte(1);
 					packet.PutByte(1);
 				}
