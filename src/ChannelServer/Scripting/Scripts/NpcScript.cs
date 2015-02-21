@@ -538,12 +538,24 @@ namespace Aura.Channel.Scripting.Scripts
 
 			// Seem to be multiple levels? -5, -2, 0, 2, 5?
 
-			var msg = this.RndStr(
-				Localization.Get("(I think I left a good impression.)"),
-				Localization.Get("(The conversation drew a lot of interest.)"),
-				Localization.Get("(That was a great conversation!)")
-				// (It seems I left quite a good impression.)
-			);
+			var msg = "";
+			if (favor >= 0)
+			{
+				msg = this.RndStr(
+					Localization.Get("(I think I left a good impression.)"),
+					Localization.Get("(The conversation drew a lot of interest.)"),
+					Localization.Get("(That was a great conversation!)")
+					// (It seems I left quite a good impression.)
+			   );
+			}
+			else
+			{
+				msg = this.RndStr(
+					Localization.Get("(A bit of frowning is evident.)"),
+					Localization.Get("(Seems like this person did not enjoy the conversation.)"),
+					Localization.Get("(A disapproving look, indeed.)")
+			   );
+			}
 
 			this.Msg(Hide.Name, FavorExpression(), msg);
 		}
