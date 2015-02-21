@@ -69,16 +69,7 @@ namespace Aura.Channel.World.Quests
 		/// <summary>
 		/// The required result to get this reward.
 		/// </summary>
-		public QuestResult Result { get; protected set; }
-
-		/// <summary>
-		/// Sets result
-		/// </summary>
-		/// <param name="result"></param>
-		public QuestReward(QuestResult result)
-		{
-			this.Result = result;
-		}
+		public QuestResult Result { get; set; }
 
 		/// <summary>
 		/// Gives reward to creature.
@@ -104,8 +95,7 @@ namespace Aura.Channel.World.Quests
 		public int ItemId { get; protected set; }
 		public int Amount { get; protected set; }
 
-		public QuestRewardItem(QuestResult result, int itemId, int amount)
-			: base(result)
+		public QuestRewardItem(int itemId, int amount)
 		{
 			this.ItemId = itemId;
 			this.Amount = amount;
@@ -136,8 +126,7 @@ namespace Aura.Channel.World.Quests
 		public SkillId SkillId { get; protected set; }
 		public SkillRank Rank { get; protected set; }
 
-		public QuestRewardSkill(QuestResult result, SkillId id, SkillRank rank)
-			: base(result)
+		public QuestRewardSkill(SkillId id, SkillRank rank)
 		{
 			this.SkillId = id;
 			this.Rank = rank;
@@ -168,8 +157,7 @@ namespace Aura.Channel.World.Quests
 
 		public int Amount { get; protected set; }
 
-		public QuestRewardGold(QuestResult result, int amount)
-			: base(result)
+		public QuestRewardGold(int amount)
 		{
 			this.Amount = amount;
 		}
@@ -195,8 +183,7 @@ namespace Aura.Channel.World.Quests
 
 		public int Amount { get; protected set; }
 
-		public QuestRewardExp(QuestResult result, int amount)
-			: base(result)
+		public QuestRewardExp(int amount)
 		{
 			this.Amount = amount;
 		}
@@ -222,8 +209,7 @@ namespace Aura.Channel.World.Quests
 
 		public int Amount { get; protected set; }
 
-		public QuestRewardExplExp(QuestResult result, int amount)
-			: base(result)
+		public QuestRewardExplExp(int amount)
 		{
 			this.Amount = amount;
 		}
@@ -248,8 +234,7 @@ namespace Aura.Channel.World.Quests
 
 		public short Amount { get; protected set; }
 
-		public QuestRewardAp(QuestResult result, short amount)
-			: base(result)
+		public QuestRewardAp(short amount)
 		{
 			this.Amount = amount;
 		}
