@@ -80,6 +80,7 @@ namespace Aura.Channel.Scripting.Compilers
 			add.Append("using Aura.Channel.Util;");
 			add.Append("using Aura.Channel.World.Entities;");
 			add.Append("using Aura.Channel.World;");
+			add.Append("using Aura.Channel.World.Quests;");
 			add.Append("using Aura.Channel;");
 			add.Append("using Aura.Data;");
 			add.Append("using Aura.Data.Database;");
