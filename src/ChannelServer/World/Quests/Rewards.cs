@@ -95,16 +95,6 @@ namespace Aura.Channel.World.Quests
 	}
 
 	/// <summary>
-	/// Quest result, describes how much the player got or has to get done.
-	/// </summary>
-	public enum QuestResult
-	{
-		Perfect,
-		Mid,
-		Low,
-	}
-
-	/// <summary>
 	/// Rewards item
 	/// </summary>
 	public class QuestRewardItem : QuestReward

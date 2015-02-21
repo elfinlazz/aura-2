@@ -76,4 +76,14 @@ namespace Aura.Shared.Mabi.Const
 		Item = 2,
 		Scroll = 3, // ?
 	}
+
+	/// <summary>
+	/// Quest result, describes how much the player got or has to get done.
+	/// </summary>
+	public enum QuestResult : byte
+	{
+		Perfect,
+		Mid,
+		Low,
+	}
 }
