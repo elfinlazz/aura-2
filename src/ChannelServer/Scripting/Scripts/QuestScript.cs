@@ -37,7 +37,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public List<QuestPrerequisite> Prerequisites { get; protected set; }
 		public OrderedDictionary<string, QuestObjective> Objectives { get; protected set; }
-		public List<QuestReward> Rewards { get; protected set; }
+		public Dictionary<int, QuestRewardGroup> RewardGroups { get; protected set; }
 
 		/// <summary>
 		/// Used in quest items, although seemingly not required.
@@ -48,7 +48,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			this.Prerequisites = new List<QuestPrerequisite>();
 			this.Objectives = new OrderedDictionary<string, QuestObjective>();
-			this.Rewards = new List<QuestReward>();
+			this.RewardGroups = new Dictionary<int, QuestRewardGroup>();
 
 			this.MetaData = new MabiDictionary();
 
@@ -74,7 +74,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.ReceiveMethod == Receive.Automatically)
 				ChannelServer.Instance.Events.PlayerLoggedIn += this.OnPlayerLoggedIn;
 
-			this.MetaData.SetString("QSTTIP", "N_{0}|D_{1}|A_|R_{2}|T_0", this.Name, this.Description, string.Join(", ", this.Rewards));
+			this.MetaData.SetString("QSTTIP", "N_{0}|D_{1}|A_|R_{2}|T_0", this.Name, this.Description, string.Join(", ", this.GetDefaultRewardGroup().Rewards));
 
 			ChannelServer.Instance.ScriptManager.AddQuestScript(this);
 
@@ -241,7 +241,25 @@ namespace Aura.Channel.Scripting.Scripts
 
 		protected void AddReward(QuestReward reward)
 		{
-			this.Rewards.Add(reward);
+			this.AddReward(0, RewardGroupType.Item, reward);
+		}
+
+		protected void AddReward(int groupId, RewardGroupType type, QuestReward reward)
+		{
+			if (!this.RewardGroups.ContainsKey(groupId))
+				this.RewardGroups[groupId] = new QuestRewardGroup(groupId, type);
+
+			this.RewardGroups[groupId].Add(reward);
+		}
+
+		public QuestRewardGroup GetDefaultRewardGroup()
+		{
+			QuestRewardGroup result;
+			if (!this.RewardGroups.TryGetValue(0, out result))
+				if (!this.RewardGroups.TryGetValue(1, out result))
+					throw new Exception("QuestScript.GetDefaultRewardGroup: No default group found.");
+
+			return result;
 		}
 
 		// Prerequisite Factory

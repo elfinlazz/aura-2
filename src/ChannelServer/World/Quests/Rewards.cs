@@ -6,9 +6,30 @@ using Aura.Shared.Mabi.Const;
 using Aura.Channel.World.Entities;
 using System;
 using Aura.Channel.Network.Sending;
+using System.Collections.Generic;
 
 namespace Aura.Channel.World.Quests
 {
+	public class QuestRewardGroup
+	{
+		public int Id { get; protected set; }
+		public RewardGroupType Type { get; protected set; }
+		public List<QuestReward> Rewards { get; protected set; }
+
+		public QuestRewardGroup(int groupId, RewardGroupType type)
+		{
+			this.Rewards = new List<QuestReward>();
+
+			this.Id = groupId;
+			this.Type = type;
+		}
+
+		public void Add(QuestReward reward)
+		{
+			this.Rewards.Add(reward);
+		}
+	}
+
 	public abstract class QuestReward
 	{
 		public abstract RewardType Type { get; }

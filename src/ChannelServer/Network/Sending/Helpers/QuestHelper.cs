@@ -6,6 +6,7 @@ using Aura.Channel.World.Quests;
 using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using System;
+using System.Linq;
 
 namespace Aura.Channel.Network.Sending.Helpers
 {
@@ -150,20 +151,24 @@ namespace Aura.Channel.Network.Sending.Helpers
 				}
 			}
 
-			packet.PutByte(1);
-			packet.PutByte(0);
-			packet.PutByte(0);
-			packet.PutByte(1);
-
 			// Rewards
-			packet.PutByte((byte)quest.Data.Rewards.Count);
-			foreach (var reward in quest.Data.Rewards)
+			packet.PutByte((byte)quest.Data.RewardGroups.Count);
+			foreach (var group in quest.Data.RewardGroups.Values.OrderBy(a => a.Id))
 			{
-				packet.PutByte((byte)reward.Type);
-				packet.PutString(reward.ToString());
-				packet.PutByte(0); // Group?
-				packet.PutByte(1);
-				packet.PutByte(1);
+				// Group id has to be !0 for client to display rewards for PTJs
+				packet.PutByte((byte)group.Id);
+				packet.PutByte((byte)group.Type);
+				packet.PutByte(0);
+
+				packet.PutByte((byte)group.Rewards.Count);
+				foreach (var reward in group.Rewards)
+				{
+					packet.PutByte((byte)reward.Type);
+					packet.PutString(reward.ToString());
+					packet.PutByte(0); // necessary result? (ptj, groups rewards by how much has to get done)
+					packet.PutByte(1);
+					packet.PutByte(1);
+				}
 			}
 
 			packet.PutByte(0);

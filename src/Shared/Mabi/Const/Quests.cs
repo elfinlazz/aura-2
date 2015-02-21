@@ -68,4 +68,12 @@ namespace Aura.Shared.Mabi.Const
 		Lighthouse = 34,
 		PuppetShop = 35,
 	}
+
+	public enum RewardGroupType
+	{
+		Gold = 0,
+		Exp = 1,
+		Item = 2,
+		Scroll = 3, // ?
+	}
 }
