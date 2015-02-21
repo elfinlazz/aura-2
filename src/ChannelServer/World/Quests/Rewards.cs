@@ -5,6 +5,7 @@ using Aura.Data;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.World.Entities;
 using System;
+using System.Linq;
 using Aura.Channel.Network.Sending;
 using System.Collections.Generic;
 
@@ -15,6 +16,8 @@ namespace Aura.Channel.World.Quests
 		public int Id { get; protected set; }
 		public RewardGroupType Type { get; protected set; }
 		public List<QuestReward> Rewards { get; protected set; }
+
+		public bool PerfectOnly { get { return this.Rewards.Any(a => a.Result != QuestResult.Perfect); } }
 
 		public QuestRewardGroup(int groupId, RewardGroupType type)
 		{
@@ -33,10 +36,23 @@ namespace Aura.Channel.World.Quests
 	public abstract class QuestReward
 	{
 		public abstract RewardType Type { get; }
+		public QuestResult Result { get; protected set; }
+
+		public QuestReward(QuestResult result)
+		{
+			this.Result = result;
+		}
 
 		public abstract void Reward(Creature creature, Quest quest);
 
 		public override abstract string ToString();
+	}
+
+	public enum QuestResult
+	{
+		Perfect,
+		Mid,
+		Low,
 	}
 
 	/// <summary>
@@ -49,7 +65,8 @@ namespace Aura.Channel.World.Quests
 		public int ItemId { get; protected set; }
 		public int Amount { get; protected set; }
 
-		public QuestRewardItem(int itemId, int amount)
+		public QuestRewardItem(QuestResult result, int itemId, int amount)
+			: base(result)
 		{
 			this.ItemId = itemId;
 			this.Amount = amount;
@@ -80,7 +97,8 @@ namespace Aura.Channel.World.Quests
 		public SkillId SkillId { get; protected set; }
 		public SkillRank Rank { get; protected set; }
 
-		public QuestRewardSkill(SkillId id, SkillRank rank)
+		public QuestRewardSkill(QuestResult result, SkillId id, SkillRank rank)
+			: base(result)
 		{
 			this.SkillId = id;
 			this.Rank = rank;
@@ -111,7 +129,8 @@ namespace Aura.Channel.World.Quests
 
 		public int Amount { get; protected set; }
 
-		public QuestRewardGold(int amount)
+		public QuestRewardGold(QuestResult result, int amount)
+			: base(result)
 		{
 			this.Amount = amount;
 		}
@@ -137,7 +156,8 @@ namespace Aura.Channel.World.Quests
 
 		public int Amount { get; protected set; }
 
-		public QuestRewardExp(int amount)
+		public QuestRewardExp(QuestResult result, int amount)
+			: base(result)
 		{
 			this.Amount = amount;
 		}
@@ -163,7 +183,8 @@ namespace Aura.Channel.World.Quests
 
 		public int Amount { get; protected set; }
 
-		public QuestRewardExplExp(int amount)
+		public QuestRewardExplExp(QuestResult result, int amount)
+			: base(result)
 		{
 			this.Amount = amount;
 		}
@@ -188,7 +209,8 @@ namespace Aura.Channel.World.Quests
 
 		public short Amount { get; protected set; }
 
-		public QuestRewardAp(short amount)
+		public QuestRewardAp(QuestResult result, short amount)
+			: base(result)
 		{
 			this.Amount = amount;
 		}

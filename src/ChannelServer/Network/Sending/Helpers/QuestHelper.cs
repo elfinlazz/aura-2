@@ -158,7 +158,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				// Group id has to be !0 for client to display rewards for PTJs
 				packet.PutByte((byte)group.Id);
 				packet.PutByte((byte)group.Type);
-				packet.PutByte(0);
+				packet.PutByte(group.PerfectOnly);
 
 				packet.PutByte((byte)group.Rewards.Count);
 				foreach (var reward in group.Rewards)

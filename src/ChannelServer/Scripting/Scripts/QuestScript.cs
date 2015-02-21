@@ -283,12 +283,19 @@ namespace Aura.Channel.Scripting.Scripts
 		// Reward Factory
 		// ------------------------------------------------------------------
 
-		protected QuestReward Item(int itemId, int amount = 1) { return new QuestRewardItem(itemId, amount); }
-		protected QuestReward Skill(SkillId skillId, SkillRank rank) { return new QuestRewardSkill(skillId, rank); }
-		protected QuestReward Gold(int amount) { return new QuestRewardGold(amount); }
-		protected QuestReward Exp(int amount) { return new QuestRewardExp(amount); }
-		protected QuestReward ExplExp(int amount) { return new QuestRewardExplExp(amount); }
-		protected QuestReward AP(short amount) { return new QuestRewardAp(amount); }
+		protected QuestReward Item(int itemId, int amount = 1) { return new QuestRewardItem(QuestResult.Perfect, itemId, amount); }
+		protected QuestReward Skill(SkillId skillId, SkillRank rank) { return new QuestRewardSkill(QuestResult.Perfect, skillId, rank); }
+		protected QuestReward Gold(int amount) { return new QuestRewardGold(QuestResult.Perfect, amount); }
+		protected QuestReward Exp(int amount) { return new QuestRewardExp(QuestResult.Perfect, amount); }
+		protected QuestReward ExplExp(int amount) { return new QuestRewardExplExp(QuestResult.Perfect, amount); }
+		protected QuestReward AP(short amount) { return new QuestRewardAp(QuestResult.Perfect, amount); }
+
+		protected QuestReward Item(QuestResult result, int itemId, int amount = 1) { return new QuestRewardItem(result, itemId, amount); }
+		protected QuestReward Skill(QuestResult result, SkillId skillId, SkillRank rank) { return new QuestRewardSkill(result, skillId, rank); }
+		protected QuestReward Gold(QuestResult result, int amount) { return new QuestRewardGold(result, amount); }
+		protected QuestReward Exp(QuestResult result, int amount) { return new QuestRewardExp(result, amount); }
+		protected QuestReward ExplExp(QuestResult result, int amount) { return new QuestRewardExplExp(result, amount); }
+		protected QuestReward AP(QuestResult result, short amount) { return new QuestRewardAp(result, amount); }
 
 		// Where the magic happens~
 		// ------------------------------------------------------------------
