@@ -233,6 +233,28 @@ namespace Aura.Channel.World.Quests
 
 			return this.QuestItem;
 		}
+
+		/// <summary>
+		/// Returns how well the quest/objective has been done (so far).
+		/// </summary>
+		/// <remarks>
+		/// Only ever needed for PTJs? Ignore multi objective?
+		/// </remarks>
+		/// <returns></returns>
+		public QuestResult GetResult()
+		{
+			var objective = this.CurrentObjectiveOrLast;
+			var doneRate = 100f / this.Data.Objectives[objective.Ident].Amount * objective.Count;
+
+			if (doneRate == 100)
+				return QuestResult.Perfect;
+			else if (doneRate >= 50)
+				return QuestResult.Mid;
+			else if (doneRate > 0)
+				return QuestResult.Low;
+
+			return QuestResult.None;
+		}
 	}
 
 	public class QuestObjectiveProgress
