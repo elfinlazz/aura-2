@@ -266,36 +266,11 @@ namespace Aura.Channel.World.Entities.Creatures
 			// Rewards
 			if (rewardGroup != -1)
 			{
-				QuestRewardGroup group;
-				quest.Data.RewardGroups.TryGetValue(rewardGroup, out group);
-				if (group != null)
-				{
-					if (result != QuestResult.None)
-					{
-						// Owl
-						if (owl)
-							Send.QuestOwlComplete(_creature, quest.UniqueId);
-
-						// Reward all rewards that match the quest result
-						var rewards = group.Rewards.Where(a => a.Result == result);
-						if (rewards.Count() == 0)
-							Log.Warning("CreatureQuests.Complete: No rewards in group '{0}' at result '{1}' in quest '{2}'.", rewardGroup, result, quest.Id);
-
-						foreach (var reward in rewards)
-						{
-							try
-							{
-								reward.Reward(_creature, quest);
-							}
-							catch (NotImplementedException)
-							{
-								Log.Unimplemented("Quest.Complete: Reward '{0}'.", reward.Type);
-							}
-						}
-					}
-				}
+				var rewards = quest.Data.GetRewards(rewardGroup, result);
+				if (rewards.Count == 0)
+					Log.Warning("CreatureQuests.EndQuest: No rewards for group '{0}' at result '{1}' in quest '{2}'.", rewardGroup, result, quest.Id);
 				else
-					Log.Warning("CreatureQuests.Complete: Reward group '{0}' doesn't exist for quest '{1}'.", rewardGroup, quest.Id);
+					this.GiveRewards(quest, rewards, owl);
 			}
 
 			_creature.Inventory.Remove(quest.QuestItem);
@@ -313,6 +288,27 @@ namespace Aura.Channel.World.Entities.Creatures
 			}
 
 			return true;
+		}
+
+		private void GiveRewards(Quest quest, ICollection<QuestReward> rewards, bool owl)
+		{
+			if (rewards.Count == 0)
+				return;
+
+			if (owl)
+				Send.QuestOwlComplete(_creature, quest.UniqueId);
+
+			foreach (var reward in rewards)
+			{
+				try
+				{
+					reward.Reward(_creature, quest);
+				}
+				catch (NotImplementedException)
+				{
+					Log.Unimplemented("Quest.Complete: Reward '{0}'.", reward.Type);
+				}
+			}
 		}
 
 		/// <summary>

@@ -264,6 +264,18 @@ namespace Aura.Channel.Scripting.Scripts
 			return result;
 		}
 
+		public ICollection<QuestReward> GetRewards(int rewardGroup, QuestResult result)
+		{
+			var rewards = new List<QuestReward>();
+
+			QuestRewardGroup group;
+			this.RewardGroups.TryGetValue(rewardGroup, out group);
+			if (group != null && result != QuestResult.None)
+				rewards.AddRange(group.Rewards.Where(a => a.Result == result));
+
+			return rewards;
+		}
+
 		// Prerequisite Factory
 		// ------------------------------------------------------------------
 
