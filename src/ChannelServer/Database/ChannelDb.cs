@@ -756,6 +756,13 @@ namespace Aura.Channel.Database
 						continue;
 					}
 
+					// Don't save PTJs, fail them
+					if (quest.Data.Type == QuestType.Deliver)
+					{
+						character.Quests.ModifyPtjTrackRecord(quest.Data.PtjType, +1, 0);
+						continue;
+					}
+
 					using (var cmd = new InsertCommand("INSERT INTO `quests` {0}", conn, transaction))
 					{
 						if (quest.UniqueId < MabiId.QuestsTmp)
