@@ -35,6 +35,7 @@ public class EndelyonBaseScript : NpcScript
 			"Lymilark priestess stands in front of the church."
 		);
 		
+		// May I help you on anything else?<button title='End Conversation' keyword='@end' />
 		Msg("May I help you?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
 		
 		switch(await Select())
@@ -79,11 +80,6 @@ public class EndelyonBaseScript : NpcScript
 			case "about_skill":
 				GiveKeyword("skill_tailoring");
 				Msg("I'm sorry, but I don't know much about skills.<br/>The only skill I know is tailoring.<br/>If you want to know more about making clothes,<br/>talk with Caitin at the Grocery Store.<br/>She's the best tailor in town.<br/>");
-				break;
-
-			case "about_arbeit":
-				Msg("Are you willing to help the Church?<br/>It's a bit early, though. Please come back at a later time.");
-				//Msg("Our Church is looking for a kind soul to help take care of our crops.<br/>The main job is to harvest wheat or barley from the farmland located south of the Church.<br/>One thing to note: because of our tight budget, we cannot afford to pay in gold.<p/>Instead, anyone who completes the job will receive some Holy Water of Lymilark,<br/>which can be used to bless items.<br/>Blessed items do not fall to the ground<br/>when its owner is knocked unconscious.<br/>Now, what do you say?");
 				break;
 
 			case "shop_misc":
