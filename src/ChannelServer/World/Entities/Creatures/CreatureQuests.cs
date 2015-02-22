@@ -210,19 +210,16 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <param name="quest"></param>
 		public bool Complete(Quest quest, bool owl)
 		{
-			return this.Complete(quest, 0, QuestResult.Perfect, owl);
+			return this.Complete(quest, 0, owl);
 		}
 
 		/// <summary>
 		/// Completes and removes quest, if it exists.
 		/// </summary>
 		/// <param name="quest"></param>
-		public bool Complete(Quest quest, int rewardGroup, QuestResult result, bool owl)
+		public bool Complete(Quest quest, int rewardGroup, bool owl)
 		{
-			if (quest.Data.Type == QuestType.Deliver)
-				this.ModifyPtjTrackRecord(quest.Data.PtjType, +1, (result == QuestResult.Perfect ? +1 : 0));
-
-			var success = this.EndQuest(quest, rewardGroup, QuestResult.Perfect, owl);
+			var success = this.EndQuest(quest, rewardGroup, owl);
 			if (success)
 			{
 				quest.State = QuestState.Complete;
@@ -239,10 +236,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public bool GiveUp(Quest quest)
 		{
-			if (quest.Data.Type == QuestType.Deliver)
-				this.ModifyPtjTrackRecord(quest.Data.PtjType, +1, 0);
-
-			var success = this.EndQuest(quest, -1, QuestResult.None, false);
+			var success = this.EndQuest(quest, -1, false);
 			if (success)
 				lock (_quests)
 					_quests.Remove(quest.Id);
@@ -251,45 +245,58 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
-		/// Completes and removes quest, if it exists.
+		/// Completes and removes quest, if it exists, giving the rewards
+		/// in the process, if warranted.
 		/// </summary>
 		/// <param name="quest"></param>
-		/// <param name="rewardGroup">Reward group to use, set to -1 for now rewards.</param>
+		/// <param name="rewardGroup">Reward group to use, set to -1 for no rewards.</param>
 		/// <param name="owl">Show owl delivering the rewards?</param>
 		/// <returns></returns>
-		private bool EndQuest(Quest quest, int rewardGroup, QuestResult result, bool owl)
+		private bool EndQuest(Quest quest, int rewardGroup, bool owl)
 		{
 			if (!_quests.ContainsValue(quest))
 				return false;
 
+			var result = quest.GetResult();
+
+			// Increase PTJ done/success
+			if (quest.Data.Type == QuestType.Deliver)
+				this.ModifyPtjTrackRecord(quest.Data.PtjType, +1, (result == QuestResult.Perfect ? +1 : 0));
+
 			// Rewards
-			QuestRewardGroup group;
-			quest.Data.RewardGroups.TryGetValue(rewardGroup, out group);
-			if (group != null)
+			if (rewardGroup != -1)
 			{
-				// Owl
-				if (owl)
-					Send.QuestOwlComplete(_creature, quest.UniqueId);
-
-				// Reward all rewards that match the quest result
-				var rewards = group.Rewards.Where(a => a.Result == result);
-				if (rewards.Count() == 0)
-					Log.Warning("CreatureQuests.Complete: No rewards in group '{0}' at result '{1}' in quest '{2}'.", rewardGroup, result, quest.Id);
-
-				foreach (var reward in rewards)
+				QuestRewardGroup group;
+				quest.Data.RewardGroups.TryGetValue(rewardGroup, out group);
+				if (group != null)
 				{
-					try
+					if (result != QuestResult.None)
 					{
-						reward.Reward(_creature, quest);
-					}
-					catch (NotImplementedException)
-					{
-						Log.Unimplemented("Quest.Complete: Reward '{0}'.", reward.Type);
+						// Owl
+						if (owl)
+							Send.QuestOwlComplete(_creature, quest.UniqueId);
+
+						// Reward all rewards that match the quest result
+						var rewards = group.Rewards.Where(a => a.Result == result);
+						if (rewards.Count() == 0)
+							Log.Warning("CreatureQuests.Complete: No rewards in group '{0}' at result '{1}' in quest '{2}'.", rewardGroup, result, quest.Id);
+
+						foreach (var reward in rewards)
+						{
+							try
+							{
+								reward.Reward(_creature, quest);
+							}
+							catch (NotImplementedException)
+							{
+								Log.Unimplemented("Quest.Complete: Reward '{0}'.", reward.Type);
+							}
+						}
 					}
 				}
+				else
+					Log.Warning("CreatureQuests.Complete: Reward group '{0}' doesn't exist for quest '{1}'.", rewardGroup, quest.Id);
 			}
-			else
-				Log.Warning("CreatureQuests.Complete: Reward group '{0}' doesn't exist for quest '{1}'.", rewardGroup, quest.Id);
 
 			_creature.Inventory.Remove(quest.QuestItem);
 
