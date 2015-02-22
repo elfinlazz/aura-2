@@ -58,7 +58,7 @@ namespace Aura.Channel.Skills.Life
 			// Check distance
 			if (!creaturePosition.InRange(creature.Temp.GatheringTargetPosition, 400))
 			{
-				Send.Notice(creature, Localization.Get("It is too far to gather."));
+				Send.Notice(creature, Localization.Get("Your arms are too short to reach that from here."));
 				return false;
 			}
 
@@ -126,7 +126,7 @@ namespace Aura.Channel.Skills.Life
 
 			if (!creaturePosition.InRange(targetPosition, 400))
 			{
-				Send.Notice(creature, Localization.Get("It is too far to gather."));
+				Send.Notice(creature, Localization.Get("Your arms are too short to reach that from here."));
 				this.DoComplete(creature, entityId, collectId, false, 1);
 				return;
 			}
