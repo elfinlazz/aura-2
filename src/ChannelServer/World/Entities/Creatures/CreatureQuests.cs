@@ -369,5 +369,14 @@ namespace Aura.Channel.World.Entities.Creatures
 
 			return record;
 		}
+
+		/// <summary>
+		/// Returns current PTJ quest or null.
+		/// </summary>
+		/// <returns></returns>
+		public Quest GetPtjQuest()
+		{
+			return this.Get(a => a.Data.Type == QuestType.Deliver && a.State != QuestState.Complete);
+		}
 	}
 }
