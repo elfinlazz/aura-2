@@ -1050,7 +1050,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var progress = quest.CurrentObjectiveOrLast;
 			var objective = quest.Data.Objectives[quest.CurrentObjectiveOrLast.Ident] as QuestObjectiveCollect;
 			if (objective != null)
-				this.Player.Inventory.Remove(objective.ItemId, progress.Count);
+				this.Player.Inventory.Remove(objective.ItemId, Math.Min(objective.Amount, progress.Count));
 
 			// Complete
 			this.Player.Quests.Complete(quest, rewardGroup, false);
