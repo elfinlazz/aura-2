@@ -6,9 +6,16 @@
 
 public class EndelyonPtjScript : GeneralScript
 {
+	const PtjType JobType = PtjType.Church;
+	
 	const int Start = 12;
 	const int Report = 16;
 	const int Deadline = 21;
+	
+	readonly int[] QuestIds = new int[]
+	{
+		502103 // Basic - 10 Wheat
+	};
 
 	public override void Load()
 	{
@@ -18,7 +25,7 @@ public class EndelyonPtjScript : GeneralScript
 	
 	public async Task<HookResult> AfterIntro(NpcScript npc, params object[] args)
 	{
-		if(npc.DoingPtjForNpc() && npc.ErinnHour(16, 21))
+		if(npc.DoingPtjForNpc() && npc.ErinnHour(Report, Deadline))
 		{
 			await AboutArbeit(npc);
 			return HookResult.Break;
@@ -117,17 +124,17 @@ public class EndelyonPtjScript : GeneralScript
 			return;
 		}
 		
-		if(!npc.CanDoPtj())
+		if(!npc.CanDoPtj(JobType))
 		{
 			npc.Msg("Today's part-time jobs are all taken.<br/>If you need some Holy Water of Lymilark, please come back tomorrow.");
 			return;
 		}
 		
-		var randomPtj = npc.RandomPtj(PtjType.Church, 502103);
+		var randomPtj = npc.RandomPtj(JobType, QuestIds);
 		var ptjXml = npc.GetPtjXml(randomPtj, "Endelyon's Church Part-Time Job", "Looking for help with delivering goods to Church.");
 		var msg = "";
 		
-		if(npc.GetPtjDoneCount(PtjType.Church) == 0)
+		if(npc.GetPtjDoneCount(JobType) == 0)
 			msg = "Our Church is looking for a kind soul to help take care of our crops.<br/>The main job is to harvest wheat or barley from the farmland located south of the Church.<br/>One thing to note: because of our tight budget, we cannot afford to pay in gold.<p/>Instead, anyone who completes the job will receive some Holy Water of Lymilark,<br/>which can be used to bless items.<br/>Blessed items do not fall to the ground<br/>when its owner is knocked unconscious.<br/>Now, what do you say?";
 		else
 			msg = "Are you here for the Holy Water of Lymilark again?<br/>Please take a look at today's part-time job and tell me if you want it.";
