@@ -58,7 +58,7 @@ public class StewartScript : NpcScript
 
 			case "@shop":
 				Msg("I have a few items related to magic here.<br/>You can buy some if you need any.");
-				OpenShop("StweartShop");
+				OpenShop("StewartShop");
 				return;
 
 			case "@repair":
