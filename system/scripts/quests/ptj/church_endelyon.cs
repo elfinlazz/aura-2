@@ -6,6 +6,10 @@
 
 public class EndelyonPtjScript : GeneralScript
 {
+	const int Start = 12;
+	const int Report = 16;
+	const int Deadline = 21;
+
 	public override void Load()
 	{
 		AddHook("_endelyon", "after_intro", AfterIntro);
@@ -51,14 +55,14 @@ public class EndelyonPtjScript : GeneralScript
 		{
 			var result = npc.GetPtjResult();
 			
-			//if(!npc.ErinnHour(16, 21))
-			//{
-			//	if(result == QuestResult.Perfect)
-			//		Msg("It seems you took care of your end of the bargain.<br/>I'm a little busy right now, but come back later so I can compensate you for your work.");
-			//	else
-			//		Msg("How are you doing with the part-time job for the Church today?<br/>I have the utmost faith in you, <username/>.");
-			//	return;
-			//}
+			if(!npc.ErinnHour(Report, Deadline))
+			{
+				if(result == QuestResult.Perfect)
+					Msg("It seems you took care of your end of the bargain.<br/>I'm a little busy right now, but come back later so I can compensate you for your work.");
+				else
+					Msg("How are you doing with the part-time job for the Church today?<br/>I have the utmost faith in you, <username/>.");
+				return;
+			}
 			
 			npc.Msg("Did you finish the part-time job I gave you?<br/>If you are done, you can report the results to me. Do you want to do so now?<button title='Report Now' keyword='@report' /><button title='Report Later' keyword='@later' />");
 			
@@ -107,7 +111,7 @@ public class EndelyonPtjScript : GeneralScript
 			return;
 		}
 		
-		if(!npc.ErinnHour(0, 21))
+		if(!npc.ErinnHour(Start, Deadline))
 		{
 			npc.Msg("Are you willing to help the Church?<br/>It's a bit early, though. Please come back at a later time.");
 			return;
