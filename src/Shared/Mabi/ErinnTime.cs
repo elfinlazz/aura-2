@@ -101,8 +101,8 @@ namespace Aura.Shared.Mabi
 			// Based on the theory that 1 year (1 week realtime) consists of
 			// 7 months (7 days) with 40 days (1440 / 36 min) each.
 			this.Year = (int)Math.Floor((this.DateTime.Ticks - BeginOfTime.Ticks) / TicksPerMinute / 60 / 24 / 280f);
-			this.Month = (int)this.DateTime.DayOfWeek;
-			this.Day = (int)Math.Ceiling((this.DateTime.Hour * 60 + this.DateTime.Minute) / 36f);
+			this.Month = (int)this.DateTime.DayOfWeek + 1;
+			this.Day = (int)Math.Floor((this.DateTime.Hour * 60 + this.DateTime.Minute) / 36f);
 		}
 
 		/// <summary>
