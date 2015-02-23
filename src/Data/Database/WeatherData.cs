@@ -14,7 +14,7 @@ namespace Aura.Data.Database
 	[Serializable]
 	public class WeatherTableData
 	{
-		public DateTime BaseTime { get; set; }
+		public long BaseTime { get; set; }
 		public List<float> Values { get; set; }
 
 		public WeatherTableData()
@@ -33,8 +33,8 @@ namespace Aura.Data.Database
 			var data = new WeatherTableData();
 			
 			DateTime dt;
-			DateTime.TryParseExact(entry.ReadString("base_time"), "yyyyMMddhhmm", null, System.Globalization.DateTimeStyles.None, out dt);
-			data.BaseTime = dt;
+			DateTime.TryParseExact(entry.ReadString("base_time"), "yyyyMMddhhmm", null, System.Globalization.DateTimeStyles.AssumeLocal, out dt);
+			data.BaseTime = dt.Ticks;
 
 			var unitTime = entry.ReadUInt("unit_time"); // number of hours
 			var count = (int)(3600000 * unitTime / 1200000); // number of 20 min periods
@@ -81,12 +81,8 @@ namespace Aura.Data.Database
 		public float GetWeatherAsFloat(int table, DateTime dt)
 		{
 			var entry = this.Entries[table];
-			long tz = TimeZoneInfo.Local.BaseUtcOffset.Ticks / TimeSpan.TicksPerSecond;
-			long idx = dt.Ticks / TimeSpan.TicksPerSecond;
-			idx -= entry.BaseTime.Ticks / TimeSpan.TicksPerSecond;
-			idx -= tz;
-			idx -= 60*60*13;
-			var index = idx / (60*20);
+			var index = (dt.Ticks - entry.BaseTime) / TimeSpan.TicksPerSecond;
+			index = index / (60 * 20) + 1;
 			index %= entry.Values.Count;
 			return entry.Values[(int)index];
 		}

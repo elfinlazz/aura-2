@@ -13,6 +13,7 @@ namespace Aura.Data.Database
 		private const int N = 624;
 		private uint[] _mt;
 		private int _mti;
+		private uint _mt_ptr;
 
 		public CRandom(uint seed)
 		{
@@ -23,9 +24,9 @@ namespace Aura.Data.Database
 			for (var i = 0; i < N; i++)
 			{
 				_mt[i] = x & 0xFFFF0000;
-				x = (69069*x) & 0xFFFFFFFF;
+				x = (69069 * x) & 0xFFFFFFFF;
 				_mt[i] |= x >> 16;
-				x = 69069*x + 69070;
+				x = 69069 * x + 69070;
 			}
 			this.Reload();
 		}
@@ -34,20 +35,25 @@ namespace Aura.Data.Database
 		{
 			for (var i = 0; i < N; i++)
 			{
-				var y = (_mt[i] & 0x80000000) + (_mt[(i + 1)%N] & 0x7FFFFFFF);
-				_mt[i] = _mt[(i + 397)%N] ^ (y >> 1);
-				if (y%2 != 0)
+				var y = (_mt[i] & 0x80000000) + (_mt[(i + 1) % N] & 0x7FFFFFFF);
+				_mt[i] = _mt[(i + 397) % N] ^ (y >> 1);
+				if (y % 2 != 0)
 					_mt[i] ^= 2567483615;
 			}
-			_mti = 0;
+			_mti = N;
+			_mt_ptr = 0;
 		}
 
 		public uint RandomU32()
 		{
-			if (_mti >= N)
-				this.Reload();
+			var temp_i = _mti--;
+			if (temp_i == 0)
+				Reload();
 
-			uint y = _mt[_mti++];
+			uint y = 0;
+			if (_mt_ptr < N)
+				y = _mt[_mt_ptr];
+			++_mt_ptr;
 
 			y ^= (y >> 11);
 			y ^= (y << 7) & 0x9D2C5680U;
