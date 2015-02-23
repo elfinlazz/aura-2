@@ -82,8 +82,14 @@ namespace Aura.Channel.Skills.Combat
 		public override void Complete(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillComplete(creature, skill.Info.Id);
-			Send.SkillReady(creature, skill.Info.Id);
-			skill.State = SkillState.Ready;
+
+			// Ready again if it wasn't canceled in Use (Counter)? o~o
+			// TODO: Find a way to do this properly.
+			if (skill.State != SkillState.Canceled)
+			{
+				Send.SkillReady(creature, skill.Info.Id);
+				skill.State = SkillState.Ready;
+			}
 		}
 
 		/// <summary>
