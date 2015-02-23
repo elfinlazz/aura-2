@@ -56,9 +56,9 @@ namespace Aura.Shared.Mabi
 		public DateTime DateTime { get; protected set; }
 
 		/// <summary>
-		/// Time stamp used in packets.
+		/// Time stamp for this Erinn date (Format: yyyymdd).
 		/// </summary>
-		public long TimeStamp { get { return this.DateTime.Ticks / 10000; } }
+		public int DateTimeStamp { get { return (this.Year * 1000 + this.Month * 100 + this.Day); } }
 
 		/// <summary>
 		/// Returns a new MabiTime instance based on the current time.
