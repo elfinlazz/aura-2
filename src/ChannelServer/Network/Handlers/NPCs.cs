@@ -133,7 +133,16 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check session
-			client.NpcSession.EnsureValid();
+			if (!client.NpcSession.IsValid())
+			{
+				// We can't throw a violation here because the client sends
+				// NpcTalkSelect *after* NpcTalkEnd if you click the X in Eiry
+				// while a list is open... maybe on other occasions as well,
+				// so let's make it a debug msg, to not confuse admins.
+
+				Log.Debug("NpcTalkSelect: Player '{0}' sent NpcTalkSelect for an invalid NPC session.", creature.Name);
+				return;
+			}
 
 			// Check result string
 			var match = Regex.Match(result, "<return type=\"string\">(?<result>[^<]*)</return>");
