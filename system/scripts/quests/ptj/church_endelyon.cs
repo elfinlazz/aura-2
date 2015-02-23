@@ -58,9 +58,9 @@ public class EndelyonPtjScript : GeneralScript
 			if(!npc.ErinnHour(Report, Deadline))
 			{
 				if(result == QuestResult.Perfect)
-					Msg("It seems you took care of your end of the bargain.<br/>I'm a little busy right now, but come back later so I can compensate you for your work.");
+					npc.Msg("It seems you took care of your end of the bargain.<br/>I'm a little busy right now, but come back later so I can compensate you for your work.");
 				else
-					Msg("How are you doing with the part-time job for the Church today?<br/>I have the utmost faith in you, <username/>.");
+					npc.Msg("How are you doing with the part-time job for the Church today?<br/>I have the utmost faith in you, <username/>.");
 				return;
 			}
 			
