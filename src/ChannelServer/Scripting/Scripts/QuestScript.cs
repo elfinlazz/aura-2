@@ -331,6 +331,60 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Checks and updates current obective's count.
+		/// </summary>
+		/// <param name="creature"></param>
+		public void CheckCurrentObjective(Creature creature)
+		{
+			if (creature == null || !creature.IsPlayer)
+				return;
+
+			var quest = creature.Quests.Get(this.Id);
+			if (quest == null) return;
+
+			var progress = quest.CurrentObjectiveOrLast;
+			if (progress == null) return;
+
+			var objective = this.Objectives[progress.Ident];
+			if (objective == null) return;
+
+			var prevCount = progress.Count;
+			switch (objective.Type)
+			{
+				case ObjectiveType.ReachRank:
+					var reachRankObjective = (objective as QuestObjectiveReachRank);
+					var skillId = reachRankObjective.Id;
+					var rank = reachRankObjective.Rank;
+					var skill = creature.Skills.Get(skillId);
+
+					if (skill != null && skill.Info.Rank >= rank)
+						quest.SetDone(progress.Ident);
+					else
+						quest.SetUndone(progress.Ident);
+
+					break;
+
+				case ObjectiveType.Collect:
+					var itemId = (objective as QuestObjectiveCollect).ItemId;
+
+					progress.Count = creature.Inventory.Count(itemId);
+
+					if (!progress.Done && progress.Count >= objective.Amount)
+						quest.SetDone(progress.Ident);
+					else if (progress.Done && progress.Count < objective.Amount)
+						quest.SetUndone(progress.Ident);
+					break;
+
+				default:
+					// Objective that can't be checked here.
+					break;
+			}
+
+			if (progress.Count != prevCount)
+				Send.QuestUpdate(creature, quest);
+		}
+
+		/// <summary>
 		/// Updates kill objectives.
 		/// </summary>
 		/// <param name="creature"></param>
@@ -361,32 +415,12 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Updates collect objectives.
 		/// </summary>
-		/// <param name="character"></param>
+		/// <param name="creature"></param>
 		/// <param name="itemId"></param>
 		/// <param name="amount"></param>
-		private void OnPlayerReceivesOrRemovesItem(Creature character, int itemId, int amount)
+		private void OnPlayerReceivesOrRemovesItem(Creature creature, int itemId, int amount)
 		{
-			if (character == null) return;
-
-			var quest = character.Quests.Get(this.Id);
-			if (quest == null) return;
-
-			var progress = quest.CurrentObjectiveOrLast;
-			if (progress == null) return;
-
-			var objective = this.Objectives[progress.Ident] as QuestObjectiveCollect;
-			if (objective == null || objective.Type != ObjectiveType.Collect || itemId != objective.ItemId) return;
-
-			if (progress.Count >= objective.Amount) return;
-
-			progress.Count = character.Inventory.Count(itemId);
-
-			if (!progress.Done && progress.Count >= objective.Amount)
-				quest.SetDone(progress.Ident);
-			else if (progress.Done && progress.Count < objective.Amount)
-				quest.SetUndone(progress.Ident);
-
-			Send.QuestUpdate(character, quest);
+			this.CheckCurrentObjective(creature);
 		}
 
 		/// <summary>
@@ -396,33 +430,18 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="skill"></param>
 		private void OnSkillRankChanged(Creature creature, Skill skill)
 		{
-			if (creature == null || skill == null) return;
-
-			var quest = creature.Quests.Get(this.Id);
-			if (quest == null) return;
-
-			var progress = quest.CurrentObjective;
-			if (progress == null) return;
-
-			var objective = this.Objectives[progress.Ident] as QuestObjectiveReachRank;
-			if (objective == null || objective.Type != ObjectiveType.ReachRank) return;
-
-			if (skill.Info.Id != objective.Id || skill.Info.Rank < objective.Rank) return;
-
-			quest.SetDone(progress.Ident);
-
-			Send.QuestUpdate(creature, quest);
+			this.CheckCurrentObjective(creature);
 		}
 
 		/// <summary>
 		/// Checks prerequisites.
 		/// </summary>
-		/// <param name="character"></param>
+		/// <param name="creature"></param>
 		/// <param name="questId"></param>
-		private void OnPlayerCompletesQuest(Creature character, int questId)
+		private void OnPlayerCompletesQuest(Creature creature, int questId)
 		{
-			if (this.CheckPrerequisites(character))
-				character.Quests.Start(this.Id, true);
+			if (this.CheckPrerequisites(creature))
+				creature.Quests.Start(this.Id, true);
 		}
 
 		/// <summary>

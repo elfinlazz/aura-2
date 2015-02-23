@@ -168,6 +168,10 @@ namespace Aura.Channel.World.Entities.Creatures
 			// Start PTJ clock
 			if (quest.Data.Type == QuestType.Deliver)
 				Send.QuestStartPtj(_creature, quest.UniqueId);
+
+			// Initial objective check, for things like collect and reach rank,
+			// that may be done already.
+			quest.Data.CheckCurrentObjective(_creature);
 		}
 
 		/// <summary>
