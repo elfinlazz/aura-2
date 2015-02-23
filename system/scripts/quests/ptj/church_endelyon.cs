@@ -117,6 +117,12 @@ public class EndelyonPtjScript : GeneralScript
 			return;
 		}
 		
+		if(!npc.CanDoPtj())
+		{
+			npc.Msg("Today's part-time jobs are all taken.<br/>If you need some Holy Water of Lymilark, please come back tomorrow.");
+			return;
+		}
+		
 		var randomPtj = npc.RandomPtj(PtjType.Church, 502103);
 		var ptjXml = npc.GetPtjXml(randomPtj, "Endelyon's Church Part-Time Job", "Looking for help with delivering goods to Church.");
 		var msg = "";

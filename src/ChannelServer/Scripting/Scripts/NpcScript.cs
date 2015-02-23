@@ -1096,6 +1096,21 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Returns true if the player can do a PTJ of type, because he hasn't
+		/// done one of the same type today.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public bool CanDoPtj(PtjType type)
+		{
+			var ptj = this.Player.Quests.GetPtjTrackRecord(type);
+			var change = new ErinnTime(ptj.LastChange);
+			var now = ErinnTime.Now;
+
+			return (now.Day != change.Day && now.Month != change.Month && now.Year != change.Year);
+		}
+
+		/// <summary>
 		/// Returns the player's level (basic, int, adv) for the given PTJ type.
 		/// </summary>
 		/// <param name="type"></param>
