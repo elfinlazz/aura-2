@@ -533,7 +533,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="memory"></param>
 		/// <param name="favor"></param>
 		/// <param name="stress"></param>
-		protected virtual void ModifyRelation(int memory, int favor, int stress)
+		public virtual void ModifyRelation(int memory, int favor, int stress)
 		{
 			if (memory != 0) this.Memory += memory;
 			if (favor != 0) this.Favor += favor;
