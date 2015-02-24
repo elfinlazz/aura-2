@@ -25,5 +25,7 @@ public class EndelyonBarleyAdvPtjScript : QuestScript
 		AddReward(1, RewardGroupType.Item, QuestResult.Mid, Item(63016, 5));
 		AddReward(1, RewardGroupType.Item, QuestResult.Low, Exp(100));
 		AddReward(1, RewardGroupType.Item, QuestResult.Low, Item(63016, 2));
+		AddReward(2, RewardGroupType.Item, QuestResult.Perfect, Item(40004, 1));
+		AddReward(2, RewardGroupType.Item, QuestResult.Perfect, Item(19001, 1));
 	}
 }
