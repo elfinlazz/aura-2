@@ -12,6 +12,7 @@ quests/beginner_uladh/school_1.cs
 
 quests/ptj/502102_endelyon_barley_basic.cs
 quests/ptj/502103_endelyon_wheat_basic.cs
+quests/ptj/502105_endelyon_eggs_basic.cs
 quests/ptj/church_endelyon.cs
 
 include "/user/scripts/scripts_quests.txt"
