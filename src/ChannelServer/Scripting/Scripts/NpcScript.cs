@@ -1166,8 +1166,18 @@ namespace Aura.Channel.Scripting.Scripts
 			// Check same level quests
 			var sameLevelQuests = questScripts.Where(a => a.Level == level);
 			var sameLevelQuestsCount = sameLevelQuests.Count();
+
 			if (sameLevelQuestsCount == 0)
-				throw new Exception("NpcScript.RandomPtj: Missing quest for level '" + level + "'.");
+			{
+				// Try to fall back to Basic
+				sameLevelQuests = questScripts.Where(a => a.Level == QuestLevel.Basic);
+				sameLevelQuestsCount = sameLevelQuests.Count();
+
+				if (sameLevelQuestsCount == 0)
+					throw new Exception("NpcScript.RandomPtj: Missing quest for level '" + level + "'.");
+
+				Log.Warning("NpcScript.RandomPtj: Missing quest for level '" + level + "', using 'Basic' as fallback.");
+			}
 
 			// Return random quest's id
 			// Random is seeded with the current Erinn day so we always get
