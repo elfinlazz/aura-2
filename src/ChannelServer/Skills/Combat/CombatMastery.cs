@@ -75,6 +75,7 @@ namespace Aura.Channel.Skills.Combat
 			for (byte i = 1; i <= maxHits; ++i)
 			{
 				var weapon = (i == 1 ? rightWeapon : leftWeapon);
+				var weaponIsKnuckle = (weapon != null && weapon.Data.HasTag("/knuckle/"));
 
 				var aAction = new AttackerAction(CombatActionType.Hit, attacker, skill.Info.Id, targetEntityId);
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
@@ -123,7 +124,7 @@ namespace Aura.Channel.Skills.Combat
 							if (target.KnockBack >= 100 && target.Is(RaceStands.KnockBackable))
 								tAction.Set(tAction.Has(TargetOptions.Critical) ? TargetOptions.KnockDown : TargetOptions.KnockBack);
 						}
-						else if (!dualWield)
+						else if (!dualWield && !weaponIsKnuckle)
 						{
 							target.KnockBack = 120;
 							tAction.Set(TargetOptions.KnockDown);
