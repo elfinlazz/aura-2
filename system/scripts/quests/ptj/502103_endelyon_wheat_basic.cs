@@ -4,7 +4,7 @@
 // Endelyon's basic wheat harvest quest.
 //---------------------------------------------------------------------------
 
-public class EndelyonBarleyBasicPtjScript : QuestScript
+public class EndelyonWheatBasicPtjScript : QuestScript
 {
 	public override void Load()
 	{

@@ -20,6 +20,12 @@ public class EndelyonPtjScript : GeneralScript
 		502102, // Basic - 10 Barley
 		502103, // Basic - 10 Wheat
 		502105, // Basic - 15 Eggs
+		502132, // Int - 15 Barley
+		502133, // Int - 15 Wheat
+		502135, // Int - 20 Eggs
+		502162, // Adv - 20 Barley
+		502163, // Adv - 20 Wheat
+		502165, // Adv - 30 Eggs
 	};
 
 	public override void Load()
