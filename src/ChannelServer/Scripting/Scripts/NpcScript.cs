@@ -1049,6 +1049,10 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 
 			// Get reward group id
+			// The client displays a list of all available rewards,
+			// ordered by group id, with unobtainable ones disabled.
+			// What it sends is the index of the element in that list,
+			// not the actual group id, because that would be too easy.
 			var rewardGroup = -1;
 			var group = quest.Data.RewardGroups.Values.OrderBy(a => a.Id).ElementAt(rewardGroupIdx);
 			if (group == null)
