@@ -701,6 +701,36 @@ namespace Aura.Channel.Database
 						}
 					}
 				}
+				using (var mc = new MySqlCommand("SELECT * FROM `ptj` WHERE `creatureId` = @creatureId", conn))
+				{
+					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+
+					using (var reader = mc.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							var type = (PtjType)reader.GetInt32("type");
+							var done = reader.GetInt32("done");
+							var success = reader.GetInt32("success");
+							var lastChange = reader.GetDateTimeSafe("lastChange");
+
+							// Reduce done by 1 for each day after the third
+							var daysSinceChange = (int)(DateTime.Now - lastChange).TotalDays;
+							var forgetDays = Math.Max(0, daysSinceChange - 3);
+
+							// Cap at 1
+							if (forgetDays >= done)
+								done = 1;
+							else if (forgetDays > 0)
+								done -= forgetDays;
+
+							var record = character.Quests.GetPtjTrackRecord(type);
+							record.Done = done;
+							record.Success = success;
+							record.LastChange = lastChange;
+						}
+					}
+				}
 			}
 		}
 
@@ -747,7 +777,14 @@ namespace Aura.Channel.Database
 					mc.ExecuteNonQuery();
 				}
 
-				// Add quests and progress
+				// Delete PTJ records
+				using (var mc = new MySqlCommand("DELETE FROM `ptj` WHERE `creatureId` = @creatureId", conn, transaction))
+				{
+					mc.Parameters.AddWithValue("@creatureId", character.CreatureId);
+					mc.ExecuteNonQuery();
+				}
+
+				// Add everything
 				foreach (var quest in character.Quests.GetList())
 				{
 					if (quest.State == QuestState.InProgress && !character.Inventory.Has(quest.QuestItem))
@@ -791,6 +828,22 @@ namespace Aura.Channel.Database
 							cmd.Set("unlocked", objective.Unlocked);
 							cmd.Execute();
 						}
+					}
+				}
+
+				foreach (var record in character.Quests.GetPtjTrackRecords())
+				{
+					if (record.Done == 0)
+						continue;
+
+					using (var cmd = new InsertCommand("INSERT INTO `ptj` {0}", conn, transaction))
+					{
+						cmd.Set("creatureId", character.CreatureId);
+						cmd.Set("type", (int)record.Type);
+						cmd.Set("done", record.Done);
+						cmd.Set("success", record.Success);
+						cmd.Set("lastChange", record.LastChange);
+						cmd.Execute();
 					}
 				}
 
