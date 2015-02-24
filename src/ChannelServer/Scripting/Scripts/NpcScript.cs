@@ -1162,8 +1162,7 @@ namespace Aura.Channel.Scripting.Scripts
 			// Return random quest's id
 			// Random is seeded with the current Erinn day so we always get
 			// the same result for one in-game day.
-			var now = ErinnTime.Now;
-			var rnd = new Random(now.Day + now.Month * 100 + now.Year * 10000);
+			var rnd = new Random(ErinnTime.Now.DateTimeStamp);
 			var randomQuest = sameLevelQuests.ElementAt(rnd.Next(sameLevelQuestsCount));
 
 			return randomQuest.Id;

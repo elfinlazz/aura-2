@@ -17,7 +17,8 @@ public class EndelyonPtjScript : GeneralScript
 	
 	readonly int[] QuestIds = new int[]
 	{
-		502103 // Basic - 10 Wheat
+		502102, // Basic - 10 Barley
+		502103, // Basic - 10 Wheat
 	};
 
 	public override void Load()
