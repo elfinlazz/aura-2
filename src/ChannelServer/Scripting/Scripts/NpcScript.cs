@@ -158,6 +158,11 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				// Thrown to get out of the async chain
 			}
+			catch (Exception ex)
+			{
+				Log.Exception(ex, "NpcScript.TalkAsync");
+				this.Close2("(Error)");
+			}
 			this.ConversationState = ConversationState.Ended;
 		}
 
@@ -223,6 +228,11 @@ namespace Aura.Channel.Scripting.Scripts
 			catch (OperationCanceledException)
 			{
 				// Thrown to get out of the async chain
+			}
+			catch (Exception ex)
+			{
+				Log.Exception(ex, "NpcScript.GiftAsync");
+				this.Close2("(Error)");
 			}
 			this.ConversationState = ConversationState.Ended;
 		}
