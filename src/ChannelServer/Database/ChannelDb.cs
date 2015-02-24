@@ -718,12 +718,21 @@ namespace Aura.Channel.Database
 							var daysSinceChange = (int)(DateTime.Now - lastChange).TotalDays;
 							var forgetDays = Math.Max(0, daysSinceChange - 3);
 
-							// Cap at 1
-							if (forgetDays >= done)
-								done = 1;
-							else if (forgetDays > 0)
-								done -= forgetDays;
+							// Make NPCs "forget", cap at 1 job done
+							if (forgetDays > 0)
+							{
+								done = Math.Max(1, done - forgetDays);
 
+								// Set last change to 3 days ago, to keep forgetting,
+								// starting tomorrow.
+								lastChange = DateTime.Now.AddDays(-3);
+							}
+
+							// Adjust success
+							if (done < success)
+								success = done;
+
+							// Add record
 							var record = character.Quests.GetPtjTrackRecord(type);
 							record.Done = done;
 							record.Success = success;
