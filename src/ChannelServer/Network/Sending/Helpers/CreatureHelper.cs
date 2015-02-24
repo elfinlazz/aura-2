@@ -459,11 +459,15 @@ namespace Aura.Channel.Network.Sending.Helpers
 			if (type == CreaturePacketType.Private)
 			{
 				packet.PutLong(0);				     // ArbeitID
-				packet.PutInt(0);				     // ArbeitRecordList
-				// loop
-				//   packet.PutShort
-				//   packet.PutShort
-				//   packet.PutShort
+
+				var records = creature.Quests.GetPtjTrackRecords();
+				packet.PutInt(records.Length);
+				foreach (var record in records)
+				{
+					packet.PutShort((short)record.Type);
+					packet.PutShort((short)record.Done);
+					packet.PutShort((short)record.Success);
+				}
 			}
 
 			// Following a master
