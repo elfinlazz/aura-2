@@ -54,6 +54,16 @@ namespace Aura.Channel.World.Quests
 		{
 			this.Rewards.Add(reward);
 		}
+
+		/// <summary>
+		/// Returns true if group contains rewards for result.
+		/// </summary>
+		/// <param name="result"></param>
+		/// <returns></returns>
+		public bool HasRewardsFor(QuestResult result)
+		{
+			return this.Rewards.Any(a => a.Result == result);
+		}
 	}
 
 	/// <summary>

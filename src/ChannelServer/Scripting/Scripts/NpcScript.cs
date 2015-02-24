@@ -1053,6 +1053,8 @@ namespace Aura.Channel.Scripting.Scripts
 			var group = quest.Data.RewardGroups.Values.OrderBy(a => a.Id).ElementAt(rewardGroupIdx);
 			if (group == null)
 				Log.Warning("NpcScript.CompletePtj: Invalid group index '{0}' for quest '{1}'.", rewardGroupIdx, quest.Id);
+			else if (!group.HasRewardsFor(quest.GetResult()))
+				throw new Exception("Invalid reward group, doesn't have rewards for result.");
 			else
 				rewardGroup = group.Id;
 
