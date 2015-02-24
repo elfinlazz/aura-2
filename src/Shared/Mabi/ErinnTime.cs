@@ -129,28 +129,47 @@ namespace Aura.Shared.Mabi
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return this.ToString("ampm");
+			return this.ToString("y-M-dd HH:mm");
 		}
 
 		/// <summary>
 		/// Returns a string with the Erinn time of this instance.
-		/// Formats: "24", "ampm"
 		/// </summary>
 		/// <param name="format"></param>
 		/// <returns></returns>
 		public string ToString(string format)
 		{
-			switch (format)
-			{
-				default:
-				case "24":
-					return this.Hour.ToString("00") + ":" + this.Minute.ToString("00");
-				case "ampm":
-					var h = this.Hour % 12;
-					if (this.Hour == 12)
-						h = 12;
-					return h.ToString("00") + ":" + this.Minute.ToString("00") + (this.Hour < 12 ? " A.M." : " P.M.");
-			}
+			var h12 = this.Hour % 12;
+			if (this.Hour == 12)
+				h12 = 12;
+
+			format = format.Replace("ampm", (h12.ToString("00") + ":" + this.Minute.ToString("00") + (this.Hour < 12 ? " A.M." : " P.M.")));
+
+			format = format.Replace("hh", h12.ToString("00"));
+			format = format.Replace("h", h12.ToString());
+
+			format = format.Replace("HH", this.Hour.ToString("00"));
+			format = format.Replace("H", this.Hour.ToString());
+
+			format = format.Replace("mm", this.Minute.ToString("00"));
+			format = format.Replace("m", this.Minute.ToString());
+
+			format = format.Replace("yyyy", this.Year.ToString("0000"));
+			format = format.Replace("yyy", this.Year.ToString("000"));
+			format = format.Replace("yy", this.Year.ToString("00"));
+			format = format.Replace("y", this.Year.ToString("0"));
+
+			format = format.Replace("MMMM", Months[this.Month - 1]);
+			format = format.Replace("MM", this.Month.ToString("00"));
+			format = format.Replace("M", this.Month.ToString());
+
+			format = format.Replace("dd", this.Day.ToString("00"));
+			format = format.Replace("d", this.Day.ToString());
+
+			format = format.Replace("tt", (this.Hour < 12 ? "AM" : "PM"));
+			format = format.Replace("t", (this.Hour < 12 ? "A" : "P"));
+
+			return format;
 		}
 	}
 }
