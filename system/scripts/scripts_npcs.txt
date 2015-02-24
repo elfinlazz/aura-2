@@ -36,6 +36,7 @@ npcs/dunbarton/kristell.cs
 npcs/dunbarton/manus.cs
 npcs/dunbarton/nerys.cs
 npcs/dunbarton/simon.cs
+npcs/dunbarton/stewart.cs
 
 npcs/egos/eiry.cs
 npcs/egos/sword_male.cs
