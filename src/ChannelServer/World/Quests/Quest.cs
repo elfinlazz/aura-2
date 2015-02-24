@@ -246,7 +246,7 @@ namespace Aura.Channel.World.Quests
 			var objective = this.CurrentObjectiveOrLast;
 			var doneRate = 100f / this.Data.Objectives[objective.Ident].Amount * objective.Count;
 
-			if (doneRate == 100)
+			if (doneRate >= 100)
 				return QuestResult.Perfect;
 			else if (doneRate >= 50)
 				return QuestResult.Mid;
