@@ -369,7 +369,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			PtjTrackRecord record;
 			lock (_ptjRecords)
 				if (!_ptjRecords.TryGetValue(type, out record))
-					_ptjRecords[type] = (record = new PtjTrackRecord(type, 0, 0, DateTime.Now));
+					_ptjRecords[type] = (record = new PtjTrackRecord(type, 0, 0, DateTime.MinValue));
 
 			return record;
 		}
