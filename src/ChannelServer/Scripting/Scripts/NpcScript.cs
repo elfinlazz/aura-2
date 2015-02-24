@@ -1176,7 +1176,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var objective = quest.Objectives.First().Value;
 
 			var now = ErinnTime.Now;
-			var remainingHours = quest.DeadlineHour - now.Hour;
+			var remainingHours = Math.Max(0, quest.DeadlineHour - now.Hour);
 
 			var sb = new StringBuilder();
 
