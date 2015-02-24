@@ -11,6 +11,9 @@ public class EndelyonPtjScript : GeneralScript
 	const int Start = 12;
 	const int Report = 16;
 	const int Deadline = 21;
+	const int PerDay = 20;
+	
+	int remaining = PerDay;
 	
 	readonly int[] QuestIds = new int[]
 	{
@@ -32,6 +35,12 @@ public class EndelyonPtjScript : GeneralScript
 		}
 		
 		return HookResult.Continue;
+	}
+	
+	[On("ErinnMidnightTick")]
+	private void OnErinnMidnightTick(ErinnTime time)
+	{
+		remaining = PerDay;
 	}
 	
 	public async Task<HookResult> BeforeKeywords(NpcScript npc, params object[] args)
@@ -98,6 +107,7 @@ public class EndelyonPtjScript : GeneralScript
 				}
 				
 				npc.CompletePtj(reply);
+				remaining--;
 				
 				if(result == QuestResult.Perfect)
 				{
@@ -124,14 +134,14 @@ public class EndelyonPtjScript : GeneralScript
 			return;
 		}
 		
-		if(!npc.CanDoPtj(JobType))
+		if(!npc.CanDoPtj(JobType, remaining))
 		{
 			npc.Msg("Today's part-time jobs are all taken.<br/>If you need some Holy Water of Lymilark, please come back tomorrow.");
 			return;
 		}
 		
 		var randomPtj = npc.RandomPtj(JobType, QuestIds);
-		var ptjXml = npc.GetPtjXml(randomPtj, "Endelyon's Church Part-Time Job", "Looking for help with delivering goods to Church.");
+		var ptjXml = npc.GetPtjXml(randomPtj, "Endelyon's Church Part-Time Job", "Looking for help with delivering goods to Church.", PerDay, remaining);
 		var msg = "";
 		
 		if(npc.GetPtjDoneCount(JobType) == 0)

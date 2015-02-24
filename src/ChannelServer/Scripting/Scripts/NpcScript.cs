@@ -1101,8 +1101,17 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public bool CanDoPtj(PtjType type)
+		public bool CanDoPtj(PtjType type, int remaining = 99)
 		{
+			// Always allow devCATs
+			//if (this.Title == 60001)
+			//	return true;
+
+			// Check remaining
+			if (remaining <= 0)
+				return false;
+
+			// Check if PTJ has already been done this Erinn day
 			var ptj = this.Player.Quests.GetPtjTrackRecord(type);
 			var change = new ErinnTime(ptj.LastChange);
 			var now = ErinnTime.Now;
@@ -1167,7 +1176,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="name"></param>
 		/// <param name="title"></param>
 		/// <returns></returns>
-		public string GetPtjXml(int questId, string name, string title)
+		public string GetPtjXml(int questId, string name, string title, int maxAvailableJobs, int remainingJobs)
 		{
 			var quest = ChannelServer.Instance.ScriptManager.GetQuestScript(questId);
 			if (quest == null)
@@ -1177,6 +1186,8 @@ namespace Aura.Channel.Scripting.Scripts
 
 			var now = ErinnTime.Now;
 			var remainingHours = Math.Max(0, quest.DeadlineHour - now.Hour);
+			remainingJobs = Math2.Clamp(0, maxAvailableJobs, remainingJobs);
+			var history = this.Player.Quests.GetPtjTrackRecord(quest.PtjType).Done;
 
 			var sb = new StringBuilder();
 
@@ -1194,7 +1205,7 @@ namespace Aura.Channel.Scripting.Scripts
 				sb.AppendFormat("</rewards>");
 			}
 			sb.AppendFormat("<desc>{0}</desc>", objective.Description);
-			sb.AppendFormat("<values maxcount=\"{0}\" remaincount=\"{1}\" remaintime=\"{2}\" history=\"{3}\"/>", 99, 99, remainingHours, 1);
+			sb.AppendFormat("<values maxcount=\"{0}\" remaincount=\"{1}\" remaintime=\"{2}\" history=\"{3}\"/>", maxAvailableJobs, remainingJobs, remainingHours, history);
 			sb.Append("</arbeit>");
 
 			return sb.ToString();
