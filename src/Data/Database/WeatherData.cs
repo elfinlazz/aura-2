@@ -94,7 +94,14 @@ namespace Aura.Data.Database
 			var weather = this.GetWeatherAsFloat(table, dt);
 			details.Type = this.FloatToWeatherType(weather);
 			if (details.Type == WeatherType.Rain)
-				details.RainStrength = (int)((weather - 1.95f)/(0.05f/20.0));
+			{
+				var amount = (weather - 1.949900031089783d) * 20.0d;
+				if (amount < 0.0d)
+					amount = 0.0d;
+				else if (amount > 1.0d)
+					amount = 1.0d;
+				details.RainStrength = (int)(amount / 0.05d);
+			}
 			return details;
 		}
 
@@ -114,7 +121,7 @@ namespace Aura.Data.Database
 		{
 			if (value < 1.0f)
 				return WeatherType.Clear;
-			if (value < 1.95f)
+			if (value < 1.949900031089783d)
 				return WeatherType.Clouds;
 			return WeatherType.Rain;
 		}
