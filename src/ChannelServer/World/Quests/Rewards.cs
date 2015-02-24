@@ -31,7 +31,7 @@ namespace Aura.Channel.World.Quests
 		/// <summary>
 		/// Returns true if there are no rewards for non-perfect results.
 		/// </summary>
-		public bool PerfectOnly { get { return this.Rewards.Any(a => a.Result != QuestResult.Perfect); } }
+		public bool PerfectOnly { get { return this.Rewards.All(a => a.Result == QuestResult.Perfect); } }
 
 		/// <summary>
 		/// Creates new QuestRewardGroup
