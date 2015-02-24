@@ -1116,7 +1116,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var change = new ErinnTime(ptj.LastChange);
 			var now = ErinnTime.Now;
 
-			return (now.Day != change.Day && now.Month != change.Month && now.Year != change.Year);
+			return (now.Day != change.Day || now.Month != change.Month || now.Year != change.Year);
 		}
 
 		/// <summary>
