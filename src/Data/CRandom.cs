@@ -6,8 +6,34 @@
  * C# implementaion and modifications by tachiorz
 */
 
+using System;
+using System.Runtime.Serialization;
+
 namespace Aura.Data.Database
 {
+	[Serializable]
+	public class CRandomException : Exception
+	{
+		public CRandomException()
+		{
+		}
+
+		public CRandomException(string message)
+			: base(message)
+		{
+		}
+
+		public CRandomException(string message, Exception inner)
+			: base(message, inner)
+		{
+		}
+
+		protected CRandomException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+		}
+	}
+
 	public class CRandom
 	{
 		private const int N = 624;
@@ -52,8 +78,12 @@ namespace Aura.Data.Database
 
 			uint y = 0;
 			if (_mt_ptr < N)
-				y = _mt[_mt_ptr];
-			++_mt_ptr;
+				y = _mt[_mt_ptr++];
+			else
+			{
+				++_mt_ptr;
+				throw new CRandomException();
+			}
 
 			y ^= (y >> 11);
 			y ^= (y << 7) & 0x9D2C5680U;

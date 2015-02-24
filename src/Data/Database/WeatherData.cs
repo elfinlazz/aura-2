@@ -59,7 +59,16 @@ namespace Aura.Data.Database
 			for (var i = 1; i < 4; ++i)
 				addedCols[i] += addedCols[i - 1] + cols[i];
 
-			var randFloat = rnd.RandomF32(0.0f, addedCols[3]);
+			float randFloat;
+			try
+			{
+				randFloat = rnd.RandomF32(0.0f, addedCols[3]);
+			}
+			catch (CRandomException e)
+			{
+				return -1.0f;
+			}
+
 			if (addedCols[1] >= randFloat)
 			{
 				if (addedCols[0] >= randFloat)
@@ -119,6 +128,8 @@ namespace Aura.Data.Database
 
 		private WeatherType FloatToWeatherType(float value)
 		{
+			if (value < 0.0f)
+				return WeatherType.Unknown;
 			if (value < 1.0f)
 				return WeatherType.Clear;
 			if (value < 1.949900031089783d)
@@ -147,5 +158,6 @@ namespace Aura.Data.Database
 		Clear,
 		Clouds,
 		Rain,
+		Unknown,
 	}
 }
