@@ -13,32 +13,20 @@ namespace Aura.Channel.World.Weather
 	/// </summary>
 	public class WeatherProviderTable : IWeatherProviderTable
 	{
-		private int _tableId;
-
 		public string Name { get; private set; }
 		public int RegionId { get; private set; }
 		public int GroupId { get; private set; }
 
 		public WeatherProviderTable(int regionId, string name)
 		{
-			_tableId = this.NameToId(name);
-
 			this.Name = name;
 			this.RegionId = regionId;
 			this.GroupId = AuraData.RegionInfoDb.GetGroupId(regionId);
 		}
 
-		private int NameToId(string name)
-		{
-			if (Regex.IsMatch(name, "type[0-9]+"))
-				return Convert.ToInt32(name.Substring("type".Length)) - 1;
-
-			return -1;
-		}
-
 		public WeatherDetails GetWeather(DateTime dt)
 		{
-			return AuraData.WeatherTableDb.GetWeather(_tableId, dt);
+			return AuraData.WeatherTableDb.GetWeather(this.Name, dt);
 		}
 
 		public float GetWeatherAsFloat(DateTime dt)

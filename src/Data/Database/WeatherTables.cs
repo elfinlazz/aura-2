@@ -47,11 +47,11 @@ namespace Aura.Data.Database
 	/// <summary>
 	/// Holds information about the weather.
 	/// </summary>
-	public class WeatherTableDb : DatabaseJsonIndexed<int, WeatherTableData>
+	public class WeatherTableDb : DatabaseJsonIndexed<string, WeatherTableData>
 	{
 		protected override void ReadEntry(JObject entry)
 		{
-			var id = entry.ReadInt("id");
+			var name = entry.ReadString("name");
 			var unitTime = entry.ReadUInt("unitTime"); // number of hours
 			var seed = entry.ReadUInt("seed");
 			var baseTime = entry.ReadString("baseTime");
@@ -69,7 +69,7 @@ namespace Aura.Data.Database
 				for (var i = 0; i < count; ++i)
 					data.Values.Add(this.ComputeWeather(cols, rnd));
 
-			this.Entries[id - 1] = data;
+			this.Entries[name] = data;
 		}
 
 		private float ComputeWeather(float[] cols, CRandom rnd)
@@ -109,9 +109,9 @@ namespace Aura.Data.Database
 			return result;
 		}
 
-		public float GetWeatherAsFloat(int table, DateTime dt)
+		public float GetWeatherAsFloat(string tableName, DateTime dt)
 		{
-			var entry = this.Entries[table];
+			var entry = this.Entries[tableName];
 			var index = (dt.Ticks - entry.BaseTime) / TimeSpan.TicksPerSecond;
 			index = index / (60 * 20) + 1;
 			index %= entry.Values.Count;
@@ -119,11 +119,11 @@ namespace Aura.Data.Database
 			return entry.Values[(int)index];
 		}
 
-		public WeatherDetails GetWeather(int table, DateTime dt)
+		public WeatherDetails GetWeather(string tableName, DateTime dt)
 		{
 			var details = new WeatherDetails { Type = WeatherType.Clear, RainStrength = 0 };
 
-			var weather = this.GetWeatherAsFloat(table, dt);
+			var weather = this.GetWeatherAsFloat(tableName, dt);
 			details.Type = this.FloatToWeatherType(weather);
 			if (details.Type == WeatherType.Rain)
 			{
@@ -138,15 +138,15 @@ namespace Aura.Data.Database
 			return details;
 		}
 
-		public WeatherType GetWeatherType(int table, DateTime dt)
+		public WeatherType GetWeatherType(string tableName, DateTime dt)
 		{
-			var details = this.GetWeather(table, dt);
+			var details = this.GetWeather(tableName, dt);
 			return details.Type;
 		}
 
-		public int GetRainStrength(int table, DateTime dt)
+		public int GetRainStrength(string tableName, DateTime dt)
 		{
-			var details = this.GetWeather(table, dt);
+			var details = this.GetWeather(tableName, dt);
 			return details.RainStrength;
 		}
 
