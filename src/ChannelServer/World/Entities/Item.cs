@@ -193,6 +193,11 @@ namespace Aura.Channel.World.Entities
 		public bool IsNew { get; set; }
 
 		/// <summary>
+		/// Returns true if item has "Blessed" flag.
+		/// </summary>
+		public bool IsBlessed { get { return ((this.OptionInfo.Flags & ItemFlags.Blessed) != 0); } }
+
+		/// <summary>
 		/// New item based on item id.
 		/// </summary>
 		/// <param name="itemId"></param>

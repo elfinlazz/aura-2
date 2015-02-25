@@ -113,6 +113,7 @@ namespace Aura.Shared.Network
 		public const int NpcTalkEgoR = 0x55F5;
 		public const int NpcTalkPartner = 0x55F8;
 		public const int NpcTalkPartnerR = 0x55F9;
+		public const int ItemBlessed = 0x5BD8;
 		public const int ItemMove = 0x59D8;
 		public const int ItemMoveR = 0x59D9;
 		public const int ItemPickUp = 0x59DA;

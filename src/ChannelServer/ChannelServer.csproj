@@ -166,6 +166,7 @@
     <Compile Include="Skills\Combat\FinalHit.cs" />
     <Compile Include="Skills\Combat\GlasGhaibhleannSkill.cs" />
     <Compile Include="Skills\Combat\Smash.cs" />
+    <Compile Include="Skills\Hidden\Blessing.cs" />
     <Compile Include="Skills\Hidden\Dye.cs" />
     <Compile Include="Skills\Life\Gathering.cs" />
     <Compile Include="Skills\Life\Herbalism.cs" />
