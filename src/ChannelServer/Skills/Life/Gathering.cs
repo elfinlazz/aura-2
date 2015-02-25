@@ -31,6 +31,10 @@ namespace Aura.Channel.Skills.Life
 		private const int DropRange = 50;
 
 		/// <summary>
+		/// Max distance you may be away from the gethering target.
+		/// </summary>
+		private const int MaxDistance = 400;
+
 		/// Prepares skill, skips right to used.
 		/// </summary>
 		/// <remarks>
@@ -56,7 +60,7 @@ namespace Aura.Channel.Skills.Life
 				creature.Temp.GatheringTargetPosition = targetEntity.GetPosition();
 
 			// Check distance
-			if (!creaturePosition.InRange(creature.Temp.GatheringTargetPosition, 400))
+			if (!creaturePosition.InRange(creature.Temp.GatheringTargetPosition, MaxDistance))
 			{
 				Send.Notice(creature, Localization.Get("Your arms are too short to reach that from here."));
 				return false;
@@ -124,7 +128,7 @@ namespace Aura.Channel.Skills.Life
 			var creaturePosition = creature.GetPosition();
 			var targetPosition = targetEntity.GetPosition();
 
-			if (!creaturePosition.InRange(targetPosition, 400))
+			if (!creaturePosition.InRange(targetPosition, MaxDistance))
 			{
 				Send.Notice(creature, Localization.Get("Your arms are too short to reach that from here."));
 				this.DoComplete(creature, entityId, collectId, false, 1);
