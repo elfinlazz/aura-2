@@ -35,6 +35,12 @@ namespace Aura.Channel.Skills.Life
 		/// </summary>
 		private const int MaxDistance = 400;
 
+		/// <summary>
+		/// Max distance the target may move during gathering.
+		/// </summary>
+		private const int MaxMoveDistance = 50;
+
+		/// <summary>
 		/// Prepares skill, skips right to used.
 		/// </summary>
 		/// <remarks>
@@ -136,7 +142,7 @@ namespace Aura.Channel.Skills.Life
 			}
 
 			// Check if moved
-			if (creature.Temp.GatheringTargetPosition != targetPosition)
+			if (creature.Temp.GatheringTargetPosition.GetDistance(targetPosition) > MaxMoveDistance)
 			{
 				this.DoComplete(creature, entityId, collectId, false, 3);
 				return;
