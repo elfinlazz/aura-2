@@ -13,11 +13,11 @@ namespace Aura.Shared.Mabi
 		/// <summary>
 		/// 1,500ms (1.5 seconds)
 		/// </summary>
-		protected const int TicksPerMinute = 15000000;
+		public const long TicksPerMinute = 15000000;
 		/// <summary>
 		/// 90,000ms (1.5 minutes)
 		/// </summary>
-		protected const int TicksPerHour = TicksPerMinute * 60;
+		public const long TicksPerHour = TicksPerMinute * 60;
 
 		/// <summary>
 		/// Erinn months in English, starting on Imbolic (Sunday).
@@ -56,9 +56,9 @@ namespace Aura.Shared.Mabi
 		public DateTime DateTime { get; protected set; }
 
 		/// <summary>
-		/// Time stamp used in packets.
+		/// Time stamp for this Erinn date (Format: yyyymdd).
 		/// </summary>
-		public long TimeStamp { get { return this.DateTime.Ticks / 10000; } }
+		public int DateTimeStamp { get { return (this.Year * 1000 + this.Month * 100 + this.Day); } }
 
 		/// <summary>
 		/// Returns a new MabiTime instance based on the current time.
@@ -101,8 +101,8 @@ namespace Aura.Shared.Mabi
 			// Based on the theory that 1 year (1 week realtime) consists of
 			// 7 months (7 days) with 40 days (1440 / 36 min) each.
 			this.Year = (int)Math.Floor((this.DateTime.Ticks - BeginOfTime.Ticks) / TicksPerMinute / 60 / 24 / 280f);
-			this.Month = (int)this.DateTime.DayOfWeek;
-			this.Day = (int)Math.Ceiling((this.DateTime.Hour * 60 + this.DateTime.Minute) / 36f);
+			this.Month = (int)this.DateTime.DayOfWeek + 1;
+			this.Day = (int)Math.Floor((this.DateTime.Hour * 60 + this.DateTime.Minute) / 36f);
 		}
 
 		/// <summary>
@@ -129,28 +129,47 @@ namespace Aura.Shared.Mabi
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return this.ToString("ampm");
+			return this.ToString("y-M-dd HH:mm");
 		}
 
 		/// <summary>
 		/// Returns a string with the Erinn time of this instance.
-		/// Formats: "24", "ampm"
 		/// </summary>
 		/// <param name="format"></param>
 		/// <returns></returns>
 		public string ToString(string format)
 		{
-			switch (format)
-			{
-				default:
-				case "24":
-					return this.Hour.ToString("00") + ":" + this.Minute.ToString("00");
-				case "ampm":
-					var h = this.Hour % 12;
-					if (this.Hour == 12)
-						h = 12;
-					return h.ToString("00") + ":" + this.Minute.ToString("00") + (this.Hour < 12 ? " A.M." : " P.M.");
-			}
+			var h12 = this.Hour % 12;
+			if (this.Hour == 12)
+				h12 = 12;
+
+			format = format.Replace("ampm", (h12.ToString("00") + ":" + this.Minute.ToString("00") + (this.Hour < 12 ? " A.M." : " P.M.")));
+
+			format = format.Replace("hh", h12.ToString("00"));
+			format = format.Replace("h", h12.ToString());
+
+			format = format.Replace("HH", this.Hour.ToString("00"));
+			format = format.Replace("H", this.Hour.ToString());
+
+			format = format.Replace("mm", this.Minute.ToString("00"));
+			format = format.Replace("m", this.Minute.ToString());
+
+			format = format.Replace("yyyy", this.Year.ToString("0000"));
+			format = format.Replace("yyy", this.Year.ToString("000"));
+			format = format.Replace("yy", this.Year.ToString("00"));
+			format = format.Replace("y", this.Year.ToString("0"));
+
+			format = format.Replace("MMMM", Months[this.Month - 1]);
+			format = format.Replace("MM", this.Month.ToString("00"));
+			format = format.Replace("M", this.Month.ToString());
+
+			format = format.Replace("dd", this.Day.ToString("00"));
+			format = format.Replace("d", this.Day.ToString());
+
+			format = format.Replace("tt", (this.Hour < 12 ? "AM" : "PM"));
+			format = format.Replace("t", (this.Hour < 12 ? "A" : "P"));
+
+			return format;
 		}
 	}
 }

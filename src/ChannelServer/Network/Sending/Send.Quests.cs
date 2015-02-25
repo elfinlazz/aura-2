@@ -10,6 +10,7 @@ using Aura.Shared.Network;
 using Aura.Channel.World.Quests;
 using System.Collections;
 using Aura.Channel.Network.Sending.Helpers;
+using Aura.Shared.Mabi.Const;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -129,6 +130,47 @@ namespace Aura.Channel.Network.Sending
 		{
 			var packet = new Packet(Op.GiveUpQuestR, creature.EntityId);
 			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends QuestStartPtj to creature's client, which starts the clock.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="uniqueQuestId"></param>
+		public static void QuestStartPtj(Creature creature, long uniqueQuestId)
+		{
+			var packet = new Packet(Op.QuestStartPtj, creature.EntityId);
+			packet.PutLong(uniqueQuestId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends QuestEndPtj to creature's client, which stops the clock.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void QuestEndPtj(Creature creature)
+		{
+			var packet = new Packet(Op.QuestEndPtj, creature.EntityId);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends QuestUpdatePtj to creature's client, updates the char info window.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="type"></param>
+		/// <param name="done"></param>
+		/// <param name="success"></param>
+		public static void QuestUpdatePtj(Creature creature, PtjType type, int done, int success)
+		{
+			var packet = new Packet(Op.QuestUpdatePtj, creature.EntityId);
+			packet.PutInt((int)type);
+			packet.PutInt(done);
+			packet.PutInt(success);
 
 			creature.Client.Send(packet);
 		}

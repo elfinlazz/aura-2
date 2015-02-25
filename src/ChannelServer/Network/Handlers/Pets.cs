@@ -199,6 +199,9 @@ namespace Aura.Channel.Network.Handlers
 				goto L_Fail;
 			}
 
+			ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item.Info.Id, item.Info.Amount);
+			ChannelServer.Instance.Events.OnPlayerReceivesItem(pet, item.Info.Id, item.Info.Amount);
+
 			Send.PutItemIntoPetInvR(creature, true);
 			return;
 
@@ -235,6 +238,9 @@ namespace Aura.Channel.Network.Handlers
 				Send.TakeItemFromPetInvR(creature, false);
 				return;
 			}
+
+			ChannelServer.Instance.Events.OnPlayerRemovesItem(pet, item.Info.Id, item.Info.Amount);
+			ChannelServer.Instance.Events.OnPlayerReceivesItem(creature, item.Info.Id, item.Info.Amount);
 
 			Send.TakeItemFromPetInvR(creature, true);
 		}

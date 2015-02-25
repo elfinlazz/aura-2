@@ -5,16 +5,93 @@ using Aura.Data;
 using Aura.Shared.Mabi.Const;
 using Aura.Channel.World.Entities;
 using System;
+using System.Linq;
 using Aura.Channel.Network.Sending;
+using System.Collections.Generic;
 
 namespace Aura.Channel.World.Quests
 {
+	public class QuestRewardGroup
+	{
+		/// <summary>
+		/// Group's id
+		/// </summary>
+		public int Id { get; protected set; }
+
+		/// <summary>
+		/// Group's type (affects the reward icon)
+		/// </summary>
+		public RewardGroupType Type { get; protected set; }
+
+		/// <summary>
+		/// List of rewards in this group.
+		/// </summary>
+		public List<QuestReward> Rewards { get; protected set; }
+
+		/// <summary>
+		/// Returns true if there are no rewards for non-perfect results.
+		/// </summary>
+		public bool PerfectOnly { get { return this.Rewards.All(a => a.Result == QuestResult.Perfect); } }
+
+		/// <summary>
+		/// Creates new QuestRewardGroup
+		/// </summary>
+		/// <param name="groupId"></param>
+		/// <param name="type"></param>
+		public QuestRewardGroup(int groupId, RewardGroupType type)
+		{
+			this.Rewards = new List<QuestReward>();
+
+			this.Id = groupId;
+			this.Type = type;
+		}
+
+		/// <summary>
+		/// Adds reward to group.
+		/// </summary>
+		/// <param name="reward"></param>
+		public void Add(QuestReward reward)
+		{
+			this.Rewards.Add(reward);
+		}
+
+		/// <summary>
+		/// Returns true if group contains rewards for result.
+		/// </summary>
+		/// <param name="result"></param>
+		/// <returns></returns>
+		public bool HasRewardsFor(QuestResult result)
+		{
+			return this.Rewards.Any(a => a.Result == result);
+		}
+	}
+
+	/// <summary>
+	/// Common quest reward base class
+	/// </summary>
 	public abstract class QuestReward
 	{
+		/// <summary>
+		/// The reward type
+		/// </summary>
 		public abstract RewardType Type { get; }
 
+		/// <summary>
+		/// The required result to get this reward.
+		/// </summary>
+		public QuestResult Result { get; set; }
+
+		/// <summary>
+		/// Gives reward to creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="quest"></param>
 		public abstract void Reward(Creature creature, Quest quest);
 
+		/// <summary>
+		/// Returns string for this reward, displayed on the client.
+		/// </summary>
+		/// <returns></returns>
 		public override abstract string ToString();
 	}
 

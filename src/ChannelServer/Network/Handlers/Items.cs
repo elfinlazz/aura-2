@@ -60,6 +60,10 @@ namespace Aura.Channel.Network.Handlers
 			if (!creature.Inventory.Move(item, target, targetX, targetY))
 				goto L_Fail;
 
+			// Inform about temp moves (items in temp don't count for quest objectives?)
+			if (source == Pocket.Temporary && target == Pocket.Cursor)
+				ChannelServer.Instance.Events.OnPlayerReceivesItem(creature, item.Info.Id, item.Info.Amount);
+
 			Send.ItemMoveR(creature, true);
 			return;
 
@@ -479,6 +483,8 @@ namespace Aura.Channel.Network.Handlers
 			client.NpcSession.StartGift(npc, client.Controlling, item);
 
 			client.Controlling.Inventory.Remove(item);
+
+			ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item.Info.Id, item.Info.Amount);
 
 			Send.GiftItemR(client.Controlling, true);
 		}

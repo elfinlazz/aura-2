@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Quests;
+using Aura.Shared.Mabi.Const;
 using Aura.Shared.Network;
 using System;
+using System.Linq;
 
 namespace Aura.Channel.Network.Sending.Helpers
 {
@@ -19,7 +22,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 
 			packet.PutLong(quest.QuestItem.EntityId);
 
-			packet.PutByte(2); // 0 = blue icon, 2 = normal, 4 = exploration, 7 = shadow (changes structure slightly)
+			packet.PutByte((byte)quest.Data.Type); // 0 = blue icon, 2 = normal, 4 = exploration, 7 = shadow (changes structure slightly)
 			// Client values that might make sense:
 			// Delivery: 1? (id == 506401?)
 			// Event: 1? ((this + 80) == 18?)
@@ -74,16 +77,23 @@ namespace Aura.Channel.Network.Sending.Helpers
 			packet.PutInt(0);     // 4, x y ?
 			packet.PutInt(0);
 			packet.PutString(""); // <xml soundset="4" npc="GUI_NPCportrait_Lanier"/>
-			packet.PutString("QMBEXP:f:1.000000;QMBGLD:f:1.000000;QMSMEXP:f:1.000000;QMSMGLD:f:1.000000;QMAMEXP:f:1.000000;QMAMGLD:f:1.000000;QMBHDCTADD:4:0;QMGNRB:f:1.000000;QMGNRB:f:1.000000;");
+			packet.PutString(quest.MetaData.ToString());
 
-			packet.PutInt(0);
-			packet.PutInt(0);
-			// Alternative, PTJ
-			//020 [........00000002] Int    : 2
-			//021 [........0000000C] Int    : 12
-			//022 [........00000010] Int    : 16
-			//023 [........00000015] Int    : 21
-			//024 [000039BF89671150] Long   : 63494806770000 // Timestamp
+			switch (quest.Data.Type)
+			{
+				case QuestType.Deliver:
+					packet.PutInt((int)quest.Data.PtjType);
+					packet.PutInt(quest.Data.StartHour);
+					packet.PutInt(quest.Data.ReportHour);
+					packet.PutInt(quest.Data.DeadlineHour);
+					packet.PutLong(quest.Deadline);
+					break;
+
+				default:
+					packet.PutInt(0);
+					packet.PutInt(0);
+					break;
+			}
 
 			packet.PutInt(quest.Data.Objectives.Count);
 			foreach (var objectiveData in quest.Data.Objectives)
@@ -141,20 +151,24 @@ namespace Aura.Channel.Network.Sending.Helpers
 				}
 			}
 
-			packet.PutByte(1);
-			packet.PutByte(0);
-			packet.PutByte(0);
-			packet.PutByte(1);
-
 			// Rewards
-			packet.PutByte((byte)quest.Data.Rewards.Count);
-			foreach (var reward in quest.Data.Rewards)
+			packet.PutByte((byte)quest.Data.RewardGroups.Count);
+			foreach (var group in quest.Data.RewardGroups.Values.OrderBy(a => a.Id))
 			{
-				packet.PutByte((byte)reward.Type);
-				packet.PutString(reward.ToString());
-				packet.PutByte(0); // Group?
-				packet.PutByte(1);
-				packet.PutByte(1);
+				// Group id has to be !0 for client to display rewards for PTJs
+				packet.PutByte((byte)group.Id);
+				packet.PutByte((byte)group.Type);
+				packet.PutByte(group.PerfectOnly);
+
+				packet.PutByte((byte)group.Rewards.Count);
+				foreach (var reward in group.Rewards)
+				{
+					packet.PutByte((byte)reward.Type);
+					packet.PutString(reward.ToString());
+					packet.PutByte((byte)reward.Result);
+					packet.PutByte(1);
+					packet.PutByte(1);
+				}
 			}
 
 			packet.PutByte(0);

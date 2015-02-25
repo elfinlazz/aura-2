@@ -31,7 +31,7 @@ public class TirBeginnerRegionScript : RegionScript
 				return;
 
 			if (!creature.Quests.Has(202001))
-				creature.Quests.Start(202001); // Nao's Letter of Introduction
+				creature.Quests.Start(202001, false); // Nao's Letter of Introduction
 
 			// TODO: Cutscene db
 			var cutscene = new Cutscene("tuto_meet_tin", creature);

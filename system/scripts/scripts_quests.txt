@@ -10,4 +10,15 @@ quests/beginner_uladh/202006_duncans_call.cs
 quests/beginner_uladh/skills_rest.cs
 quests/beginner_uladh/school_1.cs
 
+quests/ptj/502102_endelyon_barley_basic.cs
+quests/ptj/502103_endelyon_wheat_basic.cs
+quests/ptj/502105_endelyon_eggs_basic.cs
+quests/ptj/502132_endelyon_barley_int.cs
+quests/ptj/502133_endelyon_wheat_int.cs
+quests/ptj/502135_endelyon_eggs_int.cs
+quests/ptj/502162_endelyon_barley_adv.cs
+quests/ptj/502163_endelyon_wheat_adv.cs
+quests/ptj/502165_endelyon_eggs_adv.cs
+quests/ptj/church_endelyon.cs
+
 include "/user/scripts/scripts_quests.txt"
