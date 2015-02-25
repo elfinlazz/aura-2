@@ -99,7 +99,11 @@ namespace Aura.Channel.World.Weather
 		{
 			var provider = this.GetProvider(creature.RegionId);
 			if (provider == null)
+			{
+				var groupId = AuraData.RegionInfoDb.GetGroupId(creature.RegionId);
+				Send.Weather(creature, creature.RegionId, groupId);
 				return;
+			}
 
 			Send.Weather(creature, provider);
 		}

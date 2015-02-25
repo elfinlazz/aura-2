@@ -25,6 +25,21 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends empty Weather packet to creature's client.
+		/// </summary>
+		public static void Weather(Creature creature, int regionId, int groupId)
+		{
+			var packet = new Packet(Op.Weather, MabiId.Broadcast);
+			packet.PutByte(0);
+			packet.PutInt(regionId);
+			packet.PutByte(0);
+			packet.PutInt(groupId);
+			packet.PutByte(0);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Broadcasts Weather in region.
 		/// </summary>
 		public static void Weather(Region region, IWeatherProvider provider)
