@@ -1,16 +1,14 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
+using System.Globalization;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 
 namespace Aura.Data.Database
 {
-
 	[Serializable]
 	public class WeatherTableData
 	{
@@ -23,31 +21,55 @@ namespace Aura.Data.Database
 		}
 	}
 
+	public class WeatherDetails
+	{
+		public WeatherType Type { get; set; }
+		public int RainStrength { get; set; }
+
+		public override string ToString()
+		{
+			var result = this.Type.ToString();
+			if (this.Type == WeatherType.Rain)
+				result += " " + this.RainStrength;
+
+			return result;
+		}
+	}
+
+	public enum WeatherType
+	{
+		Clear,
+		Clouds,
+		Rain,
+		Unknown,
+	}
+
 	/// <summary>
 	/// Holds information about the weather.
 	/// </summary>
-	public class WeatherDataDb : DatabaseJsonIndexed<int, WeatherTableData>
+	public class WeatherTableDb : DatabaseJsonIndexed<int, WeatherTableData>
 	{
 		protected override void ReadEntry(JObject entry)
 		{
+			var id = entry.ReadInt("id");
+			var unitTime = entry.ReadUInt("unitTime"); // number of hours
+			var seed = entry.ReadUInt("seed");
+			var baseTime = entry.ReadString("baseTime");
+
 			var data = new WeatherTableData();
-			
+
 			DateTime dt;
-			DateTime.TryParseExact(entry.ReadString("base_time"), "yyyyMMddhhmm", null, System.Globalization.DateTimeStyles.AssumeLocal, out dt);
+			DateTime.TryParseExact(baseTime, "yyyyMMddhhmm", null, DateTimeStyles.AssumeLocal, out dt);
 			data.BaseTime = dt.Ticks;
 
-			var unitTime = entry.ReadUInt("unit_time"); // number of hours
-			var count = (int)(3600000 * unitTime / 1200000); // number of 20 min periods
-			
-			var seed = entry.ReadUInt("seed");
 			var rnd = new CRandom(seed);
+			var count = (int)(3600000 * unitTime / 1200000); // number of 20 min periods
 
 			foreach (var cols in entry["rows"].Select(row => row.ToObject<float[]>()))
 				for (var i = 0; i < count; ++i)
 					data.Values.Add(this.ComputeWeather(cols, rnd));
 
-			var id = entry.ReadUShort("id");
-			this.Entries[id-1] = data;
+			this.Entries[id - 1] = data;
 		}
 
 		private float ComputeWeather(float[] cols, CRandom rnd)
@@ -64,7 +86,7 @@ namespace Aura.Data.Database
 			{
 				randFloat = rnd.RandomF32(0.0f, addedCols[3]);
 			}
-			catch (CRandomException e)
+			catch (CRandomException)
 			{
 				return -1.0f;
 			}
@@ -93,6 +115,7 @@ namespace Aura.Data.Database
 			var index = (dt.Ticks - entry.BaseTime) / TimeSpan.TicksPerSecond;
 			index = index / (60 * 20) + 1;
 			index %= entry.Values.Count;
+
 			return entry.Values[(int)index];
 		}
 
@@ -111,6 +134,7 @@ namespace Aura.Data.Database
 					amount = 1.0d;
 				details.RainStrength = (int)(amount / 0.05d);
 			}
+
 			return details;
 		}
 
@@ -130,34 +154,14 @@ namespace Aura.Data.Database
 		{
 			if (value < 0.0f)
 				return WeatherType.Unknown;
+
 			if (value < 1.0f)
 				return WeatherType.Clear;
+
 			if (value < 1.949900031089783d)
 				return WeatherType.Clouds;
+
 			return WeatherType.Rain;
 		}
-	}
-
-	public class WeatherDetails
-	{
-		public WeatherType Type { get; set; }
-		public int RainStrength { get; set; }
-
-		public override string ToString()
-		{
-			var result = this.Type.ToString();
-			if (this.Type == WeatherType.Rain)
-				result += " " + this.RainStrength;
-
-			return result;
-		}
-	}
-
-	public enum WeatherType
-	{
-		Clear,
-		Clouds,
-		Rain,
-		Unknown,
 	}
 }

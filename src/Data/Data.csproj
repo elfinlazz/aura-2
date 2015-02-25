@@ -60,7 +60,7 @@
     <Compile Include="Database\CharCardSets.cs" />
     <Compile Include="Database\CollectingDb.cs" />
     <Compile Include="Database\Props.cs" />
-    <Compile Include="Database\WeatherData.cs" />
+    <Compile Include="Database\WeatherTables.cs" />
     <Compile Include="Database\ColorMaps.cs" />
     <Compile Include="Database\Exp.cs" />
     <Compile Include="Database\Items.cs" />

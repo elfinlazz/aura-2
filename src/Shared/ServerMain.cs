@@ -162,7 +162,7 @@ namespace Aura.Shared
 
 				if ((toLoad & DataLoad.Weather) != 0)
 				{
-					this.LoadDb(AuraData.WeatherDataDb, "db/weathercommon.txt", reload);
+					this.LoadDb(AuraData.WeatherTableDb, "db/weathertables.txt", reload);
 					this.LoadDb(AuraData.WeatherDb, "db/weather.txt", reload);
 				}
 

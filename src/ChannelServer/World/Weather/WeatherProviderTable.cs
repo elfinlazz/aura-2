@@ -38,7 +38,7 @@ namespace Aura.Channel.World.Weather
 
 		public WeatherDetails GetWeather(DateTime dt)
 		{
-			return AuraData.WeatherDataDb.GetWeather(_tableId, dt);
+			return AuraData.WeatherTableDb.GetWeather(_tableId, dt);
 		}
 
 		public float GetWeatherAsFloat(DateTime dt)
