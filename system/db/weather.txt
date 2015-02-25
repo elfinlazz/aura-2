@@ -46,7 +46,4 @@
 
 // 12 - Taillteann, Abb Neagh, Corrib, Tara, Blago
 { regions: [300, 302, 400, 401, 402], type: "table", name: "type12" },
-
-// 13 - Sidhe Sneachta, Physis
-// 47:48:3200, 0, type13?
 ]
