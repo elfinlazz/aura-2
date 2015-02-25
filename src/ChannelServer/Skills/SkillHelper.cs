@@ -50,7 +50,13 @@ namespace Aura.Channel.Skills
 				// Durability
 				if (!ChannelServer.Instance.Conf.World.NoDurabilityLoss)
 				{
-					weapon.Durability -= rnd.Next(1, 30);
+					var reduce = rnd.Next(1, 30);
+
+					// Half dura loss if blessed
+					if (weapon.IsBlessed)
+						reduce = Math.Max(1, reduce / 2);
+
+					weapon.Durability -= reduce;
 					Send.ItemDurabilityUpdate(attacker, weapon);
 				}
 

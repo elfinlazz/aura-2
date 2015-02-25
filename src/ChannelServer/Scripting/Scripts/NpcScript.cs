@@ -1471,13 +1471,17 @@ namespace Aura.Channel.Scripting.Scripts
 
 			// TODO: Luck?
 
-			// TODO: Holy Water
-
 			// Repair x times
 			for (int i = 0; i < result.Points; ++i)
 			{
+				var useRate = rate;
+
+				// Holy Water (+1%?)
+				if (result.Item.IsBlessed)
+					useRate += 1;
+
 				// Success
-				if (this.Random(100) < rate)
+				if (this.Random(100) < useRate)
 				{
 					result.Item.Durability += 1000;
 					result.Successes++;
@@ -1485,6 +1489,13 @@ namespace Aura.Channel.Scripting.Scripts
 				// Fail
 				else
 				{
+					// Remove blessing 
+					if (result.Item.IsBlessed)
+					{
+						result.Item.OptionInfo.Flags &= ~ItemFlags.Blessed;
+						Send.ItemBlessed(this.Player, result.Item);
+					}
+
 					result.Item.OptionInfo.DurabilityMax = Math.Max(1000, result.Item.OptionInfo.DurabilityMax - 1000);
 					if (result.Item.OptionInfo.DurabilityMax < result.Item.OptionInfo.Durability)
 						result.Item.Durability -= 1000;
