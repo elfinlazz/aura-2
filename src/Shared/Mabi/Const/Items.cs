@@ -175,4 +175,11 @@ namespace Aura.Shared.Mabi.Const
 		CylinderM = 15,
 		CylinderF = 16,
 	}
+
+	[Flags]
+	public enum ItemFlags : byte
+	{
+		Unknown = 0x01,
+		Blessed = 0x04,
+	}
 }

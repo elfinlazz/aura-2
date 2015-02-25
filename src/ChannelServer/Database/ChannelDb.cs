@@ -416,6 +416,7 @@ namespace Aura.Channel.Database
 							item.MetaData1.Parse(reader.GetStringSafe("meta1"));
 							item.MetaData2.Parse(reader.GetStringSafe("meta2"));
 							item.OptionInfo.LinkedPocketId = (Pocket)reader.GetByte("linkedPocket");
+							item.OptionInfo.Flags = (ItemFlags)reader.GetByte("flags");
 
 							result.Add(item);
 						}
@@ -1089,6 +1090,7 @@ namespace Aura.Channel.Database
 						cmd.Set("upgrades", item.OptionInfo.Upgraded);
 						cmd.Set("meta1", item.MetaData1.ToString());
 						cmd.Set("meta2", item.MetaData2.ToString());
+						cmd.Set("flags", (byte)item.OptionInfo.Flags);
 
 						cmd.Execute();
 

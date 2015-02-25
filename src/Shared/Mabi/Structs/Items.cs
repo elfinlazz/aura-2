@@ -55,7 +55,7 @@ namespace Aura.Shared.Mabi.Structs
 	public struct ItemOptionInfo
 	{
 		[FieldOffset(0)]
-		public byte Flag;
+		public ItemFlags Flags;
 		[FieldOffset(1)]
 		public byte __unknown15;
 		[FieldOffset(2)]
