@@ -53,6 +53,13 @@ namespace Aura.Channel.World.Entities
 		/// <param name="type"></param>
 		/// <returns></returns>
 		public bool Is(DataType type) { return (this.DataType == type); }
+
+		/// <summary>
+		/// Returns true if entity's data has the tag.
+		/// </summary>
+		/// <param name="tag"></param>
+		/// <returns></returns>
+		public abstract bool HasTag(string tag);
 	}
 
 	/// <summary>

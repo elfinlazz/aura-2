@@ -14,6 +14,7 @@ namespace Aura.Data
 		public static ChairDb ChairDb = new ChairDb();
 		public static CharCardDb CharCardDb = new CharCardDb();
 		public static CharCardSetDb CharCardSetDb = new CharCardSetDb();
+		public static CollectingDb CollectingDb = new CollectingDb();
 		public static ColorMapDb ColorMapDb = new ColorMapDb();
 		public static ExpDb ExpDb = new ExpDb();
 		//public static FlightDb FlightDb = new FlightDb();
@@ -22,6 +23,7 @@ namespace Aura.Data
 		public static KeywordDb KeywordDb = new KeywordDb();
 		public static MotionDb MotionDb = new MotionDb();
 		public static PetDb PetDb = new PetDb();
+		public static PropsDb PropsDb = new PropsDb();
 		public static PropDropDb PropDropDb = new PropDropDb();
 		public static RaceDb RaceDb = new RaceDb();
 		public static RegionDb RegionDb = new RegionDb();

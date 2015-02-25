@@ -197,6 +197,7 @@ namespace Aura.Shared.Network
 		public const int SkillReady = 0x6983;
 		public const int SkillUse = 0x6986;
 		public const int SkillComplete = 0x6987;
+		public const int SkillCompleteUnk = 0x6988; // used in gathering fail
 		public const int SkillCancel = 0x6989;
 		public const int SkillStart = 0x698A;
 		public const int SkillStop = 0x698B;
@@ -388,6 +389,8 @@ namespace Aura.Shared.Network
 		public const int AgeUpEffect = 0x9858;
 
 		public const int ConditionUpdate = 0xA028;
+		public const int CollectAnimation = 0xA415;
+		public const int CollectAnimationCancel = 0xA416;
 		public const int DyePaletteReq = 0xA418;
 		public const int DyePaletteReqR = 0xA419;
 		public const int DyePickColor = 0xA41A;

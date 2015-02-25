@@ -12,6 +12,7 @@ using System.Threading;
 using Aura.Data;
 using Aura.Channel.Network;
 using Aura.Shared.Util;
+using Aura.Data.Database;
 
 namespace Aura.Channel.World.Entities
 {
@@ -43,6 +44,11 @@ namespace Aura.Channel.World.Entities
 		public PropInfo Info;
 
 		/// <summary>
+		/// Data about the prop from the db.
+		/// </summary>
+		public PropsDbData Data;
+
+		/// <summary>
 		/// True if this prop was spawned by the server.
 		/// </summary>
 		/// <remarks>
@@ -53,7 +59,7 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Returns true if prop is not server sided and has a state or extra data.
 		/// </summary>
-		public bool ModifiedClientSide { get { return !this.ServerSide && (this.State != "" || this.HasXml); } }
+		public bool ModifiedClientSide { get { return !this.ServerSide && (!string.IsNullOrWhiteSpace(this.State) || this.HasXml); } }
 
 		/// <summary>
 		/// Called when a player interacts with the prop (touch, attack).
@@ -69,6 +75,17 @@ namespace Aura.Channel.World.Entities
 		/// Prop's title (only supported by specific props)
 		/// </summary>
 		public string Title { get; set; }
+
+		public float _resource;
+		/// <summary>
+		/// Remaining resource amount
+		/// </summary>
+		public float Resource { get { return _resource; } set { _resource = Math2.Clamp(0, 100, value); } }
+
+		/// <summary>
+		/// Time at which something was collected from the prop last.
+		/// </summary>
+		public DateTime LastCollect { get; set; }
 
 		/// <summary>
 		/// Prop's state (only supported by specific props)
@@ -170,6 +187,31 @@ namespace Aura.Channel.World.Entities
 			this.Info.Color7 =
 			this.Info.Color8 =
 			this.Info.Color9 = 0xFF808080;
+
+			_resource = 100;
+			this.LastCollect = DateTime.Now;
+
+			this.LoadDefault();
+		}
+
+		/// <summary>
+		/// Loads prop data from db.
+		/// </summary>
+		private void LoadDefault()
+		{
+			if ((this.Data = AuraData.PropsDb.Find(this.Info.Id)) == null)
+			{
+				Log.Warning("Prop.LoadDefault: No data found for '{0}'.", this.Info.Id);
+				return;
+			}
+
+			// Add state for wells, otherwise they aren't interactable
+			// and you can walk through them o,o
+			// TODO: Can we generalize this somehow?
+			// They also have XML, but that doesn't seem to be needed.
+			// <xml _RESOURCE="100.000000" _LAST_COLLECT_TIME="63559712423945"/>
+			if (this.Data.HasTag("/water/well/"))
+				this.State = "default";
 		}
 
 		/// <summary>
@@ -234,6 +276,19 @@ namespace Aura.Channel.World.Entities
 			{
 				creature.Warp(region, x, y);
 			};
+		}
+
+		/// <summary>
+		///  Returns true if prop's data has the tag.
+		/// </summary>
+		/// <param name="tag"></param>
+		/// <returns></returns>
+		public override bool HasTag(string tag)
+		{
+			if (this.Data == null)
+				return false;
+
+			return this.Data.HasTag(tag);
 		}
 	}
 

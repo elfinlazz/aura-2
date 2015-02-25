@@ -1428,5 +1428,18 @@ namespace Aura.Channel.World.Entities
 
 			return newPos;
 		}
+
+		/// <summary>
+		///  Returns true if creature's race data has the tag.
+		/// </summary>
+		/// <param name="tag"></param>
+		/// <returns></returns>
+		public override bool HasTag(string tag)
+		{
+			if (this.RaceData == null)
+				return false;
+
+			return this.RaceData.HasTag(tag);
+		}
 	}
 }

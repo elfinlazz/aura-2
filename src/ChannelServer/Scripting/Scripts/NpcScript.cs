@@ -899,6 +899,30 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Checks if player has the skill.
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <param name="rank"></param>
+		/// <returns></returns>
+		public bool HasSkill(SkillId skillId, SkillRank rank = SkillRank.Novice)
+		{
+			return this.Player.Skills.Has(skillId, rank);
+		}
+
+		/// <summary>
+		/// Gives skill to player if he doesn't have it on that rank yet.
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <param name="rank"></param>
+		public void GiveSkill(SkillId skillId, SkillRank rank = SkillRank.Novice)
+		{
+			if (this.HasSkill(skillId, rank))
+				return;
+
+			this.Player.Skills.Give(skillId, rank);
+		}
+
+		/// <summary>
 		/// Execute Hook! Harhar.
 		/// </summary>
 		/// <remarks>

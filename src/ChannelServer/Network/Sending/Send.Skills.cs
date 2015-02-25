@@ -256,7 +256,9 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
-		/// <param name="unkByte"></param>
+		/// <param name="entityId"></param>
+		/// <param name="unk1"></param>
+		/// <param name="unk2"></param>
 		public static void SkillUse(Creature creature, SkillId skillId, long entityId, int unk1, int unk2)
 		{
 			var packet = new Packet(Op.SkillUse, creature.EntityId);
@@ -264,6 +266,22 @@ namespace Aura.Channel.Network.Sending
 			packet.PutLong(entityId);
 			packet.PutInt(unk1);
 			packet.PutInt(unk2);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillUse to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="unk1"></param>
+		public static void SkillUse(Creature creature, SkillId skillId, long entityId, int unk1)
+		{
+			var packet = new Packet(Op.SkillUse, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutLong(entityId);
+			packet.PutInt(unk1);
 
 			creature.Client.Send(packet);
 		}
@@ -424,6 +442,42 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
+		/// <param name="entityId"></param>
+		/// <param name="unkInt"></param>
+		public static void SkillComplete(Creature creature, SkillId skillId, long entityId, int unkInt)
+		{
+			var packet = new Packet(Op.SkillComplete, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutLong(entityId);
+			packet.PutInt(unkInt);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillComplete to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="entityId"></param>
+		/// <param name="unkInt"></param>
+		/// <param name="unkShort"></param>
+		public static void SkillCompleteUnk(Creature creature, SkillId skillId, long entityId, int unkInt, short unkShort)
+		{
+			var packet = new Packet(Op.SkillCompleteUnk, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutLong(entityId);
+			packet.PutInt(unkInt);
+			packet.PutShort(unkShort);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillComplete to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
 		/// <param name="part"></param>
 		public static void SkillCompleteDye(Creature creature, SkillId skillId, int part)
 		{
@@ -515,6 +569,36 @@ namespace Aura.Channel.Network.Sending
 			packet.PutUShort((ushort)skillId);
 
 			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts CollectAnimation in creature's range.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="entityId"></param>
+		/// <param name="collectId"></param>
+		/// <param name="pos"></param>
+		public static void CollectAnimation(Creature creature, long entityId, int collectId, Position pos)
+		{
+			var packet = new Packet(Op.CollectAnimation, creature.EntityId);
+			packet.PutLong(entityId);
+			packet.PutInt(collectId);
+			packet.PutFloat(pos.X);
+			packet.PutFloat(pos.Y);
+			packet.PutFloat(1);
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
+		/// Broadcasts CollectAnimationCancel in creature's range.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void CollectAnimationCancel(Creature creature)
+		{
+			var packet = new Packet(Op.CollectAnimationCancel, creature.EntityId);
+
+			creature.Region.Broadcast(packet, creature);
 		}
 	}
 }

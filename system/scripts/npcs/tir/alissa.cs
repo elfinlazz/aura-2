@@ -105,7 +105,14 @@ public class AlissaBaseScript : NpcScript
 				break;
 
 			case "about_skill":
-				Msg("Um... I only know about Production Mastery,<br/>you know.");
+				if(!HasSkill(SkillId.ProductionMastery))
+				{
+					GiveSkill(SkillId.ProductionMastery, SkillRank.RF);
+					Msg("Have you heard of the Production Mastery skill? Learning it will give you more Stamina and Dexterity,<br/>and you'll be more successful at gathering and crafting.");
+					Msg("It's not a skill you have to activate manually, either. Simply gathering and crafting will trigger the skill,<br/>so it'll improve without any particular effort on your part.");
+				}
+				else
+					Msg("Um... I only know about Production Mastery,<br/>you know.");
 				break;
 
 			case "shop_misc":
