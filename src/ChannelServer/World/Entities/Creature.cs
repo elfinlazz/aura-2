@@ -652,7 +652,7 @@ namespace Aura.Channel.World.Entities
 			var rnd = RandomProvider.Get();
 			var pos = entity.GetPosition();
 			var target = pos.GetRandomInRange(range, rnd);
-			var dir = (byte)rnd.Next(255);
+			var dir = (byte)rnd.Next(256);
 
 			this.SetLocation(entity.RegionId, target.X, target.Y);
 			this.Direction = dir;
