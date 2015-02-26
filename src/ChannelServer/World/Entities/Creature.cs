@@ -1216,8 +1216,8 @@ namespace Aura.Channel.World.Entities
 					var item = new Item(drop.ItemId);
 
 					item.Info.Amount = (ushort)drop.Amount;
-					item.OptionInfo.Prefix = (short)drop.Prefix;
-					item.OptionInfo.Suffix = (short)drop.Suffix;
+					item.OptionInfo.Prefix = (ushort)drop.Prefix;
+					item.OptionInfo.Suffix = (ushort)drop.Suffix;
 					if (drop.HasColor)
 					{
 						item.Info.Color1 = drop.Color1;

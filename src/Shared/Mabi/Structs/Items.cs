@@ -125,9 +125,9 @@ namespace Aura.Shared.Mabi.Structs
 		public int Grade;
 
 		[FieldOffset(60)]
-		public short Prefix;
+		public ushort Prefix;
 		[FieldOffset(62)]
-		public short Suffix;
+		public ushort Suffix;
 
 		[FieldOffset(64)]
 		public short Elemental;
