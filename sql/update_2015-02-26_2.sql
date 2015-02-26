@@ -1,0 +1,1 @@
+ALTER TABLE `items` CHANGE `flags` `flags` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0';
