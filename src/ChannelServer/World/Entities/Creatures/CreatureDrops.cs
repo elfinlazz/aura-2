@@ -56,7 +56,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			lock (_drops)
 			{
 				foreach (var drop in drops)
-					_drops[drop.ItemId] = new DropData(drop.ItemId, drop.Chance);
+					_drops[drop.ItemId] = drop.Copy();
 			}
 		}
 	}

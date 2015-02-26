@@ -1214,7 +1214,17 @@ namespace Aura.Channel.World.Entities
 					var dropPos = pos.GetRandomInRange(50, rnd);
 
 					var item = new Item(drop.ItemId);
-					item.Info.Amount = 1;
+
+					item.Info.Amount = (ushort)drop.Amount;
+					item.OptionInfo.Prefix = (short)drop.Prefix;
+					item.OptionInfo.Suffix = (short)drop.Suffix;
+					if (drop.HasColor)
+					{
+						item.Info.Color1 = drop.Color1;
+						item.Info.Color2 = drop.Color2;
+						item.Info.Color3 = drop.Color3;
+					}
+
 					item.Info.Region = this.RegionId;
 					item.Info.X = dropPos.X;
 					item.Info.Y = dropPos.Y;
