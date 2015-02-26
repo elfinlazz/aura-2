@@ -834,6 +834,10 @@ namespace Aura.Channel.World.Entities
 						continue;
 				}
 
+				// Half dura loss if blessed
+				if (item.IsBlessed)
+					loss = Math.Max(1, loss / 2);
+
 				item.Durability -= loss;
 				update.Add(item);
 			}

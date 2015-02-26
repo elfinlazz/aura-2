@@ -115,7 +115,13 @@ namespace Aura.Channel.Skills.Life
 			// Reduce tool's durability
 			if (creature.RightHand != null && collectData.DurabilityLoss > 0)
 			{
-				creature.RightHand.Durability -= collectData.DurabilityLoss;
+				var reduce = collectData.DurabilityLoss;
+
+				// Half dura loss if blessed
+				if (creature.RightHand.IsBlessed)
+					reduce = Math.Max(1, reduce / 2);
+
+				creature.RightHand.Durability -= reduce;
 				Send.ItemExpUpdate(creature, creature.RightHand);
 			}
 
