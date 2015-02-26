@@ -1,17 +1,17 @@
 //--- Aura Script -----------------------------------------------------------
-//  Chicken AI
+//  Hen AI
 //--- Description -----------------------------------------------------------
-//  AI for chickens.
+//  AI for hens.
 //---------------------------------------------------------------------------
 
-public class ChickenAi : AiScript
+public class HenAi : AiScript
 {
-	public ChickenAi()
+	public HenAi()
 	{
 		SetAggroRadius(400);
 		
 		Hates("/fox/");
-		Loves("/hen/");
+		Loves("/cock/");
 	}
 	
 	protected override IEnumerable Idle()
@@ -33,5 +33,8 @@ public class ChickenAi : AiScript
 	{
 		Do(Follow(300, true));
 		Do(Wait(5000, 10000));
+		Do(StartSkill(SkillId.Rest));
+		Do(Wait(10000));
+		Do(StopSkill(SkillId.Rest));
 	}
 }
