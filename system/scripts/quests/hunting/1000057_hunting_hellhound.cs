@@ -16,8 +16,6 @@ public class HellhoundQuestScript : QuestScript
 		SetReceive(Receive.Automatically);
 		AddPrerequisite(Completed(1000056));
 
-
-		
 		AddObjective("kill_hound", "Hunt 1 Hellhound", 25, 3200, 3426, Kill(1, "/hellhound/"));
 
 		AddReward(Exp(20000));

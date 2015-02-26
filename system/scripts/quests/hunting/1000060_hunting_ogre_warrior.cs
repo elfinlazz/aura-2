@@ -16,8 +16,6 @@ public class OgreWarriorQuestScript : QuestScript
 		SetReceive(Receive.Automatically);
 		AddPrerequisite(Completed(1000059));
 
-
-		
 		AddObjective("kill_ogre", "Hunt 1 Ogre Warrior", 32, 3192, 2891, Kill(1, "/ogrebros1/"));
 
 		AddReward(Exp(50000));

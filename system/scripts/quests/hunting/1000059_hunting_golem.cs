@@ -16,8 +16,6 @@ public class GolemQuestScript : QuestScript
 		SetReceive(Receive.Automatically);
 		AddPrerequisite(Completed(1000058));
 
-
-		
 		AddObjective("kill_golem", "Hunt 1 Golem", 11, 3213, 3209, Kill(1, "/golem/"));
 
 		AddReward(Exp(40000));

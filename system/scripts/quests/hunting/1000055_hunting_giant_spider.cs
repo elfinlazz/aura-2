@@ -18,7 +18,7 @@ public class GiantSpiderQuestScript : QuestScript
 
 		AddObjective("kill_spider", "Hunt 1 Giant Spider", 13, 3210, 3209, Kill(1, "/giantspider/"));
 
-		AddReward(Exp(4000 ));
+		AddReward(Exp(4000));
 		AddReward(Item(17018, 1));
 	}
 }

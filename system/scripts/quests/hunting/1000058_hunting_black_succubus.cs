@@ -16,8 +16,6 @@ public class BlackSuccubusQuestScript : QuestScript
 		SetReceive(Receive.Automatically);
 		AddPrerequisite(Completed(1000057));
 
-
-		
 		AddObjective("kill_succubus", "Hunt 1 Black Succubus", 24, 3198, 3427, Kill(1, "/black_succubus/"));
 
 		AddReward(Exp(30000));
