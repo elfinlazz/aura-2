@@ -4,12 +4,14 @@
 // All scripts listed here will be loaded.
 //---------------------------------------------------------------------------
 
+// Beginner Quests
 quests/beginner_uladh/202001_naos_letter.cs
 quests/beginner_uladh/202002_rescue_resident.cs
 quests/beginner_uladh/202006_duncans_call.cs
 quests/beginner_uladh/skills_rest.cs
 quests/beginner_uladh/school_1.cs
 
+// Part-Time Jobs
 quests/ptj/502102_endelyon_barley_basic.cs
 quests/ptj/502103_endelyon_wheat_basic.cs
 quests/ptj/502105_endelyon_eggs_basic.cs
@@ -20,5 +22,35 @@ quests/ptj/502162_endelyon_barley_adv.cs
 quests/ptj/502163_endelyon_wheat_adv.cs
 quests/ptj/502165_endelyon_eggs_adv.cs
 quests/ptj/church_endelyon.cs
+
+// Hunting
+quests/hunting/1000034_hunting_spiders.cs
+quests/hunting/1000035_hunting_foxes.cs
+quests/hunting/1000036_hunting_gray_wolves.cs
+quests/hunting/1000037_hunting_black_wolves.cs
+quests/hunting/1000038_hunting_white_wolves.cs
+quests/hunting/1000039_hunting_brown_dire_wolves.cs
+quests/hunting/1000040_hunting_black_dire_wolves.cs
+quests/hunting/1000041_hunting_white_dire_wolves.cs
+quests/hunting/1000042_hunting_brown_bear.cs
+quests/hunting/1000043_hunting_wisp.cs
+quests/hunting/1000044_hunting_kobold_bandits.cs
+quests/hunting/1000045_hunting_skeleton_wolves.cs
+quests/hunting/1000046_hunting_skeletons.cs
+quests/hunting/1000047_hunting_brown_grizzly_cub.cs
+quests/hunting/1000048_hunting_red_grizzly_cub.cs
+quests/hunting/1000049_hunting_red_bear.cs
+quests/hunting/1000050_hunting_brown_grizzly_bear.cs
+quests/hunting/1000051_hunting_black_grizzly_bear.cs
+quests/hunting/1000052_hunting_troll.cs
+quests/hunting/1000053_hunting_orge.cs
+
+// Hunting Boss Quests
+quests/hunting/1000055_hunting_giant_spider.cs
+quests/hunting/1000056_hunting_small_golem.cs
+quests/hunting/1000057_hunting_hellhound.cs
+quests/hunting/1000058_hunting_black_succubus.cs
+quests/hunting/1000059_hunting_golem.cs
+quests/hunting/1000060_hunting_ogre_warrior.cs
 
 include "/user/scripts/scripts_quests.txt"
