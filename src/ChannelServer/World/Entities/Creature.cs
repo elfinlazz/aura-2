@@ -1213,8 +1213,13 @@ namespace Aura.Channel.World.Entities
 			}
 
 			// Drops
+			var dropped = new HashSet<int>();
 			foreach (var drop in this.Drops.Drops)
 			{
+				// Only drop any item once
+				if (dropped.Contains(drop.ItemId))
+					continue;
+
 				if (rnd.NextDouble() < drop.Chance * ChannelServer.Instance.Conf.World.DropRate)
 				{
 					var dropPos = pos.GetRandomInRange(50, rnd);
@@ -1237,6 +1242,8 @@ namespace Aura.Channel.World.Entities
 					item.DisappearTime = DateTime.Now.AddSeconds(60);
 
 					this.Region.AddItem(item);
+
+					dropped.Add(drop.ItemId);
 				}
 			}
 		}
