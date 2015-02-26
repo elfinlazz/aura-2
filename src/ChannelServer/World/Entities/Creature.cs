@@ -83,6 +83,12 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public virtual bool LevelingEnabled { get { return false; } }
 
+		/// <summary>
+		/// Returns whether creature is able to learn skills automatically
+		/// (e.g. Counterattack).
+		/// </summary>
+		public virtual bool LearningSkillsEnabled { get { return false; } }
+
 		// Look
 		// ------------------------------------------------------------------
 

@@ -8,6 +8,10 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public class Character : PlayerCreature
 	{
-
+		/// <summary>
+		/// Returns whether creature is able to learn skills automatically
+		/// (e.g. Counterattack).
+		/// </summary>
+		public override bool LearningSkillsEnabled { get { return true; } }
 	}
 }

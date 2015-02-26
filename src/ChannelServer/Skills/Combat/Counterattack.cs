@@ -167,7 +167,7 @@ namespace Aura.Channel.Skills.Combat
 
 			if (targetSkill != null)
 				targetSkill.Train(3); // Learn from the enemy's counter attack.
-			else
+			else if (tAction.Creature.LearningSkillsEnabled)
 				tAction.Creature.Skills.Give(SkillId.Counterattack, SkillRank.Novice); // Obtaining the Skill
 		}
 	}
