@@ -60,11 +60,13 @@ namespace Aura.Channel.Network.Sending
 		/// in range of creature.
 		/// </summary>
 		/// <param name="creature"></param>
+		/// <param name="type">Variable not sent if null.</param>
 		public static void SkillInitEffect(Creature creature, string type)
 		{
 			var packet = new Packet(Op.Effect, creature.EntityId);
 			packet.PutInt(E.SkillInit);
-			packet.PutString(type);
+			if (type != null)
+				packet.PutString(type);
 
 			creature.Region.Broadcast(packet, creature);
 		}
