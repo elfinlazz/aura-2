@@ -150,9 +150,13 @@ namespace Aura.Channel.Skills
 				// If attacker action
 				if (action.Category == CombatActionCategory.Attack)
 				{
+					var aAction = action as AttackerAction;
+
 					var npc = action.Creature as NPC;
 					if (npc != null && npc.AI != null && action.SkillId != SkillId.CombatMastery)
-						npc.AI.OnUsedSkill(action as AttackerAction);
+						npc.AI.OnUsedSkill(aAction);
+
+					ChannelServer.Instance.Events.OnCreatureAttacks(aAction);
 				}
 			}
 
