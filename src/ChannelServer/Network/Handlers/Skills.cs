@@ -345,11 +345,15 @@ namespace Aura.Channel.Network.Handlers
 			{
 				handler.Use(creature, skill, packet);
 
-				// Only if it wasn't canceled in Use? (Counter)
-				if (skill.State != SkillState.Canceled)
-					skill.State = SkillState.Used;
+				// If stacks aren't 0 the skill wasn't successfully used yet.
+				if (skill.Stacks == 0)
+				{
+					// Only if it wasn't canceled in Use? (Counter)
+					if (skill.State != SkillState.Canceled)
+						skill.State = SkillState.Used;
 
-				creature.Regens.Remove("ActiveSkillWait");
+					creature.Regens.Remove("ActiveSkillWait");
+				}
 			}
 			catch (NotImplementedException)
 			{
