@@ -91,7 +91,19 @@ namespace Aura.Channel.Skills
 		/// <param name="actions"></param>
 		public void Add(params CombatAction[] actions)
 		{
+			foreach (var action in actions)
+				action.Pack = this;
+
 			this.Actions.AddRange(actions);
+		}
+
+		/// <summary>
+		/// Returns all creatures found in this pack's target actions.
+		/// </summary>
+		/// <returns></returns>
+		public Creature[] GetTargets()
+		{
+			return this.Actions.Where(a => a.Category == CombatActionCategory.Target).Select(a => a.Creature).ToArray();
 		}
 
 		/// <summary>
@@ -201,6 +213,12 @@ namespace Aura.Channel.Skills
 		/// Attack or Target action
 		/// </summary>
 		public abstract CombatActionCategory Category { get; }
+
+		/// <summary>
+		/// Returns the combat action pack this action is part of, or null.
+		/// Set automatically when adding the action to the pack.
+		/// </summary>
+		public CombatActionPack Pack { get; set; }
 
 		/// <summary>
 		/// Returns true if the given type equals the combat action's type.

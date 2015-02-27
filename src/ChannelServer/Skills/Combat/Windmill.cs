@@ -25,7 +25,7 @@ namespace Aura.Channel.Skills.Combat
 	/// Var 3: ?
 	/// </remarks>
 	[Skill(SkillId.Windmill)]
-	public class Windmill : IPreparable, IReadyable, IUseable, ICompletable, ICancelable
+	public class Windmill : IPreparable, IReadyable, IUseable, ICompletable, ICancelable, IInitiableSkillHandler
 	{
 		/// <summary>
 		/// Amount added to the Knockback meter.
@@ -36,6 +36,20 @@ namespace Aura.Channel.Skills.Combat
 		/// Units the enemy is knocked back.
 		/// </summary>
 		private const int KnockbackDistance = 450;
+
+		/// <summary>
+		/// Knock back required for WM to count as Counter.
+		/// </summary>
+		private const int CounterKnockBack = 80;
+
+		/// <summary>
+		/// Subscribes to events needed for training.
+		/// </summary>
+		public void Init()
+		{
+			ChannelServer.Instance.Events.CreatureAttack += this.OnCreatureAttack;
+			ChannelServer.Instance.Events.CreatureAttacks += this.OnCreatureAttacks;
+		}
 
 		/// <summary>
 		/// Prepares WM, empty skill init for only the loading sound.
@@ -206,6 +220,198 @@ namespace Aura.Channel.Skills.Combat
 			range += attacker.RaceData.AttackRange;
 
 			return (int)range;
+		}
+
+		/// <summary>
+		/// Handles WM training
+		/// </summary>
+		/// <param name="obj"></param>
+		private void OnCreatureAttack(TargetAction tAction)
+		{
+			if (tAction.SkillId != SkillId.Windmill)
+				return;
+
+			var attackerSkill = tAction.Attacker.Skills.Get(SkillId.Windmill);
+			if (attackerSkill == null) return;
+
+			var rating = tAction.Attacker.GetPowerRating(tAction.Creature);
+			var targets = tAction.Pack.GetTargets();
+
+			var multipleEnemies = targets.Length >= 4;
+			var multipleEnemiesDefeated = targets.Count(a => a.IsDead) >= 4;
+
+			// rF-D, 1-2
+			if (attackerSkill.Info.Rank >= SkillRank.RF && attackerSkill.Info.Rank <= SkillRank.RD)
+			{
+				attackerSkill.Train(1); // Attack an enemy.
+				if (tAction.Creature.IsDead)
+					attackerSkill.Train(2); // Defeat an enemy.
+			}
+
+			// rF, 3-5
+			if (attackerSkill.Info.Rank == SkillRank.RF)
+			{
+				if (tAction.Attacker.KnockBack >= CounterKnockBack)
+					attackerSkill.Train(3); // Counterattack with Windmill.
+
+				if (multipleEnemies) attackerSkill.Train(4); // Attack several enemies.
+				if (multipleEnemiesDefeated) attackerSkill.Train(5); // Defeat several enemies.
+			}
+
+			// rE-D, 3-8
+			if (attackerSkill.Info.Rank >= SkillRank.RE && attackerSkill.Info.Rank <= SkillRank.RD)
+			{
+				if (rating == PowerRating.Normal)
+				{
+					attackerSkill.Train(3); // Attack a similar ranked enemy.
+					if (tAction.Creature.IsDead)
+						attackerSkill.Train(4); // Defeat a similar ranked enemy.
+				}
+
+				if (rating == PowerRating.Strong && tAction.Creature.IsDead)
+					attackerSkill.Train(5); // Defeat a powerful enemy.
+
+				if (tAction.Attacker.KnockBack >= CounterKnockBack)
+					attackerSkill.Train(6); // Counterattack with Windmill.
+			}
+
+			// rC-B
+			if (attackerSkill.Info.Rank >= SkillRank.RC && attackerSkill.Info.Rank <= SkillRank.RB)
+			{
+				if (rating == PowerRating.Normal)
+				{
+					attackerSkill.Train(1); // Attack a similar ranked enemy.
+					if (tAction.Creature.IsDead)
+						attackerSkill.Train(2); // Defeat a similar ranked enemy.
+				}
+
+				if (rating == PowerRating.Strong && tAction.Creature.IsDead)
+					attackerSkill.Train(3); // Defeat a powerful enemy.
+
+				if (rating == PowerRating.Awful && tAction.Creature.IsDead)
+					attackerSkill.Train(4); // Defeat a very powerful enemy.
+
+				if (tAction.Attacker.KnockBack >= CounterKnockBack)
+					attackerSkill.Train(5); // Counterattack with Windmill.
+			}
+
+			// rA-8
+			if (attackerSkill.Info.Rank >= SkillRank.RA && attackerSkill.Info.Rank <= SkillRank.R8)
+			{
+				if (rating == PowerRating.Normal && tAction.Creature.IsDead)
+					attackerSkill.Train(1); // Defeat a similar ranked enemy.
+
+				if (rating == PowerRating.Strong && tAction.Creature.IsDead)
+					attackerSkill.Train(2); // Defeat a powerful enemy.
+
+				if (rating == PowerRating.Awful && tAction.Creature.IsDead)
+					attackerSkill.Train(3); // Defeat a very powerful enemy.
+
+				if (tAction.Attacker.KnockBack >= CounterKnockBack)
+					attackerSkill.Train(4); // Counterattack with Windmill.
+			}
+
+			// r7
+			if (attackerSkill.Info.Rank == SkillRank.R7)
+			{
+				if (rating == PowerRating.Normal && tAction.Creature.IsDead)
+					attackerSkill.Train(1); // Defeat a similar ranked enemy.
+
+				if (rating == PowerRating.Strong && tAction.Creature.IsDead)
+					attackerSkill.Train(2); // Defeat a powerful enemy.
+
+				if (rating == PowerRating.Awful && tAction.Creature.IsDead)
+					attackerSkill.Train(3); // Defeat a very powerful enemy.
+
+				if (rating == PowerRating.Boss && tAction.Creature.IsDead)
+					attackerSkill.Train(4); // Defeat a boss-level enemy.
+			}
+
+			// r6-1
+			if (attackerSkill.Info.Rank >= SkillRank.R6 && attackerSkill.Info.Rank <= SkillRank.R1)
+			{
+				if (rating == PowerRating.Strong && tAction.Creature.IsDead)
+					attackerSkill.Train(1); // Defeat a powerful enemy.
+
+				if (rating == PowerRating.Awful && tAction.Creature.IsDead)
+					attackerSkill.Train(2); // Defeat a very powerful enemy.
+
+				if (rating == PowerRating.Boss && tAction.Creature.IsDead)
+					attackerSkill.Train(3); // Defeat a boss-level enemy.
+			}
+		}
+
+		/// <summary>
+		/// Handles multi-target training.
+		/// </summary>
+		/// <remarks>
+		/// Can't be handled in OnCreatureAttack because it would be done
+		/// for every single target.
+		/// </remarks>
+		/// <param name="cap"></param>
+		private void OnCreatureAttacks(AttackerAction aAction)
+		{
+			if (aAction.SkillId != SkillId.Windmill)
+				return;
+
+			var attackerSkill = aAction.Creature.Skills.Get(SkillId.Windmill);
+			if (attackerSkill == null) return;
+
+			var targets = aAction.Pack.GetTargets();
+			var multipleEnemies = false;
+			var multipleEnemiesDefeated = false;
+			var trainingIdx = 4;
+
+			switch (attackerSkill.Info.Rank)
+			{
+				case SkillRank.RE:
+				case SkillRank.RD: trainingIdx = 7; break;
+				case SkillRank.RC:
+				case SkillRank.RB: trainingIdx = 6; break;
+				case SkillRank.RA:
+				case SkillRank.R9:
+				case SkillRank.R8:
+				case SkillRank.R7: trainingIdx = 5; break;
+				case SkillRank.R6:
+				case SkillRank.R5:
+				case SkillRank.R4:
+				case SkillRank.R3:
+				case SkillRank.R2:
+				case SkillRank.R1: trainingIdx = 4; break;
+			}
+
+			// rF, 3-5
+			if (attackerSkill.Info.Rank == SkillRank.RF)
+			{
+				multipleEnemies = (targets.Length >= 4); // Attack several enemies.
+				multipleEnemiesDefeated = (targets.Count(a => a.IsDead) >= 4); // Defeat several enemies.
+			}
+
+			// rE-D, 3-8
+			if (attackerSkill.Info.Rank >= SkillRank.RE && attackerSkill.Info.Rank <= SkillRank.RD)
+			{
+				// "When training multiple hits/kills, the player must hit four or more targets.
+				// To fulfill the "kill" condition, the player must finish all four targets simultaneously.
+				// At least one must be "Strong" while the rest are either lower or equal in power or else you will not receive the points."
+				// http://wiki.mabinogiworld.com/view/Windmill#Training_Method
+
+				var matches = targets.Where(a => aAction.Creature.GetPowerRating(a) <= PowerRating.Normal);
+
+				multipleEnemies = (matches.Count() >= 4 && matches.Any(a => aAction.Creature.GetPowerRating(a) == PowerRating.Normal)); // Attack several enemies of similar level.
+				multipleEnemiesDefeated = (multipleEnemies && matches.Count(a => a.IsDead) >= 4); // Defeat several enemies of similar level.
+			}
+
+			// rC-1
+			if (attackerSkill.Info.Rank >= SkillRank.RC && attackerSkill.Info.Rank <= SkillRank.R1)
+			{
+				var matches = targets.Where(a => aAction.Creature.GetPowerRating(a) <= PowerRating.Strong);
+
+				multipleEnemies = (matches.Count() >= 4 && matches.Any(a => aAction.Creature.GetPowerRating(a) == PowerRating.Strong)); // Attack several powerful enemies.
+				multipleEnemiesDefeated = (multipleEnemies && matches.Count(a => a.IsDead) >= 4); // Defeat several powerful enemies.
+			}
+
+			if (multipleEnemies) attackerSkill.Train(trainingIdx);
+			if (multipleEnemiesDefeated) attackerSkill.Train(trainingIdx + 1);
 		}
 	}
 }
