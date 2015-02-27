@@ -411,12 +411,19 @@ namespace Aura.Channel.Network.Sending
 		/// Sends ItemBlessed to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="item"></param>
-		public static void ItemBlessed(Creature creature, Item item)
+		/// <param name="items"></param>
+		public static void ItemBlessed(Creature creature, params Item[] items)
 		{
 			var packet = new Packet(Op.ItemBlessed, creature.EntityId);
-			packet.PutLong(item.EntityId);
-			packet.PutByte(item.IsBlessed);
+
+			if (items != null)
+			{
+				foreach (var item in items)
+				{
+					packet.PutLong(item.EntityId);
+					packet.PutByte(item.IsBlessed);
+				}
+			}
 
 			creature.Client.Send(packet);
 		}
