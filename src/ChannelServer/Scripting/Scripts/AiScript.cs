@@ -90,6 +90,7 @@ namespace Aura.Channel.Scripting.Scripts
 			_rnd = new Random(RandomProvider.Get().Next());
 			_reactions = new Dictionary<AiState, Dictionary<AiEvent, Func<IEnumerable>>>();
 			_reactions[AiState.Idle] = new Dictionary<AiEvent, Func<IEnumerable>>();
+			_reactions[AiState.Aware] = new Dictionary<AiEvent, Func<IEnumerable>>();
 			_reactions[AiState.Alert] = new Dictionary<AiEvent, Func<IEnumerable>>();
 			_reactions[AiState.Aggro] = new Dictionary<AiEvent, Func<IEnumerable>>();
 			_reactions[AiState.Love] = new Dictionary<AiEvent, Func<IEnumerable>>();
