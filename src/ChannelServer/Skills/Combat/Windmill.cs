@@ -40,7 +40,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <summary>
 		/// Knock back required for WM to count as Counter.
 		/// </summary>
-		private const int CounterKnockBack = 80;
+		private const int CounterKnockBack = 50;
 
 		/// <summary>
 		/// Subscribes to events needed for training.
