@@ -389,6 +389,16 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Aggroes target, setting target and putting creature in battle stance.
+		/// </summary>
+		/// <param name="creature"></param>
+		public override void Aggro(Creature target)
+		{
+			if (this.AI != null)
+				this.AI.AggroCreature(target);
+		}
+
+		/// <summary>
 		/// TODO: Move somewhere? =/
 		/// </summary>
 		public class GiftWeightInfo

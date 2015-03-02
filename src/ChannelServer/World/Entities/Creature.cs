@@ -1540,5 +1540,11 @@ namespace Aura.Channel.World.Entities
 
 			return targetable;
 		}
+
+		/// <summary>
+		/// Aggroes target, setting target and putting creature in battle stance.
+		/// </summary>
+		/// <param name="creature"></param>
+		public abstract void Aggro(Creature target);
 	}
 }

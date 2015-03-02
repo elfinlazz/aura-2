@@ -259,5 +259,14 @@ namespace Aura.Channel.World.Entities
 			// XXX: Replace with effect and notice to allow something to happen past age 25?
 			Send.AgeUpEffect(this, this.Age);
 		}
+
+		/// <summary>
+		/// Aggroes target, setting target and putting creature in battle stance.
+		/// </summary>
+		/// <param name="creature"></param>
+		public override void Aggro(Creature target)
+		{
+			this.IsInBattleStance = true;
+		}
 	}
 }
