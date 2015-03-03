@@ -1220,12 +1220,12 @@ namespace Aura.Channel.World.Entities
 			var dropped = new HashSet<int>();
 			foreach (var drop in this.Drops.Drops)
 			{
-				// Only drop any item once
-				if (dropped.Contains(drop.ItemId))
-					continue;
-
 				if (rnd.NextDouble() < drop.Chance * ChannelServer.Instance.Conf.World.DropRate)
 				{
+					// Only drop any item once
+					if (dropped.Contains(drop.ItemId))
+						continue;
+
 					var dropPos = pos.GetRandomInRange(50, rnd);
 
 					var item = new Item(drop.ItemId);
