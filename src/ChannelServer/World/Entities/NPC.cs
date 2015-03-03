@@ -394,7 +394,13 @@ namespace Aura.Channel.World.Entities
 		/// <param name="creature"></param>
 		public override void Aggro(Creature target)
 		{
-			if (this.AI != null)
+			if (this.AI == null)
+				return;
+
+			// Aggro attacker if there is not current target,
+			// or if there is a target but it's not a player, and the attacker is one,
+			// or if the current target is not aggroed yet.
+			if (this.Target == null || (this.Target != null && target != null && !this.Target.IsPlayer && target.IsPlayer) || this.AI.State != AiScript.AiState.Aggro)
 				this.AI.AggroCreature(target);
 		}
 
