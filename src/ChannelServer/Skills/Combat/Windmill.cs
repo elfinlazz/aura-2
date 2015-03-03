@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.Network.Sending;
+using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.Skills.Magic;
 using Aura.Channel.World.Entities;
@@ -115,6 +116,8 @@ namespace Aura.Channel.Skills.Combat
 
 			cap.Add(aAction);
 
+			var survived = new List<Creature>();
+
 			foreach (var target in targets)
 			{
 				target.StopMove();
@@ -142,14 +145,15 @@ namespace Aura.Channel.Skills.Combat
 				if (damage > 0)
 					target.TakeDamage(tAction.Damage = damage, attacker);
 
-				// Aggro
-				target.Aggro(attacker);
-
 				// Finish if dead, knock down if not defended
 				if (target.IsDead)
 					tAction.Set(TargetOptions.KnockDownFinish);
 				else if (!tAction.Is(CombatActionType.Defended))
 					tAction.Set(TargetOptions.KnockDown);
+
+				// Anger Management
+				if (!target.IsDead)
+					survived.Add(target);
 
 				// Stun & knock back
 				aAction.Stun = CombatMastery.GetAttackerStun(attacker.AverageKnockCount, attacker.AverageAttackSpeed, true);
@@ -163,6 +167,15 @@ namespace Aura.Channel.Skills.Combat
 
 				// Add action
 				cap.Add(tAction);
+			}
+
+			// Only select a random aggro if there is no aggro yet,
+			// WM only aggroes one target at a time.
+			if (survived.Count != 0 && attacker.Region.CountAggro(attacker) < 1)
+			{
+				var rnd = RandomProvider.Get();
+				var aggroTarget = survived.Random();
+				aggroTarget.Aggro(attacker);
 			}
 
 			// Spin it~

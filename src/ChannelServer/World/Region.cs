@@ -16,6 +16,7 @@ using System.Threading;
 using Aura.Data.Database;
 using Boo.Lang.Compiler.TypeSystem;
 using System.Drawing;
+using Aura.Channel.Scripting.Scripts;
 
 namespace Aura.Channel.World
 {
@@ -803,8 +804,32 @@ namespace Aura.Channel.World
 				return _creatures.Values.OfType<NPC>().Count(npc =>
 					!npc.IsDead &&
 					npc.AI != null &&
-					npc.AI.State == Scripting.Scripts.AiScript.AiState.Aggro &&
+					npc.AI.State == AiScript.AiState.Aggro &&
 					npc.Race == raceId &&
+					npc.Target == target
+				);
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
+		/// Returns amount of creatures of race that are targetting target
+		/// in this region.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public int CountAggro(Creature target)
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				return _creatures.Values.OfType<NPC>().Count(npc =>
+					!npc.IsDead &&
+					npc.AI != null &&
+					npc.AI.State == AiScript.AiState.Aggro &&
 					npc.Target == target
 				);
 			}
