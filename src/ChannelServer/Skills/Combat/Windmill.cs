@@ -142,6 +142,9 @@ namespace Aura.Channel.Skills.Combat
 				if (damage > 0)
 					target.TakeDamage(tAction.Damage = damage, attacker);
 
+				// Aggro
+				target.Aggro(attacker);
+
 				// Finish if dead, knock down if not defended
 				if (target.IsDead)
 					tAction.Set(TargetOptions.KnockDownFinish);
