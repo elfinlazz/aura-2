@@ -83,6 +83,8 @@ namespace Aura.Data.Database
 		public int ItemId { get; set; }
 		public float Chance { get; set; }
 		public int Amount { get; set; }
+		public int MinAmount { get; set; }
+		public int MaxAmount { get; set; }
 		public int Prefix { get; set; }
 		public int Suffix { get; set; }
 		public uint Color1 { get; set; }
@@ -94,7 +96,7 @@ namespace Aura.Data.Database
 		{
 		}
 
-		public DropData(int itemId, float chance, int amount = 1, int prefix = 0, int suffix = 0)
+		public DropData(int itemId, float chance, int amount = 1, int minAmount = 0, int maxAmount = 0, int prefix = 0, int suffix = 0)
 		{
 			this.ItemId = itemId;
 			this.Chance = chance;
@@ -103,8 +105,8 @@ namespace Aura.Data.Database
 			this.Suffix = suffix;
 		}
 
-		public DropData(int itemId, float chance, int amount, int prefix, int suffix, uint color1, uint color2, uint color3)
-			: this(itemId, chance, amount, prefix, suffix)
+		public DropData(int itemId, float chance, int amount, int minAmount, int maxAmount, int prefix, int suffix, uint color1, uint color2, uint color3)
+			: this(itemId, chance, amount, minAmount, maxAmount, prefix, suffix)
 		{
 			this.Color1 = color1;
 			this.Color2 = color2;
@@ -119,6 +121,8 @@ namespace Aura.Data.Database
 			result.ItemId = this.ItemId;
 			result.Chance = this.Chance;
 			result.Amount = this.Amount;
+			result.MinAmount = this.MinAmount;
+			result.MaxAmount = this.MaxAmount;
 			result.Prefix = this.Prefix;
 			result.Suffix = this.Suffix;
 			result.Color1 = this.Color1;
@@ -331,8 +335,13 @@ namespace Aura.Data.Database
 					dropData.ItemId = drop.ReadInt("itemId");
 					dropData.Chance = drop.ReadFloat("chance");
 					dropData.Amount = drop.ReadInt("amount", 1);
+					dropData.MinAmount = drop.ReadInt("minAmount", 0);
+					dropData.MaxAmount = drop.ReadInt("maxAmount", 0);
 					dropData.Prefix = drop.ReadInt("prefix");
 					dropData.Suffix = drop.ReadInt("suffix");
+
+					if (dropData.MaxAmount < dropData.MinAmount)
+						dropData.MinAmount = dropData.MaxAmount;
 
 					if (drop.ContainsKeys("color1"))
 					{
