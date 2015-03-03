@@ -24,16 +24,16 @@ namespace Aura.Channel.World.Entities.Creatures
 		};
 
 		private Creature _creature;
-		private Dictionary<int, DropData> _drops;
+		private List<DropData> _drops;
 
 		public int GoldMin { get; set; }
 		public int GoldMax { get; set; }
-		public ICollection<DropData> Drops { get { lock (_drops) return _drops.Values.ToArray(); } }
+		public ICollection<DropData> Drops { get { lock (_drops) return _drops.ToArray(); } }
 
 		public CreatureDrops(Creature creature)
 		{
 			_creature = creature;
-			_drops = new Dictionary<int, DropData>();
+			_drops = new List<DropData>();
 		}
 
 		/// <summary>
@@ -44,7 +44,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		public void Add(int itemId, float chance)
 		{
 			lock (_drops)
-				_drops[itemId] = new DropData(itemId, chance);
+				_drops.Add(new DropData(itemId, chance));
 		}
 
 		/// <summary>
@@ -56,7 +56,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			lock (_drops)
 			{
 				foreach (var drop in drops)
-					_drops[drop.ItemId] = drop.Copy();
+					_drops.Add(drop.Copy());
 			}
 		}
 	}
