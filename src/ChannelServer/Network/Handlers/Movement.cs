@@ -51,6 +51,8 @@ namespace Aura.Channel.Network.Handlers
 				creature.SetPosition(to.X, to.Y);
 				Send.Effect(creature, Effect.SilentMoveTeleport, (byte)2, to.X, to.Y);
 				Send.SkillTeleport(creature, to.X, to.Y);
+
+				creature.Region.ActivateAis(creature, to, to);
 				return;
 			}
 
