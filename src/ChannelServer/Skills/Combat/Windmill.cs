@@ -46,7 +46,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <summary>
 		/// Subscribes to events needed for training.
 		/// </summary>
-		public void Init()
+		public virtual void Init()
 		{
 			ChannelServer.Instance.Events.CreatureAttack += this.OnCreatureAttack;
 			ChannelServer.Instance.Events.CreatureAttacks += this.OnCreatureAttacks;
