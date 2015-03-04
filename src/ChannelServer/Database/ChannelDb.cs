@@ -721,6 +721,13 @@ namespace Aura.Channel.Database
 							var daysSinceChange = (int)(DateTime.Now - lastChange).TotalDays;
 							var forgetDays = Math.Max(0, daysSinceChange - 3);
 
+							// Make sure completed PTJs aren't reduced if option is set
+							if (ChannelServer.Instance.Conf.World.PtjInfiniteMemory)
+							{
+								forgetDays = 0;
+								lastChange = DateTime.Now;
+							}
+
 							// Make NPCs "forget", cap at 1 job done
 							if (forgetDays > 0)
 							{

@@ -40,6 +40,8 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public int BankGoldPerCharacter { get; protected set; }
 
+		public bool PtjInfiniteMemory { get; protected set; }
+
 		public void Load()
 		{
 			this.Require("system/conf/world.conf");
@@ -76,6 +78,8 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.RebirthTime = TimeSpan.FromDays(this.GetInt("rebirth_time", 6));
 
 			this.BankGoldPerCharacter = this.GetInt("gold_per_character", 5000000);
+
+			this.PtjInfiniteMemory = this.GetBool("ptj_infinite_memory", false);
 		}
 	}
 
