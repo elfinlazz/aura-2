@@ -97,7 +97,7 @@ namespace Aura.Channel.Skills.Combat
 			var unkInt1 = packet.GetInt();
 			var unkInt2 = packet.GetInt();
 
-			var range = 400;
+			var range = this.GetRange(attacker, skill);
 			var targets = attacker.GetTargetableCreaturesInRange(range);
 
 			// Check targets
