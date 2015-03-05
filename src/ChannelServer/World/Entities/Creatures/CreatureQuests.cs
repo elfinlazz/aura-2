@@ -209,16 +209,22 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 
 		/// <summary>
-		/// Completes and removes quest, if it exists.
+		/// Completes all objectives and the quest, if it exists,
+		/// and removes quest from log. Rewards are taken from
+		/// group 0, result "Perfect", because the objectives are set done.
 		/// </summary>
 		/// <param name="quest"></param>
 		public bool Complete(Quest quest, bool owl)
 		{
+			quest.CompleteAllObjectives();
+
 			return this.Complete(quest, 0, owl);
 		}
 
 		/// <summary>
-		/// Completes and removes quest, if it exists.
+		/// Completes quest and takes rewards from group and the result
+		/// based on the progress on the current or last objective.
+		/// Primarily used by PTJs.
 		/// </summary>
 		/// <param name="quest"></param>
 		public bool Complete(Quest quest, int rewardGroup, bool owl)

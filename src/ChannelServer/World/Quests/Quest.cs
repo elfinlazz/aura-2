@@ -216,6 +216,15 @@ namespace Aura.Channel.World.Quests
 		}
 
 		/// <summary>
+		/// Sets all objectives done.
+		/// </summary>
+		public void CompleteAllObjectives()
+		{
+			var last = _progresses.Values.Last();
+			this.SetDone(last.Ident);
+		}
+
+		/// <summary>
 		/// Generates, caches, and returns new quest item.
 		/// </summary>
 		/// <remarks>
