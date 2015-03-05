@@ -403,11 +403,18 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 		L_End:
-			// Reset active skill if all stacks are used up
 			if (skill.Stacks == 0)
 			{
+				// Reset active skill if all stacks are used up
 				creature.Skills.ActiveSkill = null;
 				skill.State = SkillState.Completed;
+			}
+			else if (skill.State != SkillState.Canceled)
+			{
+				// Ready again if it wasn't canceled and it has stacks left
+				// (e.g. Final Hit is canceled if you attack a countering enemy)
+				Send.SkillReady(creature, skill.Info.Id);
+				skill.State = SkillState.Ready;
 			}
 		}
 
