@@ -141,7 +141,7 @@ namespace Aura.Channel.Skills.Combat
 				if (!tAction.Is(CombatActionType.Defended) && !tAction.Has(TargetOptions.Critical))
 					tAction.Set(TargetOptions.CleanHit);
 
-				// Tage damage if any is left
+				// Take damage if any is left
 				if (damage > 0)
 					target.TakeDamage(tAction.Damage = damage, attacker);
 
