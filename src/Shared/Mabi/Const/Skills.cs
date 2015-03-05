@@ -528,7 +528,7 @@ namespace Aura.Shared.Mabi.Const
 
 		// GM
 		PickupItemGMSkill = 65001,
-		SuperWindmillGMSkill = 65002,
+		SuperWindmillGmSkill = 65002,
 		BlockWorldGMSkill = 65003,
 	}
 

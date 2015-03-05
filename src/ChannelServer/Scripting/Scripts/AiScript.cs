@@ -90,6 +90,7 @@ namespace Aura.Channel.Scripting.Scripts
 			_rnd = new Random(RandomProvider.Get().Next());
 			_reactions = new Dictionary<AiState, Dictionary<AiEvent, Func<IEnumerable>>>();
 			_reactions[AiState.Idle] = new Dictionary<AiEvent, Func<IEnumerable>>();
+			_reactions[AiState.Aware] = new Dictionary<AiEvent, Func<IEnumerable>>();
 			_reactions[AiState.Alert] = new Dictionary<AiEvent, Func<IEnumerable>>();
 			_reactions[AiState.Aggro] = new Dictionary<AiEvent, Func<IEnumerable>>();
 			_reactions[AiState.Love] = new Dictionary<AiEvent, Func<IEnumerable>>();
@@ -701,7 +702,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Sets target and puts creature in battle mode.
 		/// </summary>
 		/// <param name="creature"></param>
-		protected void AggroCreature(Creature creature)
+		public void AggroCreature(Creature creature)
 		{
 			_state = AiState.Aggro;
 			this.Clear();
@@ -1286,10 +1287,10 @@ namespace Aura.Channel.Scripting.Scripts
 			// Aggro attacker if there is not current target,
 			// or if there is a target but it's not a player, and the attacker is one,
 			// or if the current target is not aggroed yet.
-			if (this.Creature.Target == null || (this.Creature.Target != null && action.Attacker != null && !this.Creature.Target.IsPlayer && action.Attacker.IsPlayer) || _state != AiState.Aggro)
-			{
-				this.AggroCreature(action.Attacker);
-			}
+			//if (this.Creature.Target == null || (this.Creature.Target != null && action.Attacker != null && !this.Creature.Target.IsPlayer && action.Attacker.IsPlayer) || _state != AiState.Aggro)
+			//{
+			//	this.AggroCreature(action.Attacker);
+			//}
 
 			var activeSkillWas = SkillId.None;
 

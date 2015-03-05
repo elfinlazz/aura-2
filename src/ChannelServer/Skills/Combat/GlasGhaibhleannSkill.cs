@@ -155,6 +155,9 @@ namespace Aura.Channel.Skills.Combat
 				target.TakeDamage(tAction.Damage = 300, attacker);
 				target.KnockBack = KnockbackMeter;
 
+				// Aggro
+				target.Aggro(attacker);
+
 				// Check death
 				if (target.IsDead)
 					tAction.Options |= TargetOptions.FinishingKnockDown;

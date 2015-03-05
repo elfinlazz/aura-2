@@ -110,12 +110,15 @@ namespace Aura.Channel.Skills.Combat
 				if (damage > 0)
 					target.TakeDamage(tAction.Damage = damage, attacker);
 
+				// Aggro
+				target.Aggro(attacker);
+
 				// Evaluate caused damage
 				if (!target.IsDead)
 				{
 					if (tAction.Type != CombatActionType.Defended)
 					{
-						target.KnockBack += this.GetKnockBack(weapon) / maxHits;
+						target.KnockBack += this.GetKnockBack(attacker, weapon) / maxHits;
 
 						// React normal for CombatMastery, knock down if 
 						// FH and not dual wield, don't knock at all if dual.
@@ -152,8 +155,8 @@ namespace Aura.Channel.Skills.Combat
 				// Set stun time
 				if (tAction.Type != CombatActionType.Defended)
 				{
-					aAction.Stun = this.GetAttackerStun(weapon, tAction.IsKnockBack && (skill.Info.Id != SkillId.FinalHit || !dualWield));
-					tAction.Stun = this.GetTargetStun(weapon, tAction.IsKnockBack);
+					aAction.Stun = GetAttackerStun(attacker, weapon, tAction.IsKnockBack && (skill.Info.Id != SkillId.FinalHit || !dualWield));
+					tAction.Stun = GetTargetStun(attacker, weapon, tAction.IsKnockBack);
 				}
 
 				// Second hit doubles stun time for normal hits
@@ -179,13 +182,25 @@ namespace Aura.Channel.Skills.Combat
 		/// <param name="weapon"></param>
 		/// <param name="knockback"></param>
 		/// <returns></returns>
-		public short GetAttackerStun(Item weapon, bool knockback)
+		public static short GetAttackerStun(Creature creature, Item weapon, bool knockback)
+		{
+			var count = weapon != null ? weapon.Info.KnockCount + 1 : creature.RaceData.KnockCount + 1;
+			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : (AttackSpeed)creature.RaceData.AttackSpeed;
+
+			return GetAttackerStun(count, speed, knockback);
+		}
+
+		/// <summary>
+		/// Returns stun time for the attacker.
+		/// </summary>
+		/// <param name="count"></param>
+		/// <param name="speed"></param>
+		/// <param name="knockback"></param>
+		/// <returns></returns>
+		public static short GetAttackerStun(int count, AttackSpeed speed, bool knockback)
 		{
 			//public enum CombatStunAttacker { VeryFast = 450, Fast = 520, Normal = 600, Slow = 800, VerySlow = 1000 }
 			//public enum CombatKnockbackStunAttacker { VeryFast = 2500, Fast = 2500, Normal = 2500, Slow = 2500, VerySlow = 2500 }
-
-			var count = weapon != null ? weapon.Info.KnockCount + 1 : 3;
-			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : AttackSpeed.Normal;
 
 			if (knockback)
 				return 2500;
@@ -236,13 +251,25 @@ namespace Aura.Channel.Skills.Combat
 		/// <param name="weapon"></param>
 		/// <param name="knockback"></param>
 		/// <returns></returns>
-		public short GetTargetStun(Item weapon, bool knockback)
+		public static short GetTargetStun(Creature creature, Item weapon, bool knockback)
+		{
+			var count = weapon != null ? weapon.Info.KnockCount + 1 : creature.RaceData.KnockCount + 1;
+			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : (AttackSpeed)creature.RaceData.AttackSpeed;
+
+			return GetTargetStun(count, speed, knockback);
+		}
+
+		/// <summary>
+		/// Returns stun time for the target.
+		/// </summary>
+		/// <param name="count"></param>
+		/// <param name="speed"></param>
+		/// <param name="knockback"></param>
+		/// <returns></returns>
+		public static short GetTargetStun(int count, AttackSpeed speed, bool knockback)
 		{
 			//public enum CombatStunTarget { VeryFast = 1200, Fast = 1700, Normal = 2000, Slow = 2800, VerySlow = 3000 }
 			//public enum CombatKnockbackStunTarget { VeryFast = 3000, Fast = 3000, Normal = 3000, Slow = 3000, VerySlow = 3000 }
-
-			var count = weapon != null ? weapon.Info.KnockCount + 1 : 3;
-			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : AttackSpeed.Normal;
 
 			if (knockback)
 				return 3000;
@@ -295,10 +322,10 @@ namespace Aura.Channel.Skills.Combat
 		/// </remarks>
 		/// <param name="weapon"></param>
 		/// <returns></returns>
-		public float GetKnockBack(Item weapon)
+		public float GetKnockBack(Creature creature, Item weapon)
 		{
-			var count = weapon != null ? weapon.Info.KnockCount + 1 : 3;
-			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : AttackSpeed.Normal;
+			var count = weapon != null ? weapon.Info.KnockCount + 1 : creature.RaceData.KnockCount + 1;
+			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : (AttackSpeed)creature.RaceData.AttackSpeed;
 
 			switch (count)
 			{

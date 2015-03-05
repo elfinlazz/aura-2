@@ -235,6 +235,66 @@ namespace Aura.Channel.World.Entities
 
 		public bool WasKnockedBack { get; set; }
 
+		/// <summary>
+		/// Returns weapon's knock count or the race's if not weapon
+		/// is equipped.
+		/// </summary>
+		public int KnockCount { get { return (this.RightHand != null ? this.RightHand.Info.KnockCount + 1 : this.RaceData.KnockCount + 1); } }
+
+		/// <summary>
+		/// Returns average knock count of both equipped weapons, or race's
+		/// if none are equipped.
+		/// </summary>
+		public int AverageKnockCount
+		{
+			get
+			{
+				var result = this.RaceData.KnockCount + 1;
+
+				if (this.RightHand != null)
+				{
+					result = this.RightHand.Info.KnockCount + 1;
+					if (this.LeftHand != null)
+					{
+						result += this.LeftHand.Info.KnockCount + 1;
+						result /= 2;
+					}
+				}
+
+				return result;
+			}
+		}
+
+		/// <summary>
+		/// Returns weapon's attack speed or the race's if not weapon
+		/// is equipped.
+		/// </summary>
+		public AttackSpeed AttackSpeed { get { return (this.RightHand != null ? (AttackSpeed)this.RightHand.Data.AttackSpeed : (AttackSpeed)this.RaceData.AttackSpeed); } }
+
+		/// <summary>
+		/// Returns average attack speed of both equipped weapons, or race's
+		/// if none are equipped.
+		/// </summary>
+		public AttackSpeed AverageAttackSpeed
+		{
+			get
+			{
+				var result = this.RaceData.AttackSpeed;
+
+				if (this.RightHand != null)
+				{
+					result = this.RightHand.Data.AttackSpeed;
+					if (this.LeftHand != null)
+					{
+						result += this.LeftHand.Data.AttackSpeed;
+						result /= 2;
+					}
+				}
+
+				return (AttackSpeed)result;
+			}
+		}
+
 		// Stats
 		// ------------------------------------------------------------------
 
@@ -1473,5 +1533,23 @@ namespace Aura.Channel.World.Entities
 
 			return this.RaceData.HasTag(tag);
 		}
+		/// <summary>
+		/// Returns a list of creatures in range that are targetable.
+		/// </summary>
+		/// <param name="range"></param>
+		/// <returns></returns>
+		public ICollection<Creature> GetTargetableCreaturesInRange(int range)
+		{
+			var visible = this.Region.GetVisibleCreaturesInRange(this, range);
+			var targetable = visible.FindAll(a => this.CanTarget(a));
+
+			return targetable;
+		}
+
+		/// <summary>
+		/// Aggroes target, setting target and putting creature in battle stance.
+		/// </summary>
+		/// <param name="creature"></param>
+		public abstract void Aggro(Creature target);
 	}
 }

@@ -116,6 +116,8 @@ namespace Aura.Channel.Skills.Combat
 
 			target.TakeDamage(tAction.Damage = damage, attacker);
 
+			target.Aggro(attacker);
+
 			if (target.IsDead)
 				tAction.Options |= TargetOptions.FinishingKnockDown;
 

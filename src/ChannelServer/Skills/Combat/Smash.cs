@@ -140,6 +140,9 @@ namespace Aura.Channel.Skills.Combat
 			// Apply damage
 			target.TakeDamage(tAction.Damage = damage, attacker);
 
+			// Aggro
+			target.Aggro(attacker);
+
 			if (target.IsDead)
 				tAction.Set(TargetOptions.FinishingHit | TargetOptions.Finished);
 

@@ -137,10 +137,17 @@ namespace Aura.Channel.World
 		public void OnCreatureAttackedByPlayer(TargetAction action) { CreatureAttackedByPlayer.Raise(action); }
 
 		/// <summary>
-		/// Raised when a creature attacks some creature.
+		/// Raised when a creature is attacked.
 		/// </summary>
 		public event Action<TargetAction> CreatureAttack;
 		public void OnCreatureAttack(TargetAction action) { CreatureAttack.Raise(action); }
+
+		/// <summary>
+		/// Raised when a creature attacks some creature.
+		/// </summary>
+		/// TODO: Improve the names of these events.
+		public event Action<AttackerAction> CreatureAttacks;
+		public void OnCreatureAttacks(AttackerAction action) { CreatureAttacks.Raise(action); }
 
 		/// <summary>
 		/// Raised when a creature's level increases.
@@ -153,6 +160,12 @@ namespace Aura.Channel.World
 		/// </summary>
 		public event Action<CollectEventArgs> CreatureCollected;
 		public void OnCreatureCollected(CollectEventArgs args) { CreatureCollected.Raise(args); }
+
+		/// <summary>
+		/// Raised while handling the combat action pack.
+		/// </summary>
+		public event Action<CombatActionPack> HandlingCombatActionPack;
+		public void OnHandlingCombatActionPack(CombatActionPack pack) { HandlingCombatActionPack.Raise(pack); }
 	}
 
 	public static class EventHandlerExtensions
