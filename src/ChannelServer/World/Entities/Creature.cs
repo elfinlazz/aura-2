@@ -27,6 +27,7 @@ namespace Aura.Channel.World.Entities
 	public abstract class Creature : Entity, IDisposable
 	{
 		public const float HandBalance = 0.3f;
+		public const float BaseMagicBalance = 0.3f;
 		public const float HandCritical = 0.1f;
 		public const int HandAttackMin = 0;
 		public const int HandAttackMax = 8;
@@ -472,7 +473,7 @@ namespace Aura.Channel.World.Entities
 		{
 			get
 			{
-				var result = ((this.Int - 10) / 5f);
+				var result = (Math.Max(0, this.Int - 10) / 5f);
 
 				// TODO: Bonuses
 
@@ -487,7 +488,7 @@ namespace Aura.Channel.World.Entities
 		{
 			get
 			{
-				var result = ((this.Will - 10) / 5f);
+				var result = (Math.Max(0, this.Will - 10) / 5f);
 
 				// TODO: Bonuses
 
@@ -502,7 +503,7 @@ namespace Aura.Channel.World.Entities
 		{
 			get
 			{
-				var result = ((this.Int - 10) / 20f);
+				var result = (Math.Max(0, this.Int - 10) / 20f);
 
 				// TODO: Bonuses
 
@@ -1161,7 +1162,7 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Calculates random balance using the given base balance (eg 0.3 for hands).
+		/// Calculates random balance (0.0~0.8) using the given base balance (eg 0.3 for hands).
 		/// </summary>
 		/// <param name="baseBalance"></param>
 		/// <returns></returns>
@@ -1176,9 +1177,27 @@ namespace Aura.Channel.World.Entities
 			// Randomization, balance+-(100-balance), eg 80 = 60~100
 			var diff = 1.0f - balance;
 			balance += ((diff - (diff * 2 * (float)rnd.NextDouble())) * (float)rnd.NextDouble());
-			balance = (float)Math.Max(0f, Math.Round(balance, 2));
 
-			return balance;
+			return Math2.Clamp(0f, 0.8f, balance);
+		}
+
+		/// <summary>
+		/// Calculates random magic balance (0.0~1.0).
+		/// </summary>
+		/// <returns></returns>
+		public float GetRndMagicBalance(float baseBalance = BaseMagicBalance)
+		{
+			var rnd = RandomProvider.Get();
+			var balance = baseBalance;
+
+			// Int
+			balance += (Math.Max(0, this.Int - 10) / 4) / 100f;
+
+			// Randomization, balance+-(100-balance), eg 80 = 60~100
+			var diff = 1.0f - balance;
+			balance += ((diff - (diff * 2 * (float)rnd.NextDouble())) * (float)rnd.NextDouble());
+
+			return Math2.Clamp(0f, 1f, balance);
 		}
 
 		/// <summary>

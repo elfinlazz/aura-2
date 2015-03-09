@@ -235,6 +235,8 @@ namespace Aura.Channel.Skills.Magic
 			if (this.HoldsIceWand(creature))
 				damage += WandBonus;
 
+			damage *= creature.GetRndMagicBalance();
+
 			return damage;
 		}
 
