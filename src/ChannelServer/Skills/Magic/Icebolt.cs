@@ -134,7 +134,7 @@ namespace Aura.Channel.Skills.Magic
 			var targetPosition = target.GetPosition();
 			var attackerPosition = attacker.GetPosition();
 
-			if (!attackerPosition.InRange(targetPosition, this.GetRange(attacker)))
+			if (!attackerPosition.InRange(targetPosition, this.GetRange(attacker, skill)))
 				return CombatSkillResult.OutOfRange;
 
 			target.StopMove();
@@ -201,13 +201,15 @@ namespace Aura.Channel.Skills.Magic
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <returns></returns>
-		public int GetRange(Creature creature)
+		public int GetRange(Creature creature, Skill skill)
 		{
+			var range = skill.RankData.Range;
+
 			// 1400 for ice wands, 1200 as default
 			if (creature.RightHand != null && creature.RightHand.HasTag("/ice_wand/"))
-				return 1400;
+				range += 200;
 
-			return 1200;
+			return range;
 		}
 
 		/// <summary>
