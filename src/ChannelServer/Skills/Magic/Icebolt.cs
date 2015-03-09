@@ -213,7 +213,7 @@ namespace Aura.Channel.Skills.Magic
 			var range = skill.RankData.Range;
 
 			// +200 for ice wands
-			if (this.HoldsIceWand(creature))
+			if (creature.RightHand != null && creature.RightHand.HasTag("/ice_wand/"))
 				range += 200;
 
 			return range;
@@ -222,32 +222,14 @@ namespace Aura.Channel.Skills.Magic
 		/// <summary>
 		/// Returns damage for creature using skill.
 		/// </summary>
-		/// <remarks>
-		/// http://wiki.mabinogiworld.com/view/Stats#Magic_Damage
-		/// </remarks>
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <returns></returns>
 		public float GetDamage(Creature creature, Skill skill)
 		{
-			var damage = creature.GetMagicDamage(skill.RankData.Var1, skill.RankData.Var2, skill.RankData.FactorMin, skill.RankData.FactorMax);
-
-			if (this.HoldsIceWand(creature))
-				damage += WandBonus;
-
-			damage *= creature.GetRndMagicBalance();
+			var damage = creature.GetRndMagicDamage(skill, skill.RankData.Var1, skill.RankData.Var2);
 
 			return damage;
-		}
-
-		/// <summary>
-		/// Returns true if creature has an ice wand equipped.
-		/// </summary>
-		/// <param name="creature"></param>
-		/// <returns></returns>
-		private bool HoldsIceWand(Creature creature)
-		{
-			return (creature.RightHand != null && creature.RightHand.HasTag("/ice_wand/"));
 		}
 	}
 }

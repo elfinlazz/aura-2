@@ -95,7 +95,7 @@ namespace Aura.Channel.Skills.Combat
 			if (defenseSkill != null)
 				damage -= defenseSkill.RankData.Var3;
 
-			Send.SkillUseStun(tAction.Creature, SkillId.Defense, 1000, 0);
+			Send.SkillUseStun(tAction.Creature, SkillId.Defense, DefenseTargetStun, 0);
 
 			return true;
 		}

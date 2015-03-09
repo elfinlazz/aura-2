@@ -1220,26 +1220,40 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Returns random base Magic damage based on the given values.
+		/// Calculates random base Magic damage for skill, using the given values.
 		/// </summary>
 		/// <remarks>
 		/// http://wiki.mabinogiworld.com/view/Stats#Magic_Damage
 		/// </remarks>
+		/// <param name="skill"></param>
 		/// <param name="baseMin"></param>
 		/// <param name="baseMax"></param>
-		/// <param name="factorMin"></param>
-		/// <param name="factorMax"></param>
 		/// <returns></returns>
-		public float GetMagicDamage(float baseMin, float baseMax, float factorMin, float factorMax)
+		public float GetRndMagicDamage(Skill skill, float baseMin, float baseMax)
 		{
 			var rnd = RandomProvider.Get();
 
 			var baseDamage = (float)(baseMin + rnd.NextDouble() * (baseMax - baseMin));
-			var factor = (float)(factorMin + rnd.NextDouble() * (factorMax - factorMin));
+			var factor = (float)(skill.RankData.FactorMin + rnd.NextDouble() * (skill.RankData.FactorMax - skill.RankData.FactorMin));
+
+			var wandBonus = 0f;
+			var chargeMultiplier = 0f;
+
+			if (skill.Info.Id == SkillId.Icebolt && this.RightHand != null && this.RightHand.HasTag("/ice_wand/"))
+				wandBonus = 5;
+			else if (skill.Info.Id == SkillId.Firebolt && this.RightHand != null && this.RightHand.HasTag("/fire_wand/"))
+				wandBonus = 5;
+			else if (skill.Info.Id == SkillId.Lightningbolt && this.RightHand != null && this.RightHand.HasTag("/lightning_wand/"))
+				wandBonus = 3.5f;
+
+			if (skill.Info.Id == SkillId.Firebolt || skill.Info.Id == SkillId.IceSpear || skill.Info.Id == SkillId.HailStorm)
+				chargeMultiplier = skill.Stacks;
 
 			// TODO: Enchants
 
-			return (baseDamage + (factor * this.MagicAttack));
+			var damage = (float)(baseDamage + Math.Floor(wandBonus * (1 + chargeMultiplier)) + (factor * this.MagicAttack));
+
+			return (damage * this.GetRndMagicBalance());
 		}
 
 		/// <summary>
