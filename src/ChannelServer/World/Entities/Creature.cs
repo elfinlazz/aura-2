@@ -464,6 +464,21 @@ namespace Aura.Channel.World.Entities
 		public int AttackMinMod { get { return (int)this.StatMods.Get(Stat.AttackMinMod); } }
 		public int AttackMaxMod { get { return (int)this.StatMods.Get(Stat.AttackMaxMod); } }
 
+		/// <summary>
+		///  Returns total magic damage, based on stats, equipment, etc.
+		/// </summary>
+		public float MagicAttack
+		{
+			get
+			{
+				var result = ((this.Int - 10) / 5f);
+
+				// TODO: Bonuses
+
+				return result;
+			}
+		}
+
 		// Food Mods
 		// ------------------------------------------------------------------
 
