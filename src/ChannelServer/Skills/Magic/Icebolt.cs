@@ -53,6 +53,11 @@ namespace Aura.Channel.Skills.Magic
 		protected const string EffectSkillName = "icebolt";
 
 		/// <summary>
+		/// Bonus used in damage calculation.
+		/// </summary>
+		protected const float WandBonus = 5;
+
+		/// <summary>
 		/// Prepares skill, showing a casting motion.
 		/// </summary>
 		/// <param name="creature"></param>
@@ -205,29 +210,40 @@ namespace Aura.Channel.Skills.Magic
 		{
 			var range = skill.RankData.Range;
 
-			// 1400 for ice wands, 1200 as default
-			if (creature.RightHand != null && creature.RightHand.HasTag("/ice_wand/"))
+			// +200 for ice wands
+			if (this.HoldsIceWand(creature))
 				range += 200;
 
 			return range;
 		}
 
 		/// <summary>
-		/// Returns base damage for creature using skill.
+		/// Returns damage for creature using skill.
 		/// </summary>
+		/// <remarks>
+		/// http://wiki.mabinogiworld.com/view/Stats#Magic_Damage
+		/// </remarks>
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <returns></returns>
 		public float GetDamage(Creature creature, Skill skill)
 		{
-			var rnd = RandomProvider.Get();
+			var damage = creature.GetMagicDamage(skill.RankData.Var1, skill.RankData.Var2, skill.RankData.FactorMin, skill.RankData.FactorMax);
 
-			var damage = creature.MagicAttack;
-
-			// Skill damage
-			damage += (float)(skill.RankData.Var1 + rnd.NextDouble() * (skill.RankData.Var2 - skill.RankData.Var1));
+			if (this.HoldsIceWand(creature))
+				damage += WandBonus;
 
 			return damage;
+		}
+
+		/// <summary>
+		/// Returns true if creature has an ice wand equipped.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <returns></returns>
+		private bool HoldsIceWand(Creature creature)
+		{
+			return (creature.RightHand != null && creature.RightHand.HasTag("/ice_wand/"));
 		}
 	}
 }

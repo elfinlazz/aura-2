@@ -17,6 +17,7 @@ using Aura.Channel.Scripting;
 using Aura.Channel.World.Inventory;
 using Aura.Channel.Skills.Life;
 using System.Collections.Generic;
+using Aura.Channel.Skills;
 
 namespace Aura.Channel.World.Entities
 {
@@ -1167,6 +1168,29 @@ namespace Aura.Channel.World.Entities
 		public float GetRndBalance(Item weapon)
 		{
 			return this.GetRndBalance(weapon != null ? weapon.Balance : HandBalance);
+		}
+
+		/// <summary>
+		/// Returns random base Magic damage based on the given values.
+		/// </summary>
+		/// <remarks>
+		/// http://wiki.mabinogiworld.com/view/Stats#Magic_Damage
+		/// </remarks>
+		/// <param name="baseMin"></param>
+		/// <param name="baseMax"></param>
+		/// <param name="factorMin"></param>
+		/// <param name="factorMax"></param>
+		/// <returns></returns>
+		public float GetMagicDamage(float baseMin, float baseMax, float factorMin, float factorMax)
+		{
+			var rnd = RandomProvider.Get();
+
+			var baseDamage = (float)(baseMin + rnd.NextDouble() * (baseMax - baseMin));
+			var factor = (float)(factorMin + rnd.NextDouble() * (factorMax - factorMin));
+
+			// TODO: Enchants
+
+			return (baseDamage + (factor * this.MagicAttack));
 		}
 
 		/// <summary>
