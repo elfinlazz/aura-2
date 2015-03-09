@@ -157,7 +157,9 @@ namespace Aura.Channel.Skills.Magic
 			// Damage
 			var damage = this.GetDamage(attacker, skill);
 
+			// Reduce damage
 			Defense.Handle(aAction, tAction, ref damage);
+			SkillHelper.HandleMagicDefenseProtection(target, ref damage);
 			ManaShield.Handle(target, ref damage, tAction);
 
 			// Deal damage

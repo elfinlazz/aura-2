@@ -87,8 +87,8 @@ namespace Aura.Channel.Skills.Combat
 			// Update actions
 			tAction.Type = CombatActionType.Defended;
 			tAction.SkillId = SkillId.Defense;
-			tAction.Creature.Stun = tAction.Stun = DefenseTargetStun;
-			aAction.Creature.Stun = aAction.Stun = DefenseAttackerStun;
+			tAction.Stun = DefenseTargetStun;
+			aAction.Stun = DefenseAttackerStun;
 
 			// Reduce damage
 			var defenseSkill = tAction.Creature.Skills.Get(SkillId.Defense);

@@ -33,6 +33,21 @@ namespace Aura.Channel.Skills
 		}
 
 		/// <summary>
+		/// Reduces damage by target's magic defense and protection.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="damage"></param>
+		/// <param name="defense"></param>
+		/// <param name="protection"></param>
+		public static void HandleMagicDefenseProtection(Creature target, ref float damage, bool defense = true, bool protection = true)
+		{
+			if (defense)
+				damage = Math.Max(1, damage - target.MagicDefense);
+			if (protection && damage > 1)
+				damage = Math.Max(1, damage - (damage * target.MagicProtection));
+		}
+
+		/// <summary>
 		/// Reduces weapon's durability and increases its proficiency.
 		/// Only updates weapon type items that are not null.
 		/// </summary>
