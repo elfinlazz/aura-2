@@ -1233,8 +1233,8 @@ namespace Aura.Channel.World.Entities
 		{
 			var rnd = RandomProvider.Get();
 
-			var baseDamage = (float)(baseMin + rnd.NextDouble() * (baseMax - baseMin));
-			var factor = (float)(skill.RankData.FactorMin + rnd.NextDouble() * (skill.RankData.FactorMax - skill.RankData.FactorMin));
+			var baseDamage = rnd.Between(baseMin, baseMax);
+			var factor = rnd.Between(skill.RankData.FactorMin, skill.RankData.FactorMax);
 
 			var wandBonus = 0f;
 			var chargeMultiplier = 0f;
