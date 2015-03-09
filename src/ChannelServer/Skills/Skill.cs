@@ -49,7 +49,8 @@ namespace Aura.Channel.Skills
 
 		private int _stack = 0;
 		/// <summary>
-		/// Loaded stack count.
+		/// Gets or sets loaded stack count, capped at 0~max.
+		/// Updates client automatically.
 		/// </summary>
 		public int Stacks
 		{
