@@ -1136,7 +1136,7 @@ namespace Aura.Channel.Util
 			var listOfSkills = new SkillId[] {
 				SkillId.Smash, SkillId.Defense, SkillId.FinalHit, SkillId.Counterattack, SkillId.Windmill,
 				SkillId.Rest, SkillId.Herbalism, SkillId.ProductionMastery,
-				SkillId.ManaShield, SkillId.Icebolt, 
+				SkillId.ManaShield, SkillId.Icebolt, SkillId.Firebolt, SkillId.Lightningbolt,
 				SkillId.Composing, SkillId.PlayingInstrument, SkillId.Song,
 			};
 
