@@ -120,27 +120,9 @@ namespace Aura.Channel.Skills.Magic
 		/// </summary>
 		/// <param name="attacker"></param>
 		/// <param name="skill"></param>
-		protected virtual void BeforeHandlingPack(Creature attacker, Skill skill)
+		protected override void BeforeHandlingPack(Creature attacker, Skill skill)
 		{
 			skill.Stacks = 0;
-		}
-
-		/// <summary>
-		/// Returns damage for creature using skill.
-		/// </summary>
-		/// <param name="creature"></param>
-		/// <param name="skill"></param>
-		/// <returns></returns>
-		protected override float GetDamage(Creature creature, Skill skill)
-		{
-			var damage = creature.GetRndMagicDamage(skill, skill.RankData.Var1, skill.RankData.Var2);
-
-			if (skill.Stacks < 5)
-				damage *= skill.Stacks;
-			else
-				damage *= 6.5f;
-
-			return damage;
 		}
 	}
 }
