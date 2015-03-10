@@ -16,11 +16,6 @@ using System.Threading.Tasks;
 
 namespace Aura.Channel.Skills.Magic
 {
-	public class firebolt : Icebolt
-	{
-		protected new const int AttackerStun = 500;
-	}
-
 	/// <summary>
 	/// Icebolt skill handler
 	/// </summary>
@@ -60,7 +55,7 @@ namespace Aura.Channel.Skills.Magic
 		/// <summary>
 		/// Subscribes to events required for training.
 		/// </summary>
-		public void Init()
+		public virtual void Init()
 		{
 			ChannelServer.Instance.Events.CreatureAttack += this.OnCreatureAttack;
 		}

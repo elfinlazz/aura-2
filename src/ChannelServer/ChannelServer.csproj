@@ -176,6 +176,7 @@
     <Compile Include="Skills\Life\ProductionMastery.cs" />
     <Compile Include="Skills\Life\Rest.cs" />
     <Compile Include="Skills\Life\WebSpinning.cs" />
+    <Compile Include="Skills\Magic\SuperIcebolt.cs" />
     <Compile Include="Skills\Magic\Icebolt.cs" />
     <Compile Include="Skills\Magic\ManaShield.cs" />
     <Compile Include="Skills\Magic\SilentMove.cs" />
