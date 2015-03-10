@@ -18,14 +18,14 @@ using System.Threading.Tasks;
 namespace Aura.Channel.Skills.Combat
 {
 	/// <summary>
-	/// Super Windmill skill handler
+	/// Super Windmill skill handler (GM skill)
 	/// </summary>
 	/// <remarks>
 	/// Var 1: Damage multiplicator?
 	/// Var 2: Range? (1500)
 	/// </remarks>
-	[Skill(SkillId.SuperWindmillGmSkill)]
-	public class SuperWindmillGmSkill : Windmill
+	[Skill(SkillId.SuperWindmill)]
+	public class SuperWindmill : Windmill
 	{
 		/// <summary>
 		/// No training.
