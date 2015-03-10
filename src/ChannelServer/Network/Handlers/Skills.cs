@@ -291,8 +291,10 @@ namespace Aura.Channel.Network.Handlers
 				if (!success)
 					return;
 
-				creature.Regens.Add("ActiveSkillWait", Stat.Mana, skill.RankData.ManaWait, creature.ManaMax);
-				creature.Regens.Add("ActiveSkillWait", Stat.Stamina, skill.RankData.StaminaWait, creature.StaminaMax);
+				if (skill.RankData.ManaWait != 0)
+					creature.Regens.Add("ActiveSkillWait", Stat.Mana, skill.RankData.ManaWait, creature.ManaMax);
+				if (skill.RankData.StaminaWait != 0)
+					creature.Regens.Add("ActiveSkillWait", Stat.Stamina, skill.RankData.StaminaWait, creature.StaminaMax);
 
 				skill.State = SkillState.Ready;
 			}
