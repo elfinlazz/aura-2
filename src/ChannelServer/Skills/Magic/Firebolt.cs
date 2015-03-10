@@ -46,54 +46,25 @@ namespace Aura.Channel.Skills.Magic
 		protected override string SpecialWandTag { get { return "fire_wand"; } }
 
 		/// <summary>
-		/// Bolt specific use code.
+		/// Handles knock back/stun/death.
 		/// </summary>
-		/// <param name="attacker"></param>
-		/// <param name="skill"></param>
-		/// <param name="target"></param>
-		protected override void UseSkillOnTarget(Creature attacker, Skill skill, Creature target)
+		protected virtual void HandleKnockBack(Creature attacker, Creature target, TargetAction tAction)
 		{
-			target.StopMove();
-
-			// Create actions
-			var aAction = new AttackerAction(CombatActionType.RangeHit, attacker, skill.Info.Id, target.EntityId);
-			aAction.Set(AttackerOptions.Result);
-
-			var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
-			tAction.Set(TargetOptions.Result);
-			tAction.Stun = TargetStun;
-
-			var cap = new CombatActionPack(attacker, skill.Info.Id, aAction, tAction);
-
-			// Damage
-			var damage = this.GetDamage(attacker, skill);
-
-			// Reduce damage
-			Defense.Handle(aAction, tAction, ref damage);
-			SkillHelper.HandleMagicDefenseProtection(target, ref damage);
-			ManaShield.Handle(target, ref damage, tAction);
-
-			// Deal damage
-			if (damage > 0)
-				target.TakeDamage(tAction.Damage = damage, attacker);
-			target.Aggro(attacker);
-
-			// Death/Knockback
 			attacker.Shove(target, KnockbackDistance);
 			if (target.IsDead)
 				tAction.Set(TargetOptions.FinishingKnockDown);
 			else
 				tAction.Set(TargetOptions.KnockDown);
+		}
 
-			// Override stun set by defense
-			aAction.Stun = AttackerStun;
-
-			Send.Effect(attacker, Effect.UseMagic, EffectSkillName);
-			Send.SkillUseStun(attacker, skill.Info.Id, aAction.Stun, 1);
-
+		/// <summary>
+		/// Actions to be done before the combat action pack is handled.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skill"></param>
+		protected virtual void BeforeHandlingPack(Creature attacker, Skill skill)
+		{
 			skill.Stacks = 0;
-
-			cap.Handle();
 		}
 
 		/// <summary>
@@ -106,7 +77,7 @@ namespace Aura.Channel.Skills.Magic
 		{
 			var damage = creature.GetRndMagicDamage(skill, skill.RankData.Var1, skill.RankData.Var2);
 
-			if (skill.Stacks < 5)
+			if (skill.Stacks < skill.RankData.StackMax)
 				damage *= skill.Stacks;
 			else
 				damage *= 6.5f;

@@ -43,6 +43,11 @@ namespace Aura.Channel.Skills.Magic
 		protected virtual int KnockbackDistance { get { return 400; } }
 
 		/// <summary>
+		/// Amount added to the knock back meter on each hit.
+		/// </summary>
+		protected virtual float Knockback { get { return 45; } }
+
+		/// <summary>
 		/// ID of the skill, used in training.
 		/// </summary>
 		protected virtual SkillId SkillId { get { return SkillId.Icebolt; } }
@@ -190,6 +195,24 @@ namespace Aura.Channel.Skills.Magic
 			target.Aggro(attacker);
 
 			// Death/Knockback
+			this.HandleKnockBack(attacker, target, tAction);
+
+			// Override stun set by defense
+			aAction.Stun = AttackerStun;
+
+			Send.Effect(attacker, Effect.UseMagic, EffectSkillName);
+			Send.SkillUseStun(attacker, skill.Info.Id, aAction.Stun, 1);
+
+			this.BeforeHandlingPack(attacker, skill);
+
+			cap.Handle();
+		}
+
+		/// <summary>
+		/// Handles knock back/stun/death.
+		/// </summary>
+		protected virtual void HandleKnockBack(Creature attacker, Creature target, TargetAction tAction)
+		{
 			if (target.IsDead)
 			{
 				tAction.Set(TargetOptions.FinishingKnockDown);
@@ -211,7 +234,7 @@ namespace Aura.Channel.Skills.Magic
 				}
 				else
 				{
-					target.KnockBack += 45;
+					target.KnockBack += Knockback;
 					if (target.KnockBack >= 100)
 					{
 						tAction.Set(TargetOptions.KnockBack);
@@ -219,16 +242,16 @@ namespace Aura.Channel.Skills.Magic
 					}
 				}
 			}
+		}
 
-			// Override stun set by defense
-			aAction.Stun = AttackerStun;
-
-			Send.Effect(attacker, Effect.UseMagic, EffectSkillName);
-			Send.SkillUseStun(attacker, skill.Info.Id, aAction.Stun, 1);
-
+		/// <summary>
+		/// Actions to be done before the combat action pack is handled.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skill"></param>
+		protected virtual void BeforeHandlingPack(Creature attacker, Skill skill)
+		{
 			skill.Stacks--;
-
-			cap.Handle();
 		}
 
 		/// <summary>
