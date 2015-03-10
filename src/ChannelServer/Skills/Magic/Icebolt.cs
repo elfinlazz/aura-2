@@ -43,6 +43,11 @@ namespace Aura.Channel.Skills.Magic
 		protected virtual int KnockbackDistance { get { return 400; } }
 
 		/// <summary>
+		/// ID of the skill, used in training.
+		/// </summary>
+		protected virtual SkillId SkillId { get { return SkillId.Icebolt; } }
+
+		/// <summary>
 		/// String used in effect packets.
 		/// </summary>
 		protected virtual string EffectSkillName { get { return "icebolt"; } }
@@ -261,12 +266,22 @@ namespace Aura.Channel.Skills.Magic
 		/// <param name="tAction"></param>
 		protected virtual void OnCreatureAttack(TargetAction tAction)
 		{
-			if (tAction.SkillId != SkillId.Icebolt)
+			if (tAction.SkillId != this.SkillId)
 				return;
 
 			var attackerSkill = tAction.Attacker.Skills.Get(tAction.SkillId);
 			if (attackerSkill == null) return;
 
+			this.Train(tAction, attackerSkill);
+		}
+
+		/// <summary>
+		/// Trains skill based on target action.
+		/// </summary>
+		/// <param name="tAction"></param>
+		/// <param name="attackerSkill"></param>
+		protected virtual void Train(TargetAction tAction, Skill attackerSkill)
+		{
 			var rating = tAction.Attacker.GetPowerRating(tAction.Creature);
 
 			if (attackerSkill.Info.Rank == SkillRank.RF)
@@ -278,7 +293,7 @@ namespace Aura.Channel.Skills.Magic
 					attackerSkill.Train(3); // Knock down an enemy using combo attack.
 
 				if (tAction.Creature.IsDead)
-					attackerSkill.Train(4); // Defeated an enemy.
+					attackerSkill.Train(4); // Defeat an enemy.
 
 				return;
 			}
@@ -289,7 +304,7 @@ namespace Aura.Channel.Skills.Magic
 					attackerSkill.Train(1); // Knock down an enemy using combo attack.
 
 				if (tAction.Creature.IsDead)
-					attackerSkill.Train(2); // Defeated an enemy.
+					attackerSkill.Train(2); // Defeat an enemy.
 
 				if (rating == PowerRating.Normal)
 				{
@@ -321,7 +336,7 @@ namespace Aura.Channel.Skills.Magic
 					attackerSkill.Train(2); // Knock down an enemy using combo attack.
 
 				if (tAction.Creature.IsDead)
-					attackerSkill.Train(3); // Defeated an enemy.
+					attackerSkill.Train(3); // Defeat an enemy.
 
 				if (rating == PowerRating.Normal)
 				{
