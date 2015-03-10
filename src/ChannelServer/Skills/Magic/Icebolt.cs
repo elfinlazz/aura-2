@@ -183,7 +183,15 @@ namespace Aura.Channel.Skills.Magic
 			}
 			else
 			{
-				if (target.KnockBack >= 100)
+				// If knocked down, instant recovery,
+				// if repeat hit, knock down,
+				// otherwise potential knock back.
+
+				if (target.IsKnockedDown)
+				{
+					tAction.Stun = 0;
+				}
+				else if (target.KnockBack >= 100)
 				{
 					tAction.Set(TargetOptions.KnockDown);
 				}

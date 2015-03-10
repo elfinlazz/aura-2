@@ -297,6 +297,16 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
+		/// <summary>
+		/// Holds the time at which the knock down is over.
+		/// </summary>
+		public DateTime KnockDownTime { get; set; }
+
+		/// <summary>
+		/// Returns true if creature is currently knocked down.
+		/// </summary>
+		public bool IsKnockedDown { get { return (DateTime.Now < this.KnockDownTime); } }
+
 		// Stats
 		// ------------------------------------------------------------------
 
