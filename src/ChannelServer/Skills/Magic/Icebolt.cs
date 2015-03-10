@@ -30,27 +30,27 @@ namespace Aura.Channel.Skills.Magic
 		/// <summary>
 		/// Stun time of attacker after use in ms.
 		/// </summary>
-		protected const int AttackerStun = 500;
+		protected virtual short AttackerStun { get { return 500; } }
 
 		/// <summary>
 		/// Stun time of target after being hit in ms.
 		/// </summary>
-		protected const int TargetStun = 2000;
+		protected virtual short TargetStun { get { return 2000; } }
 
 		/// <summary>
 		/// Units the target is knocked back.
 		/// </summary>
-		protected const int KnockbackDistance = 400;
+		protected virtual int KnockbackDistance { get { return 400; } }
 
 		/// <summary>
 		/// String used in effect packets.
 		/// </summary>
-		protected const string EffectSkillName = "icebolt";
+		protected virtual string EffectSkillName { get { return "icebolt"; } }
 
 		/// <summary>
-		/// Bonus used in damage calculation.
+		/// Weapon tag that's looked for in range calculation.
 		/// </summary>
-		protected const float WandBonus = 5;
+		protected virtual string SpecialWandTag { get { return "ice_wand"; } }
 
 		/// <summary>
 		/// Subscribes to events required for training.
@@ -67,7 +67,7 @@ namespace Aura.Channel.Skills.Magic
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
 		/// <returns></returns>
-		public bool Prepare(Creature creature, Skill skill, Packet packet)
+		public virtual bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			creature.StopMove();
 
@@ -84,7 +84,7 @@ namespace Aura.Channel.Skills.Magic
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
 		/// <returns></returns>
-		public bool Ready(Creature creature, Skill skill, Packet packet)
+		public virtual bool Ready(Creature creature, Skill skill, Packet packet)
 		{
 			// Note: The client only prevents casting if stacks = max, if you go above the limit
 			//   it lets you keep casting.
@@ -107,7 +107,7 @@ namespace Aura.Channel.Skills.Magic
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <param name="packet"></param>
-		public void Complete(Creature creature, Skill skill, Packet packet)
+		public virtual void Complete(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillComplete(creature, skill.Info.Id);
 		}
@@ -117,7 +117,7 @@ namespace Aura.Channel.Skills.Magic
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
-		public void Cancel(Creature creature, Skill skill)
+		public virtual void Cancel(Creature creature, Skill skill)
 		{
 			skill.Stacks = 0;
 			Send.Effect(creature, Effect.StackUpdate, EffectSkillName, (byte)skill.Stacks, (byte)0);
@@ -131,7 +131,7 @@ namespace Aura.Channel.Skills.Magic
 		/// <param name="skill"></param>
 		/// <param name="targetEntityId"></param>
 		/// <returns></returns>
-		public CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId)
+		public virtual CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId)
 		{
 			// Check target
 			var target = attacker.Region.GetCreature(targetEntityId);
@@ -145,10 +145,24 @@ namespace Aura.Channel.Skills.Magic
 			if (!attackerPosition.InRange(targetPosition, this.GetRange(attacker, skill)))
 				return CombatSkillResult.OutOfRange;
 
+			// Use
+			this.UseSkillOnTarget(attacker, skill, target);
+
+			return CombatSkillResult.Okay;
+		}
+
+		/// <summary>
+		/// Bolt specific use code.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skill"></param>
+		/// <param name="target"></param>
+		protected virtual void UseSkillOnTarget(Creature attacker, Skill skill, Creature target)
+		{
 			target.StopMove();
 
 			// Create actions
-			var aAction = new AttackerAction(CombatActionType.RangeHit, attacker, skill.Info.Id, targetEntityId);
+			var aAction = new AttackerAction(CombatActionType.RangeHit, attacker, skill.Info.Id, target.EntityId);
 			aAction.Set(AttackerOptions.Result);
 
 			var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
@@ -210,21 +224,19 @@ namespace Aura.Channel.Skills.Magic
 			skill.Stacks--;
 
 			cap.Handle();
-
-			return CombatSkillResult.Okay;
 		}
 
 		/// <summary>
-		/// Returns range for Icebolt.
+		/// Returns range for skill.
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <returns></returns>
-		public int GetRange(Creature creature, Skill skill)
+		protected virtual int GetRange(Creature creature, Skill skill)
 		{
 			var range = skill.RankData.Range;
 
 			// +200 for ice wands
-			if (creature.RightHand != null && creature.RightHand.HasTag("/ice_wand/"))
+			if (creature.RightHand != null && creature.RightHand.HasTag(SpecialWandTag))
 				range += 200;
 
 			return range;
@@ -236,7 +248,7 @@ namespace Aura.Channel.Skills.Magic
 		/// <param name="creature"></param>
 		/// <param name="skill"></param>
 		/// <returns></returns>
-		public float GetDamage(Creature creature, Skill skill)
+		protected virtual float GetDamage(Creature creature, Skill skill)
 		{
 			var damage = creature.GetRndMagicDamage(skill, skill.RankData.Var1, skill.RankData.Var2);
 
@@ -247,12 +259,12 @@ namespace Aura.Channel.Skills.Magic
 		/// Handles training.
 		/// </summary>
 		/// <param name="tAction"></param>
-		private void OnCreatureAttack(TargetAction tAction)
+		protected virtual void OnCreatureAttack(TargetAction tAction)
 		{
 			if (tAction.SkillId != SkillId.Icebolt)
 				return;
 
-			var attackerSkill = tAction.Attacker.Skills.Get(SkillId.Icebolt);
+			var attackerSkill = tAction.Attacker.Skills.Get(tAction.SkillId);
 			if (attackerSkill == null) return;
 
 			var rating = tAction.Attacker.GetPowerRating(tAction.Creature);
