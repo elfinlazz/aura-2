@@ -69,11 +69,13 @@ namespace Aura.Channel.Skills.Magic
 			targets.Add(mainTarget);
 			targets.AddRange(mainTarget.Region.GetCreaturesInRange(mainTarget.GetPosition(), SplashRange).Where(a => attacker.CanTarget(a)));
 
-			var max = targets.Count;
+			// Damage
+			var damage = this.GetDamage(attacker, skill);
 
-			for (int i = 0; i < max; ++i)
+			for (int i = 0; i < targets.Count; ++i)
 			{
 				var target = targets[i];
+				var targetDamage = damage;
 
 				target.StopMove();
 
@@ -81,19 +83,17 @@ namespace Aura.Channel.Skills.Magic
 				tAction.Set(TargetOptions.Result);
 				tAction.Stun = TargetStun;
 
-				// Damage
 				// Full damage for the first target, -10% for every subsequent one.
-				var damage = this.GetDamage(attacker, skill);
-				damage -= (damage * 0.1f) * i;
+				targetDamage -= (targetDamage * 0.1f) * i;
 
 				// Reduce damage
-				Defense.Handle(aAction, tAction, ref damage);
-				SkillHelper.HandleMagicDefenseProtection(target, ref damage);
-				ManaShield.Handle(target, ref damage, tAction);
+				Defense.Handle(aAction, tAction, ref targetDamage);
+				SkillHelper.HandleMagicDefenseProtection(target, ref targetDamage);
+				ManaShield.Handle(target, ref targetDamage, tAction);
 
 				// Deal damage
-				if (damage > 0)
-					target.TakeDamage(tAction.Damage = damage, attacker);
+				if (targetDamage > 0)
+					target.TakeDamage(tAction.Damage = targetDamage, attacker);
 
 				if (target == mainTarget)
 					target.Aggro(attacker);
