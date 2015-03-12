@@ -50,7 +50,6 @@ namespace Aura.Channel.Skills.Magic
 		/// </summary>
 		protected override string SpecialWandTag { get { return "lightning_wand"; } }
 
-
 		/// <summary>
 		/// Bolt specific use code.
 		/// </summary>
@@ -123,6 +122,19 @@ namespace Aura.Channel.Skills.Magic
 		protected override void BeforeHandlingPack(Creature attacker, Skill skill)
 		{
 			skill.Stacks = 0;
+		}
+
+		/// <summary>
+		/// Returns damage for attacker using skill.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skill"></param>
+		/// <returns></returns>
+		protected override float GetDamage(Creature attacker, Skill skill)
+		{
+			var damage = attacker.GetRndMagicDamage(skill, skill.RankData.Var1, skill.RankData.Var2);
+
+			return damage;
 		}
 	}
 }

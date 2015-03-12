@@ -28,7 +28,7 @@ namespace Aura.Channel.Skills.Magic
 	/// same as Icebolt, the Wiki is either outdated or incorrect.
 	/// </remarks>
 	[Skill(SkillId.Firebolt)]
-	public class Firebolt : Icebolt
+	public class Firebolt : MagicBolt
 	{
 		/// <summary>
 		/// ID of the skill, used in training.
@@ -73,14 +73,14 @@ namespace Aura.Channel.Skills.Magic
 		}
 
 		/// <summary>
-		/// Returns damage for creature using skill.
+		/// Returns damage for attacker using skill.
 		/// </summary>
-		/// <param name="creature"></param>
+		/// <param name="attacker"></param>
 		/// <param name="skill"></param>
 		/// <returns></returns>
-		protected override float GetDamage(Creature creature, Skill skill)
+		protected override float GetDamage(Creature attacker, Skill skill)
 		{
-			var damage = creature.GetRndMagicDamage(skill, skill.RankData.Var1, skill.RankData.Var2);
+			var damage = attacker.GetRndMagicDamage(skill, skill.RankData.Var1, skill.RankData.Var2);
 
 			if (skill.Stacks < skill.RankData.StackMax)
 				damage *= skill.Stacks;
