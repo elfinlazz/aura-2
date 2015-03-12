@@ -158,6 +158,9 @@ namespace Aura.Channel.Skills
 
 					// Remember knock back/down
 					tAction.Creature.WasKnockedBack = tAction.Has(TargetOptions.KnockBack) || tAction.Has(TargetOptions.KnockDown) || tAction.Has(TargetOptions.Smash);
+
+					if (tAction.Has(TargetOptions.KnockDown))
+						tAction.Creature.KnockDownTime = DateTime.Now.AddMilliseconds(tAction.Stun);
 				}
 
 				// If attacker action

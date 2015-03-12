@@ -97,6 +97,15 @@ namespace Aura.Data.Database
 		public float WillTotal { get; set; }
 		public float LuckTotal { get; set; }
 
+		public float DamageMin { get; set; }
+		public float DamageMax { get; set; }
+		public float Critical { get; set; }
+		public float Balance { get; set; }
+		public float InjuryMin { get; set; }
+		public float InjuryMax { get; set; }
+		public float FactorMin { get; set; }
+		public float FactorMax { get; set; }
+
 		public float Var1 { get; set; }
 		public float Var2 { get; set; }
 		public float Var3 { get; set; }
@@ -174,6 +183,14 @@ namespace Aura.Data.Database
 				rankInfo.Dex = rank.ReadFloat("dex");
 				rankInfo.Will = rank.ReadFloat("will");
 				rankInfo.Luck = rank.ReadFloat("luck");
+				rankInfo.DamageMin = rank.ReadFloat("damageMin");
+				rankInfo.DamageMax = rank.ReadFloat("damageMax");
+				rankInfo.Critical = rank.ReadFloat("critical");
+				rankInfo.Balance = rank.ReadFloat("balance");
+				rankInfo.InjuryMin = rank.ReadFloat("injuryMin");
+				rankInfo.InjuryMax = rank.ReadFloat("injuryMax");
+				rankInfo.FactorMin = rank.ReadFloat("factorMin");
+				rankInfo.FactorMax = rank.ReadFloat("factorMax");
 				rankInfo.Var1 = rank.ReadFloat("var1");
 				rankInfo.Var2 = rank.ReadFloat("var2");
 				rankInfo.Var3 = rank.ReadFloat("var3");

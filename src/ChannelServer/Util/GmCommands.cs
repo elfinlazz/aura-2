@@ -1132,11 +1132,11 @@ namespace Aura.Channel.Util
 
 		private CommandResult HandleAllSkills(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
 		{
-			// List of "working" skills
+			// List of "working", normal player skills
 			var listOfSkills = new SkillId[] {
-				SkillId.Smash, SkillId.Defense, SkillId.FinalHit, SkillId.Counterattack,
-				SkillId.Rest,
-				SkillId.ManaShield, 
+				SkillId.Smash, SkillId.Defense, SkillId.FinalHit, SkillId.Counterattack, SkillId.Windmill,
+				SkillId.Rest, SkillId.Herbalism, SkillId.ProductionMastery,
+				SkillId.ManaShield, SkillId.Icebolt, SkillId.Firebolt, SkillId.Lightningbolt,
 				SkillId.Composing, SkillId.PlayingInstrument, SkillId.Song,
 			};
 

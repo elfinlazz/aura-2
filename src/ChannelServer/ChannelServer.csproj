@@ -166,7 +166,7 @@
     <Compile Include="Skills\Combat\FinalHit.cs" />
     <Compile Include="Skills\Combat\GlasGhaibhleannSkill.cs" />
     <Compile Include="Skills\Combat\Smash.cs" />
-    <Compile Include="Skills\Combat\SuperWindmillGmSkill.cs" />
+    <Compile Include="Skills\Combat\SuperWindmill.cs" />
     <Compile Include="Skills\Combat\Windmill.cs" />
     <Compile Include="Skills\Hidden\BigBlessingWaterKit.cs" />
     <Compile Include="Skills\Hidden\Blessing.cs" />
@@ -176,6 +176,11 @@
     <Compile Include="Skills\Life\ProductionMastery.cs" />
     <Compile Include="Skills\Life\Rest.cs" />
     <Compile Include="Skills\Life\WebSpinning.cs" />
+    <Compile Include="Skills\Base\MagicBolt.cs" />
+    <Compile Include="Skills\Magic\Lightningbolt.cs" />
+    <Compile Include="Skills\Magic\Firebolt.cs" />
+    <Compile Include="Skills\Magic\SuperIcebolt.cs" />
+    <Compile Include="Skills\Magic\Icebolt.cs" />
     <Compile Include="Skills\Magic\ManaShield.cs" />
     <Compile Include="Skills\Magic\SilentMove.cs" />
     <Compile Include="Skills\Music\Composing.cs" />

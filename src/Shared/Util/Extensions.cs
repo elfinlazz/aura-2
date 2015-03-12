@@ -64,5 +64,18 @@ namespace Aura.Shared.Util
 		{
 			return list[RandomProvider.Get().Next(list.Count)];
 		}
+
+		/// <summary>
+		/// Returns a random number between min and max (incl).
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="rnd"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static float Between(this Random rnd, float min, float max)
+		{
+			return (float)(min + (rnd.NextDouble() * (max - min)));
+		}
 	}
 }
