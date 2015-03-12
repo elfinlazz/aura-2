@@ -36,6 +36,11 @@ namespace Aura.Channel.Skills.Magic
 		protected override SkillId SkillId { get { return SkillId.Firebolt; } }
 
 		/// <summary>
+		/// Returns whether the skill can be blocked with Defense.
+		/// </summary>
+		protected override bool Defendable { get { return false; } }
+
+		/// <summary>
 		/// String used in effect packets.
 		/// </summary>
 		protected override string EffectSkillName { get { return "firebolt"; } }
@@ -48,7 +53,7 @@ namespace Aura.Channel.Skills.Magic
 		/// <summary>
 		/// Handles knock back/stun/death.
 		/// </summary>
-		protected virtual void HandleKnockBack(Creature attacker, Creature target, TargetAction tAction)
+		protected override void HandleKnockBack(Creature attacker, Creature target, TargetAction tAction)
 		{
 			attacker.Shove(target, KnockbackDistance);
 			if (target.IsDead)
@@ -62,7 +67,7 @@ namespace Aura.Channel.Skills.Magic
 		/// </summary>
 		/// <param name="attacker"></param>
 		/// <param name="skill"></param>
-		protected virtual void BeforeHandlingPack(Creature attacker, Skill skill)
+		protected override void BeforeHandlingPack(Creature attacker, Skill skill)
 		{
 			skill.Stacks = 0;
 		}

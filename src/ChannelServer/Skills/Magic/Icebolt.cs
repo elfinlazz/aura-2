@@ -48,6 +48,11 @@ namespace Aura.Channel.Skills.Magic
 		protected virtual float Knockback { get { return 45; } }
 
 		/// <summary>
+		/// Returns whether the skill can be blocked with Defense.
+		/// </summary>
+		protected virtual bool Defendable { get { return true; } }
+
+		/// <summary>
 		/// ID of the skill, used in training.
 		/// </summary>
 		protected virtual SkillId SkillId { get { return SkillId.Icebolt; } }
@@ -185,7 +190,8 @@ namespace Aura.Channel.Skills.Magic
 			var damage = this.GetDamage(attacker, skill);
 
 			// Reduce damage
-			Defense.Handle(aAction, tAction, ref damage);
+			if (this.Defendable)
+				Defense.Handle(aAction, tAction, ref damage);
 			SkillHelper.HandleMagicDefenseProtection(target, ref damage);
 			ManaShield.Handle(target, ref damage, tAction);
 
