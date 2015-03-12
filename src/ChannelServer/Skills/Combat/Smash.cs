@@ -33,11 +33,6 @@ namespace Aura.Channel.Skills.Combat
 		private const int AfterUseStun = 600;
 
 		/// <summary>
-		/// Amount added to the Knockback meter.
-		/// </summary>
-		private const float Knockback = 120;
-
-		/// <summary>
 		/// Units the enemy is knocked back.
 		/// </summary>
 		private const int KnockbackDistance = 450;
@@ -149,7 +144,7 @@ namespace Aura.Channel.Skills.Combat
 			// Set Stun/Knockback
 			attacker.Stun = aAction.Stun = StunTime;
 			target.Stun = tAction.Stun = StunTime;
-			target.KnockBack = Knockback;
+			target.Stability = Creature.MinStability;
 
 			// Set knockbacked position
 			attacker.Shove(target, KnockbackDistance);

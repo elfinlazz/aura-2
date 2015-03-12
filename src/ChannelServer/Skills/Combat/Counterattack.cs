@@ -124,6 +124,7 @@ namespace Aura.Channel.Skills.Combat
 			aAction.Stun = StunTime;
 			tAction.Stun = StunTime;
 
+			target.Stability = Creature.MinStability;
 			attacker.Shove(target, KnockbackDistance);
 
 			// Update both weapons

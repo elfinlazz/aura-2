@@ -118,18 +118,18 @@ namespace Aura.Channel.Skills.Combat
 				{
 					if (tAction.Type != CombatActionType.Defended)
 					{
-						target.KnockBack += this.GetKnockBack(attacker, weapon) / maxHits;
+						target.Stability -= this.GetStabilityReduction(attacker, weapon) / maxHits;
 
 						// React normal for CombatMastery, knock down if 
 						// FH and not dual wield, don't knock at all if dual.
 						if (skill.Info.Id != SkillId.FinalHit)
 						{
-							if (target.KnockBack >= 100 && target.Is(RaceStands.KnockBackable))
+							if (target.IsUnstable && target.Is(RaceStands.KnockBackable))
 								tAction.Set(tAction.Has(TargetOptions.Critical) ? TargetOptions.KnockDown : TargetOptions.KnockBack);
 						}
 						else if (!dualWield && !weaponIsKnuckle)
 						{
-							target.KnockBack = 120;
+							target.Stability = Creature.MinStability;
 							tAction.Set(TargetOptions.KnockDown);
 						}
 					}
@@ -315,14 +315,14 @@ namespace Aura.Channel.Skills.Combat
 		}
 
 		/// <summary>
-		/// Returns knock down increase for weapon.
+		/// Returns stability reduction for creature and weapon.
 		/// </summary>
 		/// <remarks>
 		/// http://wiki.mabinogiworld.com/view/Knock_down_gauge#Knockdown_Timer_Rates
 		/// </remarks>
 		/// <param name="weapon"></param>
 		/// <returns></returns>
-		public float GetKnockBack(Creature creature, Item weapon)
+		public float GetStabilityReduction(Creature creature, Item weapon)
 		{
 			var count = weapon != null ? weapon.Info.KnockCount + 1 : creature.RaceData.KnockCount + 1;
 			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : (AttackSpeed)creature.RaceData.AttackSpeed;

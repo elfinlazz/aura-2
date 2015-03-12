@@ -40,7 +40,7 @@ namespace Aura.Channel.Skills.Base
 		/// <summary>
 		/// Amount added to the knock back meter on each hit.
 		/// </summary>
-		protected virtual float Knockback { get { return 45; } }
+		protected virtual float StabilityReduction { get { return 45; } }
 
 		/// <summary>
 		/// Returns whether the skill can be blocked with Defense.
@@ -229,14 +229,14 @@ namespace Aura.Channel.Skills.Base
 				{
 					tAction.Stun = 0;
 				}
-				else if (target.KnockBack >= 100)
+				else if (target.IsUnstable)
 				{
 					tAction.Set(TargetOptions.KnockDown);
 				}
 				else
 				{
-					target.KnockBack += Knockback;
-					if (target.KnockBack >= 100)
+					target.Stability -= StabilityReduction;
+					if (target.IsUnstable)
 					{
 						tAction.Set(TargetOptions.KnockBack);
 						attacker.Shove(target, KnockbackDistance);

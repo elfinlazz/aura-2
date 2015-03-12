@@ -29,11 +29,6 @@ namespace Aura.Channel.Skills.Combat
 	public class Windmill : IPreparable, IReadyable, IUseable, ICompletable, ICancelable, IInitiableSkillHandler
 	{
 		/// <summary>
-		/// Amount added to the Knockback meter.
-		/// </summary>
-		private const float Knockback = 120;
-
-		/// <summary>
 		/// Units the enemy is knocked back.
 		/// </summary>
 		private const int KnockbackDistance = 450;
@@ -41,7 +36,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <summary>
 		/// Knock back required for WM to count as Counter.
 		/// </summary>
-		private const int CounterKnockBack = 50;
+		private const int CounterStability = 50;
 
 		/// <summary>
 		/// Subscribes to events needed for training.
@@ -161,7 +156,7 @@ namespace Aura.Channel.Skills.Combat
 				if (!tAction.Is(CombatActionType.Defended))
 				{
 					tAction.Stun = CombatMastery.GetTargetStun(attacker.AverageKnockCount, attacker.AverageAttackSpeed, true);
-					target.KnockBack = Knockback;
+					target.Stability = Creature.MinStability;
 					attacker.Shove(target, KnockbackDistance);
 				}
 
@@ -267,7 +262,7 @@ namespace Aura.Channel.Skills.Combat
 			// rF, 3-5
 			if (attackerSkill.Info.Rank == SkillRank.RF)
 			{
-				if (tAction.Attacker.KnockBack >= CounterKnockBack)
+				if (tAction.Attacker.Stability <= CounterStability)
 					attackerSkill.Train(3); // Counterattack with Windmill.
 
 				if (multipleEnemies) attackerSkill.Train(4); // Attack several enemies.
@@ -287,7 +282,7 @@ namespace Aura.Channel.Skills.Combat
 				if (rating == PowerRating.Strong && tAction.Creature.IsDead)
 					attackerSkill.Train(5); // Defeat a powerful enemy.
 
-				if (tAction.Attacker.KnockBack >= CounterKnockBack)
+				if (tAction.Attacker.Stability <= CounterStability)
 					attackerSkill.Train(6); // Counterattack with Windmill.
 			}
 
@@ -307,7 +302,7 @@ namespace Aura.Channel.Skills.Combat
 				if (rating == PowerRating.Awful && tAction.Creature.IsDead)
 					attackerSkill.Train(4); // Defeat a very powerful enemy.
 
-				if (tAction.Attacker.KnockBack >= CounterKnockBack)
+				if (tAction.Attacker.Stability <= CounterStability)
 					attackerSkill.Train(5); // Counterattack with Windmill.
 			}
 
@@ -323,7 +318,7 @@ namespace Aura.Channel.Skills.Combat
 				if (rating == PowerRating.Awful && tAction.Creature.IsDead)
 					attackerSkill.Train(3); // Defeat a very powerful enemy.
 
-				if (tAction.Attacker.KnockBack >= CounterKnockBack)
+				if (tAction.Attacker.Stability <= CounterStability)
 					attackerSkill.Train(4); // Counterattack with Windmill.
 			}
 

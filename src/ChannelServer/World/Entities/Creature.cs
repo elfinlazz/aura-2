@@ -31,7 +31,7 @@ namespace Aura.Channel.World.Entities
 		public const float HandCritical = 0.1f;
 		public const int HandAttackMin = 0;
 		public const int HandAttackMax = 8;
-		public const float MaxKnockBack = 120;
+		public const float MinStability = -10, MaxStability = 100;
 
 		private const float MinWeight = 0.7f, MaxWeight = 1.5f;
 		private const float MaxFoodStatBonus = 100;
@@ -201,10 +201,11 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		private float _knockBack;
-		private DateTime _knockBackChange;
+		private float _stability;
+		private DateTime _stabilityChange;
 		/// <summary>
-		/// "Force" applied to the creature.
+		/// Creature's stability, once it goes below a certain value the creature
+		/// becomes "unstable" and might have to be knocked back.
 		/// </summary>
 		/// <remarks>
 		/// The more you hit a creature with heavy weapons,
@@ -212,25 +213,31 @@ namespace Aura.Channel.World.Entities
 		/// is knocked back/down.
 		/// This is also used for the knock down gauge.
 		/// </remarks>
-		public float KnockBack
+		public float Stability
 		{
 			get
 			{
-				if (_knockBack <= 0)
-					return 0;
+				if (_stability >= MaxStability)
+					return MaxStability;
 
-				var result = _knockBack - ((DateTime.Now - _knockBackChange).TotalMilliseconds / 60f);
-				if (result <= 0)
-					result = _knockBack = 0;
+				var result = _stability + ((DateTime.Now - _stabilityChange).TotalMilliseconds / 60f);
+				if (result >= MaxStability)
+					result = _stability = MaxStability;
 
 				return (float)result;
 			}
 			set
 			{
-				_knockBack = Math.Min(MaxKnockBack, value);
-				_knockBackChange = DateTime.Now;
+				_stability = Math2.Clamp(MinStability, MaxStability, value);
+				_stabilityChange = DateTime.Now;
 			}
 		}
+
+		/// <summary>
+		/// Returns true if Stability is lower than or equal to 0,
+		/// at which point the creature should be knocked back.
+		/// </summary>
+		public bool IsUnstable { get { return (this.Stability <= 0); } }
 
 		public bool IsDead { get { return this.Has(CreatureStates.Dead); } }
 		public bool IsStunned { get { return (this.Stun > 0); } }

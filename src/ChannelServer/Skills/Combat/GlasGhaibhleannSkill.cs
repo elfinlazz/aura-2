@@ -42,11 +42,6 @@ namespace Aura.Channel.Skills.Combat
 		private const int TargetStun = 3000; // ?
 
 		/// <summary>
-		/// Amount added to the Knockback meter.
-		/// </summary>
-		private const float KnockbackMeter = 120;
-
-		/// <summary>
 		/// Units the enemy is knocked back.
 		/// </summary>
 		private const int KnockbackDistance = 450;
@@ -153,7 +148,7 @@ namespace Aura.Channel.Skills.Combat
 
 				// Apply damage
 				target.TakeDamage(tAction.Damage = 300, attacker);
-				target.KnockBack = KnockbackMeter;
+				target.Stability = Creature.MinStability;
 
 				// Aggro
 				target.Aggro(attacker);
