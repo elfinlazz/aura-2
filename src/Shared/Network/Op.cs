@@ -433,9 +433,9 @@ namespace Aura.Shared.Network
 		// [150000~180000] Something was added? Next two ops changed.
 		// [180800, NA196] Something was added? Ops 0xAAXX - 0xABXX increased by 4.
 
-		public const int SubsribeStunMeter = 0xAA21;
-		public const int StunMeterTotal = 0xAA22;
-		public const int StunMeterUpdate = 0xAA23;
+		public const int SubsribeStabilityMeter = 0xAA21;
+		public const int StabilityMeterInit = 0xAA22;
+		public const int StabilityMeterUpdate = 0xAA23;
 
 		public const int HomesteadInfoRequest = 0xAA58;
 		public const int HomesteadInfoRequestR = 0xAA59;

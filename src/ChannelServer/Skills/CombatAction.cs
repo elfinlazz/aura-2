@@ -161,6 +161,12 @@ namespace Aura.Channel.Skills
 
 					if (tAction.Has(TargetOptions.KnockDown))
 						tAction.Creature.KnockDownTime = DateTime.Now.AddMilliseconds(tAction.Stun);
+
+					// Stability meter
+					// TODO: Limit it to "targetees"?
+					var visibleCreatures = tAction.Creature.Region.GetVisibleCreaturesInRange(tAction.Creature);
+					foreach (var cr in visibleCreatures)
+						Send.StabilityMeterUpdate(cr, tAction.Creature);
 				}
 
 				// If attacker action

@@ -267,6 +267,43 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Sends StabilityMeterInit to receiver, containing meter information
+		/// of creature.
+		/// </summary>
+		/// <remarks>
+		/// Init is sent officially the first time you get these information,
+		/// afterwards it sends Update. The only visible difference so far
+		/// seems to be that Init doesn't work with negative values.
+		/// </remarks>
+		/// <param name="receiver"></param>
+		/// <param name="creature"></param>
+		public static void StabilityMeterInit(Creature receiver, Creature creature)
+		{
+			var packet = new Packet(Op.StabilityMeterInit, receiver.EntityId);
+			packet.PutLong(creature.EntityId);
+			packet.PutByte(1);
+			packet.PutFloat(creature.Stability);
+
+			receiver.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends StabilityMeterUpdate to receiver, containing meter information
+		/// of creature.
+		/// </summary>
+		/// <param name="receiver"></param>
+		/// <param name="creature"></param>
+		public static void StabilityMeterUpdate(Creature receiver, Creature creature)
+		{
+			var packet = new Packet(Op.StabilityMeterUpdate, receiver.EntityId);
+			packet.PutLong(creature.EntityId);
+			packet.PutFloat(creature.Stability);
+			packet.PutByte(1);
+
+			receiver.Client.Send(packet);
+		}
 	}
 
 	public enum TargetMode : byte { Normal = 0, Alert = 1, Aggro = 2 }

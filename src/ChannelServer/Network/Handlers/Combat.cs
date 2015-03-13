@@ -170,17 +170,15 @@ namespace Aura.Channel.Network.Handlers
 		/// ?
 		/// </summary>
 		/// <remarks>
-		/// The client sends this when initially attacking a creature.
-		/// It's answered with op+1, probably the full stun at the time.
-		/// Afterwards you get op+2, with relative values, most likely
-		/// an update.
-		/// Sent again with id 0 when the target dies.
+		/// Sent once when creature is first targeted, with its entity id,
+		/// and again when it dies, with 0. Assumed to be a subscription
+		/// request for the stability meter. We send it to everyone around.
 		/// </remarks>
 		/// <example>
 		/// 0001 [0010F00000046344] Long   : 4767482418324292
 		/// </example>
-		[PacketHandler(Op.SubsribeStunMeter)]
-		public void SubsribeStunMeter(ChannelClient client, Packet packet)
+		[PacketHandler(Op.SubsribeStabilityMeter)]
+		public void SubsribeStabilityMeter(ChannelClient client, Packet packet)
 		{
 			// ...
 
