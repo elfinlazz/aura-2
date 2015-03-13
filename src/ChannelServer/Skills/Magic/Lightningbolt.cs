@@ -71,7 +71,8 @@ namespace Aura.Channel.Skills.Magic
 			// Damage
 			var damage = this.GetDamage(attacker, skill);
 
-			for (int i = 0; i < targets.Count; ++i)
+			var max = Math.Min(targets.Count, skill.Stacks);
+			for (int i = 0; i < max; ++i)
 			{
 				var target = targets[i];
 				var targetDamage = damage;
