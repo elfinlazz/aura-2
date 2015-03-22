@@ -1,6 +1,6 @@
 ﻿using Aura.Channel.Skills.Base;
 using Aura.Channel.World.Entities;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;

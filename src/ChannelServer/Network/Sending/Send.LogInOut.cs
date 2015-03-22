@@ -2,7 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Network.Sending.Helpers;
 using Aura.Channel.World.Entities;

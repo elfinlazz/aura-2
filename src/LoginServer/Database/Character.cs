@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using System;
 
 namespace Aura.Login.Database

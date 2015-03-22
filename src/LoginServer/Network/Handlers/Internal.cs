@@ -2,7 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Shared.Network;
-using Aura.MabiLib;
+using Aura.Mabi;
 using Aura.Shared.Util;
 using System;
 using Aura.Login.Database;

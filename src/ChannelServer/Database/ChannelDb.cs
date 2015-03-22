@@ -10,7 +10,7 @@ using Aura.Channel.World.Entities.Creatures;
 using Aura.Channel.World.Inventory;
 using Aura.Channel.World.Quests;
 using Aura.Shared.Database;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
 using System;

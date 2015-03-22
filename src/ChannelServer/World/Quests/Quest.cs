@@ -7,11 +7,11 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Shared.Util;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Entities;
-using Aura.MabiLib;
+using Aura.Mabi;
 
 namespace Aura.Channel.World.Quests
 {

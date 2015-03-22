@@ -98,9 +98,9 @@
       <Project>{2DEA473E-6FD9-4875-926E-8A1CF3E89703}</Project>
       <Name>Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MabiLib\MabiLib.csproj">
+    <ProjectReference Include="..\Mabi\Mabi.csproj">
       <Project>{68361442-6ad0-4334-816c-c719652f1909}</Project>
-      <Name>MabiLib</Name>
+      <Name>Mabi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

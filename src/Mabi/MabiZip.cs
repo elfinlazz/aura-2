@@ -6,7 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 
-namespace Aura.MabiLib
+namespace Aura.Mabi
 {
 	/// <summary>
 	/// Wrapper around zip working with strings.

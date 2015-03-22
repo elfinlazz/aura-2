@@ -2,7 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.Scripting.Scripts;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using System;
 using System.Collections.Generic;
 using System.Linq;

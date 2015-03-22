@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.World.Entities;
-using Aura.MabiLib;
-using Aura.MabiLib.Const;
+using Aura.Mabi;
+using Aura.Mabi.Const;
 using Aura.Shared.Network;
 
 namespace Aura.Channel.Skills.Music

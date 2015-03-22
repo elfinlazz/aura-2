@@ -2,9 +2,9 @@
 // For more information, see license file in the main folder
 
 using System.Runtime.InteropServices;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 
-namespace Aura.MabiLib.Structs
+namespace Aura.Mabi.Structs
 {
 	/// <summary>
 	/// Public item info.

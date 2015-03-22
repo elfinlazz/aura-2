@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Aura.MabiLib.Const
+namespace Aura.Mabi.Const
 {
 	/// <summary>
 	/// Flags for SkillInfo

@@ -2,7 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Data;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Channel.World.Entities;
 using System;
 using System.Linq;

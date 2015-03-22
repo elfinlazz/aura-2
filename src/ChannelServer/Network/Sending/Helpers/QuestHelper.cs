@@ -3,7 +3,7 @@
 
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Quests;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Shared.Network;
 using System;
 using System.Linq;

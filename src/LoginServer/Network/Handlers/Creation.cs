@@ -9,7 +9,7 @@ using Aura.Login.Util;
 using Aura.Shared.Database;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 
 namespace Aura.Login.Network.Handlers
 {

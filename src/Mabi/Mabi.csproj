@@ -7,8 +7,8 @@
     <ProjectGuid>{68361442-6AD0-4334-816C-C719652F1909}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aura.MabiLib</RootNamespace>
-    <AssemblyName>MabiLib</AssemblyName>
+    <RootNamespace>Aura.Mabi</RootNamespace>
+    <AssemblyName>Mabi</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

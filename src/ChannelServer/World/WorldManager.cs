@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using Aura.Channel.World.Entities;
 using Aura.Data;
-using Aura.MabiLib;
+using Aura.Mabi;
 using Aura.Shared.Util;
 using Aura.Channel.Util;
 using Aura.Channel.Network.Sending;

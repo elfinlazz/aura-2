@@ -3,7 +3,7 @@
 
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using System;
 using System.Collections.Generic;
 using System.Linq;

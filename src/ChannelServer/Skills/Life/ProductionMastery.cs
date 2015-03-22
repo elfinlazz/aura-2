@@ -5,7 +5,7 @@ using Aura.Channel.Skills.Base;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Data.Database;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using System;
 using System.Collections.Generic;
 using System.Linq;

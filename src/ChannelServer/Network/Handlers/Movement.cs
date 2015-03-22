@@ -12,7 +12,7 @@ using Aura.Shared.Util;
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Channel.Network.Sending;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 
 namespace Aura.Channel.Network.Handlers
 {

@@ -15,12 +15,12 @@ using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Shared.Database;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Shared.Util;
 using Aura.Channel.World.Inventory;
 using Aura.Data.Database;
 using Aura.Channel.World.Quests;
-using Aura.MabiLib;
+using Aura.Mabi;
 using System.Text;
 
 namespace Aura.Channel.Scripting.Scripts

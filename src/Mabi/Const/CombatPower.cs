@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Aura.MabiLib.Const
+namespace Aura.Mabi.Const
 {
 	/// <summary>
 	/// Power of one creature compared to another.

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Channel.Skills.Base;
 using System.Reflection;
 using Aura.Shared.Util;

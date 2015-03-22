@@ -12,7 +12,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting;
 using System.Text.RegularExpressions;
 using Aura.Data.Database;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Data;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Scripting.Scripts;

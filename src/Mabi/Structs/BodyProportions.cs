@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace Aura.MabiLib.Structs
+namespace Aura.Mabi.Structs
 {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct BodyProportions

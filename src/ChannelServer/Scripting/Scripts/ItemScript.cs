@@ -4,8 +4,8 @@
 using System;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
-using Aura.MabiLib;
-using Aura.MabiLib.Const;
+using Aura.Mabi;
+using Aura.Mabi.Const;
 using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting.Scripts

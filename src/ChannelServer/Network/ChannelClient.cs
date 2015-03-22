@@ -9,7 +9,7 @@ using Aura.Channel.Util;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
 using Aura.Channel.Skills.Life;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 
 namespace Aura.Channel.Network
 {

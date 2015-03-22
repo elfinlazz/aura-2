@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "src\Data\Data.cspro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer", "src\WebServer\WebServer.csproj", "{61265059-F60C-4964-B734-B77507BB5BF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MabiLib", "src\MabiLib\MabiLib.csproj", "{68361442-6AD0-4334-816C-C719652F1909}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mabi", "src\Mabi\Mabi.csproj", "{68361442-6AD0-4334-816C-C719652F1909}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

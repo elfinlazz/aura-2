@@ -6,7 +6,7 @@ using Aura.Channel.Util;
 using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Data.Database;
-using Aura.MabiLib.Const;
+using Aura.Mabi.Const;
 using Aura.Shared.Network;
 using System;
 
