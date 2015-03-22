@@ -47,6 +47,7 @@
     <Compile Include="Const\Effects.cs" />
     <Compile Include="Const\Items.cs" />
     <Compile Include="Const\Locks.cs" />
+    <Compile Include="Const\Login.cs" />
     <Compile Include="Const\MabiId.cs" />
     <Compile Include="Const\Pets.cs" />
     <Compile Include="Const\Quests.cs" />

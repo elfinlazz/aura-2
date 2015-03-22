@@ -656,4 +656,6 @@ namespace Aura.Login.Database
 			}
 		}
 	}
+
+	public enum CharacterType { Character, Pet, Partner }
 }

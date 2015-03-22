@@ -94,7 +94,4 @@ namespace Aura.Login.Database
 			this.Luck = 10;
 		}
 	}
-
-	public enum CharacterType { Character, Pet, Partner }
-	public enum DeletionFlag { Normal, Recover, Ready, Delete }
 }
