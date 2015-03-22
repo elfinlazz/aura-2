@@ -40,16 +40,6 @@ namespace Aura.Channel.Skills.Actions
 	public class ContinentWarp : IPreparable, IUseable, ICompletable, ICancelable
 	{
 		/// <summary>
-		/// Continents players can warp to.
-		/// </summary>
-		private enum Continent : byte
-		{
-			Uladh = 0,
-			Iria = 1,
-			Belvast = 2,
-		}
-
-		/// <summary>
 		/// Prepares the skill, called when opening map. Goes straight to Ready.
 		/// </summary>
 		/// <param name="creature"></param>

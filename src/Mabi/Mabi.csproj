@@ -42,6 +42,7 @@
     <Compile Include="Const\Combat.cs" />
     <Compile Include="Const\CombatPower.cs" />
     <Compile Include="Const\Conditions.cs" />
+    <Compile Include="Const\Continent.cs" />
     <Compile Include="Const\CreatureStates.cs" />
     <Compile Include="Const\Effects.cs" />
     <Compile Include="Const\Items.cs" />
