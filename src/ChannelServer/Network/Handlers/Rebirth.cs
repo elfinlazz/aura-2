@@ -170,12 +170,5 @@ namespace Aura.Channel.Network.Handlers
 			// Success
 			Send.RequestRebirthR(creature, true);
 		}
-
-		private enum RebirthLocation : byte
-		{
-			Last = 0,
-			Tir = 1,
-			Iria = 2,
-		}
 	}
 }

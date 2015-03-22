@@ -49,8 +49,11 @@
     <Compile Include="Const\Locks.cs" />
     <Compile Include="Const\Login.cs" />
     <Compile Include="Const\MabiId.cs" />
+    <Compile Include="Const\Music.cs" />
+    <Compile Include="Const\Notices.cs" />
     <Compile Include="Const\Pets.cs" />
     <Compile Include="Const\Quests.cs" />
+    <Compile Include="Const\Rebirth.cs" />
     <Compile Include="Const\ReviveOptions.cs" />
     <Compile Include="Const\Skills.cs" />
     <Compile Include="Const\Stats.cs" />

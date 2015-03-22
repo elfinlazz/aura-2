@@ -277,8 +277,4 @@ namespace Aura.Channel.Network.Sending
 			region.Broadcast(packet);
 		}
 	}
-	public enum MsgBoxTitle { Notice, Info, Warning, Confirm }
-	public enum MsgBoxButtons { None, Close, OkCancel, YesNoCancel }
-	public enum MsgBoxAlign { Left, Center }
-	public enum NoticeType { Top = 1, TopRed, MiddleTop, Middle, Left, TopGreen, MiddleSystem, System, MiddleLower }
 }

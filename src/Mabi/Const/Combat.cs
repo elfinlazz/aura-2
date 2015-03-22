@@ -2,9 +2,6 @@
 // For more information, see license file in the main folder
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Aura.Mabi.Const
 {
@@ -191,4 +188,6 @@ namespace Aura.Mabi.Const
 
 		//DefendedHit = 0x73, // ?
 	}
+
+	public enum TargetMode : byte { Normal = 0, Alert = 1, Aggro = 2 }
 }

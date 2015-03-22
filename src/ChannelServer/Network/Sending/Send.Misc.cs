@@ -331,9 +331,4 @@ namespace Aura.Channel.Network.Sending
 			creature.Client.Send(packet);
 		}
 	}
-
-	/// <summary>
-	/// Repeat modes for SetBgm
-	/// </summary>
-	public enum BgmRepeat : int { Indefinitely = 0, Once = 1 }
 }
