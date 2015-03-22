@@ -343,6 +343,15 @@ namespace Aura.Mabi.Network
 		}
 
 		/// <summary>
+		/// Reads long from buffer and returns it as DateTime.
+		/// </summary>
+		/// <returns></returns>
+		public DateTime GetDateTime()
+		{
+			return new DateTime(this.GetLong() * 10000);
+		}
+
+		/// <summary>
 		/// Reads and returns float from buffer.
 		/// </summary>
 		/// <returns></returns>
@@ -395,6 +404,48 @@ namespace Aura.Mabi.Network
 			_ptr += len;
 
 			return val;
+		}
+
+		/// <summary>
+		/// Reads bin from buffer and returns it, marshaled into T.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public T GetObj<T>() where T : new()
+		{
+			var type = typeof(T);
+			if (!type.IsValueType || type.IsPrimitive)
+				throw new Exception("GetObj can only marshal to structs.");
+
+			var buffer = this.GetBin();
+
+			IntPtr intPtr = Marshal.AllocHGlobal(buffer.Length);
+			Marshal.Copy(buffer, 0, intPtr, buffer.Length);
+			var val = Marshal.PtrToStructure(intPtr, typeof(T));
+			Marshal.FreeHGlobal(intPtr);
+
+			return (T)val;
+		}
+
+		/// <summary>
+		/// Skips number of elements.
+		/// </summary>
+		/// <param name="num"></param>
+		public void Skip(int num)
+		{
+			for (int i = 0; i < num; ++i)
+			{
+				switch (this.Peek())
+				{
+					case PacketElementType.Byte: this.GetByte(); break;
+					case PacketElementType.Short: this.GetShort(); break;
+					case PacketElementType.Int: this.GetInt(); break;
+					case PacketElementType.Long: this.GetLong(); break;
+					case PacketElementType.Float: this.GetFloat(); break;
+					case PacketElementType.String: this.GetString(); break;
+					case PacketElementType.Bin: this.GetBin(); break;
+				}
+			}
 		}
 
 		// ------------------------------------------------------------------
