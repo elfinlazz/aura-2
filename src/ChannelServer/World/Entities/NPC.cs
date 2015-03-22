@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Shared.Util;
 using System;

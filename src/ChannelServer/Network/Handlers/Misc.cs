@@ -8,7 +8,7 @@ using System.Text;
 using Aura.Shared.Network;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Data;
 
 namespace Aura.Channel.Network.Handlers

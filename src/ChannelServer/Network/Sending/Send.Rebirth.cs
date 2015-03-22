@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 
 namespace Aura.Channel.Network.Sending
 {

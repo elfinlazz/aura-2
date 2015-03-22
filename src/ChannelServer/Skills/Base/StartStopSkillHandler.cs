@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Network;
-using Aura.Shared.Mabi;
+using Aura.MabiLib;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Data.Database;
 
 namespace Aura.Channel.Skills.Base

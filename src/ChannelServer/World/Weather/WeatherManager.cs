@@ -5,7 +5,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Data.Database;
-using Aura.Shared.Mabi;
+using Aura.MabiLib;
 using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using Aura.Shared.Mabi.Structs;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Structs;
+using Aura.MabiLib.Const;
 
 namespace Aura.Login.Database
 {

@@ -4,7 +4,7 @@
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared.Database;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Shared.Util;
 using MySql.Data.MySqlClient;
 using System;

@@ -5,10 +5,10 @@ using System;
 using System.Threading;
 using Aura.Data;
 using Aura.Data.Database;
-using Aura.Shared.Mabi.Const;
-using Aura.Shared.Mabi.Structs;
+using Aura.MabiLib.Const;
+using Aura.MabiLib.Structs;
 using Aura.Shared.Util;
-using Aura.Shared.Mabi;
+using Aura.MabiLib;
 
 namespace Aura.Channel.World.Entities
 {

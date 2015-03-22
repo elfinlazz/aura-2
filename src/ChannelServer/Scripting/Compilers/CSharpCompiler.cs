@@ -84,8 +84,8 @@ namespace Aura.Channel.Scripting.Compilers
 			add.Append("using Aura.Channel;");
 			add.Append("using Aura.Data;");
 			add.Append("using Aura.Data.Database;");
-			add.Append("using Aura.Shared.Mabi.Const;");
-			add.Append("using Aura.Shared.Mabi;");
+			add.Append("using Aura.MabiLib.Const;");
+			add.Append("using Aura.MabiLib;");
 			add.Append("using Aura.Shared.Network;");
 			add.Append("using Aura.Shared.Util;");
 			add.Append("using Aura.Shared.Util.Commands;");

@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Aura.Channel.Skills.Base;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 using Aura.Data.Database;
 using Aura.Channel.World;
 using Aura.Channel.Skills.Life;
-using Aura.Shared.Mabi;
+using Aura.MabiLib;
 using Aura.Channel.Skills.Magic;
 
 namespace Aura.Channel.Skills.Combat

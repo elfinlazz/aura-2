@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Aura.Channel.Util;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Channel.Skills;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;

@@ -3,8 +3,8 @@
 
 using System.Linq;
 using Aura.Data;
-using Aura.Shared.Mabi.Const;
-using Aura.Shared.Mabi;
+using Aura.MabiLib.Const;
+using Aura.MabiLib;
 using Aura.Channel.World.Entities;
 
 namespace Aura.Channel.World.Quests

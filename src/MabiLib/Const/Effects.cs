@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Aura.Shared.Mabi.Const
+namespace Aura.MabiLib.Const
 {
 	// No enum because we don't need type safety and string conversion,
 	// but something that can be passed to a function. (No casts ftw.)

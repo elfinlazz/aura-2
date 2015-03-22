@@ -6,7 +6,7 @@ using Aura.Channel.Skills.Base;
 using Aura.Channel.Skills.Combat;
 using Aura.Channel.Skills.Magic;
 using Aura.Channel.World.Entities;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using System;

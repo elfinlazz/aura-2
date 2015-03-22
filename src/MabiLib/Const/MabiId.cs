@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-namespace Aura.Shared.Mabi.Const
+namespace Aura.MabiLib.Const
 {
 	/// <summary>
 	/// Various ids used by Mabi.

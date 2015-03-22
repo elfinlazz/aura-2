@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Aura.Shared.Mabi
+namespace Aura.MabiLib
 {
 	/// <summary>
 	/// Wrapper around DateTime, to calculate the current time in Erinn.

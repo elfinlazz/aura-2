@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Aura.Shared.Mabi
+namespace Aura.MabiLib
 {
 	public static class MabiMath
 	{

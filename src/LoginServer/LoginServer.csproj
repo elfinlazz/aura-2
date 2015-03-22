@@ -95,6 +95,10 @@
       <Project>{2DEA473E-6FD9-4875-926E-8A1CF3E89703}</Project>
       <Name>Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MabiLib\MabiLib.csproj">
+      <Project>{68361442-6ad0-4334-816c-c719652f1909}</Project>
+      <Name>MabiLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{49B4C28D-3E7D-4F57-8549-B0E13354DE5D}</Project>
       <Name>Shared</Name>

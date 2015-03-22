@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Aura.Shared.Mabi.Const
+namespace Aura.MabiLib.Const
 {
 	[Flags]
 	public enum ReviveOptions : uint

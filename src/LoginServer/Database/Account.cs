@@ -7,7 +7,7 @@ using System.Linq;
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared.Database;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 
 namespace Aura.Login.Database
 {

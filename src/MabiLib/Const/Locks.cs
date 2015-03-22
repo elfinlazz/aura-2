@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Aura.Shared.Mabi.Const
+namespace Aura.MabiLib.Const
 {
 	/// <summary>
 	/// This list is based on vague information found in the client,

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
 using Aura.Channel.Skills.Life;

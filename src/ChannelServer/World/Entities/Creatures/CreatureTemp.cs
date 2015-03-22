@@ -4,7 +4,7 @@
 using System;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Data.Database;
-using Aura.Shared.Mabi.Structs;
+using Aura.MabiLib.Structs;
 
 namespace Aura.Channel.World.Entities.Creatures
 {

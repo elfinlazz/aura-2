@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Aura.Channel.Util;
-using Aura.Shared.Mabi;
+using Aura.MabiLib;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Skills;
 using Aura.Data.Database;

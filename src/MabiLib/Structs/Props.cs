@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace Aura.Shared.Mabi.Structs
+namespace Aura.MabiLib.Structs
 {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct PropInfo

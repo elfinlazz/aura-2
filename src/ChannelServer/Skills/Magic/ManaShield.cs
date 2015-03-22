@@ -4,8 +4,8 @@
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.World.Entities;
-using Aura.Shared.Mabi;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib;
+using Aura.MabiLib.Const;
 
 namespace Aura.Channel.Skills.Magic
 {

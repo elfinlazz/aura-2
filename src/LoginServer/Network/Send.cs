@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using Aura.Login.Database;
 using Aura.Shared.Database;
-using Aura.Shared.Mabi;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib;
+using Aura.MabiLib.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Network.Sending.Helpers;
 

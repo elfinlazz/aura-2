@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Aura.Channel.World.Entities;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 
 namespace Aura.Channel.Scripting
 {

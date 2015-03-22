@@ -3,7 +3,7 @@
 
 using System.Linq;
 using Aura.Channel.World.Entities;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 
 namespace Aura.Channel.World.Quests
 {

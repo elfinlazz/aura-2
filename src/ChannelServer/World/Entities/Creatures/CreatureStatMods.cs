@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Entities.Creatures

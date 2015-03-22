@@ -2,9 +2,9 @@
 // For more information, see license file in the main folder
 
 using System.Runtime.InteropServices;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 
-namespace Aura.Shared.Mabi.Structs
+namespace Aura.MabiLib.Structs
 {
 	/// <summary>
 	/// Information about a skill and its current rank

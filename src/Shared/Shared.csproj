@@ -55,28 +55,8 @@
   <ItemGroup>
     <Compile Include="Database\Card.cs" />
     <Compile Include="Database\Commands.cs" />
-    <Compile Include="Mabi\Const\Combat.cs" />
-    <Compile Include="Mabi\Const\CombatPower.cs" />
-    <Compile Include="Mabi\Const\Conditions.cs" />
-    <Compile Include="Mabi\Const\CreatureStates.cs" />
-    <Compile Include="Mabi\Const\Quests.cs" />
-    <Compile Include="Mabi\Const\ReviveOptions.cs" />
-    <Compile Include="Mabi\Const\Effects.cs" />
-    <Compile Include="Mabi\Const\Items.cs" />
-    <Compile Include="Mabi\Const\Locks.cs" />
-    <Compile Include="Mabi\Const\MabiId.cs" />
     <Compile Include="Database\AuraDb.cs" />
-    <Compile Include="Mabi\Const\Pets.cs" />
-    <Compile Include="Mabi\Const\Skills.cs" />
-    <Compile Include="Mabi\Const\Stats.cs" />
-    <Compile Include="Mabi\MabiDictionary.cs" />
-    <Compile Include="Mabi\MabiMath.cs" />
-    <Compile Include="Mabi\MabiZip.cs" />
     <Compile Include="Util\Password.cs" />
-    <Compile Include="Mabi\Structs\BodyProportions.cs" />
-    <Compile Include="Mabi\Structs\Items.cs" />
-    <Compile Include="Mabi\Structs\Props.cs" />
-    <Compile Include="Mabi\Structs\Skills.cs" />
     <Compile Include="Network\BaseClient.cs" />
     <Compile Include="Network\BaseServer.cs" />
     <Compile Include="Network\Crypto\AesFastEngine.cs" />
@@ -106,7 +86,6 @@
     <Compile Include="Util\Float.cs" />
     <Compile Include="Util\Localization.cs" />
     <Compile Include="Util\Log.cs" />
-    <Compile Include="Mabi\ErinnTime.cs" />
     <Compile Include="Util\CliUtil.cs" />
     <Compile Include="Util\Math2.cs" />
     <Compile Include="Util\OrderedDictionary.cs" />
@@ -118,6 +97,10 @@
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{2DEA473E-6FD9-4875-926E-8A1CF3E89703}</Project>
       <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MabiLib\MabiLib.csproj">
+      <Project>{68361442-6ad0-4334-816c-c719652f1909}</Project>
+      <Name>MabiLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

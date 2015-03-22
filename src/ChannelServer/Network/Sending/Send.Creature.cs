@@ -3,7 +3,7 @@
 
 using System;
 using Aura.Channel.World.Entities;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.World;
@@ -11,7 +11,7 @@ using Aura.Channel.World.Entities.Creatures;
 using System.Collections;
 using System.Collections.Generic;
 using Aura.Data;
-using Aura.Shared.Mabi.Structs;
+using Aura.MabiLib.Structs;
 using Aura.Channel.Network.Sending.Helpers;
 
 namespace Aura.Channel.Network.Sending

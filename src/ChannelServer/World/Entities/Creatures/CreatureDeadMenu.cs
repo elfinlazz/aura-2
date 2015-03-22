@@ -2,7 +2,7 @@
 // For more information, see license file in the main folder
 
 using System.Text;
-using Aura.Shared.Mabi.Const;
+using Aura.MabiLib.Const;
 
 namespace Aura.Channel.World.Entities.Creatures
 {

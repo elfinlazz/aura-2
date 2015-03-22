@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
-namespace Aura.Shared.Mabi
+namespace Aura.MabiLib
 {
 	/// <summary>
 	/// "Generic" dictionary wrapper that can hold various var types and
