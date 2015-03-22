@@ -5,9 +5,8 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Aura.Shared.Util;
 
-namespace Aura.Shared.Mabi
+namespace Aura.Shared.Util
 {
 	/// <summary>
 	/// Handles hashing of passwords.
@@ -34,7 +33,7 @@ namespace Aura.Shared.Mabi
 		/// </summary>
 		public static string RawToMD5(byte[] passbin)
 		{
-			var password = passbin.TakeWhile(a => a != 0).Aggregate(string.Empty, (current, chr) => current + (char) chr);
+			var password = passbin.TakeWhile(a => a != 0).Aggregate(string.Empty, (current, chr) => current + (char)chr);
 
 			return RawToMD5(password);
 		}
