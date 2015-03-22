@@ -30,7 +30,7 @@ quests/beginner_uladh/hunting/1000049_hunting_red_bear.cs
 quests/beginner_uladh/hunting/1000050_hunting_brown_grizzly_bear.cs
 quests/beginner_uladh/hunting/1000051_hunting_black_grizzly_bear.cs
 quests/beginner_uladh/hunting/1000052_hunting_troll.cs
-quests/beginner_uladh/hunting/1000053_hunting_orge.cs
+quests/beginner_uladh/hunting/1000053_hunting_ogre.cs
 
 quests/beginner_uladh/hunting/1000055_hunting_giant_spider.cs
 quests/beginner_uladh/hunting/1000056_hunting_small_golem.cs
