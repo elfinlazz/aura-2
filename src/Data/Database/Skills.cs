@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using Aura.Mabi.Const;
 
 namespace Aura.Data.Database
 {
@@ -260,20 +261,5 @@ namespace Aura.Data.Database
 				}
 			}
 		}
-	}
-
-	public enum SkillType
-	{
-		None = -1,
-		Unk1 = 0,
-		Combat = 1,
-		RangedCombat = 2,
-		RangedCombat2 = 3,
-		Production = 4,
-		MaterialProduction = 5,
-		Enchanting = 6,
-		BroadcastStartStop = 7,
-		StartStop = 8,
-		Passive = 10,
 	}
 }

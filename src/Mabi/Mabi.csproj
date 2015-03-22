@@ -53,7 +53,9 @@
     <Compile Include="Const\Notices.cs" />
     <Compile Include="Const\Pets.cs" />
     <Compile Include="Const\Quests.cs" />
+    <Compile Include="Const\Races.cs" />
     <Compile Include="Const\Rebirth.cs" />
+    <Compile Include="Const\Regions.cs" />
     <Compile Include="Const\ReviveOptions.cs" />
     <Compile Include="Const\Skills.cs" />
     <Compile Include="Const\Stats.cs" />

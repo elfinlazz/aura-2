@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
+using Aura.Mabi.Const;
 
 namespace Aura.Data.Database
 {
@@ -480,6 +481,5 @@ namespace Aura.Data.Database
 		}
 	}
 
-	public enum Gender : byte { None, Female, Male, Universal }
 	public enum Element : byte { None, Ice, Fire, Lightning }
 }

@@ -188,4 +188,139 @@ namespace Aura.Mabi.Const
 		// ? = 0x40,
 		// ? = 0x80,
 	}
+
+	/// <summary>
+	/// Item's type
+	/// </summary>
+	/// <remarks>
+	/// Basically the "Attr_Type" value found in the client, however,
+	/// we made some adjustments in Aura. Officially, Gold Pouches have
+	/// type 5. In Aura they have type 1000, we turn them into Sacs for
+	/// Gold items. This way we can treat them like any other Sac.
+	/// Also, all items that official have type 1000, but an id > 10000
+	/// were changed to type 1001, because they aren't sacs.
+	/// This difference was important in Aura before we had support for tags.
+	/// TODO: Utilize tags more?
+	/// </remarks>
+	public enum ItemType
+	{
+		Armor = 0,
+		Headgear = 1,
+		Glove = 2,
+		Shoe = 3,
+		Book = 4,
+		Currency = 5,
+		ItemBag = 6,
+		Weapon = 7,
+		Weapon2H = 8, // 2H, bows, tools, etc
+		Weapon2 = 9, // Ineffective Weapons? Signs, etc.
+		Instrument = 10,
+		Shield = 11,
+		Robe = 12,
+		Accessory = 13,
+		SecondaryWeapon = 14,
+		MusicScroll = 15,
+		Manual = 16,
+		EnchantScroll = 17,
+		CollectionBook = 18,
+		ShopLicense = 19,
+		FaliasTreasure = 20,
+		Kiosk = 21,
+		StyleArmor = 22,
+		StyleHeadgear = 23,
+		StyleGlove = 24,
+		StyleShoe = 25,
+		ComboCard = 27,
+		Unknown2 = 28,
+		Hair = 100,
+		Face = 101,
+		Usable = 501,
+		Quest = 502,
+		Usable2 = 503,
+		Unknown1 = 504,
+		Sac = 1000,
+		Misc = 1001,
+	}
+
+	/// <summary>
+	/// The way an item is stacked.
+	/// </summary>
+	public enum StackType
+	{
+		/// <summary>
+		/// Single item (1, e.g. equipment)
+		/// </summary>
+		None = 0,
+
+		/// <summary>
+		/// Stackable item (1+, e.g. potions)
+		/// </summary>
+		Stackable = 1,
+
+		/// <summary>
+		/// Sac, containing items (0+, e.g. Gold Pouches)
+		/// </summary>
+		Sac = 2,
+	}
+
+	/// <summary>
+	/// Type of an instrument item, used to specify the sound.
+	/// </summary>
+	public enum InstrumentType
+	{
+		Lute = 0,
+		Ukulele = 1,
+		Mandolin = 2,
+		Whistle = 3,
+		Roncadora = 4,
+		Flute = 5,
+		Chalumeau = 6,
+
+		ToneBottleC = 7,
+		ToneBottleD = 8,
+		ToneBottleE = 9,
+		ToneBottleF = 10,
+		ToneBottleG = 11,
+		ToneBottleB = 12,
+		ToneBottleA = 13,
+
+		Tuba = 18,
+		Lyra = 19,
+		ElectricGuitar = 20,
+
+		Piano = 21,
+		Violin = 22,
+		Cello = 23,
+
+		BassDrum = 66,
+		Drum = 67,
+		Cymbals = 68,
+
+		HandbellC = 69,
+		HandbellD = 70,
+		HandbellE = 71,
+		HandbellF = 72,
+		HandbellG = 73,
+		HandbellB = 74,
+		HandbellA = 75,
+		HandbellHighC = 76,
+
+		Xylophone = 77,
+
+		MaleVoiceKr1 = 81,
+		MaleVoiceKr2 = 82,
+		MaleVoiceKr3 = 83,
+		MaleVoiceKr4 = 84,
+		FemaleVoiceKr1 = 90,
+		FemaleVoiceKr2 = 91,
+		FemaleVoiceKr3 = 92,
+		FemaleVoiceKr4 = 93,
+		FemaleVoiceKr5 = 94,
+
+		MaleChorusVoice = 100,
+		FemaleChorusVoice = 110,
+
+		MaleVoiceJp = 120,
+		FemaleVoiceJp = 121,
+	}
 }

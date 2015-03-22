@@ -269,7 +269,7 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				var delta = score;
 
-				if (gift.Data.StackType == Data.Database.StackType.Stackable)
+				if (gift.Data.StackType == StackType.Stackable)
 				{
 					delta *= gift.Amount * gift.Data.StackMax * 3;
 					delta /= (1 + 2 * (Random(4) + 7));

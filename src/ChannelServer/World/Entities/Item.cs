@@ -372,7 +372,7 @@ namespace Aura.Channel.World.Entities
 				this.OptionInfo.Price = this.Data.Price;
 				this.OptionInfo.SellingPrice = this.Data.SellingPrice;
 				this.OptionInfo.WeaponType = this.Data.WeaponType;
-				this.OptionInfo.AttackSpeed = (AttackSpeed)this.Data.AttackSpeed;
+				this.OptionInfo.AttackSpeed = this.Data.AttackSpeed;
 				this.OptionInfo.EffectiveRange = this.Data.Range;
 				this.OptionInfo.UpgradeMax = (byte)this.Data.MaxUpgrades;
 

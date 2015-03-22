@@ -89,6 +89,12 @@
     <Compile Include="CsvReader.cs" />
     <Compile Include="DatabaseCsv.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mabi\Mabi.csproj">
+      <Project>{68361442-6ad0-4334-816c-c719652f1909}</Project>
+      <Name>Mabi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

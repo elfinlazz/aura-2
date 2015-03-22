@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using Aura.Mabi.Const;
 
 namespace Aura.Data.Database
 {
@@ -85,27 +86,6 @@ namespace Aura.Data.Database
 		public bool IsAltar { get; set; }
 		public List<ShapeData> Shapes { get; set; }
 		public List<RegionElementData> Parameters { get; set; }
-	}
-
-	public enum EventType : int
-	{
-		Unk1 = 1,
-		AreaChange = 10, // ? (texts, bgm change)
-		Collision = 14,
-		CreatureSpawn = 2000,
-	}
-
-	public enum SignalType : int
-	{
-		/// <summary>
-		/// Triggered by entering event area.
-		/// </summary>
-		Enter = 101,
-
-		/// <summary>
-		/// Triggered by leaving event area.
-		/// </summary>
-		Leave = 102,
 	}
 
 	public class RegionElementData

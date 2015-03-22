@@ -278,7 +278,7 @@ namespace Aura.Channel.World.Entities
 		/// Returns weapon's attack speed or the race's if not weapon
 		/// is equipped.
 		/// </summary>
-		public AttackSpeed AttackSpeed { get { return (this.RightHand != null ? (AttackSpeed)this.RightHand.Data.AttackSpeed : (AttackSpeed)this.RaceData.AttackSpeed); } }
+		public AttackSpeed AttackSpeed { get { return (this.RightHand != null ? this.RightHand.Data.AttackSpeed : (AttackSpeed)this.RaceData.AttackSpeed); } }
 
 		/// <summary>
 		/// Returns average attack speed of both equipped weapons, or race's
@@ -292,10 +292,10 @@ namespace Aura.Channel.World.Entities
 
 				if (this.RightHand != null)
 				{
-					result = this.RightHand.Data.AttackSpeed;
+					result = (int)this.RightHand.Data.AttackSpeed;
 					if (this.LeftHand != null)
 					{
-						result += this.LeftHand.Data.AttackSpeed;
+						result += (int)this.LeftHand.Data.AttackSpeed;
 						result /= 2;
 					}
 				}

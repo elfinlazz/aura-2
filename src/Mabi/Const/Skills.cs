@@ -547,4 +547,27 @@ namespace Aura.Mabi.Const
 		Loaded = 2,
 		Cancelling = 6
 	}
+
+	/// <summary>
+	/// A skill's type, not to be confused with its category.
+	/// </summary>
+	/// <remarks>
+	/// Value "SkillType" in client. The specific purpose of this value is unknown,
+	/// all we know is that skills with the type "BroadcastStartStop" are special,
+	/// in that their Start/Stop packets are broadcasted, to activate special effects.
+	/// </remarks>
+	public enum SkillType
+	{
+		None = -1,
+		Unk1 = 0,
+		Combat = 1,
+		RangedCombat = 2,
+		RangedCombat2 = 3,
+		Production = 4,
+		MaterialProduction = 5,
+		Enchanting = 6,
+		BroadcastStartStop = 7,
+		StartStop = 8,
+		Passive = 10,
+	}
 }
