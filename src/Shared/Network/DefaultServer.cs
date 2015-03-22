@@ -60,7 +60,7 @@ namespace Aura.Shared.Network
 					// Start reading after the protocol header
 					var packet = new Packet(buffer, 6);
 
-					//Logger.Debug(packet);
+					//Log.Debug(packet);
 
 					try
 					{
