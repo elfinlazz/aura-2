@@ -8,6 +8,7 @@ using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Mabi;
 using Aura.Mabi.Const;
+using Aura.Mabi.Network;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using System;

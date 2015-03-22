@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Aura.Data;
 using Aura.Mabi.Structs;
 using Aura.Channel.Network.Sending.Helpers;
+using Aura.Mabi.Network;
 
 namespace Aura.Channel.Network.Sending
 {

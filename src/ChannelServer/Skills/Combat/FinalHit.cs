@@ -5,6 +5,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.World.Entities;
 using Aura.Mabi.Const;
+using Aura.Mabi.Network;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using System;

@@ -4,6 +4,7 @@
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Quests;
 using Aura.Mabi.Const;
+using Aura.Mabi.Network;
 using Aura.Shared.Network;
 using System;
 using System.Linq;

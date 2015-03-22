@@ -3,6 +3,7 @@
 
 using System;
 using Aura.Shared.Util;
+using Aura.Mabi.Network;
 
 namespace Aura.Shared.Network
 {

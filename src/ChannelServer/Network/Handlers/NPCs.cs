@@ -17,6 +17,7 @@ using Aura.Data;
 using Aura.Channel.World.Entities;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Inventory;
+using Aura.Mabi.Network;
 
 namespace Aura.Channel.Network.Handlers
 {

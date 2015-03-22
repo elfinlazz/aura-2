@@ -56,6 +56,8 @@
     <Compile Include="MabiDictionary.cs" />
     <Compile Include="MabiMath.cs" />
     <Compile Include="MabiZip.cs" />
+    <Compile Include="Network\Op.cs" />
+    <Compile Include="Network\Packet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structs\BodyProportions.cs" />
     <Compile Include="Structs\Items.cs" />

@@ -5,6 +5,7 @@ using System;
 using System.Net.Sockets;
 using Aura.Shared.Network.Crypto;
 using Aura.Shared.Util;
+using Aura.Mabi.Network;
 
 namespace Aura.Shared.Network
 {

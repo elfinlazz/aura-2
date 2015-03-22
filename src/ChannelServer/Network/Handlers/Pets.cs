@@ -8,6 +8,7 @@ using Aura.Shared.Util;
 using Aura.Channel.World;
 using Aura.Mabi.Const;
 using Aura.Channel.World.Inventory;
+using Aura.Mabi.Network;
 
 namespace Aura.Channel.Network.Handlers
 {

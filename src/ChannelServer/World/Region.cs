@@ -17,6 +17,7 @@ using Aura.Data.Database;
 using Boo.Lang.Compiler.TypeSystem;
 using System.Drawing;
 using Aura.Channel.Scripting.Scripts;
+using Aura.Mabi.Network;
 
 namespace Aura.Channel.World
 {

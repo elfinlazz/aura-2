@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.World.Entities;
+using Aura.Mabi.Network;
 using Aura.Shared.Network;
 
 namespace Aura.Channel.Skills.Base

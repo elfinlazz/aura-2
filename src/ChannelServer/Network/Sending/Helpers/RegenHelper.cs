@@ -3,6 +3,7 @@
 
 using Aura.Channel.World.Entities.Creatures;
 using Aura.Mabi.Const;
+using Aura.Mabi.Network;
 using Aura.Shared.Network;
 
 namespace Aura.Channel.Network.Sending.Helpers

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Aura.Shared.Util;
+using Aura.Mabi.Network;
 
 namespace Aura.Shared.Network
 {

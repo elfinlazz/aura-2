@@ -11,6 +11,7 @@ using Aura.Channel.Util;
 using Aura.Channel.Util.Configuration;
 using Aura.Channel.World;
 using Aura.Channel.World.Weather;
+using Aura.Mabi.Network;
 using Aura.Shared;
 using Aura.Shared.Database;
 using Aura.Shared.Network;

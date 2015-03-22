@@ -7,7 +7,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Aura.Shared.Network
+namespace Aura.Mabi.Network
 {
 	public enum PacketElementType : byte
 	{

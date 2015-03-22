@@ -11,6 +11,7 @@ using Aura.Mabi.Const;
 using Aura.Channel.World.Entities;
 using System;
 using Aura.Mabi;
+using Aura.Mabi.Network;
 
 namespace Aura.Channel.Network.Handlers
 {
