@@ -10,6 +10,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Aura.Shared.Mabi;
 
 namespace Aura.Login.Database
 {
@@ -104,6 +105,23 @@ namespace Aura.Login.Database
 			{
 				mc.Parameters.AddWithValue("@accountId", account.Name);
 				mc.Parameters.AddWithValue("@secondaryPassword", account.SecondaryPassword);
+
+				mc.ExecuteNonQuery();
+			}
+		}
+
+		/// <summary>
+		/// Resets password for account to its name.
+		/// </summary>
+		/// <param name="accName"></param>
+		/// <returns></returns>
+		public void SetAccountPassword(string accountName, string password)
+		{
+			using (var conn = this.Connection)
+			using (var mc = new MySqlCommand("UPDATE `accounts` SET `password` = @password WHERE `accountId` = @accountId", conn))
+			{
+				mc.Parameters.AddWithValue("@accountId", accountName);
+				mc.Parameters.AddWithValue("@password", Password.HashRaw(password));
 
 				mc.ExecuteNonQuery();
 			}
