@@ -55,7 +55,7 @@ public class BryceScript : NpcScript
 			case "@talk":
 				Greet();
 				Msg(Hide.Name, GetMoodString(), FavorExpression());
-				if (Player.Titles.SelectedTitle == 11002)
+				if (Title == 11002)
 				{
 					Msg("Guardian of Erinn...?<br/>You know, listening to over exaggerated rumors<br/>can be dangerous to you.");
 					Msg("Although, if anyone, you could<br/>probably fit that title...");
