@@ -41,6 +41,11 @@ namespace Aura.Login.Network.Handlers
 				var accountName2 = packet.GetString();
 			}
 
+			client.Ident = ident;
+
+			// Officials disconnect if the ident is wrong, we want to give a
+			// meaningful message, so we handle it in the next packet.
+
 			//if (ident != "WHO_Gives-A10211-799-107")
 			//{
 			//    Send.CheckIdentR(client, false);
@@ -77,6 +82,15 @@ namespace Aura.Login.Network.Handlers
 		[PacketHandler(Op.Login)]
 		public void Login(LoginClient client, Packet packet)
 		{
+			// Officially you're disconnected if your client's ident is incorrect,
+			// we give a meaningful message instead, because users commonly try
+			// to use Aura with non-NA clients.
+			if (!LoginServer.Instance.Conf.Login.IdentAllow.IsMatch(client.Ident))
+			{
+				Send.LoginR_Msg(client, "Unfortunately Aura doesn't support your client, please use the latest, updated NA client.\nIf you're the admin, you can disable this check in 'login.conf'.");
+				return;
+			}
+
 			var loginType = (LoginType)packet.GetByte();
 			var accountId = packet.GetString();
 			var password = "";

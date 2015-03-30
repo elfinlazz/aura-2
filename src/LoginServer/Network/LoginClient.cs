@@ -8,6 +8,7 @@ namespace Aura.Login.Network
 {
 	public class LoginClient : DefaultClient
 	{
+		public string Ident { get; set; }
 		public Account Account { get; set; }
 	}
 }

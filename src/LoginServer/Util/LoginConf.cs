@@ -4,6 +4,7 @@
 using Aura.Shared.Util;
 using Aura.Shared.Util.Configuration;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Aura.Login.Util
 {
@@ -44,6 +45,8 @@ namespace Aura.Login.Util
 		public int WebPort { get; protected set; }
 		public HashSet<string> TrustedSources { get; protected set; }
 
+		public Regex IdentAllow { get; protected set; }
+
 		public void Load()
 		{
 			this.Require("system/conf/login.conf");
@@ -64,6 +67,8 @@ namespace Aura.Login.Util
 			var trusted = this.GetString("trusted_sources", "127.0.0.1").Split(',');
 			foreach (var source in trusted)
 				this.TrustedSources.Add(source.Trim());
+
+			this.IdentAllow = new Regex(this.GetString("ident_allow", ""), RegexOptions.Compiled);
 		}
 
 		/// <summary>
