@@ -200,5 +200,23 @@ namespace Aura.Channel.Network.Handlers
 		public void UnkEsc(ChannelClient client, Packet packet)
 		{
 		}
+
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Purpose unknown, sent if character is "stuck" because of
+		/// incompatibilities or missing responses, commonly happens
+		/// after an update of creature info (5209).
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.IncompatibleUnk)]
+		public void IncompatibleUnk(ChannelClient client, Packet packet)
+		{
+			//Log.Unimplemented("5411");
+			Log.Warning("A client seems to be incompatible with the server, the latest version of Aura only supports the latest NA update. (Account id: {0})", client.Account.Id);
+		}
 	}
 }

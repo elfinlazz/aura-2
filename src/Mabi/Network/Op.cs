@@ -105,6 +105,7 @@ namespace Aura.Mabi.Network
 		public const int DeadFeather = 0x5403;
 		public const int UseGesture = 0x540E;
 		public const int UseGestureR = 0x540F;
+		public const int IncompatibleUnk = 0x5411;
 		public const int NpcTalkStart = 0x55F0;
 		public const int NpcTalkStartR = 0x55F1;
 		public const int NpcTalkEnd = 0x55F2;
