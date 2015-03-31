@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Aura.Mabi.Network;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Util
 {
@@ -77,7 +78,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "telewalk", "", HandleTeleWalk);
 
 			// Admins
-			Add(99, 99, "variant", "<xml_file>", HandleVariant);
+			Add(99, 99, "dynamic", "<variant>", HandleDynamic);
 			Add(99, -1, "reloaddata", "", HandleReloadData);
 			Add(99, -1, "reloadscripts", "", HandleReloadScripts);
 			Add(99, -1, "reloadconf", "", HandleReloadConf);
@@ -464,36 +465,52 @@ namespace Aura.Channel.Util
 			}
 		}
 
-		private CommandResult HandleVariant(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		private CommandResult HandleDynamic(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
 		{
 			if (args.Count < 2)
 				return CommandResult.InvalidArgument;
 
-			var actualId = 1;
-			var dynamicId = 35001;
-			var x = 12800;
-			var y = 38100;
+			var variant = args[1];
+			if (variant.EndsWith(".xml"))
+				variant = variant.Substring(0, variant.Length - 4);
 
-			ChannelServer.Instance.World.AddRegion(35001);
-			sender.SetLocation(dynamicId, x, y);
-			sender.Warping = true;
+			var baseRegionId = target.RegionId;
+			var regionData = AuraData.RegionDb.Find(baseRegionId);
 
-			var pp = new Packet(0x0000A97E, MabiId.Broadcast);
-			pp.PutLong(sender.EntityId);
-			pp.PutInt(actualId);
-			pp.PutInt(dynamicId);
-			pp.PutInt(x);
-			pp.PutInt(y);
+			if (regionData == null)
+				return CommandResult.Fail;
+
+			var regionName = regionData.Name.ToLower();
+
+			var region = new DynamicRegion(baseRegionId, variant);
+			var dynamicRegionId = region.Id;
+			ChannelServer.Instance.World.AddRegion(region);
+
+			var pos = target.GetPosition();
+
+			// Warp()
+			target.LastLocation = new Location(target.RegionId, pos);
+			target.SetLocation(region.Id, pos.X, pos.Y);
+			target.Warping = true;
+			Send.CharacterLock(target, Locks.Default);
+
+			//Send.EnterRegion(this);
+			var pp = new Packet(Op.VariantWarp, MabiId.Broadcast);
+			pp.PutLong(target.EntityId);
+			pp.PutInt(baseRegionId);
+			pp.PutInt(dynamicRegionId);
+			pp.PutInt(pos.X);
+			pp.PutInt(pos.Y);
 			pp.PutInt(0);
 			pp.PutInt(1);
-			pp.PutInt(dynamicId);
-			pp.PutString("DynamicRegion" + dynamicId);
+			pp.PutInt(dynamicRegionId);
+			pp.PutString("DynamicRegion" + dynamicRegionId);
 			pp.PutUInt(0x80000001);
-			pp.PutInt(1);
-			pp.PutString("uladh_main");
+			pp.PutInt(baseRegionId);
+			pp.PutString(regionName);
 			pp.PutInt(200);
 			pp.PutByte(0);
-			pp.PutString("data/world/uladh_main/" + args[1] + ".xml"); // region_variation_797208
+			pp.PutString(string.IsNullOrWhiteSpace(variant) ? "" : "data/world/{0}/{1}.xml", regionName, variant);
 
 			client.Send(pp);
 
