@@ -467,7 +467,7 @@ namespace Aura.Channel.Util
 
 		private CommandResult HandleDynamic(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
 		{
-			string variant = null;
+			string variant = "";
 
 			if (args.Count > 1)
 				variant = args[1];
