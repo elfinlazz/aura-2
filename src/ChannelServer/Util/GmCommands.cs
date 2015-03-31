@@ -498,20 +498,22 @@ namespace Aura.Channel.Util
 			//Send.EnterRegion(this);
 			var pp = new Packet(Op.VariantWarp, MabiId.Broadcast);
 			pp.PutLong(target.EntityId);
-			pp.PutInt(baseRegionId);
-			pp.PutInt(dynamicRegionId);
-			pp.PutInt(pos.X);
-			pp.PutInt(pos.Y);
+			pp.PutInt(baseRegionId); // creature's current region?
+			pp.PutInt(dynamicRegionId); // target region id
+			pp.PutInt(pos.X); // target x pos
+			pp.PutInt(pos.Y); // target y pos
 			pp.PutInt(0);
-			pp.PutInt(1);
-			pp.PutInt(dynamicRegionId);
-			pp.PutString("DynamicRegion" + dynamicRegionId);
-			pp.PutUInt(0x80000001);
-			pp.PutInt(baseRegionId);
-			pp.PutString(regionName);
-			pp.PutInt(200);
-			pp.PutByte(0);
-			pp.PutString(string.IsNullOrWhiteSpace(variant) ? "" : "data/world/{0}/{1}.xml", regionName, variant);
+			pp.PutInt(1); // count
+			{
+				pp.PutInt(dynamicRegionId);
+				pp.PutString("DynamicRegion" + dynamicRegionId);
+				pp.PutUInt(0x80000001);
+				pp.PutInt(baseRegionId);
+				pp.PutString(regionName);
+				pp.PutInt(200);
+				pp.PutByte(0);
+				pp.PutString(string.IsNullOrWhiteSpace(variant) ? "" : "data/world/{0}/{1}.xml", regionName, variant);
+			}
 
 			client.Send(pp);
 
