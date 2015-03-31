@@ -14,6 +14,12 @@ namespace Aura.Channel.World
 		public int BaseId { get; protected set; }
 		public string Variant { get; protected set; }
 
+		/// <summary>
+		/// Creates new dynamic region, based on regionId and variant.
+		/// Region is automatically added to the dynamic region manager.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="variant"></param>
 		public DynamicRegion(int regionId, string variant = null)
 			: base(regionId)
 		{

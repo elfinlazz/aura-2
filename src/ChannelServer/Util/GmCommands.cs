@@ -514,6 +514,8 @@ namespace Aura.Channel.Util
 
 			client.Send(pp);
 
+			Send.ServerMessage(sender, Localization.Get("Created new region based on region {0}, new region's id: {1}"), baseRegionId, dynamicRegionId);
+
 			return CommandResult.Okay;
 		}
 
