@@ -137,18 +137,23 @@ namespace Aura.Channel.World.Entities
 		/// <param name="title"></param>
 		/// <param name="extra"></param>
 		/// <param name="id"></param>
-		/// <param name="region"></param>
+		/// <param name="regionId"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="direction"></param>
 		/// <param name="scale"></param>
 		/// <param name="altitude"></param>
-		public Prop(string name, string title, string extra, int id, int region, int x, int y, float direction, float scale = 1, float altitude = 0)
-			: this(0, name, title, id, region, x, y, direction, scale, altitude)
+		public Prop(string name, string title, string extra, int id, int regionId, int x, int y, float direction, float scale = 1, float altitude = 0)
+			: this(0, name, title, id, regionId, x, y, direction, scale, altitude)
 		{
 			this.EntityId = Interlocked.Increment(ref _propId);
-			this.EntityId += (long)region << 32;
-			this.EntityId += AuraData.RegionInfoDb.GetAreaId(region, x, y) << 16;
+			this.EntityId += (long)regionId << 32;
+
+			var region = ChannelServer.Instance.World.GetRegion(regionId);
+			if (region == null)
+				throw new ArgumentException("Region '" + regionId + "' doesn't exist.");
+
+			this.EntityId += region.RegionInfoData.GetAreaId(x, y) << 16;
 		}
 
 		/// <summary>

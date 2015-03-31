@@ -34,7 +34,7 @@ namespace Aura.Channel.World
 
 		protected HashSet<ChannelClient> _clients;
 
-		protected RegionInfoData _regionData;
+		public RegionInfoData RegionInfoData { get; protected set; }
 
 		/// <summary>
 		/// Region's id
@@ -62,14 +62,14 @@ namespace Aura.Channel.World
 
 			this.Collisions = new RegionCollision();
 
-			_regionData = AuraData.RegionInfoDb.Find(this.Id);
-			if (_regionData == null)
+			this.RegionInfoData = AuraData.RegionInfoDb.Find(this.Id);
+			if (this.RegionInfoData == null)
 			{
 				Log.Warning("Region: No data found for '{0}'.", this.Id);
 				return;
 			}
 
-			this.Collisions.Init(_regionData);
+			this.Collisions.Init(this.RegionInfoData);
 
 			this.LoadClientProps();
 		}
@@ -79,10 +79,10 @@ namespace Aura.Channel.World
 		/// </summary>
 		private void LoadClientProps()
 		{
-			if (_regionData == null || _regionData.Areas == null)
+			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
 				return;
 
-			foreach (var area in _regionData.Areas.Values)
+			foreach (var area in this.RegionInfoData.Areas.Values)
 			{
 				foreach (var prop in area.Props.Values)
 				{

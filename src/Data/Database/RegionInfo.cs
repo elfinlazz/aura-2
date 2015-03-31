@@ -19,6 +19,23 @@ namespace Aura.Data.Database
 		public int X2 { get; set; }
 		public int Y2 { get; set; }
 		public Dictionary<int, AreaData> Areas { get; set; }
+
+		/// <summary>
+		/// Returns id of area at the given coordinates, or 0 if area wasn't found.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public int GetAreaId(int x, int y)
+		{
+			foreach (var area in this.Areas.Values)
+			{
+				if (x >= Math.Min(area.X1, area.X2) && x <= Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y <= Math.Max(area.Y1, area.Y2))
+					return area.Id;
+			}
+
+			return 0;
+		}
 	}
 
 	public class AreaData
@@ -185,13 +202,7 @@ namespace Aura.Data.Database
 			if (ri == null)
 				return int.MaxValue;
 
-			foreach (var area in ri.Areas.Values)
-			{
-				if (x >= Math.Min(area.X1, area.X2) && x <= Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y <= Math.Max(area.Y1, area.Y2))
-					return area.Id;
-			}
-
-			return 0;
+			return ri.GetAreaId(x, y);
 		}
 
 		/// <summary>
