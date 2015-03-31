@@ -35,7 +35,7 @@ namespace Aura.Channel.World
 		public void Add(DynamicRegion dynamicRegion)
 		{
 			lock (_regions)
-				_regions.Add(dynamicRegion.BaseId, dynamicRegion);
+				_regions.Add(dynamicRegion.Id, dynamicRegion);
 		}
 
 		/// <summary>
