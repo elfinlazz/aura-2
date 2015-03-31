@@ -39,6 +39,23 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Removes dynamic region from internal list, which is used to find
+		/// available ids, and from the world.
+		/// </summary>
+		/// <remarks>
+		/// TODO: We should probbaly add a fail-safe for when players are still
+		///   in there, here or in World.
+		/// </remarks>
+		/// <param name="dynamicRegionId"></param>
+		public void Remove(int dynamicRegionId)
+		{
+			lock (_regions)
+				_regions.Remove(dynamicRegionId);
+
+			ChannelServer.Instance.World.RemoveRegion(dynamicRegionId);
+		}
+
+		/// <summary>
 		/// Returns a free dynamic region id.
 		/// </summary>
 		/// <returns></returns>
