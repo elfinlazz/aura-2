@@ -46,6 +46,9 @@ namespace Aura.Mabi.Const
 		// Default type for pet/partner cards.
 		public const int PetCardType = 102;
 
+		// Start of the dynamic regions id range
+		public const int DynamicRegions = 35001;
+
 		// NPCs
 		public const long Nao = 0x0010FFFFFFFFFFFF;
 		public const long Tin = 0x0010FFFFFFFFFFFE;
