@@ -251,7 +251,8 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public bool HasRegion(int regionId)
 		{
-			return _regions.ContainsKey(regionId);
+			lock (_regions)
+				return _regions.ContainsKey(regionId);
 		}
 
 		/// <summary>
@@ -262,7 +263,12 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public Prop GetProp(long id)
 		{
-			return _regions.Values.Select(region => region.GetProp(id)).FirstOrDefault(prop => prop != null);
+			var regionId = (int)((id >> 32) & ~0xFFFF0000);
+			var region = this.GetRegion(regionId);
+			if (region == null)
+				return null;
+
+			return region.GetProp(id);
 		}
 
 		/// <summary>
@@ -272,7 +278,8 @@ namespace Aura.Channel.World
 		/// <returns></returns>
 		public PlayerCreature GetPlayer(string name)
 		{
-			return _regions.Values.Select(region => region.GetPlayer(name)).FirstOrDefault(creature => creature != null);
+			lock (_regions)
+				return _regions.Values.Select(region => region.GetPlayer(name)).FirstOrDefault(creature => creature != null);
 		}
 
 		/// <summary>
@@ -283,8 +290,9 @@ namespace Aura.Channel.World
 		{
 			var result = new List<Creature>();
 
-			foreach (var region in _regions.Values)
-				result.AddRange(region.GetAllPlayers());
+			lock (_regions)
+				foreach (var region in _regions.Values)
+					result.AddRange(region.GetAllPlayers());
 
 			return result;
 		}

@@ -495,7 +495,7 @@ namespace Aura.Channel.World
 			_propsRWLS.EnterWriteLock();
 			try
 			{
-				_props.Add(prop.EntityId, prop);
+				_props.Add(prop.SubEntityId, prop);
 			}
 			finally
 			{
@@ -522,7 +522,7 @@ namespace Aura.Channel.World
 			_propsRWLS.EnterWriteLock();
 			try
 			{
-				_props.Remove(prop.EntityId);
+				_props.Remove(prop.SubEntityId);
 			}
 			finally
 			{
@@ -541,10 +541,13 @@ namespace Aura.Channel.World
 		{
 			Prop result;
 
+			// Doc: See Prop.SubEntityId
+			var subEntityId = entityId & ~0x0000FFFF00000000;
+
 			_propsRWLS.EnterReadLock();
 			try
 			{
-				_props.TryGetValue(entityId, out result);
+				_props.TryGetValue(subEntityId, out result);
 			}
 			finally
 			{
