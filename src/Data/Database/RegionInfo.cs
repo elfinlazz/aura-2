@@ -10,7 +10,7 @@ using Aura.Mabi.Const;
 
 namespace Aura.Data.Database
 {
-	public class RegionData
+	public class RegionInfoData
 	{
 		public int Id { get; set; }
 		public int GroupId { get; set; }
@@ -96,7 +96,7 @@ namespace Aura.Data.Database
 		public string XML { get; set; }
 	}
 
-	public class RegionInfoDb : DatabaseDatIndexed<int, RegionData>
+	public class RegionInfoDb : DatabaseDatIndexed<int, RegionInfoData>
 	{
 		public Dictionary<long, PropData> PropEntries = new Dictionary<long, PropData>();
 		public Dictionary<long, EventData> EventEntries = new Dictionary<long, EventData>();
@@ -213,7 +213,7 @@ namespace Aura.Data.Database
 			var cRegions = br.ReadInt32();
 			for (int l = 0; l < cRegions; ++l)
 			{
-				var ri = new RegionData();
+				var ri = new RegionInfoData();
 
 				ri.Id = br.ReadInt32();
 				ri.GroupId = br.ReadInt32();

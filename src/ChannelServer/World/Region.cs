@@ -34,7 +34,7 @@ namespace Aura.Channel.World
 
 		protected HashSet<ChannelClient> _clients;
 
-		protected RegionData _regionData;
+		protected RegionInfoData _regionData;
 
 		/// <summary>
 		/// Region's id
