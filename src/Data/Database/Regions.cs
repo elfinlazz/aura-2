@@ -7,18 +7,18 @@ using System.Linq;
 namespace Aura.Data.Database
 {
 	[Serializable]
-	public class MapData
+	public class RegionData
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
 	}
 
 	/// <summary>
-	/// Indexed by map name.
+	/// Indexed by region name.
 	/// </summary>
-	public class RegionDb : DatabaseCsvIndexed<string, MapData>
+	public class RegionDb : DatabaseCsvIndexed<string, RegionData>
 	{
-		public MapData Find(uint id)
+		public RegionData Find(uint id)
 		{
 			return this.Entries.FirstOrDefault(a => a.Value.Id == id).Value;
 		}
@@ -39,7 +39,7 @@ namespace Aura.Data.Database
 		[MinFieldCount(2)]
 		protected override void ReadEntry(CsvEntry entry)
 		{
-			var info = new MapData();
+			var info = new RegionData();
 			info.Id = entry.ReadInt();
 			info.Name = entry.ReadString();
 
