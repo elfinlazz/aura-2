@@ -78,7 +78,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "telewalk", "", HandleTeleWalk);
 
 			// Admins
-			Add(99, 99, "dynamic", "<variant>", HandleDynamic);
+			Add(99, 99, "dynamic", "[variant]", HandleDynamic);
 			Add(99, -1, "reloaddata", "", HandleReloadData);
 			Add(99, -1, "reloadscripts", "", HandleReloadScripts);
 			Add(99, -1, "reloadconf", "", HandleReloadConf);
@@ -467,10 +467,11 @@ namespace Aura.Channel.Util
 
 		private CommandResult HandleDynamic(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
 		{
-			if (args.Count < 2)
-				return CommandResult.InvalidArgument;
+			string variant = null;
 
-			var variant = args[1];
+			if (args.Count > 1)
+				variant = args[1];
+
 			if (variant.EndsWith(".xml"))
 				variant = variant.Substring(0, variant.Length - 4);
 
