@@ -388,7 +388,7 @@ namespace Aura.Mabi.Network
 		// [190100, NA198 (11.12.2014)] End of above's shift?
 
 		public const int DungeonInfo = 0x9470;
-		public const int DynamicWarp = 0x9571;
+		public const int DynamicWarp = 0x9571; // Creates one dynamic region and warps there
 		public const int ArenaRoundInfo = 0x9667;
 		public const int ArenaRoundInfoCancel = 0x9668;
 		public const int AgeUpEffect = 0x9858;
@@ -429,7 +429,7 @@ namespace Aura.Mabi.Network
 		public const int UmbrellaLand = 0xA8E2;
 		public const int SetBgm = 0xA910;
 		public const int UnsetBgm = 0xA911;
-		public const int VariantWarp = 0xA97E;
+		public const int VariantWarp = 0xA97E; // Creates multiple dynamic regions and warps to one
 		public const int EnableRoyalAlchemist = 0xA9A3;
 		public const int SosButtonRequest = 0xA9A9;
 		public const int SosButtonRequestR = 0xA9AA;

@@ -470,18 +470,18 @@ namespace Aura.Channel.Util
 			string variant = "";
 
 			if (args.Count > 1)
+			{
 				variant = args[1];
 
-			if (variant.EndsWith(".xml"))
-				variant = variant.Substring(0, variant.Length - 4);
+				if (!variant.EndsWith(".xml"))
+					variant += ".xml";
+			}
 
 			var baseRegionId = target.RegionId;
 			var regionData = AuraData.RegionDb.Find(baseRegionId);
 
 			if (regionData == null)
 				return CommandResult.Fail;
-
-			var regionName = regionData.Name.ToLower();
 
 			var region = new DynamicRegion(baseRegionId, variant);
 			var dynamicRegionId = region.Id;
@@ -498,22 +498,37 @@ namespace Aura.Channel.Util
 			//Send.EnterRegion(this);
 			var pp = new Packet(Op.VariantWarp, MabiId.Broadcast);
 			pp.PutLong(target.EntityId);
-			pp.PutInt(baseRegionId); // creature's current region?
-			pp.PutInt(dynamicRegionId); // target region id
-			pp.PutInt(pos.X); // target x pos
-			pp.PutInt(pos.Y); // target y pos
-			pp.PutInt(0);
-			pp.PutInt(1); // count
+			pp.PutInt(baseRegionId); // creature's current region or 0?
+			// VariantWarp
+			{
+				pp.PutInt(dynamicRegionId); // target region id
+				pp.PutInt(pos.X); // target x pos
+				pp.PutInt(pos.Y); // target y pos
+				pp.PutInt(0); // 0|4|8|16
+				pp.PutInt(1); // count of dynamic regions v
+			}
+			// VariantWarp|DynamicWarp
 			{
 				pp.PutInt(dynamicRegionId);
-				pp.PutString("DynamicRegion" + dynamicRegionId);
-				pp.PutUInt(0x80000001);
+				pp.PutString("DynamicRegion" + dynamicRegionId); // dynamic region name
+				pp.PutUInt(0x80000001); // bitmask?
 				pp.PutInt(baseRegionId);
-				pp.PutString(regionName);
-				pp.PutInt(200);
-				pp.PutByte(0);
-				pp.PutString(string.IsNullOrWhiteSpace(variant) ? "" : "data/world/{0}/{1}.xml", regionName, variant);
+				pp.PutString(regionData.Name);
+				pp.PutInt(200); // 100|200
+				pp.PutByte(0); // 1 = next is empty?
+				pp.PutString("data/world/{0}/{1}", regionData.Name, variant);
 			}
+			// DynamicWarp
+			//{
+			//	pp.PutByte(0);
+			//	//if (^ true)
+			//	//{
+			//	//	pp.PutByte(1);
+			//	//	pp.PutInt(3100); // some region id?
+			//	//}
+			//	pp.PutInt(pos.X); // target x pos
+			//	pp.PutInt(pos.Y); // target y pos
+			//}
 
 			client.Send(pp);
 
