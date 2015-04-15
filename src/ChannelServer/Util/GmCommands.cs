@@ -227,7 +227,9 @@ namespace Aura.Channel.Util
 				? Localization.Get("You're here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4} (Radian: {6})")
 				: Localization.Get("{3} is here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4} (Radian: {6})");
 
-			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name, target.Direction, AuraData.RegionInfoDb.GetAreaId(target.RegionId, pos.X, pos.Y), MabiMath.ByteToRadian(target.Direction).ToInvariant("#.###"));
+			var areaId = target.Region.RegionInfoData.GetAreaId(pos.X, pos.Y);
+
+			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name, target.Direction, areaId, MabiMath.ByteToRadian(target.Direction).ToInvariant("#.###"));
 
 			return CommandResult.Okay;
 		}
@@ -278,8 +280,16 @@ namespace Aura.Channel.Util
 				return CommandResult.InvalidArgument;
 			}
 
-			// Random coordinates if none were specified
-			if (x == -1 || y == -1)
+			// Same coordinates if warping back from a dynamic region,
+			// random coordinates if none were specified in a normal warp.
+			var dynamic = target.Region as DynamicRegion;
+			if (dynamic != null && dynamic.BaseId == regionId)
+			{
+				var pos = target.GetPosition();
+				x = pos.X;
+				y = pos.Y;
+			}
+			else if (x == -1 || y == -1)
 			{
 				var rndc = AuraData.RegionInfoDb.RandomCoord(regionId);
 				if (x < 0) x = rndc.X;
