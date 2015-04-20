@@ -258,7 +258,8 @@ namespace Aura.Channel.Util
 				regionId = target.RegionId;
 
 			// Check region
-			if (warp && !ChannelServer.Instance.World.HasRegion(regionId))
+			var warpToRegion = ChannelServer.Instance.World.GetRegion(regionId);
+			if (warp && warpToRegion == null)
 			{
 				Send.ServerMessage(sender, Localization.Get("Region doesn't exist."));
 				return CommandResult.Fail;
@@ -282,7 +283,7 @@ namespace Aura.Channel.Util
 
 			// Same coordinates if warping back from a dynamic region,
 			// random coordinates if none were specified in a normal warp.
-			if (target.Region.IsDynamic != null && target.Region.BaseId == regionId)
+			if ((target.Region.IsDynamic && target.Region.BaseId == regionId) || (warpToRegion.IsDynamic && warpToRegion.BaseId == target.RegionId))
 			{
 				var pos = target.GetPosition();
 				x = pos.X;
@@ -497,48 +498,7 @@ namespace Aura.Channel.Util
 
 			var pos = target.GetPosition();
 
-			// Warp()
-			target.LastLocation = new Location(target.RegionId, pos);
-			target.SetLocation(region.Id, pos.X, pos.Y);
-			target.Warping = true;
-			Send.CharacterLock(target, Locks.Default);
-
-			//Send.EnterRegion(this);
-			var pp = new Packet(Op.VariantWarp, MabiId.Broadcast);
-			pp.PutLong(target.EntityId);
-			pp.PutInt(baseRegionId); // creature's current region or 0?
-			// VariantWarp
-			{
-				pp.PutInt(region.Id); // target region id
-				pp.PutInt(pos.X); // target x pos
-				pp.PutInt(pos.Y); // target y pos
-				pp.PutInt(0); // 0|4|8|16
-				pp.PutInt(1); // count of dynamic regions v
-			}
-			// VariantWarp|DynamicWarp
-			{
-				pp.PutInt(region.Id);
-				pp.PutString("DynamicRegion" + region.Id); // dynamic region name
-				pp.PutUInt(0x80000001); // bitmask?
-				pp.PutInt(baseRegionId);
-				pp.PutString(regionData.Name);
-				pp.PutInt(200); // 100|200
-				pp.PutByte(0); // 1 = next is empty?
-				pp.PutString("data/world/{0}/{1}", regionData.Name, variant);
-			}
-			// DynamicWarp
-			//{
-			//	pp.PutByte(0);
-			//	//if (^ true)
-			//	//{
-			//	//	pp.PutByte(1);
-			//	//	pp.PutInt(3100); // some region id?
-			//	//}
-			//	pp.PutInt(pos.X); // target x pos
-			//	pp.PutInt(pos.Y); // target y pos
-			//}
-
-			client.Send(pp);
+			target.Warp(region.Id, pos.X, pos.Y);
 
 			Send.ServerMessage(sender, Localization.Get("Created new region based on region {0}, new region's id: {1}"), baseRegionId, region.Id);
 

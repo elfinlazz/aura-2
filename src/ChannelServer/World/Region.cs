@@ -47,6 +47,16 @@ namespace Aura.Channel.World
 		public RegionInfoData RegionInfoData { get; protected set; }
 
 		/// <summary>
+		/// Region's name
+		/// </summary>
+		public string Name { get; protected set; }
+
+		/// <summary>
+		/// Name of the region this one is based on (dynamics)
+		/// </summary>
+		public string BaseName { get; protected set; }
+
+		/// <summary>
 		/// Region's id
 		/// </summary>
 		public int Id { get; protected set; }
@@ -142,6 +152,12 @@ namespace Aura.Channel.World
 		{
 			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
 				return;
+
+			var regionData = AuraData.RegionDb.Find(this.BaseId);
+			if (regionData != null)
+				this.BaseName = regionData.Name;
+
+			this.Name = (this.IsDynamic ? "Dynamic" + this.Id : this.BaseName);
 
 			this.Collisions.Init(this.RegionInfoData);
 
