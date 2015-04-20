@@ -73,7 +73,7 @@ namespace Aura.Channel.Network.Sending
 
 			packet.PutInt(warpToRegion.Id);
 			packet.PutString(warpToRegion.Name); // dynamic region name
-			packet.PutUInt(0x80000001); // bitmask?
+			packet.PutUInt(0x80000000); // bitmask? (|1 = time difference?)
 			packet.PutInt(warpToRegion.BaseId);
 			packet.PutString(warpToRegion.BaseName);
 			packet.PutInt(200); // 100|200
