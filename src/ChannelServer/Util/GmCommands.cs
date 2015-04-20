@@ -291,7 +291,7 @@ namespace Aura.Channel.Util
 			}
 			else if (x == -1 || y == -1)
 			{
-				var rndc = AuraData.RegionInfoDb.RandomCoord(regionId);
+				var rndc = AuraData.RegionInfoDb.RandomCoord(warpToRegion.BaseId);
 				if (x < 0) x = rndc.X;
 				if (y < 0) y = rndc.Y;
 			}
