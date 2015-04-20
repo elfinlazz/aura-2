@@ -283,7 +283,7 @@ namespace Aura.Channel.Util
 
 			// Same coordinates if warping back from a dynamic region,
 			// random coordinates if none were specified in a normal warp.
-			if ((target.Region.IsDynamic && target.Region.BaseId == regionId) || (warpToRegion.IsDynamic && warpToRegion.BaseId == target.RegionId))
+			if ((target.Region.IsDynamic || warpToRegion.IsDynamic) && (warpToRegion.BaseId == target.Region.BaseId))
 			{
 				var pos = target.GetPosition();
 				x = pos.X;
