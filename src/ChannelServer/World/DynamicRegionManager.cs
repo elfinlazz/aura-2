@@ -16,14 +16,14 @@ namespace Aura.Channel.World
 	/// </summary>
 	public class DynamicRegionManager
 	{
-		private Dictionary<int, DynamicRegion> _regions;
+		private Dictionary<int, Region> _regions;
 
 		/// <summary>
 		/// Creates new dynamic region manager.
 		/// </summary>
 		public DynamicRegionManager()
 		{
-			_regions = new Dictionary<int, DynamicRegion>();
+			_regions = new Dictionary<int, Region>();
 		}
 
 		/// <summary>
@@ -32,7 +32,7 @@ namespace Aura.Channel.World
 		/// when you create a new instance of DynamicRegion.
 		/// </summary>
 		/// <param name="dynamicRegion"></param>
-		public void Add(DynamicRegion dynamicRegion)
+		public void Add(Region dynamicRegion)
 		{
 			lock (_regions)
 				_regions.Add(dynamicRegion.Id, dynamicRegion);

@@ -52,17 +52,37 @@ namespace Aura.Channel.World
 		public int Id { get; protected set; }
 
 		/// <summary>
+		/// Id of the region this one is based on (dynamics)
+		/// </summary>
+		public int BaseId { get; protected set; }
+
+		/// <summary>
+		/// Variation file used for this region (dynamics)
+		/// </summary>
+		public string Variation { get; protected set; }
+
+		/// <summary>
+		/// Returns true if this is a dynamic region.
+		/// </summary>
+		public bool IsDynamic { get { return this.Id != this.BaseId; } }
+
+		/// <summary>
 		/// Manager for blocking objects in the region.
 		/// </summary>
 		public RegionCollision Collisions { get; protected set; }
 
-		public Region(int id)
+		/// <summary>
+		/// Creates new region by id.
+		/// </summary>
+		/// <param name="regionId"></param>
+		private Region(int regionId)
 		{
 			_creaturesRWLS = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 			_propsRWLS = new ReaderWriterLockSlim();
 			_itemsRWLS = new ReaderWriterLockSlim();
 
-			this.Id = id;
+			this.Id = regionId;
+			this.BaseId = regionId;
 
 			_areas = new List<AreaData>();
 
@@ -80,18 +100,51 @@ namespace Aura.Channel.World
 				Log.Warning("Region: No data found for '{0}'.", this.Id);
 				return;
 			}
+		}
 
-			this.Collisions.Init(this.RegionInfoData);
+		/// <summary>
+		/// Creates new region by id.
+		/// </summary>
+		/// <param name="regionId"></param>
+		public static Region CreateNormal(int regionId)
+		{
+			var region = new Region(regionId);
 
-			this.LoadRegionFromData();
+			region.InitializeFromData();
+
+			return region;
+		}
+
+		/// <summary>
+		/// Creates new dynamic region, based on regionId and variant.
+		/// Region is automatically added to the dynamic region manager.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="variation"></param>
+		public static Region CreateDynamic(int baseRegionId, string variation)
+		{
+			var region = new Region(baseRegionId);
+			region.Id = ChannelServer.Instance.World.DynamicRegions.GetFreeDynamicRegionId();
+			region.Variation = variation;
+
+			region.InitializeFromData();
+
+			ChannelServer.Instance.World.DynamicRegions.Add(region);
+
+			return region;
 		}
 
 		/// <summary>
 		/// Adds all props found in the client for this region and creates a list
 		/// of areas.
 		/// </summary>
-		protected virtual void LoadRegionFromData()
+		protected void InitializeFromData()
 		{
+			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
+				return;
+
+			this.Collisions.Init(this.RegionInfoData);
+
 			this.LoadAreas();
 			this.LoadProps();
 		}
@@ -99,11 +152,8 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Creates a list of all areas.
 		/// </summary>
-		protected virtual void LoadAreas()
+		protected void LoadAreas()
 		{
-			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
-				return;
-
 			foreach (var area in this.RegionInfoData.Areas)
 			{
 				var newArea = new AreaData() { Id = area.Id, X1 = area.X1, Y1 = area.Y1, X2 = area.X2, Y2 = area.Y2 };
@@ -115,16 +165,20 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Adds all props found in the client for this region.
 		/// </summary>
-		protected virtual void LoadProps()
+		protected void LoadProps()
 		{
-			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
-				return;
-
 			foreach (var area in this.RegionInfoData.Areas)
 			{
 				foreach (var prop in area.Props.Values)
 				{
-					var add = new Prop(prop.EntityId, "", "", prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0);
+					// Use the id given by the client data as base, but replace
+					// region and area ids in case of this being a dynamic region.
+					var entityId = (ulong)prop.EntityId;
+					entityId &= ~0x0000FFFFFFFF0000U;
+					entityId |= ((ulong)this.Id << 32);
+					entityId |= ((ulong)this.GetAreaId(prop.EntityId) << 16);
+
+					var add = new Prop((long)entityId, "", "", prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0);
 
 					// Add drop behaviour if drop type exists
 					var dropType = prop.GetDropType();
@@ -136,20 +190,69 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
-		/// Returns id of area at the given coordinates, or 0 if area wasn't found.
+		/// Extracts area id from prop entity id and adjusts it if region is dynamic.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		private int GetAreaId(long entityId)
+		{
+			var areaId = (int)(((ulong)entityId & ~0xFFFFFFFF0000FFFF) >> 16);
+
+			areaId = this.AdjustAreaIdForDynamics(areaId);
+
+			return areaId;
+		}
+
+		/// <summary>
+		/// Returns id of area at the given coordinates and adjusts it if region is dynamic, or 0 if area wasn't found.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <returns></returns>
 		public int GetAreaId(int x, int y)
 		{
+			var areaId = 0;
+
 			foreach (var area in _areas)
 			{
-				if (x >= Math.Min(area.X1, area.X2) && x <= Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y <= Math.Max(area.Y1, area.Y2))
-					return area.Id;
+				if (x >= Math.Min(area.X1, area.X2) && x < Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y < Math.Max(area.Y1, area.Y2))
+					areaId = area.Id;
 			}
 
-			return 0;
+			areaId = this.AdjustAreaIdForDynamics(areaId);
+
+			return areaId;
+		}
+
+		/// <summary>
+		/// Changes area id, if necessary, for dynamic regions.
+		/// </summary>
+		/// <remarks>
+		/// Areas in the client files aren't in order, it can be id 1, 2, 3,
+		/// but it can just as well be 2, 1, 3. When the client creates a dynamic
+		/// region it changes the ids to be order, so 2, 1, 3 would become
+		/// 1, 2, 3 in the dynamic version. We have to mimic this to get the
+		/// correct ids for the props. Genius system, thanks, devCAT.
+		/// 
+		/// What we do here is returning the index of the area in the list.
+		/// </remarks>
+		/// <param name="areaId"></param>
+		/// <returns></returns>
+		private int AdjustAreaIdForDynamics(int areaId)
+		{
+			if (!this.IsDynamic)
+				return areaId;
+
+			var id = 1;
+			foreach (var area in _areas)
+			{
+				if (area.Id == areaId)
+					return id;
+
+				id++;
+			}
+
+			throw new Exception("Area '" + areaId + "' not found in '" + this.BaseId + "'.");
 		}
 
 		/// <summary>

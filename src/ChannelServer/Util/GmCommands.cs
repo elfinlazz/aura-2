@@ -282,8 +282,7 @@ namespace Aura.Channel.Util
 
 			// Same coordinates if warping back from a dynamic region,
 			// random coordinates if none were specified in a normal warp.
-			var dynamic = target.Region as DynamicRegion;
-			if (dynamic != null && dynamic.BaseId == regionId)
+			if (target.Region.IsDynamic != null && target.Region.BaseId == regionId)
 			{
 				var pos = target.GetPosition();
 				x = pos.X;
@@ -493,8 +492,7 @@ namespace Aura.Channel.Util
 			if (regionData == null)
 				return CommandResult.Fail;
 
-			var region = new DynamicRegion(baseRegionId, variant);
-			var dynamicRegionId = region.Id;
+			var region = Region.CreateDynamic(baseRegionId, variant);
 			ChannelServer.Instance.World.AddRegion(region);
 
 			var pos = target.GetPosition();
@@ -511,7 +509,7 @@ namespace Aura.Channel.Util
 			pp.PutInt(baseRegionId); // creature's current region or 0?
 			// VariantWarp
 			{
-				pp.PutInt(dynamicRegionId); // target region id
+				pp.PutInt(region.Id); // target region id
 				pp.PutInt(pos.X); // target x pos
 				pp.PutInt(pos.Y); // target y pos
 				pp.PutInt(0); // 0|4|8|16
@@ -519,8 +517,8 @@ namespace Aura.Channel.Util
 			}
 			// VariantWarp|DynamicWarp
 			{
-				pp.PutInt(dynamicRegionId);
-				pp.PutString("DynamicRegion" + dynamicRegionId); // dynamic region name
+				pp.PutInt(region.Id);
+				pp.PutString("DynamicRegion" + region.Id); // dynamic region name
 				pp.PutUInt(0x80000001); // bitmask?
 				pp.PutInt(baseRegionId);
 				pp.PutString(regionData.Name);
@@ -542,7 +540,7 @@ namespace Aura.Channel.Util
 
 			client.Send(pp);
 
-			Send.ServerMessage(sender, Localization.Get("Created new region based on region {0}, new region's id: {1}"), baseRegionId, dynamicRegionId);
+			Send.ServerMessage(sender, Localization.Get("Created new region based on region {0}, new region's id: {1}"), baseRegionId, region.Id);
 
 			return CommandResult.Okay;
 		}
