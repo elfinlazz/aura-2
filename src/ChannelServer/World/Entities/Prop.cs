@@ -165,7 +165,7 @@ namespace Aura.Channel.World.Entities
 			if (region == null)
 				throw new ArgumentException("Region '" + regionId + "' doesn't exist.");
 
-			this.EntityId += region.RegionInfoData.GetAreaId(x, y) << 16;
+			this.EntityId += region.GetAreaId(x, y) << 16;
 		}
 
 		/// <summary>

@@ -28,6 +28,16 @@ namespace Aura.Channel.World
 
 		protected ReaderWriterLockSlim _creaturesRWLS, _propsRWLS, _itemsRWLS;
 
+		/// <summary>
+		/// List of areas in this region
+		/// </summary>
+		/// <remarks>
+		/// The reason for this list is that we need a region specific list of
+		/// areas, because dynamic regions change the area's ids. We can't use
+		/// the original area information to identify them.
+		/// </remarks>
+		protected List<AreaData> _areas;
+
 		protected Dictionary<long, Creature> _creatures;
 		protected Dictionary<long, Prop> _props;
 		protected Dictionary<long, Item> _items;
@@ -54,6 +64,8 @@ namespace Aura.Channel.World
 
 			this.Id = id;
 
+			_areas = new List<AreaData>();
+
 			_creatures = new Dictionary<long, Creature>();
 			_props = new Dictionary<long, Prop>();
 			_items = new Dictionary<long, Item>();
@@ -71,13 +83,39 @@ namespace Aura.Channel.World
 
 			this.Collisions.Init(this.RegionInfoData);
 
-			this.LoadClientProps();
+			this.LoadRegionFromData();
+		}
+
+		/// <summary>
+		/// Adds all props found in the client for this region and creates a list
+		/// of areas.
+		/// </summary>
+		protected virtual void LoadRegionFromData()
+		{
+			this.LoadAreas();
+			this.LoadProps();
+		}
+
+		/// <summary>
+		/// Creates a list of all areas.
+		/// </summary>
+		protected virtual void LoadAreas()
+		{
+			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
+				return;
+
+			foreach (var area in this.RegionInfoData.Areas.Values)
+			{
+				var newArea = new AreaData() { Id = area.Id, X1 = area.X1, Y1 = area.Y1, X2 = area.X2, Y2 = area.Y2 };
+				lock (_areas)
+					_areas.Add(newArea);
+			}
 		}
 
 		/// <summary>
 		/// Adds all props found in the client for this region.
 		/// </summary>
-		private void LoadClientProps()
+		protected virtual void LoadProps()
 		{
 			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
 				return;
@@ -95,6 +133,23 @@ namespace Aura.Channel.World
 					this.AddProp(add);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Returns id of area at the given coordinates, or 0 if area wasn't found.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public int GetAreaId(int x, int y)
+		{
+			foreach (var area in _areas)
+			{
+				if (x >= Math.Min(area.X1, area.X2) && x <= Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y <= Math.Max(area.Y1, area.Y2))
+					return area.Id;
+			}
+
+			return 0;
 		}
 
 		/// <summary>

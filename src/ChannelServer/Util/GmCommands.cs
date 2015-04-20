@@ -227,7 +227,7 @@ namespace Aura.Channel.Util
 				? Localization.Get("You're here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4} (Radian: {6})")
 				: Localization.Get("{3} is here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4} (Radian: {6})");
 
-			var areaId = target.Region.RegionInfoData.GetAreaId(pos.X, pos.Y);
+			var areaId = target.Region.GetAreaId(pos.X, pos.Y);
 
 			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name, target.Direction, areaId, MabiMath.ByteToRadian(target.Direction).ToInvariant("#.###"));
 
