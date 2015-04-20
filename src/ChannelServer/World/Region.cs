@@ -104,7 +104,7 @@ namespace Aura.Channel.World
 			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
 				return;
 
-			foreach (var area in this.RegionInfoData.Areas.Values)
+			foreach (var area in this.RegionInfoData.Areas)
 			{
 				var newArea = new AreaData() { Id = area.Id, X1 = area.X1, Y1 = area.Y1, X2 = area.X2, Y2 = area.Y2 };
 				lock (_areas)
@@ -120,7 +120,7 @@ namespace Aura.Channel.World
 			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
 				return;
 
-			foreach (var area in this.RegionInfoData.Areas.Values)
+			foreach (var area in this.RegionInfoData.Areas)
 			{
 				foreach (var prop in area.Props.Values)
 				{

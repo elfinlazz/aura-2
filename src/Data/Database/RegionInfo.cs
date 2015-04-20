@@ -18,7 +18,7 @@ namespace Aura.Data.Database
 		public int Y1 { get; set; }
 		public int X2 { get; set; }
 		public int Y2 { get; set; }
-		public Dictionary<int, AreaData> Areas { get; set; }
+		public List<AreaData> Areas { get; set; }
 
 		/// <summary>
 		/// Returns id of area at the given coordinates, or 0 if area wasn't found.
@@ -28,7 +28,7 @@ namespace Aura.Data.Database
 		/// <returns></returns>
 		public int GetAreaId(int x, int y)
 		{
-			foreach (var area in this.Areas.Values)
+			foreach (var area in this.Areas)
 			{
 				if (x >= Math.Min(area.X1, area.X2) && x <= Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y <= Math.Max(area.Y1, area.Y2))
 					return area.Id;
@@ -128,22 +128,6 @@ namespace Aura.Data.Database
 		}
 
 		/// <summary>
-		/// Returns area data if it exists, or null.
-		/// </summary>
-		/// <param name="region"></param>
-		/// <param name="area"></param>
-		/// <returns></returns>
-		public AreaData Find(int region, int area)
-		{
-			if (!this.Entries.ContainsKey(region))
-				return null;
-			if (!this.Entries[region].Areas.ContainsKey(area))
-				return null;
-
-			return this.Entries[region].Areas[area];
-		}
-
-		/// <summary>
 		/// Returns event data if it exists, or null.
 		/// </summary>
 		/// <param name="id"></param>
@@ -234,7 +218,7 @@ namespace Aura.Data.Database
 				ri.Y2 = br.ReadInt32();
 
 				var cAreas = br.ReadInt32();
-				ri.Areas = new Dictionary<int, AreaData>();
+				ri.Areas = new List<AreaData>();
 				for (int i = 0; i < cAreas; ++i)
 				{
 					var ai = new AreaData();
@@ -339,7 +323,7 @@ namespace Aura.Data.Database
 						this.EventEntries.Add(ei.Id, ei);
 					}
 
-					ri.Areas.Add(ai.Id, ai);
+					ri.Areas.Add(ai);
 				}
 
 				this.Entries.Add(ri.Id, ri);

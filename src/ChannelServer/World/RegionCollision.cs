@@ -28,7 +28,7 @@ namespace Aura.Channel.World
 		/// <param name="data"></param>
 		public void Init(RegionInfoData data)
 		{
-			foreach (var area in data.Areas.Values)
+			foreach (var area in data.Areas)
 			{
 				foreach (var prop in area.Props.Values)
 				{
