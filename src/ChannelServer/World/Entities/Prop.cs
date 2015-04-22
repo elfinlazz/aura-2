@@ -49,18 +49,6 @@ namespace Aura.Channel.World.Entities
 		public PropsDbData Data;
 
 		/// <summary>
-		/// Returns entity id with nulled region id part.
-		/// </summary>
-		/// <remarks>
-		/// Dynamic regions have the same props as the region they're based
-		/// on, but those props have different entity ids, because of the
-		/// new region id. By nulling the region id part we get an entity
-		/// id that works across regions, which we can use to index the
-		/// prop, so we can find it by id in dynamic regions.
-		/// </remarks>
-		public long SubEntityId { get { return this.EntityId & ~0x0000FFFF00000000; } }
-
-		/// <summary>
 		/// True if this prop was spawned by the server.
 		/// </summary>
 		/// <remarks>
