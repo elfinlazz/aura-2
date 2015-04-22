@@ -28,26 +28,6 @@ namespace Aura.Channel.World
 
 		protected ReaderWriterLockSlim _creaturesRWLS, _propsRWLS, _itemsRWLS;
 
-		/// <summary>
-		/// List of areas in this region
-		/// </summary>
-		/// <remarks>
-		/// The reason for this list is that we need a region specific list of
-		/// areas, because dynamic regions change the area's ids. We can't use
-		/// the original area information to identify them.
-		/// </remarks>
-		protected List<AreaData> _areas;
-
-		/// <summary>
-		/// List of client events in this region
-		/// </summary>
-		/// <remarks>
-		/// The reason for this list is that we need a region specific list of
-		/// events, because dynamic regions change the area's ids. We can't use
-		/// the original area information to identify them.
-		/// </remarks>
-		protected Dictionary<long, EventData> _events;
-
 		protected Dictionary<long, Creature> _creatures;
 		protected Dictionary<long, Prop> _props;
 		protected Dictionary<long, Item> _items;
@@ -104,10 +84,6 @@ namespace Aura.Channel.World
 			this.Id = regionId;
 			this.BaseId = regionId;
 
-			_areas = new List<AreaData>();
-
-			_events = new Dictionary<long, EventData>();
-
 			_creatures = new Dictionary<long, Creature>();
 			_props = new Dictionary<long, Prop>();
 			_items = new Dictionary<long, Item>();
@@ -115,13 +91,6 @@ namespace Aura.Channel.World
 			_clients = new HashSet<ChannelClient>();
 
 			this.Collisions = new RegionCollision();
-
-			this.RegionInfoData = AuraData.RegionInfoDb.Find(this.Id);
-			if (this.RegionInfoData == null)
-			{
-				Log.Warning("Region: No data found for '{0}'.", this.Id);
-				return;
-			}
 		}
 
 		/// <summary>
@@ -131,6 +100,12 @@ namespace Aura.Channel.World
 		public static Region CreateNormal(int regionId)
 		{
 			var region = new Region(regionId);
+
+			var regionInfo = AuraData.RegionInfoDb.Find(region.Id);
+			if (regionInfo == null)
+				throw new Exception("Region.CreateNormal: No region info data found for '" + region.Id + "'.");
+
+			region.RegionInfoData = regionInfo.Copy();
 
 			region.InitializeFromData();
 
@@ -148,6 +123,12 @@ namespace Aura.Channel.World
 			var region = new Region(baseRegionId);
 			region.Id = ChannelServer.Instance.World.DynamicRegions.GetFreeDynamicRegionId();
 			region.Variation = variation;
+
+			var regionInfo = AuraData.RegionInfoDb.Find(region.BaseId);
+			if (regionInfo == null)
+				throw new Exception("Region.CreateDynamic: No region info data found for '" + region.BaseId + "'.");
+
+			region.RegionInfoData = regionInfo.CreateDynamic(region.Id);
 
 			region.InitializeFromData();
 
@@ -173,22 +154,7 @@ namespace Aura.Channel.World
 
 			this.Collisions.Init(this.RegionInfoData);
 
-			this.LoadAreas();
 			this.LoadProps();
-			this.LoadEvents();
-		}
-
-		/// <summary>
-		/// Creates a list of all areas.
-		/// </summary>
-		protected void LoadAreas()
-		{
-			foreach (var area in this.RegionInfoData.Areas)
-			{
-				var newArea = area.Copy();
-				lock (_areas)
-					_areas.Add(newArea);
-			}
 		}
 
 		/// <summary>
@@ -196,18 +162,11 @@ namespace Aura.Channel.World
 		/// </summary>
 		protected void LoadProps()
 		{
-			foreach (var area in _areas)
+			foreach (var area in this.RegionInfoData.Areas)
 			{
 				foreach (var prop in area.Props.Values)
 				{
-					// Use the id given by the client data as base, but replace
-					// region and area ids in case of this being a dynamic region.
-					var entityId = (ulong)prop.EntityId;
-					entityId &= ~0x0000FFFFFFFF0000U;
-					entityId |= ((ulong)this.Id << 32);
-					entityId |= ((ulong)this.GetAreaId(prop.EntityId) << 16);
-
-					var add = new Prop((long)entityId, "", "", prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0);
+					var add = new Prop(prop.EntityId, "", "", prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0);
 
 					// Add drop behaviour if drop type exists
 					var dropType = prop.GetDropType();
@@ -219,56 +178,13 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
-		/// Adds all events found in the client for this region.
-		/// </summary>
-		protected void LoadEvents()
-		{
-			foreach (var area in _areas)
-			{
-				foreach (var ev in area.Events.Values)
-				{
-					// Use the id given by the client data as base, but replace
-					// region and area ids in case of this being a dynamic region.
-					var eventId = (ulong)ev.Id;
-					eventId &= ~0x0000FFFFFFFF0000U;
-					eventId |= ((ulong)this.Id << 32);
-					eventId |= ((ulong)this.GetAreaId(ev.Id) << 16);
-
-					var newEvent = ev.Copy();
-					newEvent.Id = (long)eventId;
-					newEvent.RegionId = this.Id;
-
-					lock (_events)
-						_events.Add(newEvent.Id, newEvent);
-				}
-			}
-		}
-
-		/// <summary>
 		/// Returns event by id or null if it doesn't exist.
 		/// </summary>
 		/// <param name="eventId"></param>
 		/// <returns></returns>
 		public EventData GetEvent(long eventId)
 		{
-			if (!_events.ContainsKey(eventId))
-				return null;
-
-			return _events[eventId];
-		}
-
-		/// <summary>
-		/// Extracts area id from prop entity id and adjusts it if region is dynamic.
-		/// </summary>
-		/// <param name="entityId"></param>
-		/// <returns></returns>
-		private int GetAreaId(long entityId)
-		{
-			var areaId = (int)(((ulong)entityId & ~0xFFFFFFFF0000FFFF) >> 16);
-
-			areaId = this.AdjustAreaIdForDynamics(areaId);
-
-			return areaId;
+			return this.RegionInfoData.GetEvent(eventId);
 		}
 
 		/// <summary>
@@ -281,46 +197,13 @@ namespace Aura.Channel.World
 		{
 			var areaId = 0;
 
-			foreach (var area in _areas)
+			foreach (var area in this.RegionInfoData.Areas)
 			{
 				if (x >= Math.Min(area.X1, area.X2) && x < Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y < Math.Max(area.Y1, area.Y2))
 					areaId = area.Id;
 			}
 
-			areaId = this.AdjustAreaIdForDynamics(areaId);
-
 			return areaId;
-		}
-
-		/// <summary>
-		/// Changes area id, if necessary, for dynamic regions.
-		/// </summary>
-		/// <remarks>
-		/// Areas in the client files aren't in order, it can be id 1, 2, 3,
-		/// but it can just as well be 2, 1, 3. When the client creates a dynamic
-		/// region it changes the ids to be order, so 2, 1, 3 would become
-		/// 1, 2, 3 in the dynamic version. We have to mimic this to get the
-		/// correct ids for the props. Genius system, thanks, devCAT.
-		/// 
-		/// What we do here is returning the index of the area in the list.
-		/// </remarks>
-		/// <param name="areaId"></param>
-		/// <returns></returns>
-		private int AdjustAreaIdForDynamics(int areaId)
-		{
-			if (!this.IsDynamic)
-				return areaId;
-
-			var id = 1;
-			foreach (var area in _areas)
-			{
-				if (area.Id == areaId)
-					return id;
-
-				id++;
-			}
-
-			throw new Exception("Area '" + areaId + "' not found in '" + this.BaseId + "'.");
 		}
 
 		/// <summary>
