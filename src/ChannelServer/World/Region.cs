@@ -38,6 +38,16 @@ namespace Aura.Channel.World
 		/// </remarks>
 		protected List<AreaData> _areas;
 
+		/// <summary>
+		/// List of client events in this region
+		/// </summary>
+		/// <remarks>
+		/// The reason for this list is that we need a region specific list of
+		/// events, because dynamic regions change the area's ids. We can't use
+		/// the original area information to identify them.
+		/// </remarks>
+		protected Dictionary<long, EventData> _events;
+
 		protected Dictionary<long, Creature> _creatures;
 		protected Dictionary<long, Prop> _props;
 		protected Dictionary<long, Item> _items;
@@ -95,6 +105,8 @@ namespace Aura.Channel.World
 			this.BaseId = regionId;
 
 			_areas = new List<AreaData>();
+
+			_events = new Dictionary<long, EventData>();
 
 			_creatures = new Dictionary<long, Creature>();
 			_props = new Dictionary<long, Prop>();
@@ -163,6 +175,7 @@ namespace Aura.Channel.World
 
 			this.LoadAreas();
 			this.LoadProps();
+			this.LoadEvents();
 		}
 
 		/// <summary>
@@ -172,7 +185,7 @@ namespace Aura.Channel.World
 		{
 			foreach (var area in this.RegionInfoData.Areas)
 			{
-				var newArea = new AreaData() { Id = area.Id, X1 = area.X1, Y1 = area.Y1, X2 = area.X2, Y2 = area.Y2 };
+				var newArea = area.Copy();
 				lock (_areas)
 					_areas.Add(newArea);
 			}
@@ -183,7 +196,7 @@ namespace Aura.Channel.World
 		/// </summary>
 		protected void LoadProps()
 		{
-			foreach (var area in this.RegionInfoData.Areas)
+			foreach (var area in _areas)
 			{
 				foreach (var prop in area.Props.Values)
 				{
@@ -203,6 +216,45 @@ namespace Aura.Channel.World
 					this.AddProp(add);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Adds all events found in the client for this region.
+		/// </summary>
+		protected void LoadEvents()
+		{
+			foreach (var area in _areas)
+			{
+				foreach (var ev in area.Events.Values)
+				{
+					// Use the id given by the client data as base, but replace
+					// region and area ids in case of this being a dynamic region.
+					var eventId = (ulong)ev.Id;
+					eventId &= ~0x0000FFFFFFFF0000U;
+					eventId |= ((ulong)this.Id << 32);
+					eventId |= ((ulong)this.GetAreaId(ev.Id) << 16);
+
+					var newEvent = ev.Copy();
+					newEvent.Id = (long)eventId;
+					newEvent.RegionId = this.Id;
+
+					lock (_events)
+						_events.Add(newEvent.Id, newEvent);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns event by id or null if it doesn't exist.
+		/// </summary>
+		/// <param name="eventId"></param>
+		/// <returns></returns>
+		public EventData GetEvent(long eventId)
+		{
+			if (!_events.ContainsKey(eventId))
+				return null;
+
+			return _events[eventId];
 		}
 
 		/// <summary>

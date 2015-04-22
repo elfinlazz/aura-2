@@ -83,10 +83,20 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			// Do something with this information?
+			// Get region by id in event id
+			// We can't get it from the creature, because when an event is
+			// triggered the creature might already be in a different region,
+			// as is the case for leaving region events.
+			var regionId = (ushort)((ulong)eventId >> 32);
+			var region = ChannelServer.Instance.World.GetRegion(regionId);
+			if (region == null)
+			{
+				Log.Warning("EventInform: Unknown region '{0}'", regionId);
+				return;
+			}
 
 			// Get event
-			var eventData = AuraData.RegionInfoDb.FindEvent(eventId);
+			var eventData = region.GetEvent(eventId);
 			if (eventData == null)
 			{
 				Log.Warning("EventInform: Player '{0:X16}' triggered unknown event '{1:X16}'.", creature.EntityId, eventId);
@@ -98,6 +108,7 @@ namespace Aura.Channel.Network.Handlers
 			//   can be triggered after we've changed the creature's region.
 			//   Checking position doesn't work because the events can be
 			//   quite large.
+			// TODO: Check the shape?
 			if (eventData.RegionId != creature.RegionId && signalType == SignalType.Enter)
 			{
 				Log.Warning("EventInform: Player '{0:X16}' triggered event '{1:X16}' out of range.", creature.EntityId, eventId);

@@ -47,6 +47,20 @@ namespace Aura.Data.Database
 		public int Y2 { get; set; }
 		public Dictionary<long, PropData> Props { get; set; }
 		public Dictionary<long, EventData> Events { get; set; }
+
+		public AreaData Copy()
+		{
+			var result = new AreaData();
+			result.Id = this.Id;
+			result.X1 = this.X1;
+			result.Y1 = this.Y1;
+			result.X2 = this.X2;
+			result.Y2 = this.Y2;
+			result.Props = new Dictionary<long, PropData>(this.Props);
+			result.Events = new Dictionary<long, EventData>(this.Events);
+
+			return result;
+		}
 	}
 
 	public class PropData
@@ -103,6 +117,21 @@ namespace Aura.Data.Database
 		public bool IsAltar { get; set; }
 		public List<ShapeData> Shapes { get; set; }
 		public List<RegionElementData> Parameters { get; set; }
+
+		public EventData Copy()
+		{
+			var result = new EventData();
+			result.Id = this.Id;
+			result.Type = this.Type;
+			result.RegionId = this.RegionId;
+			result.X = this.X;
+			result.Y = this.Y;
+			result.IsAltar = this.IsAltar;
+			result.Shapes = new List<ShapeData>(this.Shapes);
+			result.Parameters = new List<RegionElementData>(this.Parameters);
+
+			return result;
+		}
 	}
 
 	public class RegionElementData
