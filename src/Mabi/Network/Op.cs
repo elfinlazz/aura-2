@@ -506,6 +506,7 @@ namespace Aura.Mabi.Network
 		public const int GmcpBan = 0x1D597;
 		public const int GmcpNpcList = 0x1D59F;
 		public const int GmcpNpcListR = 0x1D5A0;
+		public const int GmcpBoost = 0x1D5A1; // [190200, NA203 (22.04.2015)] New? Or did I miss that feature?
 
 		public const int PetMount = 0x1FBD0;
 		public const int PetMountR = 0x1FBD1;

@@ -74,6 +74,11 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutByte(0);
 			}
 
+			// [190200, NA203 (22.04.2015)] ?
+			{
+				packet.PutByte(0);
+			}
+
 			packet.PutString(""); // data\gfx\image\gui_temporary_quest.dds
 			packet.PutInt(0);     // 4, x y ?
 			packet.PutInt(0);

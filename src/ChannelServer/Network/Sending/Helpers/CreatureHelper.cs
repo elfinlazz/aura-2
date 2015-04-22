@@ -218,6 +218,11 @@ namespace Aura.Channel.Network.Sending.Helpers
 					packet.PutByte(0);
 				}
 
+				// [190200, NA203 (22.04.2015)] ?
+				{
+					packet.PutByte(0);
+				}
+
 				var regens = creature.Regens.GetList();
 				packet.PutInt(regens.Count);
 				foreach (var regen in regens)
@@ -394,6 +399,11 @@ namespace Aura.Channel.Network.Sending.Helpers
 			// [150100] ?
 			{
 				packet.PutByte(0);			     // {PLGCNT}
+			}
+
+			// [190200, NA203 (24.04.2015)] ?
+			{
+				packet.PutInt(0);
 			}
 
 			// Party
