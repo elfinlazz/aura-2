@@ -53,90 +53,11 @@ namespace Aura.Data.Database
 		}
 
 		/// <summary>
-		/// Creates copy of region info.
-		/// </summary>
-		/// <returns></returns>
-		public RegionInfoData Copy()
-		{
-			var result = new RegionInfoData();
-			result.Id = this.Id;
-			result.GroupId = this.GroupId;
-			result.X1 = this.X1;
-			result.Y1 = this.Y1;
-			result.X2 = this.X2;
-			result.Y2 = this.Y2;
-
-			result.Areas = new List<AreaData>(this.Areas.Count);
-			foreach (var original in this.Areas)
-				result.Areas.Add(original.Copy(true, true));
-
-			return result;
-		}
-
-		/// <summary>
-		/// Creates copy of region info, while changing the region and area ids.
-		/// </summary>
-		/// <returns></returns>
-		public RegionInfoData CreateDynamic(int regionId)
-		{
-			var result = new RegionInfoData();
-			result.Id = regionId;
-			result.GroupId = this.GroupId;
-			result.X1 = this.X1;
-			result.Y1 = this.Y1;
-			result.X2 = this.X2;
-			result.Y2 = this.Y2;
-
-			result.Areas = new List<AreaData>(this.Areas.Count);
-			var i = 1;
-			foreach (var original in this.Areas)
-			{
-				var area = original.Copy(false, false);
-				area.Id = i++;
-
-				// Add props
-				foreach (var originalProp in original.Props.Values)
-				{
-					var prop = originalProp.Copy();
-
-					var id = (ulong)prop.EntityId;
-					id &= ~0x0000FFFFFFFF0000U;
-					id |= ((ulong)result.Id << 32);
-					id |= ((ulong)this.GetIndexAreaId(area.Id) << 16);
-
-					prop.EntityId = (long)id;
-
-					area.Props.Add(prop.EntityId, prop);
-				}
-
-				// Add events
-				foreach (var originalEvent in original.Events.Values)
-				{
-					var ev = originalEvent.Copy();
-					ev.RegionId = result.Id;
-
-					var id = (ulong)ev.Id;
-					id &= ~0x0000FFFFFFFF0000U;
-					id |= ((ulong)result.Id << 32);
-					id |= ((ulong)this.GetIndexAreaId(area.Id) << 16);
-
-					ev.Id = (long)id;
-
-					area.Events.Add(ev.Id, ev);
-				}
-
-				result.Areas.Add(area);
-			}
-
-			return result;
-		}
-
-		/// <summary>
 		/// Returns index of the area in the list.
 		/// </summary>
 		/// <param name="areaId"></param>
 		/// <returns></returns>
-		public int GetIndexAreaId(int areaId)
+		public int GetAreaIndex(int areaId)
 		{
 			var id = 1;
 			foreach (var area in this.Areas)
@@ -162,13 +83,12 @@ namespace Aura.Data.Database
 		public Dictionary<long, EventData> Events { get; set; }
 
 		/// <summary>
-		/// Creates a copy of the area data, and changes the region and
-		/// area id in all props and events.
+		/// Creates a copy of the area data.
 		/// </summary>
 		/// <param name="copyProps"></param>
 		/// <param name="copyEvents"></param>
 		/// <returns></returns>
-		internal AreaData Copy(bool copyProps, bool copyEvents)
+		public AreaData Copy(bool copyProps, bool copyEvents)
 		{
 			var result = new AreaData();
 			result.Id = this.Id;
@@ -232,7 +152,7 @@ namespace Aura.Data.Database
 			return -1;
 		}
 
-		internal PropData Copy()
+		public PropData Copy()
 		{
 			var result = new PropData();
 			result.EntityId = this.EntityId;
@@ -265,7 +185,7 @@ namespace Aura.Data.Database
 		public int X4 { get; set; }
 		public int Y4 { get; set; }
 
-		internal ShapeData Copy()
+		public ShapeData Copy()
 		{
 			var result = new ShapeData();
 			result.X1 = this.X1;
@@ -292,7 +212,7 @@ namespace Aura.Data.Database
 		public List<ShapeData> Shapes { get; set; }
 		public List<RegionElementData> Parameters { get; set; }
 
-		internal EventData Copy()
+		public EventData Copy()
 		{
 			var result = new EventData();
 			result.Id = this.Id;
@@ -321,7 +241,7 @@ namespace Aura.Data.Database
 		public string Name { get; set; }
 		public string XML { get; set; }
 
-		internal RegionElementData Copy()
+		public RegionElementData Copy()
 		{
 			var result = new RegionElementData();
 			result.EventType = this.EventType;

@@ -101,11 +101,9 @@ namespace Aura.Channel.World
 		{
 			var region = new Region(regionId);
 
-			var regionInfo = AuraData.RegionInfoDb.Find(region.Id);
-			if (regionInfo == null)
+			region.RegionInfoData = AuraData.RegionInfoDb.Find(region.Id);
+			if (region.RegionInfoData == null)
 				throw new Exception("Region.CreateNormal: No region info data found for '" + region.Id + "'.");
-
-			region.RegionInfoData = regionInfo.Copy();
 
 			region.InitializeFromData();
 
@@ -113,28 +111,91 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
-		/// Creates new dynamic region, based on regionId and variant.
+		/// Creates new dynamic region, based on a region and variation file.
 		/// Region is automatically added to the dynamic region manager.
 		/// </summary>
 		/// <param name="regionId"></param>
-		/// <param name="variation"></param>
-		public static Region CreateDynamic(int baseRegionId, string variation)
+		/// <param name="variationFile"></param>
+		public static Region CreateDynamic(int baseRegionId, string variationFile)
 		{
 			var region = new Region(baseRegionId);
 			region.Id = ChannelServer.Instance.World.DynamicRegions.GetFreeDynamicRegionId();
-			region.Variation = variation;
+			region.Variation = variationFile;
 
-			var regionInfo = AuraData.RegionInfoDb.Find(region.BaseId);
-			if (regionInfo == null)
+			var baseRegionInfoData = AuraData.RegionInfoDb.Find(region.BaseId);
+			if (baseRegionInfoData == null)
 				throw new Exception("Region.CreateDynamic: No region info data found for '" + region.BaseId + "'.");
 
-			region.RegionInfoData = regionInfo.CreateDynamic(region.Id);
+			region.RegionInfoData = CreateVariation(baseRegionInfoData, region.Id, variationFile);
 
 			region.InitializeFromData();
 
 			ChannelServer.Instance.World.DynamicRegions.Add(region);
 
 			return region;
+		}
+
+		/// <summary>
+		/// Recreates a region, based on another region and a variation file.
+		/// </summary>
+		/// <param name="baseRegionInfoData"></param>
+		/// <param name="newRegionId"></param>
+		/// <param name="variationFile"></param>
+		/// <returns></returns>
+		private static RegionInfoData CreateVariation(RegionInfoData baseRegionInfoData, int newRegionId, string variationFile)
+		{
+			var result = new RegionInfoData();
+			result.Id = newRegionId;
+			result.GroupId = baseRegionInfoData.GroupId;
+			result.X1 = baseRegionInfoData.X1;
+			result.Y1 = baseRegionInfoData.Y1;
+			result.X2 = baseRegionInfoData.X2;
+			result.Y2 = baseRegionInfoData.Y2;
+
+			// TODO: Filter areas, props, and events to create, based on variation file.
+
+			result.Areas = new List<AreaData>(baseRegionInfoData.Areas.Count);
+			var i = 1;
+			foreach (var originalArea in baseRegionInfoData.Areas)
+			{
+				var area = originalArea.Copy(false, false);
+				area.Id = i++;
+
+				// Add props
+				foreach (var originalProp in originalArea.Props.Values)
+				{
+					var prop = originalProp.Copy();
+
+					var id = (ulong)prop.EntityId;
+					id &= ~0x0000FFFFFFFF0000U;
+					id |= ((ulong)result.Id << 32);
+					id |= ((ulong)baseRegionInfoData.GetAreaIndex(originalArea.Id) << 16);
+
+					prop.EntityId = (long)id;
+
+					area.Props.Add(prop.EntityId, prop);
+				}
+
+				// Add events
+				foreach (var originalEvent in originalArea.Events.Values)
+				{
+					var ev = originalEvent.Copy();
+					ev.RegionId = result.Id;
+
+					var id = (ulong)ev.Id;
+					id &= ~0x0000FFFFFFFF0000U;
+					id |= ((ulong)result.Id << 32);
+					id |= ((ulong)baseRegionInfoData.GetAreaIndex(originalArea.Id) << 16);
+
+					ev.Id = (long)id;
+
+					area.Events.Add(ev.Id, ev);
+				}
+
+				result.Areas.Add(area);
+			}
+
+			return result;
 		}
 
 		/// <summary>
