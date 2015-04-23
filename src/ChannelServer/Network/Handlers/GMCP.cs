@@ -11,6 +11,7 @@ using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
 using Aura.Mabi.Const;
 using Aura.Mabi.Network;
+using System.Globalization;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -235,6 +236,34 @@ namespace Aura.Channel.Network.Handlers
 			var npcs = ChannelServer.Instance.World.GetAllGoodNpcs();
 
 			Send.GmcpNpcListR(creature, npcs);
+		}
+
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Given the name and the parameter of this feature we're gonna
+		/// assume it's a speeed boost for now.
+		/// </remarks>
+		/// <example>
+		/// 0001 [................] Float  : 1.0
+		/// </example>
+		[PacketHandler(Op.GmcpBoost)]
+		public void GmcpBoost(ChannelClient client, Packet packet)
+		{
+			var multiplier = packet.GetFloat();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			var speedBonus = (short)(multiplier * 100 - 100);
+			speedBonus = (short)Math2.Clamp(0, 1000, speedBonus);
+
+			if (speedBonus == 0)
+				creature.Conditions.Deactivate(ConditionsC.Hurry);
+			else
+				creature.Conditions.Activate(ConditionsC.Hurry, speedBonus);
+
+			Send.ServerMessage(creature, Localization.Get("Speed boost: {0}x"), multiplier.ToString("0.0", CultureInfo.InvariantCulture));
 		}
 	}
 }

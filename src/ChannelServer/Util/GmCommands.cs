@@ -729,7 +729,6 @@ namespace Aura.Channel.Util
 			if (sender != target)
 				Send.ServerMessage(target, Localization.Get("Your speed has been changed to +{0}% by {1}."), speed, sender.Name);
 
-
 			return CommandResult.Okay;
 		}
 
