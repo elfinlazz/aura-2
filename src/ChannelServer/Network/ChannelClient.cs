@@ -111,6 +111,10 @@ namespace Aura.Channel.Network
 				if (creature.Client.NpcSession.Script != null)
 					creature.Client.NpcSession.Clear();
 
+				// Use fallback location if creature is in a temp region.
+				if (creature.Region.IsTemporary)
+					creature.SetLocation(creature.FallbackLocation);
+
 				// Unspawn creature
 				creature.Region.RemoveCreature(creature);
 			}

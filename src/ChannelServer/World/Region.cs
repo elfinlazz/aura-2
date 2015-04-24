@@ -67,6 +67,12 @@ namespace Aura.Channel.World
 		public bool IsDynamic { get { return this.Id != this.BaseId; } }
 
 		/// <summary>
+		/// Returns true if this region is temporary, like a dynamic region
+		/// or a dungeon.
+		/// </summary>
+		public bool IsTemporary { get { return this.IsDynamic; } }
+
+		/// <summary>
 		/// Manager for blocking objects in the region.
 		/// </summary>
 		public RegionCollision Collisions { get; protected set; }
