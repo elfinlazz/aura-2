@@ -114,11 +114,11 @@ namespace Aura.Channel.Network.Sending
 					{
 						actionPacket.PutFloat(pos.X);
 						actionPacket.PutFloat(pos.Y);
-					}
 
-					// [190200, NA203 (22.04.2015)]
-					{
-						actionPacket.PutInt(0);
+						// [190200, NA203 (22.04.2015)]
+						{
+							actionPacket.PutInt(0);
+						}
 					}
 
 					actionPacket.PutByte(0); // PDef? Seen as 0x20 in a normal attack (G18)
