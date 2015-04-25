@@ -51,8 +51,6 @@ namespace Aura.Channel.World
 		{
 			lock (_regions)
 				_regions.Remove(dynamicRegionId);
-
-			ChannelServer.Instance.World.RemoveRegion(dynamicRegionId);
 		}
 
 		/// <summary>

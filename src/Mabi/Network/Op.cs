@@ -389,6 +389,7 @@ namespace Aura.Mabi.Network
 
 		public const int DungeonInfo = 0x9470;
 		public const int EnterDynamicRegion = 0x9571; // Creates one dynamic region and warps there
+		public const int RemoveDynamicRegion = 0x9572;
 		public const int ArenaRoundInfo = 0x9667;
 		public const int ArenaRoundInfoCancel = 0x9668;
 		public const int AgeUpEffect = 0x9858;

@@ -73,6 +73,12 @@ namespace Aura.Channel.World
 		public bool IsTemporary { get { return this.IsDynamic; } }
 
 		/// <summary>
+		/// Returns true if this region is temporary, like a dynamic region
+		/// or a dungeon.
+		/// </summary>
+		public RegionMode Mode { get; protected set; }
+
+		/// <summary>
 		/// Manager for blocking objects in the region.
 		/// </summary>
 		public RegionCollision Collisions { get; protected set; }
@@ -81,7 +87,7 @@ namespace Aura.Channel.World
 		/// Creates new region by id.
 		/// </summary>
 		/// <param name="regionId"></param>
-		private Region(int regionId)
+		private Region(int regionId, RegionMode mode)
 		{
 			_creaturesRWLS = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 			_propsRWLS = new ReaderWriterLockSlim();
@@ -89,6 +95,8 @@ namespace Aura.Channel.World
 
 			this.Id = regionId;
 			this.BaseId = regionId;
+
+			this.Mode = mode;
 
 			_creatures = new Dictionary<long, Creature>();
 			_props = new Dictionary<long, Prop>();
@@ -105,7 +113,7 @@ namespace Aura.Channel.World
 		/// <param name="regionId"></param>
 		public static Region CreateNormal(int regionId)
 		{
-			var region = new Region(regionId);
+			var region = new Region(regionId, RegionMode.Permanent);
 
 			region.RegionInfoData = AuraData.RegionInfoDb.Find(region.Id);
 			if (region.RegionInfoData == null)
@@ -122,9 +130,9 @@ namespace Aura.Channel.World
 		/// </summary>
 		/// <param name="regionId"></param>
 		/// <param name="variationFile"></param>
-		public static Region CreateDynamic(int baseRegionId, string variationFile)
+		public static Region CreateDynamic(int baseRegionId, string variationFile = "", RegionMode mode = RegionMode.RemoveWhenEmpty)
 		{
-			var region = new Region(baseRegionId);
+			var region = new Region(baseRegionId, mode);
 			region.Id = ChannelServer.Instance.World.DynamicRegions.GetFreeDynamicRegionId();
 			region.Variation = variationFile;
 
@@ -217,7 +225,7 @@ namespace Aura.Channel.World
 			if (regionData != null)
 				this.BaseName = regionData.Name;
 
-			this.Name = (this.IsDynamic ? "Dynamic" + this.Id : this.BaseName);
+			this.Name = (this.IsDynamic ? "DynamicRegion" + this.Id : this.BaseName);
 
 			this.Collisions.Init(this.RegionInfoData);
 
@@ -493,6 +501,21 @@ namespace Aura.Channel.World
 
 			if (creature.EntityId < MabiId.Npcs)
 				Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
+
+			// Remove dynamic region from client when he's removed from it on
+			// the server, so it's recreated next time it goes to a dynamic
+			// region with that id. Otherwise it will load the previous
+			// region again.
+			if (this.IsDynamic)
+				Send.RemoveDynamicRegion(creature, this.Id);
+
+			// Remove empty region from world
+			if (this.CountPlayers() == 0 && this.Mode == RegionMode.RemoveWhenEmpty)
+			{
+				ChannelServer.Instance.World.RemoveRegion(this.Id);
+				if (this.IsDynamic)
+					ChannelServer.Instance.World.DynamicRegions.Remove(this.Id);
+			}
 		}
 
 		/// <summary>
@@ -1069,5 +1092,18 @@ namespace Aura.Channel.World
 				}
 			}
 		}
+	}
+
+	public enum RegionMode
+	{
+		/// <summary>
+		/// Kept in the world permanently
+		/// </summary>
+		Permanent,
+
+		/// <summary>
+		/// Region gets removed once the last player has left.
+		/// </summary>
+		RemoveWhenEmpty,
 	}
 }

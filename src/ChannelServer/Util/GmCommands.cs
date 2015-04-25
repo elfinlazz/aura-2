@@ -493,7 +493,7 @@ namespace Aura.Channel.Util
 			if (regionData == null)
 				return CommandResult.Fail;
 
-			var region = Region.CreateDynamic(baseRegionId, variant);
+			var region = Region.CreateDynamic(baseRegionId, variant, RegionMode.Permanent);
 			ChannelServer.Instance.World.AddRegion(region);
 
 			var pos = target.GetPosition();

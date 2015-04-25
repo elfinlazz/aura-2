@@ -76,7 +76,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutUInt(0x80000000); // bitmask? (|1 = time difference?)
 			packet.PutInt(warpToRegion.BaseId);
 			packet.PutString(warpToRegion.BaseName);
-			packet.PutInt(200); // 100|200
+			packet.PutInt(200); // 100|200 (100 changes the lighting?)
 			packet.PutByte(0); // 1 = next is empty?
 			packet.PutString("data/world/{0}/{1}", warpToRegion.BaseName, warpToRegion.Variation);
 
@@ -119,12 +119,25 @@ namespace Aura.Channel.Network.Sending
 
 			packet.PutInt(warpToRegion.Id);
 			packet.PutString(warpToRegion.Name); // dynamic region name
-			packet.PutUInt(0x80000001); // bitmask?
+			packet.PutUInt(0x80000000); // bitmask? (|1 = time difference?)
 			packet.PutInt(warpToRegion.BaseId);
 			packet.PutString(warpToRegion.BaseName);
 			packet.PutInt(200); // 100|200
 			packet.PutByte(0); // 1 = next is empty?
 			packet.PutString("data/world/{0}/{1}", warpToRegion.BaseName, warpToRegion.Variation);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends RemoveDynamicRegion to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="regionId"></param>
+		public static void RemoveDynamicRegion(Creature creature, int regionId)
+		{
+			var packet = new Packet(Op.RemoveDynamicRegion, MabiId.Broadcast);
+			packet.PutInt(regionId);
 
 			creature.Client.Send(packet);
 		}
