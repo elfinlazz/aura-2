@@ -11,6 +11,10 @@ quests/beginner_uladh/202006_duncans_call.cs
 quests/beginner_uladh/skills_rest.cs
 quests/beginner_uladh/school_1.cs
 
+quests/beginner_uladh/1000028_reach_level_20.cs
+quests/beginner_uladh/1000029_reach_level_30.cs
+quests/beginner_uladh/1000030_reach_level_40.cs
+
 quests/beginner_uladh/hunting/1000034_hunting_spiders.cs
 quests/beginner_uladh/hunting/1000035_hunting_foxes.cs
 quests/beginner_uladh/hunting/1000036_hunting_gray_wolves.cs
