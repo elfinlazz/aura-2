@@ -102,7 +102,7 @@ namespace Aura.Channel.World.Quests
 	}
 
 	/// <summary>
-	/// Objective to talk to a specific NPC.
+	/// Objective to reach a rank in a certain skill.
 	/// </summary>
 	public class QuestObjectiveReachRank : QuestObjective
 	{
@@ -119,6 +119,21 @@ namespace Aura.Channel.World.Quests
 
 			this.MetaData.SetUShort("TGTSKL", (ushort)skillId);
 			this.MetaData.SetShort("TGTLVL", (short)rank);
+			this.MetaData.SetInt("TARGETCOUNT", 1);
+		}
+	}
+
+	/// <summary>
+	/// Objective to reach a rank in a certain skill.
+	/// </summary>
+	public class QuestObjectiveReachLevel : QuestObjective
+	{
+		public override ObjectiveType Type { get { return ObjectiveType.ReachLevel; } }
+
+		public QuestObjectiveReachLevel(int level)
+			: base(level)
+		{
+			this.MetaData.SetShort("TGTLVL", (short)level);
 			this.MetaData.SetInt("TARGETCOUNT", 1);
 		}
 	}

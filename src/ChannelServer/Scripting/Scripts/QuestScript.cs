@@ -91,6 +91,7 @@ namespace Aura.Channel.Scripting.Scripts
 			ChannelServer.Instance.Events.PlayerRemovesItem -= this.OnPlayerReceivesOrRemovesItem;
 			ChannelServer.Instance.Events.PlayerCompletesQuest -= this.OnPlayerCompletesQuest;
 			ChannelServer.Instance.Events.SkillRankChanged -= this.OnSkillRankChanged;
+			ChannelServer.Instance.Events.CreatureLevelUp -= this.OnCreatureLevelUp;
 		}
 
 		// Setup
@@ -236,6 +237,12 @@ namespace Aura.Channel.Scripting.Scripts
 				ChannelServer.Instance.Events.SkillRankChanged += this.OnSkillRankChanged;
 			}
 
+			if (objective.Type == ObjectiveType.ReachLevel)
+			{
+				ChannelServer.Instance.Events.CreatureLevelUp -= this.OnCreatureLevelUp;
+				ChannelServer.Instance.Events.CreatureLevelUp += this.OnCreatureLevelUp;
+			}
+
 			this.Objectives.Add(ident, objective);
 		}
 
@@ -293,6 +300,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected QuestObjective Collect(int itemId, int amount) { return new QuestObjectiveCollect(itemId, amount); }
 		protected QuestObjective Talk(string npcName) { return new QuestObjectiveTalk(npcName); }
 		protected QuestObjective ReachRank(SkillId skillId, SkillRank rank) { return new QuestObjectiveReachRank(skillId, rank); }
+		protected QuestObjective ReachLevel(int level) { return new QuestObjectiveReachLevel(level); }
 
 		// Reward Factory
 		// ------------------------------------------------------------------
@@ -361,6 +369,14 @@ namespace Aura.Channel.Scripting.Scripts
 						quest.SetDone(progress.Ident);
 					else
 						quest.SetUndone(progress.Ident);
+
+					break;
+
+				case ObjectiveType.ReachLevel:
+					var reachLevelObjective = (objective as QuestObjectiveReachLevel);
+
+					if (creature.Level >= reachLevelObjective.Amount)
+						quest.SetDone(progress.Ident);
 
 					break;
 
@@ -452,8 +468,10 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="creature"></param>
 		private void OnCreatureLevelUp(Creature creature)
 		{
-			if (this.CheckPrerequisites(creature))
+			if (!creature.Quests.Has(this.Id) && this.CheckPrerequisites(creature))
 				creature.Quests.Start(this.Id, true);
+
+			this.CheckCurrentObjective(creature);
 		}
 	}
 
