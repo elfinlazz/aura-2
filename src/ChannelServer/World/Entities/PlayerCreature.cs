@@ -115,18 +115,34 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public override bool Warp(int regionId, int x, int y)
 		{
-			if (!ChannelServer.Instance.World.HasRegion(regionId))
+			var warpTo = ChannelServer.Instance.World.GetRegion(regionId);
+			if (warpTo == null)
 			{
 				Send.ServerMessage(this, "Warp failed, region doesn't exist.");
 				Log.Error("PC.Warp: Region '{0}' doesn't exist.", regionId);
 				return false;
 			}
 
-			this.LastLocation = new Location(this.RegionId, this.GetPosition());
+			var warpFrom = this.RegionId;
+			var loc = new Location(this.RegionId, this.GetPosition());
+
+			// Save fallback when warping from a normal to a dynamic region
+			if (warpTo.IsDynamic && !this.Region.IsDynamic)
+				this.FallbackLocation = loc;
+
+			this.LastLocation = loc;
 			this.SetLocation(regionId, x, y);
 			this.Warping = true;
 			Send.CharacterLock(this, Locks.Default);
-			Send.EnterRegion(this);
+
+			if (!warpTo.IsDynamic)
+			{
+				Send.EnterRegion(this);
+			}
+			else
+			{
+				Send.EnterDynamicRegion(this, warpFrom, warpTo);
+			}
 
 			return true;
 		}

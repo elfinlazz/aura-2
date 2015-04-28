@@ -199,6 +199,7 @@
     <Compile Include="Util\Quadtree.cs" />
     <Compile Include="Util\Security.cs" />
     <Compile Include="World\Cutscene.cs" />
+    <Compile Include="World\DynamicRegionManager.cs" />
     <Compile Include="World\EgoInfo.cs" />
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\Creature.cs" />

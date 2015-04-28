@@ -10,6 +10,7 @@ using Aura.Channel.World.Entities.Creatures;
 using System.Globalization;
 using Aura.Channel.Network.Sending.Helpers;
 using Aura.Mabi.Network;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -41,9 +42,7 @@ namespace Aura.Channel.Network.Sending
 		/// <summary>
 		/// Sends EnterRegion to creature's client.
 		/// </summary>
-		/// <remarks>
-		/// ...
-		/// </remarks>
+		/// <param name="creature"></param>
 		public static void EnterRegion(Creature creature)
 		{
 			var pos = creature.GetPosition();
@@ -54,6 +53,91 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(creature.RegionId);
 			packet.PutInt(pos.X);
 			packet.PutInt(pos.Y);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends EnterDynamicRegion to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="warpFromRegionId"></param>
+		/// <param name="warpToRegion"></param>
+		public static void EnterDynamicRegion(Creature creature, int warpFromRegionId, Region warpToRegion)
+		{
+			var pos = creature.GetPosition();
+
+			var packet = new Packet(Op.EnterDynamicRegion, MabiId.Broadcast);
+			packet.PutLong(creature.EntityId);
+			packet.PutInt(warpFromRegionId); // creature's current region or 0?
+
+			packet.PutInt(warpToRegion.Id);
+			packet.PutString(warpToRegion.Name); // dynamic region name
+			packet.PutUInt(0x80000000); // bitmask? (|1 = time difference?)
+			packet.PutInt(warpToRegion.BaseId);
+			packet.PutString(warpToRegion.BaseName);
+			packet.PutInt(200); // 100|200 (100 changes the lighting?)
+			packet.PutByte(0); // 1 = next is empty?
+			packet.PutString("data/world/{0}/{1}", warpToRegion.BaseName, warpToRegion.Variation);
+
+			packet.PutByte(0);
+			//if (^ true)
+			//{
+			//	pp.PutByte(1);
+			//	pp.PutInt(3100); // some region id?
+			//}
+			packet.PutInt(pos.X); // target x pos
+			packet.PutInt(pos.Y); // target y pos
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends EnterDynamicRegionExtended to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// From the looks of it this basically does the same as EnterDynamicRegion,
+		/// but it supports the creation of multiple regions before warping to one.
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="warpFromRegionId"></param>
+		/// <param name="warpToRegion"></param>
+		public static void EnterDynamicRegionExtended(Creature creature, int warpFromRegionId, Region warpToRegion)
+		{
+			var pos = creature.GetPosition();
+
+			var packet = new Packet(Op.EnterDynamicRegionExtended, MabiId.Broadcast);
+			packet.PutLong(creature.EntityId);
+			packet.PutInt(warpFromRegionId); // creature's current region or 0?
+
+			packet.PutInt(warpToRegion.Id); // target region id
+			packet.PutInt(pos.X); // target x pos
+			packet.PutInt(pos.Y); // target y pos
+			packet.PutInt(0); // 0|4|8|16
+
+			packet.PutInt(1); // count of dynamic regions v
+
+			packet.PutInt(warpToRegion.Id);
+			packet.PutString(warpToRegion.Name); // dynamic region name
+			packet.PutUInt(0x80000000); // bitmask? (|1 = time difference?)
+			packet.PutInt(warpToRegion.BaseId);
+			packet.PutString(warpToRegion.BaseName);
+			packet.PutInt(200); // 100|200
+			packet.PutByte(0); // 1 = next is empty?
+			packet.PutString("data/world/{0}/{1}", warpToRegion.BaseName, warpToRegion.Variation);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends RemoveDynamicRegion to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="regionId"></param>
+		public static void RemoveDynamicRegion(Creature creature, int regionId)
+		{
+			var packet = new Packet(Op.RemoveDynamicRegion, MabiId.Broadcast);
+			packet.PutInt(regionId);
 
 			creature.Client.Send(packet);
 		}

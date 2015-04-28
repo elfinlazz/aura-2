@@ -11,7 +11,7 @@ namespace Aura.Channel.World.Entities
 	public abstract class Entity
 	{
 		/// <summary>
-		/// Unique entity id
+		/// Gets or sets unique entity id
 		/// </summary>
 		public long EntityId { get; set; }
 

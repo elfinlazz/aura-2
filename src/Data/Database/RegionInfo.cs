@@ -10,7 +10,7 @@ using Aura.Mabi.Const;
 
 namespace Aura.Data.Database
 {
-	public class RegionData
+	public class RegionInfoData
 	{
 		public int Id { get; set; }
 		public int GroupId { get; set; }
@@ -18,7 +18,58 @@ namespace Aura.Data.Database
 		public int Y1 { get; set; }
 		public int X2 { get; set; }
 		public int Y2 { get; set; }
-		public Dictionary<int, AreaData> Areas { get; set; }
+		public List<AreaData> Areas { get; set; }
+
+		/// <summary>
+		/// Returns id of area at the given coordinates, or 0 if area wasn't found.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public int GetAreaId(int x, int y)
+		{
+			foreach (var area in this.Areas)
+			{
+				if (x >= Math.Min(area.X1, area.X2) && x <= Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y <= Math.Max(area.Y1, area.Y2))
+					return area.Id;
+			}
+
+			return 0;
+		}
+
+		/// <summary>
+		/// Returns event by id or null if it doesn't exist.
+		/// </summary>
+		/// <returns></returns>
+		public EventData GetEvent(long eventId)
+		{
+			foreach (var area in this.Areas)
+			{
+				if (area.Events.ContainsKey(eventId))
+					return area.Events[eventId];
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Returns index of the area in the list.
+		/// </summary>
+		/// <param name="areaId"></param>
+		/// <returns></returns>
+		public int GetAreaIndex(int areaId)
+		{
+			var id = 1;
+			foreach (var area in this.Areas)
+			{
+				if (area.Id == areaId)
+					return id;
+
+				id++;
+			}
+
+			return -1;
+		}
 	}
 
 	public class AreaData
@@ -30,6 +81,44 @@ namespace Aura.Data.Database
 		public int Y2 { get; set; }
 		public Dictionary<long, PropData> Props { get; set; }
 		public Dictionary<long, EventData> Events { get; set; }
+
+		/// <summary>
+		/// Creates a copy of the area data.
+		/// </summary>
+		/// <param name="copyProps"></param>
+		/// <param name="copyEvents"></param>
+		/// <returns></returns>
+		public AreaData Copy(bool copyProps, bool copyEvents)
+		{
+			var result = new AreaData();
+			result.Id = this.Id;
+			result.X1 = this.X1;
+			result.Y1 = this.Y1;
+			result.X2 = this.X2;
+			result.Y2 = this.Y2;
+			result.Props = new Dictionary<long, PropData>();
+			result.Events = new Dictionary<long, EventData>();
+
+			if (copyProps)
+			{
+				foreach (var original in this.Props.Values)
+				{
+					var item = original.Copy();
+					result.Props.Add(item.EntityId, item);
+				}
+			}
+
+			if (copyEvents)
+			{
+				foreach (var original in this.Events.Values)
+				{
+					var item = original.Copy();
+					result.Events.Add(item.Id, item);
+				}
+			}
+
+			return result;
+		}
 	}
 
 	public class PropData
@@ -62,6 +151,27 @@ namespace Aura.Data.Database
 
 			return -1;
 		}
+
+		public PropData Copy()
+		{
+			var result = new PropData();
+			result.EntityId = this.EntityId;
+			result.Id = this.Id;
+			result.X = this.X;
+			result.Y = this.Y;
+			result.Direction = this.Direction;
+			result.Scale = this.Scale;
+
+			result.Shapes = new List<ShapeData>(this.Shapes.Count);
+			foreach (var item in this.Shapes)
+				result.Shapes.Add(item.Copy());
+
+			result.Parameters = new List<RegionElementData>(this.Parameters.Count);
+			foreach (var item in this.Parameters)
+				result.Parameters.Add(item.Copy());
+
+			return result;
+		}
 	}
 
 	public class ShapeData
@@ -74,6 +184,21 @@ namespace Aura.Data.Database
 		public int Y3 { get; set; }
 		public int X4 { get; set; }
 		public int Y4 { get; set; }
+
+		public ShapeData Copy()
+		{
+			var result = new ShapeData();
+			result.X1 = this.X1;
+			result.Y1 = this.Y1;
+			result.X2 = this.X2;
+			result.Y2 = this.Y2;
+			result.X3 = this.X3;
+			result.Y3 = this.Y3;
+			result.X4 = this.X4;
+			result.Y4 = this.Y4;
+
+			return result;
+		}
 	}
 
 	public class EventData
@@ -86,6 +211,27 @@ namespace Aura.Data.Database
 		public bool IsAltar { get; set; }
 		public List<ShapeData> Shapes { get; set; }
 		public List<RegionElementData> Parameters { get; set; }
+
+		public EventData Copy()
+		{
+			var result = new EventData();
+			result.Id = this.Id;
+			result.Type = this.Type;
+			result.RegionId = this.RegionId;
+			result.X = this.X;
+			result.Y = this.Y;
+			result.IsAltar = this.IsAltar;
+
+			result.Shapes = new List<ShapeData>(this.Shapes.Count);
+			foreach (var item in this.Shapes)
+				result.Shapes.Add(item.Copy());
+
+			result.Parameters = new List<RegionElementData>(this.Parameters.Count);
+			foreach (var item in this.Parameters)
+				result.Parameters.Add(item.Copy());
+
+			return result;
+		}
 	}
 
 	public class RegionElementData
@@ -94,61 +240,22 @@ namespace Aura.Data.Database
 		public int SignalType { get; set; }
 		public string Name { get; set; }
 		public string XML { get; set; }
+
+		public RegionElementData Copy()
+		{
+			var result = new RegionElementData();
+			result.EventType = this.EventType;
+			result.SignalType = this.SignalType;
+			result.Name = this.Name;
+			result.XML = this.XML;
+
+			return result;
+		}
 	}
 
-	public class RegionInfoDb : DatabaseDatIndexed<int, RegionData>
+	public class RegionInfoDb : DatabaseDatIndexed<int, RegionInfoData>
 	{
-		public Dictionary<long, PropData> PropEntries = new Dictionary<long, PropData>();
-		public Dictionary<long, EventData> EventEntries = new Dictionary<long, EventData>();
-
 		private Random _rnd = new Random(Environment.TickCount);
-
-		public override void Clear()
-		{
-			base.Clear();
-			this.PropEntries.Clear();
-			this.EventEntries.Clear();
-		}
-
-		/// <summary>
-		/// Returns area data if it exists, or null.
-		/// </summary>
-		/// <param name="region"></param>
-		/// <param name="area"></param>
-		/// <returns></returns>
-		public AreaData Find(int region, int area)
-		{
-			if (!this.Entries.ContainsKey(region))
-				return null;
-			if (!this.Entries[region].Areas.ContainsKey(area))
-				return null;
-
-			return this.Entries[region].Areas[area];
-		}
-
-		/// <summary>
-		/// Returns event data if it exists, or null.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public EventData FindEvent(long id)
-		{
-			EventData result;
-			this.EventEntries.TryGetValue(id, out result);
-			return result;
-		}
-
-		/// <summary>
-		/// Returns prop data if it exists, or null.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public PropData FindProp(long id)
-		{
-			PropData result;
-			this.PropEntries.TryGetValue(id, out result);
-			return result;
-		}
 
 		/// <summary>
 		/// Returns random coordinates inside the actual region.
@@ -185,13 +292,7 @@ namespace Aura.Data.Database
 			if (ri == null)
 				return int.MaxValue;
 
-			foreach (var area in ri.Areas.Values)
-			{
-				if (x >= Math.Min(area.X1, area.X2) && x <= Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y <= Math.Max(area.Y1, area.Y2))
-					return area.Id;
-			}
-
-			return 0;
+			return ri.GetAreaId(x, y);
 		}
 
 		/// <summary>
@@ -213,7 +314,7 @@ namespace Aura.Data.Database
 			var cRegions = br.ReadInt32();
 			for (int l = 0; l < cRegions; ++l)
 			{
-				var ri = new RegionData();
+				var ri = new RegionInfoData();
 
 				ri.Id = br.ReadInt32();
 				ri.GroupId = br.ReadInt32();
@@ -223,7 +324,7 @@ namespace Aura.Data.Database
 				ri.Y2 = br.ReadInt32();
 
 				var cAreas = br.ReadInt32();
-				ri.Areas = new Dictionary<int, AreaData>();
+				ri.Areas = new List<AreaData>();
 				for (int i = 0; i < cAreas; ++i)
 				{
 					var ai = new AreaData();
@@ -277,7 +378,6 @@ namespace Aura.Data.Database
 						}
 
 						ai.Props.Add(pi.EntityId, pi);
-						this.PropEntries.Add(pi.EntityId, pi);
 					}
 
 					var cEvents = br.ReadInt32();
@@ -325,10 +425,9 @@ namespace Aura.Data.Database
 						}
 
 						ai.Events.Add(ei.Id, ei);
-						this.EventEntries.Add(ei.Id, ei);
 					}
 
-					ri.Areas.Add(ai.Id, ai);
+					ri.Areas.Add(ai);
 				}
 
 				this.Entries.Add(ri.Id, ri);

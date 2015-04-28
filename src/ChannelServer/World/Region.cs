@@ -34,7 +34,17 @@ namespace Aura.Channel.World
 
 		protected HashSet<ChannelClient> _clients;
 
-		protected RegionData _regionData;
+		public RegionInfoData RegionInfoData { get; protected set; }
+
+		/// <summary>
+		/// Region's name
+		/// </summary>
+		public string Name { get; protected set; }
+
+		/// <summary>
+		/// Name of the region this one is based on (dynamics)
+		/// </summary>
+		public string BaseName { get; protected set; }
 
 		/// <summary>
 		/// Region's id
@@ -42,17 +52,51 @@ namespace Aura.Channel.World
 		public int Id { get; protected set; }
 
 		/// <summary>
+		/// Id of the region this one is based on (dynamics)
+		/// </summary>
+		public int BaseId { get; protected set; }
+
+		/// <summary>
+		/// Variation file used for this region (dynamics)
+		/// </summary>
+		public string Variation { get; protected set; }
+
+		/// <summary>
+		/// Returns true if this is a dynamic region.
+		/// </summary>
+		public bool IsDynamic { get { return this.Id != this.BaseId; } }
+
+		/// <summary>
+		/// Returns true if this region is temporary, like a dynamic region
+		/// or a dungeon.
+		/// </summary>
+		public bool IsTemporary { get { return this.IsDynamic; } }
+
+		/// <summary>
+		/// Returns true if this region is temporary, like a dynamic region
+		/// or a dungeon.
+		/// </summary>
+		public RegionMode Mode { get; protected set; }
+
+		/// <summary>
 		/// Manager for blocking objects in the region.
 		/// </summary>
 		public RegionCollision Collisions { get; protected set; }
 
-		public Region(int id)
+		/// <summary>
+		/// Creates new region by id.
+		/// </summary>
+		/// <param name="regionId"></param>
+		private Region(int regionId, RegionMode mode)
 		{
 			_creaturesRWLS = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 			_propsRWLS = new ReaderWriterLockSlim();
 			_itemsRWLS = new ReaderWriterLockSlim();
 
-			this.Id = id;
+			this.Id = regionId;
+			this.BaseId = regionId;
+
+			this.Mode = mode;
 
 			_creatures = new Dictionary<long, Creature>();
 			_props = new Dictionary<long, Prop>();
@@ -61,28 +105,139 @@ namespace Aura.Channel.World
 			_clients = new HashSet<ChannelClient>();
 
 			this.Collisions = new RegionCollision();
+		}
 
-			_regionData = AuraData.RegionInfoDb.Find(this.Id);
-			if (_regionData == null)
+		/// <summary>
+		/// Creates new region by id.
+		/// </summary>
+		/// <param name="regionId"></param>
+		public static Region CreateNormal(int regionId)
+		{
+			var region = new Region(regionId, RegionMode.Permanent);
+
+			region.RegionInfoData = AuraData.RegionInfoDb.Find(region.Id);
+			if (region.RegionInfoData == null)
+				throw new Exception("Region.CreateNormal: No region info data found for '" + region.Id + "'.");
+
+			region.InitializeFromData();
+
+			return region;
+		}
+
+		/// <summary>
+		/// Creates new dynamic region, based on a region and variation file.
+		/// Region is automatically added to the dynamic region manager.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="variationFile"></param>
+		public static Region CreateDynamic(int baseRegionId, string variationFile = "", RegionMode mode = RegionMode.RemoveWhenEmpty)
+		{
+			var region = new Region(baseRegionId, mode);
+			region.Id = ChannelServer.Instance.World.DynamicRegions.GetFreeDynamicRegionId();
+			region.Variation = variationFile;
+
+			var baseRegionInfoData = AuraData.RegionInfoDb.Find(region.BaseId);
+			if (baseRegionInfoData == null)
+				throw new Exception("Region.CreateDynamic: No region info data found for '" + region.BaseId + "'.");
+
+			region.RegionInfoData = CreateVariation(baseRegionInfoData, region.Id, variationFile);
+
+			region.InitializeFromData();
+
+			ChannelServer.Instance.World.DynamicRegions.Add(region);
+
+			return region;
+		}
+
+		/// <summary>
+		/// Recreates a region, based on another region and a variation file.
+		/// </summary>
+		/// <param name="baseRegionInfoData"></param>
+		/// <param name="newRegionId"></param>
+		/// <param name="variationFile"></param>
+		/// <returns></returns>
+		private static RegionInfoData CreateVariation(RegionInfoData baseRegionInfoData, int newRegionId, string variationFile)
+		{
+			var result = new RegionInfoData();
+			result.Id = newRegionId;
+			result.GroupId = baseRegionInfoData.GroupId;
+			result.X1 = baseRegionInfoData.X1;
+			result.Y1 = baseRegionInfoData.Y1;
+			result.X2 = baseRegionInfoData.X2;
+			result.Y2 = baseRegionInfoData.Y2;
+
+			// TODO: Filter areas, props, and events to create, based on variation file.
+
+			result.Areas = new List<AreaData>(baseRegionInfoData.Areas.Count);
+			var i = 1;
+			foreach (var originalArea in baseRegionInfoData.Areas)
 			{
-				Log.Warning("Region: No data found for '{0}'.", this.Id);
-				return;
+				var area = originalArea.Copy(false, false);
+				area.Id = i++;
+
+				// Add props
+				foreach (var originalProp in originalArea.Props.Values)
+				{
+					var prop = originalProp.Copy();
+
+					var id = (ulong)prop.EntityId;
+					id &= ~0x0000FFFFFFFF0000U;
+					id |= ((ulong)result.Id << 32);
+					id |= ((ulong)baseRegionInfoData.GetAreaIndex(originalArea.Id) << 16);
+
+					prop.EntityId = (long)id;
+
+					area.Props.Add(prop.EntityId, prop);
+				}
+
+				// Add events
+				foreach (var originalEvent in originalArea.Events.Values)
+				{
+					var ev = originalEvent.Copy();
+					ev.RegionId = result.Id;
+
+					var id = (ulong)ev.Id;
+					id &= ~0x0000FFFFFFFF0000U;
+					id |= ((ulong)result.Id << 32);
+					id |= ((ulong)baseRegionInfoData.GetAreaIndex(originalArea.Id) << 16);
+
+					ev.Id = (long)id;
+
+					area.Events.Add(ev.Id, ev);
+				}
+
+				result.Areas.Add(area);
 			}
 
-			this.Collisions.Init(_regionData);
+			return result;
+		}
 
-			this.LoadClientProps();
+		/// <summary>
+		/// Adds all props found in the client for this region and creates a list
+		/// of areas.
+		/// </summary>
+		protected void InitializeFromData()
+		{
+			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
+				return;
+
+			var regionData = AuraData.RegionDb.Find(this.BaseId);
+			if (regionData != null)
+				this.BaseName = regionData.Name;
+
+			this.Name = (this.IsDynamic ? "DynamicRegion" + this.Id : this.BaseName);
+
+			this.Collisions.Init(this.RegionInfoData);
+
+			this.LoadProps();
 		}
 
 		/// <summary>
 		/// Adds all props found in the client for this region.
 		/// </summary>
-		private void LoadClientProps()
+		protected void LoadProps()
 		{
-			if (_regionData == null || _regionData.Areas == null)
-				return;
-
-			foreach (var area in _regionData.Areas.Values)
+			foreach (var area in this.RegionInfoData.Areas)
 			{
 				foreach (var prop in area.Props.Values)
 				{
@@ -95,6 +250,35 @@ namespace Aura.Channel.World
 					this.AddProp(add);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Returns event by id or null if it doesn't exist.
+		/// </summary>
+		/// <param name="eventId"></param>
+		/// <returns></returns>
+		public EventData GetEvent(long eventId)
+		{
+			return this.RegionInfoData.GetEvent(eventId);
+		}
+
+		/// <summary>
+		/// Returns id of area at the given coordinates and adjusts it if region is dynamic, or 0 if area wasn't found.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public int GetAreaId(int x, int y)
+		{
+			var areaId = 0;
+
+			foreach (var area in this.RegionInfoData.Areas)
+			{
+				if (x >= Math.Min(area.X1, area.X2) && x < Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y < Math.Max(area.Y1, area.Y2))
+					areaId = area.Id;
+			}
+
+			return areaId;
 		}
 
 		/// <summary>
@@ -317,6 +501,21 @@ namespace Aura.Channel.World
 
 			if (creature.EntityId < MabiId.Npcs)
 				Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
+
+			// Remove dynamic region from client when he's removed from it on
+			// the server, so it's recreated next time it goes to a dynamic
+			// region with that id. Otherwise it will load the previous
+			// region again.
+			if (this.IsDynamic)
+				Send.RemoveDynamicRegion(creature, this.Id);
+
+			// Remove empty region from world
+			if (this.CountPlayers() == 0 && this.Mode == RegionMode.RemoveWhenEmpty)
+			{
+				ChannelServer.Instance.World.RemoveRegion(this.Id);
+				if (this.IsDynamic)
+					ChannelServer.Instance.World.DynamicRegions.Remove(this.Id);
+			}
 		}
 
 		/// <summary>
@@ -893,5 +1092,18 @@ namespace Aura.Channel.World
 				}
 			}
 		}
+	}
+
+	public enum RegionMode
+	{
+		/// <summary>
+		/// Kept in the world permanently
+		/// </summary>
+		Permanent,
+
+		/// <summary>
+		/// Region gets removed once the last player has left.
+		/// </summary>
+		RemoveWhenEmpty,
 	}
 }

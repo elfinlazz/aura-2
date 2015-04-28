@@ -214,12 +214,14 @@ namespace Aura.Mabi.Network
 		public const int PlayAnimation = 0x6D63; // s:data/.../anim/..., 1:0, 2:0, 1:0
 		public const int CancelMotion = 0x6D65;
 		public const int MotionCancel2 = 0x6D66; // Delayed?
+		public const int SetStandStyle = 0x6D68;
 		public const int LevelUp = 0x6D69;
 		public const int RankUp = 0x6D6A;
 		public const int SitDown = 0x6D6C;
 		public const int StandUp = 0x6D6D;
 		public const int ArenaHideOn = 0x6D6F;
 		public const int ArenaHideOff = 0x6D70;
+		public const int SetStandStyleTalking = 0x6D79;
 		public const int ChangeStanceRequest = 0x6E28;
 		public const int ChangeStanceRequestR = 0x6E29;
 		public const int ChangeStance = 0x6E2A;
@@ -386,6 +388,8 @@ namespace Aura.Mabi.Network
 		// [190100, NA198 (11.12.2014)] End of above's shift?
 
 		public const int DungeonInfo = 0x9470;
+		public const int EnterDynamicRegion = 0x9571; // Creates one dynamic region and warps there
+		public const int RemoveDynamicRegion = 0x9572;
 		public const int ArenaRoundInfo = 0x9667;
 		public const int ArenaRoundInfoCancel = 0x9668;
 		public const int AgeUpEffect = 0x9858;
@@ -426,6 +430,7 @@ namespace Aura.Mabi.Network
 		public const int UmbrellaLand = 0xA8E2;
 		public const int SetBgm = 0xA910;
 		public const int UnsetBgm = 0xA911;
+		public const int EnterDynamicRegionExtended = 0xA97E; // Creates multiple dynamic regions and warps to one
 		public const int EnableRoyalAlchemist = 0xA9A3;
 		public const int SosButtonRequest = 0xA9A9;
 		public const int SosButtonRequestR = 0xA9AA;

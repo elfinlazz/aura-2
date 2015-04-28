@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Aura.Mabi.Network;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Util
 {
@@ -77,7 +78,7 @@ namespace Aura.Channel.Util
 			Add(50, 50, "telewalk", "", HandleTeleWalk);
 
 			// Admins
-			Add(99, 99, "variant", "<xml_file>", HandleVariant);
+			Add(99, 99, "dynamic", "[variant]", HandleDynamic);
 			Add(99, -1, "reloaddata", "", HandleReloadData);
 			Add(99, -1, "reloadscripts", "", HandleReloadScripts);
 			Add(99, -1, "reloadconf", "", HandleReloadConf);
@@ -226,7 +227,9 @@ namespace Aura.Channel.Util
 				? Localization.Get("You're here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4} (Radian: {6})")
 				: Localization.Get("{3} is here: Region: {0} @ {1}/{2}, Area: {5}, Dir: {4} (Radian: {6})");
 
-			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name, target.Direction, AuraData.RegionInfoDb.GetAreaId(target.RegionId, pos.X, pos.Y), MabiMath.ByteToRadian(target.Direction).ToInvariant("#.###"));
+			var areaId = target.Region.GetAreaId(pos.X, pos.Y);
+
+			Send.ServerMessage(sender, msg, target.RegionId, pos.X, pos.Y, target.Name, target.Direction, areaId, MabiMath.ByteToRadian(target.Direction).ToInvariant("#.###"));
 
 			return CommandResult.Okay;
 		}
@@ -255,7 +258,8 @@ namespace Aura.Channel.Util
 				regionId = target.RegionId;
 
 			// Check region
-			if (warp && !ChannelServer.Instance.World.HasRegion(regionId))
+			var warpToRegion = ChannelServer.Instance.World.GetRegion(regionId);
+			if (warp && warpToRegion == null)
 			{
 				Send.ServerMessage(sender, Localization.Get("Region doesn't exist."));
 				return CommandResult.Fail;
@@ -277,10 +281,17 @@ namespace Aura.Channel.Util
 				return CommandResult.InvalidArgument;
 			}
 
-			// Random coordinates if none were specified
-			if (x == -1 || y == -1)
+			// Same coordinates if warping back from a dynamic region,
+			// random coordinates if none were specified in a normal warp.
+			if ((target.Region.IsDynamic || warpToRegion.IsDynamic) && (warpToRegion.BaseId == target.Region.BaseId))
 			{
-				var rndc = AuraData.RegionInfoDb.RandomCoord(regionId);
+				var pos = target.GetPosition();
+				x = pos.X;
+				y = pos.Y;
+			}
+			else if (x == -1 || y == -1)
+			{
+				var rndc = AuraData.RegionInfoDb.RandomCoord(warpToRegion.BaseId);
 				if (x < 0) x = rndc.X;
 				if (y < 0) y = rndc.Y;
 			}
@@ -464,38 +475,32 @@ namespace Aura.Channel.Util
 			}
 		}
 
-		private CommandResult HandleVariant(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		private CommandResult HandleDynamic(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
 		{
-			if (args.Count < 2)
-				return CommandResult.InvalidArgument;
+			string variant = "";
 
-			var actualId = 1;
-			var dynamicId = 35001;
-			var x = 12800;
-			var y = 38100;
+			if (args.Count > 1)
+			{
+				variant = args[1];
 
-			ChannelServer.Instance.World.AddRegion(35001);
-			sender.SetLocation(dynamicId, x, y);
-			sender.Warping = true;
+				if (!variant.EndsWith(".xml"))
+					variant += ".xml";
+			}
 
-			var pp = new Packet(0x0000A97E, MabiId.Broadcast);
-			pp.PutLong(sender.EntityId);
-			pp.PutInt(actualId);
-			pp.PutInt(dynamicId);
-			pp.PutInt(x);
-			pp.PutInt(y);
-			pp.PutInt(0);
-			pp.PutInt(1);
-			pp.PutInt(dynamicId);
-			pp.PutString("DynamicRegion" + dynamicId);
-			pp.PutUInt(0x80000001);
-			pp.PutInt(1);
-			pp.PutString("uladh_main");
-			pp.PutInt(200);
-			pp.PutByte(0);
-			pp.PutString("data/world/uladh_main/" + args[1] + ".xml"); // region_variation_797208
+			var baseRegionId = target.RegionId;
+			var regionData = AuraData.RegionDb.Find(baseRegionId);
 
-			client.Send(pp);
+			if (regionData == null)
+				return CommandResult.Fail;
+
+			var region = Region.CreateDynamic(baseRegionId, variant, RegionMode.Permanent);
+			ChannelServer.Instance.World.AddRegion(region);
+
+			var pos = target.GetPosition();
+
+			target.Warp(region.Id, pos.X, pos.Y);
+
+			Send.ServerMessage(sender, Localization.Get("Created new region based on region {0}, new region's id: {1}"), baseRegionId, region.Id);
 
 			return CommandResult.Okay;
 		}

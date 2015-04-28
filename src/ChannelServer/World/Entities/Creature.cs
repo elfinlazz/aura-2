@@ -821,6 +821,15 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Sets RegionId and position.
+		/// </summary>
+		/// <param name="loc"></param>
+		public void SetLocation(Location loc)
+		{
+			this.SetLocation(loc.RegionId, loc.X, loc.Y);
+		}
+
+		/// <summary>
 		/// Starts movement from current position to destination.
 		/// Sends Running|Walking.
 		/// </summary>
