@@ -41,19 +41,27 @@ namespace Aura.Channel.Skills
 
 					var handler = Activator.CreateInstance(type) as ISkillHandler;
 					foreach (var skillId in (attributes.First() as SkillAttribute).Ids)
-					{
-						if (_handlers.ContainsKey(skillId))
-							Log.Warning("SkillManager: Duplicate handler for '{0}', using '{1}'.", skillId, type.Name);
-
-						var initHandler = handler as IInitiableSkillHandler;
-						if (initHandler != null) initHandler.Init();
-
-						_handlers[skillId] = handler;
-					}
+						this.AddHandler(skillId, handler);
 				}
 			}
 
 			Log.Info("Done loading {0} skill handlers.", _handlers.Count);
+		}
+
+		/// <summary>
+		/// Adds handler for skill id and calls Init if applicable.
+		/// </summary>
+		/// <param name="skillId"></param>
+		/// <param name="handler"></param>
+		public void AddHandler(SkillId skillId, ISkillHandler handler)
+		{
+			if (_handlers.ContainsKey(skillId))
+				Log.Info("SkillManager: Overriding handler for '{0}', using '{1}'.", skillId, handler.GetType().Name);
+
+			var initHandler = handler as IInitiableSkillHandler;
+			if (initHandler != null) initHandler.Init();
+
+			_handlers[skillId] = handler;
 		}
 
 		/// <summary>

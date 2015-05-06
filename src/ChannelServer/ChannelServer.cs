@@ -118,11 +118,11 @@ namespace Aura.Channel
 			// World
 			this.InitializeWorld();
 
-			// Scripts
-			this.LoadScripts();
-
 			// Skills
 			this.LoadSkills();
+
+			// Scripts
+			this.LoadScripts();
 
 			// Weather
 			this.Weather.Initialize();
