@@ -14,7 +14,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Aura.Channel.Database;
 using Aura.Channel.Network.Sending;
-using Aura.Channel.Scripting.Compilers;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.Skills;
 using Aura.Channel.World;
@@ -28,15 +27,12 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.Scripting
 {
-	public class ScriptManager
+	public class ScriptManager : Aura.Shared.Scripting.ScriptManager
 	{
 		private const string SystemIndexRoot = "system/scripts/";
 		private const string UserIndexRoot = "user/scripts/";
 		private const string IndexPath = SystemIndexRoot + "scripts.txt";
 
-		private Dictionary<string, Compiler> _compilers;
-
-		private Dictionary<string, Type> _scripts;
 		private Dictionary<int, ItemScript> _itemScripts;
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<string, NpcShopScript> _shops;
@@ -47,17 +43,10 @@ namespace Aura.Channel.Scripting
 
 		private Dictionary<int, CreatureSpawn> _creatureSpawns;
 
-		private List<IDisposable> _scriptsToDispose;
-
 		public ScriptVariables GlobalVars { get; protected set; }
 
 		public ScriptManager()
 		{
-			_compilers = new Dictionary<string, Compiler>();
-			_compilers.Add("cs", new CSharpCompiler());
-			_compilers.Add("boo", new BooCompiler());
-
-			_scripts = new Dictionary<string, Type>();
 			_itemScripts = new Dictionary<int, ItemScript>();
 			_aiScripts = new Dictionary<string, Type>();
 			_shops = new Dictionary<string, NpcShopScript>();
@@ -67,8 +56,6 @@ namespace Aura.Channel.Scripting
 			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
 
 			_creatureSpawns = new Dictionary<int, CreatureSpawn>();
-
-			_scriptsToDispose = new List<IDisposable>();
 
 			this.GlobalVars = new ScriptVariables();
 		}
@@ -86,7 +73,7 @@ namespace Aura.Channel.Scripting
 		{
 			this.LoadAiScripts();
 			this.LoadItemScripts();
-			this.LoadScripts();
+			this.LoadScripts(IndexPath);
 
 			this.LoadSpawns();
 		}
@@ -106,62 +93,17 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
-		/// Loads scripts from list.
+		/// Returns path for the compiled version of the script.
+		/// Creates directory structure if it doesn't exist.
 		/// </summary>
-		private void LoadScripts()
+		/// <param name="path"></param>
+		/// <returns></returns>
+		protected override string GetCachePath(string path)
 		{
-			Log.Info("Loading scripts, this might take a few minutes...");
+			path = path.Replace(Path.GetFullPath(SystemIndexRoot).Replace("\\", "/").TrimStart('/'), "");
+			path = path.Replace(Path.GetFullPath(UserIndexRoot).Replace("\\", "/").TrimStart('/'), "");
 
-			_scripts.Clear();
-			_creatureSpawns.Clear();
-			_questScripts.Clear();
-			_hooks.Clear();
-			_shops.Clear();
-			_clientEventHandlers.Clear();
-
-			if (!File.Exists(IndexPath))
-			{
-				Log.Error("Script list not found at '{0}'.", IndexPath);
-				return;
-			}
-
-			// Read script list
-			OrderedDictionary toLoad = null;
-			try
-			{
-				toLoad = this.ReadScriptList(IndexPath);
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex, "Failed to read script list.");
-				return;
-			}
-
-			// Load scripts
-			int done = 0, loaded = 0;
-			foreach (string filePath in toLoad.Values)
-			{
-				var asm = this.GetAssembly(filePath);
-				if (asm != null)
-				{
-					this.LoadScriptAssembly(asm, filePath);
-					loaded++;
-				}
-
-				if (done % 5 == 0)
-					Log.Progress(done + 1, toLoad.Count);
-
-				done++;
-			}
-			Log.Progress(100, 100);
-
-			// Init scripts
-			this.InitializeScripts();
-
-			if (toLoad.Count > 0)
-				Log.WriteLine();
-
-			Log.Info("Done loading {0} scripts (of {1}).", loaded, toLoad.Count);
+			return base.GetCachePath(path);
 		}
 
 		/// <summary>
@@ -169,34 +111,29 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		/// <param name="rootList"></param>
 		/// <returns></returns>
-		private OrderedDictionary ReadScriptList(string rootList)
+		protected override ICollection<string> ReadScriptList(string scriptListFile)
 		{
-			var result = new OrderedDictionary();
+			var result = new List<string>();
 
-			using (var fr = new FileReader(rootList))
+			using (var fr = new FileReader(scriptListFile))
 			{
 				foreach (var line in fr)
 				{
-					// Get path to file relative to "x/scripts/".
-					var relative = Path.GetFullPath(line.File);
-					relative = relative.Replace(Path.GetFullPath(UserIndexRoot), "");
-					relative = relative.Replace(Path.GetFullPath(SystemIndexRoot), "");
-					relative = Path.GetDirectoryName(relative);
+					// Get path to the current list's directory
+					var listPath = Path.GetFullPath(line.File);
+					listPath = listPath.Replace(Path.GetFullPath(UserIndexRoot), "");
+					listPath = listPath.Replace(Path.GetFullPath(SystemIndexRoot), "");
+					listPath = Path.GetDirectoryName(listPath);
 
-					var fileName = Path.Combine(relative, line.Value).Replace("\\", "/");
+					var fileName = Path.Combine(listPath, line.Value).Replace("\\", "/");
 
 					// Get script path for either user or system
 					var scriptPath = Path.Combine(UserIndexRoot, fileName);
 					if (!File.Exists(scriptPath))
 						scriptPath = Path.Combine(SystemIndexRoot, fileName);
-					if (!File.Exists(scriptPath))
-					{
-						Log.Warning("Script not found: {0}", fileName);
-						continue;
-					}
 
-					// Easiest way to get a unique, ordered list.
-					result[fileName] = scriptPath;
+					if (!result.Contains(scriptPath))
+						result.Add(scriptPath);
 				}
 			}
 
@@ -387,223 +324,6 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
-		/// Loads assembly for script, compiles it if necessary.
-		/// Returns null if there was a problem.
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		private Assembly GetAssembly(string path)
-		{
-			if (!File.Exists(path))
-			{
-				Log.Error("File '{0}' not found.", path);
-				return null;
-			}
-
-			var ext = Path.GetExtension(path).TrimStart('.');
-
-			// Load dlls directly
-			if (ext == "dll")
-				return Assembly.LoadFrom(path);
-
-			// Try to compile other files
-			var outPath = this.GetCachePath(path);
-
-			Compiler compiler;
-			_compilers.TryGetValue(ext, out compiler);
-			if (compiler == null)
-			{
-				Log.Error("No compiler found for script '{0}'.", path);
-				return null;
-			}
-
-			try
-			{
-				var scriptAsm = compiler.Compile(path, outPath);
-				//this.LoadScriptAssembly(scriptAsm);
-
-				return scriptAsm;
-			}
-			catch (CompilerErrorsException ex)
-			{
-				try
-				{
-					File.Delete(outPath);
-				}
-				catch (UnauthorizedAccessException)
-				{
-					Log.Warning("Unable to delete '{0}'", outPath);
-				}
-
-				var lines = File.ReadAllLines(path);
-
-				foreach (var err in ex.Errors)
-				{
-					// Error msg
-					Log.WriteLine((!err.IsWarning ? LogLevel.Error : LogLevel.Warning), "In {0} on line {1}, column {2}", err.File, err.Line, err.Column);
-					Log.WriteLine(LogLevel.None, "          {0}", err.Message);
-
-					// Display lines around the error
-					int startLine = Math.Max(1, err.Line - 1);
-					int endLine = Math.Min(lines.Length, startLine + 2);
-					for (int i = startLine; i <= endLine; ++i)
-					{
-						// Make sure we don't get out of range.
-						// (ReadAllLines "trims" the input)
-						var line = (i <= lines.Length) ? lines[i - 1] : "";
-
-						Log.WriteLine(LogLevel.None, "  {2} {0:0000}: {1}", i, line, (err.Line == i ? '*' : ' '));
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex, "LoadScript: Problem while loading script '{0}'", path);
-				//File.Delete(outPath);
-			}
-
-			return null;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <remarks>
-		/// TODO: We might want to stop loading if this is a problem,
-		/// scripts might depend on each other, which could lead to more
-		/// errors.
-		/// </remarks>
-		/// <param name="asm"></param>
-		/// <param name="filePath"></param>
-		/// <returns></returns>
-		private static IEnumerable<Type> GetJITtedTypes(Assembly asm, string filePath)
-		{
-			Type[] types;
-			try
-			{
-				types = asm.GetTypes();
-				foreach (var method in types.SelectMany(t => t.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)).Where(m => !m.IsAbstract && !m.ContainsGenericParameters))
-					RuntimeHelpers.PrepareMethod(method.MethodHandle);
-			}
-			catch (Exception ex)
-			{
-				// Happens if classes in source or other scripts change,
-				// i.e. a class name changes, or a parent class. Only
-				// fixable by recaching, so they can "sync" again.
-
-				Log.Exception(ex, "GetJITtedTypes: Loading of one or multiple types in '{0}' failed, classes in this file won't be loaded. " +
-					"Restart your server to recompile the offending scripts. Delete your cache folder if this error persists.", filePath);
-
-				// Mark for recomp
-				try
-				{
-					new FileInfo(filePath).LastWriteTime = DateTime.Now;
-				}
-				catch
-				{
-					// Fails for DLLs, because they're loaded from where they are.
-				}
-
-				return Enumerable.Empty<Type>();
-			}
-
-			return types;
-		}
-
-		/// <summary>
-		/// Loads script classes inside assembly.
-		/// </summary>
-		/// <param name="asm"></param>
-		/// <param name="filePath">Path of the script, for reference</param>
-		/// <returns></returns>
-		private void LoadScriptAssembly(Assembly asm, string filePath)
-		{
-			var types = GetJITtedTypes(asm, filePath);
-
-			foreach (var type in types.Where(a => a.GetInterfaces().Contains(typeof(IScript)) && !a.IsAbstract && !a.Name.StartsWith("_")))
-			{
-				try
-				{
-					// Make sure there's only one copy of each script.
-					if (_scripts.ContainsKey(type.Name))
-					{
-						Log.Error("Script classes must have unique names, duplicate '{0}' found in '{1}'.", type.Name, Path.GetFileName(filePath));
-						continue;
-					}
-
-					// Check overrides
-					var overide = type.GetCustomAttribute<OverrideAttribute>();
-					if (overide != null)
-					{
-						if (_scripts.ContainsKey(overide.TypeName))
-						{
-							_scripts.Remove(overide.TypeName);
-						}
-						else
-							Log.Warning("Override: Script class '{0}' not found ({1} @ {2}).", overide.TypeName, type.Name, Path.GetFileName(filePath));
-					}
-
-					// Check removes
-					var removes = type.GetCustomAttribute<RemoveAttribute>();
-					if (removes != null)
-					{
-						foreach (var rm in removes.TypeNames)
-						{
-							if (_scripts.ContainsKey(rm))
-							{
-								_scripts.Remove(rm);
-							}
-							else
-								Log.Warning("Remove: Script class '{0}' not found ({1} @ {2}).", rm, type.Name, Path.GetFileName(filePath));
-						}
-					}
-
-					// Add class to load list, even if it's a dummy for remove,
-					// we can't be sure it's not supposed to get initialized.
-					_scripts[type.Name] = type;
-				}
-				catch (Exception ex)
-				{
-					Log.Exception(ex, "Error while loading script '{0}' ({1}).", type.Name, ex.Message);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Initializes all scripts loaded from assemblies.
-		/// </summary>
-		private void InitializeScripts()
-		{
-			foreach (var type in _scripts.Values)
-			{
-				try
-				{
-					// Initiate script
-					var script = Activator.CreateInstance(type) as IScript;
-					if (!script.Init())
-					{
-						Log.Debug("LoadScriptAssembly: Failed to initiate '{0}'.", type.Name);
-						continue;
-					}
-
-					// Register scripts implementing IDisposable as script to
-					// dispose on reload.
-					if (type.GetInterfaces().Contains(typeof(IDisposable)))
-						_scriptsToDispose.Add(script as IDisposable);
-
-					// Run auto loader. This has to be done after Init,
-					// because of how Load is called from GeneralScript.
-					if (type.GetInterfaces().Contains(typeof(IAutoLoader)))
-						(script as IAutoLoader).AutoLoad();
-				}
-				catch (Exception ex)
-				{
-					Log.Exception(ex, "Error while loading script '{0}' ({1}).", type.Name, ex.Message);
-				}
-			}
-		}
-
-		/// <summary>
 		/// Loads item script classes from assembly.
 		/// </summary>
 		/// <param name="asm"></param>
@@ -637,23 +357,6 @@ namespace Aura.Channel.Scripting
 
 				itemId = 0;
 			}
-		}
-
-		/// <summary>
-		/// Returns path for the compiled version of the script.
-		/// Creates directory structure if it doesn't exist.
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		private string GetCachePath(string path)
-		{
-			var result = (!path.StartsWith("cache") ? Path.Combine("cache", path + ".compiled") : path + ".compiled");
-			var dir = Path.GetDirectoryName(result);
-
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
-
-			return result;
 		}
 
 		/// <summary>

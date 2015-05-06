@@ -9,6 +9,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 using Aura.Mabi;
 using Aura.Data;
+using Aura.Shared.Scripting.Scripts;
 
 namespace Aura.Channel.Scripting.Scripts
 {

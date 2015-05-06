@@ -15,6 +15,7 @@ using Aura.Shared.Util;
 using System.Threading;
 using System.Collections.Generic;
 using Aura.Shared.Util.Commands;
+using Aura.Shared.Scripting.Scripts;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -39,7 +40,7 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
-		/// Adds subscribtions based on "On" attribute on methods.
+		/// Adds subscriptions based on "On" attribute on methods.
 		/// </summary>
 		public void AutoLoad()
 		{
