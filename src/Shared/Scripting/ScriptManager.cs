@@ -24,7 +24,7 @@ namespace Aura.Shared.Scripting
 		protected List<IDisposable> _scriptsToDispose;
 
 		/// <summary>
-		/// Gets or sets whether caching is enabled.
+		/// Gets or sets whether caching is enabled (enabled by default).
 		/// </summary>
 		public bool Caching { get; set; }
 
@@ -37,14 +37,18 @@ namespace Aura.Shared.Scripting
 			_compilers.Add("cs", new CSharpCompiler());
 			_compilers.Add("boo", new BooCompiler());
 
+			_scripts = new Dictionary<string, Type>();
+
 			_scriptsToDispose = new List<IDisposable>();
+
+			this.Caching = true;
 		}
 
 		/// <summary>
 		/// Loads scripts from list file.
 		/// </summary>
 		/// <param name="scriptListFile">Text file containing paths to script files.</param>
-		public virtual void LoadScripts(string scriptListFile)
+		public void LoadScripts(string scriptListFile)
 		{
 			if (!File.Exists(scriptListFile))
 			{
@@ -57,7 +61,7 @@ namespace Aura.Shared.Scripting
 			_scripts.Clear();
 
 			// Read script list
-			SortedSet<string> toLoad = null;
+			ICollection<string> toLoad = null;
 			try
 			{
 				toLoad = this.ReadScriptList(scriptListFile);
@@ -85,7 +89,7 @@ namespace Aura.Shared.Scripting
 		/// </summary>
 		/// <param name="scriptFileList">Collection of script file names.</param>
 		/// <returns></returns>
-		protected virtual int LoadScripts(ICollection<string> scriptFileList)
+		private int LoadScripts(ICollection<string> scriptFileList)
 		{
 			int done = 0, loaded = 0;
 			foreach (string scriptPath in scriptFileList)
@@ -116,7 +120,7 @@ namespace Aura.Shared.Scripting
 		/// </summary>
 		/// <param name="scriptPath"></param>
 		/// <returns></returns>
-		public virtual bool LoadScript(string scriptPath)
+		private bool LoadScript(string scriptPath)
 		{
 			if (!File.Exists(scriptPath))
 				throw new FileNotFoundException();
@@ -135,9 +139,9 @@ namespace Aura.Shared.Scripting
 		/// </summary>
 		/// <param name="rootList"></param>
 		/// <returns></returns>
-		protected virtual SortedSet<string> ReadScriptList(string scriptListFile)
+		protected virtual ICollection<string> ReadScriptList(string scriptListFile)
 		{
-			var result = new SortedSet<string>();
+			var result = new List<string>();
 
 			using (var fr = new FileReader(scriptListFile))
 			{
@@ -150,7 +154,8 @@ namespace Aura.Shared.Scripting
 					// Get full path to script
 					var scriptPath = Path.Combine(listPath, line.Value).Replace("\\", "/");
 
-					result.Add(scriptPath);
+					if (!result.Contains(scriptPath))
+						result.Add(scriptPath);
 				}
 			}
 
