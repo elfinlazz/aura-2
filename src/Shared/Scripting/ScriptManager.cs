@@ -395,13 +395,7 @@ namespace Aura.Shared.Scripting
 		/// <returns></returns>
 		protected virtual string GetCachePath(string path)
 		{
-			var result = (!path.StartsWith("cache") ? Path.Combine("cache", path + ".compiled") : path + ".compiled");
-			var dir = Path.GetDirectoryName(result);
-
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
-
-			return result;
+			return path + ".compiled";
 		}
 	}
 }
