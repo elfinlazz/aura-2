@@ -173,10 +173,19 @@ namespace Aura.Shared.Scripting
 					else
 					{
 						var recursive = scriptPath.EndsWith("/**/*");
-						scriptPath = scriptPath.TrimEnd('/', '*');
+						var directoryPath = scriptPath.TrimEnd('/', '*');
 
-						foreach (var file in Directory.EnumerateFiles(scriptPath, "*", recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
-							paths.Add(file);
+						if (Directory.Exists(directoryPath))
+						{
+							foreach (var file in Directory.EnumerateFiles(directoryPath, "*", recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
+								paths.Add(file);
+						}
+						else
+						{
+							// Add path with wildcards, so a warning is given
+							// when trying to load the script.
+							paths.Add(scriptPath);
+						}
 					}
 
 					foreach (var path in paths)
