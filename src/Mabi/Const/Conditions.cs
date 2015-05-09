@@ -288,22 +288,74 @@ namespace Aura.Mabi.Const
 	public enum ConditionsE : ulong
 	{
 		SlientVoice = 0x0000000000000001,
-		BeastCry = 0x0000000000000002,
+		BeastRoar = 0x0000000000000002,
 		DanceTime = 0x0000000000000004,
-		GhostBerserk = 0x0000000000000008,
-		ProtectofChineseZombie = 0x0000000000000010,
+		GhostMadness = 0x0000000000000008,
+		EasternVampireProtection = 0x0000000000000010,
 		HalloweenChannelBuff = 0x0000000000000020,
-		HalloweenWorldQuest = 0x0000000000000040,
-		IriaSkyRacingBoost = 0x0000000000000080,
+		HalloweenWorldEventQuestCheck = 0x0000000000000040,
+		FlightBoost = 0x0000000000000080, // IriaSkyRacingBoost
 		SpeedDown = 0x0000000000000100,
 		Transformation = 0x0000000000000200,
 		Stun = 0x0000000000000400,
-		IriaSkyRacingWindBoost = 0x0000000000000800,
+		TyphoonBoost = 0x0000000000000800, // IriaSkyRacingWindBoost
 		FreezeUsableItem = 0x0000000000001000,
 		AngryMonster = 0x0000000000002000,
-		CommerceSpeedUp = 0x0000000000004000,
-		RomanticCampfire = 0x0000000000008000,
-		FlyTogether = 0x0000000000010000,
+		CommerceSpeed = 0x0000000000004000,
+		LoveyDovey = 0x0000000000008000,
+		CookingProductionExpBoost = 0x0000000000010000,
+		LadderEscape = 0x0000000000020000,
+		BattleMode = 0x0000000000040000,
+		MovementSpeedIncreased = 0x0000000000080000, // OverlapSpeedUp
+		DefenseDebuff = 0x0000000000100000,
+		BossInvincible = 0x0000000000200000,
+		BossAmbientSound = 0x0000000000400000,
+		PossessedRuairiSwngSkillDotDamage = 0x0000000000800000,
+		ShadowMissionExpBoost = 0x0000000001000000,
+		NinjaSkillTrainingBoost = 0x0000000002000000,
+		SpeedBoost = 0x0000000004000000, // Increase movement and gathering speed
+		RegenerationEnhance = 0x0000000008000000, // Increase HP, Wound, MP, Strength recovery rate
+		FairySleep = 0x0000000010000000,
+		FairySpeedReduce = 0x0000000020000000,
+		FairyMagicImmune = 0x0000000040000000,
+		Refreshed = 0x0000000080000000, // NearObjectBuff
+		Contagion = 0x0000000100000000, // SacredInfection
+		Confinement = 0x0000000200000000, // SacredImprison
+		FanaticismBuff = 0x0000000400000000,
+		BindingTiming = 0x0000000800000000,
+		SmitingTiming = 0x0000001000000000,
+		ApostleWarding = 0x0000002000000000,
+		SmitingEnhancementEffect = 0x0000004000000000,
+		ShieldOfTrust = 0x0000008000000000,
+		CelestialSpike = 0x0000010000000000,
+		Fatty = 0x0000020000000000, // UseItemChangeScale
+		CrusaderWardingPower = 0x0000040000000000, // ShieldOfTrustDefense
+		CelestialSpikeDivineDamage = 0x0000080000000000,
+		SummonLock = 0x0000100000000000,
+		FanaticismDebuff = 0x0000200000000000,
+		Meditation = 0x0000400000000000,
+		PerfectPitch = 0x0000800000000000, // Perfect_Playing
+		Incarnation = 0x0001000000000000,
+		// 0x0002000000000000~0x1000000000000000 missing in client?
+		CloseCombatBleedingEffect = 0x2000000000000000, // TalentRenovationCombatBleeding
+		CloseCombatDazedEffect = 0x4000000000000000, // TalentRenovationCombatGroggy
+		CloseCombatShatterEffect = 0x8000000000000000, // TalentRenovationCombatDecreaseDefenseProtect
+		All = 0xFFFFFFFFFFFFFFFF,
+	}
+
+	[Flags]
+	public enum ConditionsF : ulong
+	{
+		IgnoreCommercePenalty = 0x0000000000000001,
+		BashCombo = 0x0000000000000002,
+		BashComboMax = 0x0000000000000004,
+		DamageCurse2 = 0x0000000000000008,
+		EnhancedCriticalDamage = 0x0000000000000010,
+		EnhancedBash = 0x0000000000000020,
+		DecreasedDurabilityLoss = 0x0000000000000040,
+		SleepingWool = 0x0000000000000080, // SheepSleep
+		GivingOffTheCharm = 0x0000000000000100, // SheepBewitch
+		LightAsWool = 0x0000000000000200, // TouchMoveUp
 		All = 0xFFFFFFFFFFFFFFFF,
 	}
 }

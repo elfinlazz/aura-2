@@ -18,13 +18,13 @@ namespace Aura.Channel.Network.Sending.Helpers
 			{
 				packet.PutULong((ulong)conditions.D);
 			}
-			// [180300, NA169 (23.10.2013)] New conditions list?
+			// [180300, NA169 (23.10.2013)] New conditions list
 			{
 				packet.PutULong((ulong)conditions.E);
 			}
-			// [190100, NA201 (14.02.2015)] New conditions list?
+			// [190100, NA201 (14.02.2015)] New conditions list
 			{
-				packet.PutULong(0);
+				packet.PutULong((ulong)conditions.F);
 			}
 
 			// List of additional values for the conditions

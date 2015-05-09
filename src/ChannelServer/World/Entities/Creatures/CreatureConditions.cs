@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Aura.Channel.Network.Sending;
 using Aura.Mabi;
 using Aura.Mabi.Const;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
@@ -34,6 +33,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		public ConditionsC C { get; private set; }
 		public ConditionsD D { get; private set; }
 		public ConditionsE E { get; private set; }
+		public ConditionsF F { get; private set; }
 
 		public CreatureConditions(Creature creature)
 		{
@@ -46,12 +46,14 @@ namespace Aura.Channel.World.Entities.Creatures
 		public bool Has(ConditionsC condition) { return ((this.C & condition) != 0); }
 		public bool Has(ConditionsD condition) { return ((this.D & condition) != 0); }
 		public bool Has(ConditionsE condition) { return ((this.E & condition) != 0); }
+		public bool Has(ConditionsF condition) { return ((this.F & condition) != 0); }
 
 		public void Activate(ConditionsA condition) { this.A |= condition; Send.ConditionUpdate(_creature); }
 		public void Activate(ConditionsB condition) { this.B |= condition; Send.ConditionUpdate(_creature); }
 		public void Activate(ConditionsC condition) { this.C |= condition; Send.ConditionUpdate(_creature); }
 		public void Activate(ConditionsD condition) { this.D |= condition; Send.ConditionUpdate(_creature); }
 		public void Activate(ConditionsE condition) { this.E |= condition; Send.ConditionUpdate(_creature); }
+		public void Activate(ConditionsF condition) { this.F |= condition; Send.ConditionUpdate(_creature); }
 
 		public void Activate(ConditionsC condition, short val)
 		{
@@ -89,6 +91,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		}
 		public void Deactivate(ConditionsD condition) { this.D &= ~condition; Send.ConditionUpdate(_creature); }
 		public void Deactivate(ConditionsE condition) { this.E &= ~condition; Send.ConditionUpdate(_creature); }
+		public void Deactivate(ConditionsF condition) { this.F &= ~condition; Send.ConditionUpdate(_creature); }
 
 		/// <summary>
 		/// Resets all conditions and sends update.
@@ -100,6 +103,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			this.C = 0;
 			this.D = 0;
 			this.E = 0;
+			this.F = 0;
 			lock (_extra)
 				_extra.Clear();
 			_extraCache = null;
@@ -137,7 +141,7 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		public override string ToString()
 		{
-			return ("(" + this.A + " ; " + this.B + " ; " + this.C + " ; " + this.D + ")");
+			return ("(" + this.A + " ; " + this.B + " ; " + this.C + " ; " + this.D + " ; " + this.E + " ; " + this.F + ")");
 		}
 	}
 }
