@@ -139,7 +139,7 @@ namespace Aura.Shared.Scripting
 		/// </summary>
 		/// <param name="rootList"></param>
 		/// <returns></returns>
-		protected virtual ICollection<string> ReadScriptList(string scriptListFile)
+		protected virtual List<string> ReadScriptList(string scriptListFile)
 		{
 			var result = new List<string>();
 
@@ -147,12 +147,23 @@ namespace Aura.Shared.Scripting
 			{
 				foreach (var line in fr)
 				{
-					// Get path to the current list's directory
-					var listPath = Path.GetFullPath(line.File);
-					listPath = Path.GetDirectoryName(listPath);
+					var scriptPath = line.Value;
 
-					// Get full path to script
-					var scriptPath = Path.Combine(listPath, line.Value).Replace("\\", "/");
+					// Path relative to cwd
+					if (scriptPath.StartsWith("/"))
+					{
+						scriptPath = Path.Combine(Directory.GetCurrentDirectory().Replace("\\", "/"), scriptPath.Replace("\\", "/").TrimStart('/')).Replace("\\", "/");
+					}
+					// Path relative to list file
+					else
+					{
+						// Get path to the current list's directory
+						var listPath = Path.GetFullPath(line.File);
+						listPath = Path.GetDirectoryName(listPath);
+
+						// Get full path to script
+						scriptPath = Path.Combine(listPath, scriptPath).Replace("\\", "/");
+					}
 
 					if (!result.Contains(scriptPath))
 						result.Add(scriptPath);
