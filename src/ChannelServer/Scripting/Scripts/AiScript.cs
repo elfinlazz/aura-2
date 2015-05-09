@@ -17,12 +17,13 @@ using Aura.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.Skills.Life;
+using Aura.Shared.Scripting.Scripts;
 
 namespace Aura.Channel.Scripting.Scripts
 {
 	// TODO: Rewrite into the new tree design before we make more
 	//   of a mess out of this than necessary.
-	public abstract class AiScript : IDisposable
+	public abstract class AiScript : IScript, IDisposable
 	{
 		// Official heartbeat while following a target seems
 		// to be about 100-200ms?
@@ -116,6 +117,14 @@ namespace Aura.Channel.Scripting.Scripts
 			_heartbeatTimer.Change(-1, -1);
 			_heartbeatTimer.Dispose();
 			_heartbeatTimer = null;
+		}
+
+		public bool Init()
+		{
+			// Read attribute...
+			// Add to collection...
+
+			return false;
 		}
 
 		/// <summary>

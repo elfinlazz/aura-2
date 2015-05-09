@@ -23,10 +23,12 @@ namespace Aura.Channel.Scripting.Scripts
 		private const float WeightChangePlus = 0.0015f;
 		private const float WeightChangeMinus = 0.000375f;
 
-		public override void Load()
+		public override bool Init()
 		{
 			// Read attribute...
-			// Add item to collection...
+			// Add to collection...
+
+			return false;
 		}
 
 		/// <summary>

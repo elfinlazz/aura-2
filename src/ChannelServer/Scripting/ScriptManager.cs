@@ -74,7 +74,6 @@ namespace Aura.Channel.Scripting
 		{
 			this.CreateInlineItemScriptFile();
 
-			this.LoadAiScripts();
 			this.LoadScripts(IndexPath);
 
 			this.LoadSpawns();
@@ -241,42 +240,6 @@ namespace Aura.Channel.Scripting
 			ItemScript result;
 			_itemScripts.TryGetValue(itemId, out result);
 			return result;
-		}
-
-		/// <summary>
-		/// Loads AI scripts
-		/// </summary>
-		private void LoadAiScripts()
-		{
-			Log.Info("Loading AI scripts...");
-
-			_aiScripts.Clear();
-
-			foreach (var folder in new string[] { Path.Combine(SystemIndexRoot, "ai"), Path.Combine(UserIndexRoot, "ai") })
-			{
-				if (!Directory.Exists(folder))
-					continue;
-
-				foreach (var filePath in Directory.GetFiles(folder))
-				{
-					var fileName = Path.GetFileNameWithoutExtension(filePath);
-
-					var asm = this.GetAssembly(filePath);
-					if (asm != null)
-					{
-						var types = GetJITtedTypes(asm, filePath);
-
-						// Get first AiScript class and save the type
-						foreach (var type in types.Where(a => a.IsSubclassOf(typeof(AiScript))))
-						{
-							_aiScripts[fileName] = type;
-							break;
-						}
-					}
-				}
-			}
-
-			Log.Info("Done loading AI scripts.");
 		}
 
 		/// <summary>
