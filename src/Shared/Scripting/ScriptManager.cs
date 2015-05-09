@@ -45,6 +45,18 @@ namespace Aura.Shared.Scripting
 		}
 
 		/// <summary>
+		/// Disposes all disposable scripts and clears internal script list.
+		/// </summary>
+		protected void DisposeScripts()
+		{
+			foreach (var script in _scriptsToDispose)
+				script.Dispose();
+
+			_scriptsToDispose.Clear();
+			_scripts.Clear();
+		}
+
+		/// <summary>
 		/// Loads scripts from list file.
 		/// </summary>
 		/// <param name="scriptListFile">Text file containing paths to script files.</param>

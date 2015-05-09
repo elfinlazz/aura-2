@@ -73,9 +73,7 @@ namespace Aura.Channel.Scripting
 		public void Load()
 		{
 			this.CreateInlineItemScriptFile();
-
 			this.LoadScripts(IndexPath);
-
 			this.LoadSpawns();
 		}
 
@@ -84,12 +82,8 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		public void Reload()
 		{
-			foreach (var script in _scriptsToDispose)
-				script.Dispose();
-			_scriptsToDispose.Clear();
-
+			this.DisposeScripts();
 			ChannelServer.Instance.World.RemoveScriptedEntities();
-
 			this.Load();
 		}
 
