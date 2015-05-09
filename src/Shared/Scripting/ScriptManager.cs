@@ -165,8 +165,25 @@ namespace Aura.Shared.Scripting
 						scriptPath = Path.Combine(listPath, scriptPath).Replace("\\", "/");
 					}
 
-					if (!result.Contains(scriptPath))
-						result.Add(scriptPath);
+					var paths = new List<string>();
+					if (!scriptPath.EndsWith("/*"))
+					{
+						paths.Add(scriptPath);
+					}
+					else
+					{
+						var recursive = scriptPath.EndsWith("/**/*");
+						scriptPath = scriptPath.TrimEnd('/', '*');
+
+						foreach (var file in Directory.EnumerateFiles(scriptPath, "*", recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
+							paths.Add(file);
+					}
+
+					foreach (var path in paths)
+					{
+						if (!result.Contains(path))
+							result.Add(path);
+					}
 				}
 			}
 
