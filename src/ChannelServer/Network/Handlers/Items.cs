@@ -351,7 +351,7 @@ namespace Aura.Channel.Network.Handlers
 			if (!gotMetaScript)
 			{
 				// Get script
-				var script = ChannelServer.Instance.ScriptManager.GetItemScript(item.Info.Id);
+				var script = ChannelServer.Instance.ScriptManager.ItemScripts.Get(item.Info.Id);
 				if (script == null)
 				{
 					Log.Unimplemented("Item script for '{0}' not found.", item.Info.Id);

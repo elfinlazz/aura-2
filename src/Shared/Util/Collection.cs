@@ -1,0 +1,106 @@
+﻿// Copyright (c) Aura development team - Licensed under GNU GPL
+// For more information, see license file in the main folder
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Aura.Shared.Util
+{
+	/// <summary>
+	/// Thread-safe wrapper around a generic dictionary.
+	/// </summary>
+	/// <typeparam name="TKey"></typeparam>
+	/// <typeparam name="TValue"></typeparam>
+	public class Collection<TKey, TValue>
+	{
+		private Dictionary<TKey, TValue> _entries;
+
+		/// <summary>
+		/// Creates new collection.
+		/// </summary>
+		public Collection()
+		{
+			_entries = new Dictionary<TKey, TValue>();
+		}
+
+		/// <summary>
+		/// Adds value to collection, returns false if key existed already.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public bool Add(TKey key, TValue value)
+		{
+			lock (_entries)
+			{
+				if (_entries.ContainsKey(key))
+					return false;
+
+				_entries.Add(key, value);
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Removes value with key from collection, returns true if successful.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public bool Remove(TKey key)
+		{
+			lock (_entries)
+				return _entries.Remove(key);
+		}
+
+		/// <summary>
+		/// Returns true if collection contains a value for key.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public bool ContainsKey(TKey key)
+		{
+			lock (_entries)
+				return _entries.ContainsKey(key);
+		}
+
+		/// <summary>
+		/// Returns true if collection contains the value.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public bool ContainsValue(TValue value)
+		{
+			lock (_entries)
+				return _entries.ContainsValue(value);
+		}
+
+		/// <summary>
+		/// Returns value for key or default for value (e.g. null for string).
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public TValue Get(TKey key)
+		{
+			TValue result;
+
+			lock (_entries)
+				_entries.TryGetValue(key, out result);
+
+			return result;
+		}
+
+		/// <summary>
+		/// Returns list of values that match the predicate.
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
+		public IEnumerable<KeyValuePair<TKey, TValue>> Get(Func<KeyValuePair<TKey, TValue>, bool> predicate)
+		{
+			lock (_entries)
+				return _entries.Where(predicate);
+		}
+	}
+}

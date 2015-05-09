@@ -206,7 +206,7 @@ namespace Aura.Channel.World.Entities
 			this.Init(itemId);
 			this.SetNewEntityId();
 
-			var script = ChannelServer.Instance.ScriptManager.GetItemScript(itemId);
+			var script = ChannelServer.Instance.ScriptManager.ItemScripts.Get(itemId);
 			if (script != null)
 				script.OnCreation(this);
 

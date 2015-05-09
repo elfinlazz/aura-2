@@ -9,6 +9,7 @@ using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -25,10 +26,14 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public override bool Init()
 		{
-			// Read attribute...
-			// Add to collection...
+			var attr = this.GetType().GetCustomAttribute<ItemScriptAttribute>();
+			if (attr == null)
+				return false;
 
-			return false;
+			foreach (var itemId in attr.ItemIds)
+				ChannelServer.Instance.ScriptManager.ItemScripts.Add(itemId, this);
+
+			return true;
 		}
 
 		/// <summary>

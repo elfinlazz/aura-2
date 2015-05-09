@@ -95,6 +95,7 @@
     <Compile Include="Scripting\ScriptAttributes.cs" />
     <Compile Include="Scripting\ScriptManager.cs" />
     <Compile Include="Scripting\Scripts\IScript.cs" />
+    <Compile Include="Util\Collection.cs" />
     <Compile Include="Util\Password.cs" />
     <Compile Include="Network\BaseClient.cs" />
     <Compile Include="Network\BaseServer.cs" />

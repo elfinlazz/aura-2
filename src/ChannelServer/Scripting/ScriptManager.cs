@@ -34,7 +34,8 @@ namespace Aura.Channel.Scripting
 		private const string CacheRoot = "cache/";
 		private const string IndexPath = SystemIndexRoot + "scripts.txt";
 
-		private Dictionary<int, ItemScript> _itemScripts;
+		public Collection<int, ItemScript> ItemScripts { get; private set; }
+
 		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<string, NpcShopScript> _shops;
 		private Dictionary<int, QuestScript> _questScripts;
@@ -48,7 +49,8 @@ namespace Aura.Channel.Scripting
 
 		public ScriptManager()
 		{
-			_itemScripts = new Dictionary<int, ItemScript>();
+			this.ItemScripts = new Collection<int, ItemScript>();
+
 			_aiScripts = new Dictionary<string, Type>();
 			_shops = new Dictionary<string, NpcShopScript>();
 			_questScripts = new Dictionary<int, QuestScript>();
@@ -186,54 +188,6 @@ namespace Aura.Channel.Scripting
 			}
 
 			File.WriteAllText(outPath, sb.ToString());
-		}
-
-		/// <summary>
-		/// Loads item script classes from assembly.
-		/// </summary>
-		/// <param name="asm"></param>
-		/// <param name="itemId">Only loads first class for itemId, if this is not 0.</param>
-		/// <remarks>
-		/// Item scripts have some special needs, like needing an item id.
-		/// Hard to handle inside the normal loading.
-		/// If itemId is 0 it's retreived from the class name, ItemScript(Id).
-		/// </remarks>
-		private void LoadItemScriptAssembly(Assembly asm, int itemId = 0)
-		{
-			foreach (var type in asm.GetTypes().Where(a => a.IsSubclassOf(typeof(ItemScript)) && !a.IsAbstract && !a.Name.StartsWith("_")))
-			{
-				var itemScript = Activator.CreateInstance(type) as ItemScript;
-
-				// Stop after first type if this loading was for a single item.
-				if (itemId != 0)
-				{
-					_itemScripts[itemId] = itemScript;
-					return;
-				}
-
-				// Parse item id from name
-				if (!Regex.IsMatch(type.Name, "^ItemScript[0-9]+$") || !int.TryParse(type.Name.Substring(10), out itemId))
-				{
-					Log.Error("Unable to parse item id of item script '{0}'.", type.Name);
-					continue;
-				}
-
-				_itemScripts[itemId] = itemScript;
-
-				itemId = 0;
-			}
-		}
-
-		/// <summary>
-		/// Return the item script by itemId, or null.
-		/// </summary>
-		/// <param name="itemId"></param>
-		/// <returns></returns>
-		public ItemScript GetItemScript(int itemId)
-		{
-			ItemScript result;
-			_itemScripts.TryGetValue(itemId, out result);
-			return result;
 		}
 
 		/// <summary>
