@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
+using Aura.Data;
 using Aura.Mabi;
-using Aura.Mabi.Const;
 using Aura.Shared.Util;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -20,6 +22,12 @@ namespace Aura.Channel.Scripting.Scripts
 	{
 		private const float WeightChangePlus = 0.0015f;
 		private const float WeightChangeMinus = 0.000375f;
+
+		public override void Load()
+		{
+			// Read attribute...
+			// Add item to collection...
+		}
 
 		/// <summary>
 		/// Executed when item is used.
@@ -173,6 +181,29 @@ namespace Aura.Channel.Scripting.Scripts
 			item.MetaData1.SetString("MGCSEL", color);
 			if (script != null)
 				item.MetaData1.SetString("MGCWRD", script);
+		}
+	}
+
+	public class ItemScriptAttribute : Attribute
+	{
+		public int[] ItemIds { get; private set; }
+
+		public ItemScriptAttribute(params int[] itemIds)
+		{
+			this.ItemIds = itemIds;
+		}
+
+		public ItemScriptAttribute(params string[] tags)
+		{
+			var ids = new HashSet<int>();
+
+			foreach (var tag in tags)
+			{
+				foreach (var itemData in AuraData.ItemDb.Entries.Values.Where(a => a.HasTag(tag)))
+					ids.Add(itemData.Id);
+			}
+
+			this.ItemIds = ids.ToArray();
 		}
 	}
 }

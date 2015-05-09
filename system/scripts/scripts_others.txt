@@ -6,4 +6,6 @@
 
 others/sealstones.cs
 
+/cache/system/scripts/items/inline.generated.cs
+
 include "/user/scripts/scripts_others.txt"

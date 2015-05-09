@@ -31,6 +31,7 @@ namespace Aura.Channel.Scripting
 	{
 		private const string SystemIndexRoot = "system/scripts/";
 		private const string UserIndexRoot = "user/scripts/";
+		private const string CacheRoot = "cache/";
 		private const string IndexPath = SystemIndexRoot + "scripts.txt";
 
 		private Dictionary<int, ItemScript> _itemScripts;
@@ -71,8 +72,9 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		public void Load()
 		{
+			this.CreateInlineItemScriptFile();
+
 			this.LoadAiScripts();
-			this.LoadItemScripts();
 			this.LoadScripts(IndexPath);
 
 			this.LoadSpawns();
@@ -100,63 +102,62 @@ namespace Aura.Channel.Scripting
 		/// <returns></returns>
 		protected override string GetCachePath(string path)
 		{
-			path = path.Replace(Path.GetFullPath(SystemIndexRoot).Replace("\\", "/").TrimStart('/'), "");
-			path = path.Replace(Path.GetFullPath(UserIndexRoot).Replace("\\", "/").TrimStart('/'), "");
+			path = path.Replace(Path.GetFullPath(SystemIndexRoot).Replace("\\", "/"), "");
+			path = path.Replace(Path.GetFullPath(UserIndexRoot).Replace("\\", "/"), "");
+			path = path.Replace(Path.GetFullPath(CacheRoot).Replace("\\", "/"), "");
 
-			return base.GetCachePath(path);
-		}
+			var result = Path.Combine(CacheRoot, base.GetCachePath(path));
+			var dir = Path.GetDirectoryName(result);
 
-		/// <summary>
-		/// Returns list of script files loaded from scripts.txt.
-		/// </summary>
-		/// <param name="rootList"></param>
-		/// <returns></returns>
-		protected override ICollection<string> ReadScriptList(string scriptListFile)
-		{
-			var result = new List<string>();
-
-			using (var fr = new FileReader(scriptListFile))
-			{
-				foreach (var line in fr)
-				{
-					// Get path to the current list's directory
-					var listPath = Path.GetFullPath(line.File);
-					listPath = listPath.Replace(Path.GetFullPath(UserIndexRoot), "");
-					listPath = listPath.Replace(Path.GetFullPath(SystemIndexRoot), "");
-					listPath = Path.GetDirectoryName(listPath);
-
-					var fileName = Path.Combine(listPath, line.Value).Replace("\\", "/");
-
-					// Get script path for either user or system
-					var scriptPath = Path.Combine(UserIndexRoot, fileName);
-					if (!File.Exists(scriptPath))
-						scriptPath = Path.Combine(SystemIndexRoot, fileName);
-
-					if (!result.Contains(scriptPath))
-						result.Add(scriptPath);
-				}
-			}
+			if (!Directory.Exists(dir))
+				Directory.CreateDirectory(dir);
 
 			return result;
 		}
 
 		/// <summary>
-		/// Generates script for all items and loads it.
+		/// Returns list of script files loaded from scripts.txt.
 		/// </summary>
-		private void LoadItemScripts()
+		/// <param name="scriptListFile"></param>
+		/// <returns></returns>
+		protected override List<string> ReadScriptList(string scriptListFile)
 		{
-			Log.Info("Loading item scripts...");
+			// Get original list
+			var result = base.ReadScriptList(scriptListFile);
 
-			_itemScripts.Clear();
+			// Fix paths to prioritize files in user over system
+			var user = Path.GetFullPath(UserIndexRoot).Replace("\\", "/");
+			var system = Path.GetFullPath(SystemIndexRoot).Replace("\\", "/");
 
-			// Place generated script in the cache folder
-			var tmpPath = this.GetCachePath(Path.Combine(SystemIndexRoot, "items", "inline.generated.cs")).Replace(".compiled", "");
+			for (int i = 0; i < result.Count; ++i)
+			{
+				var path = result[i];
+				path = path.Replace(user, "").Replace(system, "");
 
-			// We go over all items only once, inline scripts are added
-			// to the generated script if the inline script needs updating.
-			var updateInline =
-				(File.GetLastWriteTime(Path.Combine("system", "db", "items.txt")) >= File.GetLastWriteTime(tmpPath)) ||
-				(File.GetLastWriteTime(Path.Combine("user", "db", "items.txt")) >= File.GetLastWriteTime(tmpPath));
+				if (File.Exists(Path.Combine(UserIndexRoot, path)))
+					path = Path.Combine(UserIndexRoot, path).Replace("\\", "/");
+				else
+					path = Path.Combine(SystemIndexRoot, path).Replace("\\", "/");
+
+				result[i] = path;
+			}
+
+			return result;
+		}
+
+		private void CreateInlineItemScriptFile()
+		{
+			// Place generated script in cache folder
+			var outPath = this.GetCachePath(Path.Combine("system", "scripts", "items", "inline.generated.cs")).Replace(".compiled", "");
+
+			// Check if db files were updated, if not we don't need to recreate
+			// the inline script.
+			var dbNewerThanScript =
+				(File.GetLastWriteTime(Path.Combine("system", "db", "items.txt")) >= File.GetLastWriteTime(outPath)) ||
+				(File.GetLastWriteTime(Path.Combine("user", "db", "items.txt")) >= File.GetLastWriteTime(outPath));
+
+			if (!dbNewerThanScript)
+				return;
 
 			var sb = new StringBuilder();
 
@@ -170,157 +171,28 @@ namespace Aura.Channel.Scripting
 			// Go through all items
 			foreach (var entry in AuraData.ItemDb.Entries.Values)
 			{
-				var empty = (string.IsNullOrWhiteSpace(entry.OnUse) && string.IsNullOrWhiteSpace(entry.OnEquip) && string.IsNullOrWhiteSpace(entry.OnUnequip) && string.IsNullOrWhiteSpace(entry.OnCreation));
-				var match = Regex.Match(entry.OnUse, @"^\s*use\s*\(\s*""([^"")]+)""\s*\)\s*;?\s*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-				var use = match.Success;
+				var scriptsEmpty = (string.IsNullOrWhiteSpace(entry.OnUse) && string.IsNullOrWhiteSpace(entry.OnEquip) && string.IsNullOrWhiteSpace(entry.OnUnequip) && string.IsNullOrWhiteSpace(entry.OnCreation));
 
-				// Inline script
-				if (!empty && !use)
-				{
-					if (updateInline)
-					{
-						// Add inline scripts to the collection,
-						// wrapped in an ItemScript class.
-						sb.AppendFormat("public class ItemScript{0} : ItemScript {{" + Environment.NewLine, entry.Id);
-						{
-							if (!string.IsNullOrWhiteSpace(entry.OnUse))
-								sb.AppendFormat("	public override void OnUse(Creature cr, Item i)     {{ {0} }}" + Environment.NewLine, entry.OnUse.Trim());
-							if (!string.IsNullOrWhiteSpace(entry.OnEquip))
-								sb.AppendFormat("	public override void OnEquip(Creature cr, Item i)   {{ {0} }}" + Environment.NewLine, entry.OnEquip.Trim());
-							if (!string.IsNullOrWhiteSpace(entry.OnUnequip))
-								sb.AppendFormat("	public override void OnUnequip(Creature cr, Item i) {{ {0} }}" + Environment.NewLine, entry.OnUnequip.Trim());
-							if (!string.IsNullOrWhiteSpace(entry.OnCreation))
-								sb.AppendFormat("	public override void OnCreation(Item i) {{ {0} }}" + Environment.NewLine, entry.OnCreation.Trim());
-						}
-						sb.AppendFormat("}}" + Environment.NewLine + Environment.NewLine);
-					}
-
-					continue;
-				}
-
-				// Not inline or empty
-
-				// Get file name from use command or by id.
-				var scriptFile = (use ? (match.Groups[1].Value) : (entry.Id + ".cs"));
-
-				var scriptPath = Path.Combine(UserIndexRoot, "items", scriptFile);
-				if (!File.Exists(scriptPath))
-					scriptPath = Path.Combine(SystemIndexRoot, "items", scriptFile);
-				if (!File.Exists(scriptPath))
-				{
-					// Only show error if the use was explicit
-					if (use)
-						Log.Error("Item script not found: {0}", "items/" + scriptFile);
-					continue;
-				}
-
-				var asm = this.GetAssembly(scriptPath);
-				if (asm != null)
-					this.LoadItemScriptAssembly(asm, entry.Id);
-
-				Log.Debug(_itemScripts[entry.Id].GetType().Name);
-			}
-
-			// Update inline script
-			if (updateInline)
-			{
-				File.WriteAllText(tmpPath, sb.ToString());
-			}
-
-			// Compile will update assembly if generated script was updated
-			//foreach (string filePath in )
-			var inlineAsm = this.GetAssembly(tmpPath);
-			if (inlineAsm != null)
-				this.LoadItemScriptAssembly(inlineAsm);
-
-			Log.Info("Done loading item scripts.");
-		}
-
-		/// <summary>
-		/// Loads AI scripts
-		/// </summary>
-		private void LoadAiScripts()
-		{
-			Log.Info("Loading AI scripts...");
-
-			_aiScripts.Clear();
-
-			foreach (var folder in new string[] { Path.Combine(SystemIndexRoot, "ai"), Path.Combine(UserIndexRoot, "ai") })
-			{
-				if (!Directory.Exists(folder))
+				if (scriptsEmpty)
 					continue;
 
-				foreach (var filePath in Directory.GetFiles(folder))
-				{
-					var fileName = Path.GetFileNameWithoutExtension(filePath);
+				sb.AppendFormat("// {0}: {1}" + Environment.NewLine, entry.Id, entry.Name);
+				sb.AppendFormat("[ItemScript({0})]" + Environment.NewLine, entry.Id);
+				sb.AppendFormat("public class ItemScript{0} : ItemScript {{" + Environment.NewLine, entry.Id);
 
-					var asm = this.GetAssembly(filePath);
-					if (asm != null)
-					{
-						var types = GetJITtedTypes(asm, filePath);
+				if (!string.IsNullOrWhiteSpace(entry.OnUse))
+					sb.AppendFormat("	public override void OnUse(Creature cr, Item i)     {{ {0} }}" + Environment.NewLine, entry.OnUse.Trim());
+				if (!string.IsNullOrWhiteSpace(entry.OnEquip))
+					sb.AppendFormat("	public override void OnEquip(Creature cr, Item i)   {{ {0} }}" + Environment.NewLine, entry.OnEquip.Trim());
+				if (!string.IsNullOrWhiteSpace(entry.OnUnequip))
+					sb.AppendFormat("	public override void OnUnequip(Creature cr, Item i) {{ {0} }}" + Environment.NewLine, entry.OnUnequip.Trim());
+				if (!string.IsNullOrWhiteSpace(entry.OnCreation))
+					sb.AppendFormat("	public override void OnCreation(Item i) {{ {0} }}" + Environment.NewLine, entry.OnCreation.Trim());
 
-						// Get first AiScript class and save the type
-						foreach (var type in types.Where(a => a.IsSubclassOf(typeof(AiScript))))
-						{
-							_aiScripts[fileName] = type;
-							break;
-						}
-					}
-				}
+				sb.AppendFormat("}}" + Environment.NewLine + Environment.NewLine);
 			}
 
-			Log.Info("Done loading AI scripts.");
-		}
-
-
-		/// <summary>
-		/// Returns shop or null.
-		/// </summary>
-		/// <param name="typeName"></param>
-		/// <returns></returns>
-		public NpcShopScript GetShop(string typeName)
-		{
-			NpcShopScript result;
-			_shops.TryGetValue(typeName, out result);
-			return result;
-		}
-
-		/// <summary>
-		/// Returns true if shop of type exists.
-		/// </summary>
-		/// <param name="typeName"></param>
-		/// <returns></returns>
-		public bool ShopExists(string typeName)
-		{
-			return _shops.ContainsKey(typeName);
-		}
-
-		/// <summary>
-		/// Adds shop.
-		/// </summary>
-		/// <param name="shop"></param>
-		public void AddShop(NpcShopScript shop)
-		{
-			_shops[shop.GetType().Name] = shop;
-		}
-
-		/// <summary>
-		/// Returns new AI script by name for creature, or null.
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="creature"></param>
-		/// <returns></returns>
-		public AiScript GetAi(string name, Creature creature)
-		{
-			Type type;
-			_aiScripts.TryGetValue(name, out type);
-			if (type == null)
-				return null;
-
-			var script = Activator.CreateInstance(type) as AiScript;
-			script.Attach(creature);
-
-			return script;
+			File.WriteAllText(outPath, sb.ToString());
 		}
 
 		/// <summary>
@@ -369,6 +241,92 @@ namespace Aura.Channel.Scripting
 			ItemScript result;
 			_itemScripts.TryGetValue(itemId, out result);
 			return result;
+		}
+
+		/// <summary>
+		/// Loads AI scripts
+		/// </summary>
+		private void LoadAiScripts()
+		{
+			Log.Info("Loading AI scripts...");
+
+			_aiScripts.Clear();
+
+			foreach (var folder in new string[] { Path.Combine(SystemIndexRoot, "ai"), Path.Combine(UserIndexRoot, "ai") })
+			{
+				if (!Directory.Exists(folder))
+					continue;
+
+				foreach (var filePath in Directory.GetFiles(folder))
+				{
+					var fileName = Path.GetFileNameWithoutExtension(filePath);
+
+					var asm = this.GetAssembly(filePath);
+					if (asm != null)
+					{
+						var types = GetJITtedTypes(asm, filePath);
+
+						// Get first AiScript class and save the type
+						foreach (var type in types.Where(a => a.IsSubclassOf(typeof(AiScript))))
+						{
+							_aiScripts[fileName] = type;
+							break;
+						}
+					}
+				}
+			}
+
+			Log.Info("Done loading AI scripts.");
+		}
+
+		/// <summary>
+		/// Returns new AI script by name for creature, or null.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="creature"></param>
+		/// <returns></returns>
+		public AiScript GetAi(string name, Creature creature)
+		{
+			Type type;
+			_aiScripts.TryGetValue(name, out type);
+			if (type == null)
+				return null;
+
+			var script = Activator.CreateInstance(type) as AiScript;
+			script.Attach(creature);
+
+			return script;
+		}
+
+		/// <summary>
+		/// Returns shop or null.
+		/// </summary>
+		/// <param name="typeName"></param>
+		/// <returns></returns>
+		public NpcShopScript GetShop(string typeName)
+		{
+			NpcShopScript result;
+			_shops.TryGetValue(typeName, out result);
+			return result;
+		}
+
+		/// <summary>
+		/// Returns true if shop of type exists.
+		/// </summary>
+		/// <param name="typeName"></param>
+		/// <returns></returns>
+		public bool ShopExists(string typeName)
+		{
+			return _shops.ContainsKey(typeName);
+		}
+
+		/// <summary>
+		/// Adds shop.
+		/// </summary>
+		/// <param name="shop"></param>
+		public void AddShop(NpcShopScript shop)
+		{
+			_shops[shop.GetType().Name] = shop;
 		}
 
 		/// <summary>
