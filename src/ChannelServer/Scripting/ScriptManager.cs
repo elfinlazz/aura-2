@@ -34,9 +34,9 @@ namespace Aura.Channel.Scripting
 		private const string CacheRoot = "cache/";
 		private const string IndexPath = SystemIndexRoot + "scripts.txt";
 
-		public Collection<int, ItemScript> ItemScripts { get; private set; }
+		public ItemScriptCollection ItemScripts { get; private set; }
+		public AiScriptCollection AiScripts { get; private set; }
 
-		private Dictionary<string, Type> _aiScripts;
 		private Dictionary<string, NpcShopScript> _shops;
 		private Dictionary<int, QuestScript> _questScripts;
 		private Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>> _clientEventHandlers;
@@ -49,9 +49,9 @@ namespace Aura.Channel.Scripting
 
 		public ScriptManager()
 		{
-			this.ItemScripts = new Collection<int, ItemScript>();
+			this.ItemScripts = new ItemScriptCollection();
+			this.AiScripts = new AiScriptCollection();
 
-			_aiScripts = new Dictionary<string, Type>();
 			_shops = new Dictionary<string, NpcShopScript>();
 			_questScripts = new Dictionary<int, QuestScript>();
 			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>>();
@@ -188,25 +188,6 @@ namespace Aura.Channel.Scripting
 			}
 
 			File.WriteAllText(outPath, sb.ToString());
-		}
-
-		/// <summary>
-		/// Returns new AI script by name for creature, or null.
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="creature"></param>
-		/// <returns></returns>
-		public AiScript GetAi(string name, Creature creature)
-		{
-			Type type;
-			_aiScripts.TryGetValue(name, out type);
-			if (type == null)
-				return null;
-
-			var script = Activator.CreateInstance(type) as AiScript;
-			script.Attach(creature);
-
-			return script;
 		}
 
 		/// <summary>
@@ -348,9 +329,9 @@ namespace Aura.Channel.Scripting
 			// Set AI
 			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI) && creature.RaceData.AI != "none")
 			{
-				creature.AI = this.GetAi(creature.RaceData.AI, creature);
+				creature.AI = this.AiScripts.CreateAi(creature.RaceData.AI, creature);
 				if (creature.AI == null)
-					Log.Warning("Spawn: Missing AI '{0}' for '{1}'.", creature.RaceData.AI, raceId);
+					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", creature.RaceData.AI, raceId);
 			}
 
 			// Warp to spawn point

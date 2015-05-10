@@ -4,6 +4,7 @@
 //  AI for foxes and fox-like creatures.
 //---------------------------------------------------------------------------
 
+[AiScript("fox")]
 public class FoxAi : AiScript
 {
 	public FoxAi()

@@ -4,6 +4,7 @@
 //  AI for wolves.
 //---------------------------------------------------------------------------
 
+[AiScript("wolf")]
 public class WolfAi : AiScript
 {
 	public WolfAi()

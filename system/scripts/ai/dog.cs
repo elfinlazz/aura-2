@@ -4,6 +4,7 @@
 //  AI for shepherd dogs.
 //---------------------------------------------------------------------------
 
+[AiScript("dog")]
 public class DogAi : AiScript
 {
 	public DogAi()

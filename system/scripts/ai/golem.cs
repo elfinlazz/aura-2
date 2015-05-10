@@ -4,6 +4,7 @@
 //  AI for golems.
 //---------------------------------------------------------------------------
 
+[AiScript("golem")]
 public class GolemAi : AiScript
 {
 	public GolemAi()

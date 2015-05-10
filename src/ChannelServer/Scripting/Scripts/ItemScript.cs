@@ -24,11 +24,18 @@ namespace Aura.Channel.Scripting.Scripts
 		private const float WeightChangePlus = 0.0015f;
 		private const float WeightChangeMinus = 0.000375f;
 
+		/// <summary>
+		/// Called when script is initialized after loading it.
+		/// </summary>
+		/// <returns></returns>
 		public override bool Init()
 		{
 			var attr = this.GetType().GetCustomAttribute<ItemScriptAttribute>();
 			if (attr == null)
+			{
+				Log.Error("ItemScript.Init: Missing ItemScript attribute.");
 				return false;
+			}
 
 			foreach (var itemId in attr.ItemIds)
 				ChannelServer.Instance.ScriptManager.ItemScripts.Add(itemId, this);

@@ -116,7 +116,8 @@ namespace Aura.Channel.Scripting.Scripts
 			this.NPC = new NPC();
 			this.NPC.State = CreatureStates.Npc | CreatureStates.NamedNpc | CreatureStates.GoodNpc;
 			this.NPC.ScriptType = this.GetType();
-			this.NPC.AI = ChannelServer.Instance.ScriptManager.GetAi("npc_normal", this.NPC);
+
+			this.SetAi("npc_normal");
 
 			// Load script first, to get race set and stuff, then load the NPC data.
 			this.Load();
@@ -776,14 +777,9 @@ namespace Aura.Channel.Scripting.Scripts
 			if (this.NPC.AI != null)
 				this.NPC.AI.Dispose();
 
-			var ai = ChannelServer.Instance.ScriptManager.GetAi(name, this.NPC);
-			if (ai == null)
-			{
-				Log.Error("SetAi: AI '{0}' not found ({1})", name, this.GetType().Name);
-				return;
-			}
-
-			this.NPC.AI = ai;
+			this.NPC.AI = ChannelServer.Instance.ScriptManager.AiScripts.CreateAi(name, this.NPC);
+			if (this.NPC.AI == null)
+				Log.Error("NpcScript.SetAi: AI '{0}' not found ({1})", name, this.GetType().Name);
 		}
 
 		/// <summary>

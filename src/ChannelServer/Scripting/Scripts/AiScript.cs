@@ -1,23 +1,24 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills;
 using Aura.Channel.Skills.Base;
+using Aura.Channel.Skills.Life;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Mabi;
 using Aura.Mabi.Const;
 using Aura.Shared.Network;
-using Aura.Shared.Util;
-using Aura.Channel.Skills.Life;
 using Aura.Shared.Scripting.Scripts;
+using Aura.Shared.Util;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -119,12 +120,23 @@ namespace Aura.Channel.Scripting.Scripts
 			_heartbeatTimer = null;
 		}
 
+		/// <summary>
+		/// Called when script is initialized after loading it.
+		/// </summary>
+		/// <returns></returns>
 		public bool Init()
 		{
-			// Read attribute...
-			// Add to collection...
+			var attr = this.GetType().GetCustomAttribute<AiScriptAttribute>();
+			if (attr == null)
+			{
+				Log.Error("AiScript.Init: Missing AiScript attribute.");
+				return false;
+			}
 
-			return false;
+			foreach (var name in attr.Names)
+				ChannelServer.Instance.ScriptManager.AiScripts.Add(name, this.GetType());
+
+			return true;
 		}
 
 		/// <summary>
@@ -1432,6 +1444,16 @@ namespace Aura.Channel.Scripting.Scripts
 			Hit,
 			DefenseHit,
 			KnockDown,
+		}
+	}
+
+	public class AiScriptAttribute : Attribute
+	{
+		public string[] Names { get; private set; }
+
+		public AiScriptAttribute(params string[] names)
+		{
+			this.Names = names;
 		}
 	}
 }
