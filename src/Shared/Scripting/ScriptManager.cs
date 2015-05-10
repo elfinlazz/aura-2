@@ -194,9 +194,7 @@ namespace Aura.Shared.Scripting
 						}
 						else
 						{
-							// Add path with wildcards, so a warning is given
-							// when trying to load the script.
-							paths.Add(scriptPath);
+							Log.Warning("ReadScriptList: Directory not found: {0}", directoryPath);
 						}
 					}
 
