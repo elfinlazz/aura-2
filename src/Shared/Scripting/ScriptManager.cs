@@ -190,7 +190,13 @@ namespace Aura.Shared.Scripting
 						if (Directory.Exists(directoryPath))
 						{
 							foreach (var file in Directory.EnumerateFiles(directoryPath, "*", recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
+							{
+								// Ignore "hidden" files
+								if (Path.GetFileName(file).StartsWith("."))
+									continue;
+
 								paths.Add(file);
+							}
 						}
 						else
 						{
