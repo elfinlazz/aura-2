@@ -36,8 +36,8 @@ namespace Aura.Channel.Scripting
 
 		public ItemScriptCollection ItemScripts { get; private set; }
 		public AiScriptCollection AiScripts { get; private set; }
+		public NpcShopScriptCollection NpcShopScripts { get; private set; }
 
-		private Dictionary<string, NpcShopScript> _shops;
 		private Dictionary<int, QuestScript> _questScripts;
 		private Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>> _clientEventHandlers;
 
@@ -51,8 +51,8 @@ namespace Aura.Channel.Scripting
 		{
 			this.ItemScripts = new ItemScriptCollection();
 			this.AiScripts = new AiScriptCollection();
+			this.NpcShopScripts = new NpcShopScriptCollection();
 
-			_shops = new Dictionary<string, NpcShopScript>();
 			_questScripts = new Dictionary<int, QuestScript>();
 			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>>();
 
@@ -188,37 +188,6 @@ namespace Aura.Channel.Scripting
 			}
 
 			File.WriteAllText(outPath, sb.ToString());
-		}
-
-		/// <summary>
-		/// Returns shop or null.
-		/// </summary>
-		/// <param name="typeName"></param>
-		/// <returns></returns>
-		public NpcShopScript GetShop(string typeName)
-		{
-			NpcShopScript result;
-			_shops.TryGetValue(typeName, out result);
-			return result;
-		}
-
-		/// <summary>
-		/// Returns true if shop of type exists.
-		/// </summary>
-		/// <param name="typeName"></param>
-		/// <returns></returns>
-		public bool ShopExists(string typeName)
-		{
-			return _shops.ContainsKey(typeName);
-		}
-
-		/// <summary>
-		/// Adds shop.
-		/// </summary>
-		/// <param name="shop"></param>
-		public void AddShop(NpcShopScript shop)
-		{
-			_shops[shop.GetType().Name] = shop;
 		}
 
 		/// <summary>

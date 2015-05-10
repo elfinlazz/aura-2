@@ -16,7 +16,7 @@ namespace Aura.Shared.Util
 	/// <typeparam name="TValue"></typeparam>
 	public class Collection<TKey, TValue>
 	{
-		private Dictionary<TKey, TValue> _entries;
+		protected Dictionary<TKey, TValue> _entries;
 
 		/// <summary>
 		/// Creates new collection.

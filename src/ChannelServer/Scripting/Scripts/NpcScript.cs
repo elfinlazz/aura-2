@@ -810,13 +810,13 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Opens shop for player.
 		/// </summary>
-		/// <param name="shopType"></param>
-		protected void OpenShop(string shopType)
+		/// <param name="typeName"></param>
+		protected void OpenShop(string typeName)
 		{
-			var shop = ChannelServer.Instance.ScriptManager.GetShop(shopType);
+			var shop = ChannelServer.Instance.ScriptManager.NpcShopScripts.Get(typeName);
 			if (shop == null)
 			{
-				Log.Unimplemented("Missing shop: {0}", shopType);
+				Log.Unimplemented("Missing shop: {0}", typeName);
 				this.Close("(Missing shop.)");
 				return;
 			}

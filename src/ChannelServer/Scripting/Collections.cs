@@ -52,4 +52,25 @@ namespace Aura.Channel.Scripting
 			return script;
 		}
 	}
+
+	/// <summary>
+	/// Collection of NPC shop scripts.
+	/// </summary>
+	/// <remarks>
+	/// Key: Type name of the script class
+	/// Value: Instance of NpcSchopScript
+	/// </remarks>
+	public class NpcShopScriptCollection : Collection<string, NpcShopScript>
+	{
+		/// <summary>
+		/// Adds shop to collection, uses the shop's type name as index.
+		/// Overrides existing entries.
+		/// </summary>
+		/// <param name="script"></param>
+		public void AddOrReplace(NpcShopScript script)
+		{
+			lock (_entries)
+				_entries[script.GetType().Name] = script;
+		}
+	}
 }
