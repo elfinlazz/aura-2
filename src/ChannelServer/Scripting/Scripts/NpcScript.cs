@@ -1182,7 +1182,7 @@ namespace Aura.Channel.Scripting.Scripts
 				throw new ArgumentException("NpcScript.RandomPtj: questIds may not be empty.");
 
 			// Check quest scripts and get a list of available ones
-			var questScripts = questIds.Select(id => ChannelServer.Instance.ScriptManager.GetQuestScript(id)).Where(a => a != null);
+			var questScripts = questIds.Select(id => ChannelServer.Instance.ScriptManager.QuestScripts.Get(id)).Where(a => a != null);
 			var questScriptsCount = questScripts.Count();
 			if (questScriptsCount == 0)
 				throw new Exception("NpcScript.RandomPtj: Unable to find any of the given quests.");
@@ -1223,7 +1223,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public string GetPtjXml(int questId, string name, string title, int maxAvailableJobs, int remainingJobs)
 		{
-			var quest = ChannelServer.Instance.ScriptManager.GetQuestScript(questId);
+			var quest = ChannelServer.Instance.ScriptManager.QuestScripts.Get(questId);
 			if (quest == null)
 				throw new ArgumentException("NpcScript.GetPtjXml: Unknown quest '" + questId + "'.");
 

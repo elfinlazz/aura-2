@@ -73,4 +73,15 @@ namespace Aura.Channel.Scripting
 				_entries[script.GetType().Name] = script;
 		}
 	}
+
+	/// <summary>
+	/// Collection of NPC shop scripts.
+	/// </summary>
+	/// <remarks>
+	/// Key: Quest id
+	/// Value: Instance of QuestScript
+	/// </remarks>
+	public class QuestScriptCollection : Collection<int, QuestScript>
+	{
+	}
 }

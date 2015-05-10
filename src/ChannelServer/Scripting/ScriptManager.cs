@@ -37,8 +37,8 @@ namespace Aura.Channel.Scripting
 		public ItemScriptCollection ItemScripts { get; private set; }
 		public AiScriptCollection AiScripts { get; private set; }
 		public NpcShopScriptCollection NpcShopScripts { get; private set; }
+		public QuestScriptCollection QuestScripts { get; private set; }
 
-		private Dictionary<int, QuestScript> _questScripts;
 		private Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>> _clientEventHandlers;
 
 		private Dictionary<string, Dictionary<string, List<ScriptHook>>> _hooks;
@@ -52,8 +52,8 @@ namespace Aura.Channel.Scripting
 			this.ItemScripts = new ItemScriptCollection();
 			this.AiScripts = new AiScriptCollection();
 			this.NpcShopScripts = new NpcShopScriptCollection();
+			this.QuestScripts = new QuestScriptCollection();
 
-			_questScripts = new Dictionary<int, QuestScript>();
 			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>>();
 
 			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
@@ -331,37 +331,6 @@ namespace Aura.Channel.Scripting
 		{
 			ChannelServer.Instance.Database.SaveVars("Aura System", 0, this.GlobalVars.Perm);
 			Log.Info("Saved global script variables.");
-		}
-
-		/// <summary>
-		/// Returs quest data or null.
-		/// </summary>
-		/// <param name="questId"></param>
-		/// <returns></returns>
-		public QuestScript GetQuestScript(int questId)
-		{
-			QuestScript script;
-			_questScripts.TryGetValue(questId, out script);
-			return script;
-		}
-
-		/// <summary>
-		/// Returns true if quest with the given id exists.
-		/// </summary>
-		/// <param name="questId"></param>
-		/// <returns></returns>
-		public bool QuestScriptExists(int questId)
-		{
-			return _questScripts.ContainsKey(questId);
-		}
-
-		/// <summary>
-		/// Adds quest script.
-		/// </summary>
-		/// <param name="script"></param>
-		public void AddQuestScript(QuestScript script)
-		{
-			_questScripts[script.Id] = script;
 		}
 
 		/// <summary>

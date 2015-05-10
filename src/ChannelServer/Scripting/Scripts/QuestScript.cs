@@ -59,7 +59,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			this.Load();
 
-			if (this.Id == 0 || ChannelServer.Instance.ScriptManager.QuestScriptExists(this.Id))
+			if (this.Id == 0 || ChannelServer.Instance.ScriptManager.QuestScripts.ContainsKey(this.Id))
 			{
 				Log.Error("{1}.Init: Invalid id or already in use ({0}).", this.Id, this.GetType().Name);
 				return false;
@@ -76,7 +76,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 			this.MetaData.SetString("QSTTIP", "N_{0}|D_{1}|A_|R_{2}|T_0", this.Name, this.Description, string.Join(", ", this.GetDefaultRewardGroup().Rewards));
 
-			ChannelServer.Instance.ScriptManager.AddQuestScript(this);
+			ChannelServer.Instance.ScriptManager.QuestScripts.Add(this.Id, this);
 
 			return true;
 		}

@@ -111,7 +111,7 @@ namespace Aura.Channel.World.Quests
 		public Quest(int questId, long uniqueId, QuestState state, string metaData)
 			: this()
 		{
-			this.Data = ChannelServer.Instance.ScriptManager.GetQuestScript(questId);
+			this.Data = ChannelServer.Instance.ScriptManager.QuestScripts.Get(questId);
 			if (this.Data == null)
 				throw new Exception("Quest '" + questId.ToString() + "' does not exist.");
 
