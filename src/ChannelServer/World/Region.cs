@@ -332,27 +332,7 @@ namespace Aura.Channel.World
 
 			// Remove them from the region
 			foreach (var entity in disappear)
-			{
-				if (entity.Is(DataType.Creature))
-				{
-					var creature = entity as Creature;
-					this.RemoveCreature(creature);
-					creature.Dispose();
-
-					// Respawn
-					var npc = creature as NPC;
-					if (npc != null && npc.SpawnId > 0)
-						ChannelServer.Instance.ScriptManager.Spawn(npc.SpawnId, 1);
-				}
-				else if (entity.Is(DataType.Item))
-				{
-					this.RemoveItem(entity as Item);
-				}
-				else if (entity.Is(DataType.Prop))
-				{
-					this.RemoveProp(entity as Prop);
-				}
-			}
+				entity.Disappear();
 		}
 
 		/// <summary>
@@ -536,6 +516,53 @@ namespace Aura.Channel.World
 			}
 
 			return creature;
+		}
+
+		/// <summary>
+		/// Returns list of creatures that match predicate.
+		/// </summary>
+		public ICollection<Creature> GetCreatures(Func<Creature, bool> predicate)
+		{
+			var result = new List<Creature>();
+
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				result.AddRange(_creatures.Values.Where(predicate));
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Returns list of creatures that match predicate.
+		/// </summary>
+		public ICollection<NPC> GetNpcs(Func<NPC, bool> predicate)
+		{
+			var result = new List<NPC>();
+
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				foreach (var creature in _creatures.Values)
+				{
+					var npc = creature as NPC;
+					if (npc == null || !predicate(npc))
+						continue;
+
+					result.Add(npc);
+				}
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+
+			return result;
 		}
 
 		/// <summary>
@@ -947,7 +974,7 @@ namespace Aura.Channel.World
 			finally { _propsRWLS.ExitReadLock(); }
 
 			// Remove all
-			foreach (var npc in npcs) { this.RemoveCreature(npc); npc.Dispose(); }
+			foreach (var npc in npcs) { npc.Dispose(); this.RemoveCreature(npc); }
 			foreach (var prop in props) this.RemoveProp(prop);
 		}
 

@@ -332,7 +332,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="coordinates"></param>
 		protected void CreatureSpawn(int raceId, int amount, int regionId, params int[] coordinates)
 		{
-			ChannelServer.Instance.ScriptManager.AddCreatureSpawn(new CreatureSpawn(raceId, amount, regionId, coordinates));
+			ChannelServer.Instance.World.SpawnManager.Add(new CreatureSpawner(raceId, amount, regionId, coordinates));
 		}
 
 		/// <summary>
@@ -445,7 +445,7 @@ namespace Aura.Channel.Scripting.Scripts
 				if (radius > 0)
 					pos = pos.GetRandomInRange(radius, rnd);
 
-				var creature = ChannelServer.Instance.ScriptManager.Spawn(raceId, regionId, pos.X, pos.Y, -1, true, effect);
+				var creature = ChannelServer.Instance.World.SpawnManager.Spawn(raceId, regionId, pos.X, pos.Y, true, effect);
 
 				if (onDeath != null)
 					creature.Death += onDeath;

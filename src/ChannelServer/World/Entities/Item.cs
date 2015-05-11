@@ -631,5 +631,16 @@ namespace Aura.Channel.World.Entities
 
 			return this.Data.HasTag(tag);
 		}
+
+		/// <summary>
+		/// Removes item from its current region.
+		/// </summary>
+		public override void Disappear()
+		{
+			if (this.Region != null)
+				this.Region.RemoveItem(this);
+
+			base.Disappear();
+		}
 	}
 }

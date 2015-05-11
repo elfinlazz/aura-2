@@ -43,8 +43,6 @@ namespace Aura.Channel.Scripting
 
 		private Dictionary<string, Dictionary<string, List<ScriptHook>>> _hooks;
 
-		private Dictionary<int, CreatureSpawn> _creatureSpawns;
-
 		public ScriptVariables GlobalVars { get; protected set; }
 
 		public ScriptManager()
@@ -57,8 +55,6 @@ namespace Aura.Channel.Scripting
 			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>>();
 
 			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
-
-			_creatureSpawns = new Dictionary<int, CreatureSpawn>();
 
 			this.GlobalVars = new ScriptVariables();
 		}
@@ -76,7 +72,7 @@ namespace Aura.Channel.Scripting
 		{
 			this.CreateInlineItemScriptFile();
 			this.LoadScripts(IndexPath);
-			this.LoadSpawns();
+			ChannelServer.Instance.World.SpawnManager.SpawnAll();
 		}
 
 		/// <summary>
@@ -86,6 +82,7 @@ namespace Aura.Channel.Scripting
 		{
 			this.DisposeScripts();
 			ChannelServer.Instance.World.RemoveScriptedEntities();
+			ChannelServer.Instance.World.SpawnManager.Clear();
 			this.Load();
 		}
 
@@ -188,139 +185,6 @@ namespace Aura.Channel.Scripting
 			}
 
 			File.WriteAllText(outPath, sb.ToString());
-		}
-
-		/// <summary>
-		/// Adds spawn.
-		/// </summary>
-		/// <param name="spawn"></param>
-		public void AddCreatureSpawn(CreatureSpawn spawn)
-		{
-			_creatureSpawns[spawn.Id] = spawn;
-		}
-
-		/// <summary>
-		/// Spawns creatures using creature spawn information.
-		/// </summary>
-		public void LoadSpawns()
-		{
-			Log.Info("Spawning creatures...");
-
-			var spawned = 0;
-
-			foreach (var spawn in _creatureSpawns.Values)
-			{
-				spawned += this.Spawn(spawn);
-				continue;
-			}
-
-			Log.Info("Done spawning {0} creatures.", spawned);
-		}
-
-		/// <summary>
-		/// Spawns all creatures for spawn, or amount.
-		/// </summary>
-		/// <param name="spawnId"></param>
-		/// <param name="amount"></param>
-		/// <returns></returns>
-		public int Spawn(int spawnId, int amount = 0)
-		{
-			if (!_creatureSpawns.ContainsKey(spawnId))
-			{
-				Log.Warning("ScriptManager.Spawn: Failed, missing spawn '{0}'.", spawnId);
-				return 0;
-			}
-
-			return this.Spawn(_creatureSpawns[spawnId], amount);
-		}
-
-		/// <summary>
-		/// Spawns all creatures for spawn, or amount.
-		/// </summary>
-		/// <param name="spawn"></param>
-		/// <param name="amount"></param>
-		/// <returns></returns>
-		public int Spawn(CreatureSpawn spawn, int amount = 0)
-		{
-			var result = 0;
-			if (amount == 0)
-				amount = spawn.Amount;
-
-			for (int i = 0; i < amount; ++i)
-			{
-				var pos = spawn.GetRandomPosition();
-				if (this.Spawn(spawn.RaceId, spawn.RegionId, pos.X, pos.Y, spawn.Id, false, false) == null)
-					return result;
-
-				result++;
-			}
-
-			return result;
-		}
-
-		/// <summary>
-		/// Spawns a creature.
-		/// </summary>
-		/// <param name="raceId"></param>
-		/// <param name="regionId"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <param name="spawnId"></param>
-		/// <param name="active"></param>
-		/// <param name="effect"></param>
-		/// <returns></returns>
-		public Creature Spawn(int raceId, int regionId, int x, int y, int spawnId, bool active, bool effect)
-		{
-			// Create NPC
-			var creature = new NPC();
-			creature.Race = raceId;
-			creature.LoadDefault();
-			creature.SpawnId = spawnId;
-			creature.Name = creature.RaceData.Name;
-			creature.Color1 = creature.RaceData.Color1;
-			creature.Color2 = creature.RaceData.Color2;
-			creature.Color3 = creature.RaceData.Color3;
-			creature.Height = creature.RaceData.Size;
-			creature.Life = creature.LifeMaxBase = creature.RaceData.Life;
-			creature.Mana = creature.ManaMaxBase = creature.RaceData.Mana;
-			creature.State = (CreatureStates)creature.RaceData.DefaultState;
-			creature.Direction = (byte)RandomProvider.Get().Next(256);
-
-			// Set drops
-			creature.Drops.GoldMin = creature.RaceData.GoldMin;
-			creature.Drops.GoldMax = creature.RaceData.GoldMax;
-			creature.Drops.Add(creature.RaceData.Drops);
-
-			// Give skills
-			foreach (var skill in creature.RaceData.Skills)
-				creature.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, creature.Race);
-
-			// Set AI
-			if (!string.IsNullOrWhiteSpace(creature.RaceData.AI) && creature.RaceData.AI != "none")
-			{
-				creature.AI = this.AiScripts.CreateAi(creature.RaceData.AI, creature);
-				if (creature.AI == null)
-					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", creature.RaceData.AI, raceId);
-			}
-
-			// Warp to spawn point
-			if (!creature.Warp(regionId, x, y))
-			{
-				Log.Error("Failed to spawn '{0}'s.", raceId);
-				return null;
-			}
-
-			creature.SpawnLocation = new Location(regionId, x, y);
-
-			// Activate AI at least once
-			if (creature.AI != null && active)
-				creature.AI.Activate(0);
-
-			// Spawn effect
-			if (effect)
-				Send.SpawnEffect(SpawnEffect.Monster, creature.RegionId, x, y, creature, creature);
-
-			return creature;
 		}
 
 		/// <summary>

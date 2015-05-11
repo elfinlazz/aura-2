@@ -72,6 +72,46 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Creates new NPC and loads defaults for race.
+		/// </summary>
+		/// <param name="raceId"></param>
+		public NPC(int raceId)
+			: this()
+		{
+			this.Race = raceId;
+			this.LoadDefault();
+
+			// TODO: This feels like it should go into LoadDefault...
+			//   why isn't it there?
+			this.Name = this.RaceData.Name;
+			this.Color1 = this.RaceData.Color1;
+			this.Color2 = this.RaceData.Color2;
+			this.Color3 = this.RaceData.Color3;
+			this.Height = this.RaceData.Size;
+			this.Life = this.LifeMaxBase = this.RaceData.Life;
+			this.Mana = this.ManaMaxBase = this.RaceData.Mana;
+			this.State = (CreatureStates)this.RaceData.DefaultState;
+			this.Direction = (byte)RandomProvider.Get().Next(256);
+
+			// Set drops
+			this.Drops.GoldMin = this.RaceData.GoldMin;
+			this.Drops.GoldMax = this.RaceData.GoldMax;
+			this.Drops.Add(this.RaceData.Drops);
+
+			// Give skills
+			foreach (var skill in this.RaceData.Skills)
+				this.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, this.Race);
+
+			// Set AI
+			if (!string.IsNullOrWhiteSpace(this.RaceData.AI) && this.RaceData.AI != "none")
+			{
+				this.AI = ChannelServer.Instance.ScriptManager.AiScripts.CreateAi(this.RaceData.AI, this);
+				if (this.AI == null)
+					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", this.RaceData.AI, raceId);
+			}
+		}
+
+		/// <summary>
 		/// Disposes AI.
 		/// </summary>
 		public override void Dispose()
