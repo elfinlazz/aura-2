@@ -558,6 +558,25 @@ namespace Aura.Channel.World.Entities
 				// Str defense is displayed automatically on the client side
 				result += (int)Math.Max(0, (this.Str - 10f) / 10f);
 
+				// Add bonus for healing
+				if (this.Skills.IsActive(SkillId.Healing))
+				{
+					switch (this.Skills.ActiveSkill.Stacks)
+					{
+						case 1:
+						case 2:
+						case 3:
+							result += this.Skills.ActiveSkill.Stacks * 4;
+							break;
+						case 4:
+							result += 3 * 4 + 3;
+							break;
+						case 5:
+							result += 3 * 4 + 3 + 5;
+							break;
+					}
+				}
+
 				return result;
 			}
 		}

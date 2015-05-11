@@ -142,7 +142,7 @@ namespace Aura.Channel.Skills
 					}
 
 					// Cancel target's skill
-					// TODO: Handle stackables.
+					// TODO: Handle stackables (bolts, healing, etc).
 					if (action.Creature.Skills.ActiveSkill != null)
 					{
 						action.Creature.Skills.CancelActiveSkill();

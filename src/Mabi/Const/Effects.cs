@@ -145,6 +145,12 @@ namespace Aura.Mabi.Const
 		public static readonly int Thunderbolt = 298;
 
 		/// <summary>
+		/// Heal effect (green number)
+		/// int:amount
+		/// </summary>
+		public static readonly int HealLife = 343;
+
+		/// <summary>
 		/// Cherry blossoms falling onto the character.
 		/// byte:1|0 (on/off)
 		/// </summary>
