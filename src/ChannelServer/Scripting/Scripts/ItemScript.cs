@@ -174,5 +174,20 @@ namespace Aura.Channel.Scripting.Scripts
 			if (script != null)
 				item.MetaData1.SetString("MGCWRD", script);
 		}
+
+		/// <summary>
+		/// Trains the specified condition for skill by one.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="condition"></param>
+		protected void TrainSkill(Creature creature, SkillId skillId, int condition)
+		{
+			var skill = creature.Skills.Get(skillId);
+			if (skill == null)
+				return;
+
+			skill.Train(condition);
+		}
 	}
 }
