@@ -23,7 +23,10 @@ namespace Aura.Channel.Skills.Life
 	/// Var1: Min Injury Heal
 	/// Var2: Max Injury Heal
 	/// 
-	/// We need a new inventory method to get an item of a specific class,
+	/// According to the Wiki the skill does nothing on Novice, that's because
+	/// min and max are 0.
+	/// 
+	/// TODO: We need a new inventory method to get an item of a specific class,
 	/// in a specific order to get the best bandage candidate.
 	/// </remarks>
 	[Skill(SkillId.FirstAid)]
@@ -144,6 +147,10 @@ namespace Aura.Channel.Skills.Life
 
 			// Heal injuries
 			var heal = rnd.Next((int)skill.RankData.Var1, (int)skill.RankData.Var2 + 1);
+
+			// 50% efficiency if target isn't resting
+			if (!target.Has(CreatureStates.SitDown))
+				heal /= 2;
 
 			target.Injuries -= heal;
 			Send.StatUpdateDefault(creature);
