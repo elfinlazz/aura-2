@@ -372,6 +372,8 @@ namespace Aura.Channel.Network.Handlers
 				}
 			}
 
+			ChannelServer.Instance.Events.OnPlayerUsesItem(creature, item);
+
 			// Decrease item count
 			if (item.Data.Consumed)
 			{
