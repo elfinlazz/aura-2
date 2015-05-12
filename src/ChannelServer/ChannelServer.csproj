@@ -171,6 +171,7 @@
     <Compile Include="Skills\Hidden\BigBlessingWaterKit.cs" />
     <Compile Include="Skills\Hidden\Blessing.cs" />
     <Compile Include="Skills\Hidden\Dye.cs" />
+    <Compile Include="Skills\Life\FirstAid.cs" />
     <Compile Include="Skills\Life\Gathering.cs" />
     <Compile Include="Skills\Life\Herbalism.cs" />
     <Compile Include="Skills\Life\ProductionMastery.cs" />

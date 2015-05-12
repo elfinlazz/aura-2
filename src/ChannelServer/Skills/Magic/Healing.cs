@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace Aura.Channel.Skills.Magic
 {
 	/// <summary>
-	/// 
+	/// Healing skill handler
 	/// </summary>
 	/// <remarks>
 	/// Var1: Healing Amount Min

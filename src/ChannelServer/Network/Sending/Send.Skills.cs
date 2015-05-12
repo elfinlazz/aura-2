@@ -508,6 +508,25 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
+		/// <param name="entityId"></param>
+		/// <param name="unkInt1"></param>
+		/// <param name="unkInt2"></param>
+		public static void SkillComplete(Creature creature, SkillId skillId, long entityId, int unkInt1, int unkInt2)
+		{
+			var packet = new Packet(Op.SkillComplete, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutLong(entityId);
+			packet.PutInt(unkInt1);
+			packet.PutInt(unkInt2);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillComplete to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
 		/// <param name="entityId1"></param>
 		/// <param name="entityId2"></param>
 		public static void SkillComplete(Creature creature, SkillId skillId, long entityId1, long entityId2)
