@@ -38,7 +38,7 @@ namespace Aura.Channel.Skills.Magic
 		/// </summary>
 		public void Init()
 		{
-			// TODO: Implement used item event
+			ChannelServer.Instance.Events.PlayerUsesItem += this.OnPlayerUsesItem;
 		}
 
 		/// <summary>
@@ -169,48 +169,59 @@ namespace Aura.Channel.Skills.Magic
 			var targetSkill = target.Skills.Get(SkillId.Healing);
 			var targetInDistress = (target.Life < target.LifeMax * 0.20f);
 
-			//if (userSkill.Info.Rank == SkillRank.RF )
-			// Drink a Life Potion.
-
-			if (userSkill.Info.Rank >= SkillRank.RF && userSkill.Info.Rank <= SkillRank.RB)
+			if (userSkill != null)
 			{
-				userSkill.Train(1); // Use Healing.
-				if (targetInDistress)
-					userSkill.Train(2); // Use Healing on a person in distress.
+				if (userSkill.Info.Rank >= SkillRank.RF && userSkill.Info.Rank <= SkillRank.RB)
+				{
+					userSkill.Train(1); // Use Healing.
+					if (targetInDistress)
+						userSkill.Train(2); // Use Healing on a person in distress.
+				}
+
+				if (userSkill.Info.Rank >= SkillRank.RA && userSkill.Info.Rank <= SkillRank.R8)
+				{
+					userSkill.Train(1); // Use Healing.
+					if (targetInDistress)
+						userSkill.Train(2); // Use Healing on a person in distress.
+				}
+
+				if (userSkill.Info.Rank >= SkillRank.R7 && userSkill.Info.Rank <= SkillRank.R4)
+				{
+					userSkill.Train(1); // Use Healing.
+					if (targetInDistress)
+						userSkill.Train(2); // Use Healing on a person in distress.
+				}
+
+				if (userSkill.Info.Rank >= SkillRank.R3 && userSkill.Info.Rank <= SkillRank.R1)
+				{
+					if (targetInDistress)
+						userSkill.Train(1); // Use Healing on a person in distress.
+				}
 			}
 
-			if (targetSkill.Info.Rank >= SkillRank.RF && targetSkill.Info.Rank <= SkillRank.RB)
+			if (targetSkill != null)
 			{
-				targetSkill.Train(3); // Receive Healing.
-				if (targetInDistress)
-					targetSkill.Train(4); // Receive Healing while in distress.
-			}
+				if (targetSkill.Info.Rank >= SkillRank.RF && targetSkill.Info.Rank <= SkillRank.RB)
+				{
+					targetSkill.Train(3); // Receive Healing.
+					if (targetInDistress)
+						targetSkill.Train(4); // Receive Healing while in distress.
+				}
 
-			if (userSkill.Info.Rank >= SkillRank.RA && userSkill.Info.Rank <= SkillRank.R8)
-			{
-				userSkill.Train(1); // Use Healing.
-				if (targetInDistress)
-					userSkill.Train(2); // Use Healing on a person in distress.
+				if (targetSkill.Info.Rank >= SkillRank.RA && targetSkill.Info.Rank <= SkillRank.R8)
+				{
+					if (targetInDistress)
+						targetSkill.Train(3); // Receive Healing while in distress.
+				}
 			}
+		}
 
-			if (targetSkill.Info.Rank >= SkillRank.RA && targetSkill.Info.Rank <= SkillRank.R8)
-			{
-				if (targetInDistress)
-					targetSkill.Train(3); // Receive Healing while in distress.
-			}
+		private void OnPlayerUsesItem(Creature creature, Item item)
+		{
+			var userSkill = creature.Skills.Get(SkillId.Healing);
 
-			if (userSkill.Info.Rank >= SkillRank.R7 && userSkill.Info.Rank <= SkillRank.R4)
-			{
-				userSkill.Train(1); // Use Healing.
-				if (targetInDistress)
-					userSkill.Train(2); // Use Healing on a person in distress.
-			}
-
-			if (userSkill.Info.Rank >= SkillRank.R3 && userSkill.Info.Rank <= SkillRank.R1)
-			{
-				if (targetInDistress)
-					userSkill.Train(1); // Use Healing on a person in distress.
-			}
+			if (userSkill != null && userSkill.Info.Rank >= SkillRank.RF && userSkill.Info.Rank <= SkillRank.RE && item.HasTag("/potion/hp/"))
+				userSkill.Train(5); // Drink a Life Potion.
 		}
 	}
 }
