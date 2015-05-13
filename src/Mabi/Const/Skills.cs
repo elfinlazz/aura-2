@@ -88,6 +88,7 @@ namespace Aura.Mabi.Const
 		WineMaking = 10037,
 		//향수제조 =  10038, 
 		StudyPotionLore = 10039,
+		AdministrativePicking2 = 65006,
 
 		// Combat
 		Defense = 20001,
