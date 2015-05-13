@@ -26,6 +26,9 @@ namespace Aura.Channel.Skills.Life
 	/// According to the Wiki the skill does nothing on Novice, that's because
 	/// min and max are 0.
 	/// 
+	/// According to the Wiki the skill *can* fail if the target is moving,
+	/// but research shows that it seemingly *always* fails.
+	/// 
 	/// TODO: We need a new inventory method to get an item of a specific class,
 	/// in a specific order to get the best bandage candidate.
 	/// </remarks>
@@ -34,7 +37,6 @@ namespace Aura.Channel.Skills.Life
 	{
 		private const int BandageItemId = 60005;
 		private const int Range = 500;
-		private const float FailChance = 0.5f;
 
 		/// <summary>
 		/// Prepares skill, fails if no Bandage is found.
@@ -134,18 +136,17 @@ namespace Aura.Channel.Skills.Life
 				goto L_End;
 			}
 
-			var rnd = RandomProvider.Get();
-
-			// Can fail if target is moving.
-			if (target.IsMoving && rnd.NextDouble() < FailChance)
+			// Fails if target is moving.
+			if (target.IsMoving)
 			{
 				// Unofficial
-				Send.Notice(creature, Localization.Get("The target moved."));
+				Send.Notice(creature, Localization.Get("Failed because target was moving."));
 				// Fail motion?
 				goto L_End;
 			}
 
 			// Heal injuries
+			var rnd = RandomProvider.Get();
 			var heal = rnd.Next((int)skill.RankData.Var1, (int)skill.RankData.Var2 + 1);
 
 			// 50% efficiency if target isn't resting
