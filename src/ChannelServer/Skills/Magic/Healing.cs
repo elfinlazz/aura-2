@@ -26,7 +26,7 @@ namespace Aura.Channel.Skills.Magic
 	/// Allows enemy click, triggers combat attack.
 	/// </remarks>
 	[Skill(SkillId.Healing)]
-	public class Healing : ISkillHandler, IPreparable, IReadyable, IUseable, ICancelable, ICompletable, IInitiableSkillHandler
+	public class Healing : ISkillHandler, IPreparable, IReadyable, IUseable, ICancelable, ICompletable, IInitiableSkillHandler, ICustomHitCanceler
 	{
 		/// <summary>
 		/// Range in which the skill may be used.
@@ -216,12 +216,35 @@ namespace Aura.Channel.Skills.Magic
 			}
 		}
 
+		/// <summary>
+		/// Called when player uses an item.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
 		private void OnPlayerUsesItem(Creature creature, Item item)
 		{
 			var userSkill = creature.Skills.Get(SkillId.Healing);
 
 			if (userSkill != null && userSkill.Info.Rank >= SkillRank.RF && userSkill.Info.Rank <= SkillRank.RE && item.HasTag("/potion/hp/"))
 				userSkill.Train(5); // Drink a Life Potion.
+		}
+
+		/// <summary>
+		/// Called when creature is hit while Healing is active.
+		/// </summary>
+		/// <param name="creature"></param>
+		public void CustomHitCancel(Creature creature)
+		{
+			// Lose only 2 stacks if r1
+			var skill = creature.Skills.ActiveSkill;
+			if (skill.Info.Rank < SkillRank.R1 || skill.Stacks <= 2)
+			{
+				creature.Skills.CancelActiveSkill();
+				return;
+			}
+
+			skill.Stacks -= 2;
+			Send.Effect(creature, Effect.StackUpdate, "healing_stack", (byte)skill.Stacks, (byte)0);
 		}
 	}
 }

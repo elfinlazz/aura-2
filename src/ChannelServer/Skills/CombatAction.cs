@@ -12,6 +12,7 @@ using Aura.Mabi.Const;
 using Aura.Channel.Network.Sending;
 using Aura.Shared.Util;
 using Aura.Channel.Skills.Life;
+using Aura.Channel.Skills.Base;
 
 namespace Aura.Channel.Skills
 {
@@ -142,10 +143,23 @@ namespace Aura.Channel.Skills
 					}
 
 					// Cancel target's skill
-					// TODO: Handle stackables (bolts, healing, etc).
 					if (action.Creature.Skills.ActiveSkill != null)
 					{
-						action.Creature.Skills.CancelActiveSkill();
+						// Cancel non stackable skills on hit, wait for a
+						// knock back for stackables
+						if (action.Creature.Skills.ActiveSkill.RankData.StackMax > 1)
+						{
+							if (action.IsKnockBack)
+							{
+								var custom = ChannelServer.Instance.SkillManager.GetHandler(action.Creature.Skills.ActiveSkill.Info.Id) as ICustomHitCanceler;
+								if (custom == null)
+									action.Creature.Skills.CancelActiveSkill();
+								else
+									custom.CustomHitCancel(action.Creature);
+							}
+						}
+						else
+							action.Creature.Skills.CancelActiveSkill();
 					}
 
 					// Cancel rest

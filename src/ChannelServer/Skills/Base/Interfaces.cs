@@ -84,4 +84,13 @@ namespace Aura.Channel.Skills.Base
 	{
 		void Init();
 	}
+
+	/// <summary>
+	/// Allows for custom behavior when getting hit while skill is active,
+	/// e.g. losing no stacks with FB on r1.
+	/// </summary>
+	public interface ICustomHitCanceler
+	{
+		void CustomHitCancel(Creature creature);
+	}
 }

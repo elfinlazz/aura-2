@@ -21,7 +21,7 @@ namespace Aura.Channel.Skills.Base
 	/// <summary>
 	/// Base for the 3 magic bolts.
 	/// </summary>
-	public abstract class MagicBolt : IPreparable, IReadyable, ICombatSkill, ICompletable, ICancelable, IInitiableSkillHandler
+	public abstract class MagicBolt : IPreparable, IReadyable, ICombatSkill, ICompletable, ICancelable, IInitiableSkillHandler, ICustomHitCanceler
 	{
 		/// <summary>
 		/// Stun time of attacker after use in ms.
@@ -544,6 +544,24 @@ namespace Aura.Channel.Skills.Base
 
 				return;
 			}
+		}
+
+		/// <summary>
+		/// Called when creature is hit while a bolt skill is active.
+		/// </summary>
+		/// <param name="creature"></param>
+		public virtual void CustomHitCancel(Creature creature)
+		{
+			// Lose only 2 stacks if r1
+			var skill = creature.Skills.ActiveSkill;
+			if (skill.Info.Rank < SkillRank.R1 || skill.Stacks <= 2)
+			{
+				creature.Skills.CancelActiveSkill();
+				return;
+			}
+
+			skill.Stacks -= 2;
+			Send.Effect(creature, Effect.StackUpdate, EffectSkillName, (byte)skill.Stacks, (byte)0);
 		}
 	}
 }
