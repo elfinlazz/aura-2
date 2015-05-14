@@ -39,5 +39,7 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		// Backup of target's position when gathering, for run away check
 		public Position GatheringTargetPosition;
+
+		public int FirewoodItemId;
 	}
 }

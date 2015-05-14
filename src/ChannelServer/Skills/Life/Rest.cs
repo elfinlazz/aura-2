@@ -9,6 +9,7 @@ using Aura.Data;
 using Aura.Data.Database;
 using Aura.Mabi;
 using Aura.Mabi.Const;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Skills.Life
 {
@@ -45,9 +46,26 @@ namespace Aura.Channel.Skills.Life
 
 			Send.SitDown(creature);
 
-			creature.Regens.Add("Rest", Stat.Life, (0.12f * ((skill.RankData.Var1 - 100) / 100)), creature.LifeMax);
-			creature.Regens.Add("Rest", Stat.Stamina, (0.4f * ((skill.RankData.Var2 - 100) / 100)), creature.StaminaMax);
-			creature.Regens.Add("Rest", Stat.LifeInjured, skill.RankData.Var3, creature.LifeMax);
+			var bonusLife = ((skill.RankData.Var1 - 100) / 100);
+			var bonusStamina = ((skill.RankData.Var2 - 100) / 100);
+			var bonusInjury = skill.RankData.Var3;
+
+			// Add bonus from campfire
+			// TODO: Check for disappearing of campfire? (OnDisappears+Recheck)
+			var campfires = creature.Region.GetProps(a => a.Info.Id == 203 && a.GetPosition().InRange(creature.GetPosition(), 500));
+			if (campfires.Count > 0)
+			{
+				// Campfire rank? Mine? The fire's?
+				bonusLife *= 1.5f;
+				bonusStamina *= 1.5f;
+				bonusInjury *= 1.5f;
+
+				Send.Notice(creature, Localization.Get("The fire feels very warm"));
+			}
+
+			creature.Regens.Add("Rest", Stat.Life, (0.12f * bonusLife), creature.LifeMax);
+			creature.Regens.Add("Rest", Stat.Stamina, (0.4f * bonusStamina), creature.StaminaMax);
+			creature.Regens.Add("Rest", Stat.LifeInjured, bonusInjury, creature.LifeMax); // TODO: Test if LifeInjured = Injuries
 
 			if (skill.Info.Rank == SkillRank.Novice) skill.Train(1); // Use Rest.
 

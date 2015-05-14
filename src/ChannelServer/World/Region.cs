@@ -691,6 +691,8 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddProp(Prop prop)
 		{
+			// TODO: Add prop shape to collisions
+
 			_propsRWLS.EnterWriteLock();
 			try
 			{
@@ -744,6 +746,26 @@ namespace Aura.Channel.World
 			try
 			{
 				_props.TryGetValue(entityId, out result);
+			}
+			finally
+			{
+				_propsRWLS.ExitReadLock();
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Returns prop or null.
+		/// </summary>
+		public ICollection<Prop> GetProps(Func<Prop, bool> predicate)
+		{
+			var result = new List<Prop>();
+
+			_propsRWLS.EnterReadLock();
+			try
+			{
+				result.AddRange(_props.Values.Where(predicate));
 			}
 			finally
 			{
