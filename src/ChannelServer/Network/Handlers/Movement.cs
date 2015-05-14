@@ -40,6 +40,9 @@ namespace Aura.Channel.Network.Handlers
 			var to = new Position(x, y);
 			var walk = (packet.Op == Op.Walk);
 
+			if (creature.Conditions.Has(ConditionsE.Meditation) && !walk && (creature.Inventory.RightHand == null || (!creature.Inventory.RightHand.HasTag("/wand/") && !creature.Inventory.RightHand.HasTag("/staff/"))))
+				throw new ModerateViolation("Tried to run with meditation active.");
+
 			//Position intersection;
 			//if (creature.Region.Collissions.Find(from, to, out intersection))
 			//{

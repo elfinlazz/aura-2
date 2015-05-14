@@ -194,6 +194,8 @@ namespace Aura.Channel.World.Entities.Creatures
 
 					switch (regen.Stat)
 					{
+						// TODO: Triple mana automatically at night?
+
 						case Stat.Life: this.Creature.Life += regen.Change; break;
 						case Stat.Mana: this.Creature.Mana += regen.Change; break;
 						case Stat.Stamina:

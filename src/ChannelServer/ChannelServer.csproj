@@ -182,6 +182,7 @@
     <Compile Include="Skills\Magic\Healing.cs" />
     <Compile Include="Skills\Magic\Lightningbolt.cs" />
     <Compile Include="Skills\Magic\Firebolt.cs" />
+    <Compile Include="Skills\Magic\Meditation.cs" />
     <Compile Include="Skills\Magic\SuperIcebolt.cs" />
     <Compile Include="Skills\Magic\Icebolt.cs" />
     <Compile Include="Skills\Magic\ManaShield.cs" />

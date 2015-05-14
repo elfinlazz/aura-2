@@ -90,6 +90,8 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// TODO: Move mana/stm checks here?
+
 			try
 			{
 				handler.Start(creature, skill, packet);
