@@ -88,7 +88,6 @@ namespace Aura.Mabi.Const
 		WineMaking = 10037,
 		//향수제조 =  10038, 
 		StudyPotionLore = 10039,
-		AdministrativePicking2 = 65006,
 
 		// Combat
 		Defense = 20001,
@@ -531,6 +530,7 @@ namespace Aura.Mabi.Const
 		PickupItemGMSkill = 65001,
 		SuperWindmill = 65002,
 		BlockWorldGMSkill = 65003,
+		AdministrativePicking2 = 65006,
 	}
 
 	public enum PlayingQuality

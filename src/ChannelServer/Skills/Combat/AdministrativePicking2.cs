@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aura.Channel.Skills.Life
+namespace Aura.Channel.Skills.Combat
 {
 	/// <summary>
 	/// Administrative Picking2 skill
