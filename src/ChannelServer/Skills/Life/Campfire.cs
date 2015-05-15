@@ -32,7 +32,7 @@ namespace Aura.Channel.Skills.Life
 	/// 
 	/// Without Firewood you get the msg "not an appropriate place".
 	/// </remarks>
-	[Skill(SkillId.Campfire)]
+	[Skill(SkillId.Campfire, SkillId.CampfireKit)]
 	public class Campfire : ISkillHandler, IPreparable, IReadyable, IUseable, ICompletable, ICancelable
 	{
 		/// <summary>
@@ -50,18 +50,38 @@ namespace Aura.Channel.Skills.Life
 
 		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
-			var itemId = packet.GetInt();
+			if (skill.Info.Id == SkillId.Campfire)
+			{
+				var itemId = packet.GetInt();
 
-			Send.SkillPrepare(creature, skill.Info.Id, itemId);
+				Send.SkillPrepare(creature, skill.Info.Id, itemId);
+			}
+			else
+			{
+				var dict = packet.GetString();
+
+				Send.SkillPrepare(creature, skill.Info.Id, dict);
+			}
 
 			return true;
 		}
 
 		public bool Ready(Creature creature, Skill skill, Packet packet)
 		{
-			creature.Temp.FirewoodItemId = packet.GetInt();
+			if (skill.Info.Id == SkillId.Campfire)
+			{
+				creature.Temp.FirewoodItemId = packet.GetInt();
 
-			Send.SkillReady(creature, skill.Info.Id, creature.Temp.FirewoodItemId);
+				Send.SkillReady(creature, skill.Info.Id, creature.Temp.FirewoodItemId);
+			}
+			else
+			{
+				var dict = packet.GetString();
+
+				creature.Temp.CampfireKitItemEntityId = MabiDictionary.Fetch<long>("ITEMID", dict);
+
+				Send.SkillReady(creature, skill.Info.Id, dict);
+			}
 
 			return true;
 		}
@@ -81,13 +101,25 @@ namespace Aura.Channel.Skills.Life
 			var unkInt1 = packet.GetInt();
 			var unkInt2 = packet.GetInt();
 
-			// Check Firewood, the client should stop the player long before Complete.
-			if (creature.Inventory.Count(creature.Temp.FirewoodItemId) < FirewoodCost)
-				throw new ModerateViolation("Used Campfire without Firewood.");
+			if (skill.Info.Id == SkillId.Campfire)
+			{
+				// Check Firewood, the client should stop the player long before Complete.
+				if (creature.Inventory.Count(creature.Temp.FirewoodItemId) < FirewoodCost)
+					throw new ModerateViolation("Used Campfire without Firewood.");
 
-			// Remove Firewood
-			// TODO: Use the item id from Ready.
-			creature.Inventory.Remove(creature.Temp.FirewoodItemId, FirewoodCost);
+				// Remove Firewood
+				creature.Inventory.Remove(creature.Temp.FirewoodItemId, FirewoodCost);
+			}
+			else
+			{
+				// Check kit
+				var item = creature.Inventory.GetItem(creature.Temp.CampfireKitItemEntityId);
+				if (item == null)
+					throw new ModerateViolation("Used CampfireKit with invalid kit.");
+
+				// Reduce kit
+				creature.Inventory.Decrement(item);
+			}
 
 			// Set up Campfire
 			var pos = new Position(positionId);

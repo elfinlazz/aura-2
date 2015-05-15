@@ -620,6 +620,21 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends SkillPrepare to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="dict">.</param>
+		public static void SkillPrepare(Creature creature, SkillId skillId, string dict)
+		{
+			var packet = new Packet(Op.SkillPrepare, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutString(dict);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Broadcasts SkillTeleport to creature's region.
 		/// </summary>
 		/// <param name="creature"></param>

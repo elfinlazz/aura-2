@@ -41,5 +41,6 @@ namespace Aura.Channel.World.Entities.Creatures
 		public Position GatheringTargetPosition;
 
 		public int FirewoodItemId;
+		public long CampfireKitItemEntityId;
 	}
 }
