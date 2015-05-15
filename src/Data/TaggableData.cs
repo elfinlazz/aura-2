@@ -31,13 +31,24 @@ namespace Aura.Data
 		/// 
 		/// Input: */bear/*
 		/// Result: False
+		/// 
+		/// And: */equip/* & */armor/* & */cloth/*
 		/// </example>
 		/// <param name="tag"></param>
 		/// <returns></returns>
 		public bool HasTag(string tag)
 		{
-			tag = tag.Replace("*", ".*");
-			return Regex.IsMatch(this.Tags, tag, RegexOptions.Compiled);
+			// TODO: Or? Groups?
+
+			var tags = tag.Split('&'); // */equip/* & */armor/* & */cloth/*
+			foreach (var t in tags)
+			{
+				var check = t.Trim().Replace("*", ".*");
+				if (!Regex.IsMatch(this.Tags, check))
+					return false;
+			}
+
+			return true;
 		}
 	}
 }
