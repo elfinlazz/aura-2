@@ -124,8 +124,12 @@ namespace Aura.Channel.Skills.Combat
 						// FH and not dual wield, don't knock at all if dual.
 						if (skill.Info.Id != SkillId.FinalHit)
 						{
+							// Originally we thought you knock enemies back, unless it's a critical
+							// hit, but apparently you knock *down* under normal circumstances.
+							// More research to be done.
 							if (target.IsUnstable && target.Is(RaceStands.KnockBackable))
-								tAction.Set(tAction.Has(TargetOptions.Critical) ? TargetOptions.KnockDown : TargetOptions.KnockBack);
+								//tAction.Set(tAction.Has(TargetOptions.Critical) ? TargetOptions.KnockDown : TargetOptions.KnockBack);
+								tAction.Set(TargetOptions.KnockDown);
 						}
 						else if (!dualWield && !weaponIsKnuckle)
 						{
