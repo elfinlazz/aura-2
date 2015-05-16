@@ -114,6 +114,10 @@ namespace Aura.Channel.Skills
 		{
 			foreach (var action in this.Actions)
 			{
+				// Max target stun for players == 2000?
+				if (action.Category == CombatActionCategory.Target && action.Creature.IsPlayer)
+					action.Stun = (short)Math.Min(2000, (int)action.Stun);
+
 				action.Creature.Stun = action.Stun;
 
 				// Life update
