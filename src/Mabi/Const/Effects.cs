@@ -62,6 +62,12 @@ namespace Aura.Mabi.Const
 		public static readonly int PetAction = 19;
 
 		/// <summary>
+		/// Smoke when burning an item.
+		/// long:prop id, byte:0?
+		/// </summary>
+		public static readonly int BurnItem = 26;
+
+		/// <summary>
 		/// White flash.
 		/// int:duration, int:0
 		/// </summary>

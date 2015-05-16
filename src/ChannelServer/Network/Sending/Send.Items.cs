@@ -428,5 +428,18 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends BurnItemR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="success"></param>
+		public static void BurnItemR(Creature creature, bool success)
+		{
+			var packet = new Packet(Op.BurnItemR, creature.EntityId);
+			packet.PutByte(success);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

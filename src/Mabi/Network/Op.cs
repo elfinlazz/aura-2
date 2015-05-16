@@ -136,6 +136,8 @@ namespace Aura.Mabi.Network
 		public const int UseItemR = 0x59EC;
 		public const int GiftItem = 0x59EF;
 		public const int GiftItemR = 0x59F0;
+		public const int BurnItem = 0x59F2;
+		public const int BurnItemR = 0x59F3;
 		public const int UnequipBag = 0x59F4;
 		public const int UnequipBagR = 0x59F5;
 
