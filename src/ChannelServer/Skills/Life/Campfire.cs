@@ -149,9 +149,10 @@ namespace Aura.Channel.Skills.Life
 
 			// Set up Campfire
 			var pos = new Position(positionId);
+			var effect = (skill.Info.Rank < SkillRank.RB ? "campfire_01" : "campfire_02");
 			var prop = new Prop(PropId, creature.RegionId, pos.X, pos.Y, MabiMath.ByteToRadian(creature.Direction), 1); // Logs
 			prop.State = "single";
-			prop.Xml.SetAttributeValue("EFFECT", "campfire_01"); // Fire effect
+			prop.Xml.SetAttributeValue("EFFECT", effect); // Fire effect
 			prop.DisappearTime = DateTime.Now.AddMinutes(this.GetDuration(skill.Info.Rank, creature.RegionId)); // Disappear after x minutes
 
 			creature.Region.AddProp(prop);
