@@ -1306,7 +1306,7 @@ namespace Aura.Channel.Scripting.Scripts
 				{
 					this.SwitchAction(_reactions[_state][AiEvent.DefenseHit]);
 				}
-				else if (action.Has(TargetOptions.KnockDown) && _reactions[_state].ContainsKey(AiEvent.KnockDown))
+				else if ((action.Has(TargetOptions.KnockDown) || action.Has(TargetOptions.Smash)) && _reactions[_state].ContainsKey(AiEvent.KnockDown))
 				{
 					this.SwitchAction(_reactions[_state][AiEvent.KnockDown]);
 				}
