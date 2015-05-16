@@ -48,6 +48,13 @@ namespace Aura.Channel.Skills.Life
 		/// </remarks>
 		private const int FirewoodCost = 5;
 
+		/// <summary>
+		/// Prepares skill (effectively does nothing)
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
+		/// <returns></returns>
 		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			if (skill.Info.Id == SkillId.Campfire)
@@ -66,6 +73,13 @@ namespace Aura.Channel.Skills.Life
 			return true;
 		}
 
+		/// <summary>
+		/// Readies skill, saving the item id to use for later.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
+		/// <returns></returns>
 		public bool Ready(Creature creature, Skill skill, Packet packet)
 		{
 			if (skill.Info.Id == SkillId.Campfire)
@@ -86,6 +100,12 @@ namespace Aura.Channel.Skills.Life
 			return true;
 		}
 
+		/// <summary>
+		/// Uses skill (effectively does nothing)
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Use(Creature creature, Skill skill, Packet packet)
 		{
 			var positionId = packet.GetLong();
@@ -95,6 +115,12 @@ namespace Aura.Channel.Skills.Life
 			Send.SkillUse(creature, skill.Info.Id, positionId, unkInt1, unkInt2);
 		}
 
+		/// <summary>
+		/// Completes skill, placing the campfire.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
 			var positionId = packet.GetLong();
@@ -134,6 +160,11 @@ namespace Aura.Channel.Skills.Life
 			Send.SkillComplete(creature, skill.Info.Id, positionId, unkInt1, unkInt2);
 		}
 
+		/// <summary>
+		/// Canceles skill (no special actions required)
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
 		public void Cancel(Creature creature, Skill skill)
 		{
 		}
