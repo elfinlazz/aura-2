@@ -1673,13 +1673,14 @@ namespace Aura.Channel.World.Entities
 		}
 		/// <summary>
 		/// Returns a list of creatures in range that are targetable.
+		/// Checks for collisions.
 		/// </summary>
 		/// <param name="range"></param>
 		/// <returns></returns>
 		public ICollection<Creature> GetTargetableCreaturesInRange(int range)
 		{
 			var visible = this.Region.GetVisibleCreaturesInRange(this, range);
-			var targetable = visible.FindAll(a => this.CanTarget(a));
+			var targetable = visible.FindAll(a => this.CanTarget(a) && !this.Region.Collisions.Any(this.GetPosition(), a.GetPosition()));
 
 			return targetable;
 		}
