@@ -931,7 +931,10 @@ namespace Aura.Channel.Scripting.Scripts
 
 			while ((pos = this.Creature.GetPosition()).InRange((targetPos = this.Creature.Target.GetPosition()), minDistance))
 			{
-				foreach (var action in this.MoveTo(pos.GetRelative(targetPos, minDistance + 50), walk))
+				// The position to move to is on the line between pos and targetPos,
+				// -distance from target to creature, resulting in a position
+				// "behind" the creature.
+				foreach (var action in this.MoveTo(pos.GetRelative(targetPos, -(minDistance + 50)), walk))
 					yield return action;
 			}
 
