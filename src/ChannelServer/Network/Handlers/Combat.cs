@@ -127,11 +127,19 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Get handler
-			var handler = ChannelServer.Instance.SkillManager.GetHandler<ICombatSkill>(skill.Info.Id);
-			if (handler == null)
+			var skillHandler = ChannelServer.Instance.SkillManager.GetHandler<ISkillHandler>(skill.Info.Id);
+			if (skillHandler == null)
 			{
 				Log.Unimplemented("CombatAttack: Skill handler or interface for '{0}'.", skill.Info.Id);
 				Send.ServerMessage(creature, "This combat skill isn't implemented yet.");
+				goto L_End;
+			}
+
+			var handler = skillHandler as ICombatSkill;
+			if (handler == null)
+			{
+				// Skill exists, but doesn't seem to be a combat skill, ignore.
+				// Example: Clicking a monster while Healing is active.
 				goto L_End;
 			}
 
