@@ -55,10 +55,21 @@ namespace Aura.Channel.Skills.Life
 			var campfires = creature.Region.GetProps(a => a.Info.Id == 203 && a.GetPosition().InRange(creature.GetPosition(), 500));
 			if (campfires.Count > 0)
 			{
-				// Campfire rank? Mine? The fire's?
-				bonusLife *= 1.5f;
-				bonusStamina *= 1.5f;
-				bonusInjury *= 1.5f;
+				// Add bonus if no chair?
+				if (chairItemEntityId == 0)
+				{
+					// Where to store the campfire's rank?
+					bonusLife *= 1.5f;
+					bonusStamina *= 1.5f;
+					bonusInjury *= 1.5f;
+
+					// TODO: Add bonus for better wood:
+					//   - Regular: firewood00
+					//   - Average: firewood01
+					//   - Fine: firewood02
+					//   - Finest: firewood03
+					//   (Where to store this...)
+				}
 
 				Send.Notice(creature, Localization.Get("The fire feels very warm"));
 			}
