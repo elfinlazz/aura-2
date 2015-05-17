@@ -569,8 +569,11 @@ namespace Aura.Channel.Network.Handlers
 		/// <example>
 		/// 001 [00A1000E000A000E] Long   : 45317531380613134  Fire prop
 		/// 002 [00500000000003B9] Long   : 22517998136853433  Item to burn
-		/// 003 [..............00] Byte   : 0  Enchanter's Brurn?
+		/// 003 [..............00] Byte   : 0  Enchanter's Burn?
 		/// </example>
+		/// <remarks>
+		/// TODO: How to get the Enchanter's Burn button? Having the items isn't enough.
+		/// </remarks>
 		[PacketHandler(Op.BurnItem)]
 		public void BurnItem(ChannelClient client, Packet packet)
 		{

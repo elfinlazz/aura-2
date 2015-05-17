@@ -49,6 +49,11 @@ namespace Aura.Channel.World.Entities
 		public PropsDbData Data;
 
 		/// <summary>
+		/// List of shapes for the prop (collision).
+		/// </summary>
+		public List<ShapeData> Shapes { get; protected set; }
+
+		/// <summary>
 		/// True if this prop was spawned by the server.
 		/// </summary>
 		/// <remarks>
@@ -171,6 +176,8 @@ namespace Aura.Channel.World.Entities
 		/// <param name="altitude"></param>
 		public Prop(long entityId, string name, string title, int id, int regionId, int x, int y, float direction, float scale = 1, float altitude = 0)
 		{
+			this.Shapes = new List<ShapeData>();
+
 			this.EntityId = entityId;
 
 			this.Name = name;
@@ -204,6 +211,29 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		private void LoadDefault()
 		{
+			// Get shapes
+			// TODO: Add prop shape db? Check for reference props in world?
+			if (this.Info.Id == 203) // Campfire
+			{
+				var size = 80;
+				var shape = new ShapeData();
+				shape.X1 = (int)(this.Info.X - size);
+				shape.Y1 = (int)(this.Info.Y - size);
+				shape.X2 = (int)(this.Info.X + size);
+				shape.Y2 = (int)(this.Info.Y - size);
+				shape.X3 = (int)(this.Info.X + size);
+				shape.Y3 = (int)(this.Info.Y + size);
+				shape.X4 = (int)(this.Info.X - size);
+				shape.Y4 = (int)(this.Info.Y + size);
+
+				this.Shapes.Add(shape);
+			}
+			else
+			{
+				// No collision data.
+			}
+
+			// Load prop data
 			if ((this.Data = AuraData.PropsDb.Find(this.Info.Id)) == null)
 			{
 				Log.Warning("Prop.LoadDefault: No data found for '{0}'.", this.Info.Id);

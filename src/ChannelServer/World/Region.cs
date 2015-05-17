@@ -705,6 +705,13 @@ namespace Aura.Channel.World
 
 			prop.Region = this;
 
+			// Add collisions
+			if (prop.Shapes.Count > 0)
+			{
+				foreach (var shape in prop.Shapes)
+					this.Collisions.Add(prop.EntityIdHex, shape);
+			}
+
 			Send.EntityAppears(prop);
 		}
 
@@ -729,6 +736,10 @@ namespace Aura.Channel.World
 			{
 				_propsRWLS.ExitWriteLock();
 			}
+
+			// Remove collisions
+			if (prop.Shapes.Count > 0)
+				this.Collisions.Remove(prop.EntityIdHex);
 
 			Send.PropDisappears(prop);
 
