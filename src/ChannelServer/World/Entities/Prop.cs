@@ -49,6 +49,11 @@ namespace Aura.Channel.World.Entities
 		public PropsDbData Data;
 
 		/// <summary>
+		/// Temporary variables for this prop
+		/// </summary>
+		public PropTemp Temp { get; private set; }
+
+		/// <summary>
 		/// List of shapes for the prop (collision).
 		/// </summary>
 		public List<ShapeData> Shapes { get; protected set; }
@@ -177,6 +182,7 @@ namespace Aura.Channel.World.Entities
 		public Prop(long entityId, string name, string title, int id, int regionId, int x, int y, float direction, float scale = 1, float altitude = 0)
 		{
 			this.Shapes = new List<ShapeData>();
+			this.Temp = new PropTemp();
 
 			this.EntityId = entityId;
 
@@ -328,4 +334,11 @@ namespace Aura.Channel.World.Entities
 	}
 
 	public delegate void PropFunc(Creature creature, Prop prop);
+
+	/// <summary>
+	/// Temporary prop variables
+	/// </summary>
+	public class PropTemp
+	{
+	}
 }
