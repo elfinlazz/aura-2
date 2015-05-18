@@ -28,7 +28,22 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="parameters"></param>
 		public static void Effect(Creature creature, int effectId, params object[] parameters)
 		{
-			var packet = new Packet(Op.Effect, creature.EntityId);
+			Effect(creature.EntityId, creature, effectId, parameters);
+		}
+
+		/// <summary>
+		/// Broadcasts Effect in range of creature, with the given packet id.
+		/// </summary>
+		/// <remarks>
+		/// Parameters have to be casted to the proper type, use carefully!
+		/// </remarks>
+		/// <param name="id"></param>
+		/// <param name="creature"></param>
+		/// <param name="effectId"></param>
+		/// <param name="parameters"></param>
+		public static void Effect(long id, Creature creature, int effectId, params object[] parameters)
+		{
+			var packet = new Packet(Op.Effect, id);
 			packet.PutInt(effectId);
 			foreach (var p in parameters)
 			{

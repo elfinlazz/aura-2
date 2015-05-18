@@ -691,6 +691,8 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddProp(Prop prop)
 		{
+			// TODO: Add prop shape to collisions
+
 			_propsRWLS.EnterWriteLock();
 			try
 			{
@@ -702,6 +704,13 @@ namespace Aura.Channel.World
 			}
 
 			prop.Region = this;
+
+			// Add collisions
+			if (prop.Shapes.Count > 0)
+			{
+				foreach (var shape in prop.Shapes)
+					this.Collisions.Add(prop.EntityIdHex, shape);
+			}
 
 			Send.EntityAppears(prop);
 		}
@@ -728,6 +737,10 @@ namespace Aura.Channel.World
 				_propsRWLS.ExitWriteLock();
 			}
 
+			// Remove collisions
+			if (prop.Shapes.Count > 0)
+				this.Collisions.Remove(prop.EntityIdHex);
+
 			Send.PropDisappears(prop);
 
 			prop.Region = null;
@@ -744,6 +757,26 @@ namespace Aura.Channel.World
 			try
 			{
 				_props.TryGetValue(entityId, out result);
+			}
+			finally
+			{
+				_propsRWLS.ExitReadLock();
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Returns prop or null.
+		/// </summary>
+		public IList<Prop> GetProps(Func<Prop, bool> predicate)
+		{
+			var result = new List<Prop>();
+
+			_propsRWLS.EnterReadLock();
+			try
+			{
+				result.AddRange(_props.Values.Where(predicate));
 			}
 			finally
 			{

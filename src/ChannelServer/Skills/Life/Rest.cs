@@ -9,6 +9,7 @@ using Aura.Data;
 using Aura.Data.Database;
 using Aura.Mabi;
 using Aura.Mabi.Const;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Skills.Life
 {
@@ -45,9 +46,48 @@ namespace Aura.Channel.Skills.Life
 
 			Send.SitDown(creature);
 
-			creature.Regens.Add("Rest", Stat.Life, (0.12f * ((skill.RankData.Var1 - 100) / 100)), creature.LifeMax);
-			creature.Regens.Add("Rest", Stat.Stamina, (0.4f * ((skill.RankData.Var2 - 100) / 100)), creature.StaminaMax);
-			creature.Regens.Add("Rest", Stat.LifeInjured, skill.RankData.Var3, creature.LifeMax);
+			// Get base bonuses
+			var bonusLife = ((skill.RankData.Var1 - 100) / 100);
+			var bonusStamina = ((skill.RankData.Var2 - 100) / 100);
+			var bonusInjury = skill.RankData.Var3;
+
+			// Add bonus from campfire
+			// TODO: Check for disappearing of campfire? (OnDisappears+Recheck)
+			var campfires = creature.Region.GetProps(a => a.Info.Id == 203 && a.GetPosition().InRange(creature.GetPosition(), 500));
+			if (campfires.Count > 0)
+			{
+				// Add bonus if no chair?
+				if (chairItemEntityId == 0)
+				{
+					// TODO: Select nearest? Random?
+					var campfire = campfires[0];
+
+					var multi = (campfire.Temp.CampfireSkillRank != null ? campfire.Temp.CampfireSkillRank.Var1 / 100f : 1);
+
+					// Add bonus for better wood.
+					// Amounts unofficial.
+					if (campfire.Temp.CampfireFirewood != null)
+					{
+						if (campfire.Temp.CampfireFirewood.HasTag("/firewood01/"))
+							multi += 0.1f;
+						else if (campfire.Temp.CampfireFirewood.HasTag("/firewood02/"))
+							multi += 0.2f;
+						else if (campfire.Temp.CampfireFirewood.HasTag("/firewood03/"))
+							multi += 0.3f;
+					}
+
+					// Apply multiplicator
+					bonusLife *= multi;
+					bonusStamina *= multi;
+					bonusInjury *= multi;
+				}
+
+				Send.Notice(creature, Localization.Get("The fire feels very warm"));
+			}
+
+			creature.Regens.Add("Rest", Stat.Life, (0.12f * bonusLife), creature.LifeMax);
+			creature.Regens.Add("Rest", Stat.Stamina, (0.4f * bonusStamina), creature.StaminaMax);
+			creature.Regens.Add("Rest", Stat.LifeInjured, bonusInjury, creature.LifeMax); // TODO: Test if LifeInjured = Injuries
 
 			if (skill.Info.Rank == SkillRank.Novice) skill.Train(1); // Use Rest.
 

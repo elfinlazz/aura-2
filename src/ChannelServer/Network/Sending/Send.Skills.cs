@@ -225,6 +225,21 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
+		/// <param name="unkInt"></param>
+		public static void SkillReady(Creature creature, SkillId skillId, int unkInt)
+		{
+			var packet = new Packet(Op.SkillReady, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutInt(unkInt);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillReady to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
 		/// <param name="itemEntityId"></param>
 		/// <param name="dyeEntityId"></param>
 		public static void SkillReadyDye(Creature creature, SkillId skillId, long itemEntityId, long dyeEntityId)
@@ -593,13 +608,28 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="skillId"></param>
-		/// <param name="castTime"></param>
+		/// <param name="castTime">Not always the cast time.</param>
 		public static void SkillPrepare(Creature creature, SkillId skillId, int castTime)
 		{
 			var packet = new Packet(Op.SkillPrepare, creature.EntityId);
 			packet.PutUShort((ushort)skillId);
 			if (skillId != SkillId.None)
 				packet.PutInt(castTime);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends SkillPrepare to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="dict">.</param>
+		public static void SkillPrepare(Creature creature, SkillId skillId, string dict)
+		{
+			var packet = new Packet(Op.SkillPrepare, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutString(dict);
 
 			creature.Client.Send(packet);
 		}

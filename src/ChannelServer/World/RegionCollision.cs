@@ -16,10 +16,15 @@ namespace Aura.Channel.World
 	{
 		private Quadtree<LinePath> _tree;
 
-		// TODO: What were those parameters used for o.o?
-		public RegionCollision(/*int x, int y, int width, int height*/)
+		private Dictionary<string, List<LinePath>> _reference;
+
+		/// <summary>
+		/// Creates new collision manager for region.
+		/// </summary>
+		public RegionCollision()
 		{
 			_tree = new Quadtree<LinePath>(new Size(1000, 1000), 2);
+			_reference = new Dictionary<string, List<LinePath>>();
 		}
 
 		/// <summary>
@@ -30,37 +35,102 @@ namespace Aura.Channel.World
 		{
 			foreach (var area in data.Areas)
 			{
+				// Add props
 				foreach (var prop in area.Props.Values)
 				{
 					foreach (var shape in prop.Shapes)
-					{
-						var p1 = new Point(shape.X1, shape.Y1);
-						var p2 = new Point(shape.X2, shape.Y2);
-						var p3 = new Point(shape.X3, shape.Y3);
-						var p4 = new Point(shape.X4, shape.Y4);
-
-						_tree.Insert(new LinePath(p1, p2));
-						_tree.Insert(new LinePath(p2, p3));
-						_tree.Insert(new LinePath(p3, p4));
-						_tree.Insert(new LinePath(p4, p1));
-					}
+						this.Add(shape);
 				}
+
+				// Add collision events
 				foreach (var ev in area.Events.Values.Where(a => a.Type == EventType.Collision))
 				{
 					foreach (var shape in ev.Shapes)
-					{
-						var p1 = new Point(shape.X1, shape.Y1);
-						var p2 = new Point(shape.X2, shape.Y2);
-						var p3 = new Point(shape.X3, shape.Y3);
-						var p4 = new Point(shape.X4, shape.Y4);
-
-						_tree.Insert(new LinePath(p1, p2));
-						_tree.Insert(new LinePath(p2, p3));
-						_tree.Insert(new LinePath(p3, p4));
-						_tree.Insert(new LinePath(p4, p1));
-					}
+						this.Add(shape);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Adds shape to collisions.
+		/// </summary>
+		/// <param name="shape"></param>
+		public void Add(ShapeData shape)
+		{
+			this.Add(null, shape);
+		}
+
+		/// <summary>
+		/// Adds shape to collisions, referenced by the given ident.
+		/// </summary>
+		/// <param name="ident"></param>
+		/// <param name="shape"></param>
+		public void Add(string ident, ShapeData shape)
+		{
+			var p1 = new Point(shape.X1, shape.Y1);
+			var p2 = new Point(shape.X2, shape.Y2);
+			var p3 = new Point(shape.X3, shape.Y3);
+			var p4 = new Point(shape.X4, shape.Y4);
+
+			var line1 = new LinePath(p1, p2);
+			var line2 = new LinePath(p2, p3);
+			var line3 = new LinePath(p3, p4);
+			var line4 = new LinePath(p4, p1);
+
+			lock (_tree)
+			{
+				_tree.Insert(line1);
+				_tree.Insert(line2);
+				_tree.Insert(line3);
+				_tree.Insert(line4);
+			}
+
+			if (ident == null)
+				return;
+
+			lock (_reference)
+			{
+				if (!_reference.ContainsKey(ident))
+					_reference[ident] = new List<LinePath>();
+
+				_reference[ident].Add(line1);
+				_reference[ident].Add(line2);
+				_reference[ident].Add(line3);
+				_reference[ident].Add(line4);
+			}
+		}
+
+		/// <summary>
+		/// Removes collision objects with the given ident.
+		/// </summary>
+		/// <param name="ident"></param>
+		public void Remove(string ident)
+		{
+			if (!_reference.ContainsKey(ident))
+				return;
+
+			// Remove lines from tree
+			lock (_reference)
+			{
+				foreach (var obj in _reference[ident])
+					lock (_tree)
+						_tree.Remove(obj);
+
+				// Remove references
+				_reference.Remove(ident);
+			}
+		}
+
+		/// <summary>
+		/// Returns true if any intersections are found between from and to.
+		/// </summary>
+		/// <param name="from"></param>
+		/// <param name="to"></param>
+		/// <returns></returns>
+		public bool Any(Position from, Position to)
+		{
+			Position intersection;
+			return this.Find(from, to, out intersection);
 		}
 
 		/// <summary>
@@ -81,8 +151,12 @@ namespace Aura.Channel.World
 
 			var intersections = new List<Position>();
 
-			var lines = _tree.Query(new LinePath(from, to).Rect);
+			// Query lines
+			List<LinePath> lines;
+			lock (_tree)
+				lines = _tree.Query(new LinePath(from, to).Rect);
 
+			// Get intersections
 			foreach (var line in lines)
 			{
 				Position inter;
@@ -90,9 +164,11 @@ namespace Aura.Channel.World
 					intersections.Add(inter);
 			}
 
+			// No collisions
 			if (intersections.Count < 1)
 				return false;
 
+			// One collision
 			if (intersections.Count == 1)
 			{
 				intersection = intersections[0];
@@ -103,10 +179,6 @@ namespace Aura.Channel.World
 			double distance = double.MaxValue;
 			foreach (var inter in intersections)
 			{
-				//Aura.Shared.Util.Log.Debug("intersection: " + inter);
-				//var region = ChannelServer.Instance.World.GetRegion(1);
-				//region.AddProp(new Aura.Channel.World.Entities.Prop(229, 1, inter.X, inter.Y, 0));
-
 				var interDist = Math.Pow(x1 - inter.X, 2) + Math.Pow(y1 - inter.Y, 2);
 				if (interDist < distance)
 				{
