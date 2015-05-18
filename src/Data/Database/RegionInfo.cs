@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using Aura.Mabi.Const;
@@ -13,6 +14,7 @@ namespace Aura.Data.Database
 	public class RegionInfoData
 	{
 		public int Id { get; set; }
+		public string Name { get; set; }
 		public int GroupId { get; set; }
 		public int X1 { get; set; }
 		public int Y1 { get; set; }
@@ -35,6 +37,16 @@ namespace Aura.Data.Database
 			}
 
 			return 0;
+		}
+
+		/// <summary>
+		/// Returns area with given name or null if it doesn't exist.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public AreaData GetArea(string name)
+		{
+			return this.Areas.FirstOrDefault(a => a.Name == name);
 		}
 
 		/// <summary>
@@ -75,6 +87,7 @@ namespace Aura.Data.Database
 	public class AreaData
 	{
 		public int Id { get; set; }
+		public string Name { get; set; }
 		public int X1 { get; set; }
 		public int Y1 { get; set; }
 		public int X2 { get; set; }
@@ -119,12 +132,33 @@ namespace Aura.Data.Database
 
 			return result;
 		}
+
+		/// <summary>
+		/// Returns prop with given name or null if it doesn't exist.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public PropData GetProp(string name)
+		{
+			return this.Props.Values.FirstOrDefault(a => a.Name == name);
+		}
+
+		/// <summary>
+		/// Returns event with given name or null if it doesn't exist.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public EventData GetEvent(string name)
+		{
+			return this.Events.Values.FirstOrDefault(a => a.Name == name);
+		}
 	}
 
 	public class PropData
 	{
 		public long EntityId { get; set; }
 		public int Id { get; set; }
+		public string Name { get; set; }
 		public float X { get; set; }
 		public float Y { get; set; }
 		public float Direction { get; set; }
@@ -204,6 +238,7 @@ namespace Aura.Data.Database
 	public class EventData
 	{
 		public long Id { get; set; }
+		public string Name { get; set; }
 		public EventType Type { get; set; }
 		public int RegionId { get; set; }
 		public float X { get; set; }
@@ -256,6 +291,16 @@ namespace Aura.Data.Database
 	public class RegionInfoDb : DatabaseDatIndexed<int, RegionInfoData>
 	{
 		private Random _rnd = new Random(Environment.TickCount);
+
+		/// <summary>
+		/// Returns region with given name or null if it doesn't exist.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public RegionInfoData GetRegion(string name)
+		{
+			return this.Entries.Values.FirstOrDefault(a => a.Name == name);
+		}
 
 		/// <summary>
 		/// Returns random coordinates inside the actual region.
@@ -317,6 +362,7 @@ namespace Aura.Data.Database
 				var ri = new RegionInfoData();
 
 				ri.Id = br.ReadInt32();
+				ri.Name = br.ReadString();
 				ri.GroupId = br.ReadInt32();
 				ri.X1 = br.ReadInt32();
 				ri.Y1 = br.ReadInt32();
@@ -330,6 +376,7 @@ namespace Aura.Data.Database
 					var ai = new AreaData();
 
 					ai.Id = br.ReadInt32();
+					ai.Name = br.ReadString();
 					ai.X1 = br.ReadInt32();
 					ai.Y1 = br.ReadInt32();
 					ai.X2 = br.ReadInt32();
@@ -342,6 +389,7 @@ namespace Aura.Data.Database
 						var pi = new PropData();
 						pi.EntityId = br.ReadInt64();
 						pi.Id = br.ReadInt32();
+						pi.Name = br.ReadString();
 						pi.X = br.ReadSingle();
 						pi.Y = br.ReadSingle();
 						pi.Direction = br.ReadSingle();
@@ -386,6 +434,7 @@ namespace Aura.Data.Database
 					{
 						var ei = new EventData();
 						ei.Id = br.ReadInt64();
+						ei.Name = br.ReadString();
 						ei.RegionId = ri.Id;
 						ei.X = br.ReadSingle();
 						ei.Y = br.ReadSingle();
