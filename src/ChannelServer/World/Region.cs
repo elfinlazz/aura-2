@@ -769,7 +769,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Returns prop or null.
 		/// </summary>
-		public ICollection<Prop> GetProps(Func<Prop, bool> predicate)
+		public IList<Prop> GetProps(Func<Prop, bool> predicate)
 		{
 			var result = new List<Prop>();
 

@@ -46,6 +46,7 @@ namespace Aura.Channel.Skills.Life
 
 			Send.SitDown(creature);
 
+			// Get base bonuses
 			var bonusLife = ((skill.RankData.Var1 - 100) / 100);
 			var bonusStamina = ((skill.RankData.Var2 - 100) / 100);
 			var bonusInjury = skill.RankData.Var3;
@@ -58,17 +59,27 @@ namespace Aura.Channel.Skills.Life
 				// Add bonus if no chair?
 				if (chairItemEntityId == 0)
 				{
-					// Where to store the campfire's rank?
-					bonusLife *= 1.5f;
-					bonusStamina *= 1.5f;
-					bonusInjury *= 1.5f;
+					// TODO: Select nearest? Random?
+					var campfire = campfires[0];
 
-					// TODO: Add bonus for better wood:
-					//   - Regular: firewood00
-					//   - Average: firewood01
-					//   - Fine: firewood02
-					//   - Finest: firewood03
-					//   (Where to store this...)
+					var multi = (campfire.Temp.CampfireSkillRank != null ? campfire.Temp.CampfireSkillRank.Var1 / 100f : 1);
+
+					// Add bonus for better wood.
+					// Amounts unofficial.
+					if (campfire.Temp.CampfireFirewood != null)
+					{
+						if (campfire.Temp.CampfireFirewood.HasTag("/firewood01/"))
+							multi += 0.1f;
+						else if (campfire.Temp.CampfireFirewood.HasTag("/firewood02/"))
+							multi += 0.2f;
+						else if (campfire.Temp.CampfireFirewood.HasTag("/firewood03/"))
+							multi += 0.3f;
+					}
+
+					// Apply multiplicator
+					bonusLife *= multi;
+					bonusStamina *= multi;
+					bonusInjury *= multi;
 				}
 
 				Send.Notice(creature, Localization.Get("The fire feels very warm"));

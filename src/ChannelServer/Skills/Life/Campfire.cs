@@ -6,6 +6,7 @@ using Aura.Channel.Skills.Base;
 using Aura.Channel.Util;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
+using Aura.Data;
 using Aura.Data.Database;
 using Aura.Mabi;
 using Aura.Mabi.Const;
@@ -127,6 +128,7 @@ namespace Aura.Channel.Skills.Life
 			var unkInt1 = packet.GetInt();
 			var unkInt2 = packet.GetInt();
 
+			// Handle items
 			if (skill.Info.Id == SkillId.Campfire)
 			{
 				// Check Firewood, the client should stop the player long before Complete.
@@ -154,6 +156,11 @@ namespace Aura.Channel.Skills.Life
 			prop.State = "single";
 			prop.Xml.SetAttributeValue("EFFECT", effect); // Fire effect
 			prop.DisappearTime = DateTime.Now.AddMinutes(this.GetDuration(skill.Info.Rank, creature.RegionId)); // Disappear after x minutes
+
+			// Temp data for Rest
+			prop.Temp.CampfireSkillRank = skill.RankData;
+			if (skill.Info.Id == SkillId.Campfire)
+				prop.Temp.CampfireFirewood = AuraData.ItemDb.Find(creature.Temp.FirewoodItemId);
 
 			creature.Region.AddProp(prop);
 
@@ -186,7 +193,7 @@ namespace Aura.Channel.Skills.Life
 			// Lower duration during rain
 			var weatherType = ChannelServer.Instance.Weather.GetWeatherType(regionId);
 			if (weatherType == WeatherType.Rain)
-				duration /= 2; // ?
+				duration /= 2; // Unofficial
 
 			return duration;
 		}

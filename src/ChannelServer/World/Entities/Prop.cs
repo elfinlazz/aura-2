@@ -340,5 +340,7 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public class PropTemp
 	{
+		public SkillRankData CampfireSkillRank;
+		public ItemData CampfireFirewood;
 	}
 }
