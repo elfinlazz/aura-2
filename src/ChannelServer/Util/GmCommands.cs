@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Linq;
 using Aura.Mabi.Network;
 using Aura.Channel.World;
+using System.Text.RegularExpressions;
 
 namespace Aura.Channel.Util
 {
@@ -244,56 +245,76 @@ namespace Aura.Channel.Util
 			if (warp && args.Count < 2)
 				return CommandResult.InvalidArgument;
 
-			// Get region id
 			int regionId = 0;
-			if (warp)
-			{
-				if (!int.TryParse(args[1].Replace("r:", ""), out regionId))
-				{
-					Send.ServerMessage(sender, Localization.Get("Invalid region id."));
-					return CommandResult.InvalidArgument;
-				}
-			}
-			else
-				regionId = target.RegionId;
-
-			// Check region
-			var warpToRegion = ChannelServer.Instance.World.GetRegion(regionId);
-			if (warp && warpToRegion == null)
-			{
-				Send.ServerMessage(sender, Localization.Get("Region doesn't exist."));
-				return CommandResult.Fail;
-			}
-
 			int x = -1, y = -1;
 
-			// Parse X
-			if (args.Count > 1 + offset && !int.TryParse(args[1 + offset].Replace("x:", ""), out x))
+			// Warp to path
+			if (warp && args.Count == 2 && !args[1].Contains("r:") && !Regex.IsMatch(args[1], "^[0-9]+$"))
 			{
-				Send.ServerMessage(sender, Localization.Get("Invalid X coordinate."));
-				return CommandResult.InvalidArgument;
+				try
+				{
+					var loc = new Location(args[1]);
+					regionId = loc.RegionId;
+					x = loc.X;
+					y = loc.Y;
+				}
+				catch (Exception ex)
+				{
+					Send.ServerMessage(sender, "Error: {0}", ex.Message);
+					return CommandResult.Fail;
+				}
 			}
+			// Warp/Jump to coordinates
+			else
+			{
+				// Get region id
+				if (warp)
+				{
+					if (!int.TryParse(args[1].Replace("r:", ""), out regionId))
+					{
+						Send.ServerMessage(sender, Localization.Get("Invalid region id."));
+						return CommandResult.InvalidArgument;
+					}
+				}
+				else
+					regionId = target.RegionId;
 
-			// Parse Y
-			if (args.Count > 2 + offset && !int.TryParse(args[2 + offset].Replace("y:", ""), out y))
-			{
-				Send.ServerMessage(sender, Localization.Get("Invalid Y coordinate."));
-				return CommandResult.InvalidArgument;
-			}
+				// Check region
+				var warpToRegion = ChannelServer.Instance.World.GetRegion(regionId);
+				if (warp && warpToRegion == null)
+				{
+					Send.ServerMessage(sender, Localization.Get("Region doesn't exist."));
+					return CommandResult.Fail;
+				}
 
-			// Same coordinates if warping back from a dynamic region,
-			// random coordinates if none were specified in a normal warp.
-			if ((target.Region.IsDynamic || warpToRegion.IsDynamic) && (warpToRegion.BaseId == target.Region.BaseId))
-			{
-				var pos = target.GetPosition();
-				x = pos.X;
-				y = pos.Y;
-			}
-			else if (x == -1 || y == -1)
-			{
-				var rndc = AuraData.RegionInfoDb.RandomCoord(warpToRegion.BaseId);
-				if (x < 0) x = rndc.X;
-				if (y < 0) y = rndc.Y;
+				// Parse X
+				if (args.Count > 1 + offset && !int.TryParse(args[1 + offset].Replace("x:", ""), out x))
+				{
+					Send.ServerMessage(sender, Localization.Get("Invalid X coordinate."));
+					return CommandResult.InvalidArgument;
+				}
+
+				// Parse Y
+				if (args.Count > 2 + offset && !int.TryParse(args[2 + offset].Replace("y:", ""), out y))
+				{
+					Send.ServerMessage(sender, Localization.Get("Invalid Y coordinate."));
+					return CommandResult.InvalidArgument;
+				}
+
+				// Same coordinates if warping back from a dynamic region,
+				// random coordinates if none were specified in a normal warp.
+				if ((target.Region.IsDynamic || warpToRegion.IsDynamic) && (warpToRegion.BaseId == target.Region.BaseId))
+				{
+					var pos = target.GetPosition();
+					x = pos.X;
+					y = pos.Y;
+				}
+				else if (x == -1 || y == -1)
+				{
+					var rndc = AuraData.RegionInfoDb.RandomCoord(warpToRegion.BaseId);
+					if (x < 0) x = rndc.X;
+					if (y < 0) y = rndc.Y;
+				}
 			}
 
 			target.Warp(regionId, x, y);
