@@ -6,6 +6,7 @@ using Aura.Shared.Database;
 using Aura.Shared.Util;
 using Aura.Shared.Util.Commands;
 using Aura.Web.Controllers;
+using Aura.Web.Scripting;
 using Aura.Web.Util;
 using SharpExpress;
 using SharpExpress.Engines;
@@ -36,6 +37,11 @@ namespace Aura.Web
 		public WebConf Conf { get; private set; }
 
 		/// <summary>
+		/// Script manager
+		/// </summary>
+		public ScriptManager ScriptManager { get; private set; }
+
+		/// <summary>
 		/// Loads all necessary components and starts the server.
 		/// </summary>
 		public void Run()
@@ -57,6 +63,9 @@ namespace Aura.Web
 			// Server
 			this.StartWebServer();
 
+			// Scripts (after web server)
+			this.LoadScripts();
+
 			CliUtil.RunningTitle();
 			_running = true;
 
@@ -65,6 +74,9 @@ namespace Aura.Web
 			commands.Wait();
 		}
 
+		/// <summary>
+		/// Sets up default controllers and starts web server
+		/// </summary>
 		public void StartWebServer()
 		{
 			Log.Info("Starting web server...");
@@ -95,6 +107,15 @@ namespace Aura.Web
 				Log.Info("The port might already be in use, make sure no other application, like other web servers or Skype, are using it or set a different port in web.conf.");
 				CliUtil.Exit(1);
 			}
+		}
+
+		/// <summary>
+		/// Loads script manager and all web scripts
+		/// </summary>
+		private void LoadScripts()
+		{
+			this.ScriptManager = new ScriptManager();
+			this.ScriptManager.LoadScripts("system/scripts/scripts_web.txt");
 		}
 	}
 }
