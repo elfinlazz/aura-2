@@ -115,8 +115,6 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
-			Log.Debug(clientEvent.Data.Type + " : " + clientEvent.EntityId);
-
 			// Check handler
 			var handler = clientEvent.Handlers.Get(signalType);
 			if (handler == null) return;
