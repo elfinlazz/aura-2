@@ -74,6 +74,12 @@ namespace Aura.Channel.Scripting
 		/// </summary>
 		public void Reload()
 		{
+			this.ItemScripts.Clear();
+			this.AiScripts.Clear();
+			this.NpcShopScripts.Clear();
+			this.QuestScripts.Clear();
+			this.NpcScriptHooks.Clear();
+
 			this.DisposeScripts();
 			ChannelServer.Instance.World.RemoveScriptedEntities();
 			ChannelServer.Instance.World.SpawnManager.Clear();

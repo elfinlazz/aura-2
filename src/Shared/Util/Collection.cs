@@ -68,6 +68,15 @@ namespace Aura.Shared.Util
 		}
 
 		/// <summary>
+		/// Clears collection
+		/// </summary>
+		public void Clear()
+		{
+			lock (_entries)
+				_entries.Clear();
+		}
+
+		/// <summary>
 		/// Returns true if collection contains a value for key.
 		/// </summary>
 		/// <param name="key"></param>
