@@ -1,47 +1,76 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Aura.Channel.Database;
-using Aura.Channel.Network.Sending;
 using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.Skills;
-using Aura.Channel.World;
-using Aura.Channel.World.Entities;
-using Aura.Channel.World.Quests;
 using Aura.Data;
-using Aura.Data.Database;
 using Aura.Mabi;
-using Aura.Mabi.Const;
 using Aura.Shared.Util;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Aura.Channel.Scripting
 {
+	/// <summary>
+	/// Channel's script manager
+	/// </summary>
 	public class ScriptManager : Aura.Shared.Scripting.ScriptManager
 	{
+		/// <summary>
+		/// Relative path to the system script folder
+		/// </summary>
 		private const string SystemIndexRoot = "system/scripts/";
+
+		/// <summary>
+		/// Relative path to the user script folder
+		/// </summary>
 		private const string UserIndexRoot = "user/scripts/";
+
+		/// <summary>
+		/// Relative path to the cache folder
+		/// </summary>
 		private const string CacheRoot = "cache/";
+
+		/// <summary>
+		/// Relative path to the primary script list
+		/// </summary>
 		private const string IndexPath = SystemIndexRoot + "scripts.txt";
 
+		/// <summary>
+		/// Item scripts loaded by this manager
+		/// </summary>
 		public ItemScriptCollection ItemScripts { get; private set; }
+
+		/// <summary>
+		/// AI scripts loaded by this manager
+		/// </summary>
 		public AiScriptCollection AiScripts { get; private set; }
+
+		/// <summary>
+		/// NPC shop scripts loaded by this manager
+		/// </summary>
 		public NpcShopScriptCollection NpcShopScripts { get; private set; }
+
+		/// <summary>
+		/// Quest scripts loaded by this manager
+		/// </summary>
 		public QuestScriptCollection QuestScripts { get; private set; }
+
+		/// <summary>
+		/// Hooks set up by various scripts
+		/// </summary>
 		public NpcScriptHookCollection NpcScriptHooks { get; private set; }
 
+		/// <summary>
+		/// Global scripting variables
+		/// </summary>
 		public ScriptVariables GlobalVars { get; protected set; }
 
+		/// <summary>
+		/// Creates new script manager
+		/// </summary>
 		public ScriptManager()
 		{
 			this.ItemScripts = new ItemScriptCollection();
@@ -53,6 +82,10 @@ namespace Aura.Channel.Scripting
 			this.GlobalVars = new ScriptVariables();
 		}
 
+		/// <summary>
+		/// Sets up global variables and subscriptions, call once everything
+		/// is ready (scripts, world, etc).
+		/// </summary>
 		public void Init()
 		{
 			this.GlobalVars.Perm = ChannelServer.Instance.Database.LoadVars("Aura System", 0);
