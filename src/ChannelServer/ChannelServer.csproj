@@ -196,6 +196,7 @@
     <Compile Include="World\DynamicRegionManager.cs" />
     <Compile Include="World\EgoInfo.cs" />
     <Compile Include="World\Entities\Character.cs" />
+    <Compile Include="World\Entities\ClientEvent.cs" />
     <Compile Include="World\Entities\Creature.cs" />
     <Compile Include="World\Entities\Creatures\CreatureConditions.cs" />
     <Compile Include="World\Entities\Creatures\CreatureDrops.cs" />

@@ -26,10 +26,11 @@ namespace Aura.Channel.World
 		// TODO: Data?
 		public const int VisibleRange = 3000;
 
-		protected ReaderWriterLockSlim _creaturesRWLS, _propsRWLS, _itemsRWLS;
+		protected ReaderWriterLockSlim _creaturesRWLS, _propsRWLS, _clientEventsRWLS, _itemsRWLS;
 
 		protected Dictionary<long, Creature> _creatures;
 		protected Dictionary<long, Prop> _props;
+		protected Dictionary<long, ClientEvent> _clientEvents;
 		protected Dictionary<long, Item> _items;
 
 		protected HashSet<ChannelClient> _clients;
@@ -91,6 +92,7 @@ namespace Aura.Channel.World
 		{
 			_creaturesRWLS = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 			_propsRWLS = new ReaderWriterLockSlim();
+			_clientEventsRWLS = new ReaderWriterLockSlim();
 			_itemsRWLS = new ReaderWriterLockSlim();
 
 			this.Id = regionId;
@@ -100,6 +102,7 @@ namespace Aura.Channel.World
 
 			_creatures = new Dictionary<long, Creature>();
 			_props = new Dictionary<long, Prop>();
+			_clientEvents = new Dictionary<long, ClientEvent>();
 			_items = new Dictionary<long, Item>();
 
 			_clients = new HashSet<ChannelClient>();
@@ -230,6 +233,7 @@ namespace Aura.Channel.World
 			this.Collisions.Init(this.RegionInfoData);
 
 			this.LoadProps();
+			this.LoadClientEvents();
 		}
 
 		/// <summary>
@@ -253,13 +257,42 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Adds all props found in the client for this region.
+		/// </summary>
+		protected void LoadClientEvents()
+		{
+			foreach (var area in this.RegionInfoData.Areas)
+			{
+				foreach (var clientEvent in area.Events.Values)
+				{
+					var add = new ClientEvent(clientEvent.Id, clientEvent);
+
+					lock (_clientEvents)
+						_clientEvents[add.EntityId] = add;
+				}
+			}
+		}
+
+		/// <summary>
 		/// Returns event by id or null if it doesn't exist.
 		/// </summary>
 		/// <param name="eventId"></param>
 		/// <returns></returns>
-		public EventData GetEvent(long eventId)
+		public ClientEvent GetClientEvent(long eventId)
 		{
-			return this.RegionInfoData.GetEvent(eventId);
+			ClientEvent result;
+
+			_clientEventsRWLS.EnterReadLock();
+			try
+			{
+				_clientEvents.TryGetValue(eventId, out result);
+			}
+			finally
+			{
+				_clientEventsRWLS.ExitReadLock();
+			}
+
+			return result;
 		}
 
 		/// <summary>

@@ -39,8 +39,6 @@ namespace Aura.Channel.Scripting
 		public NpcShopScriptCollection NpcShopScripts { get; private set; }
 		public QuestScriptCollection QuestScripts { get; private set; }
 
-		private Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>> _clientEventHandlers;
-
 		private Dictionary<string, Dictionary<string, List<ScriptHook>>> _hooks;
 
 		public ScriptVariables GlobalVars { get; protected set; }
@@ -51,8 +49,6 @@ namespace Aura.Channel.Scripting
 			this.AiScripts = new AiScriptCollection();
 			this.NpcShopScripts = new NpcShopScriptCollection();
 			this.QuestScripts = new QuestScriptCollection();
-
-			_clientEventHandlers = new Dictionary<long, Dictionary<SignalType, Action<Creature, EventData>>>();
 
 			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
 
@@ -233,39 +229,6 @@ namespace Aura.Channel.Scripting
 				_hooks[npcName][hook] = new List<ScriptHook>();
 
 			_hooks[npcName][hook].Add(func);
-		}
-
-		/// <summary>
-		/// Adds handler for client event.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="signal"></param>
-		/// <param name="onTriggered"></param>
-		public void AddClientEventHandler(long id, SignalType signal, Action<Creature, EventData> onTriggered)
-		{
-			Dictionary<SignalType, Action<Creature, EventData>> clientEvent;
-			if (!_clientEventHandlers.TryGetValue(id, out clientEvent))
-				_clientEventHandlers[id] = new Dictionary<SignalType, Action<Creature, EventData>>();
-
-			_clientEventHandlers[id][signal] = onTriggered;
-		}
-
-		/// <summary>
-		/// Returns handler for client event.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="signal"></param>
-		public Action<Creature, EventData> GetClientEventHandler(long id, SignalType signal)
-		{
-			Dictionary<SignalType, Action<Creature, EventData>> clientEvent;
-			if (!_clientEventHandlers.TryGetValue(id, out clientEvent))
-				return null;
-
-			Action<Creature, EventData> result;
-			if (!clientEvent.TryGetValue(signal, out result))
-				return null;
-
-			return result;
 		}
 	}
 

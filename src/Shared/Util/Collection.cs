@@ -45,6 +45,18 @@ namespace Aura.Shared.Util
 		}
 
 		/// <summary>
+		/// Adds value to collection, overrides existing keys.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public void Set(TKey key, TValue value)
+		{
+			lock (_entries)
+				_entries[key] = value;
+		}
+
+		/// <summary>
 		/// Removes value with key from collection, returns true if successful.
 		/// </summary>
 		/// <param name="key"></param>

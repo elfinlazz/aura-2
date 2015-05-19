@@ -460,9 +460,36 @@ namespace Aura.Channel.Scripting.Scripts
 
 		#region Client Events
 
-		public void OnClientEvent(long id, SignalType signal, Action<Creature, EventData> onTriggered)
+		/// <summary>
+		/// Adds handler for event.
+		/// </summary>
+		/// <remarks>
+		/// Reads the region id from the event id, the region must exist first,
+		/// and it must already contain the event.
+		/// </remarks>
+		/// <param name="eventId"></param>
+		/// <param name="signal"></param>
+		/// <param name="onTriggered"></param>
+		public void OnClientEvent(long eventId, SignalType signal, Action<Creature, EventData> onTriggered)
 		{
-			ChannelServer.Instance.ScriptManager.AddClientEventHandler(id, signal, onTriggered);
+			// Get region
+			var regionId = (ushort)((eventId >> 32) & ~0xFFFF0000);
+			var region = ChannelServer.Instance.World.GetRegion(regionId);
+			if (region == null)
+			{
+				Log.Error("OnClientEvent: Region '{0}' doesn't exist.", regionId);
+				return;
+			}
+
+			// Get event
+			var clientEvent = region.GetClientEvent(eventId);
+			if (clientEvent == null)
+			{
+				Log.Error("OnClientEvent: Client event '{0}' doesn't exist in '{1}'.", eventId, regionId);
+				return;
+			}
+
+			clientEvent.Handlers.Add(signal, onTriggered);
 		}
 
 		#endregion Client Events
