@@ -39,22 +39,22 @@ namespace Aura.Channel.Scripting
 		private const string IndexPath = SystemIndexRoot + "scripts.txt";
 
 		/// <summary>
-		/// Item scripts loaded by this manager
+		/// Item scripts loaded by the channel
 		/// </summary>
 		public ItemScriptCollection ItemScripts { get; private set; }
 
 		/// <summary>
-		/// AI scripts loaded by this manager
+		/// AI scripts loaded by the channel
 		/// </summary>
 		public AiScriptCollection AiScripts { get; private set; }
 
 		/// <summary>
-		/// NPC shop scripts loaded by this manager
+		/// NPC shop scripts loaded by the channel
 		/// </summary>
 		public NpcShopScriptCollection NpcShopScripts { get; private set; }
 
 		/// <summary>
-		/// Quest scripts loaded by this manager
+		/// Quest scripts loaded by the channel
 		/// </summary>
 		public QuestScriptCollection QuestScripts { get; private set; }
 

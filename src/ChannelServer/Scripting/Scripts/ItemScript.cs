@@ -198,15 +198,33 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 	}
 
+	/// <summary>
+	/// Attribute for item scripts, to specify which items the script is for.
+	/// </summary>
+	/// <remarks>
+	/// Takes lists of item ids or tags. If a list of tags is passed the item
+	/// db will be searched for item ids that match *any* of the tags.
+	/// </remarks>
 	public class ItemScriptAttribute : Attribute
 	{
+		/// <summary>
+		/// List of item ids
+		/// </summary>
 		public int[] ItemIds { get; private set; }
 
+		/// <summary>
+		/// New attribute based on ids
+		/// </summary>
+		/// <param name="itemIds"></param>
 		public ItemScriptAttribute(params int[] itemIds)
 		{
 			this.ItemIds = itemIds;
 		}
 
+		/// <summary>
+		/// New attribute based on tags
+		/// </summary>
+		/// <param name="tags"></param>
 		public ItemScriptAttribute(params string[] tags)
 		{
 			var ids = new HashSet<int>();
