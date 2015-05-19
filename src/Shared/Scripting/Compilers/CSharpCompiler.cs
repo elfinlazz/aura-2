@@ -21,7 +21,22 @@ namespace Aura.Shared.Scripting.Compilers
 				if (this.ExistsAndUpToDate(path, outPath) && cache)
 					return Assembly.LoadFrom(outPath);
 
-				asm = CSScript.LoadCode(this.PreCompile(File.ReadAllText(path)));
+				// Precompile script to a temp file
+				var precompiled = this.PreCompile(File.ReadAllText(path));
+				var tmp = Path.GetTempFileName();
+				File.WriteAllText(tmp, precompiled);
+
+#if DEBUG
+				var debug = true;
+#else
+				var debug = false;
+#endif
+
+				// Compile
+				// Mono needs the settings to not treat harmless warnings as
+				// errors (like a missing await in an async Task) and to not
+				// spam us with warnings.
+				asm = CSScript.LoadWithConfig(tmp, null, debug, CSScript.GlobalSettings, "/warnaserror- /warn:0");
 
 				this.SaveAssembly(asm, outPath);
 			}
@@ -32,8 +47,7 @@ namespace Aura.Shared.Scripting.Compilers
 
 				foreach (System.CodeDom.Compiler.CompilerError err in errors)
 				{
-					// Line-1 to compensate lines added by the pre-compiler.
-					var newEx = new CompilerError(path, err.Line - 1, err.Column, err.ErrorText, err.IsWarning);
+					var newEx = new CompilerError(path, err.Line, err.Column, err.ErrorText, err.IsWarning);
 					newExs.Errors.Add(newEx);
 				}
 
@@ -59,11 +73,6 @@ namespace Aura.Shared.Scripting.Compilers
 		{
 			// Default usings and compiler options
 			var add = new StringBuilder();
-
-			// Mono needs this to not treat harmless warnings as errors
-			// (like a missing await in an async Task) and to not spam
-			// us with warnings.
-			add.AppendLine("//css_co /warnaserror- /warn:0;");
 
 			add.Append("using System;");
 			add.Append("using System.Collections.Generic;");
