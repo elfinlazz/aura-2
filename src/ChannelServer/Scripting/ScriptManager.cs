@@ -17,23 +17,8 @@ namespace Aura.Channel.Scripting
 	/// <summary>
 	/// Channel's script manager
 	/// </summary>
-	public class ScriptManager : Aura.Shared.Scripting.ScriptManager
+	public class ScriptManager : Aura.Shared.Scripting.UserSystemScriptManager
 	{
-		/// <summary>
-		/// Relative path to the system script folder
-		/// </summary>
-		private const string SystemIndexRoot = "system/scripts/";
-
-		/// <summary>
-		/// Relative path to the user script folder
-		/// </summary>
-		private const string UserIndexRoot = "user/scripts/";
-
-		/// <summary>
-		/// Relative path to the cache folder
-		/// </summary>
-		private const string CacheRoot = "cache/";
-
 		/// <summary>
 		/// Relative path to the primary script list
 		/// </summary>
@@ -124,56 +109,8 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
-		/// Returns path for the compiled version of the script.
-		/// Creates directory structure if it doesn't exist.
+		/// Generates script file for inline scripts from item db.
 		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		protected override string GetCachePath(string path)
-		{
-			path = path.Replace(Path.GetFullPath(SystemIndexRoot).Replace("\\", "/"), "");
-			path = path.Replace(Path.GetFullPath(UserIndexRoot).Replace("\\", "/"), "");
-			path = path.Replace(Path.GetFullPath(CacheRoot).Replace("\\", "/"), "");
-
-			var result = Path.Combine(CacheRoot, base.GetCachePath(path));
-			var dir = Path.GetDirectoryName(result);
-
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
-
-			return result;
-		}
-
-		/// <summary>
-		/// Returns list of script files loaded from scripts.txt.
-		/// </summary>
-		/// <param name="scriptListFile"></param>
-		/// <returns></returns>
-		protected override List<string> ReadScriptList(string scriptListFile)
-		{
-			// Get original list
-			var result = base.ReadScriptList(scriptListFile);
-
-			// Fix paths to prioritize files in user over system
-			var user = Path.GetFullPath(UserIndexRoot).Replace("\\", "/");
-			var system = Path.GetFullPath(SystemIndexRoot).Replace("\\", "/");
-
-			for (int i = 0; i < result.Count; ++i)
-			{
-				var path = result[i];
-				path = path.Replace(user, "").Replace(system, "");
-
-				if (File.Exists(Path.Combine(UserIndexRoot, path)))
-					path = Path.Combine(UserIndexRoot, path).Replace("\\", "/");
-				else
-					path = Path.Combine(SystemIndexRoot, path).Replace("\\", "/");
-
-				result[i] = path;
-			}
-
-			return result;
-		}
-
 		private void CreateInlineItemScriptFile()
 		{
 			// Place generated script in cache folder
