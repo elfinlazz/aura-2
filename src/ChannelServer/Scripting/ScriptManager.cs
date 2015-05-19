@@ -38,8 +38,7 @@ namespace Aura.Channel.Scripting
 		public AiScriptCollection AiScripts { get; private set; }
 		public NpcShopScriptCollection NpcShopScripts { get; private set; }
 		public QuestScriptCollection QuestScripts { get; private set; }
-
-		private Dictionary<string, Dictionary<string, List<ScriptHook>>> _hooks;
+		public NpcScriptHookCollection NpcScriptHooks { get; private set; }
 
 		public ScriptVariables GlobalVars { get; protected set; }
 
@@ -49,8 +48,7 @@ namespace Aura.Channel.Scripting
 			this.AiScripts = new AiScriptCollection();
 			this.NpcShopScripts = new NpcShopScriptCollection();
 			this.QuestScripts = new QuestScriptCollection();
-
-			_hooks = new Dictionary<string, Dictionary<string, List<ScriptHook>>>();
+			this.NpcScriptHooks = new NpcScriptHookCollection();
 
 			this.GlobalVars = new ScriptVariables();
 		}
@@ -192,45 +190,7 @@ namespace Aura.Channel.Scripting
 			ChannelServer.Instance.Database.SaveVars("Aura System", 0, this.GlobalVars.Perm);
 			Log.Info("Saved global script variables.");
 		}
-
-		/// <summary>
-		/// Calls delegates for npc and hook.
-		/// </summary>
-		/// <param name="npcName"></param>
-		/// <param name="hook"></param>
-		/// <returns></returns>
-		public IEnumerable<ScriptHook> GetHooks(string npcName, string hook)
-		{
-			Dictionary<string, List<ScriptHook>> hooks;
-			_hooks.TryGetValue(npcName, out hooks);
-			if (hooks == null)
-				return Enumerable.Empty<ScriptHook>();
-
-			List<ScriptHook> calls;
-			hooks.TryGetValue(hook, out calls);
-			if (calls == null)
-				return Enumerable.Empty<ScriptHook>();
-
-			return calls;
-		}
-
-		/// <summary>
-		/// Registers hook delegate.
-		/// </summary>
-		/// <param name="npcName"></param>
-		/// <param name="hook"></param>
-		/// <param name="func"></param>
-		public void AddHook(string npcName, string hook, ScriptHook func)
-		{
-			if (!_hooks.ContainsKey(npcName))
-				_hooks[npcName] = new Dictionary<string, List<ScriptHook>>();
-
-			if (!_hooks[npcName].ContainsKey(hook))
-				_hooks[npcName][hook] = new List<ScriptHook>();
-
-			_hooks[npcName][hook].Add(func);
-		}
 	}
 
-	public delegate Task<HookResult> ScriptHook(NpcScript npc, params object[] args);
+	public delegate Task<HookResult> NpcScriptHook(NpcScript npc, params object[] args);
 }

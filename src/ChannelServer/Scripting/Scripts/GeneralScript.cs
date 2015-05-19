@@ -171,9 +171,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="npcName"></param>
 		/// <param name="hookName"></param>
 		/// <param name="func"></param>
-		protected void AddHook(string npcName, string hookName, ScriptHook func)
+		protected void AddHook(string npcName, string hookName, NpcScriptHook func)
 		{
-			ChannelServer.Instance.ScriptManager.AddHook(npcName, hookName, func);
+			ChannelServer.Instance.ScriptManager.NpcScriptHooks.Add(npcName, hookName, func);
 		}
 
 		/// <summary>

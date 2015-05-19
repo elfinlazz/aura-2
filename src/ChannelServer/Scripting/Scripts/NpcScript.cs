@@ -929,7 +929,11 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		protected async Task Hook(string hookName, params object[] args)
 		{
-			foreach (var hook in ChannelServer.Instance.ScriptManager.GetHooks(this.NPC.Name, hookName))
+			var hooks = ChannelServer.Instance.ScriptManager.NpcScriptHooks.Get(this.NPC.Name, hookName);
+			if (hooks == null)
+				return;
+
+			foreach (var hook in hooks)
 			{
 				var result = await hook(this, args);
 				switch (result)

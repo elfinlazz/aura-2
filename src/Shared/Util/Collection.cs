@@ -115,4 +115,90 @@ namespace Aura.Shared.Util
 				return _entries.Where(predicate);
 		}
 	}
+
+	/// <summary>
+	/// Thread-safe wrapper around a generic dictionary for indexed lists.
+	/// </summary>
+	/// <typeparam name="TKey"></typeparam>
+	/// <typeparam name="TValue">Type of the list.</typeparam>
+	public class ListCollection<TKey, TValue>
+	{
+		protected Dictionary<TKey, List<TValue>> _entries;
+
+		/// <summary>
+		/// Creates new collection.
+		/// </summary>
+		public ListCollection()
+		{
+			_entries = new Dictionary<TKey, List<TValue>>();
+		}
+
+		/// <summary>
+		/// Adds value to key's list.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public void Add(TKey key, TValue value)
+		{
+			lock (_entries)
+			{
+				List<TValue> list;
+				_entries.TryGetValue(key, out list);
+
+				if (list == null)
+				{
+					list = new List<TValue>();
+					_entries.Add(key, list);
+				}
+
+				list.Add(value);
+			}
+		}
+
+		/// <summary>
+		/// Clears collection.
+		/// </summary>
+		public void Clear()
+		{
+			lock (_entries)
+				_entries.Clear();
+		}
+
+		/// <summary>
+		/// Clears list in collection.
+		/// </summary>
+		public void Clear(TKey key)
+		{
+			lock (_entries)
+				if (_entries.ContainsKey(key))
+					_entries[key].Clear();
+		}
+
+		/// <summary>
+		/// Returns true if collection contains a value for key.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public bool ContainsKey(TKey key)
+		{
+			lock (_entries)
+				return _entries.ContainsKey(key);
+		}
+
+		/// <summary>
+		/// Returns value for key or default for value (e.g. null for string).
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public List<TValue> Get(TKey key)
+		{
+			List<TValue> result;
+
+			lock (_entries)
+				_entries.TryGetValue(key, out result);
+
+			return result;
+		}
+	}
 }

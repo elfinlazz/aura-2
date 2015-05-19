@@ -84,4 +84,32 @@ namespace Aura.Channel.Scripting
 	public class QuestScriptCollection : Collection<int, QuestScript>
 	{
 	}
+
+	/// <summary>
+	/// Collection of hook lists.
+	/// </summary>
+	public class NpcScriptHookCollection : ListCollection<string, NpcScriptHook>
+	{
+		/// <summary>
+		/// Adds hook.
+		/// </summary>
+		/// <param name="npcName"></param>
+		/// <param name="hookName"></param>
+		/// <param name="func"></param>
+		public void Add(string npcName, string hookName, NpcScriptHook func)
+		{
+			this.Add(npcName + "->" + hookName, func);
+		}
+
+		/// <summary>
+		/// Returns list of hooks, or null if there are none.
+		/// </summary>
+		/// <param name="npcName"></param>
+		/// <param name="hookName"></param>
+		/// <returns></returns>
+		public List<NpcScriptHook> Get(string npcName, string hookName)
+		{
+			return this.Get(npcName + "->" + hookName);
+		}
+	}
 }
