@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Scripting.Compilers;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Data;
 using Aura.Mabi;
@@ -80,6 +81,9 @@ namespace Aura.Channel.Scripting
 			this.NpcScriptHooks = new NpcScriptHookCollection();
 
 			this.GlobalVars = new ScriptVariables();
+
+			if (_compilers.ContainsKey("cs"))
+				_compilers["cs"].PreCompilers.Add(new CSharpPreCompiler());
 		}
 
 		/// <summary>

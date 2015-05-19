@@ -21,12 +21,24 @@ namespace Aura.Shared.Scripting.Compilers
 				if (this.ExistsAndUpToDate(path, outPath) && cache)
 					return Assembly.LoadFrom(outPath);
 
+				// Precompile script to a temp file
+				var precompiled = this.PreCompile(File.ReadAllText(path));
+				var tmp = Path.GetTempFileName();
+				File.WriteAllText(tmp, precompiled);
+
+				// Compile
 				var compiler = new Boo.Lang.Compiler.BooCompiler();
 				compiler.Parameters.AddAssembly(typeof(Log).Assembly);
-				compiler.Parameters.AddAssembly(typeof(ScriptManager).Assembly);
-				compiler.Parameters.Input.Add(new FileInput(path));
+				compiler.Parameters.AddAssembly(Assembly.GetEntryAssembly());
+				compiler.Parameters.Input.Add(new FileInput(tmp));
 				compiler.Parameters.OutputAssembly = outPath;
 				compiler.Parameters.Pipeline = new CompileToFile();
+
+#if DEBUG
+				compiler.Parameters.Debug = true;
+#else
+				compiler.Parameters.Debug = false;
+#endif
 
 				var context = compiler.Run();
 				if (context.GeneratedAssembly == null)
@@ -44,8 +56,6 @@ namespace Aura.Shared.Scripting.Compilers
 				}
 
 				asm = context.GeneratedAssembly;
-
-				//this.SaveAssembly(asm, outPath);
 			}
 			catch (CompilerErrorsException)
 			{

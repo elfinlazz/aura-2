@@ -92,6 +92,7 @@
     <Compile Include="Scripting\Compilers\Compiler.cs" />
     <Compile Include="Scripting\Compilers\CompilerErrors.cs" />
     <Compile Include="Scripting\Compilers\CSharpCompiler.cs" />
+    <Compile Include="Scripting\Compilers\PreCompiler.cs" />
     <Compile Include="Scripting\ScriptAttributes.cs" />
     <Compile Include="Scripting\ScriptManager.cs" />
     <Compile Include="Scripting\Scripts\IScript.cs" />

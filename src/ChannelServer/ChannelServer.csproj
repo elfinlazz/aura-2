@@ -135,6 +135,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\Collections.cs" />
+    <Compile Include="Scripting\Compilers\CSharpPreCompiler.cs" />
     <Compile Include="Scripting\NpcSession.cs" />
     <Compile Include="Scripting\Scripts\AiScript.cs" />
     <Compile Include="Scripting\Scripts\GeneralScript.cs" />
