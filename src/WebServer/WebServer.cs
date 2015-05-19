@@ -42,6 +42,14 @@ namespace Aura.Web
 		public ScriptManager ScriptManager { get; private set; }
 
 		/// <summary>
+		/// Initializes fields and properties
+		/// </summary>
+		private WebServer()
+		{
+			this.ScriptManager = new ScriptManager();
+		}
+
+		/// <summary>
 		/// Loads all necessary components and starts the server.
 		/// </summary>
 		public void Run()
@@ -110,11 +118,10 @@ namespace Aura.Web
 		}
 
 		/// <summary>
-		/// Loads script manager and all web scripts
+		/// Loads web scripts
 		/// </summary>
 		private void LoadScripts()
 		{
-			this.ScriptManager = new ScriptManager();
 			this.ScriptManager.LoadScripts("system/scripts/scripts_web.txt");
 		}
 	}
