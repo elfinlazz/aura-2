@@ -181,6 +181,14 @@ namespace Aura.Channel.Network.Sending
 			{
 				packet.PutString(tab.Name);
 				packet.PutByte((byte)tab.Race);
+
+				// [190200, NA204 (2015-05-19)] ?
+				// Haven't opened a bank in a while, could've been
+				// added earlier. -- exec
+				{
+					packet.PutInt(0);
+				}
+
 				packet.PutInt(tab.Width);
 				packet.PutInt(tab.Height);
 
