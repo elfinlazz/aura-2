@@ -11,6 +11,13 @@ using Boo.Lang.Compiler.Pipelines;
 
 namespace Aura.Shared.Scripting.Compilers
 {
+	/// <summary>
+	/// Boo compiler
+	/// </summary>
+	/// <remarks>
+	/// Similar to Python.
+	/// http://boo.codehaus.org/
+	/// </remarks>
 	public class BooCompiler : Compiler
 	{
 		public override Assembly Compile(string path, string outPath, bool cache)

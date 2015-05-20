@@ -91,6 +91,7 @@
     <Compile Include="Scripting\Compilers\BooCompiler.cs" />
     <Compile Include="Scripting\Compilers\Compiler.cs" />
     <Compile Include="Scripting\Compilers\CompilerErrors.cs" />
+    <Compile Include="Scripting\Compilers\VisualBasicCompiler.cs" />
     <Compile Include="Scripting\Compilers\CSharpCompiler.cs" />
     <Compile Include="Scripting\Compilers\PreCompiler.cs" />
     <Compile Include="Scripting\ScriptAttributes.cs" />

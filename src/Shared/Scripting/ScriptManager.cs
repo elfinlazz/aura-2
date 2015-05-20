@@ -36,6 +36,7 @@ namespace Aura.Shared.Scripting
 			_compilers = new Dictionary<string, Compiler>();
 			_compilers.Add("cs", new CSharpCompiler());
 			_compilers.Add("boo", new BooCompiler());
+			_compilers.Add("vb", new VisualBasicCompiler());
 
 			_scripts = new Dictionary<string, Type>();
 

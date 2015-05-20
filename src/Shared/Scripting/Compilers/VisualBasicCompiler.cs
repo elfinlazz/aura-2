@@ -12,9 +12,13 @@ using System.Text;
 namespace Aura.Shared.Scripting.Compilers
 {
 	/// <summary>
-	/// C# compiler, utilizing CSScript
+	/// Visual Basic compiler, utilizing CSScript
 	/// </summary>
-	public class CSharpCompiler : Compiler
+	/// <remarks>
+	/// Basically a copy of the C# one, but without parameters and with a
+	/// compiler change.
+	/// </remarks>
+	public class VisualBasicCompiler : Compiler
 	{
 		public override Assembly Compile(string path, string outPath, bool cache)
 		{
@@ -27,7 +31,7 @@ namespace Aura.Shared.Scripting.Compilers
 
 				// Precompile script to a temp file
 				var precompiled = this.PreCompile(File.ReadAllText(path));
-				var tmp = Path.GetTempFileName();
+				var tmp = Path.GetTempFileName() + Path.GetExtension(path);
 				File.WriteAllText(tmp, precompiled);
 
 #if DEBUG
@@ -40,7 +44,8 @@ namespace Aura.Shared.Scripting.Compilers
 				// Mono needs the settings to not treat harmless warnings as
 				// errors (like a missing await in an async Task) and to not
 				// spam us with warnings.
-				asm = CSScript.LoadWithConfig(tmp, null, debug, CSScript.GlobalSettings, "/warnaserror- /warn:0");
+				CSScript.GlobalSettings.UseAlternativeCompiler = Path.Combine(Directory.GetCurrentDirectory(), "lib/CSSCodeProvider.dll");
+				asm = CSScript.LoadWithConfig(tmp, null, debug, CSScript.GlobalSettings, "");
 
 				this.SaveAssembly(asm, outPath);
 			}
