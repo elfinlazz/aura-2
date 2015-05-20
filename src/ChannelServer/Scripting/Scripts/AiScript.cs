@@ -783,7 +783,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="minDistance"></param>
 		/// <param name="maxDistance"></param>
 		/// <returns></returns>
-		protected IEnumerable Wander(int minDistance = 100, int maxDistance = 600)
+		protected IEnumerable Wander(int minDistance = 100, int maxDistance = 600, bool walk = true)
 		{
 			if (maxDistance < minDistance)
 				maxDistance = minDistance;
@@ -797,7 +797,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (npc != null && destination.GetDistance(npc.SpawnLocation.Position) > _maxDistanceFromSpawn)
 				destination = pos.GetRelative(npc.SpawnLocation.Position, (minDistance + maxDistance) / 2);
 
-			foreach (var action in this.WalkTo(destination))
+			foreach (var action in this.MoveTo(destination, walk))
 				yield return action;
 		}
 
@@ -876,9 +876,9 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="timeMin"></param>
 		/// <param name="timeMax"></param>
 		/// <returns></returns>
-		protected IEnumerable Circle(int radius, int timeMin = 1000, int timeMax = 5000)
+		protected IEnumerable Circle(int radius, int timeMin = 1000, int timeMax = 5000, bool walk = true)
 		{
-			return this.Circle(radius, timeMin, timeMax, this.Random() < 50);
+			return this.Circle(radius, timeMin, timeMax, this.Random() < 50, walk);
 		}
 
 		/// <summary>
@@ -889,7 +889,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="timeMax"></param>
 		/// <param name="clockwise"></param>
 		/// <returns></returns>
-		protected IEnumerable Circle(int radius, int timeMin, int timeMax, bool clockwise)
+		protected IEnumerable Circle(int radius, int timeMin, int timeMax, bool clockwise, bool walk)
 		{
 			if (timeMin < 500)
 				timeMin = 500;
@@ -910,7 +910,7 @@ namespace Aura.Channel.Scripting.Scripts
 				var x = targetPos.X + (Math.Cos(angle) * radius);
 				var y = targetPos.Y + (Math.Sin(angle) * radius);
 
-				foreach (var action in this.WalkTo(new Position((int)x, (int)y)))
+				foreach (var action in this.MoveTo(new Position((int)x, (int)y), walk))
 					yield return action;
 			}
 		}
