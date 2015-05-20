@@ -155,12 +155,22 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Returns a random string from the given ones.
 		/// </summary>
 		/// <param name="strings"></param>
+		[Obsolete("Use Rnd instead.", true)]
 		public string RndStr(params string[] strings)
 		{
-			if (strings == null || strings.Length == 0)
-				return null;
+			return this.Rnd(strings);
+		}
 
-			return strings[this.Random(strings.Length)];
+		/// <summary>
+		/// Returns a random value from the given ones.
+		/// </summary>
+		/// <param name="values"></param>
+		public T Rnd<T>(params T[] values)
+		{
+			if (values == null || values.Length == 0)
+				throw new ArgumentException("values might not be null or empty.");
+
+			return values[this.Random(values.Length)];
 		}
 
 		#region Extension

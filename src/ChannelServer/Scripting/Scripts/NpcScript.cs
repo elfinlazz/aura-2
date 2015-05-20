@@ -448,7 +448,7 @@ namespace Aura.Channel.Scripting.Scripts
 					break;
 
 				case NpcMood.Hates:
-					moodStr = this.RndStr(
+					moodStr = this.Rnd(
 						Localization.Get("(<npcname/> is looking at me like they don't want to see me.)"),
 						Localization.Get("(<npcname/> obviously hates me.)")
 					);
@@ -475,7 +475,7 @@ namespace Aura.Channel.Scripting.Scripts
 					break;
 
 				default:
-					moodStr = this.RndStr(
+					moodStr = this.Rnd(
 						Localization.Get("(<npcname/> is looking at me.)"),
 						Localization.Get("(<npcname/> is looking in my direction.)"),
 						Localization.Get("(<npcname/> is waiting for me to says something.)"),
@@ -555,7 +555,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var msg = "";
 			if (favor >= 0)
 			{
-				msg = this.RndStr(
+				msg = this.Rnd(
 					Localization.Get("(I think I left a good impression.)"),
 					Localization.Get("(The conversation drew a lot of interest.)"),
 					Localization.Get("(That was a great conversation!)")
@@ -564,7 +564,7 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 			else
 			{
-				msg = this.RndStr(
+				msg = this.Rnd(
 					Localization.Get("(A bit of frowning is evident.)"),
 					Localization.Get("(Seems like this person did not enjoy the conversation.)"),
 					Localization.Get("(A disapproving look, indeed.)")
@@ -1670,7 +1670,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="msgs"></param>
 		public void RndMsg(params string[] msgs)
 		{
-			var msg = this.RndStr(msgs);
+			var msg = this.Rnd(msgs);
 			if (msg != null)
 				this.Msg(msgs[Random(msgs.Length)]);
 		}
@@ -1681,7 +1681,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="msgs"></param>
 		public void RndFavorMsg(params string[] msgs)
 		{
-			var msg = this.RndStr(msgs);
+			var msg = this.Rnd(msgs);
 			if (msg != null)
 				this.Msg(Hide.None, msgs[Random(msgs.Length)], FavorExpression());
 		}
