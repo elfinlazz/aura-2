@@ -74,7 +74,8 @@ namespace Aura.Mabi.Const
 		public static readonly int ScreenFlash = 27;
 
 		/// <summary>
-		/// int:region, float:x, float:y, byte:type (0=monster,1=pet,2=pet_despawn,3=monster_despawn,4=golem,5=golem_despawn)
+		/// int:region, float:x, float:y, byte:type
+		/// type: 0=Glas_summon_appear, 1=pet_summon, 2=pet_unsummon, 3=monster_despawn, 4=Golem_summon_pop01, 5=Golem_summon_disappear
 		/// </summary>
 		public static readonly int Spawn = 29;
 

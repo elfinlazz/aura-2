@@ -201,7 +201,7 @@ namespace Aura.Channel.World
 		/// Returns random spawn position.
 		/// </summary>
 		/// <returns></returns>
-		public Point GetRandomPosition()
+		private Point GetRandomPosition()
 		{
 			// Single position
 			if (_points.Length == 1)
