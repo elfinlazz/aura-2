@@ -23,6 +23,7 @@ namespace Aura.Channel.World
 		private Dictionary<int, Region> _regions;
 
 		public DynamicRegionManager DynamicRegions { get; private set; }
+		public SpawnManager SpawnManager { get; private set; }
 
 		/// <summary>
 		/// Returns number of regions.
@@ -34,6 +35,7 @@ namespace Aura.Channel.World
 			_regions = new Dictionary<int, Region>();
 
 			this.DynamicRegions = new DynamicRegionManager();
+			this.SpawnManager = new SpawnManager();
 		}
 
 		/// <summary>

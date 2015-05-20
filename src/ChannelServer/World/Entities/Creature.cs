@@ -1690,5 +1690,18 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		/// <param name="creature"></param>
 		public abstract void Aggro(Creature target);
+
+		/// <summary>
+		/// Disposes creature and removes it from its current region.
+		/// </summary>
+		public override void Disappear()
+		{
+			this.Dispose();
+
+			if (this.Region != null)
+				this.Region.RemoveCreature(this);
+
+			base.Disappear();
+		}
 	}
 }

@@ -81,6 +81,7 @@
     <Compile Include="Network\Send.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripting\ScriptManager.cs" />
     <Compile Include="Util\LoginConf.cs" />
     <Compile Include="Util\LoginConsoleCommands.cs" />
     <Compile Include="Web\BroadcastController.cs" />

@@ -206,7 +206,7 @@ namespace Aura.Channel.World.Entities
 			this.Init(itemId);
 			this.SetNewEntityId();
 
-			var script = ChannelServer.Instance.ScriptManager.GetItemScript(itemId);
+			var script = ChannelServer.Instance.ScriptManager.ItemScripts.Get(itemId);
 			if (script != null)
 				script.OnCreation(this);
 
@@ -630,6 +630,17 @@ namespace Aura.Channel.World.Entities
 				return false;
 
 			return this.Data.HasTag(tag);
+		}
+
+		/// <summary>
+		/// Removes item from its current region.
+		/// </summary>
+		public override void Disappear()
+		{
+			if (this.Region != null)
+				this.Region.RemoveItem(this);
+
+			base.Disappear();
 		}
 	}
 }

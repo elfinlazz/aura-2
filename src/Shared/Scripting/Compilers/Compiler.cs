@@ -4,18 +4,34 @@
 using System.IO;
 using System.Reflection;
 using Aura.Shared.Util;
+using System.Collections.Generic;
 
-namespace Aura.Channel.Scripting.Compilers
+namespace Aura.Shared.Scripting.Compilers
 {
 	public abstract class Compiler
 	{
 		/// <summary>
-		/// Compiles script or fetches it from cache.
+		/// List of pre-compilers that the scripts go through.
+		/// </summary>
+		public List<IPreCompiler> PreCompilers { get; protected set; }
+
+		/// <summary>
+		/// Compiles script or loads it from outPath, if cache is true and
+		/// the scrpt isn't newer.
 		/// </summary>
 		/// <param name="path"></param>
 		/// <param name="outPath"></param>
+		/// <param name="cache"></param>
 		/// <returns></returns>
-		public abstract Assembly Compile(string path, string outPath);
+		public abstract Assembly Compile(string path, string outPath, bool cache);
+
+		/// <summary>
+		/// Creates new compiler
+		/// </summary>
+		public Compiler()
+		{
+			this.PreCompilers = new List<IPreCompiler>();
+		}
 
 		/// <summary>
 		/// Returns true if the out file exists and is newer than the script.
@@ -51,6 +67,22 @@ namespace Aura.Channel.Scripting.Compilers
 				Directory.CreateDirectory(outRoot);
 
 			File.Copy(asm.Location, outPath);
+		}
+
+		/// <summary>
+		/// Runs script through all pre-compilers.
+		/// </summary>
+		/// <param name="script"></param>
+		/// <returns></returns>
+		protected string PreCompile(string script)
+		{
+			if (this.PreCompilers.Count == 0)
+				return script;
+
+			foreach (var precompiler in this.PreCompilers)
+				script = precompiler.PreCompile(script);
+
+			return script;
 		}
 	}
 }

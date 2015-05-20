@@ -9,6 +9,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 using Aura.Mabi;
 using Aura.Data;
+using Aura.Shared.Scripting.Scripts;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -82,7 +83,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <returns></returns>
 		public bool Init()
 		{
-			if (ChannelServer.Instance.ScriptManager.ShopExists(this.GetType().Name))
+			if (ChannelServer.Instance.ScriptManager.NpcShopScripts.ContainsKey(this.GetType().Name))
 			{
 				Log.Error("NpcShop.Init: Duplicate '{0}'", this.GetType().Name);
 				return false;
@@ -90,7 +91,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 			this.Setup();
 
-			ChannelServer.Instance.ScriptManager.AddShop(this);
+			ChannelServer.Instance.ScriptManager.NpcShopScripts.AddOrReplace(this);
 
 			return true;
 		}

@@ -4,6 +4,7 @@
 //  AI for normal NPCs, that do nothing but saying random phrases.
 //---------------------------------------------------------------------------
 
+[AiScript("npc_normal")]
 public class NormalNpcAi : AiScript
 {
 	public NormalNpcAi()

@@ -31,6 +31,11 @@ namespace Aura.Channel.World.Entities
 		public Region Region { get; set; }
 
 		/// <summary>
+		/// Raised when creature disappears, after it died.
+		/// </summary>
+		public event Action<Entity> Disappears;
+
+		/// <summary>
 		/// Entity's current position
 		/// </summary>
 		/// <returns></returns>
@@ -60,6 +65,16 @@ namespace Aura.Channel.World.Entities
 		/// <param name="tag"></param>
 		/// <returns></returns>
 		public abstract bool HasTag(string tag);
+
+		/// <summary>
+		/// Called when entity is removed from world, due to DisappearTime.
+		/// </summary>
+		public virtual void Disappear()
+		{
+			var ev = this.Disappears;
+			if (ev != null)
+				ev(this);
+		}
 	}
 
 	/// <summary>

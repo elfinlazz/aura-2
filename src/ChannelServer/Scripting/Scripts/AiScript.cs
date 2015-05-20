@@ -1,28 +1,30 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills;
 using Aura.Channel.Skills.Base;
+using Aura.Channel.Skills.Life;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
 using Aura.Mabi;
 using Aura.Mabi.Const;
 using Aura.Shared.Network;
+using Aura.Shared.Scripting.Scripts;
 using Aura.Shared.Util;
-using Aura.Channel.Skills.Life;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading;
 
 namespace Aura.Channel.Scripting.Scripts
 {
 	// TODO: Rewrite into the new tree design before we make more
 	//   of a mess out of this than necessary.
-	public abstract class AiScript : IDisposable
+	public abstract class AiScript : IScript, IDisposable
 	{
 		// Official heartbeat while following a target seems
 		// to be about 100-200ms?
@@ -116,6 +118,25 @@ namespace Aura.Channel.Scripting.Scripts
 			_heartbeatTimer.Change(-1, -1);
 			_heartbeatTimer.Dispose();
 			_heartbeatTimer = null;
+		}
+
+		/// <summary>
+		/// Called when script is initialized after loading it.
+		/// </summary>
+		/// <returns></returns>
+		public bool Init()
+		{
+			var attr = this.GetType().GetCustomAttribute<AiScriptAttribute>();
+			if (attr == null)
+			{
+				Log.Error("AiScript.Init: Missing AiScript attribute.");
+				return false;
+			}
+
+			foreach (var name in attr.Names)
+				ChannelServer.Instance.ScriptManager.AiScripts.Add(name, this.GetType());
+
+			return true;
 		}
 
 		/// <summary>
@@ -1426,6 +1447,26 @@ namespace Aura.Channel.Scripting.Scripts
 			Hit,
 			DefenseHit,
 			KnockDown,
+		}
+	}
+
+	/// <summary>
+	/// Attribute for AI scripts, to specify which races the script is for.
+	/// </summary>
+	public class AiScriptAttribute : Attribute
+	{
+		/// <summary>
+		/// List of AI names
+		/// </summary>
+		public string[] Names { get; private set; }
+
+		/// <summary>
+		/// New attribute
+		/// </summary>
+		/// <param name="names"></param>
+		public AiScriptAttribute(params string[] names)
+		{
+			this.Names = names;
 		}
 	}
 }

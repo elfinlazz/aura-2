@@ -4,6 +4,7 @@
 //  AI for hens.
 //---------------------------------------------------------------------------
 
+[AiScript("hen")]
 public class HenAi : AiScript
 {
 	public HenAi()

@@ -99,8 +99,8 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Get event
-			var eventData = region.GetEvent(eventId);
-			if (eventData == null)
+			var clientEvent = region.GetClientEvent(eventId);
+			if (clientEvent == null)
 			{
 				Log.Warning("EventInform: Player '{0:X16}' triggered unknown event '{1:X16}'.", creature.EntityId, eventId);
 				return;
@@ -112,18 +112,18 @@ namespace Aura.Channel.Network.Handlers
 			//   Checking position doesn't work because the events can be
 			//   quite large.
 			// TODO: Check the shape?
-			if (eventData.RegionId != creature.RegionId && signalType == SignalType.Enter)
+			if (clientEvent.Data.RegionId != creature.RegionId && signalType == SignalType.Enter)
 			{
 				Log.Warning("EventInform: Player '{0:X16}' triggered event '{1:X16}' out of range.", creature.EntityId, eventId);
 				return;
 			}
 
 			// Check handler
-			var clientEvent = ChannelServer.Instance.ScriptManager.GetClientEventHandler(eventId, signalType);
-			if (clientEvent == null) return;
+			var handler = clientEvent.Handlers.Get(signalType);
+			if (handler == null) return;
 
 			// Run
-			clientEvent(creature, eventData);
+			handler(creature, clientEvent.Data);
 		}
 
 		/// <summary>

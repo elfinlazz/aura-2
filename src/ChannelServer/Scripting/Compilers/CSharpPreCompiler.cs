@@ -1,70 +1,26 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Shared.Scripting.Compilers;
 using System;
-using System.IO;
-using System.Reflection;
-using Aura.Shared.Util;
-using CSScriptLibrary;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Aura.Channel.Scripting.Compilers
 {
-	public class CSharpCompiler : Compiler
+	/// <summary>
+	/// Pre-Compiler for the channel's C# scripts.
+	/// </summary>
+	public class CSharpPreCompiler : IPreCompiler
 	{
-		public override Assembly Compile(string path, string outPath)
-		{
-			Assembly asm = null;
-			try
-			{
-				if (this.ExistsAndUpToDate(path, outPath))
-					return Assembly.LoadFrom(outPath);
-
-				asm = CSScript.LoadCode(this.PreCompile(File.ReadAllText(path)));
-
-				this.SaveAssembly(asm, outPath);
-			}
-			catch (csscript.CompilerException ex)
-			{
-				var errors = ex.Data["Errors"] as System.CodeDom.Compiler.CompilerErrorCollection;
-				var newExs = new CompilerErrorsException();
-
-				foreach (System.CodeDom.Compiler.CompilerError err in errors)
-				{
-					// Line-1 to compensate lines added by the pre-compiler.
-					var newEx = new CompilerError(path, err.Line - 1, err.Column, err.ErrorText, err.IsWarning);
-					newExs.Errors.Add(newEx);
-				}
-
-				throw newExs;
-			}
-			catch (UnauthorizedAccessException)
-			{
-				// Thrown if file can't be copied. Happens if script was
-				// initially loaded from cache.
-				// TODO: Also thrown if CS-Script can't create the file,
-				//   ie under Linux, if /tmp/CSSCRIPT isn't writeable.
-				//   Handle that somehow?
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex);
-			}
-
-			return asm;
-		}
-
 		public string PreCompile(string script)
 		{
-			// Default usings and compiler options
 			var add = new StringBuilder();
 
-			// Mono needs this to not treat harmless warnings as errors
-			// (like a missing await in an async Task) and to not spam
-			// us with warnings.
-			add.AppendLine("//css_co /warnaserror- /warn:0;");
-
+			// Default usings
 			add.Append("using System;");
 			add.Append("using System.Collections.Generic;");
 			add.Append("using System.Collections;");
@@ -96,8 +52,8 @@ namespace Aura.Channel.Scripting.Compilers
 			// Stops Enumerator and the conversation.
 			script = Regex.Replace(script,
 				@"([\{\}:;\t ])?Return\s*\(\s*\)\s*;",
-				"$1yield break;",
-				RegexOptions.Compiled);
+				"$1yield break;"
+			);
 
 			// Do(<method_call>);
 			// --> foreach(var __callResult in <method_call>) yield return __callResult;
@@ -105,8 +61,8 @@ namespace Aura.Channel.Scripting.Compilers
 			// the results to the main Enumerator.
 			script = Regex.Replace(script,
 				@"([\{\}:;\t ])?(Do)\s*\(([^;]*)\)\s*;",
-				"$1foreach(var __callResult in $3) yield return __callResult;",
-				RegexOptions.Compiled);
+				"$1foreach(var __callResult in $3) yield return __callResult;"
+			);
 
 			// duplicate <new_class> : <old_class> { <content_of_load> }
 			// --> public class <new_class> : <old_class> { public override void OnLoad() { base.OnLoad(); <content_of_load> } }
@@ -114,8 +70,8 @@ namespace Aura.Channel.Scripting.Compilers
 			// load first, and the new load afterwards.
 			script = Regex.Replace(script,
 			   @"duplicate +([^\s:]+) *: *([^\s{]+) *{ *([^}]+) *}",
-			   "public class $1 : $2 { public override void Load() { base.Load(); $3 } }",
-			   RegexOptions.Compiled);
+			   "public class $1 : $2 { public override void Load() { base.Load(); $3 } }"
+			);
 
 			return script;
 		}

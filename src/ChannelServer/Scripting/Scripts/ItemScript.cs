@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
-using System;
 using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
+using Aura.Data;
 using Aura.Mabi;
-using Aura.Mabi.Const;
 using Aura.Shared.Util;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -20,6 +23,25 @@ namespace Aura.Channel.Scripting.Scripts
 	{
 		private const float WeightChangePlus = 0.0015f;
 		private const float WeightChangeMinus = 0.000375f;
+
+		/// <summary>
+		/// Called when script is initialized after loading it.
+		/// </summary>
+		/// <returns></returns>
+		public override bool Init()
+		{
+			var attr = this.GetType().GetCustomAttribute<ItemScriptAttribute>();
+			if (attr == null)
+			{
+				Log.Error("ItemScript.Init: Missing ItemScript attribute.");
+				return false;
+			}
+
+			foreach (var itemId in attr.ItemIds)
+				ChannelServer.Instance.ScriptManager.ItemScripts.Add(itemId, this);
+
+			return true;
+		}
 
 		/// <summary>
 		/// Executed when item is used.
@@ -188,6 +210,47 @@ namespace Aura.Channel.Scripting.Scripts
 				return;
 
 			skill.Train(condition);
+		}
+	}
+
+	/// <summary>
+	/// Attribute for item scripts, to specify which items the script is for.
+	/// </summary>
+	/// <remarks>
+	/// Takes lists of item ids or tags. If a list of tags is passed the item
+	/// db will be searched for item ids that match *any* of the tags.
+	/// </remarks>
+	public class ItemScriptAttribute : Attribute
+	{
+		/// <summary>
+		/// List of item ids
+		/// </summary>
+		public int[] ItemIds { get; private set; }
+
+		/// <summary>
+		/// New attribute based on ids
+		/// </summary>
+		/// <param name="itemIds"></param>
+		public ItemScriptAttribute(params int[] itemIds)
+		{
+			this.ItemIds = itemIds;
+		}
+
+		/// <summary>
+		/// New attribute based on tags
+		/// </summary>
+		/// <param name="tags"></param>
+		public ItemScriptAttribute(params string[] tags)
+		{
+			var ids = new HashSet<int>();
+
+			foreach (var tag in tags)
+			{
+				foreach (var itemData in AuraData.ItemDb.Entries.Values.Where(a => a.HasTag(tag)))
+					ids.Add(itemData.Id);
+			}
+
+			this.ItemIds = ids.ToArray();
 		}
 	}
 }

@@ -4,6 +4,7 @@
 using Aura.Login.Database;
 using Aura.Login.Network;
 using Aura.Login.Network.Handlers;
+using Aura.Login.Scripting;
 using Aura.Login.Util;
 using Aura.Login.Web;
 using Aura.Mabi.Network;
@@ -54,6 +55,14 @@ namespace Aura.Login
 		/// </summary>
 		public WebApplication WebApp { get; private set; }
 
+		/// <summary>
+		/// Login's script manager
+		/// </summary>
+		public ScriptManager ScriptManager { get; private set; }
+
+		/// <summary>
+		/// Initializes fields and properties
+		/// </summary>
 		private LoginServer()
 		{
 			this.Server = new DefaultServer<LoginClient>();
@@ -64,6 +73,8 @@ namespace Aura.Login
 			this.ServerList = new ServerInfoManager();
 
 			this.ChannelClients = new List<LoginClient>();
+
+			this.ScriptManager = new ScriptManager();
 		}
 
 		/// <summary>
@@ -96,6 +107,9 @@ namespace Aura.Login
 
 			// Web API
 			this.LoadWebApi();
+
+			// Scripts
+			this.LoadScripts();
 
 			// Start
 			this.Server.Start(this.Conf.Login.Port);
@@ -189,15 +203,18 @@ namespace Aura.Login
 			}
 		}
 
+		/// <summary>
+		/// Starts web server for API
+		/// </summary>
 		private void LoadWebApi()
 		{
 			Log.Info("Loading Web API...");
 
 			this.WebApp = new WebApplication();
 
-			this.WebApp.Get(@"/status", new StatusController());
-			this.WebApp.All(@"/broadcast", new BroadcastController());
-			this.WebApp.All(@"/check-user", new CheckUserController());
+			this.WebApp.Get("/status", new StatusController());
+			this.WebApp.All("/broadcast", new BroadcastController());
+			this.WebApp.All("/check-user", new CheckUserController());
 
 			try
 			{
@@ -209,6 +226,14 @@ namespace Aura.Login
 			{
 				Log.Error("Failed to load Web API, port already in use?");
 			}
+		}
+
+		/// <summary>
+		/// Loads all login scripts.
+		/// </summary>
+		private void LoadScripts()
+		{
+			this.ScriptManager.LoadScripts("system/scripts/scripts_login.txt");
 		}
 	}
 }

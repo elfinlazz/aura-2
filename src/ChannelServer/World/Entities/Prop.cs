@@ -331,6 +331,17 @@ namespace Aura.Channel.World.Entities
 
 			return this.Data.HasTag(tag);
 		}
+
+		/// <summary>
+		/// Removes prop from its current region.
+		/// </summary>
+		public override void Disappear()
+		{
+			if (this.Region != null)
+				this.Region.RemoveProp(this);
+
+			base.Disappear();
+		}
 	}
 
 	public delegate void PropFunc(Creature creature, Prop prop);

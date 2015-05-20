@@ -4,6 +4,7 @@
 //  AI for wandering NPCs, random phrases and random walking.
 //---------------------------------------------------------------------------
 
+[AiScript("npc_wander")]
 public class WanderNpcAi : AiScript
 {
 	public WanderNpcAi()

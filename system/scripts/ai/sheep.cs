@@ -4,6 +4,7 @@
 //  AI for sheeps.
 //---------------------------------------------------------------------------
 
+[AiScript("sheep")]
 public class SheepAi : AiScript
 {
 	protected override IEnumerable Idle()

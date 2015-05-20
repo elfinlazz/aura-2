@@ -4,6 +4,7 @@
 //  AI for normal spiders.
 //---------------------------------------------------------------------------
 
+[AiScript("spider")]
 public class SpiderAi : AiScript
 {
 	public SpiderAi()

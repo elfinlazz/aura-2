@@ -4,6 +4,7 @@
 //  Dummy AI for monsters, makes them wander around.
 //---------------------------------------------------------------------------
 
+[AiScript("wander")]
 public class WanderingCreatureAI : AiScript
 {
 	protected override IEnumerable Idle()

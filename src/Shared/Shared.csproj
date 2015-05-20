@@ -56,6 +56,17 @@
     <Compile Include="Database\Card.cs" />
     <Compile Include="Database\Commands.cs" />
     <Compile Include="Database\AuraDb.cs" />
+    <Compile Include="Scripting\Compilers\BooCompiler.cs" />
+    <Compile Include="Scripting\Compilers\Compiler.cs" />
+    <Compile Include="Scripting\Compilers\CompilerErrors.cs" />
+    <Compile Include="Scripting\Compilers\VisualBasicCompiler.cs" />
+    <Compile Include="Scripting\Compilers\CSharpCompiler.cs" />
+    <Compile Include="Scripting\Compilers\PreCompiler.cs" />
+    <Compile Include="Scripting\ScriptAttributes.cs" />
+    <Compile Include="Scripting\UserSystemScriptManager.cs" />
+    <Compile Include="Scripting\ScriptManager.cs" />
+    <Compile Include="Scripting\Scripts\IScript.cs" />
+    <Compile Include="Util\Collection.cs" />
     <Compile Include="Util\Password.cs" />
     <Compile Include="Network\BaseClient.cs" />
     <Compile Include="Network\BaseServer.cs" />
