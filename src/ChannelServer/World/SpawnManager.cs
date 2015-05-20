@@ -128,6 +128,8 @@ namespace Aura.Channel.World
 		private Point[] _points;
 		private int _minX = int.MaxValue, _minY = int.MaxValue, _maxX = 0, _maxY = 0;
 
+		private int[] _titles;
+
 		private List<NPC> _creatures;
 
 		/// <summary>
@@ -157,12 +159,14 @@ namespace Aura.Channel.World
 		/// <param name="amount"></param>
 		/// <param name="regionId"></param>
 		/// <param name="coordinates"></param>
-		public CreatureSpawner(int raceId, int amount, int regionId, params int[] coordinates)
+		public CreatureSpawner(int raceId, int amount, int[] titles, int regionId, int[] coordinates)
 		{
 			this.Id = Interlocked.Increment(ref _id);
 			this.RaceId = raceId;
 			this.Amount = amount;
 			this.RegionId = regionId;
+
+			_titles = titles;
 
 			if (coordinates.Length < 2 || coordinates.Length % 2 != 0)
 				throw new Exception("CreatureSpawn: Invalid amount of coordinates.");
@@ -269,6 +273,17 @@ namespace Aura.Channel.World
 
 			if (creature != null)
 			{
+				// Random title
+				if (_titles != null && _titles.Length != 0)
+				{
+					var title = (ushort)(_titles[RandomProvider.Get().Next(_titles.Length)]);
+					if (title != 0)
+					{
+						creature.Titles.Enable(title);
+						creature.Titles.ChangeTitle(title, false);
+					}
+				}
+
 				creature.SpawnId = this.Id;
 				creature.Disappears += this.OnDisappears;
 

@@ -342,7 +342,19 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="coordinates"></param>
 		protected void CreatureSpawn(int raceId, int amount, int regionId, params int[] coordinates)
 		{
-			ChannelServer.Instance.World.SpawnManager.Add(new CreatureSpawner(raceId, amount, regionId, coordinates));
+			this.CreatureSpawn(raceId, amount, null, regionId, coordinates);
+		}
+
+		/// <summary>
+		/// Creates creature spawn area.
+		/// </summary>
+		/// <param name="raceId"></param>
+		/// <param name="amount"></param>
+		/// <param name="regionId"></param>
+		/// <param name="coordinates"></param>
+		protected void CreatureSpawn(int raceId, int amount, int[] titles, int regionId, params int[] coordinates)
+		{
+			ChannelServer.Instance.World.SpawnManager.Add(new CreatureSpawner(raceId, amount, titles, regionId, coordinates));
 		}
 
 		/// <summary>
