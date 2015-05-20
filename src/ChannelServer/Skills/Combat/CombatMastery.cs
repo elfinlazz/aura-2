@@ -313,7 +313,7 @@ namespace Aura.Channel.Skills.Combat
 					break;
 			}
 
-			Log.Unimplemented("GetAttackerStun: Combination {0} {1} Hit", speed, count);
+			Log.Unimplemented("GetTargetStun: Combination {0} {1} Hit", speed, count);
 
 			return 2000;
 		}
