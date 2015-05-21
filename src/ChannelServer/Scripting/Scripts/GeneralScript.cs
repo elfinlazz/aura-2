@@ -173,6 +173,15 @@ namespace Aura.Channel.Scripting.Scripts
 			return values[this.Random(values.Length)];
 		}
 
+		/// <summary>
+		/// Returns the params as array (syntactic sugar).
+		/// </summary>
+		/// <param name="coordinates"></param>
+		protected T[] A<T>(params T[] coordinates)
+		{
+			return coordinates;
+		}
+
 		#region Extension
 
 		/// <summary>
@@ -340,21 +349,22 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="amount"></param>
 		/// <param name="regionId"></param>
 		/// <param name="coordinates"></param>
+		[Obsolete("Use CreateSpawner instead.", true)]
 		protected void CreatureSpawn(int raceId, int amount, int regionId, params int[] coordinates)
 		{
-			this.CreatureSpawn(raceId, amount, null, regionId, coordinates);
+			this.CreateSpawner(raceId, amount, regionId, 0, 10, 10, null, coordinates);
 		}
 
 		/// <summary>
 		/// Creates creature spawn area.
 		/// </summary>
-		/// <param name="raceId"></param>
+		/// <param name="race"></param>
 		/// <param name="amount"></param>
-		/// <param name="regionId"></param>
+		/// <param name="region"></param>
 		/// <param name="coordinates"></param>
-		protected void CreatureSpawn(int raceId, int amount, int[] titles, int regionId, params int[] coordinates)
+		protected void CreateSpawner(int race, int amount, int region, int delay = 0, int delayMin = 10, int delayMax = 20, int[] titles = null, int[] coordinates = null)
 		{
-			ChannelServer.Instance.World.SpawnManager.Add(new CreatureSpawner(raceId, amount, titles, regionId, coordinates));
+			ChannelServer.Instance.World.SpawnManager.Add(new CreatureSpawner(race, amount, region, delay, delayMin, delayMax, titles, coordinates));
 		}
 
 		/// <summary>

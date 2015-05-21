@@ -129,6 +129,7 @@ namespace Aura.Channel.World
 		private int _minX = int.MaxValue, _minY = int.MaxValue, _maxX = 0, _maxY = 0;
 
 		private int[] _titles;
+		private int _delay, _delayMin, _delayMax;
 
 		private List<NPC> _creatures;
 
@@ -159,17 +160,20 @@ namespace Aura.Channel.World
 		/// <param name="amount"></param>
 		/// <param name="regionId"></param>
 		/// <param name="coordinates"></param>
-		public CreatureSpawner(int raceId, int amount, int[] titles, int regionId, int[] coordinates)
+		public CreatureSpawner(int raceId, int amount, int regionId, int delay, int delayMin, int delayMax, int[] titles, int[] coordinates)
 		{
+			if (coordinates == null || coordinates.Length < 2 || coordinates.Length % 2 != 0)
+				throw new ArgumentException("CreatureSpawn: Invalid amount of coordinates.");
+
 			this.Id = Interlocked.Increment(ref _id);
 			this.RaceId = raceId;
 			this.Amount = amount;
 			this.RegionId = regionId;
 
 			_titles = titles;
-
-			if (coordinates.Length < 2 || coordinates.Length % 2 != 0)
-				throw new Exception("CreatureSpawn: Invalid amount of coordinates.");
+			_delay = delay;
+			_delayMin = delayMin;
+			_delayMax = delayMax;
 
 			_points = new Point[coordinates.Length / 2];
 			for (int i = 0, j = 0; i < coordinates.Length; ++j, i += 2)
@@ -308,7 +312,11 @@ namespace Aura.Channel.World
 			lock (_creatures)
 				_creatures.Remove(npc);
 
-			this.SpawnOne();
+			var delay = (_delayMin >= 0 && _delayMax > 0 ? RandomProvider.Get().Next(_delayMin, _delayMax + 1) : 0);
+			if (delay == 0)
+				this.SpawnOne();
+			else
+				Task.Delay(delay).ContinueWith(_ => this.SpawnOne());
 		}
 	}
 }
