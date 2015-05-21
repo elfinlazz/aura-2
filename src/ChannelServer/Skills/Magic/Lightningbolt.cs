@@ -66,7 +66,7 @@ namespace Aura.Channel.Skills.Magic
 
 			var targets = new List<Creature>();
 			targets.Add(mainTarget);
-			targets.AddRange(mainTarget.Region.GetCreaturesInRange(mainTarget.GetPosition(), SplashRange).Where(a => attacker.CanTarget(a)));
+			targets.AddRange(mainTarget.Region.GetCreaturesInRange(mainTarget.GetPosition(), SplashRange).Where(a => a != mainTarget && attacker.CanTarget(a)));
 
 			// Damage
 			var damage = this.GetDamage(attacker, skill);
