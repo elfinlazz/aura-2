@@ -98,40 +98,62 @@ public class TirRegionScript : RegionScript
 	
 	public override void LoadSpawns()
 	{
-		// Southern Fields (Disabled during MabiLand event)
-		CreatureSpawn(20001, 15, 1, 11926,25589, 15256,22203, 11553,18350, 4721,17364, 4035,21583); // Gray Wolf
-		CreatureSpawn(20003, 5,  1, 7375,17002,  13727,17316, 16027,21792, 11708,19855);            // White Wolf
-		
-		CreatureSpawn(40001, 4,  1, 11110,25113, 15132,28149, 15825,23645); // Sheep
-		CreatureSpawn(20101, 1,  1, 11110,25113, 15132,28149, 15825,23645); // Dog
-		
-		// North
-		CreatureSpawn(50001, 10, 1, 9796,43776, 10352,48765, 12167,45980, 12139,42264); // Brown Fox
-		CreatureSpawn(50007, 6,  1, 9796,43776, 10352,48765, 12167,45980, 12139,42264); // Young Brown Fox
-		CreatureSpawn(50007, 1,  1, 9796,43776, 10352,48765, 12167,45980, 12139,42264); // Red Fox
-		
-		CreatureSpawn(50001, 5, 1, 12077,49344, 7718,54523, 6915,53857, 10288,49285); // Brown Fox
-		CreatureSpawn(50007, 5, 1, 12077,49344, 7718,54523, 6915,53857, 10288,49285); // Young Brown Fox
-		
-		CreatureSpawn(40001, 6,  1, 27031,43284, 30730,38996, 25747,37402); // Sheep
-		
-		// Graveyard
-		CreatureSpawn(30001, 20, 1, 16475,46411, 22344,47653, 21819,40695, 16047,40496); // White Spider
-		CreatureSpawn(30003, 1,  1, 16475,46411, 22344,47653, 21819,40695, 16047,40496); // Red Spider
-		
+		// Southern Fields (disabled during MabiLand event)
+		CreateSpawner(race: 40001, amount: 8, region: 1, coordinates: A(9991,21498, 8678,23454, 13515,26700, 14828,24745)); // Sheep
+		CreateSpawner(race: 20101, amount: 5, region: 1, coordinates: A(9991,21498, 8678,23454, 13515,26700, 14828,24745)); // Dog
+		CreateSpawner(race: 40001, amount: 8, region: 1, coordinates: A(13701,23421, 13701,24840, 14891,24840, 14891,23421)); // Sheep
+		CreateSpawner(race: 20101, amount: 5, region: 1, coordinates: A(13701,23421, 13701,24840, 14891,24840, 14891,23421)); // Dog
+
+		CreateSpawner(race: 20001, amount: 20, region: 1, coordinates: A(6690,20303, 13585,25668, 16347,22118, 9452,16754)); // Gray Wolf
+		CreateSpawner(race: 40001, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(6690,20303, 13585,25668, 16347,22118, 9452,16754)); // Sheep
+		CreateSpawner(race: 20101, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(6690,20303, 13585,25668, 16347,22118, 9452,16754)); // Dog
+
+		CreateSpawner(race: 20003, amount: 8, region: 1, coordinates: A(13481,19473, 12479,17258, 4882,20694, 5884,22909)); // White Wolf
+		CreateSpawner(race: 40001, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(13481,19473, 12479,17258, 4882,20694, 5884,22909)); // Sheep
+		CreateSpawner(race: 20101, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(13481,19473, 12479,17258, 4882,20694, 5884,22909)); // Dog
+
+		// Pasture
+		CreateSpawner(race: 40001, amount: 10, region: 1, coordinates: A(32785,42317, 26117,37787, 24726,39834, 31394,44365)); // Sheep
+		CreateSpawner(race: 20101, amount: 5, region: 1, coordinates: A(32785,42317, 26117,37787, 24726,39834, 31394,44365)); // Dog
+		CreateSpawner(race: 20001, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(32785,42317, 26117,37787, 24726,39834, 31394,44365)); // Gray Wolf
+
 		// Eastern Fields
-		CreatureSpawn(50002, 10, 1, 32776,44588, 34600,41400, 39100,44400, 37500,48200); // Red Fox
-		CreatureSpawn(50005, 5,  1, 32776,44588, 34600,41400, 39100,44400, 37500,48200); // Young Red Fox
-		CreatureSpawn(50003, 4,  1, 39732,46937, 41440,43889, 45191,42226, 44339,46377); // Gray Fox
-		CreatureSpawn(50006, 2,  1, 39732,46937, 41440,43889, 45191,42226, 44339,46377); // Young Gray Fox
-		
-		CreatureSpawn(20002, 5,  1, 45155,47360, 46286,40727, 47877,42053, 49088,45648); // Black Wolf
-		CreatureSpawn(20005, 2,  1, 45144,37935, 45716,33852, 41942,30286, 38000,36000); // Brown Dire Wolf
-		CreatureSpawn(20009, 4,  1, 45144,37935, 45716,33852, 41942,30286, 38000,36000); // Brown Dire Wolf Cub
-		
+		CreateSpawner(race: 50002, amount: 10, region: 1, coordinates: A(36777,49202, 39864,46467, 32796,38490, 29710,41224)); // Red Fox
+		CreateSpawner(race: 50005, amount: 5, region: 1, coordinates: A(36777,49202, 39864,46467, 32796,38490, 29710,41224)); // Little Red Fox
+		CreateSpawner(race: 60002, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(36777,49202, 39864,46467, 32796,38490, 29710,41224)); // Cock
+		CreateSpawner(race: 60003, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(36777,49202, 39864,46467, 32796,38490, 29710,41224)); // Hen
+
+		CreateSpawner(race: 50003, amount: 15, region: 1, coordinates: A(36397,43859, 36397,47207, 44503,47207, 44503,43859)); // Gray Fox
+		CreateSpawner(race: 50006, amount: 6, region: 1, coordinates: A(36397,43859, 36397,47207, 44503,47207, 44503,43859)); // Little Gray Fox
+
+		CreateSpawner(race: 20002, amount: 15, region: 1, coordinates: A(49301,45115, 46607,40197, 41783,42839, 44477,47758)); // Black Wolf
+
+		CreateSpawner(race: 20005, amount: 4, region: 1, coordinates: A(42417,40216, 47411,34463, 44174,31653, 39180,37406)); // Brown Dire Wolf
+		CreateSpawner(race: 20009, amount: 6, region: 1, coordinates: A(42417,40216, 47411,34463, 44174,31653, 39180,37406)); // Little Brown Dire Wolf
+
+		CreateSpawner(race: 20005, amount: 4, region: 1, coordinates: A(37271,31057, 37271,37138, 42145,37138, 42145,31057)); // Brown Dire Wolf
+		CreateSpawner(race: 20009, amount: 6, region: 1, coordinates: A(37271,31057, 37271,37138, 42145,37138, 42145,31057)); // Little Brown Dire Wolf
+
+		// Graveyard
+		CreateSpawner(race: 30014, amount: 22, region: 1, coordinates: A(18595,40025, 15904,44605, 21371,47817, 24062,43237)); // White Spider
+		CreateSpawner(race: 30003, amount: 1, region: 1, coordinates: A(18595,40025, 15904,44605, 21371,47817, 24062,43237)); // Red Spider
+
+		// North
+		CreateSpawner(race: 50001, amount: 6, region: 1, coordinates: A(9938,43120, 9923,47580, 13341,47591, 13356,43131)); // Brown Fox
+		CreateSpawner(race: 50007, amount: 9, region: 1, coordinates: A(9938,43120, 9923,47580, 13341,47591, 13356,43131)); // Little BrownFox
+
+		CreateSpawner(race: 50001, amount: 5, region: 1, coordinates: A(10625,49354, 8268,52432, 9059,53038, 11416,49960)); // Brown Fox
+		CreateSpawner(race: 50007, amount: 5, region: 1, coordinates: A(10625,49354, 8268,52432, 9059,53038, 11416,49960)); // Little BrownFox
+
 		// Church
-		CreatureSpawn(60002, 1,  1, 9370,39024, 7556,40150, 5927,39309, 6512,38073); // Rooster
-		CreatureSpawn(60003, 4,  1, 9370,39024, 7556,40150, 5927,39309, 6512,38073); // Hen
-		CreatureSpawn(60004, 8,  1, 9370,39024, 7556,40150, 5927,39309, 6512,38073); // Chick
+		CreateSpawner(race: 60002, amount: 4, region: 1, coordinates: A(8177,40200, 8617,38376, 6586,37887, 6146,39711)); // Cock
+		CreateSpawner(race: 60003, amount: 10, region: 1, coordinates: A(8177,40200, 8617,38376, 6586,37887, 6146,39711)); // Hen
+		CreateSpawner(race: 60004, amount: 5, region: 1, coordinates: A(8177,40200, 8617,38376, 6586,37887, 6146,39711)); // Chicken
+		CreateSpawner(race: 50002, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(8177,40200, 8617,38376, 6586,37887, 6146,39711)); // Red Fox
+
+		CreateSpawner(race: 60002, amount: 3, region: 1, coordinates: A(12602,41429, 11861,40520, 10017,42021, 10757,42931)); // Cock
+		CreateSpawner(race: 60003, amount: 6, region: 1, coordinates: A(12602,41429, 11861,40520, 10017,42021, 10757,42931)); // Hen
+		CreateSpawner(race: 60004, amount: 3, region: 1, coordinates: A(12602,41429, 11861,40520, 10017,42021, 10757,42931)); // Chicken
+		CreateSpawner(race: 50002, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(12602,41429, 11861,40520, 10017,42021, 10757,42931)); // Red Fox
 	}
 }
