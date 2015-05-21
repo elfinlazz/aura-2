@@ -69,7 +69,7 @@ namespace Aura.Shared.Scripting
 				return;
 			}
 
-			Log.Info("Loading scripts, this might take a few minutes...");
+			Log.Info("Loading scripts, this might take a moment...");
 
 			_scripts.Clear();
 

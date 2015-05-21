@@ -72,10 +72,8 @@ namespace Aura.Channel.World
 		{
 			Log.Info("Spawning creatures...");
 
-			var count = 0;
-
 			foreach (var spawner in _spawners.Values)
-				count += spawner.Spawn().Count;
+				spawner.Spawn();
 
 			Log.Info("  done spawning creatures.");
 		}
@@ -129,7 +127,6 @@ namespace Aura.Channel.World
 		private int _minX = int.MaxValue, _minY = int.MaxValue, _maxX = 0, _maxY = 0;
 
 		private int[] _titles;
-		private int _delay, _delayMin, _delayMax;
 
 		private List<NPC> _creatures;
 
@@ -154,26 +151,45 @@ namespace Aura.Channel.World
 		public int RegionId { get; private set; }
 
 		/// <summary>
-		/// Creatures new CreatureSpawn
+		/// Initial spawn delay in ms
 		/// </summary>
-		/// <param name="raceId"></param>
-		/// <param name="amount"></param>
-		/// <param name="regionId"></param>
-		/// <param name="coordinates"></param>
+		public int Delay { get; private set; }
+
+		/// <summary>
+		/// Minimum respawn delay in ms
+		/// </summary>
+		public int DelayMin { get; private set; }
+
+		/// <summary>
+		/// Maximum respawn delay in ms
+		/// </summary>
+		public int DelayMax { get; private set; }
+
+		/// <summary>
+		/// Creates new CreatureSpawner
+		/// </summary>
+		/// <param name="raceId">Race to spawn</param>
+		/// <param name="amount">Maximum amount to spawn</param>
+		/// <param name="regionId">Region to spawn in</param>
+		/// <param name="delay">Initial spawn delay in seconds</param>
+		/// <param name="delayMin">Minimum respawn delay in seconds</param>
+		/// <param name="delayMax">Maximum respawn delay in seconds</param>
+		/// <param name="titles">List of random titles to apply to creatures</param>
+		/// <param name="coordinates">Even number of coordinates, specifying the spawn area</param>
 		public CreatureSpawner(int raceId, int amount, int regionId, int delay, int delayMin, int delayMax, int[] titles, int[] coordinates)
 		{
 			if (coordinates == null || coordinates.Length < 2 || coordinates.Length % 2 != 0)
-				throw new ArgumentException("CreatureSpawn: Invalid amount of coordinates.");
+				throw new ArgumentException("CreatureSpawner: Invalid amount of coordinates.");
 
 			this.Id = Interlocked.Increment(ref _id);
 			this.RaceId = raceId;
 			this.Amount = amount;
 			this.RegionId = regionId;
+			this.Delay = delay * 1000;
+			this.DelayMin = delayMin * 1000;
+			this.DelayMax = delayMax * 1000;
 
 			_titles = titles;
-			_delay = delay;
-			_delayMin = delayMin;
-			_delayMax = delayMax;
 
 			_points = new Point[coordinates.Length / 2];
 			for (int i = 0, j = 0; i < coordinates.Length; ++j, i += 2)
@@ -251,51 +267,57 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Spawns as many creatures as necessary to reach this spawn's amount.
 		/// </summary>
-		public ICollection<NPC> Spawn()
+		public void Spawn()
 		{
-			var result = new List<NPC>();
 			var spawnAmount = Math.Max(0, this.Amount - _creatures.Count);
 
 			for (int i = 0; i < spawnAmount; ++i)
 			{
-				var creature = this.SpawnOne();
-				if (creature != null)
-					result.Add(creature);
+				if (this.Delay == 0)
+					this.SpawnOne();
+				else
+					Task.Delay(this.Delay).ContinueWith(_ => this.SpawnOne());
 			}
-
-			return result;
 		}
 
 		/// <summary>
 		/// Spawns one creature based on this spawners settings.
 		/// </summary>
 		/// <returns></returns>
-		private NPC SpawnOne()
+		private void SpawnOne()
 		{
+			// Create NPC
+			var creature = new NPC(this.RaceId);
+
+			// Warp to spawn point
 			var pos = this.GetRandomPosition();
-			var creature = ChannelServer.Instance.World.SpawnManager.Spawn(this.RaceId, this.RegionId, pos.X, pos.Y, false, false);
-
-			if (creature != null)
+			if (!creature.Warp(this.RegionId, pos.X, pos.Y))
 			{
-				// Random title
-				if (_titles != null && _titles.Length != 0)
-				{
-					var title = (ushort)(_titles[RandomProvider.Get().Next(_titles.Length)]);
-					if (title != 0)
-					{
-						creature.Titles.Enable(title);
-						creature.Titles.ChangeTitle(title, false);
-					}
-				}
-
-				creature.SpawnId = this.Id;
-				creature.Disappears += this.OnDisappears;
-
-				lock (_creatures)
-					_creatures.Add(creature);
+				Log.Error("CreatureSpawner: Failed to spawn '{0}'s, region '{1}' doesn't exist.", this.RaceId, this.RegionId);
+				return;
 			}
 
-			return creature;
+			// Save spawn location
+			creature.SpawnLocation = new Location(this.RegionId, pos.X, pos.Y);
+
+			// Random title
+			if (_titles != null && _titles.Length != 0)
+			{
+				var title = (ushort)(_titles[RandomProvider.Get().Next(_titles.Length)]);
+				if (title != 0)
+				{
+					creature.Titles.Enable(title);
+					creature.Titles.ChangeTitle(title, false);
+				}
+			}
+
+			// Maintenance
+			creature.SpawnId = this.Id;
+			creature.Disappears += this.OnDisappears;
+
+			// Add to list to keep track of all creatures
+			lock (_creatures)
+				_creatures.Add(creature);
 		}
 
 		/// <summary>
@@ -312,7 +334,7 @@ namespace Aura.Channel.World
 			lock (_creatures)
 				_creatures.Remove(npc);
 
-			var delay = (_delayMin >= 0 && _delayMax > 0 ? RandomProvider.Get().Next(_delayMin, _delayMax + 1) : 0);
+			var delay = (this.DelayMin >= 0 && this.DelayMax > 0 ? RandomProvider.Get().Next(this.DelayMin, this.DelayMax + 1) : 0);
 			if (delay == 0)
 				this.SpawnOne();
 			else
