@@ -85,7 +85,7 @@ namespace Aura.Shared.Util.Commands
 			}
 		}
 
-		private CommandResult HandleHelp(string command, IList<string> args)
+		protected virtual CommandResult HandleHelp(string command, IList<string> args)
 		{
 			var maxLength = _commands.Values.Max(a => a.Name.Length);
 
@@ -96,7 +96,7 @@ namespace Aura.Shared.Util.Commands
 			return CommandResult.Okay;
 		}
 
-		private CommandResult HandleStatus(string command, IList<string> args)
+		protected virtual CommandResult HandleStatus(string command, IList<string> args)
 		{
 			Log.Status("Memory Usage: {0:N0} KB", Math.Round(GC.GetTotalMemory(false) / 1024f));
 

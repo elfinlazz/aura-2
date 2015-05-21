@@ -329,6 +329,19 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns list of all creatures in all regions.
+		/// </summary>
+		public ICollection<Creature> GetAllCreatures()
+		{
+			var result = new List<Creature>();
+
+			foreach (var region in _regions.Values)
+				result.AddRange(region.GetCreatures(_ => true));
+
+			return result;
+		}
+
+		/// <summary>
 		/// Returns NPC from any region by id, or null.
 		/// </summary>
 		/// <param name="entityId"></param>

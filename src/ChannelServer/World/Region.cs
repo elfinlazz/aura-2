@@ -484,8 +484,8 @@ namespace Aura.Channel.World
 			// TODO: Technically not required? Handled by LookAround.
 			Send.EntityAppears(creature);
 
-			if (creature.EntityId < MabiId.Npcs)
-				Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
+			//if (creature.EntityId < MabiId.Npcs)
+			//	Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
 		}
 
 		/// <summary>
@@ -512,8 +512,8 @@ namespace Aura.Channel.World
 				lock (_clients)
 					_clients.Remove(creature.Client);
 
-			if (creature.EntityId < MabiId.Npcs)
-				Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
+			//if (creature.EntityId < MabiId.Npcs)
+			//	Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
 
 			// Remove dynamic region from client when he's removed from it on
 			// the server, so it's recreated next time it goes to a dynamic
