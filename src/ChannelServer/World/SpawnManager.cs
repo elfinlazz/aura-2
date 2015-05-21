@@ -77,7 +77,7 @@ namespace Aura.Channel.World
 			foreach (var spawner in _spawners.Values)
 				count += spawner.Spawn().Count;
 
-			Log.Info("Done spawning {0} creatures.", count);
+			Log.Info("  done spawning creatures.");
 		}
 
 		/// <summary>

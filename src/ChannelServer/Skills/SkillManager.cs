@@ -45,7 +45,7 @@ namespace Aura.Channel.Skills
 				}
 			}
 
-			Log.Info("Done loading {0} skill handlers.", _handlers.Count);
+			Log.Info("  done loading {0} skill handlers.", _handlers.Count);
 		}
 
 		/// <summary>

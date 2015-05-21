@@ -91,10 +91,10 @@ namespace Aura.Shared.Scripting
 			// Init scripts
 			this.InitializeScripts();
 
-			if (toLoad.Count > 0)
-				Log.WriteLine();
+			//if (toLoad.Count > 0)
+			//	Log.WriteLine();
 
-			Log.Info("Done loading {0} scripts (of {1}).", loaded, toLoad.Count);
+			Log.Info("  done loading {0} scripts (of {1}).", loaded, toLoad.Count);
 		}
 
 		/// <summary>
