@@ -51,7 +51,7 @@ namespace Aura.Channel.Util
 
 			// GMs
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
-			Add(50, 50, "jump", "[x] [y]", HandleWarp);
+			Add(50, 50, "jump", "[x] [y]", HandleJump);
 			Add(50, 50, "item", "<id|name> [amount|color1 [color2 [color 3]]]", HandleItem);
 			Add(50, 50, "ego", "<item id> <ego name> <ego race> [color1 [color2 [color 3]]]", HandleEgo);
 			Add(50, 50, "skill", "<id> [rank]", HandleSkill);
@@ -237,19 +237,14 @@ namespace Aura.Channel.Util
 
 		private CommandResult HandleWarp(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
 		{
-			// Handles both warp and jump
-
-			var warp = (args[0] == "warp");
-			var offset = (warp ? 1 : 0);
-
-			if (warp && args.Count < 2)
+			if (args.Count < 2)
 				return CommandResult.InvalidArgument;
 
 			int regionId = 0;
 			int x = -1, y = -1;
 
 			// Warp to path
-			if (warp && args.Count == 2 && !args[1].Contains("r:") && !Regex.IsMatch(args[1], "^[0-9]+$"))
+			if (args.Count == 2 && !args[1].Contains("r:") && !Regex.IsMatch(args[1], "^[0-9]+$"))
 			{
 				try
 				{
@@ -267,35 +262,29 @@ namespace Aura.Channel.Util
 			// Warp/Jump to coordinates
 			else
 			{
-				// Get region id
-				if (warp)
+				if (!int.TryParse(args[1].Replace("r:", ""), out regionId))
 				{
-					if (!int.TryParse(args[1].Replace("r:", ""), out regionId))
-					{
-						Send.ServerMessage(sender, Localization.Get("Invalid region id."));
-						return CommandResult.InvalidArgument;
-					}
+					Send.ServerMessage(sender, Localization.Get("Invalid region id."));
+					return CommandResult.InvalidArgument;
 				}
-				else
-					regionId = target.RegionId;
 
 				// Check region
 				var warpToRegion = ChannelServer.Instance.World.GetRegion(regionId);
-				if (warp && warpToRegion == null)
+				if (warpToRegion == null)
 				{
 					Send.ServerMessage(sender, Localization.Get("Region doesn't exist."));
 					return CommandResult.Fail;
 				}
 
 				// Parse X
-				if (args.Count > 1 + offset && !int.TryParse(args[1 + offset].Replace("x:", ""), out x))
+				if (args.Count > 2 && !int.TryParse(args[2].Replace("x:", ""), out x))
 				{
 					Send.ServerMessage(sender, Localization.Get("Invalid X coordinate."));
 					return CommandResult.InvalidArgument;
 				}
 
 				// Parse Y
-				if (args.Count > 2 + offset && !int.TryParse(args[2 + offset].Replace("y:", ""), out y))
+				if (args.Count > 3 && !int.TryParse(args[3].Replace("y:", ""), out y))
 				{
 					Send.ServerMessage(sender, Localization.Get("Invalid Y coordinate."));
 					return CommandResult.InvalidArgument;
@@ -319,6 +308,42 @@ namespace Aura.Channel.Util
 
 			target.Warp(regionId, x, y);
 
+			Send.ServerMessage(sender, Localization.Get("Warped to {0}@{1}/{2}"), regionId, x, y);
+			if (sender != target)
+				Send.ServerMessage(target, Localization.Get("You've been warped by '{0}'."), sender.Name);
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleJump(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			int regionId = target.RegionId;
+			int x = -1, y = -1;
+
+			// Parse X
+			if (args.Count > 1 && !int.TryParse(args[1], out x))
+			{
+				Send.ServerMessage(sender, Localization.Get("Invalid X coordinate."));
+				return CommandResult.InvalidArgument;
+			}
+
+			// Parse Y
+			if (args.Count > 2 && !int.TryParse(args[2], out y))
+			{
+				Send.ServerMessage(sender, Localization.Get("Invalid Y coordinate."));
+				return CommandResult.InvalidArgument;
+			}
+
+			if (x == -1 || y == -1)
+			{
+				var rndc = AuraData.RegionInfoDb.RandomCoord(regionId);
+				if (x < 0) x = rndc.X;
+				if (y < 0) y = rndc.Y;
+			}
+
+			target.Warp(regionId, x, y);
+
+			Send.ServerMessage(sender, Localization.Get("Jumped to {0}/{1}"), x, y);
 			if (sender != target)
 				Send.ServerMessage(target, Localization.Get("You've been warped by '{0}'."), sender.Name);
 
