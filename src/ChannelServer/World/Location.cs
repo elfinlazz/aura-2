@@ -75,7 +75,7 @@ namespace Aura.Channel.World
 
 			// Get area
 			AreaData area = null;
-			if (split.Length > 2)
+			if (split.Length > 1)
 			{
 				area = region.GetArea(split[1]);
 				if (area == null)
