@@ -320,15 +320,23 @@ namespace Aura.Channel.Util
 			int regionId = target.RegionId;
 			int x = -1, y = -1;
 
+			// Split args like "123,321", our common spawner coord format
+			int index = -1;
+			if (args.Count == 2 && (index = args[1].IndexOf(',')) != -1)
+			{
+				args.Add(args[1].Substring(index + 1, args[1].Length - index - 1));
+				args[1] = args[1].Substring(0, index);
+			}
+
 			// Parse X
-			if (args.Count > 1 && !int.TryParse(args[1], out x))
+			if (args.Count > 1 && !int.TryParse(args[1].Trim(','), out x))
 			{
 				Send.ServerMessage(sender, Localization.Get("Invalid X coordinate."));
 				return CommandResult.InvalidArgument;
 			}
 
 			// Parse Y
-			if (args.Count > 2 && !int.TryParse(args[2], out y))
+			if (args.Count > 2 && !int.TryParse(args[2].Trim(','), out y))
 			{
 				Send.ServerMessage(sender, Localization.Get("Invalid Y coordinate."));
 				return CommandResult.InvalidArgument;
