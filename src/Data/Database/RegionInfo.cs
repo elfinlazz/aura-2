@@ -140,7 +140,7 @@ namespace Aura.Data.Database
 		/// <returns></returns>
 		public PropData GetProp(string name)
 		{
-			return this.Props.Values.FirstOrDefault(a => a.Name == name);
+			return this.Props.Values.FirstOrDefault(a => a.Name.ToLower() == name.ToLower());
 		}
 
 		/// <summary>
@@ -150,7 +150,7 @@ namespace Aura.Data.Database
 		/// <returns></returns>
 		public EventData GetEvent(string name)
 		{
-			return this.Events.Values.FirstOrDefault(a => a.Name == name);
+			return this.Events.Values.FirstOrDefault(a => a.Name.ToLower() == name.ToLower());
 		}
 	}
 
@@ -299,7 +299,7 @@ namespace Aura.Data.Database
 		/// <returns></returns>
 		public RegionInfoData GetRegion(string name)
 		{
-			return this.Entries.Values.FirstOrDefault(a => a.Name == name);
+			return this.Entries.Values.FirstOrDefault(a => a.Name.ToLower() == name.ToLower());
 		}
 
 		/// <summary>
