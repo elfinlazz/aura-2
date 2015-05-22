@@ -38,8 +38,10 @@ namespace Aura.Data.Database
 
 		public short AttackSkill { get; set; }
 		public int AttackRange { get; set; }
-		public int AttackMin { get; set; }
-		public int AttackMax { get; set; }
+		public int AttackMin { get; set; }  // AttackMinBaseMod (race)
+		public int AttackMax { get; set; }  // AttackMaxBaseMod (race)
+		public int AttackMin2 { get; set; }	// AttackMinBase (monster)
+		public int AttackMax2 { get; set; }	// AttackMinBase (monster)
 		public int AttackSpeed { get; set; }
 		public int KnockCount { get; set; }
 		public int Critical { get; set; }

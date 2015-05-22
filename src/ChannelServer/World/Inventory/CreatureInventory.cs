@@ -140,12 +140,21 @@ namespace Aura.Channel.World.Inventory
 			{
 				_weaponSet = value;
 				this.UpdateEquipReferences(Pocket.RightHand1, Pocket.LeftHand1, Pocket.Magazine1);
-				Send.StatUpdate(_creature, StatUpdateType.Private,
-					Stat.AttackMinBaseMod, Stat.AttackMaxBaseMod,
-					Stat.InjuryMinBaseMod, Stat.InjuryMaxBaseMod,
-					Stat.BalanceBaseMod, Stat.CriticalBaseMod,
-					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
-				);
+
+				// Make sure the creature is logged in
+				// TODO: Remove sending from properties.
+				if (_creature.Region != null)
+				{
+					Send.StatUpdate(_creature, StatUpdateType.Private,
+						Stat.AttackMinBase, Stat.AttackMaxBase,
+						Stat.AttackMinBaseMod, Stat.AttackMaxBaseMod,
+						Stat.RightAttackMinMod, Stat.RightAttackMaxMod,
+						Stat.LeftAttackMinMod, Stat.LeftAttackMaxMod,
+						Stat.InjuryMinBaseMod, Stat.InjuryMaxBaseMod,
+						Stat.BalanceBaseMod, Stat.CriticalBaseMod,
+						Stat.DefenseBaseMod, Stat.ProtectionBaseMod
+					);
+				}
 			}
 		}
 

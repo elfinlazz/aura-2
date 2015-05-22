@@ -29,8 +29,6 @@ namespace Aura.Channel.World.Entities
 		public const float HandBalance = 0.3f;
 		public const float BaseMagicBalance = 0.3f;
 		public const float HandCritical = 0.1f;
-		public const int HandAttackMin = 0;
-		public const int HandAttackMax = 8;
 		public const float MinStability = -10, MaxStability = 100;
 
 		private const float MinWeight = 0.7f, MaxWeight = 1.5f;
@@ -400,45 +398,55 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		public int AttackMinBaseMod
-		{
-			get
-			{
-				var result = HandAttackMin;
+		/// <summary>
+		/// AttMin from monster xml.
+		/// </summary>
+		public int AttackMinBase { get { return this.RaceData.AttackMin2; } }
 
-				if (this.RightHand != null)
-				{
-					result = this.RightHand.OptionInfo.AttackMin;
-					if (this.LeftHand != null)
-					{
-						result += this.LeftHand.OptionInfo.AttackMin;
-						result /= 2; // average
-					}
-				}
+		/// <summary>
+		/// AttMin from monster xml.
+		/// </summary>
+		public int AttackMaxBase { get { return this.RaceData.AttackMax2; } }
 
-				return result;
-			}
-		}
+		/// <summary>
+		/// AttackMin from races xml.
+		/// </summary>
+		public int AttackMinBaseMod { get { return this.RaceData.AttackMin; } }
 
-		public int AttackMaxBaseMod
-		{
-			get
-			{
-				var result = HandAttackMax;
+		/// <summary>
+		/// AttackMax from races xml.
+		/// </summary>
+		public int AttackMaxBaseMod { get { return this.RaceData.AttackMax; } }
 
-				if (this.RightHand != null)
-				{
-					result = this.RightHand.OptionInfo.AttackMax;
-					if (this.LeftHand != null)
-					{
-						result += this.LeftHand.OptionInfo.AttackMax;
-						result /= 2; // average
-					}
-				}
+		/// <summary>
+		/// Par_AttackMin from item xml, for right hand weapon.
+		/// </summary>
+		public int RightAttackMinMod { get { return (this.RightHand != null ? this.RightHand.OptionInfo.AttackMin : 0); } }
 
-				return result;
-			}
-		}
+		/// <summary>
+		/// Par_AttackMax from item xml, for right hand weapon.
+		/// </summary>
+		public int RightAttackMaxMod { get { return (this.RightHand != null ? this.RightHand.OptionInfo.AttackMax : 0); } }
+
+		/// <summary>
+		/// Par_AttackMin from item xml, for left hand weapon.
+		/// </summary>
+		public int LeftAttackMinMod { get { return (this.LeftHand != null ? this.LeftHand.OptionInfo.AttackMin : 0); } }
+
+		/// <summary>
+		/// Par_AttackMax from item xml, for left hand weapon.
+		/// </summary>
+		public int LeftAttackMaxMod { get { return (this.LeftHand != null ? this.LeftHand.OptionInfo.AttackMax : 0); } }
+
+		/// <summary>
+		/// Used for title bonuses.
+		/// </summary>
+		public int AttackMinMod { get { return (int)this.StatMods.Get(Stat.AttackMinMod); } }
+
+		/// <summary>
+		/// Used for title bonuses.
+		/// </summary>
+		public int AttackMaxMod { get { return (int)this.StatMods.Get(Stat.AttackMaxMod); } }
 
 		public int InjuryMinBaseMod
 		{
@@ -479,9 +487,6 @@ namespace Aura.Channel.World.Entities
 				return result;
 			}
 		}
-
-		public int AttackMinMod { get { return (int)this.StatMods.Get(Stat.AttackMinMod); } }
-		public int AttackMaxMod { get { return (int)this.StatMods.Get(Stat.AttackMaxMod); } }
 
 		/// <summary>
 		/// Returns total magic attack, based on stats, equipment, etc.
@@ -1147,34 +1152,44 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Calculates random damage using the given item.
+		/// Calculates random damage for the right hand (default).
 		/// </summary>
-		/// <param name="weapon">null for hands</param>
 		/// <param name="balance">NaN for individual balance calculation</param>
 		/// <returns></returns>
-		public virtual float GetRndDamage(Item weapon, float balance = float.NaN)
+		public virtual float GetRndRightHandDamage(float balance = float.NaN)
 		{
-			float min = 0, max = 0;
+			return this.GetRndDamage(this.RightAttackMinMod, this.RightAttackMaxMod, balance);
+		}
 
+		/// <summary>
+		/// Calculates random damage for the left hand (off-hand).
+		/// </summary>
+		/// <param name="balance">NaN for individual balance calculation</param>
+		/// <returns></returns>
+		public virtual float GetRndLeftHandDamage(float balance = float.NaN)
+		{
+			return this.GetRndDamage(this.LeftAttackMinMod, this.LeftAttackMaxMod, balance);
+		}
+
+		/// <summary>
+		/// Calculates random damage with the given min/max values for the weapon.
+		/// </summary>
+		/// <param name="balance">NaN for individual balance calculation</param>
+		/// <returns></returns>
+		protected virtual float GetRndDamage(float min, float max, float balance = float.NaN)
+		{
 			if (float.IsNaN(balance))
-				balance = this.GetRndBalance(weapon);
+				balance = this.GetRndBalance(this.RightHand);
 
-			if (weapon != null)
-			{
-				min += weapon.OptionInfo.AttackMin;
-				max += weapon.OptionInfo.AttackMax;
-			}
-			else
-			{
-				min = this.RaceData.AttackMin;
-				max = this.RaceData.AttackMax;
-			}
-
-			min += (Math.Max(0, this.Str - 10) / 3.0f);
-			max += (Math.Max(0, this.Str - 10) / 2.5f);
-
+			min += this.AttackMinBaseMod;
+			//min += this.LeftAttackMinMod;
 			min += this.AttackMinMod;
+			min += (Math.Max(0, this.Str - 10) / 3.0f);
+
+			max += this.AttackMaxBaseMod;
+			//max += this.LeftAttackMaxMod;
 			max += this.AttackMaxMod;
+			max += (Math.Max(0, this.Str - 10) / 2.5f);
 
 			if (min > max)
 				min = max;
@@ -1190,9 +1205,9 @@ namespace Aura.Channel.World.Entities
 		{
 			var balance = this.GetRndAverageBalance();
 
-			var dmg = this.GetRndDamage(this.RightHand, balance);
+			var dmg = this.GetRndRightHandDamage(balance);
 			if (this.LeftHand != null)
-				dmg += this.GetRndDamage(this.LeftHand, balance);
+				dmg += this.GetRndLeftHandDamage(balance);
 
 			return dmg;
 		}

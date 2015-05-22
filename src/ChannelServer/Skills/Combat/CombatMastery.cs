@@ -92,7 +92,7 @@ namespace Aura.Channel.Skills.Combat
 					aAction.Set(AttackerOptions.DualWield);
 
 				// Base damage
-				var damage = attacker.GetRndDamage(weapon);
+				var damage = (i == 1 ? attacker.GetRndRightHandDamage() : attacker.GetRndLeftHandDamage());
 
 				// Critical Hit
 				CriticalHit.Handle(attacker, attacker.GetCritChanceFor(target), ref damage, tAction);

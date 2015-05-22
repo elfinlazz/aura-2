@@ -271,22 +271,6 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Returns random damage based on race data.
-		/// </summary>
-		/// <param name="weapon"></param>
-		/// <param name="balance"></param>
-		/// <returns></returns>
-		public override float GetRndDamage(Item weapon, float balance = float.NaN)
-		{
-			float min = this.RaceData.AttackMin, max = this.RaceData.AttackMax;
-
-			if (float.IsNaN(balance))
-				balance = this.GetRndBalance(weapon);
-
-			return (min + ((max - min) * balance));
-		}
-
-		/// <summary>
 		/// Returns how well the NPC remembers the other creature.
 		/// </summary>
 		/// <param name="other"></param>

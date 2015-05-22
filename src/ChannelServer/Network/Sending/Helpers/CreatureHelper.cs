@@ -108,18 +108,18 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutFloat(creature.WillFoodMod);
 				packet.PutFloat(creature.LuckFoodMod);
 				packet.PutShort(creature.AbilityPoints);
-				packet.PutShort(0);			         // AttackMinBase
+				packet.PutShort((short)creature.AttackMinBase);
 				packet.PutShort((short)creature.AttackMinMod);
-				packet.PutShort(0);			         // AttackMaxBase
+				packet.PutShort((short)creature.AttackMaxBase);
 				packet.PutShort((short)creature.AttackMaxMod);
 				packet.PutShort(0);			         // InjuryMinBase
 				packet.PutShort(0);			         // InjuryMinMod
 				packet.PutShort(0);			         // InjuryMaxBase
 				packet.PutShort(0);			         // InjuryMaxMod
-				packet.PutShort(0);			         // LeftAttackMinMod
-				packet.PutShort(0);			         // LeftAttackMaxMod
-				packet.PutShort(0);			         // RightAttackMinMod
-				packet.PutShort(0);			         // RightAttackMaxMod
+				packet.PutShort((short)creature.LeftAttackMinMod);
+				packet.PutShort((short)creature.LeftAttackMaxMod);
+				packet.PutShort((short)creature.RightAttackMinMod);
+				packet.PutShort((short)creature.RightAttackMaxMod);
 				packet.PutShort(0);			         // LeftInjuryMinMod
 				packet.PutShort(0);			         // LeftInjuryMaxMod
 				packet.PutShort(0);			         // RightInjuryMinMod
@@ -162,6 +162,8 @@ namespace Aura.Channel.Network.Sending.Helpers
 
 				// In some tests the damage display would be messed up if
 				// those two weren't set to something.
+				// In recent tests they were simply added to the min/max dmg,
+				// purpose unknown.
 				packet.PutShort(0);                  // MeleeAttackMinBaseMod (8 / 3)
 				packet.PutShort(0);                  // MeleeAttackMaxBaseMod (18 / 4)
 
