@@ -715,5 +715,22 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Sends FishingActionRequired to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="unkByte"></param>
+		/// <param name="time"></param>
+		/// <param name="unkFloat"></param>
+		public static void FishingActionRequired(Creature creature, byte unkByte, int time, float unkFloat)
+		{
+			var packet = new Packet(Op.FishingActionRequired, creature.EntityId);
+			packet.PutByte(unkByte);
+			packet.PutInt(time);
+			packet.PutFloat(unkFloat);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

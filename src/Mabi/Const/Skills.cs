@@ -571,4 +571,10 @@ namespace Aura.Mabi.Const
 		StartStop = 8,
 		Passive = 10,
 	}
+
+	public enum FishingMethod : byte
+	{
+		Auto,
+		Manual,
+	}
 }

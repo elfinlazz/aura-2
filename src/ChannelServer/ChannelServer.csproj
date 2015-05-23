@@ -169,6 +169,7 @@
     <Compile Include="Skills\Combat\AdministrativePicking2.cs" />
     <Compile Include="Skills\Life\Campfire.cs" />
     <Compile Include="Skills\Life\FirstAid.cs" />
+    <Compile Include="Skills\Life\Fishing.cs" />
     <Compile Include="Skills\Life\Gathering.cs" />
     <Compile Include="Skills\Life\Herbalism.cs" />
     <Compile Include="Skills\Life\ProductionMastery.cs" />

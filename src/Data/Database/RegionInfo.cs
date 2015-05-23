@@ -247,6 +247,32 @@ namespace Aura.Data.Database
 		public List<ShapeData> Shapes { get; set; }
 		public List<RegionElementData> Parameters { get; set; }
 
+		public bool IsInside(int x, int y)
+		{
+			if (this.Shapes.Count == 0)
+				return false;
+
+			var result = false;
+
+			var shape = this.Shapes[0];
+			var point = new Point(x, y);
+			var points = new[] // >_>
+			{
+				new Point(shape.X1,shape.Y1),
+				new Point(shape.X2,shape.Y2),
+				new Point(shape.X3,shape.Y3),
+				new Point(shape.X4,shape.Y4),
+			};
+
+			for (int i = 0, j = points.Length - 1; i < points.Length; j = i++)
+			{
+				if (((points[i].Y > point.Y) != (points[j].Y > point.Y)) && (point.X < (points[j].X - points[i].X) * (point.Y - points[i].Y) / (points[j].Y - points[i].Y) + points[i].X))
+					result = !result;
+			}
+
+			return result;
+		}
+
 		public EventData Copy()
 		{
 			var result = new EventData();

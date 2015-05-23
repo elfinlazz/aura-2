@@ -212,6 +212,8 @@ namespace Aura.Mabi.Network
 		public const int SkillStopSilentCancel = 0x6990;
 		public const int SkillStackSet = 0x6991;
 		public const int SkillStackUpdate = 0x6992;
+		public const int FishingActionRequired = 0x699A;
+		public const int FishingAction = 0x699B;
 		public const int UseMotion = 0x6D62;
 		public const int PlayAnimation = 0x6D63; // s:data/.../anim/..., 1:0, 2:0, 1:0
 		public const int CancelMotion = 0x6D65;
