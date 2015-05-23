@@ -106,6 +106,8 @@ namespace Aura.Data.Database
 					item.Color3 = entryItem.ReadUInt("color3", 0x808080);
 					item.HasColor = true;
 				}
+
+				items.Add(item);
 			}
 			data.Items = items.ToArray();
 
