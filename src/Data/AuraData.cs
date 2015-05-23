@@ -18,6 +18,7 @@ namespace Aura.Data
 		public static ColorMapDb ColorMapDb = new ColorMapDb();
 		public static ExpDb ExpDb = new ExpDb();
 		//public static FlightDb FlightDb = new FlightDb();
+		public static FishingGroundsDb FishingGroundsDb = new FishingGroundsDb();
 		public static ItemDb ItemDb = new ItemDb();
 		public static ItemUpgradesDb ItemUpgradesDb = new ItemUpgradesDb();
 		public static KeywordDb KeywordDb = new KeywordDb();

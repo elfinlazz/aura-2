@@ -1,0 +1,27 @@
+// Aura
+// Database file
+// 
+// Values: name, [priority], conditions, items
+// Condition Values: [location], [event], [chance], [rod], [bait]
+// Item Values: itemId, chance, [color1], [color2], [color3]
+//---------------------------------------------------------------------------
+
+[
+{ 
+	name: "Tirchonail",
+	conditions: {
+		location: [
+			"Uladh_main/town_TirChonaill/fish_tircho_res_",
+			"Uladh_main/field_Tir_S_aa/fish_tircho_stream_",
+			"Uladh_main/town_TirChonaill/fish_tircho_stream_",
+		],
+	},
+	items: [
+		{ itemId: 50158, chance: 39.2 },
+		{ itemId: 50159, chance: 14.4 },
+		{ itemId: 51001, chance: 2.0 },
+		{ itemId: 51006, chance: 2.0 },
+		{ itemId: 60005, chance: 2.0 },
+	]
+},
+]

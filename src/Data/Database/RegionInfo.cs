@@ -354,6 +354,37 @@ namespace Aura.Data.Database
 			return data.GroupId;
 		}
 
+		/// <summary>
+		/// Returns a list of events that start with the given path,
+		/// e.g. "Uladh_main/field_Tir_S_aa/fish_tircho_stream_", to get all
+		/// fishing events starting with that name.
+		/// </summary>
+		/// <param name="eventPath"></param>
+		/// <returns></returns>
+		public List<EventData> GetMatchingEvents(string eventPath)
+		{
+			var split = eventPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+			if (split.Length != 3)
+				throw new ArgumentException("Invalid event path, expected 3 segments.");
+
+			var region = this.GetRegion(split[0]);
+			if (region == null)
+				throw new ArgumentException("Unknown region '" + split[0] + "'.");
+
+			var area = region.GetArea(split[1]);
+			if (area == null)
+				throw new ArgumentException("Unknown area '" + split[1] + "' in region '" + split[0] + "'.");
+
+			// TODO: Cache
+			var result = new List<EventData>(area.Events.Values.Where(a => a.Name.StartsWith(split[2])));
+
+			return result;
+		}
+
+		/// <summary>
+		/// Loads data.
+		/// </summary>
+		/// <param name="br"></param>
 		protected override void Read(BinaryReader br)
 		{
 			var cRegions = br.ReadInt32();

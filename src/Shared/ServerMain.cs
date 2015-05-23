@@ -190,6 +190,11 @@ namespace Aura.Shared
 				{
 					this.LoadDb(AuraData.CollectingDb, "db/collecting.txt", reload);
 				}
+
+				if ((toLoad & DataLoad.Fishing) != 0)
+				{
+					this.LoadDb(AuraData.FishingGroundsDb, "db/fishing_grounds.txt", reload);
+				}
 			}
 			catch (DatabaseErrorException ex)
 			{
@@ -290,6 +295,7 @@ namespace Aura.Shared
 		ItemUpgrades = 0x40000,
 		Props = 0x80000,
 		Collecting = 0x100000,
+		Fishing = 0x200000,
 
 		All = 0xFFFFFFFF,
 
