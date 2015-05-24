@@ -77,7 +77,7 @@ namespace Aura.Data
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
 		{
-			return ((IEnumerable<TInfo>) this.Entries).GetEnumerator();
+			return ((IEnumerable<TInfo>)this.Entries).GetEnumerator();
 		}
 
 		public override void Clear()
@@ -95,7 +95,7 @@ namespace Aura.Data
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
 		{
-			return ((IEnumerable<TInfo>) this.Entries.Values).GetEnumerator();
+			return ((IEnumerable<TInfo>)this.Entries.Values).GetEnumerator();
 		}
 
 		public TInfo Find(TIndex key)
@@ -138,6 +138,12 @@ namespace Aura.Data
 		internal static double ReadDouble(this JObject obj, string key, double def = 0) { return (double)(obj[key] ?? def); }
 		internal static string ReadString(this JObject obj, string key, string def = "") { return (string)(obj[key] ?? def); }
 
+		/// <summary>
+		/// Returns true if object contains all keys.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="keys"></param>
+		/// <returns></returns>
 		internal static bool ContainsKeys(this JObject obj, params string[] keys)
 		{
 			if (keys.Length == 1)
@@ -146,6 +152,23 @@ namespace Aura.Data
 			return keys.All(key => obj[key] != null);
 		}
 
+		/// <summary>
+		/// Returns true if object containes key.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		internal static bool ContainsKey(this JObject obj, string key)
+		{
+			return (obj[key] != null);
+		}
+
+		/// <summary>
+		/// Throws exception if one of the keys is missing from the object.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="keys"></param>
+		/// <exception cref="MandatoryValueException"></exception>
 		internal static void AssertNotMissing(this JObject obj, params string[] keys)
 		{
 			foreach (var key in keys)

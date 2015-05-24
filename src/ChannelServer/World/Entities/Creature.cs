@@ -1433,7 +1433,7 @@ namespace Aura.Channel.World.Entities
 			var dropped = new HashSet<int>();
 			foreach (var drop in this.Drops.Drops)
 			{
-				if (rnd.NextDouble() < drop.Chance * ChannelServer.Instance.Conf.World.DropRate)
+				if (rnd.NextDouble() * 100 < drop.Chance * ChannelServer.Instance.Conf.World.DropRate)
 				{
 					// Only drop any item once
 					if (dropped.Contains(drop.ItemId))
@@ -1442,13 +1442,7 @@ namespace Aura.Channel.World.Entities
 					var dropPos = pos.GetRandomInRange(50, rnd);
 
 					var item = new Item(drop.ItemId);
-
-					var amount = drop.Amount;
-					if (drop.MaxAmount != 0)
-						amount = rnd.Next(drop.MinAmount, drop.MaxAmount + 1);
-
-					item.Info.Amount = (ushort)amount;
-
+					item.Info.Amount = (ushort)rnd.Next(drop.AmountMin, drop.AmountMax + 1);
 					item.OptionInfo.Prefix = (ushort)drop.Prefix;
 					item.OptionInfo.Suffix = (ushort)drop.Suffix;
 					if (drop.HasColor)

@@ -13,9 +13,8 @@ namespace Aura.Data.Database
 			info.ItemId = entry.ReadInt(0);
 			info.Chance = entry.ReadFloat(1);
 
-			info.Chance /= 100;
-			if (info.Chance > 1)
-				info.Chance = 1;
+			if (info.Chance > 100)
+				info.Chance = 100;
 			else if (info.Chance < 0)
 				info.Chance = 0;
 

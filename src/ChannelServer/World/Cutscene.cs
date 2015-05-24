@@ -72,7 +72,7 @@ namespace Aura.Channel.World
 			creature.Color1 = creature.RaceData.Color1;
 			creature.Color2 = creature.RaceData.Color2;
 			creature.Color3 = creature.RaceData.Color3;
-			creature.Height = creature.RaceData.Size;
+			creature.Height = creature.RaceData.SizeMax;
 
 			this.Actors[name] = creature;
 		}
