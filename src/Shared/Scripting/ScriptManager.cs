@@ -196,7 +196,7 @@ namespace Aura.Shared.Scripting
 								if (Path.GetFileName(file).StartsWith("."))
 									continue;
 
-								paths.Add(file);
+								paths.Add(file.Replace("\\", "/"));
 							}
 						}
 						else
