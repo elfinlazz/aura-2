@@ -135,7 +135,7 @@ namespace Aura.Channel.Skills.Life
 			else
 			{
 				var propName = "prop_caught_objbox_01";
-				var size = 0;
+				var propSize = 0;
 
 				// Create item
 				var item = new Item(creature.Temp.FishingDrop.ItemId);
@@ -145,10 +145,16 @@ namespace Aura.Channel.Skills.Life
 				if (fish != null)
 				{
 					propName = fish.PropName;
-					size = fish.PropSize;
-					// TODO: Actual fish size
-					// Scale 1 = base size in client item db
-					//item.MetaData1.SetFloat("SCALE", 1);
+					propSize = fish.PropSize;
+
+					// Random fish size, unofficial
+					var min = fish.SizeMin + (int)Math.Max(0, (item.Data.BaseSize - fish.SizeMin) / 100f * skill.RankData.Var4);
+					var max = fish.SizeMax;
+
+					var size = Math2.Clamp(fish.SizeMin, fish.SizeMax, rnd.Next(min, max + 1) + (int)skill.RankData.Var1);
+					var scale = (1f / item.Data.BaseSize * size);
+
+					item.MetaData1.SetFloat("SCALE", scale);
 				}
 
 				// Drop if inv add failed
@@ -159,7 +165,7 @@ namespace Aura.Channel.Skills.Life
 				Send.AcquireInfo2(creature, "fishing", item.EntityId);
 
 				// Holding up fish effect
-				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, item.Info.Id, 0, propName, size);
+				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, item.Info.Id, 0, propName, propSize);
 			}
 
 			// Reduce durability
