@@ -179,8 +179,8 @@ namespace Aura.Channel.Skills.Life
 
 			// Remove bait
 			// TODO: option
-			if (creature.LeftHand != null)
-				creature.Inventory.Decrement(creature.LeftHand);
+			if (creature.Magazine != null)
+				creature.Inventory.Decrement(creature.Magazine);
 
 			// Next round
 			this.StartFishing(creature, 6000);
