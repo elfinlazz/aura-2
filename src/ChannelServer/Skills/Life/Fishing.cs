@@ -146,6 +146,7 @@ namespace Aura.Channel.Skills.Life
 			}
 
 			// Fail
+			Item item = null;
 			if (!success)
 			{
 				Send.Notice(creature, Localization.Get("I was hesistating for a bit, and it got away...")); // More responses?
@@ -158,7 +159,7 @@ namespace Aura.Channel.Skills.Life
 				var propSize = 0;
 
 				// Create item
-				var item = new Item(creature.Temp.FishingDrop.ItemId);
+				item = new Item(creature.Temp.FishingDrop.ItemId);
 
 				// Check fish
 				var fish = AuraData.FishDb.Find(creature.Temp.FishingDrop.ItemId);
@@ -187,6 +188,11 @@ namespace Aura.Channel.Skills.Life
 				// Holding up fish effect
 				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, item.Info.Id, 0, propName, propSize);
 			}
+
+			creature.Temp.FishingDrop = null;
+
+			// Handle training
+			this.Training(creature, skill, success, item);
 
 			// Reduce durability
 			if (creature.RightHand != null && !ChannelServer.Instance.Conf.World.NoDurabilityLoss)
@@ -370,6 +376,51 @@ namespace Aura.Channel.Skills.Life
 		public bool CheckEquipment(Creature creature)
 		{
 			return (creature.RightHand != null && creature.RightHand.HasTag("/fishingrod/") && creature.Magazine != null && creature.Magazine.HasTag("/fishing/bait/"));
+		}
+
+		/// <summary>
+		/// Handles skill training.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="success"></param>
+		/// <param name="item"></param>
+		/// <exception cref="ArgumentException"></exception>
+		public void Training(Creature creature, Skill skill, bool success, Item item)
+		{
+			if (success && item == null)
+				throw new ArgumentException("Item shouldn't be null if fishing was successful.");
+
+			if (skill.Info.Rank == SkillRank.Novice)
+			{
+				skill.Train(2); // Attempt to fish.
+
+				if (success && item.HasTag("/fish/"))
+					skill.Train(1); // Catch a fish.
+
+				if (!success)
+					skill.Train(3); // Fail at fishing.
+
+				return;
+			}
+
+			if (skill.Info.Rank >= SkillRank.RF && skill.Info.Rank <= SkillRank.R1)
+			{
+				if (success)
+				{
+					if (item.HasTag("/fish/"))
+						skill.Train(1); // Catch a fish.
+					else if (item.Info.Id == 70031)
+						skill.Train(2); // Catch a quest scroll.
+					else
+						skill.Train(3); // Catch an item.
+				}
+
+				if (skill.Info.Rank <= SkillRank.RA)
+					skill.Train(4); // Attempt to fish.
+
+				return;
+			}
 		}
 	}
 }
