@@ -1181,11 +1181,13 @@ namespace Aura.Channel.World.Entities
 			if (float.IsNaN(balance))
 				balance = this.GetRndBalance(this.RightHand);
 
+			min += this.AttackMinBase;
 			min += this.AttackMinBaseMod;
 			//min += this.LeftAttackMinMod;
 			min += this.AttackMinMod;
 			min += (Math.Max(0, this.Str - 10) / 3.0f);
 
+			max += this.AttackMaxBase;
 			max += this.AttackMaxBaseMod;
 			//max += this.LeftAttackMaxMod;
 			max += this.AttackMaxMod;
