@@ -1707,5 +1707,19 @@ namespace Aura.Channel.World.Entities
 
 			base.Disappear();
 		}
+
+		/// <summary>
+		/// Turns creature in direction of position.
+		/// </summary>
+		/// <param name="pos"></param>
+		public void TurnTo(Position pos)
+		{
+			var creaturePos = this.GetPosition();
+			var x = pos.X - creaturePos.X;
+			var y = pos.Y - creaturePos.Y;
+
+			this.Direction = MabiMath.DirectionToByte(x, y);
+			Send.TurnTo(this, x, y);
+		}
 	}
 }

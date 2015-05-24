@@ -86,8 +86,9 @@ namespace Aura.Channel.Skills.Life
 
 			creature.Temp.FishingProp = new Prop(274, creature.RegionId, pos.X, pos.Y, 1f);
 			creature.Temp.FishingProp.State = "empty";
-
 			creature.Region.AddProp(creature.Temp.FishingProp);
+
+			creature.TurnTo(pos);
 
 			Send.Effect(creature, 10, (byte)0, (byte)1);
 			Send.SkillUse(creature, skill.Info.Id, targetPositionId, unkInt1, unkInt2);

@@ -418,6 +418,21 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Broadcasts TurnTo in range of creature.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public static void TurnTo(Creature creature, float x, float y)
+		{
+			var packet = new Packet(Op.TurnTo, creature.EntityId);
+			packet.PutFloat(x);
+			packet.PutFloat(y);
+
+			creature.Region.Broadcast(packet, creature);
+		}
 	}
 
 	public enum StatUpdateType : byte { Private = 3, Public = 4 }
