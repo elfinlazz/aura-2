@@ -42,7 +42,12 @@ namespace Aura.Channel.Skills.Life
 		{
 			var unkStr = packet.GetString();
 
-			// Check for fishing rod and bait...
+			// Check rod and bait
+			if (!this.CheckEquipment(creature))
+			{
+				Send.MsgBox(creature, Localization.Get("You need a Fishing Rod in your right hand\nand a Bait Tin in your left."));
+				return false;
+			}
 
 			Send.SkillPrepare(creature, skill.Info.Id, unkStr);
 
@@ -122,6 +127,16 @@ namespace Aura.Channel.Skills.Life
 			{
 				Send.ServerMessage(creature, "Error: No items found.");
 				Log.Error("Fishing.OnResponse: Failing, no drop found.");
+				success = false;
+			}
+
+			// Check equipment
+			if (!this.CheckEquipment(creature))
+			{
+				Send.ServerMessage(creature, "Error: Missing equipment.");
+				Log.Error("Fishing.OnResponse: Failing, Missing equipment.");
+				// TODO: Security violation once we're sure this can't happen
+				//   without modding.
 				success = false;
 			}
 
@@ -328,6 +343,16 @@ namespace Aura.Channel.Skills.Life
 			}
 
 			return null;
+		}
+
+		/// <summary>
+		/// Returns true if creature has valid fishing equipment equipped.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <returns></returns>
+		public bool CheckEquipment(Creature creature)
+		{
+			return (creature.RightHand != null && creature.RightHand.HasTag("/fishingrod/") && creature.Magazine != null && creature.Magazine.HasTag("/fishing/bait/"));
 		}
 	}
 }
