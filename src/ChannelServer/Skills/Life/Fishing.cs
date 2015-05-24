@@ -189,7 +189,7 @@ namespace Aura.Channel.Skills.Life
 			}
 
 			// Reduce durability
-			if (!ChannelServer.Instance.Conf.World.NoDurabilityLoss && creature.RightHand != null)
+			if (creature.RightHand != null && !ChannelServer.Instance.Conf.World.NoDurabilityLoss)
 			{
 				var reduce = 15;
 
@@ -199,6 +199,15 @@ namespace Aura.Channel.Skills.Life
 
 				creature.RightHand.Durability -= reduce;
 				Send.ItemDurabilityUpdate(creature, creature.RightHand);
+
+				// Check rod durability
+				if (creature.RightHand.Durability == 0)
+				{
+					// Canceling the motion glitches the catch fish animation?
+					//Send.MotionCancel2(creature, 0);
+					creature.Skills.CancelActiveSkill();
+					return;
+				}
 			}
 
 			// Remove bait
