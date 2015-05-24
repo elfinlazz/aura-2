@@ -223,8 +223,10 @@ namespace Aura.Channel.Skills.Life
 				case 2: time = 10000; break;
 			}
 
+			var catchSize = CatchSize.Something;
+
 			// Request action
-			Send.FishingActionRequired(creature, 255, time, 1.0f);
+			Send.FishingActionRequired(creature, catchSize, time, 1.0f);
 		}
 
 		/// <summary>

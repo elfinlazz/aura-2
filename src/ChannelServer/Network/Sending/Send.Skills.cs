@@ -720,13 +720,13 @@ namespace Aura.Channel.Network.Sending
 		/// Sends FishingActionRequired to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
-		/// <param name="unkByte"></param>
-		/// <param name="time"></param>
+		/// <param name="catchSize"></param>
+		/// <param name="time">The time you have to react.</param>
 		/// <param name="unkFloat"></param>
-		public static void FishingActionRequired(Creature creature, byte unkByte, int time, float unkFloat)
+		public static void FishingActionRequired(Creature creature, CatchSize catchSize, int time, float unkFloat)
 		{
 			var packet = new Packet(Op.FishingActionRequired, creature.EntityId);
-			packet.PutByte(unkByte);
+			packet.PutByte((byte)catchSize);
 			packet.PutInt(time);
 			packet.PutFloat(unkFloat);
 
