@@ -96,8 +96,13 @@ namespace Aura.Data.Database
 			data.Bait = entryConditions.ReadInt("bait");
 
 			var items = new List<DropData>();
-			foreach (JObject entryItem in entry["items"])
+			foreach (var entryItemObj in entry["items"])
 			{
+				// Items might be commented
+				var entryItem = entryItemObj as JObject;
+				if (entryItem == null)
+					continue;
+
 				entryItem.AssertNotMissing("itemId", "chance");
 
 				var item = new DropData();
