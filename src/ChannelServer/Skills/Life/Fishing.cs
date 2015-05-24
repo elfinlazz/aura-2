@@ -123,6 +123,10 @@ namespace Aura.Channel.Skills.Life
 			if (method == FishingMethod.Auto)
 				success = rnd.NextDouble() < skill.RankData.Var3 / 100f;
 
+			// Perfect fishing
+			if (ChannelServer.Instance.Conf.World.PerfectFishing)
+				success = true;
+
 			// Check fishing ground
 			if (creature.Temp.FishingDrop == null)
 			{
@@ -198,8 +202,7 @@ namespace Aura.Channel.Skills.Life
 			}
 
 			// Remove bait
-			// TODO: option
-			if (creature.Magazine != null)
+			if (creature.Magazine != null && !ChannelServer.Instance.Conf.World.InfiniteBait)
 			{
 				creature.Inventory.Decrement(creature.Magazine);
 
