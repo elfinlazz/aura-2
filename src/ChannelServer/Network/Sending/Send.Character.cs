@@ -336,8 +336,6 @@ namespace Aura.Channel.Network.Sending
 			packet.PutString("<xml type='{0}' objectid='{1}' />", type, objectid);
 			packet.PutInt(3000);
 
-			Log.Debug(packet);
-
 			creature.Client.Send(packet);
 		}
 
