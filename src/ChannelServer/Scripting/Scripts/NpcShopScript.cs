@@ -85,7 +85,7 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			if (ChannelServer.Instance.ScriptManager.NpcShopScripts.ContainsKey(this.GetType().Name))
 			{
-				Log.Error("NpcShop.Init: Duplicate '{0}'", this.GetType().Name);
+				Log.Error("NpcShopScript.Init: Duplicate '{0}'", this.GetType().Name);
 				return false;
 			}
 
@@ -206,9 +206,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (price >= 0)
 			{
 				item.OptionInfo.Price = price;
-
-				if (item.OptionInfo.SellingPrice > item.OptionInfo.Price)
-					Log.Warning("NpcShop.Add: Selling price of '{0}' higher than buying price.", item.Info.Id);
+				item.OptionInfo.SellingPrice = (item.Info.Id != 2000 ? (int)(price * 0.1f) : 1000);
 			}
 
 			tab.Add(item);
