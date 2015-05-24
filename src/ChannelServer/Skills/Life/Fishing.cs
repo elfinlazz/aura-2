@@ -184,7 +184,17 @@ namespace Aura.Channel.Skills.Life
 			// Remove bait
 			// TODO: option
 			if (creature.Magazine != null)
+			{
 				creature.Inventory.Decrement(creature.Magazine);
+
+				// Check if bait was removed because it was empty
+				if (creature.Magazine == null)
+				{
+					Send.MotionCancel2(creature, 0);
+					creature.Skills.CancelActiveSkill();
+					return;
+				}
+			}
 
 			// Next round
 			this.StartFishing(creature, 6000);

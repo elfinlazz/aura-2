@@ -295,10 +295,11 @@ namespace Aura.Channel.Network.Sending
 		/// Broadcasts MotionCancel2 in range of creature.
 		/// </summary>
 		/// <param name="creature"></param>
-		public static void MotionCancel2(Creature creature)
+		/// <param name="unkByte"></param>
+		public static void MotionCancel2(Creature creature, byte unkByte)
 		{
 			var packet = new Packet(Op.MotionCancel2, creature.EntityId);
-			packet.PutByte(1);
+			packet.PutByte(unkByte);
 
 			creature.Region.Broadcast(packet);
 		}

@@ -132,7 +132,7 @@ namespace Aura.Channel.Skills.Base
 		{
 			skill.Stacks = 0;
 			Send.Effect(creature, Effect.StackUpdate, EffectSkillName, (byte)skill.Stacks, (byte)0);
-			Send.MotionCancel2(creature);
+			Send.MotionCancel2(creature, 1);
 		}
 
 		/// <summary>

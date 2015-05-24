@@ -144,7 +144,7 @@ namespace Aura.Channel.Skills.Magic
 		public void Cancel(Creature creature, Skill skill)
 		{
 			Send.Effect(creature, Effect.StackUpdate, "healing_stack", (byte)0, (byte)0);
-			Send.MotionCancel2(creature);
+			Send.MotionCancel2(creature, 1);
 		}
 
 		/// <summary>
