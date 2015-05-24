@@ -193,6 +193,7 @@ namespace Aura.Shared
 
 				if ((toLoad & DataLoad.Fishing) != 0)
 				{
+					this.LoadDb(AuraData.FishDb, "db/fish.txt", reload);
 					this.LoadDb(AuraData.FishingGroundsDb, "db/fishing_grounds.txt", reload);
 				}
 			}
