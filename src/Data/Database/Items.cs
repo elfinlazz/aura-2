@@ -58,6 +58,8 @@ namespace Aura.Data.Database
 		public int BagWidth { get; set; }
 		public int BagHeight { get; set; }
 
+		public int BaseSize { get; set; }
+
 		public ItemDataTaste Taste { get; set; }
 
 		public string OnUse { get; set; }
@@ -147,6 +149,8 @@ namespace Aura.Data.Database
 
 			info.BagWidth = entry.ReadInt("bagWidth");
 			info.BagHeight = entry.ReadInt("bagHeight");
+
+			info.BaseSize = entry.ReadInt("baseSize");
 
 			info.Taste = new ItemDataTaste();
 			if (entry.ContainsKeys("taste"))
