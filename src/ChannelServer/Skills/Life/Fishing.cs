@@ -193,6 +193,8 @@ namespace Aura.Channel.Skills.Life
 		/// <param name="delay"></param>
 		public async void StartFishing(Creature creature, int delay)
 		{
+			var rnd = RandomProvider.Get();
+
 			await Task.Delay(delay);
 			if (creature.Temp.FishingProp == null)
 				return;
@@ -211,7 +213,15 @@ namespace Aura.Channel.Skills.Life
 
 			// Get fishing ground and time
 			creature.Temp.FishingGround = this.GetFishingGround(creature);
-			var time = 8000;
+
+			// Random time
+			var time = 10000;
+			switch (rnd.Next(3))
+			{
+				case 0: time = 4000; break;
+				case 1: time = 8000; break;
+				case 2: time = 10000; break;
+			}
 
 			// Request action
 			Send.FishingActionRequired(creature, 255, time, 1.0f);
