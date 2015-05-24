@@ -134,6 +134,18 @@ namespace Aura.Channel.Skills.Life
 			// Success
 			else
 			{
+				var propName = "prop_caught_objbox_01";
+				var size = 0;
+
+				// Check fish
+				var fish = AuraData.FishDb.Find(creature.Temp.FishingDrop.ItemId);
+				if (fish != null)
+				{
+					propName = fish.PropName;
+					size = fish.PropSize;
+					// TODO: Actual fish size?
+				}
+
 				// Create item
 				var item = new Item(creature.Temp.FishingDrop.ItemId);
 
@@ -145,14 +157,7 @@ namespace Aura.Channel.Skills.Life
 				Send.AcquireInfo2(creature, "fishing", item.EntityId);
 
 				// Holding up fish effect
-				var isFish = item.HasTag("/fish/");
-				var unkInt = isFish ? 70 : 0;
-
-				var propCaught = "prop_caught_fish_01"; // TODO: Get from fish db
-				if (!isFish)
-					propCaught = "prop_caught_objbox_01";
-
-				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, creature.Temp.FishingDrop.ItemId, 0, propCaught, unkInt);
+				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, item.Info.Id, 0, propName, size);
 			}
 
 			// Reduce durability
@@ -294,7 +299,6 @@ namespace Aura.Channel.Skills.Life
 				// Get random item
 				var n = 0.0;
 				var chance = rnd.NextDouble() * fishingGround.TotalItemChance;
-				Log.Debug("chance: " + chance);
 				foreach (var item in fishingGround.Items)
 				{
 					n += item.Chance;
