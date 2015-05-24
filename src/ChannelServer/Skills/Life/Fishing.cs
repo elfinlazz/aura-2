@@ -138,9 +138,6 @@ namespace Aura.Channel.Skills.Life
 			// Success
 			else
 			{
-				var size = skill.RankData.Var4;
-				var propCaught = "prop_caught_fish_01"; // TODO: Get from fish db
-
 				// Get random item
 				var drop = creature.Temp.FishingGround.Items[rnd.Next(creature.Temp.FishingGround.Items.Length)]; // TODO: Proper random
 
@@ -155,8 +152,17 @@ namespace Aura.Channel.Skills.Life
 					// TODO: Check packets for non fish?
 					Send.AcquireInfo2(creature, "fishing", item.EntityId);
 
+				var isFish = item.HasTag("/fish/");
+
+				var unkInt = isFish ? 70 : 0;
+				var propCaught = "prop_caught_fish_01"; // TODO: Get from fish db
+				if (!isFish)
+					propCaught = "prop_caught_objbox_01";
+
 				// Holding up fish effect (item...?)
-				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, drop.ItemId, 0, propCaught, size);
+				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, drop.ItemId, 0, propCaught, unkInt);
+			}
+
 			// Reduce durability
 			// TODO: Create method
 			if (!ChannelServer.Instance.Conf.World.NoDurabilityLoss && creature.RightHand != null)
