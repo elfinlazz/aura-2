@@ -94,7 +94,7 @@ namespace Aura.Channel.Skills.Combat
 			// Reduce damage
 			var defenseSkill = tAction.Creature.Skills.Get(SkillId.Defense);
 			if (defenseSkill != null)
-				damage -= defenseSkill.RankData.Var3;
+				damage = Math.Max(1, damage - defenseSkill.RankData.Var3);
 
 			Send.SkillUseStun(tAction.Creature, SkillId.Defense, DefenseTargetStun, 0);
 
