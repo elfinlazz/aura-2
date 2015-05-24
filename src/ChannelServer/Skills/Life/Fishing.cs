@@ -137,17 +137,19 @@ namespace Aura.Channel.Skills.Life
 				var propName = "prop_caught_objbox_01";
 				var size = 0;
 
+				// Create item
+				var item = new Item(creature.Temp.FishingDrop.ItemId);
+
 				// Check fish
 				var fish = AuraData.FishDb.Find(creature.Temp.FishingDrop.ItemId);
 				if (fish != null)
 				{
 					propName = fish.PropName;
 					size = fish.PropSize;
-					// TODO: Actual fish size?
+					// TODO: Actual fish size
+					// Scale 1 = base size in client item db
+					//item.MetaData1.SetFloat("SCALE", 1);
 				}
-
-				// Create item
-				var item = new Item(creature.Temp.FishingDrop.ItemId);
 
 				// Drop if inv add failed
 				if (!creature.Inventory.Add(item, false))
