@@ -199,7 +199,7 @@ namespace Aura.Channel.Skills.Life
 			creature.Temp.FishingProp.State = "normal";
 			Send.PropUpdate(creature.Temp.FishingProp);
 
-			await Task.Delay(5000); // rnd
+			await Task.Delay(rnd.Next(5000, 120000));
 			if (creature.Temp.FishingProp == null)
 				return;
 
