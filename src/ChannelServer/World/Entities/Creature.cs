@@ -753,6 +753,10 @@ namespace Aura.Channel.World.Entities
 				if (restHandler != null)
 					restHandler.Stop(this, this.Skills.Get(SkillId.Rest));
 			}
+
+			// Cancel any active skills
+			if (this.Skills.ActiveSkill != null)
+				this.Skills.CancelActiveSkill();
 		}
 
 		public void Activate(CreatureStates state) { this.State |= state; }
