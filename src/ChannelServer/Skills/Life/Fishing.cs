@@ -145,26 +145,24 @@ namespace Aura.Channel.Skills.Life
 				var item = new Item(drop.ItemId);
 
 				// Drop if inv add failed
-				if (!creature.Inventory.Insert(item, false))
+				if (!creature.Inventory.Add(item, false))
 					item.Drop(creature.Region, creature.GetPosition().GetRandomInRange(100, rnd));
-				// Show aquire (on inv add success?)
-				else
-					// TODO: Check packets for non fish?
-					Send.AcquireInfo2(creature, "fishing", item.EntityId);
 
+				// Show acquire 
+				Send.AcquireInfo2(creature, "fishing", item.EntityId);
+
+				// Holding up fish effect
 				var isFish = item.HasTag("/fish/");
-
 				var unkInt = isFish ? 70 : 0;
+
 				var propCaught = "prop_caught_fish_01"; // TODO: Get from fish db
 				if (!isFish)
 					propCaught = "prop_caught_objbox_01";
 
-				// Holding up fish effect (item...?)
 				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, drop.ItemId, 0, propCaught, unkInt);
 			}
 
 			// Reduce durability
-			// TODO: Create method
 			if (!ChannelServer.Instance.Conf.World.NoDurabilityLoss && creature.RightHand != null)
 			{
 				var reduce = 15;
