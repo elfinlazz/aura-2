@@ -330,5 +330,28 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends ViewEquipmentR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="targetEntityId"></param>
+		/// <param name="items"></param>
+		public static void ViewEquipmentR(Creature creature, Creature target)
+		{
+			var packet = new Packet(Op.ViewEquipmentR, creature.EntityId);
+			packet.PutByte(target != null);
+			if (target != null)
+			{
+				packet.PutLong(target.EntityId);
+
+				var items = target.Inventory.Equipment.ToList();
+				packet.PutInt(items.Count);
+				foreach (var item in items)
+					packet.AddItemInfo(item, ItemPacketType.Private);
+			}
+
+			creature.Client.Send(packet);
+		}
 	}
 }

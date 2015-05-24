@@ -218,5 +218,22 @@ namespace Aura.Channel.Network.Handlers
 			//Log.Unimplemented("5411");
 			Log.Warning("A client seems to be incompatible with the server, the latest version of Aura only supports the latest NA update. (Account id: {0})", client.Account.Id);
 		}
+
+		/// <summary>
+		/// Send when trying to view someone's equipment.
+		/// </summary>
+		/// <example>
+		/// 001 [0010000000017B99] Long   : 4503599627467673
+		/// </example>
+		[PacketHandler(Op.ViewEquipment)]
+		public void ViewEquipment(ChannelClient client, Packet packet)
+		{
+			var targetEntityId = packet.GetLong();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+			var target = creature.Region.GetCreature(targetEntityId);
+
+			Send.ViewEquipmentR(creature, target);
+		}
 	}
 }
