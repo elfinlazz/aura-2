@@ -206,7 +206,8 @@ namespace Aura.Channel.Skills.Life
 				// Check if bait was removed because it was empty
 				if (creature.Magazine == null)
 				{
-					Send.MotionCancel2(creature, 0);
+					// Canceling the motion glitches the catch fish animation?
+					//Send.MotionCancel2(creature, 0);
 					creature.Skills.CancelActiveSkill();
 					return;
 				}
@@ -224,9 +225,12 @@ namespace Aura.Channel.Skills.Life
 		public async void StartFishing(Creature creature, int delay)
 		{
 			var rnd = RandomProvider.Get();
+			var prop = creature.Temp.FishingProp;
+
+			// Use cancellation tokens?
 
 			await Task.Delay(delay);
-			if (creature.Temp.FishingProp == null)
+			if (creature.Temp.FishingProp != prop)
 				return;
 
 			// Update prop state
@@ -234,7 +238,7 @@ namespace Aura.Channel.Skills.Life
 			Send.PropUpdate(creature.Temp.FishingProp);
 
 			await Task.Delay(rnd.Next(5000, 120000));
-			if (creature.Temp.FishingProp == null)
+			if (creature.Temp.FishingProp != prop)
 				return;
 
 			// Update prop state
