@@ -118,14 +118,10 @@ namespace Aura.Channel.Skills.Life
 				success = rnd.NextDouble() < skill.RankData.Var3 / 100f;
 
 			// Check fishing ground
-			if (creature.Temp.FishingGround == null)
+			if (creature.Temp.FishingDrop == null)
 			{
-				Log.Error("Fishing.OnResponse: Failing, no matching fishing ground found.");
-				success = false;
-			}
-			else if (creature.Temp.FishingGround.Items.Length == 0)
-			{
-				Log.Error("Fishing.OnResponse: Failing, no items defined for fishing ground.");
+				Send.ServerMessage(creature, "Error: No items found.");
+				Log.Error("Fishing.OnResponse: Failing, no drop found.");
 				success = false;
 			}
 
@@ -138,11 +134,8 @@ namespace Aura.Channel.Skills.Life
 			// Success
 			else
 			{
-				// Get random item
-				var drop = creature.Temp.FishingGround.Items[rnd.Next(creature.Temp.FishingGround.Items.Length)]; // TODO: Proper random
-
 				// Create item
-				var item = new Item(drop.ItemId);
+				var item = new Item(creature.Temp.FishingDrop.ItemId);
 
 				// Drop if inv add failed
 				if (!creature.Inventory.Add(item, false))
@@ -159,7 +152,7 @@ namespace Aura.Channel.Skills.Life
 				if (!isFish)
 					propCaught = "prop_caught_objbox_01";
 
-				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, drop.ItemId, 0, propCaught, unkInt);
+				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, creature.Temp.FishingDrop.ItemId, 0, propCaught, unkInt);
 			}
 
 			// Reduce durability
@@ -209,16 +202,17 @@ namespace Aura.Channel.Skills.Life
 			creature.Temp.FishingProp.State = "hooked";
 			Send.PropUpdate(creature.Temp.FishingProp);
 
-			// Get fishing ground and time
-			creature.Temp.FishingGround = this.GetFishingGround(creature);
+			// Get fishing drop 
+			creature.Temp.FishingDrop = this.GetFishingDrop(creature, rnd);
 
 			// Random time
 			var time = 10000;
-			switch (rnd.Next(3))
+			switch (rnd.Next(4))
 			{
 				case 0: time = 4000; break;
 				case 1: time = 8000; break;
-				case 2: time = 10000; break;
+				case 2: time = 6000; break;
+				case 3: time = 10000; break;
 			}
 
 			var catchSize = CatchSize.Something;
@@ -243,11 +237,12 @@ namespace Aura.Channel.Skills.Life
 		}
 
 		/// <summary>
-		/// Finds best fishing ground match for creature's current fishing prop.
+		/// Finds best fishing ground match for creature's current fishing prop
+		/// and gets a random item from it.
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <returns></returns>
-		private FishingGroundData GetFishingGround(Creature creature)
+		private DropData GetFishingDrop(Creature creature, Random rnd)
 		{
 			var prop = creature.Temp.FishingProp;
 			if (prop == null)
@@ -256,11 +251,11 @@ namespace Aura.Channel.Skills.Life
 			// More efficient way?
 
 			// Check all grounds ordered by priority
-			foreach (var entry in AuraData.FishingGroundsDb.Entries.Values.OrderByDescending(a => a.Priority))
+			foreach (var fishingGround in AuraData.FishingGroundsDb.Entries.Values.OrderByDescending(a => a.Priority))
 			{
 				// Check locations
-				var locationCondition = (entry.Locations.Length == 0);
-				foreach (var location in entry.Locations)
+				var locationCondition = (fishingGround.Locations.Length == 0);
+				foreach (var location in fishingGround.Locations)
 				{
 					try
 					{
@@ -290,8 +285,24 @@ namespace Aura.Channel.Skills.Life
 				// Rod
 				// Bait
 
-				if (locationCondition/* && ...*/)
-					return entry;
+				// Conditions not met
+				if (!locationCondition)
+					continue;
+
+				// Conditions met
+
+				// Get random item
+				var n = 0.0;
+				var chance = rnd.NextDouble() * fishingGround.TotalItemChance;
+				Log.Debug("chance: " + chance);
+				foreach (var item in fishingGround.Items)
+				{
+					n += item.Chance;
+					if (chance <= n)
+						return item;
+				}
+
+				throw new Exception("Fishing.GetFishingDrop: Failed to get item.");
 			}
 
 			return null;

@@ -63,6 +63,11 @@ namespace Aura.Data.Database
 		/// Items that can be fished from this ground.
 		/// </summary>
 		public DropData[] Items { get; set; }
+
+		/// <summary>
+		/// Cumulative drop chance of all items.
+		/// </summary>
+		public double TotalItemChance { get; set; }
 	}
 
 	/// <summary>
@@ -110,6 +115,10 @@ namespace Aura.Data.Database
 				items.Add(item);
 			}
 			data.Items = items.ToArray();
+			data.TotalItemChance = items.Sum(a => a.Chance);
+
+			if (data.Items.Length == 0)
+				throw new DatabaseErrorException("Item list must not be empty.");
 
 			this.Entries[data.Name] = data;
 		}

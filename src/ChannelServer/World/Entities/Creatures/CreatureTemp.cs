@@ -44,6 +44,6 @@ namespace Aura.Channel.World.Entities.Creatures
 		public long CampfireKitItemEntityId;
 
 		public Prop FishingProp;
-		public FishingGroundData FishingGround;
+		public DropData FishingDrop;
 	}
 }
