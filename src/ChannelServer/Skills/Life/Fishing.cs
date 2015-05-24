@@ -157,6 +157,18 @@ namespace Aura.Channel.Skills.Life
 
 				// Holding up fish effect (item...?)
 				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, drop.ItemId, 0, propCaught, size);
+			// Reduce durability
+			// TODO: Create method
+			if (!ChannelServer.Instance.Conf.World.NoDurabilityLoss && creature.RightHand != null)
+			{
+				var reduce = 15;
+
+				// Half dura loss if blessed
+				if (creature.RightHand.IsBlessed)
+					reduce = Math.Max(1, reduce / 2);
+
+				creature.RightHand.Durability -= reduce;
+				Send.ItemDurabilityUpdate(creature, creature.RightHand);
 			}
 
 			// Remove bait
