@@ -99,6 +99,14 @@ namespace Aura.Channel.Skills.Life
 		/// <summary>
 		/// Called once ready to pull the fish out.
 		/// </summary>
+		/// <remarks>
+		/// When you catch something just before running out of bait,
+		/// and you send MotionCancel2 from Cancel, there's a
+		/// visual bug on Aura, where the item keeps flying to you until
+		/// you move. This does not happen on NA for unknown reason.
+		/// The workaround: Check for cancellation in advance and only
+		/// send the real in effect if the skill wasn't canceled.
+		/// </remarks>
 		/// <param name="creature"></param>
 		/// <param name="method">Method used on this try</param>
 		/// <param name="success">Success of manual try</param>
@@ -143,6 +151,35 @@ namespace Aura.Channel.Skills.Life
 				// TODO: Security violation once we're sure this can't happen
 				//   without modding.
 				success = false;
+			}
+
+			var cancel = false;
+
+			// Reduce durability
+			if (creature.RightHand != null && !ChannelServer.Instance.Conf.World.NoDurabilityLoss)
+			{
+				var reduce = 15;
+
+				// Half dura loss if blessed
+				if (creature.RightHand.IsBlessed)
+					reduce = Math.Max(1, reduce / 2);
+
+				creature.RightHand.Durability -= reduce;
+				Send.ItemDurabilityUpdate(creature, creature.RightHand);
+
+				// Check rod durability
+				if (creature.RightHand.Durability == 0)
+					cancel = true;
+			}
+
+			// Remove bait
+			if (creature.Magazine != null && !ChannelServer.Instance.Conf.World.InfiniteBait)
+			{
+				creature.Inventory.Decrement(creature.Magazine);
+
+				// Check if bait was removed because it was empty
+				if (creature.Magazine == null)
+					cancel = true;
 			}
 
 			// Fail
@@ -190,7 +227,8 @@ namespace Aura.Channel.Skills.Life
 				Send.AcquireInfo2(creature, "fishing", item.EntityId);
 
 				// Holding up fish effect
-				Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, item.Info.Id, 0, propName, propSize);
+				if (!cancel)
+					Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, item.Info.Id, 0, propName, propSize);
 			}
 
 			creature.Temp.FishingDrop = null;
@@ -198,41 +236,11 @@ namespace Aura.Channel.Skills.Life
 			// Handle training
 			this.Training(creature, skill, success, item);
 
-			// Reduce durability
-			if (creature.RightHand != null && !ChannelServer.Instance.Conf.World.NoDurabilityLoss)
+			// Cancel
+			if (cancel)
 			{
-				var reduce = 15;
-
-				// Half dura loss if blessed
-				if (creature.RightHand.IsBlessed)
-					reduce = Math.Max(1, reduce / 2);
-
-				creature.RightHand.Durability -= reduce;
-				Send.ItemDurabilityUpdate(creature, creature.RightHand);
-
-				// Check rod durability
-				if (creature.RightHand.Durability == 0)
-				{
-					// Canceling the motion glitches the catch fish animation?
-					//Send.MotionCancel2(creature, 0);
-					creature.Skills.CancelActiveSkill();
-					return;
-				}
-			}
-
-			// Remove bait
-			if (creature.Magazine != null && !ChannelServer.Instance.Conf.World.InfiniteBait)
-			{
-				creature.Inventory.Decrement(creature.Magazine);
-
-				// Check if bait was removed because it was empty
-				if (creature.Magazine == null)
-				{
-					// Canceling the motion glitches the catch fish animation?
-					//Send.MotionCancel2(creature, 0);
-					creature.Skills.CancelActiveSkill();
-					return;
-				}
+				creature.Skills.CancelActiveSkill();
+				return;
 			}
 
 			// Next round
@@ -294,10 +302,11 @@ namespace Aura.Channel.Skills.Life
 		/// <param name="skill"></param>
 		public void Cancel(Creature creature, Skill skill)
 		{
-			if (creature.Temp.FishingProp == null)
-				return;
+			if (creature.Temp.FishingProp != null)
+				creature.Temp.FishingProp.Region.RemoveProp(creature.Temp.FishingProp);
 
-			creature.Temp.FishingProp.Region.RemoveProp(creature.Temp.FishingProp);
+			Send.MotionCancel2(creature, 0);
+
 			creature.Temp.FishingProp = null;
 		}
 
