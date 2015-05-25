@@ -90,7 +90,7 @@ namespace Aura.Channel.Skills.Life
 
 			creature.TurnTo(pos);
 
-			Send.Effect(creature, 10, (byte)0, (byte)1);
+			Send.Effect(creature, Effect.Fishing, (byte)FishingEffectType.Cast, true);
 			Send.SkillUse(creature, skill.Info.Id, targetPositionId, unkInt1, unkInt2);
 
 			this.StartFishing(creature, 1000);
@@ -187,7 +187,7 @@ namespace Aura.Channel.Skills.Life
 			if (!success)
 			{
 				Send.Notice(creature, Localization.Get("I was hesistating for a bit, and it got away...")); // More responses?
-				Send.Effect(creature, 10, (byte)4, (byte)1);
+				Send.Effect(creature, Effect.Fishing, (byte)FishingEffectType.Fall, true);
 			}
 			// Success
 			else
@@ -232,7 +232,7 @@ namespace Aura.Channel.Skills.Life
 
 				// Holding up fish effect
 				if (!cancel)
-					Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, item.Info.Id, size, propName, propSize);
+					Send.Effect(creature, Effect.Fishing, (byte)FishingEffectType.ReelIn, true, creature.Temp.FishingProp.EntityId, item.Info.Id, size, propName, propSize);
 			}
 
 			creature.Temp.FishingDrop = null;
