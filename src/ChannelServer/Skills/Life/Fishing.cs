@@ -172,8 +172,8 @@ namespace Aura.Channel.Skills.Life
 					var min = fish.SizeMin + (int)Math.Max(0, (item.Data.BaseSize - fish.SizeMin) / 100f * skill.RankData.Var4);
 					var max = fish.SizeMax;
 
-					var size = Math2.Clamp(fish.SizeMin, fish.SizeMax, rnd.Next(min, max + 1) + (int)skill.RankData.Var1);
-					var scale = (1f / item.Data.BaseSize * size);
+					propSize = Math2.Clamp(fish.SizeMin, fish.SizeMax, rnd.Next(min, max + 1) + (int)skill.RankData.Var1);
+					var scale = (1f / item.Data.BaseSize * propSize);
 
 					item.MetaData1.SetFloat("SCALE", scale);
 				}
