@@ -124,8 +124,7 @@ namespace Aura.Channel.Skills.Life
 
 			// Update prop state
 			// TODO: update prop state method
-			creature.Temp.FishingProp.State = "empty";
-			Send.PropUpdate(creature.Temp.FishingProp);
+			creature.Temp.FishingProp.SetState("empty");
 
 			// Get auto success
 			if (method == FishingMethod.Auto)
@@ -268,16 +267,14 @@ namespace Aura.Channel.Skills.Life
 				return;
 
 			// Update prop state
-			creature.Temp.FishingProp.State = "normal";
-			Send.PropUpdate(creature.Temp.FishingProp);
+			creature.Temp.FishingProp.SetState("normal");
 
 			await Task.Delay(rnd.Next(5000, 120000));
 			if (creature.Temp.FishingProp != prop)
 				return;
 
 			// Update prop state
-			creature.Temp.FishingProp.State = "hooked";
-			Send.PropUpdate(creature.Temp.FishingProp);
+			creature.Temp.FishingProp.SetState("hooked");
 
 			// Get fishing drop 
 			creature.Temp.FishingDrop = this.GetFishingDrop(creature, rnd);

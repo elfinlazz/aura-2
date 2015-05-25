@@ -13,6 +13,7 @@ using Aura.Data;
 using Aura.Channel.Network;
 using Aura.Shared.Util;
 using Aura.Data.Database;
+using Aura.Channel.Network.Sending;
 
 namespace Aura.Channel.World.Entities
 {
@@ -341,6 +342,16 @@ namespace Aura.Channel.World.Entities
 				this.Region.RemoveProp(this);
 
 			base.Disappear();
+		}
+
+		/// <summary>
+		/// Sets prop's state and broadcasts update.
+		/// </summary>
+		/// <param name="state"></param>
+		public void SetState(string state)
+		{
+			this.State = state;
+			Send.PropUpdate(this);
 		}
 	}
 
