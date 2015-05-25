@@ -178,6 +178,10 @@ namespace Aura.Channel.Skills.Life
 					item.MetaData1.SetFloat("SCALE", scale);
 				}
 
+				// Set equipment durability
+				if (item.HasTag("/equip/"))
+					item.Durability = 0;
+
 				// Drop if inv add failed
 				if (!creature.Inventory.Add(item, false))
 					item.Drop(creature.Region, creature.GetPosition().GetRandomInRange(100, rnd));
