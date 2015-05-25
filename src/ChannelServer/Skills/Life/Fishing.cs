@@ -252,6 +252,16 @@ namespace Aura.Channel.Skills.Life
 		/// <summary>
 		/// Starts fishing with given delay.
 		/// </summary>
+		/// <remarks>
+		/// This method uses async Tasks to control when the skill continues
+		/// (basically timers). Since the player could cancel the skill before
+		/// the method continues, or props could be removed because of a reload,
+		/// we need to make sure not to continue and not to crash because of
+		/// a change in the prop situation.
+		/// 
+		/// TODO: Use cancellation tokens?
+		/// TODO: Don't reload spawned props, but only scripted ones?
+		/// </remarks>
 		/// <param name="creature"></param>
 		/// <param name="delay"></param>
 		public async void StartFishing(Creature creature, int delay)
@@ -259,17 +269,19 @@ namespace Aura.Channel.Skills.Life
 			var rnd = RandomProvider.Get();
 			var prop = creature.Temp.FishingProp;
 
-			// Use cancellation tokens?
-
 			await Task.Delay(delay);
-			if (creature.Temp.FishingProp != prop)
+
+			// Check that the prop is still the same (player could have canceled
+			// and restarted, spawning a new one) and the prop wasn't removed
+			// from region (e.g. >reloadscripts).
+			if (creature.Temp.FishingProp != prop || creature.Temp.FishingProp.Region == Region.Limbo)
 				return;
 
 			// Update prop state
 			creature.Temp.FishingProp.SetState("normal");
 
 			await Task.Delay(rnd.Next(5000, 120000));
-			if (creature.Temp.FishingProp != prop)
+			if (creature.Temp.FishingProp != prop || creature.Temp.FishingProp.Region == Region.Limbo)
 				return;
 
 			// Update prop state
@@ -302,7 +314,7 @@ namespace Aura.Channel.Skills.Life
 		/// <param name="skill"></param>
 		public void Cancel(Creature creature, Skill skill)
 		{
-			if (creature.Temp.FishingProp != null)
+			if (creature.Temp.FishingProp != null && creature.Temp.FishingProp.Region != Region.Limbo)
 				creature.Temp.FishingProp.Region.RemoveProp(creature.Temp.FishingProp);
 
 			Send.MotionCancel2(creature, 0);
