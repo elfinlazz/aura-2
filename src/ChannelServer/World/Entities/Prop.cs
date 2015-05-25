@@ -127,26 +127,8 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// New prop
+		/// Creates new prop with a newly generated entity id.
 		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="region"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <param name="direction"></param>
-		/// <param name="scale"></param>
-		/// <param name="altitude"></param>
-		public Prop(int id, int region, int x, int y, float direction, float scale = 1f, float altitude = 0, string state = "")
-			: this("", "", "", id, region, x, y, direction, scale, altitude)
-		{
-		}
-
-		/// <summary>
-		/// New prop
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="title"></param>
-		/// <param name="state"></param>
 		/// <param name="id"></param>
 		/// <param name="regionId"></param>
 		/// <param name="x"></param>
@@ -154,8 +136,10 @@ namespace Aura.Channel.World.Entities
 		/// <param name="direction"></param>
 		/// <param name="scale"></param>
 		/// <param name="altitude"></param>
-		public Prop(string name, string title, string state, int id, int regionId, int x, int y, float direction, float scale = 1, float altitude = 0)
-			: this(0, name, title, state, id, regionId, x, y, direction, scale, altitude)
+		/// <param name="name"></param>
+		/// <param name="title"></param>
+		public Prop(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0, string state = "", string name = "", string title = "")
+			: this(0, id, regionId, x, y, direction, scale, altitude, state, name, title)
 		{
 			this.EntityId = Interlocked.Increment(ref _propId);
 			this.EntityId += (long)regionId << 32;
@@ -168,11 +152,9 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// New prop
+		/// Creates new prop with given entity id.
 		/// </summary>
 		/// <param name="entityId"></param>
-		/// <param name="name"></param>
-		/// <param name="title"></param>
 		/// <param name="id"></param>
 		/// <param name="regionId"></param>
 		/// <param name="x"></param>
@@ -180,7 +162,10 @@ namespace Aura.Channel.World.Entities
 		/// <param name="direction"></param>
 		/// <param name="scale"></param>
 		/// <param name="altitude"></param>
-		public Prop(long entityId, string name, string title, string state, int id, int regionId, int x, int y, float direction, float scale = 1, float altitude = 0)
+		/// <param name="state"></param>
+		/// <param name="name"></param>
+		/// <param name="title"></param>
+		public Prop(long entityId, int id, int regionId, int x, int y, float direction, float scale, float altitude, string state, string name, string title)
 		{
 			this.Shapes = new List<ShapeData>();
 			this.Temp = new PropTemp();
