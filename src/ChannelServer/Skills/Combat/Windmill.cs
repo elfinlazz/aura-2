@@ -123,7 +123,7 @@ namespace Aura.Channel.Skills.Combat
 
 				// Calculate damage and crit
 				var damage = attacker.GetRndTotalDamage();
-				var critChance = attacker.CriticalBase;
+				var critChance = attacker.CriticalBaseMod;
 
 				damage *= skill.RankData.Var1 / 100f;
 

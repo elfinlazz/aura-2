@@ -251,8 +251,17 @@ namespace Aura.Channel.Network.Sending
 						case Stat.DefenseMod: packet.PutShort((short)creature.DefenseMod); break;
 						case Stat.ProtectionMod: packet.PutFloat(creature.ProtectionMod); break;
 
-						case Stat.BalanceBaseMod: packet.PutShort((short)(creature.BalanceBase * 100)); break;
-						case Stat.CriticalBaseMod: packet.PutFloat(creature.CriticalBase * 100); break;
+						case Stat.BalanceBase: packet.PutShort((short)(creature.BalanceBase)); break;
+						case Stat.BalanceBaseMod: packet.PutShort((short)(creature.BalanceBaseMod)); break;
+
+						case Stat.RightBalanceMod: packet.PutShort((short)creature.RightBalanceMod); break;
+						case Stat.LeftBalanceMod: packet.PutShort((short)creature.LeftBalanceMod); break;
+
+						case Stat.CriticalBase: packet.PutFloat(creature.CriticalBase); break;
+						case Stat.CriticalBaseMod: packet.PutFloat(creature.CriticalBaseMod); break;
+
+						case Stat.RightCriticalMod: packet.PutFloat(creature.RightCriticalMod); break;
+						case Stat.LeftCriticalMod: packet.PutFloat(creature.LeftCriticalMod); break;
 
 						case Stat.AttackMinBase: packet.PutShort((short)creature.AttackMinBase); break;
 						case Stat.AttackMaxBase: packet.PutShort((short)creature.AttackMaxBase); break;

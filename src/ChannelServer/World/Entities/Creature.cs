@@ -26,9 +26,7 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public abstract class Creature : Entity, IDisposable
 	{
-		public const float HandBalance = 0.3f;
 		public const float BaseMagicBalance = 0.3f;
-		public const float HandCritical = 0.1f;
 		public const float MinStability = -10, MaxStability = 100;
 
 		private const float MinWeight = 0.7f, MaxWeight = 1.5f;
@@ -354,49 +352,64 @@ namespace Aura.Channel.World.Entities
 		public float Will { get { return this.WillBaseTotal + this.WillMod + this.WillFoodMod; } }
 		public float Luck { get { return this.LuckBaseTotal + this.LuckMod + this.LuckFoodMod; } }
 
-		// TODO: Make equipment actually modify mods?
+		/// <summary>
+		/// Rate from monster xml
+		/// </summary>
+		public int BalanceBase { get { return (this.RightHand == null ? this.RaceData.BalanceBase : 0); } }
 
-		public float BalanceBase
+		/// <summary>
+		/// Rate from races xml
+		/// </summary>
+		public int BalanceBaseMod { get { return (this.RightHand == null ? this.RaceData.BalanceBaseMod : 0); } }
+
+		/// <summary>
+		/// Balance of right hand weapon
+		/// </summary>
+		public int RightBalanceMod { get { return (this.RightHand != null ? this.RightHand.OptionInfo.Balance : 0); } }
+
+		/// <summary>
+		/// Balance of left hand weapon
+		/// </summary>
+		public int LeftBalanceMod { get { return (this.LeftHand != null ? this.LeftHand.OptionInfo.Balance : 0); } }
+
+		/// <summary>
+		/// Critical multiplicator (0~1)
+		/// </summary>
+		public float Critical
 		{
 			get
 			{
-				var result = HandBalance;
+				var result = 0f;
 
-				if (this.RightHand != null)
-				{
-					result = this.RightHand.Balance;
-					if (this.LeftHand != null)
-					{
-						result += this.LeftHand.Balance;
-						result /= 2f; // average
-					}
-				}
+				result += this.CriticalBase;
+				result += this.CriticalBaseMod;
 
-				return result;
+				result += (Math.Max(0, this.Will - 10) / 10f);
+				result += (Math.Max(0, this.Luck - 10) / 5f);
+
+				return result / 100f;
 			}
 		}
 
-		public float CriticalBase
-		{
-			get
-			{
-				var result = HandCritical;
+		/// <summary>
+		/// Critical from monster xml.
+		/// </summary>
+		public float CriticalBase { get { return (this.RightHand == null ? this.RaceData.CriticalBase : 0); } }
 
-				if (this.RightHand != null)
-				{
-					result = this.RightHand.Critical;
-					if (this.LeftHand != null)
-					{
-						result += this.LeftHand.Critical;
-						result /= 2f; // average
-					}
-				}
+		/// <summary>
+		/// Critical from races xml.
+		/// </summary>
+		public float CriticalBaseMod { get { return (this.RightHand == null ? this.RaceData.CriticalBaseMod : 0); } }
 
-				// TODO: Stat bonuses?
+		/// <summary>
+		/// Critical of right hand weapon
+		/// </summary>
+		public float RightCriticalMod { get { return (this.RightHand != null ? this.RightHand.OptionInfo.Critical : 0); } }
 
-				return result;
-			}
-		}
+		/// <summary>
+		/// Critical of left hand weapon
+		/// </summary>
+		public float LeftCriticalMod { get { return (this.LeftHand != null ? this.LeftHand.OptionInfo.Critical : 0); } }
 
 		/// <summary>
 		/// AttMin from monster xml.
@@ -1154,42 +1167,39 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Calculates random damage for the right hand (default).
 		/// </summary>
-		/// <param name="balance">NaN for individual balance calculation</param>
 		/// <returns></returns>
-		public virtual float GetRndRightHandDamage(float balance = float.NaN)
+		public virtual float GetRndRightHandDamage()
 		{
-			return this.GetRndDamage(this.RightAttackMinMod, this.RightAttackMaxMod, balance);
+			return this.GetRndDamage(this.RightAttackMinMod, this.RightAttackMaxMod, this.RightBalanceMod);
 		}
 
 		/// <summary>
 		/// Calculates random damage for the left hand (off-hand).
 		/// </summary>
-		/// <param name="balance">NaN for individual balance calculation</param>
 		/// <returns></returns>
-		public virtual float GetRndLeftHandDamage(float balance = float.NaN)
+		public virtual float GetRndLeftHandDamage()
 		{
-			return this.GetRndDamage(this.LeftAttackMinMod, this.LeftAttackMaxMod, balance);
+			return this.GetRndDamage(this.LeftAttackMinMod, this.LeftAttackMaxMod, this.LeftBalanceMod);
 		}
 
 		/// <summary>
 		/// Calculates random damage with the given min/max values for the weapon.
 		/// </summary>
-		/// <param name="balance">NaN for individual balance calculation</param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <param name="balance"></param>
 		/// <returns></returns>
-		protected virtual float GetRndDamage(float min, float max, float balance = float.NaN)
+		protected virtual float GetRndDamage(float min, float max, float balance)
 		{
-			if (float.IsNaN(balance))
-				balance = this.GetRndBalance(this.RightHand);
+			balance = this.GetRndBalance(balance);
 
 			min += this.AttackMinBase;
 			min += this.AttackMinBaseMod;
-			//min += this.LeftAttackMinMod;
 			min += this.AttackMinMod;
 			min += (Math.Max(0, this.Str - 10) / 3.0f);
 
 			max += this.AttackMaxBase;
 			max += this.AttackMaxBaseMod;
-			//max += this.LeftAttackMaxMod;
 			max += this.AttackMaxMod;
 			max += (Math.Max(0, this.Str - 10) / 2.5f);
 
@@ -1205,11 +1215,9 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public float GetRndTotalDamage()
 		{
-			var balance = this.GetRndAverageBalance();
-
-			var dmg = this.GetRndRightHandDamage(balance);
+			var dmg = this.GetRndRightHandDamage();
 			if (this.LeftHand != null)
-				dmg += this.GetRndLeftHandDamage(balance);
+				dmg += this.GetRndLeftHandDamage();
 
 			return dmg;
 		}
@@ -1251,25 +1259,6 @@ namespace Aura.Channel.World.Entities
 			balance += ((diff - (diff * 2 * (float)rnd.NextDouble())) * (float)rnd.NextDouble());
 
 			return Math2.Clamp(0f, 1f, balance);
-		}
-
-		/// <summary>
-		/// Returns randomized average balance, taking both weapons into consideration.
-		/// </summary>
-		/// <returns></returns>
-		public float GetRndAverageBalance()
-		{
-			return this.GetRndBalance(this.BalanceBase);
-		}
-
-		/// <summary>
-		/// Calculates random balance for the given weapon.
-		/// </summary>
-		/// <param name="weapon">null for hands</param>
-		/// <returns></returns>
-		public float GetRndBalance(Item weapon)
-		{
-			return this.GetRndBalance(weapon != null ? weapon.Balance : HandBalance);
 		}
 
 		/// <summary>
@@ -1616,14 +1605,14 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Returns CriticalBase - target protection, the base
+		/// Returns Critical - target protection, the base
 		/// critical hit chance.
 		/// </summary>
 		/// <param name="target"></param>
 		/// <returns></returns>
 		public float GetCritChanceFor(Creature target)
 		{
-			return (this.CriticalBase - target.Protection);
+			return Math.Max(0, this.Critical - target.Protection);
 		}
 
 		/// <summary>

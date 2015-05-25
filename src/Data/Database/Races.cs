@@ -45,8 +45,10 @@ namespace Aura.Data.Database
 		public int AttackMax2 { get; set; }	// AttackMinBase (monster)
 		public int AttackSpeed { get; set; }
 		public int KnockCount { get; set; }
-		public int Critical { get; set; }
-		public int CriticalRate { get; set; }
+		public int CriticalBase { get; set; } // Monster
+		public int CriticalBaseMod { get; set; } // Race
+		public int BalanceBase { get; set; } // Monster
+		public int BalanceBaseMod { get; set; } // Race
 		public int SplashRadius { get; set; }
 		public int SplashAngle { get; set; }
 		public float SplashDamage { get; set; }
@@ -270,7 +272,7 @@ namespace Aura.Data.Database
 
 		protected override void ReadEntry(JObject entry)
 		{
-			entry.AssertNotMissing("id", "name", "group", "tags", "gender", "vehicleType", "runSpeedFactor", "state", "invWidth", "invHeight", "range", "attackSpeed", "knockCount", "critical", "criticalRate", "splashRadius", "splashAngle", "splashDamage", "stand", "ai", "color1", "color2", "color3", "cp", "life", "element");
+			entry.AssertNotMissing("id", "name", "group", "tags", "gender", "vehicleType", "runSpeedFactor", "state", "invWidth", "invHeight", "range", "attackSpeed", "knockCount", "splashRadius", "splashAngle", "splashDamage", "stand", "ai", "color1", "color2", "color3", "cp", "life", "element");
 
 			var raceData = new RaceData();
 			raceData.Id = entry.ReadInt("id");
@@ -291,8 +293,10 @@ namespace Aura.Data.Database
 			raceData.AttackRange = entry.ReadInt("range");
 			raceData.AttackSpeed = entry.ReadInt("attackSpeed");
 			raceData.KnockCount = entry.ReadInt("knockCount");
-			raceData.Critical = entry.ReadInt("critical");
-			raceData.CriticalRate = entry.ReadInt("criticalRate");
+			raceData.CriticalBase = entry.ReadInt("criticalBase");
+			raceData.CriticalBaseMod = entry.ReadInt("criticalBaseMod");
+			raceData.BalanceBase = entry.ReadInt("balanceBase");
+			raceData.BalanceBaseMod = entry.ReadInt("balanceBaseMod");
 			raceData.SplashRadius = entry.ReadInt("splashRadius");
 			raceData.SplashAngle = entry.ReadInt("splashAngle");
 			raceData.SplashDamage = entry.ReadFloat("splashDamage");

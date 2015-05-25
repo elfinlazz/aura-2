@@ -124,10 +124,10 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutShort(0);			         // LeftInjuryMaxMod
 				packet.PutShort(0);			         // RightInjuryMinMod
 				packet.PutShort(0);			         // RightInjuryMaxMod
-				packet.PutFloat(0);			         // LeftCriticalMod
-				packet.PutFloat(0);			         // RightCriticalMod
-				packet.PutShort(0);			         // LeftRateMod
-				packet.PutShort(0);			         // RightRateMod
+				packet.PutFloat(creature.LeftCriticalMod);
+				packet.PutFloat(creature.RightCriticalMod);
+				packet.PutShort((short)creature.LeftBalanceMod);			         
+				packet.PutShort((short)creature.RightBalanceMod);			        
 				packet.PutFloat(0);			         // MagicDefenseMod
 				// [180300, NA166 (18.09.2013)] Magic Protection
 				{
@@ -136,13 +136,13 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutFloat(0);			         // MagicAttackMod
 				packet.PutShort(15);		         // MeleeAttackRateMod
 				packet.PutShort(15);		         // RangeAttackRateMod
-				packet.PutFloat(0);			         // CriticalBase
+				packet.PutFloat(creature.CriticalBase);
 				packet.PutFloat(0);			         // CriticalMod
 				packet.PutFloat((short)creature.ProtectionBase);
 				packet.PutFloat(creature.ProtectionMod);
 				packet.PutShort((short)creature.DefenseBase);
 				packet.PutShort((short)creature.DefenseMod);
-				packet.PutShort(0);			         // RateBase
+				packet.PutShort((short)creature.BalanceBase);
 				packet.PutShort(0);			         // RateMod
 				packet.PutShort(0);			         // Rank1
 				packet.PutShort(0);			         // Rank2
@@ -155,10 +155,10 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutShort((short)creature.AttackMaxBaseMod);
 				packet.PutShort((short)creature.InjuryMinBaseMod);
 				packet.PutShort((short)creature.InjuryMaxBaseMod);
-				packet.PutFloat(creature.CriticalBase * 100);
+				packet.PutFloat(creature.CriticalBaseMod);
 				packet.PutFloat(creature.ProtectionBaseMod);
 				packet.PutShort((short)creature.DefenseBaseMod);
-				packet.PutShort((short)(creature.BalanceBase * 100));
+				packet.PutShort((short)creature.BalanceBaseMod);
 
 				// In some tests the damage display would be messed up if
 				// those two weren't set to something.
