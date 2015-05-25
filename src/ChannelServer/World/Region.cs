@@ -1210,11 +1210,13 @@ namespace Aura.Channel.World
 		public override void Broadcast(Packet packet)
 		{
 			Log.Warning("Broadcast in Limbo.");
+			Log.Debug(Environment.StackTrace);
 		}
 
 		public override void Broadcast(Packet packet, Entity source, bool sendToSource = true, int range = -1)
 		{
 			Log.Warning("Broadcast in Limbo from source.");
+			Log.Debug(Environment.StackTrace);
 		}
 	}
 }
