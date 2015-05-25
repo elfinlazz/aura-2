@@ -414,22 +414,22 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// AttMin from monster xml.
 		/// </summary>
-		public int AttackMinBase { get { return this.RaceData.AttackMin2; } }
+		public int AttackMinBase { get { return (this.RightHand == null ? this.RaceData.AttackMin2 : 0); } }
 
 		/// <summary>
 		/// AttMin from monster xml.
 		/// </summary>
-		public int AttackMaxBase { get { return this.RaceData.AttackMax2; } }
+		public int AttackMaxBase { get { return (this.RightHand == null ? this.RaceData.AttackMax2 : 0); } }
 
 		/// <summary>
 		/// AttackMin from races xml.
 		/// </summary>
-		public int AttackMinBaseMod { get { return this.RaceData.AttackMin; } }
+		public int AttackMinBaseMod { get { return (this.RightHand == null ? this.RaceData.AttackMin : 0); } }
 
 		/// <summary>
 		/// AttackMax from races xml.
 		/// </summary>
-		public int AttackMaxBaseMod { get { return this.RaceData.AttackMax; } }
+		public int AttackMaxBaseMod { get { return (this.RightHand == null ? this.RaceData.AttackMax : 0); } }
 
 		/// <summary>
 		/// Par_AttackMin from item xml, for right hand weapon.
@@ -1167,10 +1167,19 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Calculates random damage for the right hand (default).
 		/// </summary>
+		/// <remarks>
+		/// Method is used for bare hand attacks as well, if right hand is
+		/// empty, use bare hand attack values.
+		/// </remarks>
 		/// <returns></returns>
 		public virtual float GetRndRightHandDamage()
 		{
-			return this.GetRndDamage(this.RightAttackMinMod, this.RightAttackMaxMod, this.RightBalanceMod);
+			// Checks in the properties should make this work (right = rh weapon or bare hand)
+			var min = this.AttackMinBase + this.AttackMinBaseMod + this.RightAttackMinMod;
+			var max = this.AttackMaxBase + this.AttackMaxBaseMod + this.RightAttackMaxMod;
+			var balance = this.BalanceBase + this.BalanceBaseMod + this.RightBalanceMod;
+
+			return this.GetRndDamage(min, max, balance);
 		}
 
 		/// <summary>
@@ -1179,34 +1188,35 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public virtual float GetRndLeftHandDamage()
 		{
+			if (this.LeftHand == null /*|| !weapon*/)
+				return 0;
+
 			return this.GetRndDamage(this.LeftAttackMinMod, this.LeftAttackMaxMod, this.LeftBalanceMod);
 		}
 
 		/// <summary>
-		/// Calculates random damage with the given min/max values for the weapon.
+		/// Calculates random damage with the given min/max and balance values.
+		/// Adds attack mods and stat bonuses automatically and randomizes
+		/// the balance.
 		/// </summary>
 		/// <param name="min"></param>
 		/// <param name="max"></param>
 		/// <param name="balance"></param>
 		/// <returns></returns>
-		protected virtual float GetRndDamage(float min, float max, float balance)
+		protected virtual float GetRndDamage(float min, float max, int balance)
 		{
-			balance = this.GetRndBalance(balance);
+			var balanceMultiplicator = this.GetRndBalance(balance) / 100f;
 
-			min += this.AttackMinBase;
-			min += this.AttackMinBaseMod;
 			min += this.AttackMinMod;
 			min += (Math.Max(0, this.Str - 10) / 3.0f);
 
-			max += this.AttackMaxBase;
-			max += this.AttackMaxBaseMod;
 			max += this.AttackMaxMod;
 			max += (Math.Max(0, this.Str - 10) / 2.5f);
 
 			if (min > max)
 				min = max;
 
-			return (min + ((max - min) * balance));
+			return (min + ((max - min) * balanceMultiplicator));
 		}
 
 		/// <summary>
@@ -1215,31 +1225,61 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public float GetRndTotalDamage()
 		{
-			var dmg = this.GetRndRightHandDamage();
-			if (this.LeftHand != null)
-				dmg += this.GetRndLeftHandDamage();
+			var balance = 0;
+			if (this.RightHand == null)
+				balance = this.BalanceBase + this.BalanceBaseMod;
+			else
+			{
+				balance = this.RightBalanceMod;
+				if (this.LeftHand != null)
+					balance = (balance + this.LeftBalanceMod) / 2;
+			}
 
-			return dmg;
+			var min = 0;
+			if (this.RightHand == null)
+				min = this.AttackMinBase + this.AttackMinBaseMod;
+			else
+			{
+				min = this.RightAttackMinMod;
+				if (this.LeftHand != null)
+					min = (min + this.LeftAttackMinMod) / 2;
+			}
+
+			var max = 0;
+			if (this.RightHand == null)
+				max = this.AttackMaxBase + this.AttackMaxBaseMod;
+			else
+			{
+				max = this.RightAttackMaxMod;
+				if (this.LeftHand != null)
+					max = (max + this.LeftAttackMaxMod) / 2;
+			}
+
+			return this.GetRndDamage(min, max, balance);
 		}
 
 		/// <summary>
-		/// Calculates random balance (0.0~0.8) using the given base balance (eg 0.3 for hands).
+		/// Calculates random balance with given base balance, adding the
+		/// dex bonus along the way.
 		/// </summary>
 		/// <param name="baseBalance"></param>
 		/// <returns></returns>
-		protected float GetRndBalance(float baseBalance)
+		protected int GetRndBalance(int baseBalance)
 		{
 			var rnd = RandomProvider.Get();
 			var balance = baseBalance;
 
 			// Dex
-			balance += (Math.Max(0, this.Dex - 10) / 4) / 100f;
+			balance = (int)Math2.Clamp(0, 80, balance + ((this.Dex - 10) / 4f));
 
-			// Randomization, balance+-(100-balance), eg 80 = 60~100
-			var diff = 1.0f - balance;
-			balance += ((diff - (diff * 2 * (float)rnd.NextDouble())) * (float)rnd.NextDouble());
+			// Randomization
+			var diff = 100 - balance;
+			var min = Math.Max(0, balance - diff);
+			var max = Math.Max(100, balance + diff);
 
-			return Math2.Clamp(0f, 0.8f, balance);
+			balance = rnd.Next(min, max + 1);
+
+			return Math2.Clamp(0, 80, balance);
 		}
 
 		/// <summary>
