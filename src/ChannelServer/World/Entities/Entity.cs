@@ -28,7 +28,12 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Reference to the entity's region, if it is in one.
 		/// </summary>
-		public Region Region { get; set; }
+		public Region Region
+		{
+			get { return _region ?? Region.Limbo; }
+			set { _region = value ?? Region.Limbo; }
+		}
+		private Region _region;
 
 		/// <summary>
 		/// Raised when creature disappears, after it died.

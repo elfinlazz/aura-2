@@ -11,6 +11,7 @@ using Aura.Shared.Network;
 using Aura.Channel.Skills.Life;
 using Aura.Mabi.Const;
 using Aura.Mabi.Network;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Network
 {
@@ -105,7 +106,7 @@ namespace Aura.Channel.Network
 			foreach (var creature in this.Creatures.Values)
 				creature.Dispose();
 
-			foreach (var creature in this.Creatures.Values.Where(a => a.Region != null))
+			foreach (var creature in this.Creatures.Values.Where(a => a.Region != Region.Limbo))
 			{
 				// Close NPC sessions
 				if (creature.Client.NpcSession.Script != null)

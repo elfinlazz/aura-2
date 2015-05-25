@@ -85,7 +85,7 @@ namespace Aura.Channel.Network.Handlers
 			var unk = packet.GetByte();
 
 			var creature = client.GetCreatureSafe(packet.Id);
-			if (creature.Region == null)
+			if (creature.Region == Region.Limbo)
 				return;
 
 			// Check item
@@ -128,7 +128,7 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 
 			var creature = client.GetCreatureSafe(packet.Id);
-			if (creature.Region == null)
+			if (creature.Region == Region.Limbo)
 				return;
 
 			var item = creature.Region.GetItem(entityId);

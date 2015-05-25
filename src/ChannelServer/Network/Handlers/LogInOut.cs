@@ -127,7 +127,7 @@ namespace Aura.Channel.Network.Handlers
 				(creature as PlayerCreature).Save = true;
 
 			// Add to region
-			var firstSpawn = (creature.Region == null);
+			var firstSpawn = (creature.Region == Region.Limbo);
 			if (!firstSpawn)
 				ChannelServer.Instance.Events.OnPlayerLeavesRegion(creature);
 			region.AddCreature(creature);

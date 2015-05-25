@@ -10,6 +10,7 @@ using Aura.Channel.Util;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Mabi.Network;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -19,7 +20,7 @@ namespace Aura.Channel.Network.Handlers
 		{
 			base.UnknownPacket(client, packet);
 
-			if (client.Controlling != null && client.Controlling.Region != null)
+			if (client.Controlling != null && client.Controlling.Region != Region.Limbo)
 			{
 				//Send.ServerMessage(client.Controlling, "Unknown action.");
 				//Refresh?

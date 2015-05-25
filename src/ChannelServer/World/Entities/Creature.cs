@@ -1702,7 +1702,7 @@ namespace Aura.Channel.World.Entities
 		{
 			this.Dispose();
 
-			if (this.Region != null)
+			if (this.Region != Region.Limbo)
 				this.Region.RemoveCreature(this);
 
 			base.Disappear();

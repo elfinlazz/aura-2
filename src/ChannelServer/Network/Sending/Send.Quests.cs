@@ -12,6 +12,7 @@ using System.Collections;
 using Aura.Channel.Network.Sending.Helpers;
 using Aura.Mabi.Const;
 using Aura.Mabi.Network;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Network.Sending
 {
@@ -73,7 +74,7 @@ namespace Aura.Channel.Network.Sending
 			packet.PutLong(questId);
 
 			// Creature don't have a region in Soul Stream.
-			if (creature.Region != null)
+			if (creature.Region != Region.Limbo)
 				creature.Region.Broadcast(packet, creature);
 		}
 

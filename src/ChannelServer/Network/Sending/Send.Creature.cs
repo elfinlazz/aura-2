@@ -329,7 +329,7 @@ namespace Aura.Channel.Network.Sending
 
 			if (type == StatUpdateType.Private)
 				creature.Client.Send(packet);
-			else if (creature.Region != null)
+			else if (creature.Region != Region.Limbo)
 				creature.Region.Broadcast(packet, creature);
 		}
 

@@ -54,7 +54,7 @@ namespace Aura.Channel.World.Entities.Creatures
 				_regens.Add(regen.Id, regen);
 
 			// Only send updates if the creature is actually in-game already.
-			if (this.Creature.Region != null)
+			if (this.Creature.Region != Region.Limbo)
 			{
 				Send.NewRegens(this.Creature, StatUpdateType.Private, regen);
 				if (regen.Stat >= Stat.Life && regen.Stat <= Stat.LifeMaxMod)
@@ -177,7 +177,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// </remarks>
 		public void OnSecondsTimeTick(ErinnTime time)
 		{
-			if (this.Creature.Region == null || this.Creature.IsDead)
+			if (this.Creature.Region == Region.Limbo || this.Creature.IsDead)
 				return;
 
 			lock (_regens)

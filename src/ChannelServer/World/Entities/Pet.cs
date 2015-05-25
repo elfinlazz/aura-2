@@ -8,6 +8,5 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public class Pet : PlayerCreature
 	{
-
 	}
 }
