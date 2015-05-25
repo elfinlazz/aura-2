@@ -194,6 +194,7 @@ namespace Aura.Channel.Skills.Life
 			{
 				var propName = "prop_caught_objbox_01";
 				var propSize = 0;
+				var size = 0;
 
 				// Create item
 				item = new Item(creature.Temp.FishingDrop.ItemId);
@@ -206,13 +207,16 @@ namespace Aura.Channel.Skills.Life
 					propSize = fish.PropSize;
 
 					// Random fish size, unofficial
-					var min = fish.SizeMin + (int)Math.Max(0, (item.Data.BaseSize - fish.SizeMin) / 100f * skill.RankData.Var4);
-					var max = fish.SizeMax;
+					if (fish.SizeMin + fish.SizeMax != 0)
+					{
+						var min = fish.SizeMin + (int)Math.Max(0, (item.Data.BaseSize - fish.SizeMin) / 100f * skill.RankData.Var4);
+						var max = fish.SizeMax;
 
-					propSize = Math2.Clamp(fish.SizeMin, fish.SizeMax, rnd.Next(min, max + 1) + (int)skill.RankData.Var1);
-					var scale = (1f / item.Data.BaseSize * propSize);
+						size = Math2.Clamp(fish.SizeMin, fish.SizeMax, rnd.Next(min, max + 1) + (int)skill.RankData.Var1);
+						var scale = (1f / item.Data.BaseSize * size);
 
-					item.MetaData1.SetFloat("SCALE", scale);
+						item.MetaData1.SetFloat("SCALE", scale);
+					}
 				}
 
 				// Set equipment durability
@@ -228,7 +232,7 @@ namespace Aura.Channel.Skills.Life
 
 				// Holding up fish effect
 				if (!cancel)
-					Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, item.Info.Id, 0, propName, propSize);
+					Send.Effect(creature, 10, (byte)3, (byte)1, creature.Temp.FishingProp.EntityId, item.Info.Id, size, propName, propSize);
 			}
 
 			creature.Temp.FishingDrop = null;
