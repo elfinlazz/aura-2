@@ -22,7 +22,11 @@ namespace Aura.Data.Database
 		public uint DefaultState { get; set; }
 		public int VehicleType { get; set; }
 		public float RunSpeedFactor { get; set; }
-		public Element Element { get; set; }
+
+		public int ElementPhysical { get; set; }
+		public int ElementLightning { get; set; }
+		public int ElementFire { get; set; }
+		public int ElementIce { get; set; }
 
 		public float SizeMin { get; set; }
 		public float SizeMax { get; set; }
@@ -353,7 +357,10 @@ namespace Aura.Data.Database
 			raceData.Stamina = entry.ReadFloat("stamina");
 			raceData.Defense = entry.ReadInt("defense");
 			raceData.Protection = (int)entry.ReadFloat("protection");
-			raceData.Element = (Element)entry.ReadByte("element");
+			raceData.ElementPhysical = entry.ReadInt("elementPhysical");
+			raceData.ElementLightning = entry.ReadInt("elementLightning");
+			raceData.ElementFire = entry.ReadInt("elementFire");
+			raceData.ElementIce = entry.ReadInt("elementIce");
 			raceData.Exp = entry.ReadInt("exp");
 			raceData.GoldMin = entry.ReadInt("goldMin");
 			raceData.GoldMax = entry.ReadInt("goldMax");
@@ -510,6 +517,4 @@ namespace Aura.Data.Database
 			this.Entries[raceData.Id] = raceData;
 		}
 	}
-
-	public enum Element : byte { None, Ice, Fire, Lightning }
 }
