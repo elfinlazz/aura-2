@@ -104,10 +104,9 @@ namespace Aura.Data.Database
 		public int AmountMax { get; set; }
 		public int Prefix { get; set; }
 		public int Suffix { get; set; }
-		public uint Color1 { get; set; }
-		public uint Color2 { get; set; }
-		public uint Color3 { get; set; }
-		public bool HasColor { get; set; }
+		public uint? Color1 { get; set; }
+		public uint? Color2 { get; set; }
+		public uint? Color3 { get; set; }
 
 		public DropData()
 		{
@@ -123,15 +122,6 @@ namespace Aura.Data.Database
 			this.Suffix = suffix;
 		}
 
-		public DropData(int itemId, float chance, int amountMin, int amountMax, int prefix, int suffix, uint color1, uint color2, uint color3)
-			: this(itemId, chance, amountMin, amountMax, prefix, suffix)
-		{
-			this.Color1 = color1;
-			this.Color2 = color2;
-			this.Color3 = color3;
-			this.HasColor = true;
-		}
-
 		public DropData Copy()
 		{
 			var result = new DropData();
@@ -145,7 +135,6 @@ namespace Aura.Data.Database
 			result.Color1 = this.Color1;
 			result.Color2 = this.Color2;
 			result.Color3 = this.Color3;
-			result.HasColor = this.HasColor;
 
 			return result;
 		}
@@ -395,13 +384,9 @@ namespace Aura.Data.Database
 					else if (dropData.Chance < 0)
 						dropData.Chance = 0;
 
-					if (drop.ContainsKeys("color1"))
-					{
-						dropData.Color1 = drop.ReadUInt("color1", 0x808080);
-						dropData.Color2 = drop.ReadUInt("color2", 0x808080);
-						dropData.Color3 = drop.ReadUInt("color3", 0x808080);
-						dropData.HasColor = true;
-					}
+					if (drop.ContainsKey("color1")) dropData.Color1 = drop.ReadUInt("color1");
+					if (drop.ContainsKey("color2")) dropData.Color2 = drop.ReadUInt("color2");
+					if (drop.ContainsKey("color3")) dropData.Color3 = drop.ReadUInt("color3");
 
 					raceData.Drops.Add(dropData);
 				}
