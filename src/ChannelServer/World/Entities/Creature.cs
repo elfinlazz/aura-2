@@ -545,7 +545,10 @@ namespace Aura.Channel.World.Entities
 		// Defense/Protection
 		// ------------------------------------------------------------------
 
-		public int DefenseBase { get; set; } // Race
+		/// <summary>
+		/// Defense from monster xml
+		/// </summary>
+		public int DefenseBase { get { return this.RaceData.Defense; } }
 		public int DefenseBaseMod { get { return (int)this.StatMods.Get(Stat.DefenseBaseMod) + this.Inventory.GetEquipmentDefense(); } } // Skills, Titles, etc?
 		public int DefenseMod { get { return (int)this.StatMods.Get(Stat.DefenseMod); } } // eg Reforging? (yellow)
 		public int Defense
@@ -571,7 +574,10 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		public float ProtectionBase { get; set; }
+		/// <summary>
+		/// Protect from monster xml
+		/// </summary>
+		public float ProtectionBase { get { return this.RaceData.Protection; } }
 		public float ProtectionBaseMod { get { return this.StatMods.Get(Stat.ProtectionBaseMod) + this.Inventory.GetEquipmentProtection(); } }
 		public float ProtectionMod { get { return this.StatMods.Get(Stat.ProtectionMod); } }
 		public float Protection
@@ -717,9 +723,6 @@ namespace Aura.Channel.World.Entities
 
 			if (fullyFunctional)
 			{
-				this.DefenseBase = this.RaceData.Defense;
-				this.ProtectionBase = this.RaceData.Protection;
-
 				this.Inventory.AddMainInventory();
 
 				// The wiki says it's 0.125 life, but the packets have 0.12.
