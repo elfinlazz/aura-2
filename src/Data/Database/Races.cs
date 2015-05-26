@@ -43,6 +43,10 @@ namespace Aura.Data.Database
 		public int AttackMaxBase { get; set; } // Monster
 		public int AttackMinBaseMod { get; set; } // Race
 		public int AttackMaxBaseMod { get; set; } // Race
+		public int InjuryMinBase { get; set; } // Monster
+		public int InjuryMaxBase { get; set; } // Monster
+		public int InjuryMinBaseMod { get; set; } // Race
+		public int InjuryMaxBaseMod { get; set; } // Race
 		public int AttackSpeed { get; set; }
 		public int KnockCount { get; set; }
 		public int CriticalBase { get; set; } // Monster
@@ -290,6 +294,10 @@ namespace Aura.Data.Database
 			raceData.AttackMaxBase = entry.ReadInt("attackMaxBase");
 			raceData.AttackMinBaseMod = entry.ReadInt("attackMinBaseMod");
 			raceData.AttackMaxBaseMod = entry.ReadInt("attackMaxBaseMod");
+			raceData.InjuryMinBase = entry.ReadInt("injuryMinBase");
+			raceData.InjuryMaxBase = entry.ReadInt("injuryMaxBase");
+			raceData.InjuryMinBaseMod = entry.ReadInt("injuryMinBaseMod");
+			raceData.InjuryMaxBaseMod = entry.ReadInt("injuryMaxBaseMod");
 			raceData.AttackRange = entry.ReadInt("range");
 			raceData.AttackSpeed = entry.ReadInt("attackSpeed");
 			raceData.KnockCount = entry.ReadInt("knockCount");
