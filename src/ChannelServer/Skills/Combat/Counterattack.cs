@@ -112,7 +112,9 @@ namespace Aura.Channel.Skills.Combat
 				(attacker.GetRndTotalDamage() * (skill.RankData.Var2 / 100f)) +
 				(target.GetRndTotalDamage() * (skill.RankData.Var1 / 100f));
 
-			CriticalHit.Handle(attacker, (target.GetCritChanceFor(attacker) + skill.RankData.Var3), ref damage, tAction, true);
+			var critChance = attacker.GetTotalCritChance(target.Protection) + skill.RankData.Var3;
+
+			CriticalHit.Handle(attacker, critChance, ref damage, tAction, true);
 			SkillHelper.HandleDefenseProtection(target, ref damage, true, true);
 
 			target.TakeDamage(tAction.Damage = damage, attacker);

@@ -95,7 +95,8 @@ namespace Aura.Channel.Skills.Combat
 				var damage = (i == 1 ? attacker.GetRndRightHandDamage() : attacker.GetRndLeftHandDamage());
 
 				// Critical Hit
-				CriticalHit.Handle(attacker, attacker.GetCritChanceFor(target), ref damage, tAction);
+				var critChance = (i == 1 ? attacker.GetRightCritChance(target.Protection) : attacker.GetLeftCritChance(target.Protection));
+				CriticalHit.Handle(attacker, critChance, ref damage, tAction);
 
 				// Subtract target def/prot
 				SkillHelper.HandleDefenseProtection(target, ref damage);

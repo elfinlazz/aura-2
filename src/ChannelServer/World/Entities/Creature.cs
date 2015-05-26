@@ -373,25 +373,6 @@ namespace Aura.Channel.World.Entities
 		public int LeftBalanceMod { get { return (this.LeftHand != null ? this.LeftHand.OptionInfo.Balance : 0); } }
 
 		/// <summary>
-		/// Critical multiplicator (0~1)
-		/// </summary>
-		public float Critical
-		{
-			get
-			{
-				var result = 0f;
-
-				result += this.CriticalBase;
-				result += this.CriticalBaseMod;
-
-				result += (Math.Max(0, this.Will - 10) / 10f);
-				result += (Math.Max(0, this.Luck - 10) / 5f);
-
-				return result / 100f;
-			}
-		}
-
-		/// <summary>
 		/// Critical from monster xml.
 		/// </summary>
 		public float CriticalBase { get { return (this.RightHand == null ? this.RaceData.CriticalBase : 0); } }
@@ -1645,14 +1626,65 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Returns Critical - target protection, the base
-		/// critical hit chance.
+		/// Calculates right (or bare) hand crit chance, taking stat bonuses
+		/// and given protection into consideration.
 		/// </summary>
-		/// <param name="target"></param>
+		/// <param name="protection"></param>
 		/// <returns></returns>
-		public float GetCritChanceFor(Creature target)
+		public float GetRightCritChance(float protection)
 		{
-			return Math.Max(0, this.Critical - target.Protection);
+			var crit = this.CriticalBase + this.CriticalBaseMod + this.RightCriticalMod;
+			return this.GetCritChance(crit, protection);
+		}
+
+		/// <summary>
+		/// Calculates left hand crit chance, taking stat bonuses
+		/// and given protection into consideration.
+		/// </summary>
+		/// <param name="protection"></param>
+		/// <returns></returns>
+		public float GetLeftCritChance(float protection)
+		{
+			if (this.LeftHand == null)
+				return 0;
+
+			return this.GetCritChance(this.LeftCriticalMod, protection);
+		}
+
+		/// <summary>
+		/// Calculates total crit chance, taking stat bonuses
+		/// and given protection and bonus into consideration.
+		/// </summary>
+		/// <param name="protection"></param>
+		/// <returns></returns>
+		public float GetTotalCritChance(float protection)
+		{
+			var crit = 0f;
+			if (this.RightHand == null)
+				crit = this.CriticalBase + this.CriticalBaseMod;
+			else
+			{
+				crit = this.RightCriticalMod;
+				if (this.LeftHand != null)
+					crit = (crit + this.LeftCriticalMod) / 2;
+			}
+
+			return this.GetCritChance(crit, protection);
+		}
+
+		/// <summary>
+		/// Adds stat bonuses to base and calculates crit chance,
+		/// taking protection into consideration.
+		/// </summary>
+		/// <param name="baseCritical"></param>
+		/// <param name="protection"></param>
+		/// <returns></returns>
+		private float GetCritChance(float baseCritical, float protection)
+		{
+			baseCritical += ((this.Will - 10) / 10f);
+			baseCritical += ((this.Luck - 10) / 5f);
+
+			return Math.Max(0, baseCritical - protection);
 		}
 
 		/// <summary>

@@ -141,7 +141,7 @@ namespace Aura.Channel.Skills.Combat
 				var damage = skill.RankData.Var2;
 
 				// Increase damage
-				CriticalHit.Handle(attacker, attacker.GetCritChanceFor(target), ref damage, tAction);
+				CriticalHit.Handle(attacker, attacker.GetTotalCritChance(target.Protection), ref damage, tAction);
 
 				// Reduce damage
 				SkillHelper.HandleDefenseProtection(target, ref damage);
