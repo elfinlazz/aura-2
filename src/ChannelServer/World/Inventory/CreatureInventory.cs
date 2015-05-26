@@ -684,6 +684,14 @@ namespace Aura.Channel.World.Inventory
 					_pockets[Pocket.Inventory].FillStacks(item, out changed);
 					this.UpdateChangedItems(changed);
 
+					// VIP inv
+					// TODO: Add and check inv locks
+					if (item.Info.Amount != 0)
+					{
+						_pockets[Pocket.VIPInventory].FillStacks(item, out changed);
+						this.UpdateChangedItems(changed);
+					}
+
 					// Bags
 					for (var i = Pocket.ItemBags; i <= Pocket.ItemBagsMax; ++i)
 					{
@@ -801,6 +809,14 @@ namespace Aura.Channel.World.Inventory
 				// Try main inv
 				if (_pockets.ContainsKey(Pocket.Inventory))
 					success = _pockets[Pocket.Inventory].Add(item);
+
+				// VIP inv
+				// TODO: Add and check inv locks
+				if (!success)
+				{
+					if (_pockets.ContainsKey(Pocket.VIPInventory))
+						success = _pockets[Pocket.VIPInventory].Add(item);
+				}
 
 				// Try bags
 				for (var i = Pocket.ItemBags; i <= Pocket.ItemBagsMax; ++i)
