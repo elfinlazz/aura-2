@@ -479,8 +479,9 @@ namespace Aura.Mabi.Network
 		public const int ShamalaTransformationEnd = 0xAB1E;
 		public const int ShamalaTransformationEndR = 0xAB1F;
 
-		// [190100, NA200 (2015-01-15)]
-		public const int ItemMagnet = 0xABAB;
+		// ItemMagnet got increased by one, some time between NA200 and NA204.
+
+		public const int ItemMagnet = 0xABAC; // [190100, NA200 (2015-01-15)]
 
 		public const int NpcTalk = 0x13882;
 		public const int NpcTalkSelect = 0x13883;
