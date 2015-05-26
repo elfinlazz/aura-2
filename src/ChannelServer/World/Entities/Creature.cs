@@ -704,8 +704,7 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Loads race and handles some basic stuff, like adding regens.
 		/// </summary>
-		/// <param name="fullyFunctional">Fully functional creatures have an inv, regens, etc.</param>
-		public virtual void LoadDefault(bool fullyFunctional = true)
+		public virtual void LoadDefault()
 		{
 			if (this.Race == 0)
 				throw new Exception("Set race before calling LoadDefault.");
@@ -721,20 +720,20 @@ namespace Aura.Channel.World.Entities
 				Log.Warning("Race '{0}' not found, using human instead.", this.Race);
 			}
 
-			if (fullyFunctional)
-			{
-				this.Inventory.AddMainInventory();
+			// Add inventory
+			this.Inventory.AddMainInventory();
 
-				// The wiki says it's 0.125 life, but the packets have 0.12.
-				this.Regens.Add(Stat.Life, 0.12f, this.LifeMax);
-				this.Regens.Add(Stat.Mana, 0.05f, this.ManaMax);
-				this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
-				if (ChannelServer.Instance.Conf.World.EnableHunger)
-					this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
-				this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
+			// Add regens
+			// The wiki says it's 0.125 life, but the packets have 0.12.
+			this.Regens.Add(Stat.Life, 0.12f, this.LifeMax);
+			this.Regens.Add(Stat.Mana, 0.05f, this.ManaMax);
+			this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
+			if (ChannelServer.Instance.Conf.World.EnableHunger)
+				this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
+			this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
 
-				ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
-			}
+			// Subscribe to 5 minute event
+			ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
 		}
 
 		/// <summary>

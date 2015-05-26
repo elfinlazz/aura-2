@@ -80,35 +80,6 @@ namespace Aura.Channel.World.Entities
 		{
 			this.Race = raceId;
 			this.LoadDefault();
-
-			// TODO: This feels like it should go into LoadDefault...
-			//   why isn't it there?
-			this.Name = this.RaceData.Name;
-			this.Color1 = this.RaceData.Color1;
-			this.Color2 = this.RaceData.Color2;
-			this.Color3 = this.RaceData.Color3;
-			this.Height = (float)(this.RaceData.SizeMin + RandomProvider.Get().NextDouble() * (this.RaceData.SizeMax - this.RaceData.SizeMin));
-			this.Life = this.LifeMaxBase = this.RaceData.Life;
-			this.Mana = this.ManaMaxBase = this.RaceData.Mana;
-			this.State = (CreatureStates)this.RaceData.DefaultState;
-			this.Direction = (byte)RandomProvider.Get().Next(256);
-
-			// Set drops
-			this.Drops.GoldMin = this.RaceData.GoldMin;
-			this.Drops.GoldMax = this.RaceData.GoldMax;
-			this.Drops.Add(this.RaceData.Drops);
-
-			// Give skills
-			foreach (var skill in this.RaceData.Skills)
-				this.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, this.Race);
-
-			// Set AI
-			if (!string.IsNullOrWhiteSpace(this.RaceData.AI) && this.RaceData.AI != "none")
-			{
-				this.AI = ChannelServer.Instance.ScriptManager.AiScripts.CreateAi(this.RaceData.AI, this);
-				if (this.AI == null)
-					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", this.RaceData.AI, raceId);
-			}
 		}
 
 		/// <summary>
@@ -125,12 +96,32 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Loads default information from race data.
 		/// </summary>
-		/// <param name="fullyFunctional">Fully functional creatures have an inv, regens, etc.</param>
-		public override void LoadDefault(bool fullyFunctional = true)
+		public override void LoadDefault()
 		{
-			base.LoadDefault(fullyFunctional);
+			base.LoadDefault();
 
 			var rnd = RandomProvider.Get();
+
+			// Set some base information
+			this.Name = this.RaceData.Name;
+			this.Color1 = this.RaceData.Color1;
+			this.Color2 = this.RaceData.Color2;
+			this.Color3 = this.RaceData.Color3;
+			this.Height = (float)(this.RaceData.SizeMin + RandomProvider.Get().NextDouble() * (this.RaceData.SizeMax - this.RaceData.SizeMin));
+			this.Life = this.LifeMaxBase = this.RaceData.Life;
+			this.Mana = this.ManaMaxBase = this.RaceData.Mana;
+			this.Stamina = this.StaminaMaxBase = this.RaceData.Stamina;
+			this.State = (CreatureStates)this.RaceData.DefaultState;
+			this.Direction = (byte)RandomProvider.Get().Next(256);
+
+			// Set drops
+			this.Drops.GoldMin = this.RaceData.GoldMin;
+			this.Drops.GoldMax = this.RaceData.GoldMax;
+			this.Drops.Add(this.RaceData.Drops);
+
+			// Give skills
+			foreach (var skill in this.RaceData.Skills)
+				this.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, this.Race);
 
 			// Equipment
 			foreach (var itemData in this.RaceData.Equip)
@@ -150,6 +141,14 @@ namespace Aura.Channel.World.Entities
 			if (this.RaceData.Face.EyeTypes.Count > 0) this.EyeType = (short)this.RaceData.Face.GetRandomEyeType(rnd);
 			if (this.RaceData.Face.MouthTypes.Count > 0) this.MouthType = (byte)this.RaceData.Face.GetRandomMouthType(rnd);
 			if (this.RaceData.Face.SkinColors.Count > 0) this.SkinColor = (byte)this.RaceData.Face.GetRandomSkinColor(rnd);
+
+			// Set AI
+			if (!string.IsNullOrWhiteSpace(this.RaceData.AI) && this.RaceData.AI != "none")
+			{
+				this.AI = ChannelServer.Instance.ScriptManager.AiScripts.CreateAi(this.RaceData.AI, this);
+				if (this.AI == null)
+					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", this.RaceData.AI, this.Race);
+			}
 		}
 
 		/// <summary>
