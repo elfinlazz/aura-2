@@ -218,7 +218,7 @@ namespace Aura.Channel.Skills.Life
 				}
 
 				// Set equipment durability
-				if (item.HasTag("/equip/"))
+				if (item.HasTag("/equip/") && item.OptionInfo.DurabilityMax >= 1)
 					item.Durability = 0;
 
 				// Drop if inv add failed
