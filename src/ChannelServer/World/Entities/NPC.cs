@@ -80,25 +80,11 @@ namespace Aura.Channel.World.Entities
 		{
 			this.RaceId = raceId;
 			this.LoadDefault();
-		}
 
-		/// <summary>
-		/// Disposes AI.
-		/// </summary>
-		public override void Dispose()
-		{
-			base.Dispose();
-
-			if (this.AI != null)
-				this.AI.Dispose();
-		}
-
-		/// <summary>
-		/// Loads default information from race data.
-		/// </summary>
-		public override void LoadDefault()
-		{
-			base.LoadDefault();
+			// Technically the following would belong in LoadDefault,
+			// but NPCs in NPC scripts are loaded a little weird,
+			// so we only load the following for NPCs who's race id
+			// we get in advance.
 
 			var rnd = RandomProvider.Get();
 
@@ -149,6 +135,17 @@ namespace Aura.Channel.World.Entities
 				if (this.AI == null)
 					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", this.RaceData.AI, this.RaceId);
 			}
+		}
+
+		/// <summary>
+		/// Disposes AI.
+		/// </summary>
+		public override void Dispose()
+		{
+			base.Dispose();
+
+			if (this.AI != null)
+				this.AI.Dispose();
 		}
 
 		/// <summary>
