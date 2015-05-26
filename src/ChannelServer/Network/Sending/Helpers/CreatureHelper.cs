@@ -34,7 +34,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			packet.PutString(creature.Name);
 			packet.PutString("");				 // Title
 			packet.PutString("");				 // Eng Title
-			packet.PutInt(creature.Race);
+			packet.PutInt(creature.RaceId);
 			packet.PutByte(creature.SkinColor);
 			packet.PutShort(creature.EyeType); // [180600, NA187 (25.06.2014)] Changed from byte to short
 			packet.PutByte(creature.EyeColor);

@@ -66,7 +66,7 @@ namespace Aura.Channel.World
 		public void AddActor(string name, int raceId)
 		{
 			var creature = new NPC();
-			creature.Race = raceId;
+			creature.RaceId = raceId;
 			creature.LoadDefault();
 			creature.Name = creature.RaceData.Name;
 			creature.Color1 = creature.RaceData.Color1;

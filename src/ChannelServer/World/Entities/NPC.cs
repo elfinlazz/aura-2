@@ -62,7 +62,7 @@ namespace Aura.Channel.World.Entities
 
 			// Some default values to prevent errors
 			this.Name = "_undefined";
-			this.Race = 190140; // Wood dummy
+			this.RaceId = 190140; // Wood dummy
 			this.Height = this.Weight = this.Upper = this.Lower = 1;
 			this.RegionId = 0;
 			this.Life = this.LifeMaxBase = 1000;
@@ -78,7 +78,7 @@ namespace Aura.Channel.World.Entities
 		public NPC(int raceId)
 			: this()
 		{
-			this.Race = raceId;
+			this.RaceId = raceId;
 			this.LoadDefault();
 		}
 
@@ -121,7 +121,7 @@ namespace Aura.Channel.World.Entities
 
 			// Give skills
 			foreach (var skill in this.RaceData.Skills)
-				this.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, this.Race);
+				this.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, this.RaceId);
 
 			// Equipment
 			foreach (var itemData in this.RaceData.Equip)
@@ -147,7 +147,7 @@ namespace Aura.Channel.World.Entities
 			{
 				this.AI = ChannelServer.Instance.ScriptManager.AiScripts.CreateAi(this.RaceData.AI, this);
 				if (this.AI == null)
-					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", this.RaceData.AI, this.Race);
+					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", this.RaceData.AI, this.RaceId);
 			}
 		}
 

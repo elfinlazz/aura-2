@@ -195,7 +195,7 @@ namespace Aura.Channel.Database
 					character.CreatureId = reader.GetInt64("creatureId");
 					character.Name = reader.GetStringSafe("name");
 					character.Server = reader.GetStringSafe("server");
-					character.Race = reader.GetInt32("race");
+					character.RaceId = reader.GetInt32("race");
 					character.DeletionTime = reader.GetDateTimeSafe("deletionTime");
 					character.SkinColor = reader.GetByte("skinColor");
 					character.EyeType = reader.GetInt16("eyeType");
@@ -546,7 +546,7 @@ namespace Aura.Channel.Database
 						var skillId = (SkillId)reader.GetInt32("skillId");
 						var rank = (SkillRank)reader.GetByte("rank");
 
-						var skill = new Skill(character, skillId, rank, character.Race);
+						var skill = new Skill(character, skillId, rank, character.RaceId);
 						skill.Info.ConditionCount1 = reader.GetInt16("condition1");
 						skill.Info.ConditionCount2 = reader.GetInt16("condition2");
 						skill.Info.ConditionCount3 = reader.GetInt16("condition3");
@@ -567,61 +567,61 @@ namespace Aura.Channel.Database
 			// Combat Mastery, only normal characters get all the
 			// hidden ones for now
 			// TODO: Move to race skill db.
-			character.Skills.Add(SkillId.CombatMastery, SkillRank.RF, character.Race);
+			character.Skills.Add(SkillId.CombatMastery, SkillRank.RF, character.RaceId);
 			// According to the Wiki you get Crit upon advancing CM to RF, should CM be Novice?
-			character.Skills.Add(SkillId.CriticalHit, SkillRank.Novice, character.Race);
+			character.Skills.Add(SkillId.CriticalHit, SkillRank.Novice, character.RaceId);
 			if (character is Character)
 			{
-				character.Skills.Add(SkillId.HiddenEnchant, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.HiddenResurrection, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.HiddenTownBack, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.HiddenGuildStoneSetting, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.HiddenBlessing, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.CampfireKit, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.SkillUntrainKit, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.BigBlessingWaterKit, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.Dye, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.EnchantElementalAllSlot, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.HiddenPoison, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.HiddenBomb, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.FossilRestoration, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.SeesawJump, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.SeesawCreate, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.DragonSupport, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.IceMine, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.Scan, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.UseSupportItem, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.TickingQuizBomb, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.ItemSeal, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.ItemUnseal, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.ItemDungeonPass, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.UseElathaItem, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.UseMorrighansFeather, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.PetBuffing, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.CherryTreeKit, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.ThrowConfetti, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.UsePartyPopper, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.HammerGame, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.SpiritShift, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.EmergencyEscapeBomb, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.EmergencyIceBomb, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.NameColorChange, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.HolyFlame, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.CreateFaliasPortal, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.UseItemChattingColorChange, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.InstallPrivateFarmFacility, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.ReorientHomesteadbuilding, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.GachaponSynthesis, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.MakeChocoStatue, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.Paint, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.MixPaint, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.PetSealToItem, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.FlownHotAirBalloon, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.ItemSeal2, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.CureZombie, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.ContinentWarp, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.AddSeasoning, SkillRank.Novice, character.Race);
-				character.Skills.Add(SkillId.Gathering, SkillRank.Novice, character.Race);
+				character.Skills.Add(SkillId.HiddenEnchant, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.HiddenResurrection, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.HiddenTownBack, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.HiddenGuildStoneSetting, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.HiddenBlessing, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.CampfireKit, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.SkillUntrainKit, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.BigBlessingWaterKit, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.Dye, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.EnchantElementalAllSlot, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.HiddenPoison, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.HiddenBomb, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.FossilRestoration, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.SeesawJump, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.SeesawCreate, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.DragonSupport, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.IceMine, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.Scan, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.UseSupportItem, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.TickingQuizBomb, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.ItemSeal, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.ItemUnseal, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.ItemDungeonPass, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.UseElathaItem, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.UseMorrighansFeather, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.PetBuffing, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.CherryTreeKit, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.ThrowConfetti, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.UsePartyPopper, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.HammerGame, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.SpiritShift, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.EmergencyEscapeBomb, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.EmergencyIceBomb, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.NameColorChange, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.HolyFlame, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.CreateFaliasPortal, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.UseItemChattingColorChange, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.InstallPrivateFarmFacility, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.ReorientHomesteadbuilding, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.GachaponSynthesis, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.MakeChocoStatue, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.Paint, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.MixPaint, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.PetSealToItem, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.FlownHotAirBalloon, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.ItemSeal2, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.CureZombie, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.ContinentWarp, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.AddSeasoning, SkillRank.Novice, character.RaceId);
+				character.Skills.Add(SkillId.Gathering, SkillRank.Novice, character.RaceId);
 			}
 		}
 

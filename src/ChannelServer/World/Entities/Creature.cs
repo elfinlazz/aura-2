@@ -44,7 +44,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureStates State { get; set; }
 		public CreatureStatesEx StateEx { get; set; }
 
-		public int Race { get; set; }
+		public int RaceId { get; set; }
 		public RaceData RaceData { get; protected set; }
 
 		public Creature Master { get; set; }
@@ -67,9 +67,9 @@ namespace Aura.Channel.World.Entities
 		public bool IsPet { get { return (this is Pet); } }
 		public bool IsPartner { get { return (this.IsPet && this.EntityId >= MabiId.Partners); } }
 
-		public bool IsHuman { get { return (this.Race == 10001 || this.Race == 10002); } }
-		public bool IsElf { get { return (this.Race == 9001 || this.Race == 9002); } }
-		public bool IsGiant { get { return (this.Race == 8001 || this.Race == 8002); } }
+		public bool IsHuman { get { return (this.RaceId == 10001 || this.RaceId == 10002); } }
+		public bool IsElf { get { return (this.RaceId == 9001 || this.RaceId == 9002); } }
+		public bool IsGiant { get { return (this.RaceId == 8001 || this.RaceId == 8002); } }
 
 		public bool IsMale { get { return (this.RaceData != null && this.RaceData.Gender == Gender.Male); } }
 		public bool IsFemale { get { return (this.RaceData != null && this.RaceData.Gender == Gender.Female); } }
@@ -706,18 +706,18 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public virtual void LoadDefault()
 		{
-			if (this.Race == 0)
+			if (this.RaceId == 0)
 				throw new Exception("Set race before calling LoadDefault.");
 
-			this.RaceData = AuraData.RaceDb.Find(this.Race);
+			this.RaceData = AuraData.RaceDb.Find(this.RaceId);
 			if (this.RaceData == null)
 			{
 				// Try to default to Human
 				this.RaceData = AuraData.RaceDb.Find(10000);
 				if (this.RaceData == null)
-					throw new Exception("Unable to load race data, race '" + this.Race.ToString() + "' not found.");
+					throw new Exception("Unable to load race data, race '" + this.RaceId.ToString() + "' not found.");
 
-				Log.Warning("Race '{0}' not found, using human instead.", this.Race);
+				Log.Warning("Race '{0}' not found, using human instead.", this.RaceId);
 			}
 
 			// Add inventory
@@ -1488,7 +1488,7 @@ namespace Aura.Channel.World.Entities
 
 			this.Exp += val;
 
-			var levelStats = AuraData.StatsLevelUpDb.Find(this.Race, this.Age);
+			var levelStats = AuraData.StatsLevelUpDb.Find(this.RaceId, this.Age);
 
 			var prevLevel = this.Level;
 			float ap = this.AbilityPoints;
@@ -1524,7 +1524,7 @@ namespace Aura.Channel.World.Entities
 			{
 				// Only notify on level up
 				if (levelStats == null)
-					Log.Unimplemented("GiveExp: Level up stats missing for race '{0}'.", this.Race);
+					Log.Unimplemented("GiveExp: Level up stats missing for race '{0}'.", this.RaceId);
 
 				this.FullHeal();
 
