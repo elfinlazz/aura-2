@@ -226,9 +226,11 @@ namespace Aura.Channel.Skills.Life
 				if (!creature.Inventory.Insert(item, false, out changed))
 					item.Drop(creature.Region, creature.GetPosition().GetRandomInRange(100, rnd));
 
+				var itemEntityId = (changed == null || changed.Count == 0 ? item.EntityId : changed.First().EntityId);
+
 				// Show acquire using the item's entity id if it wasn't added
 				// to a stack, or using the stack's id if it was.
-				Send.AcquireInfo2(creature, "fishing", (changed == null ? item.EntityId : changed.First().EntityId));
+				Send.AcquireInfo2(creature, "fishing", itemEntityId);
 
 				// Holding up fish effect
 				if (!cancel)
