@@ -192,7 +192,11 @@ namespace Aura.Mabi.Network
 		public const int Land = 0x65AB;
 		public const int Landing = 0x65AC;
 		public const int CanLand = 0x65AD;
-		public const int SawItemNotification = 0x65D7; // [190100, NA200 (2015-01-15)]
+
+		// SawItemNotification increased by one some time between NA200 and NA204
+
+		public const int SawItemNotification = 0x65D8; // [190100, NA200 (2015-01-15)]
+
 		public const int SkillInfo = 0x6979;
 		public const int SkillTrainingUp = 0x697C;
 		public const int SkillAdvance = 0x697E;
