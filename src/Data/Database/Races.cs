@@ -269,7 +269,7 @@ namespace Aura.Data.Database
 
 		protected override void ReadEntry(JObject entry)
 		{
-			entry.AssertNotMissing("id", "name", "group", "tags", "gender", "vehicleType", "runSpeedFactor", "state", "invWidth", "invHeight", "range", "attackSpeed", "knockCount", "splashRadius", "splashAngle", "splashDamage", "stand", "ai", "color1", "color2", "color3", "cp", "life", "element");
+			entry.AssertNotMissing("id", "name", "group", "tags", "gender", "vehicleType", "runSpeedFactor", "state", "invWidth", "invHeight", "range", "attackSpeed", "knockCount", "splashRadius", "splashAngle", "splashDamage", "stand", "ai", "color1", "color2", "color3", "cp", "life");
 
 			var raceData = new RaceData();
 			raceData.Id = entry.ReadInt("id");
