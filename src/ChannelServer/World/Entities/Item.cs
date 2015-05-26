@@ -637,7 +637,7 @@ namespace Aura.Channel.World.Entities
 		/// </summary>
 		public override void Disappear()
 		{
-			if (this.Region != null)
+			if (this.Region != Region.Limbo)
 				this.Region.RemoveItem(this);
 
 			base.Disappear();

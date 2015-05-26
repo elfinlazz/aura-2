@@ -85,11 +85,16 @@ namespace Aura.Channel.Network.Handlers
 			var unk = packet.GetByte();
 
 			var creature = client.GetCreatureSafe(packet.Id);
-			if (creature.Region == null)
+			if (creature.Region == Region.Limbo)
 				return;
 
 			// Check item
-			var item = creature.Inventory.GetItemSafe(entityId);
+			var item = creature.Inventory.GetItem(entityId);
+			if (item == null)
+			{
+				Send.ItemDropR(creature, false);
+				return;
+			}
 
 			// Check for filled bags
 			if (item.IsBag && item.OptionInfo.LinkedPocketId != Pocket.None && creature.Inventory.CountItemsInPocket(item.OptionInfo.LinkedPocketId) > 0)
@@ -128,7 +133,7 @@ namespace Aura.Channel.Network.Handlers
 			var entityId = packet.GetLong();
 
 			var creature = client.GetCreatureSafe(packet.Id);
-			if (creature.Region == null)
+			if (creature.Region == Region.Limbo)
 				return;
 
 			var item = creature.Region.GetItem(entityId);
@@ -173,9 +178,9 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			var item = creature.Inventory.GetItemSafe(itemId);
-
-			if (!creature.Inventory.Remove(item))
+			// Check and try to remove item
+			var item = creature.Inventory.GetItem(itemId);
+			if (item == null || !creature.Inventory.Remove(item))
 			{
 				Send.ItemDestroyR(creature, false);
 				return;
@@ -322,7 +327,9 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Get item
-			var item = creature.Inventory.GetItemSafe(entityId);
+			var item = creature.Inventory.GetItem(entityId);
+			if (item == null)
+				goto L_Fail;
 
 			// Meta Data Scripts
 			var gotMetaScript = false;
@@ -461,19 +468,27 @@ namespace Aura.Channel.Network.Handlers
 			var npcId = packet.GetLong();
 			var itemId = packet.GetLong();
 
-			var creature = client.Controlling.Region.GetCreatureSafe(npcId);
-			var item = client.Controlling.Inventory.GetItemSafe(itemId);
+			var creature = client.Controlling;
+			var target = client.Controlling.Region.GetCreatureSafe(npcId);
 
-			// Temp check for pets, giving food to them uses the same packet
-			// as gifting to NPCs.
-			if (creature is Pet)
+			// Check item
+			var item = creature.Inventory.GetItem(itemId);
+			if (item == null)
 			{
-				Send.SystemMessage(client.Controlling, Localization.Get("Unimplemented."));
-				Send.GiftItemR(client.Controlling, false);
+				Send.GiftItemR(creature, false);
 				return;
 			}
 
-			var npc = creature as NPC;
+			// Temp check for pets, giving food to them uses the same packet
+			// as gifting to NPCs.
+			if (target is Pet)
+			{
+				Send.SystemMessage(creature, Localization.Get("Unimplemented."));
+				Send.GiftItemR(creature, false);
+				return;
+			}
+
+			var npc = target as NPC;
 
 			// TODO: If !Item is giftable..
 			// TODO: If !Npc in range...
@@ -481,15 +496,15 @@ namespace Aura.Channel.Network.Handlers
 			if (npc.ScriptType == null)
 				return;
 
-			Send.NpcTalkStartR(client.Controlling, creature.EntityId);
+			Send.NpcTalkStartR(creature, target.EntityId);
 
-			client.NpcSession.StartGift(npc, client.Controlling, item);
+			client.NpcSession.StartGift(npc, creature, item);
 
-			client.Controlling.Inventory.Remove(item);
+			creature.Inventory.Remove(item);
 
-			ChannelServer.Instance.Events.OnPlayerRemovesItem(creature, item.Info.Id, item.Info.Amount);
+			ChannelServer.Instance.Events.OnPlayerRemovesItem(target, item.Info.Id, item.Info.Amount);
 
-			Send.GiftItemR(client.Controlling, true);
+			Send.GiftItemR(creature, true);
 		}
 
 		/// <summary>

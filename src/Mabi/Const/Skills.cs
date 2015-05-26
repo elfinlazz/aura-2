@@ -571,4 +571,34 @@ namespace Aura.Mabi.Const
 		StartStop = 8,
 		Passive = 10,
 	}
+
+	/// <summary>
+	/// Method for catching something while fishing.
+	/// </summary>
+	public enum FishingMethod : byte
+	{
+		Auto,
+		Manual,
+	}
+
+	/// <summary>
+	/// Defines the message displayed when requesting a fishing action.
+	/// </summary>
+	public enum CatchSize : byte
+	{
+		/// <summary>
+		/// Something's caught on the hook...
+		/// </summary>
+		Something = 0,
+
+		/// <summary>
+		/// This feels like a big one...
+		/// </summary>
+		BigOne = 1,
+
+		/// <summary>
+		/// A small catch...
+		/// </summary>
+		SmallCatch = 255,
+	}
 }

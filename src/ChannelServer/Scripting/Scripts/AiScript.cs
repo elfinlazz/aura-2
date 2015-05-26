@@ -181,7 +181,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="state"></param>
 		private void Heartbeat(object state)
 		{
-			if (this.Creature == null || this.Creature.Region == null)
+			if (this.Creature == null || this.Creature.Region == Region.Limbo)
 				return;
 
 			if (_inside)

@@ -26,6 +26,8 @@ namespace Aura.Channel.World
 		// TODO: Data?
 		public const int VisibleRange = 3000;
 
+		public static readonly Region Limbo = new Limbo();
+
 		protected ReaderWriterLockSlim _creaturesRWLS, _propsRWLS, _clientEventsRWLS, _itemsRWLS;
 
 		protected Dictionary<long, Creature> _creatures;
@@ -88,7 +90,7 @@ namespace Aura.Channel.World
 		/// Creates new region by id.
 		/// </summary>
 		/// <param name="regionId"></param>
-		private Region(int regionId, RegionMode mode)
+		protected Region(int regionId, RegionMode mode)
 		{
 			_creaturesRWLS = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 			_propsRWLS = new ReaderWriterLockSlim();
@@ -245,7 +247,7 @@ namespace Aura.Channel.World
 			{
 				foreach (var prop in area.Props.Values)
 				{
-					var add = new Prop(prop.EntityId, "", "", prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0);
+					var add = new Prop(prop.EntityId, prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0, "", "", "");
 
 					// Add drop behaviour if drop type exists
 					var dropType = prop.GetDropType();
@@ -459,7 +461,7 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddCreature(Creature creature)
 		{
-			if (creature.Region != null)
+			if (creature.Region != Region.Limbo)
 				creature.Region.RemoveCreature(creature);
 
 			_creaturesRWLS.EnterWriteLock();
@@ -506,7 +508,7 @@ namespace Aura.Channel.World
 			// TODO: Technically not required? Handled by LookAround.
 			Send.EntityDisappears(creature);
 
-			creature.Region = null;
+			creature.Region = Region.Limbo;
 
 			if (creature.Client.Controlling == creature)
 				lock (_clients)
@@ -751,8 +753,6 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddProp(Prop prop)
 		{
-			// TODO: Add prop shape to collisions
-
 			_propsRWLS.EnterWriteLock();
 			try
 			{
@@ -803,7 +803,7 @@ namespace Aura.Channel.World
 
 			Send.PropDisappears(prop);
 
-			prop.Region = null;
+			prop.Region = Region.Limbo;
 		}
 
 		/// <summary>
@@ -883,7 +883,7 @@ namespace Aura.Channel.World
 
 			Send.EntityDisappears(item);
 
-			item.Region = null;
+			item.Region = Region.Limbo;
 		}
 
 		/// <summary>
@@ -1152,7 +1152,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Broadcasts packet in region.
 		/// </summary>
-		public void Broadcast(Packet packet)
+		public virtual void Broadcast(Packet packet)
 		{
 			lock (_clients)
 			{
@@ -1164,7 +1164,7 @@ namespace Aura.Channel.World
 		/// <summary>
 		/// Broadcasts packet to all creatures in range of source.
 		/// </summary>
-		public void Broadcast(Packet packet, Entity source, bool sendToSource = true, int range = -1)
+		public virtual void Broadcast(Packet packet, Entity source, bool sendToSource = true, int range = -1)
 		{
 			if (range < 0)
 				range = VisibleRange;
@@ -1198,5 +1198,25 @@ namespace Aura.Channel.World
 		/// Region gets removed once the last player has left.
 		/// </summary>
 		RemoveWhenEmpty,
+	}
+
+	public class Limbo : Region
+	{
+		public Limbo()
+			: base(0, RegionMode.Permanent)
+		{
+		}
+
+		public override void Broadcast(Packet packet)
+		{
+			Log.Warning("Broadcast in Limbo.");
+			Log.Debug(Environment.StackTrace);
+		}
+
+		public override void Broadcast(Packet packet, Entity source, bool sendToSource = true, int range = -1)
+		{
+			Log.Warning("Broadcast in Limbo from source.");
+			Log.Debug(Environment.StackTrace);
+		}
 	}
 }

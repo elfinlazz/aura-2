@@ -715,5 +715,22 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Sends FishingActionRequired to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="catchSize"></param>
+		/// <param name="time">The time you have to react.</param>
+		/// <param name="fishSpeed">Fish speed for manual catching, 0 = no movement, 3+ = pretty challenging.</param>
+		public static void FishingActionRequired(Creature creature, CatchSize catchSize, int time, float fishSpeed)
+		{
+			var packet = new Packet(Op.FishingActionRequired, creature.EntityId);
+			packet.PutByte((byte)catchSize);
+			packet.PutInt(time);
+			packet.PutFloat(fishSpeed);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

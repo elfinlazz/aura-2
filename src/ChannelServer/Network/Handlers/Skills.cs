@@ -13,6 +13,7 @@ using Aura.Mabi.Const;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.Skills;
 using Aura.Mabi.Network;
+using Aura.Channel.Skills.Life;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -444,6 +445,36 @@ namespace Aura.Channel.Network.Handlers
 			creature.Regens.Remove("ActiveSkillWait");
 
 			creature.Skills.CancelActiveSkill();
+		}
+
+		/// <summary>
+		/// Reponse to FishingActionRequired.
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="packet"></param>
+		[PacketHandler(Op.FishingAction)]
+		public void FishingAction(ChannelClient client, Packet packet)
+		{
+			// TODO: Time check
+
+			var method = (FishingMethod)packet.GetByte();
+			var success = (method == FishingMethod.Manual ? packet.GetBool() : false);
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			// Check if action was actually requested
+			if (!creature.Temp.FishingActionRequested)
+				return;
+			creature.Temp.FishingActionRequested = false;
+
+			var handler = ChannelServer.Instance.SkillManager.GetHandler<Fishing>(SkillId.Fishing);
+			if (handler == null)
+			{
+				Log.Error("FishingAction: Missing fishing handler.");
+				return;
+			}
+
+			handler.OnResponse(creature, method, success);
 		}
 	}
 }

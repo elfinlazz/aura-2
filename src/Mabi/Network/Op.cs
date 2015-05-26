@@ -192,7 +192,11 @@ namespace Aura.Mabi.Network
 		public const int Land = 0x65AB;
 		public const int Landing = 0x65AC;
 		public const int CanLand = 0x65AD;
-		public const int SawItemNotification = 0x65D7; // [190100, NA200 (2015-01-15)]
+
+		// SawItemNotification increased by one some time between NA200 and NA204
+
+		public const int SawItemNotification = 0x65D8; // [190100, NA200 (2015-01-15)]
+
 		public const int SkillInfo = 0x6979;
 		public const int SkillTrainingUp = 0x697C;
 		public const int SkillAdvance = 0x697E;
@@ -212,6 +216,8 @@ namespace Aura.Mabi.Network
 		public const int SkillStopSilentCancel = 0x6990;
 		public const int SkillStackSet = 0x6991;
 		public const int SkillStackUpdate = 0x6992;
+		public const int FishingActionRequired = 0x699A;
+		public const int FishingAction = 0x699B;
 		public const int UseMotion = 0x6D62;
 		public const int PlayAnimation = 0x6D63; // s:data/.../anim/..., 1:0, 2:0, 1:0
 		public const int CancelMotion = 0x6D65;
@@ -477,8 +483,9 @@ namespace Aura.Mabi.Network
 		public const int ShamalaTransformationEnd = 0xAB1E;
 		public const int ShamalaTransformationEndR = 0xAB1F;
 
-		// [190100, NA200 (2015-01-15)]
-		public const int ItemMagnet = 0xABAB;
+		// ItemMagnet got increased by one, some time between NA200 and NA204.
+
+		public const int ItemMagnet = 0xABAC; // [190100, NA200 (2015-01-15)]
 
 		public const int NpcTalk = 0x13882;
 		public const int NpcTalkSelect = 0x13883;

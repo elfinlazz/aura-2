@@ -162,6 +162,8 @@ namespace Aura.Mabi
 					sb.AppendFormat("{0}:{1}:{2};", tag.Key, sType, (bool)tag.Value ? "1" : "0");
 				else if (sType == "s")
 					sb.AppendFormat("{0}:{1}:{2};", tag.Key, sType, ((string)tag.Value).Replace(";", "%S").Replace(":", "%C"));
+				else if (sType == "f")
+					sb.AppendFormat("{0}:{1}:{2};", tag.Key, sType, ((float)tag.Value).ToString(CultureInfo.InvariantCulture));
 				else
 					sb.AppendFormat("{0}:{1}:{2};", tag.Key, sType, tag.Value);
 			}

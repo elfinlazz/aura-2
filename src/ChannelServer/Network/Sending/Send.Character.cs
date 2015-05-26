@@ -322,6 +322,24 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Sends AcquireInfo2 to creature's client.
+		/// </summary>
+		/// <remarks>
+		/// Type can be various things, like "fishing".
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="type"></param>
+		/// <param name="objectid"></param>
+		public static void AcquireInfo2(Creature creature, string type, long objectid)
+		{
+			var packet = new Packet(Op.AcquireInfo2, creature.EntityId);
+			packet.PutString("<xml type='{0}' objectid='{1}' />", type, objectid);
+			packet.PutInt(3000);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
 		/// Sends AcquireInfo to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>

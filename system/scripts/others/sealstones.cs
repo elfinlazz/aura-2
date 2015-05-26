@@ -320,8 +320,7 @@ public abstract class SealStoneScript : GeneralScript
 	{
 		Setup();
 
-		var stone = new Prop(_ident, "", "", 40000, _region, _x, _y, _direction);
-		stone.State = "state1";
+		var stone = new Prop(40000, _region, _x, _y, _direction, 1, 0, "state1", _ident);
 
 		if (GlobalVars.Perm["SealStoneId" + _ident] != null)
 		{

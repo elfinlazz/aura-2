@@ -77,7 +77,7 @@ namespace Aura.Data
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
 		{
-			return ((IEnumerable<TInfo>) this.Entries).GetEnumerator();
+			return ((IEnumerable<TInfo>)this.Entries).GetEnumerator();
 		}
 
 		public override void Clear()
@@ -95,7 +95,7 @@ namespace Aura.Data
 	{
 		public override IEnumerator<TInfo> GetEnumerator()
 		{
-			return ((IEnumerable<TInfo>) this.Entries.Values).GetEnumerator();
+			return ((IEnumerable<TInfo>)this.Entries.Values).GetEnumerator();
 		}
 
 		public TInfo Find(TIndex key)
@@ -137,6 +137,14 @@ namespace Aura.Data
 		internal static float ReadFloat(this JObject obj, string key, float def = 0) { return (float)(obj[key] ?? def); }
 		internal static double ReadDouble(this JObject obj, string key, double def = 0) { return (double)(obj[key] ?? def); }
 		internal static string ReadString(this JObject obj, string key, string def = "") { return (string)(obj[key] ?? def); }
+
+		internal static bool ContainsAnyKeys(this JObject obj, params string[] keys)
+		{
+			if (keys.Length == 1)
+				return (obj[keys[0]] != null);
+
+			return keys.Any(key => obj[key] != null);
+		}
 
 		internal static bool ContainsKeys(this JObject obj, params string[] keys)
 		{

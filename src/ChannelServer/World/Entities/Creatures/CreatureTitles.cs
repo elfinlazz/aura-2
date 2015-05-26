@@ -177,7 +177,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			this.SwitchStatMods(data, option);
 			this.SetTitle(titleId, option);
 
-			if (_creature.Region != null)
+			if (_creature.Region != Region.Limbo)
 				Send.TitleUpdate(_creature);
 
 			return true;
@@ -251,7 +251,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			}
 
 			// Broadcast new stats if creature is in a region yet
-			if (_creature.Region != null)
+			if (_creature.Region != Region.Limbo)
 			{
 				Send.StatUpdate(_creature, StatUpdateType.Private,
 					Stat.LifeMaxMod, Stat.Life, Stat.LifeInjured, Stat.ManaMaxMod, Stat.Mana, Stat.StaminaMaxMod,

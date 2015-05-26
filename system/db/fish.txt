@@ -1,0 +1,35 @@
+// Aura
+// Database file
+// 
+// Values: id, prop, propSize, [sizeMin, sizeMax]
+//---------------------------------------------------------------------------
+
+[
+{ itemId: 50158, prop: "prop_caught_fish_01", propSize: 70 },
+{ itemId: 50613, prop: "prop_caught_fish_01", propSize: 70 },
+{ itemId: 50159, prop: "prop_caught_fish_02", propSize: 70, sizeMin: 10, sizeMax: 150 },
+{ itemId: 50204, prop: "prop_caught_fish_03", propSize: 70, sizeMin: 30, sizeMax: 160 },
+{ itemId: 50205, prop: "prop_caught_fish_04", propSize: 85, sizeMin: 50, sizeMax: 200 },
+{ itemId: 50614, prop: "prop_caught_fish_04", propSize: 85, sizeMin: 50, sizeMax: 200 },
+{ itemId: 50611, prop: "prop_caught_fish_04", propSize: 85, sizeMin: 50, sizeMax: 200 },
+{ itemId: 50612, prop: "prop_caught_fish_04", propSize: 85, sizeMin: 50, sizeMax: 200 },
+{ itemId: 50216, prop: "prop_caught_fish_05", propSize: 85, sizeMin: 160, sizeMax: 300 },
+{ itemId: 50250, prop: "prop_caught_fish_14", propSize: 85, sizeMin: 160, sizeMax: 295 },
+{ itemId: 50253, prop: "prop_caught_fish_06", propSize: 85, sizeMin: 30, sizeMax: 50 },
+{ itemId: 50254, prop: "prop_caught_fish_07", propSize: 85, sizeMin: 10, sizeMax: 30 },
+{ itemId: 50255, prop: "prop_caught_fish_08", propSize: 85, sizeMin: 50, sizeMax: 70 },
+{ itemId: 50256, prop: "prop_caught_fish_11", propSize: 85, sizeMin: 90, sizeMax: 110 },
+{ itemId: 50257, prop: "prop_caught_fish_13", propSize: 85, sizeMin: 5, sizeMax: 15 },
+{ itemId: 50258, prop: "prop_caught_fish_09", propSize: 85, sizeMin: 30, sizeMax: 160 },
+{ itemId: 50259, prop: "prop_caught_fish_10", propSize: 85, sizeMin: 50, sizeMax: 300 },
+{ itemId: 50260, prop: "prop_caught_fish_12", propSize: 85, sizeMin: 50, sizeMax: 200 },
+{ itemId: 50290, prop: "prop_caught_moon_01", propSize: 50, sizeMin: 25, sizeMax: 100 },
+{ itemId: 50392, prop: "prop_caught_moon_01", propSize: 50, sizeMin: 25, sizeMax: 100 },
+{ itemId: 50518, prop: "prop_caught_fish_16", propSize: 10, sizeMin: 50, sizeMax: 3000 },
+{ itemId: 50519, prop: "prop_caught_fish_17", propSize: 70, sizeMin: 30, sizeMax: 60 },
+{ itemId: 50520, prop: "prop_caught_fish_15", propSize: 50 },
+{ itemId: 50532, prop: "prop_caught_ice_01", propSize: 100, sizeMin: 60, sizeMax: 170 },
+{ itemId: 50569, prop: "prop_caught_fish_18", propSize: 60, sizeMin: 30, sizeMax: 100 },
+{ itemId: 50570, prop: "prop_caught_fish_19", propSize: 50 },
+{ itemId: 50571, prop: "prop_caught_fish_20", propSize: 60, sizeMin: 50, sizeMax: 100 },
+]

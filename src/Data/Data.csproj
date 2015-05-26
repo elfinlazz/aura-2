@@ -59,6 +59,8 @@
     <Compile Include="Database\CharCards.cs" />
     <Compile Include="Database\CharCardSets.cs" />
     <Compile Include="Database\CollectingDb.cs" />
+    <Compile Include="Database\Fish.cs" />
+    <Compile Include="Database\FishingGrounds.cs" />
     <Compile Include="Database\Props.cs" />
     <Compile Include="Database\WeatherTables.cs" />
     <Compile Include="Database\ColorMaps.cs" />

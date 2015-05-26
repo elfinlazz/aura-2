@@ -753,6 +753,10 @@ namespace Aura.Channel.World.Entities
 				if (restHandler != null)
 					restHandler.Stop(this, this.Skills.Get(SkillId.Rest));
 			}
+
+			// Cancel any active skills
+			if (this.Skills.ActiveSkill != null)
+				this.Skills.CancelActiveSkill();
 		}
 
 		public void Activate(CreatureStates state) { this.State |= state; }
@@ -1698,10 +1702,24 @@ namespace Aura.Channel.World.Entities
 		{
 			this.Dispose();
 
-			if (this.Region != null)
+			if (this.Region != Region.Limbo)
 				this.Region.RemoveCreature(this);
 
 			base.Disappear();
+		}
+
+		/// <summary>
+		/// Turns creature in direction of position.
+		/// </summary>
+		/// <param name="pos"></param>
+		public void TurnTo(Position pos)
+		{
+			var creaturePos = this.GetPosition();
+			var x = pos.X - creaturePos.X;
+			var y = pos.Y - creaturePos.Y;
+
+			this.Direction = MabiMath.DirectionToByte(x, y);
+			Send.TurnTo(this, x, y);
 		}
 	}
 }

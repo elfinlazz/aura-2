@@ -21,6 +21,11 @@ namespace Aura.Mabi.Const
 		public static readonly int PickUpKey = 8;
 
 		/// <summary>
+		/// byte:type, byte:? [, long:propId, int:itemId, int:fishSize, string:fishPropname, int:fishPropSize]
+		/// </summary>
+		public static readonly int Fishing = 10;
+
+		/// <summary>
 		/// Logged values: "", "healing", "flashing", "thunder", "icespear"
 		/// string:?
 		/// </summary>
@@ -181,5 +186,14 @@ namespace Aura.Mabi.Const
 		//GolemDespawn = 6, // ?
 		//Demi? = 7, // ?
 		//Demi? = 8, // ?
+	}
+
+	public enum FishingEffectType : byte
+	{
+		Cast = 0,
+		// ? = 1, // Nothing?
+		// ? = 2, // Nothing?
+		ReelIn = 3,
+		Fall = 4,
 	}
 }

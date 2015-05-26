@@ -247,6 +247,32 @@ namespace Aura.Data.Database
 		public List<ShapeData> Shapes { get; set; }
 		public List<RegionElementData> Parameters { get; set; }
 
+		public bool IsInside(int x, int y)
+		{
+			if (this.Shapes.Count == 0)
+				return false;
+
+			var result = false;
+
+			var shape = this.Shapes[0];
+			var point = new Point(x, y);
+			var points = new[] // >_>
+			{
+				new Point(shape.X1,shape.Y1),
+				new Point(shape.X2,shape.Y2),
+				new Point(shape.X3,shape.Y3),
+				new Point(shape.X4,shape.Y4),
+			};
+
+			for (int i = 0, j = points.Length - 1; i < points.Length; j = i++)
+			{
+				if (((points[i].Y > point.Y) != (points[j].Y > point.Y)) && (point.X < (points[j].X - points[i].X) * (point.Y - points[i].Y) / (points[j].Y - points[i].Y) + points[i].X))
+					result = !result;
+			}
+
+			return result;
+		}
+
 		public EventData Copy()
 		{
 			var result = new EventData();
@@ -354,6 +380,37 @@ namespace Aura.Data.Database
 			return data.GroupId;
 		}
 
+		/// <summary>
+		/// Returns a list of events that start with the given path,
+		/// e.g. "Uladh_main/field_Tir_S_aa/fish_tircho_stream_", to get all
+		/// fishing events starting with that name.
+		/// </summary>
+		/// <param name="eventPath"></param>
+		/// <returns></returns>
+		public List<EventData> GetMatchingEvents(string eventPath)
+		{
+			var split = eventPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+			if (split.Length != 3)
+				throw new ArgumentException("Invalid event path, expected 3 segments.");
+
+			var region = this.GetRegion(split[0]);
+			if (region == null)
+				throw new ArgumentException("Unknown region '" + split[0] + "'.");
+
+			var area = region.GetArea(split[1]);
+			if (area == null)
+				throw new ArgumentException("Unknown area '" + split[1] + "' in region '" + split[0] + "'.");
+
+			// TODO: Cache
+			var result = new List<EventData>(area.Events.Values.Where(a => a.Name.StartsWith(split[2])));
+
+			return result;
+		}
+
+		/// <summary>
+		/// Loads data.
+		/// </summary>
+		/// <param name="br"></param>
 		protected override void Read(BinaryReader br)
 		{
 			var cRegions = br.ReadInt32();

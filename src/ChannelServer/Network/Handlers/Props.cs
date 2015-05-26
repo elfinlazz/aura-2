@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.Network.Sending;
+using Aura.Channel.World;
 using Aura.Mabi.Const;
 using Aura.Mabi.Network;
 using Aura.Shared.Network;
@@ -24,7 +25,7 @@ namespace Aura.Channel.Network.Handlers
 
 			// Check creature and region
 			var creature = client.GetCreatureSafe(packet.Id);
-			if (creature.Region == null || creature.IsDead)
+			if (creature.Region == Region.Limbo || creature.IsDead)
 				return;
 
 			// Check prop
@@ -75,7 +76,7 @@ namespace Aura.Channel.Network.Handlers
 
 			// Check creature and region
 			var creature = client.GetCreatureSafe(packet.Id);
-			if (creature.Region == null || creature.IsDead)
+			if (creature.Region == Region.Limbo || creature.IsDead)
 				return;
 
 			// Check prop
