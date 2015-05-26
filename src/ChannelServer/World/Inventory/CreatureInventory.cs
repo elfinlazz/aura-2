@@ -654,14 +654,30 @@ namespace Aura.Channel.World.Inventory
 		/// into stacks first, if possible, before calling Add.
 		/// </summary>
 		/// <param name="item"></param>
-		/// <param name="tempFallback"></param>
+		/// <param name="tempFallback">Add to temp inv when all other pockets are full?</param>
 		/// <returns>Returns true if item was added to the inventory completely.</returns>
 		public bool Insert(Item item, bool tempFallback)
 		{
+			List<Item> changed;
+			return this.Insert(item, tempFallback, out changed);
+		}
+
+		/// <summary>
+		/// Tries to add item to one of the main inventories,
+		/// using temp as fallback. Unlike "Add" the item will be filled
+		/// into stacks first, if possible, before calling Add.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="tempFallback">Add to temp inv when all other pockets are full?</param>
+		/// <param name="changed">List of stacks that items were inserted into.</param>
+		/// <returns>Returns true if item was added to the inventory completely.</returns>
+		public bool Insert(Item item, bool tempFallback, out List<Item> changed)
+		{
+			changed = null;
+
 			if (item.Data.StackType == StackType.Stackable)
 			{
 				// Try stacks/sacs first
-				List<Item> changed;
 				lock (_pockets)
 				{
 					// Main inv

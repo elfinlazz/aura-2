@@ -222,11 +222,13 @@ namespace Aura.Channel.Skills.Life
 					item.Durability = 0;
 
 				// Drop if inv add failed
-				if (!creature.Inventory.Add(item, false))
+				List<Item> changed;
+				if (!creature.Inventory.Insert(item, false, out changed))
 					item.Drop(creature.Region, creature.GetPosition().GetRandomInRange(100, rnd));
 
-				// Show acquire 
-				Send.AcquireInfo2(creature, "fishing", item.EntityId);
+				// Show acquire using the item's entity id if it wasn't added
+				// to a stack, or using the stack's id if it was.
+				Send.AcquireInfo2(creature, "fishing", (changed == null ? item.EntityId : changed.First().EntityId));
 
 				// Holding up fish effect
 				if (!cancel)
