@@ -304,6 +304,7 @@ namespace Aura.Channel.Skills.Life
 			var fishSpeed = 1f;
 
 			// Request action
+			creature.Temp.FishingActionRequested = true;
 			Send.FishingActionRequired(creature, catchSize, time, fishSpeed);
 		}
 

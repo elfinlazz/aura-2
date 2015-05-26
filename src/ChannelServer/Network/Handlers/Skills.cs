@@ -462,6 +462,11 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
+			// Check if action was actually requested
+			if (!creature.Temp.FishingActionRequested)
+				return;
+			creature.Temp.FishingActionRequested = false;
+
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<Fishing>(SkillId.Fishing);
 			if (handler == null)
 			{
