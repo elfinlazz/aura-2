@@ -39,10 +39,10 @@ namespace Aura.Data.Database
 
 		public short AttackSkill { get; set; }
 		public int AttackRange { get; set; }
-		public int AttackMin { get; set; }  // AttackMinBaseMod (race)
-		public int AttackMax { get; set; }  // AttackMaxBaseMod (race)
-		public int AttackMin2 { get; set; }	// AttackMinBase (monster)
-		public int AttackMax2 { get; set; }	// AttackMinBase (monster)
+		public int AttackMinBase { get; set; } // Monster
+		public int AttackMaxBase { get; set; } // Monster
+		public int AttackMinBaseMod { get; set; } // Race
+		public int AttackMaxBaseMod { get; set; } // Race
 		public int AttackSpeed { get; set; }
 		public int KnockCount { get; set; }
 		public int CriticalBase { get; set; } // Monster
@@ -286,10 +286,10 @@ namespace Aura.Data.Database
 			raceData.InventoryWidth = entry.ReadInt("invWidth");
 			raceData.InventoryHeight = entry.ReadInt("invHeight");
 			raceData.AttackSkill = 23002; // Combat Mastery, they all use this anyway.
-			raceData.AttackMin = entry.ReadInt("attackMin");
-			raceData.AttackMax = entry.ReadInt("attackMax");
-			raceData.AttackMin2 = entry.ReadInt("attackMin2");
-			raceData.AttackMax2 = entry.ReadInt("attackMax2");
+			raceData.AttackMinBase = entry.ReadInt("attackMinBase");
+			raceData.AttackMaxBase = entry.ReadInt("attackMaxBase");
+			raceData.AttackMinBaseMod = entry.ReadInt("attackMinBaseMod");
+			raceData.AttackMaxBaseMod = entry.ReadInt("attackMaxBaseMod");
 			raceData.AttackRange = entry.ReadInt("range");
 			raceData.AttackSpeed = entry.ReadInt("attackSpeed");
 			raceData.KnockCount = entry.ReadInt("knockCount");

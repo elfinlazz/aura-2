@@ -395,22 +395,22 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// AttMin from monster xml.
 		/// </summary>
-		public int AttackMinBase { get { return (this.RightHand == null ? this.RaceData.AttackMin2 : 0); } }
+		public int AttackMinBase { get { return (this.RightHand == null ? this.RaceData.AttackMinBase : 0); } }
 
 		/// <summary>
 		/// AttMin from monster xml.
 		/// </summary>
-		public int AttackMaxBase { get { return (this.RightHand == null ? this.RaceData.AttackMax2 : 0); } }
+		public int AttackMaxBase { get { return (this.RightHand == null ? this.RaceData.AttackMaxBase : 0); } }
 
 		/// <summary>
 		/// AttackMin from races xml.
 		/// </summary>
-		public int AttackMinBaseMod { get { return (this.RightHand == null ? this.RaceData.AttackMin : 0); } }
+		public int AttackMinBaseMod { get { return (this.RightHand == null ? this.RaceData.AttackMinBaseMod : 0); } }
 
 		/// <summary>
 		/// AttackMax from races xml.
 		/// </summary>
-		public int AttackMaxBaseMod { get { return (this.RightHand == null ? this.RaceData.AttackMax : 0); } }
+		public int AttackMaxBaseMod { get { return (this.RightHand == null ? this.RaceData.AttackMaxBaseMod : 0); } }
 
 		/// <summary>
 		/// Par_AttackMin from item xml, for right hand weapon.
