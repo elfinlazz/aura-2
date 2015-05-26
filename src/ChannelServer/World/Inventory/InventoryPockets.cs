@@ -435,16 +435,32 @@ namespace Aura.Channel.World.Inventory
 			}
 		}
 
-		public override bool TryAdd(Item item, byte targetX, byte targetY, out Item collidingItem)
+		public override bool TryAdd(Item newItem, byte targetX, byte targetY, out Item collidingItem)
 		{
-			collidingItem = null;
-			if (_item != null)
+			collidingItem = _item;
+
+			// Handle stackables and sacs
+			if (collidingItem != null && ((collidingItem.Data.StackType == StackType.Sac && (collidingItem.Data.StackItem == newItem.Info.Id || collidingItem.Data.StackItem == newItem.Data.StackItem)) || (newItem.Data.StackType == StackType.Stackable && newItem.Info.Id == collidingItem.Info.Id)))
 			{
-				collidingItem = _item;
-				collidingItem.Move(item.Info.Pocket, item.Info.X, item.Info.Y);
+				if (collidingItem.Info.Amount < collidingItem.Data.StackMax)
+				{
+					var diff = (ushort)(collidingItem.Data.StackMax - collidingItem.Info.Amount);
+
+					collidingItem.Info.Amount += Math.Min(diff, newItem.Info.Amount);
+					newItem.Info.Amount -= Math.Min(diff, newItem.Info.Amount);
+
+					return true;
+				}
 			}
 
-			_item = item;
+			// Switch items if colliding
+			if (collidingItem != null)
+			{
+				collidingItem = _item;
+				collidingItem.Move(newItem.Info.Pocket, newItem.Info.X, newItem.Info.Y);
+			}
+
+			_item = newItem;
 			_item.Move(this.Pocket, 0, 0);
 
 			return true;
