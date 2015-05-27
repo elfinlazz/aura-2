@@ -200,6 +200,16 @@
     <Compile Include="Util\Quadtree.cs" />
     <Compile Include="Util\Security.cs" />
     <Compile Include="World\Cutscene.cs" />
+    <Compile Include="World\Dungeons\Direction.cs" />
+    <Compile Include="World\Dungeons\DungeonData.cs" />
+    <Compile Include="World\Dungeons\DungeonFloor.cs" />
+    <Compile Include="World\Dungeons\DungeonGenerator.cs" />
+    <Compile Include="World\Dungeons\MazeGenerator.cs" />
+    <Compile Include="World\Dungeons\MazeMove.cs" />
+    <Compile Include="World\Dungeons\MazeRoomInternal.cs" />
+    <Compile Include="World\Dungeons\Position.cs" />
+    <Compile Include="World\Dungeons\RandomDirection.cs" />
+    <Compile Include="World\Dungeons\RoomTrait.cs" />
     <Compile Include="World\DynamicRegionManager.cs" />
     <Compile Include="World\EgoInfo.cs" />
     <Compile Include="World\Entities\Character.cs" />
