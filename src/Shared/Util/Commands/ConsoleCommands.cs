@@ -41,9 +41,6 @@ namespace Aura.Shared.Util.Commands
 		/// <param name="handler"></param>
 		public void Add(string name, string usage, string description, ConsoleCommandFunc handler)
 		{
-			if (_commands.ContainsKey(name))
-				Log.Warning("Console command '{0}' is being overwritten.", name);
-
 			_commands[name] = new ConsoleCommand(name, usage, description, handler);
 		}
 

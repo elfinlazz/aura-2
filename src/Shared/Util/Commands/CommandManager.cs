@@ -29,9 +29,6 @@ namespace Aura.Shared.Util.Commands
 		/// <param name="command"></param>
 		protected void Add(TCommand command)
 		{
-			if (_commands.ContainsKey(command.Name))
-				Log.Warning("Command '{0}' is being overwritten.", command.Name);
-
 			_commands[command.Name] = command;
 		}
 
