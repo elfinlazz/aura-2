@@ -309,7 +309,7 @@ namespace Aura.Data.Database
 			raceData.Color2 = entry.ReadUInt("color2");
 			raceData.Color3 = entry.ReadUInt("color3");
 
-			if (!entry.ContainsKeys("size", "sizeMin", "sizeMax"))
+			if (!entry.ContainsAnyKeys("size", "sizeMin", "sizeMax"))
 				raceData.SizeMin = raceData.SizeMax = 1;
 			else if (entry.ContainsKey("size"))
 				raceData.SizeMin = raceData.SizeMax = entry.ReadFloat("size");
