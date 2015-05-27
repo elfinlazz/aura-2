@@ -183,7 +183,7 @@ namespace Aura.Channel.World
 
 			this.Id = Interlocked.Increment(ref _id);
 			this.RaceId = raceId;
-			this.Amount = amount;
+			this.Amount = (int)Math.Ceiling(amount / 2f);
 			this.RegionId = regionId;
 			this.Delay = delay * 1000;
 			this.DelayMin = delayMin * 1000;
