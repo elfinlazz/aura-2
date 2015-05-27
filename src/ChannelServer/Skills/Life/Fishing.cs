@@ -195,7 +195,7 @@ namespace Aura.Channel.Skills.Life
 				var size = 0;
 
 				// Create item
-				item = new Item(creature.Temp.FishingDrop.ItemId);
+				item = new Item(creature.Temp.FishingDrop);
 
 				// Check fish
 				var fish = AuraData.FishDb.Find(creature.Temp.FishingDrop.ItemId);
