@@ -643,7 +643,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="raceId"></param>
 		protected void SetRace(int raceId)
 		{
-			this.NPC.Race = raceId;
+			this.NPC.RaceId = raceId;
 		}
 
 		/// <summary>

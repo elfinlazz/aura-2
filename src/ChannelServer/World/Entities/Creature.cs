@@ -26,11 +26,7 @@ namespace Aura.Channel.World.Entities
 	/// </summary>
 	public abstract class Creature : Entity, IDisposable
 	{
-		public const float HandBalance = 0.3f;
 		public const float BaseMagicBalance = 0.3f;
-		public const float HandCritical = 0.1f;
-		public const int HandAttackMin = 0;
-		public const int HandAttackMax = 8;
 		public const float MinStability = -10, MaxStability = 100;
 
 		private const float MinWeight = 0.7f, MaxWeight = 1.5f;
@@ -48,7 +44,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureStates State { get; set; }
 		public CreatureStatesEx StateEx { get; set; }
 
-		public int Race { get; set; }
+		public int RaceId { get; set; }
 		public RaceData RaceData { get; protected set; }
 
 		public Creature Master { get; set; }
@@ -71,9 +67,9 @@ namespace Aura.Channel.World.Entities
 		public bool IsPet { get { return (this is Pet); } }
 		public bool IsPartner { get { return (this.IsPet && this.EntityId >= MabiId.Partners); } }
 
-		public bool IsHuman { get { return (this.Race == 10001 || this.Race == 10002); } }
-		public bool IsElf { get { return (this.Race == 9001 || this.Race == 9002); } }
-		public bool IsGiant { get { return (this.Race == 8001 || this.Race == 8002); } }
+		public bool IsHuman { get { return (this.RaceId == 10001 || this.RaceId == 10002); } }
+		public bool IsElf { get { return (this.RaceId == 9001 || this.RaceId == 9002); } }
+		public bool IsGiant { get { return (this.RaceId == 8001 || this.RaceId == 8002); } }
 
 		public bool IsMale { get { return (this.RaceData != null && this.RaceData.Gender == Gender.Male); } }
 		public bool IsFemale { get { return (this.RaceData != null && this.RaceData.Gender == Gender.Female); } }
@@ -356,89 +352,95 @@ namespace Aura.Channel.World.Entities
 		public float Will { get { return this.WillBaseTotal + this.WillMod + this.WillFoodMod; } }
 		public float Luck { get { return this.LuckBaseTotal + this.LuckMod + this.LuckFoodMod; } }
 
-		// TODO: Make equipment actually modify mods?
+		/// <summary>
+		/// Rate from monster xml
+		/// </summary>
+		public int BalanceBase { get { return (this.RightHand == null ? this.RaceData.BalanceBase : 0); } }
 
-		public float BalanceBase
-		{
-			get
-			{
-				var result = HandBalance;
+		/// <summary>
+		/// Rate from races xml
+		/// </summary>
+		public int BalanceBaseMod { get { return (this.RightHand == null ? this.RaceData.BalanceBaseMod : 0); } }
 
-				if (this.RightHand != null)
-				{
-					result = this.RightHand.Balance;
-					if (this.LeftHand != null)
-					{
-						result += this.LeftHand.Balance;
-						result /= 2f; // average
-					}
-				}
+		/// <summary>
+		/// Balance of right hand weapon
+		/// </summary>
+		public int RightBalanceMod { get { return (this.RightHand != null ? this.RightHand.OptionInfo.Balance : 0); } }
 
-				return result;
-			}
-		}
+		/// <summary>
+		/// Balance of left hand weapon
+		/// </summary>
+		public int LeftBalanceMod { get { return (this.LeftHand != null ? this.LeftHand.OptionInfo.Balance : 0); } }
 
-		public float CriticalBase
-		{
-			get
-			{
-				var result = HandCritical;
+		/// <summary>
+		/// Critical from monster xml.
+		/// </summary>
+		public float CriticalBase { get { return (this.RightHand == null ? this.RaceData.CriticalBase : 0); } }
 
-				if (this.RightHand != null)
-				{
-					result = this.RightHand.Critical;
-					if (this.LeftHand != null)
-					{
-						result += this.LeftHand.Critical;
-						result /= 2f; // average
-					}
-				}
+		/// <summary>
+		/// Critical from races xml.
+		/// </summary>
+		public float CriticalBaseMod { get { return (this.RightHand == null ? this.RaceData.CriticalBaseMod : 0); } }
 
-				// TODO: Stat bonuses?
+		/// <summary>
+		/// Critical of right hand weapon
+		/// </summary>
+		public float RightCriticalMod { get { return (this.RightHand != null ? this.RightHand.OptionInfo.Critical : 0); } }
 
-				return result;
-			}
-		}
+		/// <summary>
+		/// Critical of left hand weapon
+		/// </summary>
+		public float LeftCriticalMod { get { return (this.LeftHand != null ? this.LeftHand.OptionInfo.Critical : 0); } }
 
-		public int AttackMinBaseMod
-		{
-			get
-			{
-				var result = HandAttackMin;
+		/// <summary>
+		/// AttMin from monster xml.
+		/// </summary>
+		public int AttackMinBase { get { return (this.RightHand == null ? this.RaceData.AttackMinBase : 0); } }
 
-				if (this.RightHand != null)
-				{
-					result = this.RightHand.OptionInfo.AttackMin;
-					if (this.LeftHand != null)
-					{
-						result += this.LeftHand.OptionInfo.AttackMin;
-						result /= 2; // average
-					}
-				}
+		/// <summary>
+		/// AttMin from monster xml.
+		/// </summary>
+		public int AttackMaxBase { get { return (this.RightHand == null ? this.RaceData.AttackMaxBase : 0); } }
 
-				return result;
-			}
-		}
+		/// <summary>
+		/// AttackMin from races xml.
+		/// </summary>
+		public int AttackMinBaseMod { get { return (this.RightHand == null ? this.RaceData.AttackMinBaseMod : 0); } }
 
-		public int AttackMaxBaseMod
-		{
-			get
-			{
-				var result = HandAttackMax;
+		/// <summary>
+		/// AttackMax from races xml.
+		/// </summary>
+		public int AttackMaxBaseMod { get { return (this.RightHand == null ? this.RaceData.AttackMaxBaseMod : 0); } }
 
-				if (this.RightHand != null)
-				{
-					result = this.RightHand.OptionInfo.AttackMax;
-					if (this.LeftHand != null)
-					{
-						result += this.LeftHand.OptionInfo.AttackMax;
-						result /= 2; // average
-					}
-				}
+		/// <summary>
+		/// Par_AttackMin from item xml, for right hand weapon.
+		/// </summary>
+		public int RightAttackMinMod { get { return (this.RightHand != null ? this.RightHand.OptionInfo.AttackMin : 0); } }
 
-				return result;
-			}
-		}
+		/// <summary>
+		/// Par_AttackMax from item xml, for right hand weapon.
+		/// </summary>
+		public int RightAttackMaxMod { get { return (this.RightHand != null ? this.RightHand.OptionInfo.AttackMax : 0); } }
+
+		/// <summary>
+		/// Par_AttackMin from item xml, for left hand weapon.
+		/// </summary>
+		public int LeftAttackMinMod { get { return (this.LeftHand != null ? this.LeftHand.OptionInfo.AttackMin : 0); } }
+
+		/// <summary>
+		/// Par_AttackMax from item xml, for left hand weapon.
+		/// </summary>
+		public int LeftAttackMaxMod { get { return (this.LeftHand != null ? this.LeftHand.OptionInfo.AttackMax : 0); } }
+
+		/// <summary>
+		/// Used for title bonuses.
+		/// </summary>
+		public int AttackMinMod { get { return (int)this.StatMods.Get(Stat.AttackMinMod); } }
+
+		/// <summary>
+		/// Used for title bonuses.
+		/// </summary>
+		public int AttackMaxMod { get { return (int)this.StatMods.Get(Stat.AttackMaxMod); } }
 
 		public int InjuryMinBaseMod
 		{
@@ -479,9 +481,6 @@ namespace Aura.Channel.World.Entities
 				return result;
 			}
 		}
-
-		public int AttackMinMod { get { return (int)this.StatMods.Get(Stat.AttackMinMod); } }
-		public int AttackMaxMod { get { return (int)this.StatMods.Get(Stat.AttackMaxMod); } }
 
 		/// <summary>
 		/// Returns total magic attack, based on stats, equipment, etc.
@@ -546,7 +545,10 @@ namespace Aura.Channel.World.Entities
 		// Defense/Protection
 		// ------------------------------------------------------------------
 
-		public int DefenseBase { get; set; } // Race
+		/// <summary>
+		/// Defense from monster xml
+		/// </summary>
+		public int DefenseBase { get { return this.RaceData.Defense; } }
 		public int DefenseBaseMod { get { return (int)this.StatMods.Get(Stat.DefenseBaseMod) + this.Inventory.GetEquipmentDefense(); } } // Skills, Titles, etc?
 		public int DefenseMod { get { return (int)this.StatMods.Get(Stat.DefenseMod); } } // eg Reforging? (yellow)
 		public int Defense
@@ -572,7 +574,10 @@ namespace Aura.Channel.World.Entities
 			}
 		}
 
-		public float ProtectionBase { get; set; }
+		/// <summary>
+		/// Protect from monster xml
+		/// </summary>
+		public float ProtectionBase { get { return this.RaceData.Protection; } }
 		public float ProtectionBaseMod { get { return this.StatMods.Get(Stat.ProtectionBaseMod) + this.Inventory.GetEquipmentProtection(); } }
 		public float ProtectionMod { get { return this.StatMods.Get(Stat.ProtectionMod); } }
 		public float Protection
@@ -699,40 +704,36 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Loads race and handles some basic stuff, like adding regens.
 		/// </summary>
-		/// <param name="fullyFunctional">Fully functional creatures have an inv, regens, etc.</param>
-		public virtual void LoadDefault(bool fullyFunctional = true)
+		public virtual void LoadDefault()
 		{
-			if (this.Race == 0)
+			if (this.RaceId == 0)
 				throw new Exception("Set race before calling LoadDefault.");
 
-			this.RaceData = AuraData.RaceDb.Find(this.Race);
+			this.RaceData = AuraData.RaceDb.Find(this.RaceId);
 			if (this.RaceData == null)
 			{
 				// Try to default to Human
 				this.RaceData = AuraData.RaceDb.Find(10000);
 				if (this.RaceData == null)
-					throw new Exception("Unable to load race data, race '" + this.Race.ToString() + "' not found.");
+					throw new Exception("Unable to load race data, race '" + this.RaceId.ToString() + "' not found.");
 
-				Log.Warning("Race '{0}' not found, using human instead.", this.Race);
+				Log.Warning("Race '{0}' not found, using human instead.", this.RaceId);
 			}
 
-			if (fullyFunctional)
-			{
-				this.DefenseBase = this.RaceData.Defense;
-				this.ProtectionBase = this.RaceData.Protection;
+			// Add inventory
+			this.Inventory.AddMainInventory();
 
-				this.Inventory.AddMainInventory();
+			// Add regens
+			// The wiki says it's 0.125 life, but the packets have 0.12.
+			this.Regens.Add(Stat.Life, 0.12f, this.LifeMax);
+			this.Regens.Add(Stat.Mana, 0.05f, this.ManaMax);
+			this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
+			if (ChannelServer.Instance.Conf.World.EnableHunger)
+				this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
+			this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
 
-				// The wiki says it's 0.125 life, but the packets have 0.12.
-				this.Regens.Add(Stat.Life, 0.12f, this.LifeMax);
-				this.Regens.Add(Stat.Mana, 0.05f, this.ManaMax);
-				this.Regens.Add(Stat.Stamina, 0.4f, this.StaminaMax);
-				if (ChannelServer.Instance.Conf.World.EnableHunger)
-					this.Regens.Add(Stat.Hunger, 0.01f, this.StaminaMax);
-				this.Regens.OnErinnDaytimeTick(ErinnTime.Now);
-
-				ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
-			}
+			// Subscribe to 5 minute event
+			ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
 		}
 
 		/// <summary>
@@ -1151,39 +1152,58 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Calculates random damage using the given item.
+		/// Calculates random damage for the right hand (default).
 		/// </summary>
-		/// <param name="weapon">null for hands</param>
-		/// <param name="balance">NaN for individual balance calculation</param>
+		/// <remarks>
+		/// Method is used for bare hand attacks as well, if right hand is
+		/// empty, use bare hand attack values.
+		/// </remarks>
 		/// <returns></returns>
-		public virtual float GetRndDamage(Item weapon, float balance = float.NaN)
+		public virtual float GetRndRightHandDamage()
 		{
-			float min = 0, max = 0;
+			// Checks in the properties should make this work (right = rh weapon or bare hand)
+			var min = this.AttackMinBase + this.AttackMinBaseMod + this.RightAttackMinMod;
+			var max = this.AttackMaxBase + this.AttackMaxBaseMod + this.RightAttackMaxMod;
+			var balance = this.BalanceBase + this.BalanceBaseMod + this.RightBalanceMod;
 
-			if (float.IsNaN(balance))
-				balance = this.GetRndBalance(weapon);
+			return this.GetRndDamage(min, max, balance);
+		}
 
-			if (weapon != null)
-			{
-				min += weapon.OptionInfo.AttackMin;
-				max += weapon.OptionInfo.AttackMax;
-			}
-			else
-			{
-				min = this.RaceData.AttackMin;
-				max = this.RaceData.AttackMax;
-			}
+		/// <summary>
+		/// Calculates random damage for the left hand (off-hand).
+		/// </summary>
+		/// <returns></returns>
+		public virtual float GetRndLeftHandDamage()
+		{
+			if (this.LeftHand == null /*|| !weapon*/)
+				return 0;
 
-			min += (Math.Max(0, this.Str - 10) / 3.0f);
-			max += (Math.Max(0, this.Str - 10) / 2.5f);
+			return this.GetRndDamage(this.LeftAttackMinMod, this.LeftAttackMaxMod, this.LeftBalanceMod);
+		}
+
+		/// <summary>
+		/// Calculates random damage with the given min/max and balance values.
+		/// Adds attack mods and stat bonuses automatically and randomizes
+		/// the balance.
+		/// </summary>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <param name="balance"></param>
+		/// <returns></returns>
+		protected virtual float GetRndDamage(float min, float max, int balance)
+		{
+			var balanceMultiplicator = this.GetRndBalance(balance) / 100f;
 
 			min += this.AttackMinMod;
+			min += (Math.Max(0, this.Str - 10) / 3.0f);
+
 			max += this.AttackMaxMod;
+			max += (Math.Max(0, this.Str - 10) / 2.5f);
 
 			if (min > max)
 				min = max;
 
-			return (min + ((max - min) * balance));
+			return (min + ((max - min) * balanceMultiplicator));
 		}
 
 		/// <summary>
@@ -1192,33 +1212,61 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public float GetRndTotalDamage()
 		{
-			var balance = this.GetRndAverageBalance();
+			var balance = 0;
+			if (this.RightHand == null)
+				balance = this.BalanceBase + this.BalanceBaseMod;
+			else
+			{
+				balance = this.RightBalanceMod;
+				if (this.LeftHand != null)
+					balance = (balance + this.LeftBalanceMod) / 2;
+			}
 
-			var dmg = this.GetRndDamage(this.RightHand, balance);
-			if (this.LeftHand != null)
-				dmg += this.GetRndDamage(this.LeftHand, balance);
+			var min = 0;
+			if (this.RightHand == null)
+				min = this.AttackMinBase + this.AttackMinBaseMod;
+			else
+			{
+				min = this.RightAttackMinMod;
+				if (this.LeftHand != null)
+					min = (min + this.LeftAttackMinMod) / 2;
+			}
 
-			return dmg;
+			var max = 0;
+			if (this.RightHand == null)
+				max = this.AttackMaxBase + this.AttackMaxBaseMod;
+			else
+			{
+				max = this.RightAttackMaxMod;
+				if (this.LeftHand != null)
+					max = (max + this.LeftAttackMaxMod) / 2;
+			}
+
+			return this.GetRndDamage(min, max, balance);
 		}
 
 		/// <summary>
-		/// Calculates random balance (0.0~0.8) using the given base balance (eg 0.3 for hands).
+		/// Calculates random balance with given base balance, adding the
+		/// dex bonus along the way.
 		/// </summary>
 		/// <param name="baseBalance"></param>
 		/// <returns></returns>
-		protected float GetRndBalance(float baseBalance)
+		protected int GetRndBalance(int baseBalance)
 		{
 			var rnd = RandomProvider.Get();
 			var balance = baseBalance;
 
 			// Dex
-			balance += (Math.Max(0, this.Dex - 10) / 4) / 100f;
+			balance = (int)Math2.Clamp(0, 80, balance + ((this.Dex - 10) / 4f));
 
-			// Randomization, balance+-(100-balance), eg 80 = 60~100
-			var diff = 1.0f - balance;
-			balance += ((diff - (diff * 2 * (float)rnd.NextDouble())) * (float)rnd.NextDouble());
+			// Randomization
+			var diff = 100 - balance;
+			var min = Math.Max(0, balance - diff);
+			var max = Math.Max(100, balance + diff);
 
-			return Math2.Clamp(0f, 0.8f, balance);
+			balance = rnd.Next(min, max + 1);
+
+			return Math2.Clamp(0, 80, balance);
 		}
 
 		/// <summary>
@@ -1238,25 +1286,6 @@ namespace Aura.Channel.World.Entities
 			balance += ((diff - (diff * 2 * (float)rnd.NextDouble())) * (float)rnd.NextDouble());
 
 			return Math2.Clamp(0f, 1f, balance);
-		}
-
-		/// <summary>
-		/// Returns randomized average balance, taking both weapons into consideration.
-		/// </summary>
-		/// <returns></returns>
-		public float GetRndAverageBalance()
-		{
-			return this.GetRndBalance(this.BalanceBase);
-		}
-
-		/// <summary>
-		/// Calculates random balance for the given weapon.
-		/// </summary>
-		/// <param name="weapon">null for hands</param>
-		/// <returns></returns>
-		public float GetRndBalance(Item weapon)
-		{
-			return this.GetRndBalance(weapon != null ? weapon.Balance : HandBalance);
 		}
 
 		/// <summary>
@@ -1422,7 +1451,7 @@ namespace Aura.Channel.World.Entities
 			var dropped = new HashSet<int>();
 			foreach (var drop in this.Drops.Drops)
 			{
-				if (rnd.NextDouble() < drop.Chance * ChannelServer.Instance.Conf.World.DropRate)
+				if (rnd.NextDouble() * 100 < drop.Chance * ChannelServer.Instance.Conf.World.DropRate)
 				{
 					// Only drop any item once
 					if (dropped.Contains(drop.ItemId))
@@ -1430,23 +1459,7 @@ namespace Aura.Channel.World.Entities
 
 					var dropPos = pos.GetRandomInRange(50, rnd);
 
-					var item = new Item(drop.ItemId);
-
-					var amount = drop.Amount;
-					if (drop.MaxAmount != 0)
-						amount = rnd.Next(drop.MinAmount, drop.MaxAmount + 1);
-
-					item.Info.Amount = (ushort)amount;
-
-					item.OptionInfo.Prefix = (ushort)drop.Prefix;
-					item.OptionInfo.Suffix = (ushort)drop.Suffix;
-					if (drop.HasColor)
-					{
-						item.Info.Color1 = drop.Color1;
-						item.Info.Color2 = drop.Color2;
-						item.Info.Color3 = drop.Color3;
-					}
-
+					var item = new Item(drop);
 					item.Info.Region = this.RegionId;
 					item.Info.X = dropPos.X;
 					item.Info.Y = dropPos.Y;
@@ -1469,7 +1482,7 @@ namespace Aura.Channel.World.Entities
 
 			this.Exp += val;
 
-			var levelStats = AuraData.StatsLevelUpDb.Find(this.Race, this.Age);
+			var levelStats = AuraData.StatsLevelUpDb.Find(this.RaceId, this.Age);
 
 			var prevLevel = this.Level;
 			float ap = this.AbilityPoints;
@@ -1505,7 +1518,7 @@ namespace Aura.Channel.World.Entities
 			{
 				// Only notify on level up
 				if (levelStats == null)
-					Log.Unimplemented("GiveExp: Level up stats missing for race '{0}'.", this.Race);
+					Log.Unimplemented("GiveExp: Level up stats missing for race '{0}'.", this.RaceId);
 
 				this.FullHeal();
 
@@ -1609,14 +1622,65 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Returns CriticalBase - target protection, the base
-		/// critical hit chance.
+		/// Calculates right (or bare) hand crit chance, taking stat bonuses
+		/// and given protection into consideration.
 		/// </summary>
-		/// <param name="target"></param>
+		/// <param name="protection"></param>
 		/// <returns></returns>
-		public float GetCritChanceFor(Creature target)
+		public float GetRightCritChance(float protection)
 		{
-			return (this.CriticalBase - target.Protection);
+			var crit = this.CriticalBase + this.CriticalBaseMod + this.RightCriticalMod;
+			return this.GetCritChance(crit, protection);
+		}
+
+		/// <summary>
+		/// Calculates left hand crit chance, taking stat bonuses
+		/// and given protection into consideration.
+		/// </summary>
+		/// <param name="protection"></param>
+		/// <returns></returns>
+		public float GetLeftCritChance(float protection)
+		{
+			if (this.LeftHand == null)
+				return 0;
+
+			return this.GetCritChance(this.LeftCriticalMod, protection);
+		}
+
+		/// <summary>
+		/// Calculates total crit chance, taking stat bonuses
+		/// and given protection and bonus into consideration.
+		/// </summary>
+		/// <param name="protection"></param>
+		/// <returns></returns>
+		public float GetTotalCritChance(float protection)
+		{
+			var crit = 0f;
+			if (this.RightHand == null)
+				crit = this.CriticalBase + this.CriticalBaseMod;
+			else
+			{
+				crit = this.RightCriticalMod;
+				if (this.LeftHand != null)
+					crit = (crit + this.LeftCriticalMod) / 2;
+			}
+
+			return this.GetCritChance(crit, protection);
+		}
+
+		/// <summary>
+		/// Adds stat bonuses to base and calculates crit chance,
+		/// taking protection into consideration.
+		/// </summary>
+		/// <param name="baseCritical"></param>
+		/// <param name="protection"></param>
+		/// <returns></returns>
+		private float GetCritChance(float baseCritical, float protection)
+		{
+			baseCritical += ((this.Will - 10) / 10f);
+			baseCritical += ((this.Luck - 10) / 5f);
+
+			return Math.Max(0, baseCritical - protection);
 		}
 
 		/// <summary>

@@ -22,9 +22,14 @@ namespace Aura.Data.Database
 		public uint DefaultState { get; set; }
 		public int VehicleType { get; set; }
 		public float RunSpeedFactor { get; set; }
-		public Element Element { get; set; }
 
-		public float Size { get; set; }
+		public int ElementPhysical { get; set; }
+		public int ElementLightning { get; set; }
+		public int ElementFire { get; set; }
+		public int ElementIce { get; set; }
+
+		public float SizeMin { get; set; }
+		public float SizeMax { get; set; }
 		public uint Color1 { get; set; }
 		public uint Color2 { get; set; }
 		public uint Color3 { get; set; }
@@ -38,21 +43,37 @@ namespace Aura.Data.Database
 
 		public short AttackSkill { get; set; }
 		public int AttackRange { get; set; }
-		public int AttackMin { get; set; }
-		public int AttackMax { get; set; }
+		public int AttackMinBase { get; set; } // Monster
+		public int AttackMaxBase { get; set; } // Monster
+		public int AttackMinBaseMod { get; set; } // Race
+		public int AttackMaxBaseMod { get; set; } // Race
+		public int InjuryMinBase { get; set; } // Monster
+		public int InjuryMaxBase { get; set; } // Monster
+		public int InjuryMinBaseMod { get; set; } // Race
+		public int InjuryMaxBaseMod { get; set; } // Race
 		public int AttackSpeed { get; set; }
 		public int KnockCount { get; set; }
-		public int Critical { get; set; }
-		public int CriticalRate { get; set; }
+		public int CriticalBase { get; set; } // Monster
+		public int CriticalBaseMod { get; set; } // Race
+		public int BalanceBase { get; set; } // Monster
+		public int BalanceBaseMod { get; set; } // Race
 		public int SplashRadius { get; set; }
 		public int SplashAngle { get; set; }
 		public float SplashDamage { get; set; }
 		public RaceStands Stand { get; set; }
 
+		public int Level { get; set; }
+		public float Str { get; set; }
+		public float Int { get; set; }
+		public float Dex { get; set; }
+		public float Will { get; set; }
+		public float Luck { get; set; }
+
 		public string AI { get; set; }
 		public float CombatPower { get; set; }
 		public float Life { get; set; }
 		public float Mana { get; set; }
+		public float Stamina { get; set; }
 		public int Defense { get; set; }
 		public int Protection { get; set; }
 		public int Exp { get; set; }
@@ -83,36 +104,26 @@ namespace Aura.Data.Database
 	{
 		public int ItemId { get; set; }
 		public float Chance { get; set; }
-		public int Amount { get; set; }
-		public int MinAmount { get; set; }
-		public int MaxAmount { get; set; }
+		public int AmountMin { get; set; }
+		public int AmountMax { get; set; }
 		public int Prefix { get; set; }
 		public int Suffix { get; set; }
-		public uint Color1 { get; set; }
-		public uint Color2 { get; set; }
-		public uint Color3 { get; set; }
-		public bool HasColor { get; set; }
+		public uint? Color1 { get; set; }
+		public uint? Color2 { get; set; }
+		public uint? Color3 { get; set; }
 
 		public DropData()
 		{
 		}
 
-		public DropData(int itemId, float chance, int amount = 1, int minAmount = 0, int maxAmount = 0, int prefix = 0, int suffix = 0)
+		public DropData(int itemId, float chance, int amountMin = 0, int amountMax = 0, int prefix = 0, int suffix = 0)
 		{
 			this.ItemId = itemId;
 			this.Chance = chance;
-			this.Amount = amount;
+			this.AmountMin = amountMin;
+			this.AmountMax = amountMax;
 			this.Prefix = prefix;
 			this.Suffix = suffix;
-		}
-
-		public DropData(int itemId, float chance, int amount, int minAmount, int maxAmount, int prefix, int suffix, uint color1, uint color2, uint color3)
-			: this(itemId, chance, amount, minAmount, maxAmount, prefix, suffix)
-		{
-			this.Color1 = color1;
-			this.Color2 = color2;
-			this.Color3 = color3;
-			this.HasColor = true;
 		}
 
 		public DropData Copy()
@@ -121,15 +132,13 @@ namespace Aura.Data.Database
 
 			result.ItemId = this.ItemId;
 			result.Chance = this.Chance;
-			result.Amount = this.Amount;
-			result.MinAmount = this.MinAmount;
-			result.MaxAmount = this.MaxAmount;
+			result.AmountMin = this.AmountMin;
+			result.AmountMax = this.AmountMax;
 			result.Prefix = this.Prefix;
 			result.Suffix = this.Suffix;
 			result.Color1 = this.Color1;
 			result.Color2 = this.Color2;
 			result.Color3 = this.Color3;
-			result.HasColor = this.HasColor;
 
 			return result;
 		}
@@ -260,7 +269,7 @@ namespace Aura.Data.Database
 
 		protected override void ReadEntry(JObject entry)
 		{
-			entry.AssertNotMissing("id", "name", "group", "tags", "gender", "vehicleType", "runSpeedFactor", "state", "invWidth", "invHeight", "attackMin", "attackMax", "range", "attackSpeed", "knockCount", "critical", "criticalRate", "splashRadius", "splashAngle", "splashDamage", "stand", "ai", "color1", "color2", "color3", "size", "cp", "life", "defense", "protection", "element");
+			entry.AssertNotMissing("id", "name", "group", "tags", "gender", "vehicleType", "runSpeedFactor", "state", "invWidth", "invHeight", "range", "attackSpeed", "knockCount", "splashRadius", "splashAngle", "splashDamage", "stand", "ai", "color1", "color2", "color3", "cp", "life");
 
 			var raceData = new RaceData();
 			raceData.Id = entry.ReadInt("id");
@@ -274,13 +283,21 @@ namespace Aura.Data.Database
 			raceData.InventoryWidth = entry.ReadInt("invWidth");
 			raceData.InventoryHeight = entry.ReadInt("invHeight");
 			raceData.AttackSkill = 23002; // Combat Mastery, they all use this anyway.
-			raceData.AttackMin = entry.ReadInt("attackMin");
-			raceData.AttackMax = entry.ReadInt("attackMax");
+			raceData.AttackMinBase = entry.ReadInt("attackMinBase");
+			raceData.AttackMaxBase = entry.ReadInt("attackMaxBase");
+			raceData.AttackMinBaseMod = entry.ReadInt("attackMinBaseMod");
+			raceData.AttackMaxBaseMod = entry.ReadInt("attackMaxBaseMod");
+			raceData.InjuryMinBase = entry.ReadInt("injuryMinBase");
+			raceData.InjuryMaxBase = entry.ReadInt("injuryMaxBase");
+			raceData.InjuryMinBaseMod = entry.ReadInt("injuryMinBaseMod");
+			raceData.InjuryMaxBaseMod = entry.ReadInt("injuryMaxBaseMod");
 			raceData.AttackRange = entry.ReadInt("range");
 			raceData.AttackSpeed = entry.ReadInt("attackSpeed");
 			raceData.KnockCount = entry.ReadInt("knockCount");
-			raceData.Critical = entry.ReadInt("critical");
-			raceData.CriticalRate = entry.ReadInt("criticalRate");
+			raceData.CriticalBase = entry.ReadInt("criticalBase");
+			raceData.CriticalBaseMod = entry.ReadInt("criticalBaseMod");
+			raceData.BalanceBase = entry.ReadInt("balanceBase");
+			raceData.BalanceBaseMod = entry.ReadInt("balanceBaseMod");
 			raceData.SplashRadius = entry.ReadInt("splashRadius");
 			raceData.SplashAngle = entry.ReadInt("splashAngle");
 			raceData.SplashDamage = entry.ReadFloat("splashDamage");
@@ -288,10 +305,22 @@ namespace Aura.Data.Database
 			raceData.AI = entry.ReadString("ai");
 
 			// Looks
-			raceData.Size = entry.ReadFloat("size");
 			raceData.Color1 = entry.ReadUInt("color1");
 			raceData.Color2 = entry.ReadUInt("color2");
 			raceData.Color3 = entry.ReadUInt("color3");
+
+			if (!entry.ContainsKeys("size", "sizeMin", "sizeMax"))
+				raceData.SizeMin = raceData.SizeMax = 1;
+			else if (entry.ContainsKey("size"))
+				raceData.SizeMin = raceData.SizeMax = entry.ReadFloat("size");
+			else
+			{
+				raceData.SizeMin = entry.ReadFloat("sizeMin", 1);
+				raceData.SizeMax = entry.ReadFloat("sizeMax", 1);
+			}
+
+			if (raceData.SizeMin > raceData.SizeMax)
+				raceData.SizeMax = raceData.SizeMin;
 
 			// Face
 			Action<string, JObject, List<int>> readArrOrIntCol = (col, obj, list) =>
@@ -315,12 +344,23 @@ namespace Aura.Data.Database
 			readArrOrIntCol("skinColor", entry, raceData.Face.SkinColors);
 
 			// Stat Info
+			raceData.Level = entry.ReadInt("level");
+			raceData.Str = entry.ReadFloat("str");
+			raceData.Int = entry.ReadFloat("int");
+			raceData.Dex = entry.ReadFloat("dex");
+			raceData.Will = entry.ReadFloat("will");
+			raceData.Luck = entry.ReadFloat("luck");
+
 			raceData.CombatPower = entry.ReadFloat("cp");
 			raceData.Life = entry.ReadFloat("life");
 			raceData.Mana = entry.ReadFloat("mana");
+			raceData.Stamina = entry.ReadFloat("stamina");
 			raceData.Defense = entry.ReadInt("defense");
 			raceData.Protection = (int)entry.ReadFloat("protection");
-			raceData.Element = (Element)entry.ReadByte("element");
+			raceData.ElementPhysical = entry.ReadInt("elementPhysical");
+			raceData.ElementLightning = entry.ReadInt("elementLightning");
+			raceData.ElementFire = entry.ReadInt("elementFire");
+			raceData.ElementIce = entry.ReadInt("elementIce");
 			raceData.Exp = entry.ReadInt("exp");
 			raceData.GoldMin = entry.ReadInt("goldMin");
 			raceData.GoldMax = entry.ReadInt("goldMax");
@@ -335,28 +375,25 @@ namespace Aura.Data.Database
 					var dropData = new DropData();
 					dropData.ItemId = drop.ReadInt("itemId");
 					dropData.Chance = drop.ReadFloat("chance");
-					dropData.Amount = drop.ReadInt("amount", 1);
-					dropData.MinAmount = drop.ReadInt("minAmount", 0);
-					dropData.MaxAmount = drop.ReadInt("maxAmount", 0);
+					var amount = drop.ReadInt("amount");
+					dropData.AmountMin = drop.ReadInt("minAmount");
+					dropData.AmountMax = drop.ReadInt("maxAmount");
 					dropData.Prefix = drop.ReadInt("prefix");
 					dropData.Suffix = drop.ReadInt("suffix");
 
-					if (dropData.MaxAmount < dropData.MinAmount)
-						dropData.MinAmount = dropData.MaxAmount;
+					if (amount != 0)
+						dropData.AmountMin = dropData.AmountMax = amount;
+					if (dropData.AmountMin > dropData.AmountMax)
+						dropData.AmountMax = dropData.AmountMin;
 
-					if (drop.ContainsKeys("color1"))
-					{
-						dropData.Color1 = drop.ReadUInt("color1", 0x808080);
-						dropData.Color2 = drop.ReadUInt("color2", 0x808080);
-						dropData.Color3 = drop.ReadUInt("color3", 0x808080);
-						dropData.HasColor = true;
-					}
-
-					dropData.Chance /= 100;
-					if (dropData.Chance > 1)
-						dropData.Chance = 1;
+					if (dropData.Chance > 100)
+						dropData.Chance = 100;
 					else if (dropData.Chance < 0)
 						dropData.Chance = 0;
+
+					if (drop.ContainsKey("color1")) dropData.Color1 = drop.ReadUInt("color1");
+					if (drop.ContainsKey("color2")) dropData.Color2 = drop.ReadUInt("color2");
+					if (drop.ContainsKey("color3")) dropData.Color3 = drop.ReadUInt("color3");
 
 					raceData.Drops.Add(dropData);
 				}
@@ -480,6 +517,4 @@ namespace Aura.Data.Database
 			this.Entries[raceData.Id] = raceData;
 		}
 	}
-
-	public enum Element : byte { None, Ice, Fire, Lightning }
 }

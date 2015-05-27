@@ -146,6 +146,12 @@ namespace Aura.Data
 			return keys.Any(key => obj[key] != null);
 		}
 
+		/// <summary>
+		/// Returns true if object contains all keys.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="keys"></param>
+		/// <returns></returns>
 		internal static bool ContainsKeys(this JObject obj, params string[] keys)
 		{
 			if (keys.Length == 1)
@@ -154,6 +160,23 @@ namespace Aura.Data
 			return keys.All(key => obj[key] != null);
 		}
 
+		/// <summary>
+		/// Returns true if object containes key.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		internal static bool ContainsKey(this JObject obj, string key)
+		{
+			return (obj[key] != null);
+		}
+
+		/// <summary>
+		/// Throws exception if one of the keys is missing from the object.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="keys"></param>
+		/// <exception cref="MandatoryValueException"></exception>
 		internal static void AssertNotMissing(this JObject obj, params string[] keys)
 		{
 			foreach (var key in keys)

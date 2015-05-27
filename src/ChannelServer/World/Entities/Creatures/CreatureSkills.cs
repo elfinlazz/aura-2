@@ -154,7 +154,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			var skill = this.Get(id);
 			if (skill == null)
 			{
-				this.Add(skill = new Skill(_creature, id, rank, _creature.Race));
+				this.Add(skill = new Skill(_creature, id, rank, _creature.RaceId));
 
 				Send.SkillInfo(_creature, skill);
 				Send.RankUp(_creature);

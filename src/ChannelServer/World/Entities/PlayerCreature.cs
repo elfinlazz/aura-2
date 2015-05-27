@@ -218,7 +218,7 @@ namespace Aura.Channel.World.Entities
 				// for the next age.
 				this.Age++;
 
-				var statUp = AuraData.StatsAgeUpDb.Find(this.Race, this.Age);
+				var statUp = AuraData.StatsAgeUpDb.Find(this.RaceId, this.Age);
 				if (statUp == null)
 				{
 					// Continue silently, creatures age past 25 without

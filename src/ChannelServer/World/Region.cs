@@ -1098,7 +1098,7 @@ namespace Aura.Channel.World
 					!npc.IsDead &&
 					npc.AI != null &&
 					npc.AI.State == AiScript.AiState.Aggro &&
-					npc.Race == raceId &&
+					npc.RaceId == raceId &&
 					npc.Target == target
 				);
 			}

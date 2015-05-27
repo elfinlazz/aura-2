@@ -251,15 +251,35 @@ namespace Aura.Channel.Network.Sending
 						case Stat.DefenseMod: packet.PutShort((short)creature.DefenseMod); break;
 						case Stat.ProtectionMod: packet.PutFloat(creature.ProtectionMod); break;
 
-						case Stat.BalanceBaseMod: packet.PutShort((short)(creature.BalanceBase * 100)); break;
-						case Stat.CriticalBaseMod: packet.PutFloat(creature.CriticalBase * 100); break;
+						case Stat.BalanceBase: packet.PutShort((short)(creature.BalanceBase)); break;
+						case Stat.BalanceBaseMod: packet.PutShort((short)(creature.BalanceBaseMod)); break;
+
+						case Stat.RightBalanceMod: packet.PutShort((short)creature.RightBalanceMod); break;
+						case Stat.LeftBalanceMod: packet.PutShort((short)creature.LeftBalanceMod); break;
+
+						case Stat.CriticalBase: packet.PutFloat(creature.CriticalBase); break;
+						case Stat.CriticalBaseMod: packet.PutFloat(creature.CriticalBaseMod); break;
+
+						case Stat.RightCriticalMod: packet.PutFloat(creature.RightCriticalMod); break;
+						case Stat.LeftCriticalMod: packet.PutFloat(creature.LeftCriticalMod); break;
+
+						case Stat.AttackMinBase: packet.PutShort((short)creature.AttackMinBase); break;
+						case Stat.AttackMaxBase: packet.PutShort((short)creature.AttackMaxBase); break;
 
 						case Stat.AttackMinBaseMod: packet.PutShort((short)creature.AttackMinBaseMod); break;
 						case Stat.AttackMaxBaseMod: packet.PutShort((short)creature.AttackMaxBaseMod); break;
-						case Stat.InjuryMinBaseMod: packet.PutShort((short)creature.InjuryMinBaseMod); break;
-						case Stat.InjuryMaxBaseMod: packet.PutShort((short)creature.InjuryMaxBaseMod); break;
+
 						case Stat.AttackMinMod: packet.PutShort((short)creature.AttackMinMod); break;
 						case Stat.AttackMaxMod: packet.PutShort((short)creature.AttackMaxMod); break;
+
+						case Stat.RightAttackMinMod: packet.PutShort((short)creature.RightAttackMinMod); break;
+						case Stat.RightAttackMaxMod: packet.PutShort((short)creature.RightAttackMaxMod); break;
+
+						case Stat.LeftAttackMinMod: packet.PutShort((short)creature.LeftAttackMinMod); break;
+						case Stat.LeftAttackMaxMod: packet.PutShort((short)creature.LeftAttackMaxMod); break;
+
+						case Stat.InjuryMinBaseMod: packet.PutShort((short)creature.InjuryMinBaseMod); break;
+						case Stat.InjuryMaxBaseMod: packet.PutShort((short)creature.InjuryMaxBaseMod); break;
 
 						case Stat.Age: packet.PutShort((short)creature.Age); break;
 

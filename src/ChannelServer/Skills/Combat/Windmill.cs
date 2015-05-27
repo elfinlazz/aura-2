@@ -121,14 +121,12 @@ namespace Aura.Channel.Skills.Combat
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
 				tAction.Delay = 300; // Usually 300, sometimes 350?
 
-				// Calculate damage and crit
+				// Calculate damage
 				var damage = attacker.GetRndTotalDamage();
-				var critChance = attacker.CriticalBase;
-
 				damage *= skill.RankData.Var1 / 100f;
 
 				// Handle skills and reductions
-				CriticalHit.Handle(attacker, critChance, ref damage, tAction);
+				CriticalHit.Handle(attacker, attacker.GetTotalCritChance(0), ref damage, tAction);
 				SkillHelper.HandleDefenseProtection(target, ref damage);
 				Defense.Handle(aAction, tAction, ref damage);
 				ManaShield.Handle(target, ref damage, tAction);

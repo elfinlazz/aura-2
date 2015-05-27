@@ -62,7 +62,7 @@ namespace Aura.Channel.World.Entities
 
 			// Some default values to prevent errors
 			this.Name = "_undefined";
-			this.Race = 190140; // Wood dummy
+			this.RaceId = 190140; // Wood dummy
 			this.Height = this.Weight = this.Upper = this.Lower = 1;
 			this.RegionId = 0;
 			this.Life = this.LifeMaxBase = 1000;
@@ -78,18 +78,25 @@ namespace Aura.Channel.World.Entities
 		public NPC(int raceId)
 			: this()
 		{
-			this.Race = raceId;
+			this.RaceId = raceId;
 			this.LoadDefault();
 
-			// TODO: This feels like it should go into LoadDefault...
-			//   why isn't it there?
+			// Technically the following would belong in LoadDefault,
+			// but NPCs in NPC scripts are loaded a little weird,
+			// so we only load the following for NPCs who's race id
+			// we get in advance.
+
+			var rnd = RandomProvider.Get();
+
+			// Set some base information
 			this.Name = this.RaceData.Name;
 			this.Color1 = this.RaceData.Color1;
 			this.Color2 = this.RaceData.Color2;
 			this.Color3 = this.RaceData.Color3;
-			this.Height = this.RaceData.Size;
+			this.Height = (float)(this.RaceData.SizeMin + RandomProvider.Get().NextDouble() * (this.RaceData.SizeMax - this.RaceData.SizeMin));
 			this.Life = this.LifeMaxBase = this.RaceData.Life;
 			this.Mana = this.ManaMaxBase = this.RaceData.Mana;
+			this.Stamina = this.StaminaMaxBase = this.RaceData.Stamina;
 			this.State = (CreatureStates)this.RaceData.DefaultState;
 			this.Direction = (byte)RandomProvider.Get().Next(256);
 
@@ -100,37 +107,7 @@ namespace Aura.Channel.World.Entities
 
 			// Give skills
 			foreach (var skill in this.RaceData.Skills)
-				this.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, this.Race);
-
-			// Set AI
-			if (!string.IsNullOrWhiteSpace(this.RaceData.AI) && this.RaceData.AI != "none")
-			{
-				this.AI = ChannelServer.Instance.ScriptManager.AiScripts.CreateAi(this.RaceData.AI, this);
-				if (this.AI == null)
-					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", this.RaceData.AI, raceId);
-			}
-		}
-
-		/// <summary>
-		/// Disposes AI.
-		/// </summary>
-		public override void Dispose()
-		{
-			base.Dispose();
-
-			if (this.AI != null)
-				this.AI.Dispose();
-		}
-
-		/// <summary>
-		/// Loads default information from race data.
-		/// </summary>
-		/// <param name="fullyFunctional">Fully functional creatures have an inv, regens, etc.</param>
-		public override void LoadDefault(bool fullyFunctional = true)
-		{
-			base.LoadDefault(fullyFunctional);
-
-			var rnd = RandomProvider.Get();
+				this.Skills.Add((SkillId)skill.SkillId, (SkillRank)skill.Rank, this.RaceId);
 
 			// Equipment
 			foreach (var itemData in this.RaceData.Equip)
@@ -150,6 +127,25 @@ namespace Aura.Channel.World.Entities
 			if (this.RaceData.Face.EyeTypes.Count > 0) this.EyeType = (short)this.RaceData.Face.GetRandomEyeType(rnd);
 			if (this.RaceData.Face.MouthTypes.Count > 0) this.MouthType = (byte)this.RaceData.Face.GetRandomMouthType(rnd);
 			if (this.RaceData.Face.SkinColors.Count > 0) this.SkinColor = (byte)this.RaceData.Face.GetRandomSkinColor(rnd);
+
+			// Set AI
+			if (!string.IsNullOrWhiteSpace(this.RaceData.AI) && this.RaceData.AI != "none")
+			{
+				this.AI = ChannelServer.Instance.ScriptManager.AiScripts.CreateAi(this.RaceData.AI, this);
+				if (this.AI == null)
+					Log.Warning("ScriptManager.Spawn: Missing AI '{0}' for '{1}'.", this.RaceData.AI, this.RaceId);
+			}
+		}
+
+		/// <summary>
+		/// Disposes AI.
+		/// </summary>
+		public override void Dispose()
+		{
+			base.Dispose();
+
+			if (this.AI != null)
+				this.AI.Dispose();
 		}
 
 		/// <summary>
@@ -268,22 +264,6 @@ namespace Aura.Channel.World.Entities
 			// Actual formula unknown
 			var chance = Math.Min(50, this.Will / 10);
 			return (RandomProvider.Get().Next(101) < chance);
-		}
-
-		/// <summary>
-		/// Returns random damage based on race data.
-		/// </summary>
-		/// <param name="weapon"></param>
-		/// <param name="balance"></param>
-		/// <returns></returns>
-		public override float GetRndDamage(Item weapon, float balance = float.NaN)
-		{
-			float min = this.RaceData.AttackMin, max = this.RaceData.AttackMax;
-
-			if (float.IsNaN(balance))
-				balance = this.GetRndBalance(weapon);
-
-			return (min + ((max - min) * balance));
 		}
 
 		/// <summary>

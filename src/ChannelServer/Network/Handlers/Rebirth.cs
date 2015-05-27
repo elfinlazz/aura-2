@@ -90,7 +90,7 @@ namespace Aura.Channel.Network.Handlers
 
 			// Check race, the new one would be the same as the old one,
 			// if you remove the last number (1 for female, 2 for male).
-			if (resetGender && (creature.Race & ~3) != (race & ~3))
+			if (resetGender && (creature.RaceId & ~3) != (race & ~3))
 				throw new SevereViolation("Player tried to rebirth with invalid race ({0}).", race);
 
 			// Check hair
@@ -118,7 +118,7 @@ namespace Aura.Channel.Network.Handlers
 				creature.Level = 1;
 				creature.Exp = 0;
 
-				var ageStats = AuraData.StatsBaseDb.Find(creature.Race, creature.Age);
+				var ageStats = AuraData.StatsBaseDb.Find(creature.RaceId, creature.Age);
 				creature.LifeMaxBase = ageStats.Life;
 				creature.ManaMaxBase = ageStats.Mana;
 				creature.StaminaMaxBase = ageStats.Stamina;

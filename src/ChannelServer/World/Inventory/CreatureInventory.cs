@@ -140,12 +140,11 @@ namespace Aura.Channel.World.Inventory
 			{
 				_weaponSet = value;
 				this.UpdateEquipReferences(Pocket.RightHand1, Pocket.LeftHand1, Pocket.Magazine1);
-				Send.StatUpdate(_creature, StatUpdateType.Private,
-					Stat.AttackMinBaseMod, Stat.AttackMaxBaseMod,
-					Stat.InjuryMinBaseMod, Stat.InjuryMaxBaseMod,
-					Stat.BalanceBaseMod, Stat.CriticalBaseMod,
-					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
-				);
+
+				// Make sure the creature is logged in
+				// TODO: Remove sending from properties.
+				if (_creature.Region != null)
+					this.UpdateEquipStats();
 			}
 		}
 
@@ -1123,14 +1122,26 @@ namespace Aura.Channel.World.Inventory
 
 			// Send stat update when moving equipment
 			if (source.IsEquip() || target.IsEquip())
-			{
-				Send.StatUpdate(_creature, StatUpdateType.Private,
-					Stat.AttackMinBaseMod, Stat.AttackMaxBaseMod,
-					Stat.InjuryMinBaseMod, Stat.InjuryMaxBaseMod,
-					Stat.BalanceBaseMod, Stat.CriticalBaseMod,
-					Stat.DefenseBaseMod, Stat.ProtectionBaseMod
-				);
-			}
+				this.UpdateEquipStats();
+		}
+
+		/// <summary>
+		/// Sends private stat update for all equipment relevant stats.
+		/// </summary>
+		private void UpdateEquipStats()
+		{
+			Send.StatUpdate(_creature, StatUpdateType.Private,
+				Stat.AttackMinBase, Stat.AttackMaxBase,
+				Stat.AttackMinBaseMod, Stat.AttackMaxBaseMod,
+				Stat.RightAttackMinMod, Stat.RightAttackMaxMod,
+				Stat.LeftAttackMinMod, Stat.LeftAttackMaxMod,
+				Stat.InjuryMinBaseMod, Stat.InjuryMaxBaseMod,
+				Stat.CriticalBase, Stat.CriticalBaseMod,
+				Stat.LeftCriticalMod, Stat.RightCriticalMod,
+				Stat.BalanceBase, Stat.BalanceBaseMod,
+				Stat.LeftBalanceMod, Stat.RightBalanceMod,
+				Stat.DefenseBaseMod, Stat.ProtectionBaseMod
+			);
 		}
 
 		// Stat mods

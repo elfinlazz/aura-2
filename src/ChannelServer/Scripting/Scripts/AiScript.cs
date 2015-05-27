@@ -384,7 +384,7 @@ namespace Aura.Channel.Scripting.Scripts
 			if (_state == AiState.Alert && (this.DoesHate(this.Creature.Target) || (_hatesBattleStance && this.Creature.Target.IsInBattleStance)))
 			{
 				// Check aggro limit
-				var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.Race);
+				var aggroCount = this.Creature.Region.CountAggro(this.Creature.Target, this.Creature.RaceId);
 				if (aggroCount >= (int)_aggroLimit) return;
 
 				this.Clear();
@@ -990,7 +990,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var skill = this.Creature.Skills.ActiveSkill;
 			if (skill == null && (skill = this.Creature.Skills.Get(SkillId.CombatMastery)) == null)
 			{
-				Log.Warning("AI.Attack: Creature '{0}' doesn't have Combat Mastery.", this.Creature.Race);
+				Log.Warning("AI.Attack: Creature '{0}' doesn't have Combat Mastery.", this.Creature.RaceId);
 				yield break;
 			}
 
@@ -1083,7 +1083,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var skill = this.Creature.Skills.Get(skillId);
 			if (skill == null)
 			{
-				Log.Warning("AI.PrepareSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.Race);
+				Log.Warning("AI.PrepareSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.RaceId);
 				yield break;
 			}
 
@@ -1219,7 +1219,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var skill = this.Creature.Skills.Get(skillId);
 			if (skill == null)
 			{
-				Log.Warning("AI.StartSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.Race);
+				Log.Warning("AI.StartSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.RaceId);
 				yield break;
 			}
 
@@ -1265,7 +1265,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var skill = this.Creature.Skills.Get(skillId);
 			if (skill == null)
 			{
-				Log.Warning("AI.StopSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.Race);
+				Log.Warning("AI.StopSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.RaceId);
 				yield break;
 			}
 

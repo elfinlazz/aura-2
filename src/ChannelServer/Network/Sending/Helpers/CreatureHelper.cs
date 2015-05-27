@@ -34,7 +34,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			packet.PutString(creature.Name);
 			packet.PutString("");				 // Title
 			packet.PutString("");				 // Eng Title
-			packet.PutInt(creature.Race);
+			packet.PutInt(creature.RaceId);
 			packet.PutByte(creature.SkinColor);
 			packet.PutShort(creature.EyeType); // [180600, NA187 (25.06.2014)] Changed from byte to short
 			packet.PutByte(creature.EyeColor);
@@ -108,26 +108,26 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutFloat(creature.WillFoodMod);
 				packet.PutFloat(creature.LuckFoodMod);
 				packet.PutShort(creature.AbilityPoints);
-				packet.PutShort(0);			         // AttackMinBase
+				packet.PutShort((short)creature.AttackMinBase);
 				packet.PutShort((short)creature.AttackMinMod);
-				packet.PutShort(0);			         // AttackMaxBase
+				packet.PutShort((short)creature.AttackMaxBase);
 				packet.PutShort((short)creature.AttackMaxMod);
 				packet.PutShort(0);			         // InjuryMinBase
 				packet.PutShort(0);			         // InjuryMinMod
 				packet.PutShort(0);			         // InjuryMaxBase
 				packet.PutShort(0);			         // InjuryMaxMod
-				packet.PutShort(0);			         // LeftAttackMinMod
-				packet.PutShort(0);			         // LeftAttackMaxMod
-				packet.PutShort(0);			         // RightAttackMinMod
-				packet.PutShort(0);			         // RightAttackMaxMod
+				packet.PutShort((short)creature.LeftAttackMinMod);
+				packet.PutShort((short)creature.LeftAttackMaxMod);
+				packet.PutShort((short)creature.RightAttackMinMod);
+				packet.PutShort((short)creature.RightAttackMaxMod);
 				packet.PutShort(0);			         // LeftInjuryMinMod
 				packet.PutShort(0);			         // LeftInjuryMaxMod
 				packet.PutShort(0);			         // RightInjuryMinMod
 				packet.PutShort(0);			         // RightInjuryMaxMod
-				packet.PutFloat(0);			         // LeftCriticalMod
-				packet.PutFloat(0);			         // RightCriticalMod
-				packet.PutShort(0);			         // LeftRateMod
-				packet.PutShort(0);			         // RightRateMod
+				packet.PutFloat(creature.LeftCriticalMod);
+				packet.PutFloat(creature.RightCriticalMod);
+				packet.PutShort((short)creature.LeftBalanceMod);			         
+				packet.PutShort((short)creature.RightBalanceMod);			        
 				packet.PutFloat(0);			         // MagicDefenseMod
 				// [180300, NA166 (18.09.2013)] Magic Protection
 				{
@@ -136,13 +136,13 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutFloat(0);			         // MagicAttackMod
 				packet.PutShort(15);		         // MeleeAttackRateMod
 				packet.PutShort(15);		         // RangeAttackRateMod
-				packet.PutFloat(0);			         // CriticalBase
+				packet.PutFloat(creature.CriticalBase);
 				packet.PutFloat(0);			         // CriticalMod
 				packet.PutFloat((short)creature.ProtectionBase);
 				packet.PutFloat(creature.ProtectionMod);
 				packet.PutShort((short)creature.DefenseBase);
 				packet.PutShort((short)creature.DefenseMod);
-				packet.PutShort(0);			         // RateBase
+				packet.PutShort((short)creature.BalanceBase);
 				packet.PutShort(0);			         // RateMod
 				packet.PutShort(0);			         // Rank1
 				packet.PutShort(0);			         // Rank2
@@ -155,13 +155,15 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutShort((short)creature.AttackMaxBaseMod);
 				packet.PutShort((short)creature.InjuryMinBaseMod);
 				packet.PutShort((short)creature.InjuryMaxBaseMod);
-				packet.PutFloat(creature.CriticalBase * 100);
+				packet.PutFloat(creature.CriticalBaseMod);
 				packet.PutFloat(creature.ProtectionBaseMod);
 				packet.PutShort((short)creature.DefenseBaseMod);
-				packet.PutShort((short)(creature.BalanceBase * 100));
+				packet.PutShort((short)creature.BalanceBaseMod);
 
 				// In some tests the damage display would be messed up if
 				// those two weren't set to something.
+				// In recent tests they were simply added to the min/max dmg,
+				// purpose unknown.
 				packet.PutShort(0);                  // MeleeAttackMinBaseMod (8 / 3)
 				packet.PutShort(0);                  // MeleeAttackMaxBaseMod (18 / 4)
 
