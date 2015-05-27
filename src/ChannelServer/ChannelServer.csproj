@@ -209,6 +209,7 @@
     <Compile Include="World\Dungeons\Position.cs" />
     <Compile Include="World\Dungeons\RandomDirection.cs" />
     <Compile Include="World\Dungeons\RoomTrait.cs" />
+    <Compile Include="World\DynamicRegion.cs" />
     <Compile Include="World\DynamicRegionManager.cs" />
     <Compile Include="World\EgoInfo.cs" />
     <Compile Include="World\Entities\Character.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="World\Inventory\CreatureInventory.cs" />
     <Compile Include="World\Inventory\InventoryPockets.cs" />
     <Compile Include="World\Location.cs" />
+    <Compile Include="World\NormalRegion.cs" />
     <Compile Include="World\Position.cs" />
     <Compile Include="World\Quests\Objectives.cs" />
     <Compile Include="World\Quests\Prerequisites.cs" />

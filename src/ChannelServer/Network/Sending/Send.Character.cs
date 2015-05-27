@@ -65,6 +65,10 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="warpToRegion"></param>
 		public static void EnterDynamicRegion(Creature creature, int warpFromRegionId, Region warpToRegion)
 		{
+			var warpTo = warpToRegion as DynamicRegion;
+			if (warpTo == null)
+				throw new ArgumentException("EnterDynamicRegion requires a dynamic region.");
+
 			var pos = creature.GetPosition();
 
 			var packet = new Packet(Op.EnterDynamicRegion, MabiId.Broadcast);
@@ -74,11 +78,11 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(warpToRegion.Id);
 			packet.PutString(warpToRegion.Name); // dynamic region name
 			packet.PutUInt(0x80000000); // bitmask? (|1 = time difference?)
-			packet.PutInt(warpToRegion.BaseId);
-			packet.PutString(warpToRegion.BaseName);
+			packet.PutInt(warpTo.BaseId);
+			packet.PutString(warpTo.BaseName);
 			packet.PutInt(200); // 100|200 (100 changes the lighting?)
 			packet.PutByte(0); // 1 = next is empty?
-			packet.PutString("data/world/{0}/{1}", warpToRegion.BaseName, warpToRegion.Variation);
+			packet.PutString("data/world/{0}/{1}", warpTo.BaseName, warpTo.Variation);
 
 			packet.PutByte(0);
 			//if (^ true)
@@ -104,6 +108,10 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="warpToRegion"></param>
 		public static void EnterDynamicRegionExtended(Creature creature, int warpFromRegionId, Region warpToRegion)
 		{
+			var warpTo = warpToRegion as DynamicRegion;
+			if (warpTo == null)
+				throw new ArgumentException("EnterDynamicRegionExtended requires a dynamic region.");
+
 			var pos = creature.GetPosition();
 
 			var packet = new Packet(Op.EnterDynamicRegionExtended, MabiId.Broadcast);
@@ -120,11 +128,11 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(warpToRegion.Id);
 			packet.PutString(warpToRegion.Name); // dynamic region name
 			packet.PutUInt(0x80000000); // bitmask? (|1 = time difference?)
-			packet.PutInt(warpToRegion.BaseId);
-			packet.PutString(warpToRegion.BaseName);
+			packet.PutInt(warpTo.BaseId);
+			packet.PutString(warpTo.BaseName);
 			packet.PutInt(200); // 100|200
 			packet.PutByte(0); // 1 = next is empty?
-			packet.PutString("data/world/{0}/{1}", warpToRegion.BaseName, warpToRegion.Variation);
+			packet.PutString("data/world/{0}/{1}", warpTo.BaseName, warpTo.Variation);
 
 			creature.Client.Send(packet);
 		}

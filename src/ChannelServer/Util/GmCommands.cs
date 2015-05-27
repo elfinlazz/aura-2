@@ -276,31 +276,36 @@ namespace Aura.Channel.Util
 					return CommandResult.Fail;
 				}
 
+				var targetPos = target.GetPosition();
+
 				// Parse X
-				if (args.Count > 2 && !int.TryParse(args[2].Replace("x:", ""), out x))
+				if (args.Count > 2)
 				{
-					Send.ServerMessage(sender, Localization.Get("Invalid X coordinate."));
-					return CommandResult.InvalidArgument;
+					if (args[2].ToLower() == "x")
+						x = targetPos.X;
+					else if (!int.TryParse(args[2].Replace("x:", ""), out x))
+					{
+						Send.ServerMessage(sender, Localization.Get("Invalid X coordinate."));
+						return CommandResult.InvalidArgument;
+					}
 				}
 
 				// Parse Y
-				if (args.Count > 3 && !int.TryParse(args[3].Replace("y:", ""), out y))
+				if (args.Count > 3)
 				{
-					Send.ServerMessage(sender, Localization.Get("Invalid Y coordinate."));
-					return CommandResult.InvalidArgument;
+					if (args[3].ToLower() == "y")
+						y = targetPos.Y;
+					else if (!int.TryParse(args[3].Replace("y:", ""), out y))
+					{
+						Send.ServerMessage(sender, Localization.Get("Invalid Y coordinate."));
+						return CommandResult.InvalidArgument;
+					}
 				}
 
-				// Same coordinates if warping back from a dynamic region,
-				// random coordinates if none were specified in a normal warp.
-				if ((target.Region.IsDynamic || warpToRegion.IsDynamic) && (warpToRegion.BaseId == target.Region.BaseId))
+				// Randomize coordinates
+				if (x == -1 || y == -1)
 				{
-					var pos = target.GetPosition();
-					x = pos.X;
-					y = pos.Y;
-				}
-				else if (x == -1 || y == -1)
-				{
-					var rndc = AuraData.RegionInfoDb.RandomCoord(warpToRegion.BaseId);
+					var rndc = warpToRegion.RegionInfoData.RandomCoord(RandomProvider.Get());
 					if (x < 0) x = rndc.X;
 					if (y < 0) y = rndc.Y;
 				}
@@ -547,7 +552,7 @@ namespace Aura.Channel.Util
 			if (regionData == null)
 				return CommandResult.Fail;
 
-			var region = Region.CreateDynamic(baseRegionId, variant, RegionMode.Permanent);
+			var region = new DynamicRegion(baseRegionId, variant, RegionMode.Permanent);
 			ChannelServer.Instance.World.AddRegion(region);
 
 			var pos = target.GetPosition();

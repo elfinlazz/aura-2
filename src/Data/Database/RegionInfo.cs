@@ -82,6 +82,20 @@ namespace Aura.Data.Database
 
 			return -1;
 		}
+
+		/// <summary>
+		/// Returns random coordinates inside the actual region.
+		/// </summary>
+		/// <param name="rnd"></param>
+		/// <returns></returns>
+		public Point RandomCoord(Random rnd)
+		{
+			var result = new Point();
+			result.X = rnd.Next(this.X1, this.X2);
+			result.Y = rnd.Next(this.Y1, this.Y2);
+
+			return result;
+		}
 	}
 
 	public class AreaData
@@ -335,19 +349,12 @@ namespace Aura.Data.Database
 		/// <returns></returns>
 		public Point RandomCoord(int region)
 		{
-			var result = new Point();
-
 			var ri = this.Find(region);
-			if (ri != null)
-			{
-				lock (_rnd)
-				{
-					result.X = _rnd.Next(ri.X1, ri.X2);
-					result.Y = _rnd.Next(ri.Y1, ri.Y2);
-				}
-			}
+			if (ri == null)
+				return new Point();
 
-			return result;
+			lock (_rnd)
+				return ri.RandomCoord(_rnd);
 		}
 
 		/// <summary>

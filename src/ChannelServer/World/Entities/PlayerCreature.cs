@@ -123,11 +123,14 @@ namespace Aura.Channel.World.Entities
 				return false;
 			}
 
+			var warpToDynamic = warpTo is DynamicRegion;
+			var currentDynamic = this.Region is DynamicRegion;
+
 			var warpFrom = this.RegionId;
 			var loc = new Location(this.RegionId, this.GetPosition());
 
 			// Save fallback when warping from a normal to a dynamic region
-			if (warpTo.IsDynamic && !this.Region.IsDynamic)
+			if (warpToDynamic && !currentDynamic)
 				this.FallbackLocation = loc;
 
 			this.LastLocation = loc;
@@ -135,7 +138,7 @@ namespace Aura.Channel.World.Entities
 			this.Warping = true;
 			Send.CharacterLock(this, Locks.Default);
 
-			if (!warpTo.IsDynamic)
+			if (!warpToDynamic)
 			{
 				Send.EnterRegion(this);
 			}

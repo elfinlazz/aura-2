@@ -200,7 +200,7 @@ namespace Aura.Channel.World
 				}
 			}
 
-			var region = Region.CreateNormal(regionId);
+			var region = new NormalRegion(regionId);
 			lock (_regions)
 				_regions.Add(regionId, region);
 		}
