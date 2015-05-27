@@ -109,13 +109,9 @@ namespace Aura.Data.Database
 				item.ItemId = entryItem.ReadInt("itemId");
 				item.Chance = entryItem.ReadFloat("chance");
 
-				if (entryItem.ContainsKeys("color1"))
-				{
-					item.Color1 = entryItem.ReadUInt("color1", 0x808080);
-					item.Color2 = entryItem.ReadUInt("color2", 0x808080);
-					item.Color3 = entryItem.ReadUInt("color3", 0x808080);
-					item.HasColor = true;
-				}
+				if (entryItem.ContainsKey("color1")) item.Color1 = entryItem.ReadUInt("color1");
+				if (entryItem.ContainsKey("color2")) item.Color2 = entryItem.ReadUInt("color2");
+				if (entryItem.ContainsKey("color3")) item.Color3 = entryItem.ReadUInt("color3");
 
 				items.Add(item);
 			}
