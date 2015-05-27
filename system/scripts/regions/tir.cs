@@ -101,8 +101,8 @@ public class TirRegionScript : RegionScript
 		// Southern Fields (disabled during MabiLand event)
 		CreateSpawner(race: 40001, amount: 8, region: 1, coordinates: A(9991,21498, 8678,23454, 13515,26700, 14828,24745)); // Sheep
 		CreateSpawner(race: 20101, amount: 5, region: 1, coordinates: A(9991,21498, 8678,23454, 13515,26700, 14828,24745)); // Dog
-		CreateSpawner(race: 40001, amount: 8, region: 1, coordinates: A(13701,23421, 13701,24840, 14891,24840, 14891,23421)); // Sheep
-		CreateSpawner(race: 20101, amount: 5, region: 1, coordinates: A(13701,23421, 13701,24840, 14891,24840, 14891,23421)); // Dog
+		//CreateSpawner(race: 40001, amount: 8, region: 1, coordinates: A(13701,23421, 13701,24840, 14891,24840, 14891,23421)); // Sheep
+		//CreateSpawner(race: 20101, amount: 5, region: 1, coordinates: A(13701,23421, 13701,24840, 14891,24840, 14891,23421)); // Dog
 
 		CreateSpawner(race: 20001, amount: 20, region: 1, coordinates: A(6690,20303, 13585,25668, 16347,22118, 9452,16754)); // Gray Wolf
 		CreateSpawner(race: 40001, amount: 1, region: 1, delay: 900, delayMin: 10, delayMax: 20, coordinates: A(6690,20303, 13585,25668, 16347,22118, 9452,16754)); // Sheep
