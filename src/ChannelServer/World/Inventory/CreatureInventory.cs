@@ -143,7 +143,7 @@ namespace Aura.Channel.World.Inventory
 
 				// Make sure the creature is logged in
 				// TODO: Remove sending from properties.
-				if (_creature.Region != null)
+				if (_creature.Region != Region.Limbo)
 					this.UpdateEquipStats();
 			}
 		}
