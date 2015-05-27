@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Data.Database;
 using System;
 using System.Collections.Generic;
 
@@ -37,12 +38,12 @@ namespace Aura.Channel.World.Dungeons
 			this.MazeGenerator = new MazeGenerator();
 
 			_dungeonGenerator = dungeonGenerator;
-			_branchProbability = floorData.BranchProbability;
-			_coverageFactor = floorData.CoverageFactor;
+			_branchProbability = floorData.Branch;
+			_coverageFactor = floorData.Coverage;
 			_isLastFloor = isLastFloor;
 			_prevFloor = prevFloor;
 
-			this.HasBossRoom = floorData.HasBossRoom;
+			this.HasBossRoom = floorData.HasBoss;
 
 			this.CalculateSize(floorData);
 			this.InitRoomtraits();

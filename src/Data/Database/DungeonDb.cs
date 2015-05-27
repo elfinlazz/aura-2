@@ -1,0 +1,67 @@
+﻿// Copyright (c) Aura development team - Licensed under GNU GPL
+// For more information, see license file in the main folder
+
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Aura.Data.Database
+{
+	public class DungeonData
+	{
+		public string Name { get; set; }
+		public int BaseSeed { get; set; }
+		public List<DungeonFloorData> Floors { get; set; }
+
+		public DungeonData()
+		{
+			this.Floors = new List<DungeonFloorData>();
+		}
+	}
+
+	public class DungeonFloorData
+	{
+		public int Width { get; set; }
+		public int Height { get; set; }
+		public int CritPathMin { get; set; }
+		public int CritPathMax { get; set; }
+		public int Branch { get; set; }
+		public int Coverage { get; set; }
+		public bool HasBoss { get; set; }
+		public bool Custom { get; set; }
+	}
+
+	public class DungeonDb : DatabaseJsonIndexed<string, DungeonData>
+	{
+		protected override void ReadEntry(JObject entry)
+		{
+			entry.AssertNotMissing("name", "baseSeed", "floors");
+
+			var dungeonData = new DungeonData();
+			dungeonData.Name = entry.ReadString("name").ToLower();
+			dungeonData.BaseSeed = entry.ReadInt("baseSeed");
+
+			foreach (JObject floorEntry in entry["floors"])
+			{
+				floorEntry.AssertNotMissing("width", "height", "critPathMin", "critPathMax", "branch", "coverage", "hasBoss", "custom");
+
+				var floorData = new DungeonFloorData();
+				floorData.Width = floorEntry.ReadInt("width");
+				floorData.Height = floorEntry.ReadInt("height");
+				floorData.CritPathMin = floorEntry.ReadInt("critPathMin");
+				floorData.CritPathMax = floorEntry.ReadInt("critPathMax");
+				floorData.Branch = floorEntry.ReadInt("branch");
+				floorData.Coverage = floorEntry.ReadInt("coverage");
+				floorData.HasBoss = floorEntry.ReadBool("hasBoss");
+				floorData.Custom = floorEntry.ReadBool("custom");
+
+				dungeonData.Floors.Add(floorData);
+			}
+
+			this.Entries[dungeonData.Name] = dungeonData;
+		}
+	}
+}

@@ -201,7 +201,6 @@
     <Compile Include="Util\Security.cs" />
     <Compile Include="World\Cutscene.cs" />
     <Compile Include="World\Dungeons\Direction.cs" />
-    <Compile Include="World\Dungeons\DungeonData.cs" />
     <Compile Include="World\Dungeons\DungeonFloor.cs" />
     <Compile Include="World\Dungeons\DungeonGenerator.cs" />
     <Compile Include="World\Dungeons\MazeGenerator.cs" />

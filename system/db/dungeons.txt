@@ -1,0 +1,2170 @@
+// Aura
+// Database file
+//---------------------------------------------------------------------------
+
+[
+// Abb Neagh Castle Dungeon
+//---------------------------------------------------------------------------
+{ name: "Abbneagh_Keep_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 30, branch: 30, coverage: 65, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// Albey Dungeon
+//---------------------------------------------------------------------------
+{ name: "Tirnanog_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 75, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G1_37_C1_Tirnanog_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 30, branch: 30, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 40, hasBoss: true, custom: false },
+]},
+{ name: "G1_37_Green_Tirnanog_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G1_37_Blue_Tirnanog_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 34, branch: 34, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G1_37_Red_Tirnanog_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 34, branch: 34, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 28, critPathMax: 40, branch: 40, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G1_37_Silver_Tirnanog_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 10, height: 10, critPathMin: 50, critPathMax: 70, branch: 70, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G1_37_Black_Tirnanog_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Tirnanog_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 75, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 17, critPathMax: 26, branch: 26, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Tirnanog_Dungeon_g2jump_or_g3jump", baseSeed: 330000000, floors: [
+	{ width: 6, height: 6, critPathMin: 17, critPathMax: 26, branch: 26, coverage: 75, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 75, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Tirnanog_Dungeon_g2jump_and_g3jump", baseSeed: 330000000, floors: [
+	{ width: 6, height: 6, critPathMin: 17, critPathMax: 26, branch: 26, coverage: 75, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 75, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Tirnanog_Again_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 4, height: 4, critPathMin: 3, critPathMax: 6, branch: 6, coverage: 10, hasBoss: true, custom: false },
+]},
+{ name: "G1RP_25_Dunbarton_Rabbie_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 3, branch: 3, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "G1RP_25_Dunbarton_Rabbie_Dungeon_gfMainStream2012Part1", baseSeed: 330000000, floors: [
+	{ width: 6, height: 6, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 25, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 3, branch: 3, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "G1_39_Tirnanog_Dungeon", baseSeed: 330000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 40, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 44, critPathMax: 60, branch: 60, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G1_39_Tirnanog_Dungeon_Again", baseSeed: 330000000, floors: [
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 10, branch: 10, coverage: 10, hasBoss: true, custom: false },
+]},
+{ name: "G1_39_Tirnanog_Dungeon_EU", baseSeed: 330000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 35, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 45, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 50, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "G1_39_Tirnanog_Dungeon_Again_EU", baseSeed: 330000000, floors: [
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 10, branch: 10, coverage: 10, hasBoss: true, custom: false },
+]},
+
+// Alby Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_High_1_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 80, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 35, branch: 35, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_High_3_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 44, coverage: 70, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 45, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_High_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 47, branch: 47, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Alby Basic Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Low_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Alby Beginner Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Beginner_1_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Alby Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Whiteday_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Dungeon_Recover", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_FountainTest_high_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 62, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_HerbTest_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 62, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_DungeonNPCTest_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 16, branch: 16, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Dungeon_PartyQuest", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Dungeon_Tutorial_Ranald", baseSeed: 13000000, floors: [
+	{ width: 5, height: 5, critPathMin: 8, critPathMax: 10, branch: 10, coverage: 20, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Dungeon_Tutorial_Malcolm", baseSeed: 13000000, floors: [
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Dungeon_Tutorial_2010_Malcolm", baseSeed: 13000000, floors: [
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Dungeon_Tutorial_2010_rescuekid", baseSeed: 13000000, floors: [
+	{ width: 5, height: 5, critPathMin: 8, critPathMax: 10, branch: 10, coverage: 20, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G13_FirstFolio", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G13_FirstFolio_Mid", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G13_FirstFolio_High", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G15_Contract_of_Shylock", baseSeed: 10000000, floors: [
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 10, branch: 10, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G15_Contract_of_Shylock_Mid", baseSeed: 10000000, floors: [
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 10, branch: 10, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G15_Contract_of_Shylock_High", baseSeed: 10000000, floors: [
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 10, branch: 10, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G15_Price_Of_Love", baseSeed: 10000000, floors: [
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 10, branch: 10, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G15_Price_Of_Love_Mid", baseSeed: 10000000, floors: [
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 10, branch: 10, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G15_Price_Of_Love_Mid_renewal", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_G15_Price_Of_Love_High", baseSeed: 10000000, floors: [
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 10, branch: 10, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "G1RP_05_TirCho_Alby_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 40, hasBoss: true, custom: false },
+]},
+{ name: "G1RP_05_TirCho_Alby_Dungeon_gfMainStream2012Part1", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "RP_Trefor_TirCho_Alby_Dungeon", baseSeed: 13000000, floors: [
+	{ width: 6, height: 6, critPathMin: 4, critPathMax: 4, branch: 4, coverage: 20, hasBoss: true, custom: false },
+]},
+{ name: "RP_Trefor_TirCho_Alby_Dungeon2", baseSeed: 13000000, floors: [
+	{ width: 6, height: 6, critPathMin: 4, critPathMax: 4, branch: 4, coverage: 20, hasBoss: true, custom: false },
+]},
+{ name: "RP_LassarDilys_TirCho_Alby_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "RP_Monster_GiantSpider", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 8, branch: 8, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "RP_Monster_Chicken", baseSeed: 12345000, floors: [
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 8, branch: 8, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Dungeon_Keith_RP", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Alby Intermediate Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Middle1_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 48, branch: 48, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Middle2_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 48, branch: 48, coverage: 70, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 48, branch: 48, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Middle4_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 48, branch: 48, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 48, branch: 48, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Middle_1_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 46, branch: 46, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Middle_2_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 44, coverage: 70, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 45, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Alby_Middle_4_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 47, branch: 47, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Alby PC Cafe Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Albypcbang_High_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 80, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 35, branch: 35, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Alby PC Cafe Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Albypcbang_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// AlbyDropTestDungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_DropTest_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 3, branch: 3, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Baol Dungeon
+//---------------------------------------------------------------------------
+{ name: "G3_11_Tirnanog_Baol_Dungeon", baseSeed: 500000000, floors: [
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 36, critPathMax: 40, branch: 40, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 36, critPathMax: 40, branch: 40, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "G3_11_Tirnanog_Baol_Dungeon_easy", baseSeed: 500000000, floors: [
+	{ width: 7, height: 8, critPathMin: 36, critPathMax: 40, branch: 40, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "G3_16_Tirnanog_Baol_Dungeon", baseSeed: 500000000, floors: [
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 90, hasBoss: true, custom: false },
+]},
+
+// Barri Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "Bangor_Barri_High_2_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 30, branch: 30, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 30, branch: 30, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 30, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "Bangor_Barri_High_3_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 30, branch: 30, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 30, branch: 30, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 26, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 30, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "Bangor_Barri_High_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 26, critPathMax: 32, branch: 32, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 26, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 32, critPathMax: 38, branch: 38, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Barri Basic Dungeon
+//---------------------------------------------------------------------------
+{ name: "Bangor_Barri_Low_Dungeon", baseSeed: 31100000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 35, branch: 35, coverage: 75, hasBoss: true, custom: false },
+]},
+
+// Barri Dungeon
+//---------------------------------------------------------------------------
+{ name: "Bangor_Barri_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 26, critPathMax: 30, branch: 30, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "Bangor_Barri_Dungeon_Recover", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 40, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "Bangor_Barri_Dungeon_Recover_easy", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "Bangor_Barri_Dungeon_Paladin", baseSeed: 31100000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 40, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "G1_10_Bangor_Barri_Dungeon_C1", baseSeed: 31100000, floors: [
+	{ width: 6, height: 6, critPathMin: 25, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "G1_10_Bangor_Barri_Dungeon_EU", baseSeed: 31100000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G1_10_Bangor_Barri_Dungeon", baseSeed: 31100000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G1_30_Bangor_Barri_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "G2_37_Bangor_Barri_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 24, critPathMax: 35, branch: 35, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G2_37_Bangor_Barri_Dungeon_gfMainStream2012Part1", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 24, critPathMax: 35, branch: 35, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G2_04_Bangor_Barri_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 40, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "G2_04_Bangor_Barri_Dungeon_gfMainStream2012Part1", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 25, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 22, critPathMax: 32, branch: 32, coverage: 38, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 22, critPathMax: 30, branch: 30, coverage: 50, hasBoss: true, custom: false },
+]},
+{ name: "G3_02_Bangor_Barri_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "G3RP_DarkKnight_Bari_Dungeon", baseSeed: 31100000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 35, branch: 35, coverage: 75, hasBoss: true, custom: false },
+]},
+
+// Barri Mythril Dungeon
+//---------------------------------------------------------------------------
+{ name: "G2_24_Bangor_Barri_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 40, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "G2_24_Bangor_Barri_Dungeon_gfMainStream2012Part1", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 40, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Barri PC Cafe Advanced Dungeon
+//---------------------------------------------------------------------------
+{ name: "Bangor_Barripcbang_High_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 30, branch: 30, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 30, branch: 30, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 30, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Barri Shadow Dungeon
+//---------------------------------------------------------------------------
+{ name: "Bangor_Barri_Dungeon_G9S1_easy", baseSeed: 31000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 26, critPathMax: 30, branch: 30, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "Bangor_Barri_Dungeon_G9S1_normal", baseSeed: 31100000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 35, branch: 35, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Bangor_Barri_Dungeon_G9S1_hard", baseSeed: 31000000, floors: [
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 26, critPathMax: 32, branch: 32, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 26, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 32, critPathMax: 38, branch: 38, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Barri Spirit Dungeon
+//---------------------------------------------------------------------------
+{ name: "Bangor_Barri_Fossil_Ego_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 40, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Ciar Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_High_2_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 26, critPathMax: 60, branch: 60, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_High_3_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 45, branch: 45, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 26, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 26, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 26, critPathMax: 60, branch: 60, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_High_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 45, branch: 45, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 45, branch: 45, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 26, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 26, critPathMax: 60, branch: 60, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_High_2_Dungeon_2012_SizeRenewal", baseSeed: 11100000, floors: [
+	{ width: 6, height: 7, critPathMin: 32, critPathMax: 50, branch: 50, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 6, critPathMin: 32, critPathMax: 50, branch: 50, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 50, branch: 50, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_High_3_Dungeon_2012_SizeRenewal", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 30, critPathMax: 35, branch: 35, coverage: 50, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 35, critPathMax: 41, branch: 41, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 45, branch: 45, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_High_G11_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 27, branch: 27, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Ciar Basic Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_Low_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 30, critPathMax: 47, branch: 47, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Low_Dungeon_2012_SizeRenewal", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 45, branch: 45, coverage: 45, hasBoss: true, custom: false },
+]},
+
+// Ciar Beginner Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_Beginner_1_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 20, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 20, hasBoss: true, custom: false },
+]},
+
+// Ciar Boss Trial 
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_BossRush_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 10, branch: 10, coverage: 10, hasBoss: true, custom: false },
+]},
+
+// Ciar Dungeon
+//---------------------------------------------------------------------------
+{ name: "G14S5_Rebalance_TirCho_Ciar_G13_Easy_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 4, height: 4, critPathMin: 6, critPathMax: 8, branch: 8, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G14S5_Rebalance_TirCho_Ciar_G13_Mid_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 20, branch: 20, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G14S5_Rebalance_TirCho_Ciar_G13_High_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 18, branch: 18, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_G13_Easy_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 18, branch: 18, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_G13_Mid_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 20, branch: 20, coverage: 70, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_G13_High_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 18, branch: 18, coverage: 70, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 18, branch: 18, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Goro_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 20, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 20, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Japan_Event_Dungeon_1", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Japan_Event_Dungeon_2", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Dungeon_Recover", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Dungeon_Recover_easy", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Dungeon_PartyQuest", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 12, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Ciar_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 14, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Ciar_Dungeon_g2jump_or_g3jump", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 14, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Ciar_Dungeon_g2jump_and_g3jump", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 14, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Dungeon_Elatha_RP", baseSeed: 11100000, floors: [
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 44, coverage: 80, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 37, critPathMax: 40, branch: 40, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Dungeon_Elatha_RP_renewal", baseSeed: 11100000, floors: [
+	{ width: 7, height: 7, critPathMin: 37, critPathMax: 40, branch: 40, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Dungeon_WindBreaker", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 44, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Middle_G11_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Middle_G11_Dungeon_renewal", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "G1_21_TirCho_Ciar_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G1_21_TirCho_Ciar_Dungeon_C1", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 26, coverage: 20, hasBoss: true, custom: false },
+]},
+{ name: "RP_Tracy_TirCho_Ciar_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "G2RP_28_TirCho_Ciar_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "G2RP_28_TirCho_Ciar_Dungeon_human_gfMainStream2012Part1", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 45, hasBoss: true, custom: false },
+]},
+{ name: "G2RP_28_TirCho_Ciar_Dungeon_elf_gfMainStream2012Part1", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 45, hasBoss: true, custom: false },
+]},
+{ name: "G2RP_28_TirCho_Ciar_Dungeon_giant_gfMainStream2012Part1", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 45, hasBoss: true, custom: false },
+]},
+{ name: "G2RP_Jump_TirCho_Ciar_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// Ciar Event Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_pet_china_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 20, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 20, hasBoss: true, custom: false },
+]},
+
+// Ciar Intermediate Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_Mid_1_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 32, critPathMax: 38, branch: 38, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Mid_2_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 7, height: 6, critPathMin: 36, critPathMax: 40, branch: 40, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 6, critPathMin: 32, critPathMax: 40, branch: 40, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Mid_4_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 7, height: 6, critPathMin: 32, critPathMax: 38, branch: 38, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 32, critPathMax: 38, branch: 38, coverage: 80, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 48, critPathMax: 60, branch: 60, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Middle_1_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 44, coverage: 80, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 37, critPathMax: 40, branch: 40, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Middle_2_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 7, height: 6, critPathMin: 31, critPathMax: 36, branch: 36, coverage: 70, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 31, critPathMax: 36, branch: 36, coverage: 80, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 31, critPathMax: 38, branch: 38, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Middle_4_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 44, branch: 44, coverage: 80, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 44, branch: 44, coverage: 80, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 40, critPathMax: 54, branch: 54, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Middle_1_Dungeon_2012_SizeRenewal", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 39, branch: 39, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 40, branch: 40, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Middle_2_Dungeon_2012_SizeRenewal", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 70, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "TirCho_Ciar_Middle_4_Dungeon_2012_SizeRenewal", baseSeed: 11100000, floors: [
+	{ width: 6, height: 7, critPathMin: 24, critPathMax: 38, branch: 38, coverage: 80, hasBoss: false, custom: false },
+	{ width: 7, height: 6, critPathMin: 24, critPathMax: 39, branch: 39, coverage: 80, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 24, critPathMax: 40, branch: 40, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Ciar PC Cafe Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciarpcbang_High_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 26, critPathMax: 60, branch: 60, coverage: 90, hasBoss: true, custom: false },
+]},
+
+// Coil Elatha RP Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Coill_Dungeon_G9_ElathaRP", baseSeed: 750000000, floors: [
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 25, branch: 25, coverage: 75, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 20, branch: 20, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G9_ElathaRP_renewal", baseSeed: 750000000, floors: [
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 20, branch: 20, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// Coill Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Coill_Dungeon", baseSeed: 750000000, floors: [
+	{ width: 7, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_Paladin", baseSeed: 750000000, floors: [
+	{ width: 7, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_Recover", baseSeed: 750000000, floors: [
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 42, branch: 42, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_Recover_easy", baseSeed: 750000000, floors: [
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G14S3_Golvan1", baseSeed: 750000000, floors: [
+	{ width: 7, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G14S3_Golvan1_Mid", baseSeed: 750000000, floors: [
+	{ width: 7, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G14S3_Golvan1_High", baseSeed: 750000000, floors: [
+	{ width: 7, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G14S3_Golvan2", baseSeed: 750000000, floors: [
+	{ width: 7, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G14S3_Golvan2_Mid", baseSeed: 750000000, floors: [
+	{ width: 7, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G14S3_Golvan2_High", baseSeed: 750000000, floors: [
+	{ width: 7, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G14S4_Ascon", baseSeed: 750000000, floors: [
+	{ width: 10, height: 10, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G14S4_Ascon_Mid", baseSeed: 750000000, floors: [
+	{ width: 10, height: 10, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Coill_Dungeon_G14S4_Ascon_High", baseSeed: 750000000, floors: [
+	{ width: 10, height: 10, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "G2RP_18_Emain_Coill_Dungeon", baseSeed: 750000000, floors: [
+	{ width: 10, height: 9, critPathMin: 50, critPathMax: 62, branch: 62, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Cuilin Castle Dungeon
+//---------------------------------------------------------------------------
+{ name: "Cuilin_Keep_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 30, branch: 30, coverage: 65, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// Dugald Castle Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dugald_Keep_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 30, branch: 30, coverage: 65, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// Elemental Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Coill_Dungeon_Gianticesprite", baseSeed: 750000000, floors: [
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 42, branch: 42, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Fiodh Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "Gairech_Fiodh_High_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 8, height: 8, critPathMin: 49, critPathMax: 53, branch: 53, coverage: 70, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 48, critPathMax: 52, branch: 52, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Fiodh Dungeon
+//---------------------------------------------------------------------------
+{ name: "Gairech_Fiodh_Dungeon_EU", baseSeed: 340000000, floors: [
+	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 47, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Gairech_Fiodh_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 47, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Gairech_Fiodh_Dungeon_Recover", baseSeed: 340000000, floors: [
+	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 47, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "G2_11_Gairech_Fiodh_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 47, coverage: 75, hasBoss: true, custom: false },
+]},
+
+// Fiodh Dungeon, Where Violets Bloom
+//---------------------------------------------------------------------------
+{ name: "Gairech_Fiodh_Cai_RP", baseSeed: 340000000, floors: [
+	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 47, coverage: 75, hasBoss: true, custom: false },
+]},
+
+// Fiodh Intermediate Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "Gairech_Fiodh_Middle1_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 8, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "Gairech_Fiodh_Middle2_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 40, branch: 40, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 6, critPathMin: 32, critPathMax: 40, branch: 40, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 44, branch: 44, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "Gairech_Fiodh_Middle4_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 8, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 40, critPathMax: 48, branch: 48, coverage: 80, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 48, critPathMax: 56, branch: 56, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "Gairech_Fiodh_Middle_1_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 40, branch: 40, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "Gairech_Fiodh_Middle_2_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 44, branch: 44, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 44, coverage: 70, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "Gairech_Fiodh_Middle_4_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 8, height: 7, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 80, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 48, critPathMax: 52, branch: 52, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Glowing Pot-Belly Spider Artifact
+//---------------------------------------------------------------------------
+{ name: "shining_potspider_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Glowing Stone Bison Artifact
+//---------------------------------------------------------------------------
+{ name: "shining_stonebison_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 28, critPathMax: 36, branch: 36, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 36, branch: 36, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "karuforest_WindBreaker_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 4, height: 6, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Glowing Stone Gargoyle Artifact
+//---------------------------------------------------------------------------
+{ name: "shining_stonegargoyle_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "shining_stonegargoyle_dungeon_gfMainStream2012Part1", baseSeed: 10000000, floors: [
+	{ width: 8, height: 8, critPathMin: 15, critPathMax: 30, branch: 30, coverage: 40, hasBoss: true, custom: false },
+]},
+
+// Glowing Stone Hound Artifact
+//---------------------------------------------------------------------------
+{ name: "shining_stonehound_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Glowing Stone Imp Artifact
+//---------------------------------------------------------------------------
+{ name: "shining_stoneimp_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 62, critPathMax: 72, branch: 72, coverage: 60, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 62, critPathMax: 72, branch: 72, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Glowing Stone Zombie Artifact
+//---------------------------------------------------------------------------
+{ name: "shining_stonezombie_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Alby Advanced Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_High_Hardmode_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 80, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 35, branch: 35, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Alby Basic Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Low_Hardmode_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Alby Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Hardmode_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 50, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 20, critPathMax: 35, branch: 35, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Alby Intermediate Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Middle_Hardmode_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 44, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 45, critPathMax: 52, branch: 52, coverage: 70, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 45, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Ciar Advanced Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_High_Hardmode_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 30, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 40, branch: 40, coverage: 30, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 40, branch: 40, coverage: 30, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 26, critPathMax: 40, branch: 40, coverage: 40, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Ciar Basic Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_Low_Hardmode_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 26, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 30, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 30, critPathMax: 47, branch: 47, coverage: 65, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 30, critPathMax: 47, branch: 47, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Ciar Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_Hardmode_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 50, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 20, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Ciar Intermediate Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Ciar_Middle_Hardmode_Dungeon", baseSeed: 11100000, floors: [
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 44, coverage: 40, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 44, coverage: 40, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 37, critPathMax: 40, branch: 40, coverage: 40, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 37, critPathMax: 40, branch: 40, coverage: 40, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Rundal Advanced Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_High_Hardmode_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 8, height: 7, critPathMin: 46, critPathMax: 50, branch: 50, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 45, critPathMax: 52, branch: 52, coverage: 85, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 43, critPathMax: 46, branch: 46, coverage: 75, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Rundal Basic Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Low_Hardmode_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 8, height: 8, critPathMin: 34, critPathMax: 47, branch: 47, coverage: 60, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 34, critPathMax: 40, branch: 40, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Rundal Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Hardmode_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 32, branch: 32, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 39, critPathMax: 44, branch: 44, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 39, critPathMax: 44, branch: 44, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Hard Mode Rundal Siren Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Middle_Hardmode_Siren_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 35, branch: 35, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 25, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Herb Dungeon
+//---------------------------------------------------------------------------
+{ name: "Math_Dungeon_Herb_test", baseSeed: 21100000, floors: [
+	{ width: 6, height: 6, critPathMin: 12, critPathMax: 18, branch: 18, coverage: 25, hasBoss: true, custom: false },
+]},
+
+// Hidden Mine
+//---------------------------------------------------------------------------
+{ name: "Bangor_Barri_Hidden_Gold_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 8, height: 8, critPathMin: 30, critPathMax: 36, branch: 36, coverage: 40, hasBoss: true, custom: false },
+]},
+
+// Horrifying Skeleton Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbie_G15_Creepy_Skull", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 22, branch: 22, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 23, critPathMax: 25, branch: 25, coverage: 65, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 12, critPathMax: 15, branch: 15, coverage: 35, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Rabbie_G15_Creepy_Skull_Mid", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 22, branch: 22, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 23, critPathMax: 25, branch: 25, coverage: 65, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 12, critPathMax: 15, branch: 15, coverage: 35, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Rabbie_G15_Creepy_Skull_Mid_renewal", baseSeed: 20000000, floors: [
+	{ width: 6, height: 6, critPathMin: 23, critPathMax: 25, branch: 25, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Rabbie_G15_Creepy_Skull_High", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 22, branch: 22, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 23, critPathMax: 25, branch: 25, coverage: 65, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 12, critPathMax: 15, branch: 15, coverage: 35, hasBoss: true, custom: false },
+]},
+
+// IF YOU SEE THIS DUNGEON, PLEASE REPORT to devCAT
+//---------------------------------------------------------------------------
+{ name: "Danu_Dungeon", baseSeed: 340000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 18, branch: 18, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Karu Forest Ruins
+//---------------------------------------------------------------------------
+{ name: "karuforest_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "karuforest_dungeon_G10", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "karuforest_dungeon_G10_renewal", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "karuforest_twin_sword_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 36, critPathMax: 42, branch: 42, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Longa Desert Amethyst Ruins
+//---------------------------------------------------------------------------
+{ name: "longa_desert_amethyst_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 50, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Longa Desert Delivery Person Dungeon
+//---------------------------------------------------------------------------
+{ name: "longa_desert_dungeon_SummerEvent1st2011USA", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Longa Desert Emerald Ruins
+//---------------------------------------------------------------------------
+{ name: "longa_desert_emerald_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 50, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Longa Desert Protector Ruins
+//---------------------------------------------------------------------------
+{ name: "longa_desert_ruingadian_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 50, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Longa Desert Rain Maker Dungeon
+//---------------------------------------------------------------------------
+{ name: "longa_desert_dungeon_G10", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 50, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Longa Desert Ruins
+//---------------------------------------------------------------------------
+{ name: "longa_desert_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "longa_desert_cubic_dungeon_G10", baseSeed: 10000000, floors: [
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 50, hasBoss: true, custom: false },
+]},
+{ name: "longa_desert_dungeon_4thTaiwan", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "LongaDesert_Japan_Event_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 50, hasBoss: true, custom: false },
+]},
+{ name: "longa_desert_dungeon_RP_Atrata", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "longa_desert_dungeon_RP_Effie_Brother", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "longa_desert_final_shot_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 50, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Longa Desert Topaz Ruins
+//---------------------------------------------------------------------------
+{ name: "longa_desert_topaz_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 50, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Lucas's Peaca Dungeon
+//---------------------------------------------------------------------------
+{ name: "Senmag_Peaca_Dungeon_G11", baseSeed: 400000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 28, branch: 28, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Magic Bean Dungon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Magic_Bean_Dungeon", baseSeed: 10100000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Maiz Prairie Artifact
+//---------------------------------------------------------------------------
+{ name: "MaizPlain_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 46, critPathMax: 56, branch: 56, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "MaizPlain_twin_sword_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 80, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 20, branch: 20, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 36, branch: 36, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Maiz Prairie Ruins
+//---------------------------------------------------------------------------
+{ name: "MaizPlain_dungeon_g10", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 46, critPathMax: 56, branch: 56, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "maizplain_dungeon_Voight_RP", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 46, critPathMax: 56, branch: 56, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "maizplain_dungeon_Arneng_RP", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 46, critPathMax: 56, branch: 56, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Math Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Math_CriMath_Dungeon_H1", baseSeed: 21100000, floors: [
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 20, branch: 20, coverage: 10, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 18, critPathMax: 20, branch: 20, coverage: 10, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_CriMath_Dungeon_H2", baseSeed: 21100000, floors: [
+	{ width: 5, height: 5, critPathMin: 20, critPathMax: 20, branch: 20, coverage: 10, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_High_2_Dungeon", baseSeed: 21100000, floors: [
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 44, branch: 44, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 40, critPathMax: 52, branch: 52, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 58, branch: 58, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 9, critPathMin: 45, critPathMax: 60, branch: 60, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_High_3_Dungeon", baseSeed: 21100000, floors: [
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 42, branch: 42, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 35, critPathMax: 48, branch: 48, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 40, critPathMax: 52, branch: 52, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 40, critPathMax: 53, branch: 53, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_High_Dungeon", baseSeed: 21100000, floors: [
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 44, branch: 44, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 40, critPathMax: 52, branch: 52, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 58, branch: 58, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 9, critPathMin: 45, critPathMax: 60, branch: 60, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_High_2_Dungeon_2012_SizeRenewal", baseSeed: 21100000, floors: [
+	{ width: 5, height: 5, critPathMin: 18, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 25, critPathMax: 40, branch: 40, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 43, branch: 43, coverage: 60, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 35, critPathMax: 49, branch: 49, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_High_3_Dungeon_2012_SizeRenewal", baseSeed: 21100000, floors: [
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 32, branch: 32, coverage: 90, hasBoss: false, custom: false },
+	{ width: 7, height: 6, critPathMin: 28, critPathMax: 38, branch: 38, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 28, critPathMax: 38, branch: 38, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 30, critPathMax: 43, branch: 43, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_High_Dungeon_2012_SizeRenewal", baseSeed: 21100000, floors: [
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 36, branch: 36, coverage: 60, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 60, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 30, critPathMax: 41, branch: 41, coverage: 60, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 33, critPathMax: 44, branch: 44, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Math Basic Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Math_Low_Dungeon", baseSeed: 21100000, floors: [
+	{ width: 10, height: 10, critPathMin: 40, critPathMax: 72, branch: 72, coverage: 55, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_Low_Dungeon_2012_SizeRenewal", baseSeed: 21100000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 32, branch: 32, coverage: 40, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 32, branch: 32, coverage: 40, hasBoss: true, custom: false },
+]},
+
+// Math Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Math_CriMath_Dungeon", baseSeed: 21000000, floors: [
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 35, branch: 35, coverage: 0, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_Valentine_Dungeon", baseSeed: 21000000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_Dungeon", baseSeed: 21000000, floors: [
+	{ width: 10, height: 10, critPathMin: 50, critPathMax: 72, branch: 72, coverage: 55, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Math_Dungeon_Recover", baseSeed: 21000000, floors: [
+	{ width: 10, height: 10, critPathMin: 50, critPathMax: 72, branch: 72, coverage: 55, hasBoss: true, custom: false },
+]},
+{ name: "G1RP_18_Dunbarton_Math_Dungeon", baseSeed: 21000000, floors: [
+	{ width: 10, height: 10, critPathMin: 50, critPathMax: 70, branch: 70, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "G1RP_31_Dunbarton_Math_Dungeon", baseSeed: 21000000, floors: [
+	{ width: 10, height: 10, critPathMin: 50, critPathMax: 70, branch: 70, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "RP_NerysManus_Dunbarton_Math_Dungeon_1", baseSeed: 21000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "RP_NerysManus_Dunbarton_Math_Dungeon_2", baseSeed: 21000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "RP_NerysManus_Dunbarton_Math_Dungeon_3", baseSeed: 21000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "G2_08_Dunbarton_Math_Dungeon", baseSeed: 21000000, floors: [
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 47, branch: 47, coverage: 40, hasBoss: true, custom: false },
+]},
+{ name: "G2_08_Dunbarton_Math_Dungeon_gfMainStream2012Part1", baseSeed: 21000000, floors: [
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 35, branch: 35, coverage: 20, hasBoss: true, custom: false },
+]},
+
+// Mysterious Karu Forest Ruins
+//---------------------------------------------------------------------------
+{ name: "karuforest_dungeon_drama_ep2", baseSeed: 10000000, floors: [
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Mysterious Karu Forest Ruins Undergrounds
+//---------------------------------------------------------------------------
+{ name: "karuforest_dungeon_drama_ep2_bottom", baseSeed: 10000000, floors: [
+	{ width: 3, height: 3, critPathMin: 5, critPathMax: 7, branch: 7, coverage: 30, hasBoss: false, custom: false },
+	{ width: 3, height: 3, critPathMin: 5, critPathMax: 7, branch: 7, coverage: 30, hasBoss: false, custom: false },
+	{ width: 3, height: 3, critPathMin: 5, critPathMax: 7, branch: 7, coverage: 30, hasBoss: false, custom: false },
+	{ width: 3, height: 3, critPathMin: 5, critPathMax: 7, branch: 7, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 8, critPathMax: 10, branch: 10, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Mysterious Rundal Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Dungeon_G16S1_Shakespear", baseSeed: 760000000, floors: [
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 25, branch: 25, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G16S1_Shakespear_Mid", baseSeed: 760000000, floors: [
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 25, branch: 25, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G16S1_Shakespear_High", baseSeed: 760000000, floors: [
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 25, branch: 25, coverage: 75, hasBoss: true, custom: false },
+]},
+
+// Ninja Skill Training Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Ninja_1_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Par Dungeon
+//---------------------------------------------------------------------------
+{ name: "par_dungeon_g8s1", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "par_dungeon_WindBreaker", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Par Ruins
+//---------------------------------------------------------------------------
+{ name: "par_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "par_dungeon_4thTaiwan", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "par_dungeon_g10", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "par_dungeon_g7s4", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Par Snow Crystal Artifact
+//---------------------------------------------------------------------------
+{ name: "par_snow_crystal_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 20, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Paul's Secret Laboratory
+//---------------------------------------------------------------------------
+{ name: "Emain_Coill_Dungeon_SummerEvent1st2011USA", baseSeed: 750000000, floors: [
+	{ width: 10, height: 10, critPathMin: 44, critPathMax: 52, branch: 52, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Peaca Basic Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "Senmag_Peaca_Low_Dungeon", baseSeed: 400000000, floors: [
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Peaca Dungeon
+//---------------------------------------------------------------------------
+{ name: "Senmag_Peaca_Dungeon", baseSeed: 400000000, floors: [
+	{ width: 7, height: 7, critPathMin: 37, critPathMax: 44, branch: 44, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 42, critPathMax: 50, branch: 50, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 36, branch: 36, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "Senmag_Peaca_Dungeon_Recover", baseSeed: 400000000, floors: [
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 36, branch: 36, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "Senmag_Peaca_Dungeon_Recover_easy", baseSeed: 400000000, floors: [
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 36, branch: 36, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G12_Senmag_Peaca_Dungeon_Hard", baseSeed: 400000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 28, branch: 28, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G12_Senmag_Peaca_Dungeon_Mid", baseSeed: 400000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 28, branch: 28, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "G12_Senmag_Peaca_Dungeon_Easy", baseSeed: 400000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 28, branch: 28, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "Tirnanog_Baol_Dungeon", baseSeed: 500000000, floors: [
+	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 47, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 40, branch: 40, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Peaca Intermediate Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "Senmag_Peaca_Middle_Dungeon", baseSeed: 400000000, floors: [
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Portia's Memory RP Dungeon
+//---------------------------------------------------------------------------
+{ name: "longa_desert_dungeon_RP_Portia", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 31, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 18, branch: 18, coverage: 29, hasBoss: true, custom: false },
+]},
+{ name: "longa_desert_dungeon_RP_Portia_renewal", baseSeed: 10000000, floors: [
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 18, branch: 18, coverage: 29, hasBoss: true, custom: false },
+]},
+
+// Pot-Belly Spider Fang Artifact
+//---------------------------------------------------------------------------
+{ name: "potspider_molar_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 45, branch: 45, coverage: 30, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Pot-Belly Spider Leg Artifact
+//---------------------------------------------------------------------------
+{ name: "potspider_leg_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 30, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Pot-Belly Spider Pincer Artifact
+//---------------------------------------------------------------------------
+{ name: "potspider_claw_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 28, branch: 28, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 6, critPathMin: 8, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 4, critPathMin: 8, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 36, critPathMax: 44, branch: 44, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Pot-Belly Spider's Belly Artifact
+//---------------------------------------------------------------------------
+{ name: "potspider_pot_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 7, critPathMin: 26, critPathMax: 32, branch: 32, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Pot-Belly Spider's Venom Sac Artifact
+//---------------------------------------------------------------------------
+{ name: "potspider_poisongland_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 28, branch: 28, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Rabbie Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbie_High_2_Dungeon", baseSeed: 20100000, floors: [
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 60, branch: 60, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Rabbie_High_3_Dungeon", baseSeed: 20100000, floors: [
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 60, branch: 60, coverage: 90, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Rabbie_High_Dungeon", baseSeed: 20100000, floors: [
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 28, critPathMax: 60, branch: 60, coverage: 90, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 60, branch: 60, coverage: 90, hasBoss: true, custom: false },
+]},
+
+// Rabbie Basic Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbie_Low_Dungeon", baseSeed: 20100000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 35, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Rabbie Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbie_Dungeon", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Rabbie_Dungeon_Recover", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Rabbie_Dungeon_Recover_easy", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Rabbie_Dungeon", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Rabbie_Dungeon_g2jump_or_g3jump", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "G3_DarkKnight_Rabbie_Dungeon_g2jump_and_g3jump", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "Dunbarton_Rabbie_Andras_Dungeon", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: true, custom: false },
+]},
+{ name: "G1RP_15_Dunbarton_Rabbie_Dungeon", baseSeed: 20000000, floors: [
+	{ width: 7, height: 6, critPathMin: 26, critPathMax: 30, branch: 30, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "G1RP_15_Dunbarton_Rabbie_Dungeon_gfMainStream2012Part1", baseSeed: 20000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 22, hasBoss: true, custom: false },
+]},
+{ name: "RP_Ranald_Dunbarton_Rabbie_Dungeon", baseSeed: 20000000, floors: [
+	{ width: 8, height: 7, critPathMin: 28, critPathMax: 40, branch: 40, coverage: 60, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 28, critPathMax: 40, branch: 40, coverage: 65, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 28, critPathMax: 40, branch: 40, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// Rabbie PC Cafe Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbiepcbang_Low_Dungeon", baseSeed: 20100000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 35, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Rundal Advanced Fomor Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_High_2_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 7, height: 7, critPathMin: 42, critPathMax: 44, branch: 44, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 41, critPathMax: 44, branch: 44, coverage: 85, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 39, critPathMax: 44, branch: 44, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 39, critPathMax: 44, branch: 44, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_High_3_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 7, height: 7, critPathMin: 42, critPathMax: 44, branch: 44, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 45, critPathMax: 50, branch: 50, coverage: 85, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 33, critPathMax: 38, branch: 38, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 38, branch: 38, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_High_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 8, height: 7, critPathMin: 46, critPathMax: 50, branch: 50, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 6, critPathMin: 33, critPathMax: 38, branch: 38, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 45, critPathMax: 52, branch: 52, coverage: 85, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 43, critPathMax: 46, branch: 46, coverage: 75, hasBoss: true, custom: false },
+]},
+
+// Rundal Basic Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Dungeon_G13_Hard", baseSeed: 760000000, floors: [
+	{ width: 8, height: 8, critPathMin: 34, critPathMax: 47, branch: 47, coverage: 60, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 34, critPathMax: 40, branch: 40, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 70, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Low_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 8, height: 8, critPathMin: 34, critPathMax: 47, branch: 47, coverage: 60, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 34, critPathMax: 40, branch: 40, coverage: 75, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Rundal Boss Trial 
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_BossRush_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 10, branch: 10, coverage: 10, hasBoss: true, custom: false },
+]},
+
+// Rundal Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Dungeon_G13_Easy", baseSeed: 760000000, floors: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 20, branch: 20, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G14S4_Ascon", baseSeed: 760000000, floors: [
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 25, branch: 25, coverage: 75, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 7, critPathMax: 10, branch: 10, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G14S4_Ascon_Mid", baseSeed: 760000000, floors: [
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 25, branch: 25, coverage: 75, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 7, critPathMax: 10, branch: 10, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G14S4_Ascon_High", baseSeed: 760000000, floors: [
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 25, branch: 25, coverage: 75, hasBoss: false, custom: false },
+	{ width: 4, height: 4, critPathMin: 7, critPathMax: 10, branch: 10, coverage: 25, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G13_Mid", baseSeed: 760000000, floors: [
+	{ width: 6, height: 6, critPathMin: 30, critPathMax: 32, branch: 32, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 39, critPathMax: 44, branch: 44, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 6, height: 6, critPathMin: 30, critPathMax: 32, branch: 32, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 39, critPathMax: 44, branch: 44, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_Recover", baseSeed: 760000000, floors: [
+	{ width: 6, height: 6, critPathMin: 30, critPathMax: 32, branch: 32, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 39, critPathMax: 44, branch: 44, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_Recover_easy", baseSeed: 760000000, floors: [
+	{ width: 7, height: 8, critPathMin: 39, critPathMax: 44, branch: 44, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Rundal Siren Dungeon
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Mid_Siren_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 7, height: 7, critPathMin: 16, critPathMax: 36, branch: 36, coverage: 70, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 32, branch: 32, coverage: 70, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 28, branch: 28, coverage: 50, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 32, branch: 32, coverage: 70, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 21, critPathMax: 28, branch: 28, coverage: 60, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Middle_Siren_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 7, height: 7, critPathMin: 30, critPathMax: 35, branch: 35, coverage: 70, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 70, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 50, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 70, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Alby Zone 1
+//---------------------------------------------------------------------------
+{ name: "SAO_TirCho_Alby_1", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 6, critPathMax: 12, branch: 12, coverage: 15, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Alby Zone 2
+//---------------------------------------------------------------------------
+{ name: "SAO_TirCho_Alby_2", baseSeed: 10100000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 15, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 15, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Alby Zone 3
+//---------------------------------------------------------------------------
+{ name: "SAO_TirCho_Alby_3", baseSeed: 10100000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 15, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 15, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 15, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Alby Zone 4
+//---------------------------------------------------------------------------
+{ name: "SAO_TirCho_Alby_4", baseSeed: 10100000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 15, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 15, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 15, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 15, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Alby Zone 5
+//---------------------------------------------------------------------------
+{ name: "SAO_TirCho_Alby_5", baseSeed: 10100000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 20, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Fiodh Zone 1
+//---------------------------------------------------------------------------
+{ name: "SAO_Gairech_Fiodh_1", baseSeed: 340000000, floors: [
+	{ width: 6, height: 6, critPathMin: 6, critPathMax: 12, branch: 12, coverage: 15, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Fiodh Zone 2
+//---------------------------------------------------------------------------
+{ name: "SAO_Gairech_Fiodh_2", baseSeed: 340000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Fiodh Zone 3
+//---------------------------------------------------------------------------
+{ name: "SAO_Gairech_Fiodh_3", baseSeed: 340000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Fiodh Zone 4
+//---------------------------------------------------------------------------
+{ name: "SAO_Gairech_Fiodh_4", baseSeed: 340000000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Fiodh Zone 5
+//---------------------------------------------------------------------------
+{ name: "SAO_Gairech_Fiodh_5", baseSeed: 340000000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Math Zone 1
+//---------------------------------------------------------------------------
+{ name: "SAO_Dunbarton_Math_1", baseSeed: 21000000, floors: [
+	{ width: 6, height: 6, critPathMin: 6, critPathMax: 12, branch: 12, coverage: 15, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Math Zone 2
+//---------------------------------------------------------------------------
+{ name: "SAO_Dunbarton_Math_2", baseSeed: 21100000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 90, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 90, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Math Zone 3
+//---------------------------------------------------------------------------
+{ name: "SAO_Dunbarton_Math_3", baseSeed: 21100000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 90, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 90, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 90, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Math Zone 4
+//---------------------------------------------------------------------------
+{ name: "SAO_Dunbarton_Math_4", baseSeed: 21100000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Math Zone 5
+//---------------------------------------------------------------------------
+{ name: "SAO_Dunbarton_Math_5", baseSeed: 21100000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Peaca Zone 1
+//---------------------------------------------------------------------------
+{ name: "SAO_Senmag_Peaca_1", baseSeed: 400000000, floors: [
+	{ width: 6, height: 6, critPathMin: 6, critPathMax: 12, branch: 12, coverage: 15, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Peaca Zone 2
+//---------------------------------------------------------------------------
+{ name: "SAO_Senmag_Peaca_2", baseSeed: 400000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Peaca Zone 3
+//---------------------------------------------------------------------------
+{ name: "SAO_Senmag_Peaca_3", baseSeed: 400000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 15, branch: 15, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Peaca Zone 4
+//---------------------------------------------------------------------------
+{ name: "SAO_Senmag_Peaca_4", baseSeed: 400000000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// SAO Dungeon Capture: Peaca Zone 5
+//---------------------------------------------------------------------------
+{ name: "SAO_Senmag_Peaca_5", baseSeed: 400000000, floors: [
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 20, branch: 20, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// Secret Ruins of Longa Desert
+//---------------------------------------------------------------------------
+{ name: "G7RP_ruway_longa_desert_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 30, hasBoss: true, custom: false },
+]},
+{ name: "longa_desert_andras_secret_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 50, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// Sen Mag Castle Dungeon
+//---------------------------------------------------------------------------
+{ name: "Senmag_Keep_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 24, critPathMax: 30, branch: 30, coverage: 65, hasBoss: false, custom: false },
+	{ width: 8, height: 8, critPathMin: 46, critPathMax: 52, branch: 52, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// Shinobi Dungeon
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Ninja_2_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Special Four-Leaf Clover Dungeon
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbie_Four_Leaf_Clover_Dungeon", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// Stone Bison Hoof Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneBison_hoof_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 28, branch: 28, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 4, critPathMin: 8, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 6, critPathMin: 8, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Stone Bison Horn Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneBison_horn_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 4, height: 6, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 7, critPathMin: 26, critPathMax: 32, branch: 32, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 4, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Bison Tail Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneBison_tail_dungeon", baseSeed: 10000000, floors: [
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Bison Teeth Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneBison_tooth_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 45, branch: 45, coverage: 30, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Gargoyle Boots Artifact
+//---------------------------------------------------------------------------
+{ name: "stonegargoyle_boots_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Gargoyle Glove Artifact
+//---------------------------------------------------------------------------
+{ name: "stonegargoyle_glove_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Gargoyle Pauldron Artifact
+//---------------------------------------------------------------------------
+{ name: "stonegargoyle_shoulderaccessory_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 14, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 42, branch: 42, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Hound Bracelet Artifact
+//---------------------------------------------------------------------------
+{ name: "Stonehound_anklet_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 45, branch: 45, coverage: 30, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Hound Claw Artifact
+//---------------------------------------------------------------------------
+{ name: "Stonehound_claw_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Hound Ear Artifact
+//---------------------------------------------------------------------------
+{ name: "Stonehound_ear_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 30, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Hound Tail Artifact
+//---------------------------------------------------------------------------
+{ name: "Stonehound_tail_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 28, branch: 28, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 6, critPathMin: 8, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 4, critPathMin: 8, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Stone Hound Teeth Artifact
+//---------------------------------------------------------------------------
+{ name: "Stonehound_tooth_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 36, branch: 36, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Imp Ear Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneImp_ear_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 32, branch: 32, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 4, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Imp Hat Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneImp_cap_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 28, branch: 28, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 6, critPathMin: 8, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 4, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Stone Imp Hat Decoration Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneImp_capaccessory_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 7, critPathMin: 26, critPathMax: 32, branch: 32, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Imp Jewel Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneImp_jewel_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 60, hasBoss: false, custom: false },
+	{ width: 8, height: 6, critPathMin: 35, critPathMax: 45, branch: 45, coverage: 30, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Imp Nose Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneImp_nose_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 30, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Imp Sandal Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneImp_sandal_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 45, branch: 45, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 45, branch: 45, coverage: 30, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Zombie Belt Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneZombie_belt_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 8, critPathMin: 35, critPathMax: 45, branch: 45, coverage: 60, hasBoss: false, custom: false },
+	{ width: 8, height: 6, critPathMin: 35, critPathMax: 45, branch: 45, coverage: 30, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Zombie Bracelet Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneZombie_wristlet_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 6, critPathMin: 18, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 10, critPathMax: 14, branch: 14, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Zombie Circlet Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneZombie_circlet_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 40, coverage: 30, hasBoss: false, custom: false },
+	{ width: 8, height: 7, critPathMin: 36, critPathMax: 46, branch: 46, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Zombie Eye Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneZombie_eye_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 60, hasBoss: false, custom: false },
+	{ width: 6, height: 5, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Zombie Headband Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneZombie_hairaccessory_dungeon", baseSeed: 10000000, floors: [
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 35, critPathMax: 45, branch: 45, coverage: 30, hasBoss: false, custom: false },
+	{ width: 9, height: 9, critPathMin: 65, critPathMax: 75, branch: 75, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Stone Zombie Pauldron Artifact
+//---------------------------------------------------------------------------
+{ name: "StoneZombie_shoulderaccessory_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 28, branch: 28, coverage: 30, hasBoss: false, custom: false },
+	{ width: 6, height: 4, critPathMin: 8, critPathMax: 12, branch: 12, coverage: 30, hasBoss: false, custom: false },
+	{ width: 4, height: 6, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 30, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 34, branch: 34, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// Temple Knights Lair
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Dungeon_G12_HolyKnights", baseSeed: 760000000, floors: [
+	{ width: 8, height: 8, critPathMin: 26, critPathMax: 36, branch: 36, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G12_HolyKnights2", baseSeed: 760000000, floors: [
+	{ width: 9, height: 9, critPathMin: 40, critPathMax: 55, branch: 55, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G12_HolyKnights3", baseSeed: 760000000, floors: [
+	{ width: 9, height: 9, critPathMin: 40, critPathMax: 55, branch: 55, coverage: 75, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G9_HolyKnights1", baseSeed: 760000000, floors: [
+	{ width: 9, height: 9, critPathMin: 40, critPathMax: 55, branch: 55, coverage: 75, hasBoss: true, custom: false },
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 3, branch: 3, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G9_HolyKnights2", baseSeed: 760000000, floors: [
+	{ width: 9, height: 9, critPathMin: 40, critPathMax: 55, branch: 55, coverage: 75, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 3, branch: 3, coverage: 80, hasBoss: true, custom: false },
+]},
+{ name: "Emain_Runda_Dungeon_G9_HolyKnights3", baseSeed: 760000000, floors: [
+	{ width: 9, height: 9, critPathMin: 40, critPathMax: 55, branch: 55, coverage: 75, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 3, critPathMax: 3, branch: 3, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// test_dungeon
+//---------------------------------------------------------------------------
+{ name: "test_dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 26, critPathMax: 36, branch: 36, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// Una Dungeon
+//---------------------------------------------------------------------------
+{ name: "Bangor_Una_Dungeon", baseSeed: 320000000, floors: [
+	{ width: 6, height: 6, critPathMin: 17, critPathMax: 26, branch: 26, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// 고양이 던전
+//---------------------------------------------------------------------------
+{ name: "JG_Neko_Dungeon", baseSeed: 11000000, floors: [
+	{ width: 15, height: 15, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: true },
+	{ width: 15, height: 15, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: true },
+	{ width: 15, height: 15, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: true },
+	{ width: 7, height: 7, critPathMin: 3, critPathMax: 10, branch: 10, coverage: 10, hasBoss: true, custom: true },
+]},
+{ name: "JG_Neko_Dungeon2", baseSeed: 11000000, floors: [
+	{ width: 15, height: 15, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: true },
+	{ width: 15, height: 15, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: true },
+	{ width: 15, height: 15, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: true },
+	{ width: 7, height: 7, critPathMin: 3, critPathMax: 10, branch: 10, coverage: 10, hasBoss: true, custom: true },
+]},
+{ name: "JG_Neko_Dungeon3", baseSeed: 11000000, floors: [
+	{ width: 15, height: 15, critPathMin: 16, critPathMax: 22, branch: 22, coverage: 50, hasBoss: false, custom: true },
+	{ width: 7, height: 7, critPathMin: 3, critPathMax: 10, branch: 10, coverage: 10, hasBoss: true, custom: true },
+]},
+
+// 꼬리잡기 미니게임
+//---------------------------------------------------------------------------
+{ name: "Dungeon_Minigame_CatchingTail", baseSeed: 90000000, floors: [
+	{ width: 5, height: 5, critPathMin: 1, critPathMax: 8, branch: 8, coverage: 50, hasBoss: false, custom: true },
+]},
+
+// 라비 모험 던전
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbie_Premium_Dungeon", baseSeed: 20100000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 35, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 6, height: 6, critPathMin: 15, critPathMax: 32, branch: 32, coverage: 90, hasBoss: true, custom: false },
+]},
+
+// 라비 황금쥐 던전
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbie_Golden_Rat_Dungeon", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// 룬다 던전
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Dungeon_G2_Paladin_RP", baseSeed: 760000000, floors: [
+	{ width: 5, height: 5, critPathMin: 12, critPathMax: 16, branch: 16, coverage: 70, hasBoss: false, custom: false },
+	{ width: 5, height: 5, critPathMin: 3, critPathMax: 3, branch: 3, coverage: 50, hasBoss: true, custom: false },
+]},
+
+// 룬다 황금쥐 던전
+//---------------------------------------------------------------------------
+{ name: "Emain_Runda_Golden_Rat_Dungeon", baseSeed: 760000000, floors: [
+	{ width: 6, height: 6, critPathMin: 30, critPathMax: 32, branch: 32, coverage: 75, hasBoss: false, custom: false },
+	{ width: 7, height: 8, critPathMin: 39, critPathMax: 44, branch: 44, coverage: 80, hasBoss: true, custom: false },
+]},
+
+// 마법 카카오 던전
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbie_Magic_Cacao_Bean_Dungeon", baseSeed: 20000000, floors: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 34, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// 마스 개들의 천국
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Math_Husky_Event_Dungeon", baseSeed: 32500000, floors: [
+	{ width: 6, height: 6, critPathMin: 12, critPathMax: 17, branch: 17, coverage: 50, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 18, critPathMax: 25, branch: 25, coverage: 70, hasBoss: true, custom: false },
+]},
+
+// 마스 초보자 이벤트 던전
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Math_Japan_Event_Dungeon", baseSeed: 21000000, floors: [
+	{ width: 8, height: 8, critPathMin: 38, critPathMax: 56, branch: 56, coverage: 55, hasBoss: true, custom: false },
+]},
+
+// 메이즈 평원 초보자 이벤트 유적
+//---------------------------------------------------------------------------
+{ name: "MaizPlain_Japan_Event_dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 33, branch: 33, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// 바리 초보자 이벤트 던전
+//---------------------------------------------------------------------------
+{ name: "Bangor_Barri_Japan_Event_Dungeon", baseSeed: 31000000, floors: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 26, coverage: 20, hasBoss: false, custom: false },
+	{ width: 6, height: 7, critPathMin: 26, critPathMax: 30, branch: 30, coverage: 60, hasBoss: true, custom: false },
+]},
+
+// 바올던전테스트
+//---------------------------------------------------------------------------
+{ name: "G3_16_Tirnanog_Baol_Dungeon_Test", baseSeed: 31000000, floors: [
+	{ width: 7, height: 7, critPathMin: 20, critPathMax: 30, branch: 30, coverage: 90, hasBoss: true, custom: false },
+]},
+
+// 솔로 천국 커플 지옥 던전
+//---------------------------------------------------------------------------
+{ name: "Dunbarton_Rabbie_Whiteday_Dungeon", baseSeed: 20000000, floors: [
+	{ width: 6, height: 6, critPathMin: 22, critPathMax: 26, branch: 26, coverage: 65, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 32, critPathMax: 35, branch: 35, coverage: 65, hasBoss: true, custom: false },
+]},
+
+// 알비 초보자 이벤트 던전
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Japan_Event_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// 알비 황금쥐 던전
+//---------------------------------------------------------------------------
+{ name: "TirCho_Alby_Golden_Rat_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 12, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// 카루 숲 초보자 이벤트 유적
+//---------------------------------------------------------------------------
+{ name: "KaruForest_Japan_Event_Dungeon", baseSeed: 10000000, floors: [
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 35, branch: 35, coverage: 60, hasBoss: false, custom: false },
+	{ width: 7, height: 7, critPathMin: 25, critPathMax: 32, branch: 32, coverage: 30, hasBoss: true, custom: false },
+]},
+
+// 페카 초급 던전
+//---------------------------------------------------------------------------
+{ name: "Senmag_Peaca_Beginner_Dungeon", baseSeed: 400000000, floors: [
+	{ width: 7, height: 7, critPathMin: 28, critPathMax: 36, branch: 36, coverage: 70, hasBoss: true, custom: false },
+]},
+]

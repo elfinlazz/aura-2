@@ -196,6 +196,11 @@ namespace Aura.Shared
 					this.LoadDb(AuraData.FishDb, "db/fish.txt", reload);
 					this.LoadDb(AuraData.FishingGroundsDb, "db/fishing_grounds.txt", reload);
 				}
+
+				if ((toLoad & DataLoad.Dungeons) != 0)
+				{
+					this.LoadDb(AuraData.DungeonDb, "db/dungeons.txt", reload);
+				}
 			}
 			catch (DatabaseErrorException ex)
 			{
@@ -297,6 +302,7 @@ namespace Aura.Shared
 		Props = 0x80000,
 		Collecting = 0x100000,
 		Fishing = 0x200000,
+		Dungeons = 0x400000,
 
 		All = 0xFFFFFFFF,
 
