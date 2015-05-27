@@ -204,11 +204,12 @@ namespace Aura.Channel.Skills.Combat
 		/// <returns></returns>
 		public static short GetAttackerStun(int count, AttackSpeed speed, bool knockback)
 		{
-			//public enum CombatStunAttacker { VeryFast = 450, Fast = 520, Normal = 600, Slow = 800, VerySlow = 1000 }
-			//public enum CombatKnockbackStunAttacker { VeryFast = 2500, Fast = 2500, Normal = 2500, Slow = 2500, VerySlow = 2500 }
-
 			if (knockback)
 				return 2500;
+
+			// Speeds commented with "?" weren't logged, but taken from the weapon data.
+			// Stun *seems* to always be the same, needs confirmation. Except for 1-hit,
+			// which is always knock-back.
 
 			switch (count)
 			{
@@ -224,6 +225,9 @@ namespace Aura.Channel.Skills.Combat
 					{
 						case AttackSpeed.VerySlow: return 1000;
 						case AttackSpeed.Slow: return 800;
+						case AttackSpeed.Normal: return 600; // ?
+						case AttackSpeed.Fast: return 520; // ?
+						case AttackSpeed.VeryFast: return 450; // ?
 					}
 					break;
 
@@ -234,12 +238,28 @@ namespace Aura.Channel.Skills.Combat
 						case AttackSpeed.Slow: return 800;
 						case AttackSpeed.Normal: return 600;
 						case AttackSpeed.Fast: return 520;
+						case AttackSpeed.VeryFast: return 450; // ?
+					}
+					break;
+
+				case 4:
+					switch (speed)
+					{
+						case AttackSpeed.VerySlow: return 1000; // ?
+						case AttackSpeed.Slow: return 800; // ?
+						case AttackSpeed.Normal: return 600; // ?
+						case AttackSpeed.Fast: return 520; // ?
+						case AttackSpeed.VeryFast: return 450; // ?
 					}
 					break;
 
 				case 5:
 					switch (speed)
 					{
+						case AttackSpeed.VerySlow: return 1000; // ?
+						case AttackSpeed.Slow: return 800; // ?
+						case AttackSpeed.Normal: return 600; // ?
+						case AttackSpeed.Fast: return 520; // ?
 						case AttackSpeed.VeryFast: return 450;
 					}
 					break;
@@ -273,11 +293,10 @@ namespace Aura.Channel.Skills.Combat
 		/// <returns></returns>
 		public static short GetTargetStun(int count, AttackSpeed speed, bool knockback)
 		{
-			//public enum CombatStunTarget { VeryFast = 1200, Fast = 1700, Normal = 2000, Slow = 2800, VerySlow = 3000 }
-			//public enum CombatKnockbackStunTarget { VeryFast = 3000, Fast = 3000, Normal = 3000, Slow = 3000, VerySlow = 3000 }
-
 			if (knockback)
 				return 3000;
+
+			// Speeds commented with "?" weren't logged, but taken from the weapon data.
 
 			switch (count)
 			{
@@ -293,6 +312,9 @@ namespace Aura.Channel.Skills.Combat
 					{
 						case AttackSpeed.VerySlow: return 3000;
 						case AttackSpeed.Slow: return 2800;
+						case AttackSpeed.Normal: return 2600; // ?
+						case AttackSpeed.Fast: return 2400; // ?
+						case AttackSpeed.VeryFast: return 2200; // ?
 					}
 					break;
 
@@ -303,12 +325,28 @@ namespace Aura.Channel.Skills.Combat
 						case AttackSpeed.Slow: return 2100;
 						case AttackSpeed.Normal: return 2000;
 						case AttackSpeed.Fast: return 1700;
+						case AttackSpeed.VeryFast: return 1500; // ?
+					}
+					break;
+
+				case 4:
+					switch (speed)
+					{
+						case AttackSpeed.VerySlow: return 1900; // ?
+						case AttackSpeed.Slow: return 1800; // ?
+						case AttackSpeed.Normal: return 1700; // ?
+						case AttackSpeed.Fast: return 1500; // ?
+						case AttackSpeed.VeryFast: return 1300; // ?
 					}
 					break;
 
 				case 5:
 					switch (speed)
 					{
+						case AttackSpeed.VerySlow: return 1700; // ?
+						case AttackSpeed.Slow: return 1600; // ?
+						case AttackSpeed.Normal: return 1500; // ?
+						case AttackSpeed.Fast: return 1400; // ?
 						case AttackSpeed.VeryFast: return 1200;
 					}
 					break;
@@ -332,35 +370,57 @@ namespace Aura.Channel.Skills.Combat
 			var count = weapon != null ? weapon.Info.KnockCount + 1 : creature.RaceData.KnockCount + 1;
 			var speed = weapon != null ? (AttackSpeed)weapon.Data.AttackSpeed : (AttackSpeed)creature.RaceData.AttackSpeed;
 
+			// All values have been taken from the weapons data, the values in
+			// comments were estimates, mainly based on logs.
+
 			switch (count)
 			{
 				default:
 				case 1:
-					return 100;
+					return 105;
+
 				case 2:
 					switch (speed)
 					{
 						default:
-						case AttackSpeed.VerySlow: return 70;
-						case AttackSpeed.Slow: return 68;
-						case AttackSpeed.Normal: return 68; // ?
-						case AttackSpeed.Fast: return 68; // ?
+						case AttackSpeed.VerySlow: return 67; // 70
+						case AttackSpeed.Slow: return 65; // 68
+						case AttackSpeed.Normal: return 65; // 68
+						case AttackSpeed.Fast: return 65; // 68
+						case AttackSpeed.VeryFast: return 65;
 					}
+
 				case 3:
 					switch (speed)
 					{
 						default:
-						case AttackSpeed.VerySlow: return 60;
-						case AttackSpeed.Slow: return 56; // ?
-						case AttackSpeed.Normal: return 53;
-						case AttackSpeed.Fast: return 50;
+						case AttackSpeed.VerySlow: return 55; // 60
+						case AttackSpeed.Slow: return 52; // 56
+						case AttackSpeed.Normal: return 50; // 53
+						case AttackSpeed.Fast: return 49; // 50
+						case AttackSpeed.VeryFast: return 48;
 					}
+
+				case 4:
+					switch (speed)
+					{
+						default:
+						case AttackSpeed.VerySlow: return 42;
+						case AttackSpeed.Slow: return 40;
+						case AttackSpeed.Normal: return 39;
+						case AttackSpeed.Fast: return 36;
+						case AttackSpeed.VeryFast: return 37;
+					}
+
 				case 5:
 					switch (speed)
 					{
 						default:
-						case AttackSpeed.Fast: return 40; // ?
-						case AttackSpeed.VeryFast: return 35; // ?
+						case AttackSpeed.VerySlow: return 36;
+						case AttackSpeed.Slow: return 33;
+						case AttackSpeed.Normal: return 31.5f;
+						case AttackSpeed.Fast: return 30; // 40
+						case AttackSpeed.VeryFast: return 29.5f; // 35
 					}
 			}
 		}
