@@ -172,9 +172,9 @@ namespace Aura.Channel.World.Entities
 
 			this.EntityId = entityId;
 
+			this.State = state;
 			this.Name = name;
 			this.Title = title;
-			this.State = state;
 
 			this.Info.Id = id;
 			this.Info.Region = regionId;

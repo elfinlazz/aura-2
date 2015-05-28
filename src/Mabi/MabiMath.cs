@@ -33,6 +33,17 @@ namespace Aura.Mabi
 		}
 
 		/// <summary>
+		/// Converts vector direction into a radian.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public static float DirectionToRadian(double x, double y)
+		{
+			return ByteToRadian(DirectionToByte(x, y));
+		}
+
+		/// <summary>
 		/// Calculates the stat bonus for eating food.
 		/// </summary>
 		/// <remarks>

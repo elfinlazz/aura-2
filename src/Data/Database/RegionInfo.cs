@@ -8,6 +8,7 @@ using System.Linq;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using Aura.Mabi.Const;
+using System.Xml.Linq;
 
 namespace Aura.Data.Database
 {
@@ -21,6 +22,11 @@ namespace Aura.Data.Database
 		public int X2 { get; set; }
 		public int Y2 { get; set; }
 		public List<AreaData> Areas { get; set; }
+
+		public RegionInfoData()
+		{
+			this.Areas = new List<AreaData>();
+		}
 
 		/// <summary>
 		/// Returns id of area at the given coordinates, or 0 if area wasn't found.
@@ -96,6 +102,27 @@ namespace Aura.Data.Database
 
 			return result;
 		}
+
+		/// <summary>
+		/// Creates copy of this region data.
+		/// </summary>
+		/// <returns></returns>
+		public RegionInfoData Copy()
+		{
+			var result = new RegionInfoData();
+			result.Id = this.Id;
+			result.Name = this.Name;
+			result.GroupId = this.GroupId;
+			result.X1 = this.X1;
+			result.Y1 = this.Y1;
+			result.X2 = this.X2;
+			result.Y2 = this.Y2;
+
+			foreach (var area in this.Areas)
+				result.Areas.Add(area.Copy(true, true));
+
+			return result;
+		}
 	}
 
 	public class AreaData
@@ -108,6 +135,12 @@ namespace Aura.Data.Database
 		public int Y2 { get; set; }
 		public Dictionary<long, PropData> Props { get; set; }
 		public Dictionary<long, EventData> Events { get; set; }
+
+		public AreaData()
+		{
+			this.Props = new Dictionary<long, PropData>();
+			this.Events = new Dictionary<long, EventData>();
+		}
 
 		/// <summary>
 		/// Creates a copy of the area data.
@@ -180,6 +213,12 @@ namespace Aura.Data.Database
 		public List<ShapeData> Shapes { get; set; }
 		public List<RegionElementData> Parameters { get; set; }
 
+		public PropData()
+		{
+			this.Shapes = new List<ShapeData>();
+			this.Parameters = new List<RegionElementData>();
+		}
+
 		/// <summary>
 		/// Returns drop type, if one exists, or -1.
 		/// </summary>
@@ -190,11 +229,10 @@ namespace Aura.Data.Database
 			{
 				// TODO: Event or SignalType can probably be checked as
 				//   well for finding drop props.
-				var match = Regex.Match(param.XML, @"<xml droptype=""(?<type>[0-9]+)""/>", RegexOptions.Compiled);
-				if (!match.Success)
+				if (param.XML == null || param.XML.Attribute("droptype") == null)
 					continue;
 
-				return int.Parse(match.Groups["type"].Value);
+				return int.Parse(param.XML.Attribute("droptype").Value);
 			}
 
 			return -1;
@@ -261,6 +299,12 @@ namespace Aura.Data.Database
 		public List<ShapeData> Shapes { get; set; }
 		public List<RegionElementData> Parameters { get; set; }
 
+		public EventData()
+		{
+			this.Shapes = new List<ShapeData>();
+			this.Parameters = new List<RegionElementData>();
+		}
+
 		public bool IsInside(int x, int y)
 		{
 			if (this.Shapes.Count == 0)
@@ -314,7 +358,7 @@ namespace Aura.Data.Database
 		public int EventType { get; set; }
 		public int SignalType { get; set; }
 		public string Name { get; set; }
-		public string XML { get; set; }
+		public XElement XML { get; set; }
 
 		public RegionElementData Copy()
 		{
@@ -322,7 +366,7 @@ namespace Aura.Data.Database
 			result.EventType = this.EventType;
 			result.SignalType = this.SignalType;
 			result.Name = this.Name;
-			result.XML = this.XML;
+			result.XML = this.XML != null ? new XElement(this.XML) : null;
 
 			return result;
 		}
@@ -434,7 +478,6 @@ namespace Aura.Data.Database
 				ri.Y2 = br.ReadInt32();
 
 				var cAreas = br.ReadInt32();
-				ri.Areas = new List<AreaData>();
 				for (int i = 0; i < cAreas; ++i)
 				{
 					var ai = new AreaData();
@@ -447,7 +490,6 @@ namespace Aura.Data.Database
 					ai.Y2 = br.ReadInt32();
 
 					var cProps = br.ReadInt32();
-					ai.Props = new Dictionary<long, PropData>();
 					for (int j = 0; j < cProps; ++j)
 					{
 						var pi = new PropData();
@@ -460,7 +502,6 @@ namespace Aura.Data.Database
 						pi.Scale = br.ReadSingle();
 
 						var cShapes = br.ReadInt32();
-						pi.Shapes = new List<ShapeData>();
 						for (int k = 0; k < cShapes; ++k)
 						{
 							var si = new ShapeData();
@@ -477,14 +518,15 @@ namespace Aura.Data.Database
 						}
 
 						var cElements = br.ReadInt32();
-						pi.Parameters = new List<RegionElementData>();
 						for (int k = 0; k < cElements; ++k)
 						{
 							var red = new RegionElementData();
 							red.EventType = br.ReadInt32();
 							red.SignalType = br.ReadInt32();
 							red.Name = br.ReadString();
-							red.XML = br.ReadString();
+
+							var xml = br.ReadString();
+							red.XML = !string.IsNullOrWhiteSpace(xml) ? XElement.Parse(xml) : null;
 
 							pi.Parameters.Add(red);
 						}
@@ -493,7 +535,6 @@ namespace Aura.Data.Database
 					}
 
 					var cEvents = br.ReadInt32();
-					ai.Events = new Dictionary<long, EventData>();
 					for (int j = 0; j < cEvents; ++j)
 					{
 						var ei = new EventData();
@@ -505,7 +546,6 @@ namespace Aura.Data.Database
 						ei.Type = (EventType)br.ReadInt32();
 
 						var cShapes = br.ReadInt32();
-						ei.Shapes = new List<ShapeData>();
 						for (int k = 0; k < cShapes; ++k)
 						{
 							var si = new ShapeData();
@@ -522,14 +562,15 @@ namespace Aura.Data.Database
 						}
 
 						var cElements = br.ReadInt32();
-						ei.Parameters = new List<RegionElementData>();
 						for (int k = 0; k < cElements; ++k)
 						{
 							var red = new RegionElementData();
 							red.EventType = br.ReadInt32();
 							red.SignalType = br.ReadInt32();
 							red.Name = br.ReadString();
-							red.XML = br.ReadString();
+
+							var xml = br.ReadString();
+							red.XML = !string.IsNullOrWhiteSpace(xml) ? XElement.Parse(xml) : null;
 
 							if (!ei.IsAltar && red.EventType == 2110 && red.SignalType == 103)
 								ei.IsAltar = true;
