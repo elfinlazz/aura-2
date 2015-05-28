@@ -1325,6 +1325,23 @@ namespace Aura.Channel.World.Entities
 			return (damage * this.GetRndMagicBalance());
 		}
 
+		public float GetRndRangedDamage()
+		{
+			float min = (this.RightHand == null ? 0 : this.RightHand.OptionInfo.AttackMin);
+			float max = (this.RightHand == null ? 0 : this.RightHand.OptionInfo.AttackMax);
+
+			min += (this.Dex - 10) / 3.5f;
+			max += (this.Dex - 10) / 2.5f;
+
+			var balance = (this.RightHand == null ? this.BalanceBase + this.BalanceBaseMod : this.RightHand.OptionInfo.Balance);
+			var multiplier = this.GetRndBalance(balance) / 100f;
+
+			if (min > max)
+				min = max;
+
+			return (min + (max - min) * multiplier);
+		}
+
 		/// <summary>
 		/// Applies damage to Life, kills creature if necessary.
 		/// </summary>

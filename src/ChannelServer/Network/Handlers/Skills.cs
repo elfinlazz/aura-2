@@ -476,5 +476,45 @@ namespace Aura.Channel.Network.Handlers
 
 			handler.OnResponse(creature, method, success);
 		}
+
+		[PacketHandler(Op.CombatSetAim)]
+		public void CombatSetAim(ChannelClient client, Packet packet)
+		{
+			var targetEntityId = packet.GetLong();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+			var activeSkill = creature.Skills.ActiveSkill;
+
+			if (activeSkill == null)
+			{
+				Log.Debug("CombatSetAim: No active skill");
+				Send.CombatSetAimR(creature, 0, SkillId.None, 0);
+				return;
+			}
+
+			// Ever a negative response?
+
+			creature.Temp.AimStart = DateTime.Now;
+
+			Send.CombatSetAimR(creature, targetEntityId, activeSkill.Info.Id, 0);
+		}
+
+		[PacketHandler(Op.SkillCompleteUnk)]
+		public void SkillCompleteUnk(ChannelClient client, Packet packet)
+		{
+			var skillId = packet.GetShort();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+			var activeSkill = creature.Skills.ActiveSkill;
+			if (activeSkill == null)
+			{
+				Log.Debug("SkillCompleteUnk: No active skill");
+				return;
+			}
+
+			// TODO: What is this? Check newer logs. Cancel correct?
+
+			creature.Skills.CancelActiveSkill();
+		}
 	}
 }

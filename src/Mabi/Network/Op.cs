@@ -487,6 +487,10 @@ namespace Aura.Mabi.Network
 
 		public const int ItemMagnet = 0xABAC; // [190100, NA200 (2015-01-15)]
 
+		// When aiming without arrows
+		//Op: 0000ABBB, Id: 0010000000000002
+		//001 [................] String : /arrow/
+
 		public const int NpcTalk = 0x13882;
 		public const int NpcTalkSelect = 0x13883;
 

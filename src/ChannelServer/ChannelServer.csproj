@@ -160,6 +160,7 @@
     <Compile Include="Skills\Combat\Defense.cs" />
     <Compile Include="Skills\Combat\FinalHit.cs" />
     <Compile Include="Skills\Combat\GlasGhaibhleannSkill.cs" />
+    <Compile Include="Skills\Combat\RangedAttack.cs" />
     <Compile Include="Skills\Combat\Smash.cs" />
     <Compile Include="Skills\Combat\SuperWindmill.cs" />
     <Compile Include="Skills\Combat\Windmill.cs" />
