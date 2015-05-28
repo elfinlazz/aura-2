@@ -14,6 +14,10 @@ namespace Aura.Data.Database
 	{
 		public string Name { get; set; }
 		public int BaseSeed { get; set; }
+		public int LobbyRegionId { get; set; }
+		public int StairsPropId { get; set; }
+		public int StatuePropId { get; set; }
+		public int SaveStatuePropId { get; set; }
 		public List<DungeonFloorData> Floors { get; set; }
 
 		public DungeonData()
@@ -38,11 +42,15 @@ namespace Aura.Data.Database
 	{
 		protected override void ReadEntry(JObject entry)
 		{
-			entry.AssertNotMissing("name", "baseSeed", "floors");
+			entry.AssertNotMissing("name", "baseSeed", "lobby", "stairs", "statue", "saveStatue", "floors");
 
 			var dungeonData = new DungeonData();
 			dungeonData.Name = entry.ReadString("name").ToLower();
 			dungeonData.BaseSeed = entry.ReadInt("baseSeed");
+			dungeonData.LobbyRegionId = entry.ReadInt("lobby");
+			dungeonData.StairsPropId = entry.ReadInt("stairs");
+			dungeonData.StatuePropId = entry.ReadInt("statue");
+			dungeonData.SaveStatuePropId = entry.ReadInt("saveStatue");
 
 			foreach (JObject floorEntry in entry["floors"])
 			{
