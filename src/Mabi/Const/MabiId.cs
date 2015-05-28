@@ -46,6 +46,9 @@ namespace Aura.Mabi.Const
 		// Default type for pet/partner cards.
 		public const int PetCardType = 102;
 
+		// Start of the dungeon regions id range
+		public const int DungeonRegions = 10001;
+
 		// Start of the dynamic regions id range
 		public const int DynamicRegions = 35001;
 
