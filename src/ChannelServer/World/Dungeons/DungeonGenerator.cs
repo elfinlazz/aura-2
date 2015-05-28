@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Data;
+using Aura.Data.Database;
 using System.Collections.Generic;
 
 namespace Aura.Channel.World.Dungeons
@@ -16,25 +17,26 @@ namespace Aura.Channel.World.Dungeons
 		public MTRandom RngMaze { get; private set; }
 		public MTRandom RngPuzzles { get; private set; }
 		public List<DungeonFloor> Floors { get; private set; }
+		public DungeonData Data { get; private set; }
 
 		public DungeonGenerator(string dungeonName, int itemId, int seed, int floorPlan, string option)
 		{
 			this.Name = dungeonName.ToLower();
-			var dungeonData = AuraData.DungeonDb.Find(dungeonName);
+			this.Data = AuraData.DungeonDb.Find(dungeonName);
 
 			this.Seed = seed;
 			this.FloorPlan = floorPlan;
 			this.Option = (option ?? "").ToLower();
-			this.RngMaze = new MTRandom(dungeonData.BaseSeed + itemId + floorPlan);
+			this.RngMaze = new MTRandom(this.Data.BaseSeed + itemId + floorPlan);
 			this.RngPuzzles = new MTRandom(seed);
 			this.Floors = new List<DungeonFloor>();
 
 			DungeonFloor prev = null;
-			for (int i = 0; i < dungeonData.Floors.Count; i++)
+			for (int i = 0; i < this.Data.Floors.Count; i++)
 			{
-				var isLastFloor = (i == dungeonData.Floors.Count - 1);
+				var isLastFloor = (i == this.Data.Floors.Count - 1);
 
-				var floor = new DungeonFloor(this, dungeonData.Floors[i], isLastFloor, prev);
+				var floor = new DungeonFloor(this, this.Data.Floors[i], isLastFloor, prev);
 				this.Floors.Add(floor);
 
 				prev = floor;
