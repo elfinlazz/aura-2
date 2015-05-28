@@ -6,6 +6,8 @@
 
 ai/**/*
 
+dungeons/**/*
+
 /cache/system/scripts/items/inline.generated.cs
 items/**/*
 

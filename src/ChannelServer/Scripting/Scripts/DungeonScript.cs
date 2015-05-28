@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.World;
+using Aura.Channel.World.Entities;
 using Aura.Shared.Scripting.Scripts;
 using Aura.Shared.Util;
 using System;
@@ -32,7 +34,11 @@ namespace Aura.Channel.Scripting.Scripts
 				return false;
 			}
 
+			this.Name = attr.Name;
+
 			this.Load();
+
+			ChannelServer.Instance.ScriptManager.DungeonScripts.Add(this.Name, this);
 
 			return true;
 		}
@@ -42,6 +48,11 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public virtual void Load()
 		{
+		}
+
+		public virtual bool Route(Creature creature, Item item, ref string dungeonName)
+		{
+			return true;
 		}
 
 		/// <summary>
@@ -65,7 +76,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public DungeonScriptAttribute(string name)
 		{
-			this.Name = name;
+			this.Name = name.ToLower();
 		}
 	}
 }
