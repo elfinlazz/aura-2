@@ -89,7 +89,7 @@ namespace Aura.Channel.World.Dungeons
 			{
 				for (var x = 0; x < this.Width; ++x)
 				{
-					if (!this.Rooms[x][y].IsOccupied())
+					if (!this.Rooms[x][y].Occupied)
 						freeRooms += 1;
 				}
 			}
@@ -176,7 +176,7 @@ namespace Aura.Channel.World.Dungeons
 
 				_counter += 1;
 
-				room2.Visited(_counter);
+				room2.VisitedCount = _counter;
 				tempVector.Add(biasedPos);
 
 				if (!flag)
@@ -355,7 +355,7 @@ namespace Aura.Channel.World.Dungeons
 				for (int iDir = 0; iDir < 4; iDir++)
 				{
 					var room = this.GetRoom(pos.GetBiasedPosition(iDir));
-					if (room != null && !room.IsOccupied())
+					if (room != null && !room.Occupied)
 						count += 1;
 				}
 
@@ -378,7 +378,7 @@ namespace Aura.Channel.World.Dungeons
 
 				_counter++;
 
-				nextRoom.Visited(_counter);
+				nextRoom.VisitedCount = _counter;
 				nextRoom.IsOnCriticalPath = true;
 
 				currentRoom.Directions[direction] = 1;
@@ -405,12 +405,12 @@ namespace Aura.Channel.World.Dungeons
 
 				var oppositeDirection = Direction.GetOppositeDirection(move.Direction);
 
-				if (next_room.IsVisited != 0)
+				if (next_room.Visited)
 				{
 					current_room.Directions[move.Direction] = 0;
 					next_room.Directions[oppositeDirection] = 0;
 
-					next_room.IsVisited = 0;
+					next_room.VisitedCount = 0;
 					next_room.IsOnCriticalPath = false;
 
 					_counter -= 1;
@@ -430,7 +430,7 @@ namespace Aura.Channel.World.Dungeons
 
 		public bool IsFree(Position pos)
 		{
-			return !this.Rooms[pos.X][pos.Y].IsOccupied();
+			return !this.Rooms[pos.X][pos.Y].Occupied;
 		}
 
 		public bool IsRoomInDirectionFree(Position pos, int direction)
@@ -438,7 +438,7 @@ namespace Aura.Channel.World.Dungeons
 			var dirPos = pos.GetBiasedPosition(direction);
 
 			if ((0 <= dirPos.X) && (dirPos.X < Width) && (0 <= dirPos.Y) && (dirPos.Y < Height))
-				return !Rooms[dirPos.X][dirPos.Y].IsOccupied();
+				return !Rooms[dirPos.X][dirPos.Y].Occupied;
 
 			return false;
 		}
@@ -446,7 +446,7 @@ namespace Aura.Channel.World.Dungeons
 		public void MarkReservedPosition(Position pos)
 		{
 			MazeRoomInternal room = Rooms[pos.X][pos.Y];
-			if (room.IsVisited == 0)
+			if (!room.Visited)
 				room.IsReserved = true;
 		}
 
@@ -462,7 +462,7 @@ namespace Aura.Channel.World.Dungeons
 					{
 						room = Rooms[x][y];
 						room.Directions = new int[4];
-						room.IsVisited = 0;
+						room.VisitedCount = 0;
 					}
 				}
 
@@ -479,7 +479,7 @@ namespace Aura.Channel.World.Dungeons
 				_counter = 1;
 
 				room = Rooms[pos.X][pos.Y];
-				room.IsVisited = _counter;
+				room.VisitedCount = _counter;
 				room.IsOnCriticalPath = true;
 			}
 		}

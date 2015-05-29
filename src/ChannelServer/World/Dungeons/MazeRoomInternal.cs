@@ -7,22 +7,15 @@ namespace Aura.Channel.World.Dungeons
 	{
 		public int[] Directions { get; set; }
 		public bool IsOnCriticalPath { get; set; }
-		public int IsVisited { get; set; }
+		public int VisitedCount { get; set; }
 		public bool IsReserved { get; set; }
+
+		public bool Visited { get { return (this.VisitedCount != 0); } }
+		public bool Occupied { get { return (this.Visited || this.IsReserved); } }
 
 		public MazeRoomInternal()
 		{
 			this.Directions = new int[] { 0, 0, 0, 0 };
-		}
-
-		public bool IsOccupied()
-		{
-			return (this.IsVisited != 0 || this.IsReserved);
-		}
-
-		public void Visited(int cnt)
-		{
-			this.IsVisited = cnt;
 		}
 
 		public int GetPassageType(int direction)
