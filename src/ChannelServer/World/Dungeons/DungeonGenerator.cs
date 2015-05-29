@@ -22,7 +22,7 @@ namespace Aura.Channel.World.Dungeons
 		public DungeonGenerator(string dungeonName, int itemId, int seed, int floorPlan, string option)
 		{
 			this.Name = dungeonName.ToLower();
-			this.Data = AuraData.DungeonDb.Find(dungeonName);
+			this.Data = AuraData.DungeonDb.Find(this.Name);
 
 			this.Seed = seed;
 			this.FloorPlan = floorPlan;

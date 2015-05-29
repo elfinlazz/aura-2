@@ -1,9 +1,9 @@
-﻿using Aura.Data;
+﻿// Copyright (c) Aura development team - Licensed under GNU GPL
+// For more information, see license file in the main folder
+
+using Aura.Data;
 using System.Collections.Generic;
 using System.Linq;
-
-// Copyright (c) Aura development team - Licensed under GNU GPL
-// For more information, see license file in the main folder
 
 namespace Aura.Channel.World.Dungeons
 {
