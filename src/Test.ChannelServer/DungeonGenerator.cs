@@ -1,4 +1,4 @@
-﻿using Aura.Channel.World.Dungeons;
+﻿using Aura.Channel.World.Dungeons.Generation;
 using Aura.Data;
 using System;
 using System.Collections.Generic;
@@ -838,7 +838,7 @@ maze gen
 								row += "S ";
 							else if (floor.MazeGenerator.EndPos.X == x && floor.MazeGenerator.EndPos.Y == y)
 								row += "B ";
-							else if (floor.MazeGenerator.Rooms[x][y].IsVisited != 0)
+							else if (floor.MazeGenerator.Rooms[x][y].Visited)
 								row += "X ";
 							else
 								row += "  ";
