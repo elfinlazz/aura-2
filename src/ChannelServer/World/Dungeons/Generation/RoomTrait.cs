@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Aura.Channel.World.Dungeons
+namespace Aura.Channel.World.Dungeons.Generation
 {
 	public class RoomTrait
 	{

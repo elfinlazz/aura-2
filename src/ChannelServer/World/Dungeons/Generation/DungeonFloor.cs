@@ -5,7 +5,7 @@ using Aura.Data.Database;
 using System;
 using System.Collections.Generic;
 
-namespace Aura.Channel.World.Dungeons
+namespace Aura.Channel.World.Dungeons.Generation
 {
 	public class DungeonFloor
 	{

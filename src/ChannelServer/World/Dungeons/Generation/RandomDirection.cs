@@ -3,7 +3,7 @@
 
 using Aura.Data;
 
-namespace Aura.Channel.World.Dungeons
+namespace Aura.Channel.World.Dungeons.Generation
 {
 	public class RandomDirection
 	{

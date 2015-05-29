@@ -5,7 +5,7 @@ using Aura.Data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Aura.Channel.World.Dungeons
+namespace Aura.Channel.World.Dungeons.Generation
 {
 	public class MazeGenerator
 	{
