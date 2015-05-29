@@ -35,6 +35,10 @@ namespace Aura.Channel.Network.Handlers
 		public void GmcpClose(ChannelClient client, Packet packet)
 		{
 			// Log it?
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			creature.Vars.Perm.GMCP = null;
 		}
 
 		/// <summary>

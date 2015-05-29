@@ -89,6 +89,10 @@ namespace Aura.Channel.Network.Handlers
 			// Default answer for now
 			Send.HomesteadInfoRequestR(creature);
 
+			// Re-open GMCP
+			if (creature.Vars.Perm.GMCP != null && client.Account.Authority >= ChannelServer.Instance.Conf.World.GmcpMinAuth)
+				Send.GmcpOpen(creature);
+
 			ChannelServer.Instance.Events.OnPlayerLoggedIn(creature);
 		}
 

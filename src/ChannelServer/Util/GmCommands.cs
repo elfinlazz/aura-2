@@ -914,6 +914,8 @@ namespace Aura.Channel.Util
 				return CommandResult.Fail;
 			}
 
+			sender.Vars.Perm.GMCP = true;
+
 			Send.GmcpOpen(sender);
 
 			return CommandResult.Okay;
