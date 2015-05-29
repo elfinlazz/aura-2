@@ -65,16 +65,20 @@ namespace Aura.Channel.Skills.Combat
 				return CombatSkillResult.OutOfRange;
 
 			// Calculate chance
+			// Unofficial, but seems to be close.
 			var rnd = RandomProvider.Get();
-			var chance = 75f; // TODO: ...
 
-			Log.Debug("{0}ms (distance: {1})", (DateTime.Now - attacker.Temp.AimStart).TotalMilliseconds, attackerPos.GetDistance(targetPos));
-			// 1278,0731ms (distance: 1566)	 56
-			// 1590,0909ms (distance: 1977)	 56
-			// 1641,0939ms (distance: 1461)	 65
-			// 1989,1137ms (distance: 1461)	 73
-			// 1387,0793ms (distance: 903)	 73
-			// 1050,0601ms (distance: 292)	 93
+			var distance = attackerPos.GetDistance(targetPos);
+			var aimTime = (DateTime.Now - attacker.Temp.AimStart).TotalMilliseconds;
+			var baseAimTime = 1000f;
+			var fullAimTime = ((baseAimTime + distance) / 99f * (99f * 2));
+
+			var chance = Math.Min(99f, 99f / (baseAimTime + distance) * aimTime);
+
+			if (aimTime >= fullAimTime)
+				chance = 100;
+
+			//Log.Debug("{0}ms (distance: {1})", (DateTime.Now - attacker.Temp.AimStart).TotalMilliseconds, attackerPos.GetDistance(targetPos));
 
 			if (target.IsMoving)
 			{
@@ -83,6 +87,9 @@ namespace Aura.Channel.Skills.Combat
 				else
 					chance = Math.Min(90, chance);
 			}
+
+			if (attacker.Titles.SelectedTitle == 60001)
+				Send.ServerMessage(attacker, "Debug: Aim {0}", chance);
 
 			// Actions
 			var cap = new CombatActionPack(attacker, skill.Info.Id);
