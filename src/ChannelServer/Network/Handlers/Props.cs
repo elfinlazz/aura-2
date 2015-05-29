@@ -88,7 +88,16 @@ namespace Aura.Channel.Network.Handlers
 			}
 			else
 			{
-				if (creature.GetPosition().InRange(prop.GetPosition(), 1500))
+				// TODO: Check shape positions?
+				// Props can be quite big, and the center of it isn't necessarily
+				// where the player will touch it, so a simple range check
+				// doesn't work properly, e.g. with dungeon's boss doors.
+				// Checking the distance to any of the shapes could
+				// solve this problem.
+
+				if (!creature.GetPosition().InRange(prop.GetPosition(), 1500))
+					Log.Warning("TouchProp: Player '{0}' tried to touch prop '{1:X16}' out of range (Distance: {2}).", creature.Name, entityId, creature.GetPosition().GetDistance(prop.GetPosition()));
+
 				{
 					if (prop.Behavior != null)
 					{
@@ -99,11 +108,11 @@ namespace Aura.Channel.Network.Handlers
 						Log.Unimplemented("TouchProp: No prop behavior for '{0}'.", prop.EntityIdHex);
 					}
 				}
-				else
-				{
-					Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("You're too far away."));
-					Log.Warning("TouchProp: Player '{0}' tried to touch prop out of range.", creature.Name);
-				}
+				//else
+				//{
+				//	Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("You're too far away."));
+				//	Log.Warning("TouchProp: Player '{0}' tried to touch prop out of range.", creature.Name);
+				//}
 			}
 
 			Send.TouchPropR(creature);
