@@ -62,7 +62,7 @@ namespace Aura.Data.Database
 
 			foreach (JObject floorEntry in entry["floors"])
 			{
-				floorEntry.AssertNotMissing("width", "height", "critPathMin", "critPathMax", "branch", "coverage", "hasBoss", "custom");
+				floorEntry.AssertNotMissing("width", "height", "critPathMin", "critPathMax", "branch", "coverage");
 
 				var floorData = new DungeonFloorData();
 				floorData.Width = floorEntry.ReadInt("width");
