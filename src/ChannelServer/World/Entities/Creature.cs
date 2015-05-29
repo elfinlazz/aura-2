@@ -919,6 +919,33 @@ namespace Aura.Channel.World.Entities
 		public abstract bool Warp(int regionId, int x, int y);
 
 		/// <summary>
+		/// Warps creature to target location path,
+		/// returns false if warp is unsuccessful.
+		/// </summary>
+		/// <remarks>
+		/// Parses location paths like Uladh_main/SomeArea/SomeEvent
+		/// and calls Warp with the resulting values.
+		/// </remarks>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public bool Warp(string locationPath)
+		{
+			try
+			{
+				var loc = new Location(locationPath);
+				return this.Warp(loc.RegionId, loc.X, loc.Y);
+			}
+			catch (Exception ex)
+			{
+				Send.ServerMessage(this, "Warp error: {0}", ex.Message);
+				Log.Exception(ex, "Creature.Warp: Location parse error for '{0}'.", locationPath);
+				return false;
+			}
+		}
+
+		/// <summary>
 		/// Called every 5 minutes, checks changes through food.
 		/// </summary>
 		/// <param name="time"></param>
