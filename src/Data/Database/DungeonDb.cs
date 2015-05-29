@@ -15,6 +15,7 @@ namespace Aura.Data.Database
 		public string Name { get; set; }
 		public int BaseSeed { get; set; }
 		public int LobbyRegionId { get; set; }
+		public string Exit { get; set; }
 		public int StairsPropId { get; set; }
 		public int StatuePropId { get; set; }
 		public int SaveStatuePropId { get; set; }
@@ -51,6 +52,7 @@ namespace Aura.Data.Database
 			dungeonData.Name = entry.ReadString("name").ToLower();
 			dungeonData.BaseSeed = entry.ReadInt("baseSeed");
 			dungeonData.LobbyRegionId = entry.ReadInt("lobby");
+			dungeonData.Exit = entry.ReadString("exit");
 			dungeonData.StairsPropId = entry.ReadInt("stairs");
 			dungeonData.StatuePropId = entry.ReadInt("statue");
 			dungeonData.SaveStatuePropId = entry.ReadInt("saveStatue");
