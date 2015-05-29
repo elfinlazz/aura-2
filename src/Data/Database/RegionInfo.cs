@@ -29,23 +29,6 @@ namespace Aura.Data.Database
 		}
 
 		/// <summary>
-		/// Returns id of area at the given coordinates, or 0 if area wasn't found.
-		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <returns></returns>
-		public int GetAreaId(int x, int y)
-		{
-			foreach (var area in this.Areas)
-			{
-				if (x >= Math.Min(area.X1, area.X2) && x <= Math.Max(area.X1, area.X2) && y >= Math.Min(area.Y1, area.Y2) && y <= Math.Max(area.Y1, area.Y2))
-					return area.Id;
-			}
-
-			return 0;
-		}
-
-		/// <summary>
 		/// Returns area with given name or null if it doesn't exist.
 		/// </summary>
 		/// <param name="name"></param>
@@ -399,22 +382,6 @@ namespace Aura.Data.Database
 
 			lock (_rnd)
 				return ri.RandomCoord(_rnd);
-		}
-
-		/// <summary>
-		/// Returns area id for the given location, or 0 if no area exists.
-		/// </summary>
-		/// <param name="region"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <returns></returns>
-		public int GetAreaId(int region, int x, int y)
-		{
-			var ri = this.Find(region);
-			if (ri == null)
-				return int.MaxValue;
-
-			return ri.GetAreaId(x, y);
 		}
 
 		/// <summary>
