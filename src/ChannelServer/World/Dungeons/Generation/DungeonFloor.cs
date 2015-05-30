@@ -13,7 +13,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		private DungeonFloor _prevFloor;
 		//private DungeonFloor next_floor_structure;
 
-		private List<List<RoomTrait>> rooms;
+		public List<List<RoomTrait>> rooms;
 
 		private Position _pos;
 		private Position _startPos;
@@ -21,26 +21,26 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		private int _branchProbability;
 		private int _coverageFactor;
-		private int _width;
-		private int _height;
-		private bool _isLastFloor;
 
 		public bool HasBossRoom { get; private set; }
 		public MazeGenerator MazeGenerator { get; private set; }
+		public int Width { get; private set; }
+		public int Height { get; private set; }
+		public bool IsLastFloor { get; private set; }
 
 		public DungeonFloor(DungeonGenerator dungeonGenerator, DungeonFloorData floorData, bool isLastFloor, DungeonFloor prevFloor)
 		{
 			_pos = new Position(0, 0);
 			_startPos = new Position(0, 0);
 			_startDirection = Direction.Down;
-			_width = 1;
-			_height = 1;
+			this.Width = 1;
+			this.Height = 1;
 			this.MazeGenerator = new MazeGenerator();
 
 			_dungeonGenerator = dungeonGenerator;
 			_branchProbability = floorData.Branch;
 			_coverageFactor = floorData.Coverage;
-			_isLastFloor = isLastFloor;
+			this.IsLastFloor = isLastFloor;
 			_prevFloor = prevFloor;
 
 			this.HasBossRoom = floorData.HasBoss;
@@ -66,44 +66,42 @@ namespace Aura.Channel.World.Dungeons.Generation
 				height = 18;
 
 			var rndNum = _dungeonGenerator.RngMaze.GetUInt32();
-			_width = (int)(width - rndNum % (int)(width / 5.0));
+			this.Width = (int)(width - rndNum % (int)(width / 5.0));
 
 			rndNum = _dungeonGenerator.RngMaze.GetUInt32();
-			_height = (int)(height - rndNum % (int)(height / 5.0));
+			this.Height = (int)(height - rndNum % (int)(height / 5.0));
 		}
 
 		private void InitRoomtraits()
 		{
 			rooms = new List<List<RoomTrait>>();
-			for (int h = 0; h < _width; h++)
+			for (int h = 0; h < this.Width; h++)
 			{
 				var row = new List<RoomTrait>();
-				for (int w = 0; w < _height; w++)
+				for (int w = 0; w < this.Height; w++)
 					row.Add(new RoomTrait());
 
 				rooms.Add(row);
 			}
 
-			for (int y = 0; y < _height; y++)
+			for (int y = 0; y < this.Height; y++)
 			{
-				for (int x = 0; x < _width; x++)
+				for (int x = 0; x < this.Width; x++)
 				{
 					for (int direction = 0; direction < 4; direction++)
 					{
 						var biased_pos = new Position(x, y).GetBiasedPosition(direction);
 						if ((biased_pos.X >= 0) && (biased_pos.Y >= 0))
-							if ((biased_pos.X < _width) && (biased_pos.Y < _height))
+							if ((biased_pos.X < this.Width) && (biased_pos.Y < this.Height))
 								rooms[x][y].SetNeighbor(direction, rooms[biased_pos.X][biased_pos.Y]);
 					}
 				}
 			}
 		}
 
-
-
-		private RoomTrait GetRoom(Position pos)
+		public RoomTrait GetRoom(Position pos)
 		{
-			if ((pos.X < 0) || (pos.Y < 0) || (pos.X >= _width) || (pos.Y >= _height))
+			if ((pos.X < 0) || (pos.Y < 0) || (pos.X >= this.Width) || (pos.Y >= this.Height))
 				throw new Exception();
 			return rooms[pos.X][pos.Y];
 		}
@@ -113,7 +111,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			Position biased_pos = pos.GetBiasedPosition(direction);
 			if ((biased_pos.X >= 0) && (biased_pos.Y >= 0))
 			{
-				if ((biased_pos.X < _width) && (biased_pos.Y < _height))
+				if ((biased_pos.X < this.Width) && (biased_pos.Y < this.Height))
 				{
 					if (!this.MazeGenerator.IsFree(biased_pos))
 						return false;
@@ -162,7 +160,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		{
 			while (true)
 			{
-				this.MazeGenerator.SetSize(_width, _height);
+				this.MazeGenerator.SetSize(this.Width, this.Height);
 				this.SetRandomPathPosition();
 
 				if (this.MazeGenerator.GenerateCriticalPath(_dungeonGenerator.RngMaze, crit_path_min, crit_path_max))
@@ -227,8 +225,8 @@ namespace Aura.Channel.World.Dungeons.Generation
 				{
 					while (true)
 					{
-						_pos.X = (int)(mt.GetUInt32() % (_width - 2) + 1);
-						_pos.Y = (int)(mt.GetUInt32() % (_height - 3) + 1);
+						_pos.X = (int)(mt.GetUInt32() % (this.Width - 2) + 1);
+						_pos.Y = (int)(mt.GetUInt32() % (this.Height - 3) + 1);
 						if (this.MazeGenerator.IsFree(_pos))
 							if (this.MazeGenerator.IsFree(new Position(_pos.X - 1, _pos.Y)))
 								if (this.MazeGenerator.IsFree(new Position(_pos.X + 1, _pos.Y)))
@@ -254,8 +252,8 @@ namespace Aura.Channel.World.Dungeons.Generation
 				{
 					while (true)
 					{
-						_pos.X = (int)(mt.GetUInt32() % (_width - 2) + 1);
-						_pos.Y = (int)(mt.GetUInt32() % (_height - 3) + 1);
+						_pos.X = (int)(mt.GetUInt32() % (this.Width - 2) + 1);
+						_pos.Y = (int)(mt.GetUInt32() % (this.Height - 3) + 1);
 						if (this.MazeGenerator.IsFree(_pos))
 							if (this.MazeGenerator.IsFree(new Position(_pos.X - 1, _pos.Y)))
 								if (this.MazeGenerator.IsFree(new Position(_pos.X + 1, _pos.Y)))
@@ -278,14 +276,14 @@ namespace Aura.Channel.World.Dungeons.Generation
 				var free = false;
 				while (!free)
 				{
-					_pos.X = (int)(mt.GetUInt32() % _width);
-					_pos.Y = (int)(mt.GetUInt32() % _height);
+					_pos.X = (int)(mt.GetUInt32() % this.Width);
+					_pos.Y = (int)(mt.GetUInt32() % this.Height);
 
 					free = this.MazeGenerator.IsFree(_pos);
 				}
 			}
 
-			if (!_isLastFloor && !HasBossRoom)
+			if (!this.IsLastFloor && !HasBossRoom)
 			{
 				var rnd_dir = new RandomDirection();
 				while (true)

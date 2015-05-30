@@ -29,7 +29,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		public bool IsLinked(int direction)
 		{
 			if (direction > 3)
-				throw new Exception("Direction out of bounds.");
+				throw new ArgumentException("Direction out of bounds.");
 
 			return this.Links[direction] != 0;
 		}
@@ -37,15 +37,15 @@ namespace Aura.Channel.World.Dungeons.Generation
 		public int GetDoorType(int direction)
 		{
 			if (direction > 3)
-				throw new Exception("Direction out of bounds.");
+				throw new ArgumentException("Direction out of bounds.");
 
-			return DoorType[direction];
+			return this.DoorType[direction];
 		}
 
 		public void Link(int direction, int linkType)
 		{
 			if (direction > 3)
-				throw new Exception("Direction out of bounds.");
+				throw new ArgumentException("Direction out of bounds.");
 
 			this.Links[direction] = linkType;
 
@@ -64,13 +64,13 @@ namespace Aura.Channel.World.Dungeons.Generation
 		public void SetDoorType(int direction, int doorType)
 		{
 			if (direction > 3)
-				throw new Exception("Direction out of bounds.");
+				throw new ArgumentException("Direction out of bounds.");
 
-			DoorType[direction] = doorType;
+			this.DoorType[direction] = doorType;
 
 			var opposite_direction = Direction.GetOppositeDirection(direction);
 
-			RoomTrait room = this.Neighbor[direction];
+			var room = this.Neighbor[direction];
 			if (room != null)
 				room.DoorType[opposite_direction] = doorType;
 		}
