@@ -141,14 +141,14 @@ namespace Aura.Channel.World.Entities
 		public Prop(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0, string state = "", string name = "", string title = "")
 			: this(0, id, regionId, x, y, direction, scale, altitude, state, name, title)
 		{
-			this.EntityId = Interlocked.Increment(ref _propId);
-			this.EntityId += (long)regionId << 32;
-
 			var region = ChannelServer.Instance.World.GetRegion(regionId);
 			if (region == null)
 				throw new ArgumentException("Region '" + regionId + "' doesn't exist.");
 
-			this.EntityId += region.GetAreaId(x, y) << 16;
+			// TODO: Fix 64k server prop restriction
+			this.EntityId = Interlocked.Increment(ref _propId);
+			this.EntityId |= (long)regionId << 32;
+			this.EntityId |= (long)region.GetAreaId(x, y) << 16;
 		}
 
 		/// <summary>
