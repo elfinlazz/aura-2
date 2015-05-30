@@ -12,6 +12,9 @@ using Aura.Channel.Skills.Life;
 using Aura.Mabi.Const;
 using Aura.Mabi.Network;
 using Aura.Channel.World;
+using Aura.Channel.World.Dungeons;
+using System;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.Network
 {
@@ -115,6 +118,22 @@ namespace Aura.Channel.Network
 				// Use fallback location if creature is in a temp region.
 				if (creature.Region is DynamicRegion)
 					creature.SetLocation(creature.FallbackLocation);
+
+				// Use fallback location if creature is in a temp region.
+				var dungeonRegion = creature.Region as DungeonRegion;
+				if (dungeonRegion != null)
+				{
+					try
+					{
+						var loc = new Location(dungeonRegion.Dungeon.Data.Exit);
+						creature.SetLocation(loc);
+					}
+					catch (Exception ex)
+					{
+						Log.Exception(ex, "Failed to fallback warp character in dungeon.");
+						creature.SetLocation(1, 12800, 38100); // Tir square
+					}
+				}
 
 				// Unspawn creature
 				creature.Region.RemoveCreature(creature);
