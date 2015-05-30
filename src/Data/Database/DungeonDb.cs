@@ -17,8 +17,8 @@ namespace Aura.Data.Database
 		public int LobbyRegionId { get; set; }
 		public string Exit { get; set; }
 		public int StairsPropId { get; set; }
-		public int StatuePropId { get; set; }
 		public int SaveStatuePropId { get; set; }
+		public int LastStatuePropId { get; set; }
 		public int DoorId { get; set; }
 		public int BossDoorId { get; set; }
 		public int BossExitDoorId { get; set; }
@@ -46,7 +46,7 @@ namespace Aura.Data.Database
 	{
 		protected override void ReadEntry(JObject entry)
 		{
-			entry.AssertNotMissing("name", "baseSeed", "lobby", "stairs", "statue", "saveStatue", "door", "bossDoor", "bossExitDoor", "floors");
+			entry.AssertNotMissing("name", "baseSeed", "lobby", "stairs", "saveStatue", "lastStatue", "door", "bossDoor", "bossExitDoor", "floors");
 
 			var dungeonData = new DungeonData();
 			dungeonData.Name = entry.ReadString("name").ToLower();
@@ -54,8 +54,8 @@ namespace Aura.Data.Database
 			dungeonData.LobbyRegionId = entry.ReadInt("lobby");
 			dungeonData.Exit = entry.ReadString("exit");
 			dungeonData.StairsPropId = entry.ReadInt("stairs");
-			dungeonData.StatuePropId = entry.ReadInt("statue");
 			dungeonData.SaveStatuePropId = entry.ReadInt("saveStatue");
+			dungeonData.LastStatuePropId = entry.ReadInt("lastStatue");
 			dungeonData.DoorId = entry.ReadInt("door");
 			dungeonData.BossDoorId = entry.ReadInt("bossDoor");
 			dungeonData.BossExitDoorId = entry.ReadInt("bossExitDoor");
