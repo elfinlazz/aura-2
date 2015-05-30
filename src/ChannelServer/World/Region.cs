@@ -321,6 +321,9 @@ namespace Aura.Channel.World
 			_creaturesRWLS.EnterWriteLock();
 			try
 			{
+				if (_creatures.ContainsKey(creature.EntityId))
+					throw new ArgumentException("A creature with id '" + creature.EntityId.ToString("X16") + "' already exists.");
+
 				_creatures.Add(creature.EntityId, creature);
 			}
 			finally
@@ -595,6 +598,9 @@ namespace Aura.Channel.World
 			_propsRWLS.EnterWriteLock();
 			try
 			{
+				if (_props.ContainsKey(prop.EntityId))
+					throw new ArgumentException("A prop with id '" + prop.EntityId.ToString("X16") + "' already exists.");
+
 				_props.Add(prop.EntityId, prop);
 			}
 			finally
@@ -693,6 +699,9 @@ namespace Aura.Channel.World
 			_itemsRWLS.EnterWriteLock();
 			try
 			{
+				if (_items.ContainsKey(item.EntityId))
+					throw new ArgumentException("An item with id '" + item.EntityId.ToString("X16") + "' already exists.");
+
 				_items.Add(item.EntityId, item);
 			}
 			finally
