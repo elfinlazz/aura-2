@@ -138,24 +138,28 @@ namespace Aura.Channel.World.Dungeons
 				throw new Exception("DungeonLobbyRegion: No region info data found for '" + baseRegionId + "'.");
 
 			this.RegionInfoData = baseRegionInfoData.Copy();
-			FixRegionEntityIds(this.RegionInfoData, this.Id);
+			FixIds(this.RegionInfoData, this.Id);
 
 			this.InitializeFromData();
 		}
 
-		private static void FixRegionEntityIds(RegionInfoData data, int regionId)
+		private static void FixIds(RegionInfoData data, int regionId)
 		{
+			var areaId = 1;
+
 			foreach (var areaData in data.Areas)
 			{
+				areaData.Id = areaId++;
+
 				foreach (var propData in areaData.Props.Values)
 				{
-					var entityId = (propData.EntityId & ~0x0000FFFF00000000) | ((long)regionId << 32);
+					var entityId = (propData.EntityId & ~0x0000FFFF00000000) | ((long)regionId << 32) | ((long)areaData.Id << 16);
 					propData.EntityId = entityId;
 				}
 
 				foreach (var eventData in areaData.Events.Values)
 				{
-					var entityId = (eventData.Id & ~0x0000FFFF00000000) | ((long)regionId << 32);
+					var entityId = (eventData.Id & ~0x0000FFFF00000000) | ((long)regionId << 32) | ((long)areaData.Id << 16);
 					eventData.Id = entityId;
 					eventData.RegionId = regionId;
 				}
