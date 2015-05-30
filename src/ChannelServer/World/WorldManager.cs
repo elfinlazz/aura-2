@@ -15,6 +15,7 @@ using Aura.Shared.Network;
 using System.Threading.Tasks;
 using Aura.Mabi.Network;
 using Aura.Mabi.Const;
+using Aura.Channel.World.Dungeons;
 
 namespace Aura.Channel.World
 {
@@ -22,6 +23,7 @@ namespace Aura.Channel.World
 	{
 		private Dictionary<int, Region> _regions;
 
+		public DungeonManager DungeonManager { get; private set; }
 		public DynamicRegionManager DynamicRegions { get; private set; }
 		public SpawnManager SpawnManager { get; private set; }
 
@@ -34,6 +36,7 @@ namespace Aura.Channel.World
 		{
 			_regions = new Dictionary<int, Region>();
 
+			this.DungeonManager = new DungeonManager();
 			this.DynamicRegions = new DynamicRegionManager();
 			this.SpawnManager = new SpawnManager();
 		}

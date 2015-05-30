@@ -113,6 +113,7 @@
     <Compile Include="Network\Sending\Helpers\QuestHelper.cs" />
     <Compile Include="Network\Sending\Helpers\RegenHelper.cs" />
     <Compile Include="Network\Sending\Helpers\TalentHelper.cs" />
+    <Compile Include="Network\Sending\Send.Dungeons.cs" />
     <Compile Include="Network\Sending\Send.GMCP.cs" />
     <Compile Include="Network\Sending\Send.Quests.cs" />
     <Compile Include="Network\Sending\Send.Effects.cs" />
@@ -201,6 +202,8 @@
     <Compile Include="Util\Quadtree.cs" />
     <Compile Include="Util\Security.cs" />
     <Compile Include="World\Cutscene.cs" />
+    <Compile Include="World\Dungeons\Dungeon.cs" />
+    <Compile Include="World\Dungeons\DungeonRegion.cs" />
     <Compile Include="World\Dungeons\Generation\Direction.cs" />
     <Compile Include="World\Dungeons\Generation\DungeonFloor.cs" />
     <Compile Include="World\Dungeons\Generation\DungeonGenerator.cs" />
@@ -211,6 +214,7 @@
     <Compile Include="World\Dungeons\Generation\RandomDirection.cs" />
     <Compile Include="World\Dungeons\Generation\RoomTrait.cs" />
     <Compile Include="World\DynamicRegion.cs" />
+    <Compile Include="World\Dungeons\DungeonManager.cs" />
     <Compile Include="World\DynamicRegionManager.cs" />
     <Compile Include="World\EgoInfo.cs" />
     <Compile Include="World\Entities\Character.cs" />

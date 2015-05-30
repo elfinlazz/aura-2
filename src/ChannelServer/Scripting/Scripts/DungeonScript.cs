@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.World;
+using Aura.Channel.World.Dungeons;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Scripting.Scripts;
 using Aura.Shared.Util;
@@ -58,14 +59,21 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Called when the dungeon was just created.
 		/// </summary>
-		public virtual void OnCreation()
+		public virtual void OnCreation(Dungeon dungeon)
+		{
+		}
+
+		/// <summary>
+		/// Called when the boss door opens.
+		/// </summary>
+		public virtual void OnBoss(Dungeon dungeon)
 		{
 		}
 
 		/// <summary>
 		/// Called when the boss was killed.
 		/// </summary>
-		public virtual void OnCleared()
+		public virtual void OnCleared(Dungeon dungeon)
 		{
 		}
 	}
