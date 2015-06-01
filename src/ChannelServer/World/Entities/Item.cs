@@ -233,6 +233,9 @@ namespace Aura.Channel.World.Entities
 			var rnd = RandomProvider.Get();
 
 			this.Info.Amount = (ushort)rnd.Next(dropData.AmountMin, dropData.AmountMax + 1);
+			if (this.Data.StackType != StackType.Sac && this.Info.Amount < 1)
+				this.Info.Amount = 1;
+
 			this.OptionInfo.Prefix = (ushort)dropData.Prefix;
 			this.OptionInfo.Suffix = (ushort)dropData.Suffix;
 
