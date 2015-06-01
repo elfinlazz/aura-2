@@ -60,7 +60,7 @@
     <Compile Include="Database\CharCardSets.cs" />
     <Compile Include="Database\Collecting.cs" />
     <Compile Include="Database\DungeonBlocks.cs" />
-    <Compile Include="Database\DungeonDb.cs" />
+    <Compile Include="Database\Dungeons.cs" />
     <Compile Include="Database\Fish.cs" />
     <Compile Include="Database\FishingGrounds.cs" />
     <Compile Include="Database\PropDefaults.cs" />

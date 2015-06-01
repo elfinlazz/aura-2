@@ -13,6 +13,7 @@ namespace Aura.Data.Database
 	public class DungeonData
 	{
 		public string Name { get; set; }
+		public int Style { get; set; }
 		public int BaseSeed { get; set; }
 		public int LobbyRegionId { get; set; }
 		public string Exit { get; set; }
@@ -46,10 +47,11 @@ namespace Aura.Data.Database
 	{
 		protected override void ReadEntry(JObject entry)
 		{
-			entry.AssertNotMissing("name", "baseSeed", "lobby", "stairs", "saveStatue", "lastStatue", "door", "bossDoor", "bossExitDoor", "floors");
+			entry.AssertNotMissing("name", "style", "baseSeed", "lobby", "stairs", "saveStatue", "lastStatue", "door", "bossDoor", "bossExitDoor", "floors");
 
 			var dungeonData = new DungeonData();
 			dungeonData.Name = entry.ReadString("name").ToLower();
+			dungeonData.Style = entry.ReadInt("style");
 			dungeonData.BaseSeed = entry.ReadInt("baseSeed");
 			dungeonData.LobbyRegionId = entry.ReadInt("lobby");
 			dungeonData.Exit = entry.ReadString("exit");
