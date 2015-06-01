@@ -47,6 +47,5 @@ namespace Aura.Channel.World.Entities.Creatures
 		public bool FishingActionRequested;
 		public DropData FishingDrop;
 
-		public DateTime AimStart;
 	}
 }

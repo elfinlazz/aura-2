@@ -477,44 +477,49 @@ namespace Aura.Channel.Network.Handlers
 			handler.OnResponse(creature, method, success);
 		}
 
+		/// <summary>
+		/// Sent when starting to aim with a bow.
+		/// </summary>
+		/// <example>
+		/// 001 [0010F0000000009E] Long   : 4767482418036894
+		/// </example>
 		[PacketHandler(Op.CombatSetAim)]
 		public void CombatSetAim(ChannelClient client, Packet packet)
 		{
 			var targetEntityId = packet.GetLong();
 
 			var creature = client.GetCreatureSafe(packet.Id);
-			var activeSkill = creature.Skills.ActiveSkill;
 
-			if (activeSkill == null)
+			// Check skill
+			// TODO: More accurate checks?
+			var activeSkill = creature.Skills.ActiveSkill;
+			if (activeSkill == null || activeSkill.Data.Type != SkillType.RangedCombat)
 			{
-				Log.Debug("CombatSetAim: No active skill");
+				Log.Debug("CombatSetAim: No active (ranged) skill.");
 				Send.CombatSetAimR(creature, 0, SkillId.None, 0);
 				return;
 			}
 
 			// Ever a negative response?
 
-			creature.Temp.AimStart = DateTime.Now;
-
-			Send.CombatSetAimR(creature, targetEntityId, activeSkill.Info.Id, 0);
+			creature.AimMeter.Start(targetEntityId);
 		}
 
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// For some reason this packet is sent on Aura instead of SkillComplete,
+		/// after having used Ranged. No idea why, but handling it as a SkillComplete
+		/// seems to work just fine.
+		/// </remarks>
+		/// <example>
+		/// 001 [............5209] Short  : 21001
+		/// </example>
 		[PacketHandler(Op.SkillCompleteUnk)]
 		public void SkillCompleteUnk(ChannelClient client, Packet packet)
 		{
-			var skillId = packet.GetShort();
-
-			var creature = client.GetCreatureSafe(packet.Id);
-			var activeSkill = creature.Skills.ActiveSkill;
-			if (activeSkill == null)
-			{
-				Log.Debug("SkillCompleteUnk: No active skill");
-				return;
-			}
-
-			// TODO: What is this? Check newer logs. Cancel correct?
-
-			creature.Skills.CancelActiveSkill();
+			this.SkillComplete(client, packet);
 		}
 	}
 }

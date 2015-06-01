@@ -47,7 +47,7 @@ namespace Aura.Channel.Skills.Combat
 
 		public void Cancel(Creature creature, Skill skill)
 		{
-			Send.CombatSetAimR(creature, 0, SkillId.None, 0);
+			creature.AimMeter.Stop();
 		}
 
 		public CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId)
@@ -69,7 +69,7 @@ namespace Aura.Channel.Skills.Combat
 			var rnd = RandomProvider.Get();
 
 			var distance = attackerPos.GetDistance(targetPos);
-			var aimTime = (DateTime.Now - attacker.Temp.AimStart).TotalMilliseconds;
+			var aimTime = (DateTime.Now - attacker.AimMeter.StartTime).TotalMilliseconds;
 			var baseAimTime = 1000f;
 			var fullAimTime = ((baseAimTime + distance) / 99f * (99f * 2));
 
