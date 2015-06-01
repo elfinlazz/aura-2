@@ -13,7 +13,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		private DungeonFloor _prevFloor;
 		//private DungeonFloor next_floor_structure;
 
-		public List<List<RoomTrait>> rooms;
+		private List<List<RoomTrait>> _rooms;
 
 		private Position _pos;
 		private Position _startPos;
@@ -74,14 +74,14 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		private void InitRoomtraits()
 		{
-			rooms = new List<List<RoomTrait>>();
+			_rooms = new List<List<RoomTrait>>();
 			for (int h = 0; h < this.Width; h++)
 			{
 				var row = new List<RoomTrait>();
 				for (int w = 0; w < this.Height; w++)
 					row.Add(new RoomTrait());
 
-				rooms.Add(row);
+				_rooms.Add(row);
 			}
 
 			for (int y = 0; y < this.Height; y++)
@@ -93,7 +93,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 						var biased_pos = new Position(x, y).GetBiasedPosition(direction);
 						if ((biased_pos.X >= 0) && (biased_pos.Y >= 0))
 							if ((biased_pos.X < this.Width) && (biased_pos.Y < this.Height))
-								rooms[x][y].SetNeighbor(direction, rooms[biased_pos.X][biased_pos.Y]);
+								_rooms[x][y].SetNeighbor(direction, _rooms[biased_pos.X][biased_pos.Y]);
 					}
 				}
 			}
@@ -102,57 +102,61 @@ namespace Aura.Channel.World.Dungeons.Generation
 		public RoomTrait GetRoom(Position pos)
 		{
 			if ((pos.X < 0) || (pos.Y < 0) || (pos.X >= this.Width) || (pos.Y >= this.Height))
-				throw new Exception();
-			return rooms[pos.X][pos.Y];
+				throw new ArgumentException("Position out of bounds.");
+
+			return _rooms[pos.X][pos.Y];
 		}
 
-		private bool SetTraits(Position pos, int direction, int door_type)
+		private bool SetTraits(Position pos, int direction, int doorType)
 		{
-			Position biased_pos = pos.GetBiasedPosition(direction);
+			var biased_pos = pos.GetBiasedPosition(direction);
 			if ((biased_pos.X >= 0) && (biased_pos.Y >= 0))
 			{
 				if ((biased_pos.X < this.Width) && (biased_pos.Y < this.Height))
 				{
 					if (!this.MazeGenerator.IsFree(biased_pos))
 						return false;
+
 					this.MazeGenerator.MarkReservedPosition(biased_pos);
 				}
 			}
-			RoomTrait room = GetRoom(pos);
+
+			var room = this.GetRoom(pos);
 			if (room.IsLinked(direction))
-				throw new Exception();
+				throw new Exception("Room in direction isn't linked");
 
 			if (room.GetDoorType(direction) != 0)
 				throw new Exception();
 
-			int link_type;
-			if (door_type == 3100)
-				link_type = 2;
-			else if (door_type == 3000)
-				link_type = 1;
+			int linkType;
+			if (doorType == 3100)
+				linkType = 2;
+			else if (doorType == 3000)
+				linkType = 1;
 			else
-				throw new Exception();
-			room.Link(direction, link_type);
-			room.SetDoorType(direction, door_type);
+				throw new Exception("Invalid door_type");
+
+			room.Link(direction, linkType);
+			room.SetDoorType(direction, doorType);
+
 			return true;
 		}
 
-		private void GenerateMaze(DungeonFloorData floor_desc)
+		private void GenerateMaze(DungeonFloorData floorDesc)
 		{
-			int crit_path_min = floor_desc.CritPathMin;
-			int crit_path_max = floor_desc.CritPathMax;
-			if (crit_path_min < 1)
-				crit_path_min = 1;
-			if (crit_path_max < 1)
-				crit_path_max = 1;
-			if (crit_path_min > crit_path_max)
+			var critPathMin = Math.Max(1, floorDesc.CritPathMin);
+			var critPathMax = Math.Max(1, floorDesc.CritPathMax);
+
+			if (critPathMin > critPathMax)
 			{
-				int temp = crit_path_max;
-				crit_path_max = crit_path_min;
-				crit_path_min = temp;
+				var temp = critPathMax;
+				critPathMax = critPathMin;
+				critPathMin = temp;
 			}
-			this.CreateCriticalPath(crit_path_min, crit_path_max);
+
+			this.CreateCriticalPath(critPathMin, critPathMax);
 			this.CreateSubPath(_coverageFactor, _branchProbability);
+
 			this.UpdatePathPosition();
 		}
 
@@ -211,12 +215,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		private void SetRandomPathPosition()
 		{
-			if (_prevFloor != null)
-				_startDirection = Direction.GetOppositeDirection(_prevFloor._startDirection);
-			else
-				_startDirection = Direction.Down;
-
-			this.MazeGenerator.StartDirection = _startDirection;
+			this.MazeGenerator.StartDirection = _startDirection = (_prevFloor == null ? Direction.Down : Direction.GetOppositeDirection(_prevFloor._startDirection));
 
 			var mt = _dungeonGenerator.RngMaze;
 			if (this.HasBossRoom)
@@ -238,6 +237,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 														if (this.MazeGenerator.IsFree(new Position(_pos.X + 1, _pos.Y + 2)))
 															break;
 					}
+
 					this.MazeGenerator.MarkReservedPosition(new Position(_pos.X - 1, _pos.Y));
 					this.MazeGenerator.MarkReservedPosition(new Position(_pos.X + 1, _pos.Y));
 					this.MazeGenerator.MarkReservedPosition(new Position(_pos.X, _pos.Y + 1));
@@ -247,7 +247,6 @@ namespace Aura.Channel.World.Dungeons.Generation
 					this.MazeGenerator.MarkReservedPosition(new Position(_pos.X - 1, _pos.Y + 2));
 					this.MazeGenerator.MarkReservedPosition(new Position(_pos.X + 1, _pos.Y + 2));
 				}
-
 				else
 				{
 					while (true)
@@ -263,6 +262,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 												if (this.MazeGenerator.IsFree(new Position(_pos.X, _pos.Y + 2)))
 													break;
 					}
+
 					this.MazeGenerator.MarkReservedPosition(new Position(_pos.X - 1, _pos.Y));
 					this.MazeGenerator.MarkReservedPosition(new Position(_pos.X + 1, _pos.Y));
 					this.MazeGenerator.MarkReservedPosition(new Position(_pos.X, _pos.Y + 1));
@@ -285,16 +285,15 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 			if (!this.IsLastFloor && !HasBossRoom)
 			{
-				var rnd_dir = new RandomDirection();
+				var rndDir = new RandomDirection();
 				while (true)
 				{
-					var direction = rnd_dir.GetDirection(mt);
-					if (SetTraits(_pos, direction, 3100))
+					var direction = rndDir.GetDirection(mt);
+					if (this.SetTraits(_pos, direction, 3100))
 					{
 						_startDirection = direction;
 						break;
 					}
-					//			# core::ICommonAPI::stdapi_SetNPCDirection();  // Server stuff?
 				}
 			}
 
