@@ -170,18 +170,18 @@ namespace Aura.Channel.World.Entities
 			this.Shapes = new List<ShapeData>();
 			this.Temp = new PropTemp();
 
-			this.EntityId = entityId;
+			_resource = 100;
 
-			this.State = state;
+			this.EntityId = entityId;
 			this.Name = name;
 			this.Title = title;
-
 			this.Info.Id = id;
 			this.Info.Region = regionId;
 			this.Info.X = x;
 			this.Info.Y = y;
 			this.Info.Direction = direction;
 			this.Info.Scale = scale;
+			this.LastCollect = DateTime.Now;
 
 			this.Info.Color1 =
 			this.Info.Color2 =
@@ -193,53 +193,53 @@ namespace Aura.Channel.World.Entities
 			this.Info.Color8 =
 			this.Info.Color9 = 0xFF808080;
 
-			_resource = 100;
-			this.LastCollect = DateTime.Now;
+			this.State = state;
 
-			this.LoadDefault();
-		}
-
-		/// <summary>
-		/// Loads prop data from db.
-		/// </summary>
-		private void LoadDefault()
-		{
-			// Get shapes
-			// TODO: Add prop shape db? Check for reference props in world?
-			if (this.Info.Id == 203) // Campfire
+			var defaultsList = AuraData.PropDefaultsDb.Find(this.Info.Id);
+			if (defaultsList != null && defaultsList.Count != 0)
 			{
-				var size = 80;
-				var shape = new ShapeData();
-				shape.X1 = (int)(this.Info.X - size);
-				shape.Y1 = (int)(this.Info.Y - size);
-				shape.X2 = (int)(this.Info.X + size);
-				shape.Y2 = (int)(this.Info.Y - size);
-				shape.X3 = (int)(this.Info.X + size);
-				shape.Y3 = (int)(this.Info.Y + size);
-				shape.X4 = (int)(this.Info.X - size);
-				shape.Y4 = (int)(this.Info.Y + size);
+				var def = string.IsNullOrWhiteSpace(state)
+					? defaultsList.First()
+					: defaultsList.FirstOrDefault(a => a.State == state);
 
-				this.Shapes.Add(shape);
-			}
-			else
-			{
-				// No collision data.
+				if (def == null)
+					Log.Warning("Prop: No defaults found for state '{0}' and prop '{1}'.", state, this.Info.Id);
+				else
+				{
+					this.Info.Color1 = def.Color1;
+					this.Info.Color2 = def.Color2;
+					this.Info.Color3 = def.Color3;
+					this.Info.Color4 = def.Color4;
+					this.Info.Color5 = def.Color5;
+					this.Info.Color6 = def.Color6;
+					this.Info.Color7 = def.Color7;
+					this.Info.Color8 = def.Color8;
+					this.Info.Color9 = def.Color9;
+
+					this.State = def.State;
+
+					foreach (var shape in def.Shapes)
+					{
+						var s = shape.Copy();
+
+						// Rotate and move shape
+						var cos = (float)Math.Cos(this.Info.Direction);
+						var sin = (float)Math.Sin(this.Info.Direction);
+						s.DirX1 = cos;
+						s.DirY1 = sin;
+						s.DirX2 = -sin;
+						s.DirY2 = cos;
+						s.PosX += this.Info.X;
+						s.PosY += this.Info.Y;
+
+						this.Shapes.Add(s);
+					}
+				}
 			}
 
 			// Load prop data
 			if ((this.Data = AuraData.PropsDb.Find(this.Info.Id)) == null)
-			{
-				Log.Warning("Prop.LoadDefault: No data found for '{0}'.", this.Info.Id);
-				return;
-			}
-
-			// Add state for wells, otherwise they aren't interactable
-			// and you can walk through them o,o
-			// TODO: Can we generalize this somehow?
-			// They also have XML, but that doesn't seem to be needed.
-			// <xml _RESOURCE="100.000000" _LAST_COLLECT_TIME="63559712423945"/>
-			if (this.Data.HasTag("/water/well/"))
-				this.State = "default";
+				Log.Warning("Prop: No data found for '{0}'.", this.Info.Id);
 		}
 
 		/// <summary>

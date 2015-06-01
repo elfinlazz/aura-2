@@ -152,6 +152,61 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns first event that matches the predicate.
+		/// </summary>
+		/// <param name="eventId"></param>
+		/// <returns></returns>
+		public ClientEvent GetClientEvent(Func<ClientEvent, bool> predicate)
+		{
+			_clientEventsRWLS.EnterReadLock();
+			try
+			{
+				return _clientEvents.Values.FirstOrDefault(predicate);
+			}
+			finally
+			{
+				_clientEventsRWLS.ExitReadLock();
+			}
+		}
+
+
+		/// <summary>
+		/// Returns a list of events that start with the given path,
+		/// e.g. "Uladh_main/field_Tir_S_aa/fish_tircho_stream_", to get all
+		/// fishing events starting with that name.
+		/// </summary>
+		/// <param name="eventPath"></param>
+		/// <returns></returns>
+		public List<ClientEvent> GetMatchingEvents(string eventPath)
+		{
+			var split = eventPath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+			if (split.Length != 3)
+				throw new ArgumentException("Invalid event path, expected 3 segments.");
+
+			var result = new List<ClientEvent>();
+			//var eventName = split[2];
+
+			// We either have to look for the name or the path, but it's
+			// technically possible that two areas have events with the same
+			// name, so the path is safer.
+
+			_clientEventsRWLS.EnterReadLock();
+			try
+			{
+				// TODO: Cache
+
+				var events = _clientEvents.Values.Where(a => a.Data.Path.StartsWith(eventPath));
+				result.AddRange(events);
+			}
+			finally
+			{
+				_clientEventsRWLS.ExitReadLock();
+			}
+
+			return result;
+		}
+
+		/// <summary>
 		/// Returns id of area at the given coordinates and adjusts it if region is dynamic, or 0 if area wasn't found.
 		/// </summary>
 		/// <param name="x"></param>

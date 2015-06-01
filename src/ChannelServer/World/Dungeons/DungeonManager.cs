@@ -137,26 +137,23 @@ namespace Aura.Channel.World.Dungeons
 
 			var pos = creature.GetPosition();
 
-			var regionData = creature.Region.RegionInfoData;
-			var areaData = regionData.Areas.First();
-
-			var eventData = areaData.Events.Values.FirstOrDefault(a => a.IsAltar);
-			if (eventData == null)
+			var clientEvent = creature.Region.GetClientEvent(a => a.Data.IsAltar);
+			if (clientEvent == null)
 			{
 				Log.Warning("DungeonManager.CheckDrop: No altar found.");
 				return false;
 			}
 
-			if (!eventData.IsInside(pos.X, pos.Y))
+			if (!clientEvent.IsInside(pos.X, pos.Y))
 			{
 				// Tell player to step on altar?
 				return false;
 			}
 
-			var parameter = eventData.Parameters.FirstOrDefault(a => a.EventType == 2110);
+			var parameter = clientEvent.Data.Parameters.FirstOrDefault(a => a.EventType == 2110);
 			if (parameter == null || parameter.XML == null || parameter.XML.Attribute("dungeonname") == null)
 			{
-				Log.Warning("DungeonManager.CheckDrop: No dungeon name found in altar event ({0}/{1}/{2}).", regionData.Name, areaData.Name, eventData.Name);
+				Log.Warning("DungeonManager.CheckDrop: No dungeon name found in altar event '{0:X16}'.", clientEvent.EntityId);
 				return false;
 			}
 

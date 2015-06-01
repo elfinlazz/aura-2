@@ -62,6 +62,7 @@
     <Compile Include="Database\DungeonDb.cs" />
     <Compile Include="Database\Fish.cs" />
     <Compile Include="Database\FishingGrounds.cs" />
+    <Compile Include="Database\PropDefaults.cs" />
     <Compile Include="Database\Props.cs" />
     <Compile Include="Database\WeatherTables.cs" />
     <Compile Include="Database\ColorMaps.cs" />

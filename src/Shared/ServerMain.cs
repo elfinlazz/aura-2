@@ -184,6 +184,7 @@ namespace Aura.Shared
 				if ((toLoad & DataLoad.Props) != 0)
 				{
 					this.LoadDb(AuraData.PropsDb, "db/props.txt", reload);
+					this.LoadDb(AuraData.PropDefaultsDb, "db/prop_defaults.dat", reload);
 				}
 
 				if ((toLoad & DataLoad.Collecting) != 0)

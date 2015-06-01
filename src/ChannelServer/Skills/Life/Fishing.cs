@@ -351,7 +351,7 @@ namespace Aura.Channel.Skills.Life
 					try
 					{
 						// Check events
-						var evs = AuraData.RegionInfoDb.GetMatchingEvents(location);
+						var evs = creature.Region.GetMatchingEvents(location);
 						foreach (var ev in evs)
 						{
 							// Check if prop is inside event shape, break at first success
@@ -367,7 +367,7 @@ namespace Aura.Channel.Skills.Life
 					}
 					catch (ArgumentException ex)
 					{
-						Log.Error("Fishing.GetFishingGround: {0}", ex.Message);
+						Log.Error("Fishing.GetFishingDrop: {0}", ex.Message);
 					}
 				}
 

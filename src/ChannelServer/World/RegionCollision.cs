@@ -67,15 +67,12 @@ namespace Aura.Channel.World
 		/// <param name="shape"></param>
 		public void Add(string ident, ShapeData shape)
 		{
-			var p1 = new Point(shape.X1, shape.Y1);
-			var p2 = new Point(shape.X2, shape.Y2);
-			var p3 = new Point(shape.X3, shape.Y3);
-			var p4 = new Point(shape.X4, shape.Y4);
+			var points = shape.GetPoints();
 
-			var line1 = new LinePath(p1, p2);
-			var line2 = new LinePath(p2, p3);
-			var line3 = new LinePath(p3, p4);
-			var line4 = new LinePath(p4, p1);
+			var line1 = new LinePath(points[0], points[1]);
+			var line2 = new LinePath(points[1], points[2]);
+			var line3 = new LinePath(points[2], points[3]);
+			var line4 = new LinePath(points[3], points[0]);
 
 			lock (_tree)
 			{
