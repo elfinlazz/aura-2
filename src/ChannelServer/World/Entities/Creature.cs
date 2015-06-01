@@ -1339,6 +1339,13 @@ namespace Aura.Channel.World.Entities
 
 			// Base balance
 			var balance = (this.RightHand == null ? this.BalanceBase + this.BalanceBaseMod : this.RightHand.OptionInfo.Balance);
+
+			// Ranged balance bonus
+			var skill = this.Skills.Get(SkillId.RangedAttack);
+			if (skill != null)
+				balance += (int)skill.RankData.Var5;
+
+			// Random balance multiplier
 			var multiplier = this.GetRndBalance(balance) / 100f;
 
 			if (min > max)
