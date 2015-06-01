@@ -227,6 +227,12 @@ namespace Aura.Channel.World.Entities
 						s.PosX += this.Info.X;
 						s.PosY += this.Info.Y;
 
+
+						var newX = (cos * (s.PosX - this.Info.X)) - (sin * (s.PosY - this.Info.Y)) + this.Info.X;
+						var newY = (sin * (s.PosX - this.Info.X)) + (cos * (s.PosY - this.Info.Y)) + this.Info.Y;
+						s.PosX = newX;
+						s.PosY = newY;
+
 						this.Shapes.Add(s);
 					}
 				}
