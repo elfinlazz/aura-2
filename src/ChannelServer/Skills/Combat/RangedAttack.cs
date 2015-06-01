@@ -31,7 +31,9 @@ namespace Aura.Channel.Skills.Combat
 
 		public bool Ready(Creature creature, Skill skill, Packet packet)
 		{
-			//skill.Stacks = 1;
+			creature.Temp.FireArrow = creature.Region.GetProps(a => a.Info.Id == 203 && a.GetPosition().InRange(creature.GetPosition(), 500)).Count > 0;
+			if (creature.Temp.FireArrow)
+				Send.Effect(creature, Effect.FireArrow, true);
 
 			Send.SkillReady(creature, skill.Info.Id);
 
@@ -40,14 +42,17 @@ namespace Aura.Channel.Skills.Combat
 
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
-			Log.Debug("Complete");
-			Send.CombatSetAimR(creature, 0, SkillId.None, 0);
+			this.Cancel(creature, skill);
 			Send.SkillComplete(creature, skill.Info.Id);
 		}
 
 		public void Cancel(Creature creature, Skill skill)
 		{
 			creature.AimMeter.Stop();
+
+			// Disable fire arrow effect
+			if (creature.Temp.FireArrow)
+				Send.Effect(creature, Effect.FireArrow, false);
 		}
 
 		public CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId)
@@ -108,6 +113,10 @@ namespace Aura.Channel.Skills.Combat
 
 				// Damage
 				var damage = attacker.GetRndRangedDamage();
+
+				// More damage with fire arrow
+				if (attacker.Temp.FireArrow)
+					damage *= FireBonus;
 
 				// Critical Hit
 				var critChance = attacker.GetRightCritChance(target.Protection);
