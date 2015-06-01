@@ -16,12 +16,73 @@ using System.Threading.Tasks;
 
 namespace Aura.Channel.Skills.Combat
 {
+	/// <summary>
+	/// Ranged Attack handler
+	/// </summary>
+	/// <remarks>
+	/// Var1: Min Ranged Attack Damage
+	/// Var2: Max Ranged Attack Damage
+	/// Var3: Aim Speed
+	/// Var5: Ranged Attack Balance
+	/// </remarks>
 	[Skill(SkillId.RangedAttack)]
-	public class RangedAttack : ISkillHandler, IPreparable, IReadyable, ICompletable, ICancelable, ICombatSkill
+	public class RangedAttack : ISkillHandler, IPreparable, IReadyable, ICompletable, ICancelable, ICombatSkill, IInitiableSkillHandler
 	{
+		/// <summary>
+		/// Distance to knock the target back.
+		/// </summary>
 		private const int KnockBackDistance = 400;
-		private const float StabilityReduction = 45f;
 
+		/// <summary>
+		/// Amount of stability lost on hit.
+		/// </summary>
+		private const float StabilityReduction = 60f;
+
+		/// <summary>
+		/// Base time it takes to get from 0 to 99%.
+		/// </summary>
+		private const float BaseAimTimeRequired = 1000;
+
+		/// <summary>
+		/// Stun for the attacker
+		/// </summary>
+		private const int AttackerStun = 800;
+
+		/// <summary>
+		/// Stun for the target
+		/// </summary>
+		private const int TargetStun = 2100;
+
+		/// <summary>
+		/// Maximum aim for walking target
+		/// </summary>
+		private const int MaxChanceWalking = 95;
+
+		/// <summary>
+		/// Maximum aim for running target
+		/// </summary>
+		private const int MaxChanceRunning = 90;
+
+		/// <summary>
+		/// Bonus damage for fire arrows
+		/// </summary>
+		public const float FireBonus = 1.5f;
+
+		/// <summary>
+		/// Sets up subscriptions for skill training.
+		/// </summary>
+		public void Init()
+		{
+			ChannelServer.Instance.Events.CreatureAttack += this.OnCreatureAttacks;
+		}
+
+		/// <summary>
+		/// Prepares skill.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
+		/// <returns></returns>
 		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
@@ -29,6 +90,13 @@ namespace Aura.Channel.Skills.Combat
 			return true;
 		}
 
+		/// <summary>
+		/// Readies skill, activates fire effect.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
+		/// <returns></returns>
 		public bool Ready(Creature creature, Skill skill, Packet packet)
 		{
 			creature.Temp.FireArrow = creature.Region.GetProps(a => a.Info.Id == 203 && a.GetPosition().InRange(creature.GetPosition(), 500)).Count > 0;
@@ -40,12 +108,23 @@ namespace Aura.Channel.Skills.Combat
 			return true;
 		}
 
+		/// <summary>
+		/// Completes skill, stopping the aim meter and disabling the fire effect.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
 		public void Complete(Creature creature, Skill skill, Packet packet)
 		{
 			this.Cancel(creature, skill);
 			Send.SkillComplete(creature, skill.Info.Id);
 		}
 
+		/// <summary>
+		/// Cancels skill, stopping the aim meter and disabling the fire effect.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
 		public void Cancel(Creature creature, Skill skill)
 		{
 			creature.AimMeter.Stop();
@@ -55,6 +134,13 @@ namespace Aura.Channel.Skills.Combat
 				Send.Effect(creature, Effect.FireArrow, false);
 		}
 
+		/// <summary>
+		/// Uses the skill.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skill"></param>
+		/// <param name="targetEntityId"></param>
+		/// <returns></returns>
 		public CombatSkillResult Use(Creature attacker, Skill skill, long targetEntityId)
 		{
 			// Get target
@@ -72,27 +158,32 @@ namespace Aura.Channel.Skills.Combat
 			// Calculate chance
 			// Unofficial, but seems to be close.
 			var rnd = RandomProvider.Get();
+			var aimTimeRequired = BaseAimTimeRequired;
+
+			// Add Ranged Attack bonus
+			// TODO: log2?
+			aimTimeRequired /= skill.RankData.Var3 / 100f;
 
 			var distance = attackerPos.GetDistance(targetPos);
 			var aimTime = (DateTime.Now - attacker.AimMeter.StartTime).TotalMilliseconds;
-			var baseAimTime = 1000f;
-			var fullAimTime = ((baseAimTime + distance) / 99f * (99f * 2));
+			var fullAimTime = ((aimTimeRequired + distance) / 99f * (99f * 2));
 
-			var chance = Math.Min(99f, 99f / (baseAimTime + distance) * aimTime);
+			var chance = Math.Min(99f, 99f / (aimTimeRequired + distance) * aimTime);
 
+			// 100% after x time
 			if (aimTime >= fullAimTime)
 				chance = 100;
 
-			//Log.Debug("{0}ms (distance: {1})", (DateTime.Now - attacker.Temp.AimStart).TotalMilliseconds, attackerPos.GetDistance(targetPos));
-
+			// Reduce chance if target is moving
 			if (target.IsMoving)
 			{
 				if (target.IsWalking)
-					chance = Math.Min(95, chance);
+					chance = Math.Min(MaxChanceWalking, chance);
 				else
-					chance = Math.Min(90, chance);
+					chance = Math.Min(MaxChanceRunning, chance);
 			}
 
+			// Debug for devCATs
 			if (attacker.Titles.SelectedTitle == 60001)
 				Send.ServerMessage(attacker, "Debug: Aim {0}", chance);
 
@@ -101,14 +192,14 @@ namespace Aura.Channel.Skills.Combat
 
 			var aAction = new AttackerAction(CombatActionType.RangeHit, attacker, skill.Info.Id, targetEntityId);
 			aAction.Set(AttackerOptions.Result);
-			aAction.Stun = 800;
+			aAction.Stun = AttackerStun;
 			cap.Add(aAction);
 
 			if (rnd.NextDouble() * 100 < chance)
 			{
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
 				tAction.Set(TargetOptions.Result);
-				tAction.Stun = 2100;
+				tAction.Stun = TargetStun;
 				cap.Add(tAction);
 
 				// Damage
@@ -143,14 +234,18 @@ namespace Aura.Channel.Skills.Combat
 				}
 				else
 				{
+					// Insta-recover in knock down
+					// TODO: Tied to stability?
 					if (target.IsKnockedDown)
 					{
 						tAction.Stun = 0;
 					}
-					else if (target.IsUnstable)
+					// Knock down if hit repeatedly
+					else if (target.Stability < 30)
 					{
 						tAction.Set(TargetOptions.KnockDown);
 					}
+					// Normal stability reduction
 					else
 					{
 						target.Stability -= StabilityReduction;
@@ -163,17 +258,220 @@ namespace Aura.Channel.Skills.Combat
 				}
 			}
 
+			// Skill training
+			if (skill.Info.Rank == SkillRank.Novice || skill.Info.Rank == SkillRank.RF)
+				skill.Train(1); // Try ranged attack.
+
 			// Reduce arrows
 			// TODO: option
 			if (attacker.Magazine != null)
 				attacker.Inventory.Decrement(attacker.Magazine);
 
+			// Disable fire arrow effect
+			if (attacker.Temp.FireArrow)
+				Send.Effect(attacker, Effect.FireArrow, false);
+
 			// "Cancels" the skill
-			Send.SkillUse(attacker, skill.Info.Id, 800, 1); // 800 = old load time? == aAction.Stun?
+			// 800 = old load time? == aAction.Stun? Varies? Doesn't seem to be a stun.
+			Send.SkillUse(attacker, skill.Info.Id, 800, 1);
 
 			cap.Handle();
 
 			return CombatSkillResult.Okay;
+		}
+
+		/// <summary>
+		/// Handles the majority of the skill training.
+		/// </summary>
+		/// <param name="obj"></param>
+		private void OnCreatureAttacks(TargetAction tAction)
+		{
+			if (tAction.SkillId != SkillId.RangedAttack)
+				return;
+
+			var attackerSkill = tAction.Attacker.Skills.Get(SkillId.RangedAttack);
+			var targetSkill = tAction.Creature.Skills.Get(SkillId.RangedAttack);
+			var targetPowerRating = tAction.Attacker.GetPowerRating(tAction.Creature);
+			var attackerPowerRating = tAction.Creature.GetPowerRating(tAction.Attacker);
+
+			if (attackerSkill != null)
+			{
+				if (attackerSkill.Info.Rank == SkillRank.RF)
+				{
+					attackerSkill.Train(2); // Attack an enemy.
+
+					if (tAction.Has(TargetOptions.KnockDown))
+						attackerSkill.Train(3); // Down the enemy with continuous hit.
+
+					if (tAction.Creature.IsDead)
+						attackerSkill.Train(4); // Kill an enemy.
+				}
+				else if (attackerSkill.Info.Rank == SkillRank.RE)
+				{
+					if (targetPowerRating == PowerRating.Normal)
+						attackerSkill.Train(3); // Attack a same level enemy.
+
+					if (tAction.Has(TargetOptions.KnockDown))
+					{
+						attackerSkill.Train(1); // Down the enemy with continuous hit.
+
+						if (targetPowerRating == PowerRating.Normal)
+							attackerSkill.Train(4); // Down a same level enemy. 
+
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(6); // Down a strong enemy.
+					}
+
+					if (tAction.Creature.IsDead)
+					{
+						attackerSkill.Train(2); // Kill an enemy.
+
+						if (targetPowerRating == PowerRating.Normal)
+							attackerSkill.Train(5); // Kill a same level enemy. 
+
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(7); // Kill a strong enemy.
+					}
+				}
+				else if (attackerSkill.Info.Rank == SkillRank.RD)
+				{
+					attackerSkill.Train(1); // Attack any enemy. 
+
+					if (targetPowerRating == PowerRating.Normal)
+						attackerSkill.Train(4); // Attack a same level enemy.
+
+					if (tAction.Has(TargetOptions.KnockDown))
+					{
+						attackerSkill.Train(2); // Down the enemy with continuous hit.
+
+						if (targetPowerRating == PowerRating.Normal)
+							attackerSkill.Train(5); // Down a same level enemy. 
+
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(7); // Down a strong enemy.
+					}
+
+					if (tAction.Creature.IsDead)
+					{
+						attackerSkill.Train(3); // Kill an enemy.
+
+						if (targetPowerRating == PowerRating.Normal)
+							attackerSkill.Train(6); // Kill a same level enemy. 
+
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(8); // Kill a strong enemy.
+					}
+				}
+				else if (attackerSkill.Info.Rank >= SkillRank.RC && attackerSkill.Info.Rank <= SkillRank.RB)
+				{
+					if (targetPowerRating == PowerRating.Normal)
+						attackerSkill.Train(1); // Attack a same level enemy.
+
+					if (tAction.Has(TargetOptions.KnockDown))
+					{
+						if (targetPowerRating == PowerRating.Normal)
+							attackerSkill.Train(2); // Down a same level enemy. 
+
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(4); // Down a strong enemy.
+
+						if (targetPowerRating == PowerRating.Awful)
+							attackerSkill.Train(6); // Down an awful enemy.
+					}
+
+					if (tAction.Creature.IsDead)
+					{
+						if (targetPowerRating == PowerRating.Normal)
+							attackerSkill.Train(3); // Kill a same level enemy. 
+
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(5); // Kill a strong enemy.
+
+						if (targetPowerRating == PowerRating.Awful)
+							attackerSkill.Train(7); // Kill an awful enemy.
+					}
+				}
+				else if (attackerSkill.Info.Rank >= SkillRank.RA && attackerSkill.Info.Rank <= SkillRank.R8)
+				{
+					if (tAction.Has(TargetOptions.KnockDown))
+					{
+						if (targetPowerRating == PowerRating.Normal)
+							attackerSkill.Train(1); // Down a same level enemy. 
+
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(3); // Down a strong enemy.
+
+						if (targetPowerRating == PowerRating.Awful)
+							attackerSkill.Train(5); // Down an awful enemy.
+
+						if (targetPowerRating == PowerRating.Boss && attackerSkill.Info.Rank == SkillRank.R8)
+							attackerSkill.Train(7); // Down a boss level enemy.
+					}
+
+					if (tAction.Creature.IsDead)
+					{
+						if (targetPowerRating == PowerRating.Normal)
+							attackerSkill.Train(2); // Kill a same level enemy. 
+
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(4); // Kill a strong enemy.
+
+						if (targetPowerRating == PowerRating.Awful)
+							attackerSkill.Train(6); // Kill an awful enemy.
+
+						if (targetPowerRating == PowerRating.Boss && attackerSkill.Info.Rank == SkillRank.R8)
+							attackerSkill.Train(8); // Kill a boss level enemy.
+					}
+				}
+				else if (attackerSkill.Info.Rank >= SkillRank.R7 && attackerSkill.Info.Rank <= SkillRank.R1)
+				{
+					if (tAction.Has(TargetOptions.KnockDown))
+					{
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(1); // Down a strong enemy.
+
+						if (targetPowerRating == PowerRating.Awful)
+							attackerSkill.Train(3); // Down an awful enemy.
+
+						if (targetPowerRating == PowerRating.Boss)
+							attackerSkill.Train(5); // Down a boss level enemy.
+					}
+
+					if (tAction.Creature.IsDead)
+					{
+						if (targetPowerRating == PowerRating.Strong)
+							attackerSkill.Train(2); // Kill a strong enemy.
+
+						if (targetPowerRating == PowerRating.Awful)
+							attackerSkill.Train(4); // Kill an awful enemy.
+
+						if (targetPowerRating == PowerRating.Boss)
+							attackerSkill.Train(6); // Kill a boss level enemy.
+					}
+				}
+			}
+
+			if (targetSkill != null)
+			{
+				if (targetSkill.Info.Rank == SkillRank.RF)
+				{
+					if (tAction.Has(TargetOptions.KnockDown))
+						targetSkill.Train(5); // Learn by falling down.
+
+					if (tAction.Creature.IsDead)
+						targetSkill.Train(6); // Learn through losing.
+				}
+				else if (targetSkill.Info.Rank == SkillRank.RD)
+				{
+					if (attackerPowerRating == PowerRating.Strong)
+						targetSkill.Train(8); // Receive a powerful attack from a powerful enemy.
+				}
+				else if (targetSkill.Info.Rank == SkillRank.R7)
+				{
+					if (attackerPowerRating == PowerRating.Strong)
+						targetSkill.Train(7); // Receive a powerful attack from a powerful enemy.
+				}
+			}
 		}
 	}
 }
