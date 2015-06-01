@@ -19,7 +19,7 @@ namespace Aura.Channel.World.Entities
 	/// <remarks>
 	/// Is this considered to be an entity by the client?
 	/// </remarks>
-	public class ClientEvent
+	public class ClientEvent : IShapedEntity
 	{
 		private List<Point[]> _shapePoints;
 
@@ -39,12 +39,23 @@ namespace Aura.Channel.World.Entities
 		public EventData Data { get; private set; }
 
 		/// <summary>
+		/// Shapes of this event.
+		/// </summary>
+		public List<ShapeData> Shapes { get; private set; }
+
+		/// <summary>
+		/// Specifies whether other entities collide with this one's shape.
+		/// </summary>
+		public bool IsCollision { get { return this.Data.Type == EventType.Collision; } }
+
+		/// <summary>
 		/// Creates new client event
 		/// </summary>
 		/// <param name="eventData"></param>
 		public ClientEvent(long id, EventData eventData)
 		{
 			_shapePoints = new List<Point[]>();
+			this.Shapes = new List<ShapeData>();
 
 			this.EntityId = id;
 			this.Data = eventData;
@@ -52,7 +63,11 @@ namespace Aura.Channel.World.Entities
 			this.Handlers = new Collection<SignalType, Action<Creature, EventData>>();
 
 			foreach (var shape in this.Data.Shapes)
-				_shapePoints.Add(shape.GetPoints());
+			{
+				var copy = shape.Copy();
+				this.Shapes.Add(copy);
+				_shapePoints.Add(copy.GetPoints());
+			}
 		}
 
 		public bool IsInside(int x, int y)

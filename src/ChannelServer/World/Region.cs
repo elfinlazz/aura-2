@@ -86,8 +86,6 @@ namespace Aura.Channel.World
 			if (this.RegionInfoData == null || this.RegionInfoData.Areas == null)
 				return;
 
-			this.Collisions.Init(this.RegionInfoData);
-
 			this.LoadProps();
 			this.LoadClientEvents();
 		}
@@ -107,6 +105,10 @@ namespace Aura.Channel.World
 					var dropType = prop.GetDropType();
 					if (dropType != -1) add.Behavior = Prop.GetDropBehavior(dropType);
 
+					// Replace default shapes with the ones loaded from region.
+					add.Shapes.Clear();
+					add.Shapes.AddRange(prop.Shapes.Select(a => a.Copy()));
+
 					this.AddProp(add);
 				}
 			}
@@ -122,9 +124,7 @@ namespace Aura.Channel.World
 				foreach (var clientEvent in area.Events.Values)
 				{
 					var add = new ClientEvent(clientEvent.Id, clientEvent);
-
-					lock (_clientEvents)
-						_clientEvents[add.EntityId] = add;
+					this.AddClientEvent(add);
 				}
 			}
 		}
@@ -149,6 +149,29 @@ namespace Aura.Channel.World
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Adds client event to region.
+		/// </summary>
+		/// <param name="clientEvent"></param>
+		private void AddClientEvent(ClientEvent clientEvent)
+		{
+			_clientEventsRWLS.EnterWriteLock();
+			try
+			{
+				if (_clientEvents.ContainsKey(clientEvent.EntityId))
+					throw new ArgumentException("A client event with id '" + clientEvent.EntityId.ToString("X16") + "' already exists.");
+
+				_clientEvents.Add(clientEvent.EntityId, clientEvent);
+			}
+			finally
+			{
+				_clientEventsRWLS.ExitWriteLock();
+			}
+
+			// Add collisions
+			this.Collisions.Add(clientEvent);
 		}
 
 		/// <summary>
@@ -666,11 +689,7 @@ namespace Aura.Channel.World
 			prop.Region = this;
 
 			// Add collisions
-			if (prop.Shapes.Count > 0)
-			{
-				foreach (var shape in prop.Shapes)
-					this.Collisions.Add(prop.EntityIdHex, shape);
-			}
+			this.Collisions.Add(prop);
 
 			Send.EntityAppears(prop);
 		}
@@ -698,8 +717,7 @@ namespace Aura.Channel.World
 			}
 
 			// Remove collisions
-			if (prop.Shapes.Count > 0)
-				this.Collisions.Remove(prop.EntityIdHex);
+			this.Collisions.Remove(prop.EntityId);
 
 			Send.PropDisappears(prop);
 

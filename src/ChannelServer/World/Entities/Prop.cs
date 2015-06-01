@@ -21,7 +21,7 @@ namespace Aura.Channel.World.Entities
 	/// Not all options are used in all props. Things like ExtraData, State,
 	/// etc. are all very prop specific.
 	/// </remarks>
-	public class Prop : Entity
+	public class Prop : Entity, IShapedEntity
 	{
 		/// <summary>
 		/// Base prop id that is increased for every new prop.
@@ -58,6 +58,11 @@ namespace Aura.Channel.World.Entities
 		/// List of shapes for the prop (collision).
 		/// </summary>
 		public List<ShapeData> Shapes { get; protected set; }
+
+		/// <summary>
+		/// Specifies whether other entities collide with this one's shape.
+		/// </summary>
+		public bool IsCollision { get { return true; } }
 
 		/// <summary>
 		/// True if this prop was spawned by the server.
