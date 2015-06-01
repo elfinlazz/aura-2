@@ -206,6 +206,7 @@
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\ClientEvent.cs" />
     <Compile Include="World\Entities\Creature.cs" />
+    <Compile Include="World\Entities\Creatures\AimMeter.cs" />
     <Compile Include="World\Entities\Creatures\CreatureConditions.cs" />
     <Compile Include="World\Entities\Creatures\CreatureDrops.cs" />
     <Compile Include="World\Entities\Creatures\CreatureQuests.cs" />
