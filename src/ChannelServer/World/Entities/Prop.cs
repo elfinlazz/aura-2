@@ -206,16 +206,6 @@ namespace Aura.Channel.World.Entities
 					Log.Warning("Prop: No defaults found for state '{0}' and prop '{1}'.", state, this.Info.Id);
 				else
 				{
-					this.Info.Color1 = def.Color1;
-					this.Info.Color2 = def.Color2;
-					this.Info.Color3 = def.Color3;
-					this.Info.Color4 = def.Color4;
-					this.Info.Color5 = def.Color5;
-					this.Info.Color6 = def.Color6;
-					this.Info.Color7 = def.Color7;
-					this.Info.Color8 = def.Color8;
-					this.Info.Color9 = def.Color9;
-
 					this.State = def.State;
 
 					foreach (var shape in def.Shapes)

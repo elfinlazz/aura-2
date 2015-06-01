@@ -12,16 +12,6 @@ namespace Aura.Data.Database
 		public int Order { get; set; }
 		public float Direction { get; set; }
 		public float Scale { get; set; }
-		public uint ColorOverride { get; set; }
-		public uint Color1 { get; set; }
-		public uint Color2 { get; set; }
-		public uint Color3 { get; set; }
-		public uint Color4 { get; set; }
-		public uint Color5 { get; set; }
-		public uint Color6 { get; set; }
-		public uint Color7 { get; set; }
-		public uint Color8 { get; set; }
-		public uint Color9 { get; set; }
 		public string State { get; set; }
 		public List<ShapeData> Shapes { get; set; }
 
@@ -62,16 +52,6 @@ namespace Aura.Data.Database
 				var isFixedAltitude = br.ReadByte();
 				prop.Scale = br.ReadSingle();
 				prop.Direction = br.ReadSingle();
-				prop.ColorOverride = br.ReadUInt32();
-				prop.Color1 = br.ReadUInt32();
-				prop.Color2 = br.ReadUInt32();
-				prop.Color3 = br.ReadUInt32();
-				prop.Color4 = br.ReadUInt32();
-				prop.Color5 = br.ReadUInt32();
-				prop.Color6 = br.ReadUInt32();
-				prop.Color7 = br.ReadUInt32();
-				prop.Color8 = br.ReadUInt32();
-				prop.Color9 = br.ReadUInt32();
 				prop.State = br.ReadString();
 
 				if (!this.Entries.ContainsKey(prop.Id))
