@@ -217,16 +217,23 @@ namespace Aura.Channel.World.Entities
 					{
 						var s = shape.Copy();
 
-						// Rotate and move shape
-						var cos = (float)Math.Cos(this.Info.Direction);
-						var sin = (float)Math.Sin(this.Info.Direction);
+						// Rotate shape
+						var shapeAngle = this.Info.Direction;
+						shapeAngle += (float)Math.Atan2(s.DirY1, s.DirX1);
+						var cos = (float)Math.Cos(shapeAngle);
+						var sin = (float)Math.Sin(shapeAngle);
 						s.DirX1 = cos;
 						s.DirY1 = sin;
 						s.DirX2 = -sin;
 						s.DirY2 = cos;
+
+						// Adjust position
 						s.PosX += this.Info.X;
 						s.PosY += this.Info.Y;
 
+						// Rotate center
+						cos = (float)Math.Cos(this.Info.Direction);
+						sin = (float)Math.Sin(this.Info.Direction);
 
 						var newX = (cos * (s.PosX - this.Info.X)) - (sin * (s.PosY - this.Info.Y)) + this.Info.X;
 						var newY = (sin * (s.PosX - this.Info.X)) + (cos * (s.PosY - this.Info.Y)) + this.Info.Y;
