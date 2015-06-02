@@ -119,133 +119,147 @@ namespace Aura.Channel.World.Dungeons
 
 				// Lobby
 				if (i == 0)
-				{
-					region.GetPropById(this.Data.StairsPropId).Behavior = (cr, pr) =>
-					{
-						var regionId = this.Regions[1].Id;
-						var x = this.Generator.Floors[0].MazeGenerator.StartPos.X * TileSize + TileSize / 2;
-						var y = this.Generator.Floors[0].MazeGenerator.StartPos.Y * TileSize + TileSize / 2;
-
-						cr.Warp(regionId, x, y);
-					};
-
-					region.GetPropById(this.Data.LastStatuePropId).Behavior = (cr, pr) =>
-					{
-						cr.Warp(this.Data.Exit);
-					};
-				}
+					this.InitLobbyRegion(i);
 				// Floors
 				else
-				{
-					var floor = this.Generator.Floors[i - 1];
-					var gen = floor.MazeGenerator;
-					var data = this.Data;
-
-					var prevRegion = i - 1;
-					var nextRegion = i + 1;
-
-					var startTile = gen.StartPos;
-					var startPos = new Dungeons.Generation.Position(startTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, startTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
-					var startRoom = gen.GetRoom(startTile);
-
-					var endTile = gen.EndPos;
-					var endPos = new Dungeons.Generation.Position(endTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, endTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
-					var endRoom = gen.GetRoom(endTile);
-
-					int doorDirection = 0;
-					if (startRoom.Directions[Direction.Up] > 0)
-						doorDirection = Direction.Up;
-					else if (startRoom.Directions[Direction.Right] > 0)
-						doorDirection = Direction.Right;
-					else if (startRoom.Directions[Direction.Down] > 0)
-						doorDirection = Direction.Down;
-					else if (startRoom.Directions[Direction.Left] > 0)
-						doorDirection = Direction.Left;
-
-					var door = new Prop(data.DoorId, region.Id, startPos.X, startPos.Y, Rotation(doorDirection), 1, 0, "open");
-					region.AddProp(door);
-
-					var stairs = new Prop(Dungeon.StairsPropId, region.Id, startPos.X, startPos.Y, Rotation(gen.StartDirection), 1, 0, "single");
-					region.AddProp(stairs);
-
-					var portal = new Prop(Dungeon.StairsPortalPropId, region.Id, startPos.X, startPos.Y, Rotation(gen.StartDirection), 1, 0, "single", "_upstairs", Localization.Get("<mini>TO</mini> Upstairs"));
-					portal.Behavior = (cr, pr) =>
-					{
-						var regionId = this.Regions[prevRegion].Id;
-						int x, y;
-
-						if (prevRegion == 0)
-						{
-							x = 3200;
-							y = 4100;
-						}
-						else
-						{
-							x = this.Generator.Floors[prevRegion - 1].MazeGenerator.EndPos.X * TileSize + TileSize / 2;
-							y = this.Generator.Floors[prevRegion - 1].MazeGenerator.EndPos.Y * TileSize + TileSize / 2;
-						}
-
-						cr.Warp(regionId, x, y);
-					};
-					region.AddProp(portal);
-
-					if (floor.IsLastFloor)
-					{
-						_bossExitDoor = new Prop(data.BossExitDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Up), 1, 0, "closed");
-						region.AddProp(_bossExitDoor);
-
-						_bossDoor = new Prop(data.BossDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Down), 1, 0, "closed");
-						_bossDoor.Behavior = this.BossDoorBehavior;
-						region.AddProp(_bossDoor);
-
-						var exitStatue = new Prop(data.LastStatuePropId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize * 2, Rotation(Direction.Up), 1, 0, "single");
-						exitStatue.Xml.SetAttributeValue("dungeon_name", this.Name);
-						exitStatue.Xml.SetAttributeValue("dungeon_id", this.InstanceId);
-						exitStatue.Behavior = (cr, pr) => { cr.Warp(data.Exit); };
-						region.AddProp(exitStatue);
-					}
-					else
-					{
-						doorDirection = 0;
-						if (endRoom.Directions[Direction.Up] > 0)
-							doorDirection = Direction.Up;
-						else if (endRoom.Directions[Direction.Right] > 0)
-							doorDirection = Direction.Right;
-						else if (endRoom.Directions[Direction.Down] > 0)
-							doorDirection = Direction.Down;
-						else if (endRoom.Directions[Direction.Left] > 0)
-							doorDirection = Direction.Left;
-
-						var endDoor = new Prop(data.DoorId, region.Id, endPos.X, endPos.Y, Rotation(doorDirection), 1, 0, "open");
-						region.AddProp(endDoor);
-
-						var linkDirection = 0;
-						var endRoomTrait = floor.GetRoom(endTile);
-						if (endRoomTrait.Links[Direction.Up] > 0)
-							linkDirection = Direction.Up;
-						else if (endRoomTrait.Links[Direction.Right] > 0)
-							linkDirection = Direction.Right;
-						else if (endRoomTrait.Links[Direction.Down] > 0)
-							linkDirection = Direction.Down;
-						else if (endRoomTrait.Links[Direction.Left] > 0)
-							linkDirection = Direction.Left;
-
-						var stairsDown = new Prop(Dungeon.StairsDownPropId, region.Id, endPos.X, endPos.Y, Rotation(linkDirection), 1, 0, "single");
-						region.AddProp(stairsDown);
-
-						var portalDown = new Prop(Dungeon.StairsDownPortalPropId, region.Id, endPos.X, endPos.Y, Rotation(linkDirection), 1, 0, "single", "_downstairs", Localization.Get("<mini>TO</mini> Downstairs"));
-						portalDown.Behavior = (cr, pr) =>
-						{
-							var regionId = this.Regions[nextRegion].Id;
-							var x = this.Generator.Floors[nextRegion - 1].MazeGenerator.StartPos.X * TileSize + TileSize / 2;
-							var y = this.Generator.Floors[nextRegion - 1].MazeGenerator.StartPos.Y * TileSize + TileSize / 2;
-
-							cr.Warp(regionId, x, y);
-						};
-						region.AddProp(portalDown);
-					}
-				}
+					this.InitFloorRegion(i);
 			}
+		}
+
+		public void InitLobbyRegion(int i)
+		{
+			var region = this.Regions[i];
+
+			region.GetPropById(this.Data.StairsPropId).Behavior = (cr, pr) =>
+			{
+				var regionId = this.Regions[1].Id;
+				var x = this.Generator.Floors[0].MazeGenerator.StartPos.X * TileSize + TileSize / 2;
+				var y = this.Generator.Floors[0].MazeGenerator.StartPos.Y * TileSize + TileSize / 2;
+
+				cr.Warp(regionId, x, y);
+			};
+
+			region.GetPropById(this.Data.LastStatuePropId).Behavior = (cr, pr) =>
+			{
+				cr.Warp(this.Data.Exit);
+			};
+		}
+
+		public void InitFloorRegion(int i)
+		{
+			this.SetUpHallwayProps(i);
+
+			var region = this.Regions[i];
+			var floor = this.Generator.Floors[i - 1];
+			var gen = floor.MazeGenerator;
+
+			var prevRegion = i - 1;
+			var nextRegion = i + 1;
+
+			var startTile = gen.StartPos;
+			var startPos = new Dungeons.Generation.Position(startTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, startTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
+			var startRoom = gen.GetRoom(startTile);
+
+			var endTile = gen.EndPos;
+			var endPos = new Dungeons.Generation.Position(endTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, endTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
+			var endRoom = gen.GetRoom(endTile);
+
+			int doorDirection = 0;
+			if (startRoom.Directions[Direction.Up] > 0)
+				doorDirection = Direction.Up;
+			else if (startRoom.Directions[Direction.Right] > 0)
+				doorDirection = Direction.Right;
+			else if (startRoom.Directions[Direction.Down] > 0)
+				doorDirection = Direction.Down;
+			else if (startRoom.Directions[Direction.Left] > 0)
+				doorDirection = Direction.Left;
+
+			var door = new Prop(this.Data.DoorId, region.Id, startPos.X, startPos.Y, Rotation(doorDirection), 1, 0, "open");
+			region.AddProp(door);
+
+			var stairs = new Prop(Dungeon.StairsPropId, region.Id, startPos.X, startPos.Y, Rotation(gen.StartDirection), 1, 0, "single");
+			region.AddProp(stairs);
+
+			var portal = new Prop(Dungeon.StairsPortalPropId, region.Id, startPos.X, startPos.Y, Rotation(gen.StartDirection), 1, 0, "single", "_upstairs", Localization.Get("<mini>TO</mini> Upstairs"));
+			portal.Behavior = (cr, pr) =>
+			{
+				var regionId = this.Regions[prevRegion].Id;
+				int x, y;
+
+				if (prevRegion == 0)
+				{
+					x = 3200;
+					y = 4100;
+				}
+				else
+				{
+					x = this.Generator.Floors[prevRegion - 1].MazeGenerator.EndPos.X * TileSize + TileSize / 2;
+					y = this.Generator.Floors[prevRegion - 1].MazeGenerator.EndPos.Y * TileSize + TileSize / 2;
+				}
+
+				cr.Warp(regionId, x, y);
+			};
+			region.AddProp(portal);
+
+			if (floor.IsLastFloor)
+			{
+				_bossExitDoor = new Prop(this.Data.BossExitDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Up), 1, 0, "closed");
+				region.AddProp(_bossExitDoor);
+
+				_bossDoor = new Prop(this.Data.BossDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Down), 1, 0, "closed");
+				_bossDoor.Behavior = this.BossDoorBehavior;
+				region.AddProp(_bossDoor);
+
+				var exitStatue = new Prop(this.Data.LastStatuePropId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize * 2, Rotation(Direction.Up), 1, 0, "single");
+				exitStatue.Xml.SetAttributeValue("dungeon_name", this.Name);
+				exitStatue.Xml.SetAttributeValue("dungeon_id", this.InstanceId);
+				exitStatue.Behavior = (cr, pr) => { cr.Warp(this.Data.Exit); };
+				region.AddProp(exitStatue);
+			}
+			else
+			{
+				doorDirection = 0;
+				if (endRoom.Directions[Direction.Up] > 0)
+					doorDirection = Direction.Up;
+				else if (endRoom.Directions[Direction.Right] > 0)
+					doorDirection = Direction.Right;
+				else if (endRoom.Directions[Direction.Down] > 0)
+					doorDirection = Direction.Down;
+				else if (endRoom.Directions[Direction.Left] > 0)
+					doorDirection = Direction.Left;
+
+				var endDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y, Rotation(doorDirection), 1, 0, "open");
+				region.AddProp(endDoor);
+
+				var linkDirection = 0;
+				var endRoomTrait = floor.GetRoom(endTile);
+				if (endRoomTrait.Links[Direction.Up] > 0)
+					linkDirection = Direction.Up;
+				else if (endRoomTrait.Links[Direction.Right] > 0)
+					linkDirection = Direction.Right;
+				else if (endRoomTrait.Links[Direction.Down] > 0)
+					linkDirection = Direction.Down;
+				else if (endRoomTrait.Links[Direction.Left] > 0)
+					linkDirection = Direction.Left;
+
+				var stairsDown = new Prop(Dungeon.StairsDownPropId, region.Id, endPos.X, endPos.Y, Rotation(linkDirection), 1, 0, "single");
+				region.AddProp(stairsDown);
+
+				var portalDown = new Prop(Dungeon.StairsDownPortalPropId, region.Id, endPos.X, endPos.Y, Rotation(linkDirection), 1, 0, "single", "_downstairs", Localization.Get("<mini>TO</mini> Downstairs"));
+				portalDown.Behavior = (cr, pr) =>
+				{
+					var regionId = this.Regions[nextRegion].Id;
+					var x = this.Generator.Floors[nextRegion - 1].MazeGenerator.StartPos.X * TileSize + TileSize / 2;
+					var y = this.Generator.Floors[nextRegion - 1].MazeGenerator.StartPos.Y * TileSize + TileSize / 2;
+
+					cr.Warp(regionId, x, y);
+				};
+				region.AddProp(portalDown);
+			}
+		}
+
+		public void SetUpHallwayProps(int i)
+		{
 		}
 
 		private static float Rotation(int direction)

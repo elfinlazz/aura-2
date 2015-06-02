@@ -7,6 +7,7 @@ using Aura.Channel.World.Entities;
 using Aura.Data;
 using Aura.Data.Database;
 using Aura.Mabi;
+using Aura.Mabi.Const;
 using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;
@@ -55,37 +56,31 @@ namespace Aura.Channel.World.Dungeons
 		{
 			this.FloorId = floorId;
 			this.Floor = dungeon.Generator.Floors[floorId];
-			this.RegionInfoData = GenerateRegionInfoData(dungeon.Generator, floorId);
 
-			//Console.WriteLine("Floor " + (floorId + 1));
-			//var floor = dungeon.Generator.Floors[floorId];
-			//for (int y = floor.MazeGenerator.Height - 1; y >= 0; --y)
-			//{
-			//	for (int x = 0; x < floor.MazeGenerator.Width; ++x)
-			//	{
-			//		Console.Write((floor.MazeGenerator.Rooms[x][y].Visited ? 1 : 0) + " ");
-			//	}
-			//	Console.WriteLine();
-			//}
+			this.GenerateAreas();
 		}
 
-		private static RegionInfoData GenerateRegionInfoData(DungeonGenerator generator, int floorId)
+		private void GenerateAreas()
 		{
-			var result = new RegionInfoData();
+			this.RegionInfoData = new RegionInfoData();
 
 			var areaId = 2;
-			var floor = generator.Floors[floorId];
+			var floor = this.Floor;
 
 			for (int x = 0; x < floor.MazeGenerator.Width; ++x)
 			{
 				for (int y = 0; y < floor.MazeGenerator.Height; ++y)
 				{
+					var room = floor.MazeGenerator.GetRoom(new Generation.Position(x, y));
+
 					if (!floor.MazeGenerator.Rooms[x][y].Visited)
 						continue;
 
-					var bossRoom = (floor.HasBossRoom && x == floor.MazeGenerator.EndPos.X && y == floor.MazeGenerator.EndPos.Y);
+					var isStart = (x == floor.MazeGenerator.StartPos.X && y == floor.MazeGenerator.StartPos.Y);
+					var isEnd = (x == floor.MazeGenerator.EndPos.X && y == floor.MazeGenerator.EndPos.Y);
+					var isBossRoom = (floor.HasBossRoom && isEnd);
 
-					if (!bossRoom)
+					if (!isBossRoom)
 					{
 						var areaData = new AreaData();
 						areaData.Id = areaId++;
@@ -95,7 +90,7 @@ namespace Aura.Channel.World.Dungeons
 						areaData.X2 = x * Dungeon.TileSize + Dungeon.TileSize;
 						areaData.Y2 = y * Dungeon.TileSize + Dungeon.TileSize;
 
-						result.Areas.Add(areaData);
+						this.RegionInfoData.Areas.Add(areaData);
 					}
 					else
 					{
@@ -108,7 +103,7 @@ namespace Aura.Channel.World.Dungeons
 						areaData.X2 = x * Dungeon.TileSize + Dungeon.TileSize * 2;
 						areaData.Y2 = y * Dungeon.TileSize + Dungeon.TileSize * 2;
 
-						result.Areas.Add(areaData);
+						this.RegionInfoData.Areas.Add(areaData);
 
 						// Treasure room
 						areaData = new AreaData();
@@ -119,12 +114,10 @@ namespace Aura.Channel.World.Dungeons
 						areaData.X2 = x * Dungeon.TileSize + Dungeon.TileSize;
 						areaData.Y2 = y * Dungeon.TileSize + Dungeon.TileSize * 2 + Dungeon.TileSize;
 
-						result.Areas.Add(areaData);
+						this.RegionInfoData.Areas.Add(areaData);
 					}
 				}
 			}
-
-			return result;
 		}
 	}
 
