@@ -106,6 +106,10 @@ namespace Aura.Channel.World.Entities.Creatures
 
 			var distance = this.Creature.GetPosition().GetDistance(target.GetPosition());
 			var bowRange = this.Creature.RightHand == null ? 0 : this.Creature.RightHand.OptionInfo.EffectiveRange;
+
+			if (distance > bowRange || distance <= 0)
+				return 0;
+
 			var aimTime = this.GetAimTime();
 
 			double aimTimeRequired = BaseAimTimeRequired;
