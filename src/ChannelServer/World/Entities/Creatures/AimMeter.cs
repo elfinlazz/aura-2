@@ -2,23 +2,35 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.Network.Sending;
-using Aura.Channel.Util;
 using Aura.Mabi.Const;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aura.Channel.World.Entities.Creatures
 {
+	/// <summary>
+	/// Aim meter for ranged combat.
+	/// </summary>
 	public class AimMeter
 	{
+		/// <summary>
+		/// Creature this aim meter belongs to.
+		/// </summary>
 		public Creature Creature { get; private set; }
+
+		/// <summary>
+		/// Time at which aiming was started, equal to MinValue if not aiming.
+		/// </summary>
 		public DateTime StartTime { get; private set; }
 
+		/// <summary>
+		/// Returns true if meter's creature is aiming.
+		/// </summary>
 		public bool IsAiming { get { return this.StartTime != DateTime.MinValue; } }
 
+		/// <summary>
+		/// Creatues new aim meter for creature.
+		/// </summary>
+		/// <param name="creature"></param>
 		public AimMeter(Creature creature)
 		{
 			this.StartTime = DateTime.MinValue;
@@ -26,6 +38,10 @@ namespace Aura.Channel.World.Entities.Creatures
 			this.Creature = creature;
 		}
 
+		/// <summary>
+		/// Starts aiming timer and sends CombatSetAimR.
+		/// </summary>
+		/// <param name="targetEntityId"></param>
 		public void Start(long targetEntityId)
 		{
 			// Use 0 as fallback for now, until we're sure there's no
@@ -36,6 +52,9 @@ namespace Aura.Channel.World.Entities.Creatures
 			Send.CombatSetAimR(this.Creature, targetEntityId, activeSkillId, 0);
 		}
 
+		/// <summary>
+		/// Stops aiming timer and sends CombatSetAimR.
+		/// </summary>
 		public void Stop()
 		{
 			this.StartTime = DateTime.MinValue;
