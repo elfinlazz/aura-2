@@ -94,22 +94,31 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <remarks>
 		/// Unofficial, works in some cases (maybe 40%), but it's certainly
 		/// far from being perfect.
+		/// 
+		/// Update: Still not perfect, but we're getting there (about 84% now).
 		/// </remarks>
 		/// <param name="target"></param>
 		/// <returns></returns>
 		public double GetAimChance(Creature target)
 		{
-			var aimTimeRequired = BaseAimTimeRequired;
-			var rangedAttackSkill = this.Creature.Skills.Get(SkillId.RangedAttack);
+			var d1 = 5000;
+			var d2 = 500;
 
-			// Add Ranged Attack bonus
-			// TODO: log2?
+			var distance = this.Creature.GetPosition().GetDistance(target.GetPosition());
+			var bowRange = this.Creature.RightHand == null ? 0 : this.Creature.RightHand.OptionInfo.EffectiveRange;
+			var aimTime = this.GetAimTime();
+
+			double aimTimeRequired = BaseAimTimeRequired;
+			aimTimeRequired = (aimTimeRequired * aimTime) / 100.0;
+
+			var rangedAttackSkill = this.Creature.Skills.Get(SkillId.RangedAttack);
 			if (rangedAttackSkill != null)
 				aimTimeRequired /= rangedAttackSkill.RankData.Var3 / 100f;
 
-			var distance = this.Creature.GetPosition().GetDistance(target.GetPosition());
-			var aimTime = this.GetAimTime();
-			var chance = Math.Min(99f, 99f / (aimTimeRequired + distance) * aimTime);
+			var hitRatio = 1;
+			hitRatio = ((d1 - d2) / bowRange) * distance * hitRatio + d2;
+
+			var chance = Math.Sqrt(aimTimeRequired / hitRatio * 715);
 
 			// 100% after x time
 			var fullAimTime = ((aimTimeRequired + distance) / 99f * (99f * 2));
