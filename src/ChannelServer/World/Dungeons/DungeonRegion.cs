@@ -95,32 +95,33 @@ namespace Aura.Channel.World.Dungeons
 
 						this.RegionInfoData.Areas.Add(areaData);
 
-						if (!isRoom)
-						{
-							var propEntityId = MabiId.ClientProps | ((long)this.Id << 32) | ((long)areaData.Id << 16) | 1;
-							var top = room.Directions[0] != 0 ? 1 : 0;
-							var right = room.Directions[1] != 0 ? 1 : 0;
-							var bottom = room.Directions[2] != 0 ? 1 : 0;
-							var left = room.Directions[3] != 0 ? 1 : 0;
-							var block = blocks.FirstOrDefault(a => a.Type == 0 && a.Top == top && a.Right == right && a.Bottom == bottom && a.Left == left);
-							var tileCenter = new Point(x * Dungeon.TileSize + Dungeon.TileSize / 2, y * Dungeon.TileSize + Dungeon.TileSize / 2);
+						var type = (isBossRoom ? 200 : isRoom ? 100 : 0);
 
-							if (block == null)
-								Log.Debug("no block found:  {0}, {1}, {2}, {3}", top, right, bottom, left);
-							else
-							{
-								var prop = new Prop(propEntityId, block.PropId, this.Id, tileCenter.X, tileCenter.Y, MabiMath.DegreeToRadian(block.Rotation), 1, 0, "", "", "");
-								this.AddProp(prop);
-								foreach (var shape in prop.Shapes)
-								{
-									foreach (var point in shape.GetPoints())
-									{
-										var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
-										pole.Shapes.Clear();
-										this.AddProp(pole);
-									}
-								}
-							}
+						var propEntityId = MabiId.ClientProps | ((long)this.Id << 32) | ((long)areaData.Id << 16) | 1;
+						var top = room.Directions[Direction.Up] != 0 ? 1 : 0;
+						var right = room.Directions[Direction.Right] != 0 ? 1 : 0;
+						var bottom = room.Directions[Direction.Down] != 0 ? 1 : 0;
+						var left = room.Directions[Direction.Left] != 0 ? 1 : 0;
+						var block = blocks.FirstOrDefault(a => a.Type == type && a.Top == top && a.Right == right && a.Bottom == bottom && a.Left == left);
+						var tileCenter = new Point(x * Dungeon.TileSize + Dungeon.TileSize / 2, y * Dungeon.TileSize + Dungeon.TileSize / 2);
+
+						if (block == null)
+							Log.Debug("no block found:  {0}, {1}, {2}, {3}", top, right, bottom, left);
+						else
+						{
+							var prop = new Prop(propEntityId, block.PropId, this.Id, tileCenter.X, tileCenter.Y, MabiMath.DegreeToRadian(block.Rotation), 1, 0, "", "", "");
+							this.AddProp(prop);
+							//if (isRoom)
+							//	foreach (var shape in prop.Shapes)
+							//	{
+							//		foreach (var point in shape.GetPoints())
+							//		{
+							//			//Log.Debug("{2}: {0},{1}", point.X, point.Y, block.PropId);
+							//			var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
+							//			pole.Shapes.Clear();
+							//			this.AddProp(pole);
+							//		}
+							//	}
 						}
 					}
 					else
@@ -135,6 +136,22 @@ namespace Aura.Channel.World.Dungeons
 						areaData.Y2 = y * Dungeon.TileSize + Dungeon.TileSize * 2;
 
 						this.RegionInfoData.Areas.Add(areaData);
+
+						var block = blocks.FirstOrDefault(a => a.Type == 200);
+						var propEntityId = MabiId.ClientProps | ((long)this.Id << 32) | ((long)areaData.Id << 16) | 1;
+						var tileCenter = new Point(x * Dungeon.TileSize + Dungeon.TileSize / 2, y * Dungeon.TileSize + Dungeon.TileSize);
+						var prop = new Prop(propEntityId, block.PropId, this.Id, tileCenter.X, tileCenter.Y, MabiMath.DegreeToRadian(block.Rotation), 1, 0, "", "", "");
+						this.AddProp(prop);
+							foreach (var shape in prop.Shapes)
+							{
+								foreach (var point in shape.GetPoints())
+								{
+									//Log.Debug("{2}: {0},{1}", point.X, point.Y, block.PropId);
+									var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
+									pole.Shapes.Clear();
+									this.AddProp(pole);
+								}
+							}
 
 						// Treasure room
 						areaData = new AreaData();
