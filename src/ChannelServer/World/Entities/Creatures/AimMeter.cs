@@ -41,5 +41,17 @@ namespace Aura.Channel.World.Entities.Creatures
 			this.StartTime = DateTime.MinValue;
 			Send.CombatSetAimR(this.Creature, 0, SkillId.None, 0);
 		}
+
+		/// <summary>
+		/// Returns the time since Start was called.
+		/// </summary>
+		/// <returns></returns>
+		public double GetAimTime()
+		{
+			if (this.StartTime == DateTime.MinValue)
+				return 0;
+
+			return (DateTime.Now - this.StartTime).TotalMilliseconds;
+		}
 	}
 }

@@ -165,7 +165,7 @@ namespace Aura.Channel.Skills.Combat
 			aimTimeRequired /= skill.RankData.Var3 / 100f;
 
 			var distance = attackerPos.GetDistance(targetPos);
-			var aimTime = (DateTime.Now - attacker.AimMeter.StartTime).TotalMilliseconds;
+			var aimTime = attacker.AimMeter.GetAimTime();
 			var fullAimTime = ((aimTimeRequired + distance) / 99f * (99f * 2));
 
 			var chance = Math.Min(99f, 99f / (aimTimeRequired + distance) * aimTime);
@@ -185,7 +185,7 @@ namespace Aura.Channel.Skills.Combat
 
 			// Debug for devCATs
 			if (attacker.Titles.SelectedTitle == 60001)
-				Send.ServerMessage(attacker, "Debug: Aim {0}", chance);
+				Send.ServerMessage(attacker, "Debug: Aim {0}, Distance {1}, Time {2}", chance, distance, aimTime);
 
 			// Actions
 			var cap = new CombatActionPack(attacker, skill.Info.Id);
