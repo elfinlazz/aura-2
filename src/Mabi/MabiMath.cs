@@ -44,6 +44,16 @@ namespace Aura.Mabi
 		}
 
 		/// <summary>
+		/// Converts degree to radian.
+		/// </summary>
+		/// <param name="degree"></param>
+		/// <returns></returns>
+		public static float DegreeToRadian(int degree)
+		{
+			return (float)(Math.PI / 180f * degree);
+		}
+
+		/// <summary>
 		/// Calculates the stat bonus for eating food.
 		/// </summary>
 		/// <remarks>

@@ -151,9 +151,7 @@ namespace Aura.Channel.World.Entities
 				throw new ArgumentException("Region '" + regionId + "' doesn't exist.");
 
 			// TODO: Fix 64k server prop restriction
-			this.EntityId = Interlocked.Increment(ref _propId);
-			this.EntityId |= (long)regionId << 32;
-			this.EntityId |= (long)region.GetAreaId(x, y) << 16;
+			this.EntityId = GetNewEntityId(regionId, region.GetAreaId(x, y));
 		}
 
 		/// <summary>
@@ -248,6 +246,19 @@ namespace Aura.Channel.World.Entities
 			// Load prop data
 			if ((this.Data = AuraData.PropsDb.Find(this.Info.Id)) == null)
 				Log.Warning("Prop: No data found for '{0}'.", this.Info.Id);
+		}
+
+		/// <summary>
+		/// Generates new prop entity id (temporary).
+		/// </summary>
+		/// <returns></returns>
+		public static long GetNewEntityId(int regionId, int areaId)
+		{
+			var result = Interlocked.Increment(ref _propId);
+			result |= (long)regionId << 32;
+			result |= (long)areaId << 16;
+
+			return result;
 		}
 
 		/// <summary>

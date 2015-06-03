@@ -11,6 +11,7 @@ using Aura.Mabi.Const;
 using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +67,7 @@ namespace Aura.Channel.World.Dungeons
 
 			var areaId = 2;
 			var floor = this.Floor;
+			var blocks = AuraData.DungeonBlocksDb.Find(this.Dungeon.Data.Style);
 
 			for (int x = 0; x < floor.MazeGenerator.Width; ++x)
 			{
@@ -78,6 +80,7 @@ namespace Aura.Channel.World.Dungeons
 
 					var isStart = (x == floor.MazeGenerator.StartPos.X && y == floor.MazeGenerator.StartPos.Y);
 					var isEnd = (x == floor.MazeGenerator.EndPos.X && y == floor.MazeGenerator.EndPos.Y);
+					var isRoom = (isStart || isEnd);
 					var isBossRoom = (floor.HasBossRoom && isEnd);
 
 					if (!isBossRoom)
@@ -91,6 +94,34 @@ namespace Aura.Channel.World.Dungeons
 						areaData.Y2 = y * Dungeon.TileSize + Dungeon.TileSize;
 
 						this.RegionInfoData.Areas.Add(areaData);
+
+						if (!isRoom)
+						{
+							var propEntityId = MabiId.ClientProps | ((long)this.Id << 32) | ((long)areaData.Id << 16) | 1;
+							var top = room.Directions[0] != 0 ? 1 : 0;
+							var right = room.Directions[1] != 0 ? 1 : 0;
+							var bottom = room.Directions[2] != 0 ? 1 : 0;
+							var left = room.Directions[3] != 0 ? 1 : 0;
+							var block = blocks.FirstOrDefault(a => a.Type == 0 && a.Top == top && a.Right == right && a.Bottom == bottom && a.Left == left);
+							var tileCenter = new Point(x * Dungeon.TileSize + Dungeon.TileSize / 2, y * Dungeon.TileSize + Dungeon.TileSize / 2);
+
+							if (block == null)
+								Log.Debug("no block found:  {0}, {1}, {2}, {3}", top, right, bottom, left);
+							else
+							{
+								var prop = new Prop(propEntityId, block.PropId, this.Id, tileCenter.X, tileCenter.Y, MabiMath.DegreeToRadian(block.Rotation), 1, 0, "", "", "");
+								this.AddProp(prop);
+								foreach (var shape in prop.Shapes)
+								{
+									foreach (var point in shape.GetPoints())
+									{
+										var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
+										pole.Shapes.Clear();
+										this.AddProp(pole);
+									}
+								}
+							}
+						}
 					}
 					else
 					{

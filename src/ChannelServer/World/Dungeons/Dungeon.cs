@@ -260,6 +260,7 @@ namespace Aura.Channel.World.Dungeons
 
 		public void SetUpHallwayProps(int i)
 		{
+			// Doing this in the region makes more sense.
 		}
 
 		private static float Rotation(int direction)
