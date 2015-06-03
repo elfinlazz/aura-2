@@ -137,8 +137,8 @@ namespace Aura.Channel.Skills.Combat
 			var attackerPos = attacker.GetPosition();
 
 			// Check range
-			if (!attackerPos.InRange(targetPos, attacker.RightHand.OptionInfo.EffectiveRange + 100))
-				return CombatSkillResult.OutOfRange;
+			//if (!attackerPos.InRange(targetPos, attacker.RightHand.OptionInfo.EffectiveRange + 100))
+			//	return CombatSkillResult.OutOfRange;
 
 			// Actions
 			var cap = new CombatActionPack(attacker, skill.Info.Id);
