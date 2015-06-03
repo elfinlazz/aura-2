@@ -13,6 +13,21 @@ namespace Aura.Channel.World.Entities.Creatures
 	public class AimMeter
 	{
 		/// <summary>
+		/// Base time it takes to get from 0 to 99%.
+		/// </summary>
+		private const float BaseAimTimeRequired = 1000;
+
+		/// <summary>
+		/// Maximum aim for walking target
+		/// </summary>
+		private const int MaxChanceWalking = 95;
+
+		/// <summary>
+		/// Maximum aim for running target
+		/// </summary>
+		private const int MaxChanceRunning = 90;
+
+		/// <summary>
 		/// Creature this aim meter belongs to.
 		/// </summary>
 		public Creature Creature { get; private set; }
@@ -71,6 +86,49 @@ namespace Aura.Channel.World.Entities.Creatures
 				return 0;
 
 			return (DateTime.Now - this.StartTime).TotalMilliseconds;
+		}
+
+		/// <summary>
+		/// Returns the chance to hit target at the current aim time.
+		/// </summary>
+		/// <remarks>
+		/// Unofficial, works in some cases (maybe 40%), but it's certainly
+		/// far from being perfect.
+		/// </remarks>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public double GetAimChance(Creature target)
+		{
+			var aimTimeRequired = BaseAimTimeRequired;
+			var rangedAttackSkill = this.Creature.Skills.Get(SkillId.RangedAttack);
+
+			// Add Ranged Attack bonus
+			// TODO: log2?
+			if (rangedAttackSkill != null)
+				aimTimeRequired /= rangedAttackSkill.RankData.Var3 / 100f;
+
+			var distance = this.Creature.GetPosition().GetDistance(target.GetPosition());
+			var aimTime = this.GetAimTime();
+			var chance = Math.Min(99f, 99f / (aimTimeRequired + distance) * aimTime);
+
+			// 100% after x time
+			var fullAimTime = ((aimTimeRequired + distance) / 99f * (99f * 2));
+			if (aimTime >= fullAimTime)
+				chance = 100;
+
+			if (target.IsMoving)
+			{
+				if (target.IsWalking)
+					chance = Math.Min(MaxChanceWalking, chance);
+				else
+					chance = Math.Min(MaxChanceRunning, chance);
+			}
+
+			// Debug for devCATs
+			if (this.Creature.Titles.SelectedTitle == 60001)
+				Send.ServerMessage(this.Creature, "Debug: Aim {0}, Distance {1}, Time {2}", chance, distance, aimTime);
+
+			return chance;
 		}
 	}
 }

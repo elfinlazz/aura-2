@@ -39,11 +39,6 @@ namespace Aura.Channel.Skills.Combat
 		private const float StabilityReduction = 60f;
 
 		/// <summary>
-		/// Base time it takes to get from 0 to 99%.
-		/// </summary>
-		private const float BaseAimTimeRequired = 1000;
-
-		/// <summary>
 		/// Stun for the attacker
 		/// </summary>
 		private const int AttackerStun = 800;
@@ -52,16 +47,6 @@ namespace Aura.Channel.Skills.Combat
 		/// Stun for the target
 		/// </summary>
 		private const int TargetStun = 2100;
-
-		/// <summary>
-		/// Maximum aim for walking target
-		/// </summary>
-		private const int MaxChanceWalking = 95;
-
-		/// <summary>
-		/// Maximum aim for running target
-		/// </summary>
-		private const int MaxChanceRunning = 90;
 
 		/// <summary>
 		/// Bonus damage for fire arrows
@@ -155,38 +140,6 @@ namespace Aura.Channel.Skills.Combat
 			if (!attackerPos.InRange(targetPos, attacker.RightHand.OptionInfo.EffectiveRange + 100))
 				return CombatSkillResult.OutOfRange;
 
-			// Calculate chance
-			// Unofficial, but seems to be close.
-			var rnd = RandomProvider.Get();
-			var aimTimeRequired = BaseAimTimeRequired;
-
-			// Add Ranged Attack bonus
-			// TODO: log2?
-			aimTimeRequired /= skill.RankData.Var3 / 100f;
-
-			var distance = attackerPos.GetDistance(targetPos);
-			var aimTime = attacker.AimMeter.GetAimTime();
-			var fullAimTime = ((aimTimeRequired + distance) / 99f * (99f * 2));
-
-			var chance = Math.Min(99f, 99f / (aimTimeRequired + distance) * aimTime);
-
-			// 100% after x time
-			if (aimTime >= fullAimTime)
-				chance = 100;
-
-			// Reduce chance if target is moving
-			if (target.IsMoving)
-			{
-				if (target.IsWalking)
-					chance = Math.Min(MaxChanceWalking, chance);
-				else
-					chance = Math.Min(MaxChanceRunning, chance);
-			}
-
-			// Debug for devCATs
-			if (attacker.Titles.SelectedTitle == 60001)
-				Send.ServerMessage(attacker, "Debug: Aim {0}, Distance {1}, Time {2}", chance, distance, aimTime);
-
 			// Actions
 			var cap = new CombatActionPack(attacker, skill.Info.Id);
 
@@ -195,6 +148,9 @@ namespace Aura.Channel.Skills.Combat
 			aAction.Stun = AttackerStun;
 			cap.Add(aAction);
 
+			// Hit by chance
+			var chance = attacker.AimMeter.GetAimChance(target);
+			var rnd = RandomProvider.Get();
 			if (rnd.NextDouble() * 100 < chance)
 			{
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
