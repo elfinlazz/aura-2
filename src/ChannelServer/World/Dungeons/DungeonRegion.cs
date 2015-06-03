@@ -95,7 +95,7 @@ namespace Aura.Channel.World.Dungeons
 
 						this.RegionInfoData.Areas.Add(areaData);
 
-						var type = (isBossRoom ? 200 : isRoom ? 100 : 0);
+						var type = (isBossRoom ? DungeonBlockType.BossRoom : isRoom ? DungeonBlockType.Room : DungeonBlockType.Alley);
 
 						var propEntityId = MabiId.ClientProps | ((long)this.Id << 32) | ((long)areaData.Id << 16) | 1;
 						var top = room.Directions[Direction.Up] != 0 ? 1 : 0;
@@ -137,21 +137,21 @@ namespace Aura.Channel.World.Dungeons
 
 						this.RegionInfoData.Areas.Add(areaData);
 
-						var block = blocks.FirstOrDefault(a => a.Type == 200);
+						var block = blocks.FirstOrDefault(a => a.Type == DungeonBlockType.BossRoom);
 						var propEntityId = MabiId.ClientProps | ((long)this.Id << 32) | ((long)areaData.Id << 16) | 1;
 						var tileCenter = new Point(x * Dungeon.TileSize + Dungeon.TileSize / 2, y * Dungeon.TileSize + Dungeon.TileSize);
 						var prop = new Prop(propEntityId, block.PropId, this.Id, tileCenter.X, tileCenter.Y, MabiMath.DegreeToRadian(block.Rotation), 1, 0, "", "", "");
 						this.AddProp(prop);
-							foreach (var shape in prop.Shapes)
+						foreach (var shape in prop.Shapes)
+						{
+							foreach (var point in shape.GetPoints())
 							{
-								foreach (var point in shape.GetPoints())
-								{
-									//Log.Debug("{2}: {0},{1}", point.X, point.Y, block.PropId);
-									var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
-									pole.Shapes.Clear();
-									this.AddProp(pole);
-								}
+								//Log.Debug("{2}: {0},{1}", point.X, point.Y, block.PropId);
+								var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
+								pole.Shapes.Clear();
+								this.AddProp(pole);
 							}
+						}
 
 						// Treasure room
 						areaData = new AreaData();

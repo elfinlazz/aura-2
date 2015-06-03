@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Mabi.Const;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ namespace Aura.Data.Database
 		public int Style { get; set; }
 		public int PropId { get; set; }
 		public string PropName { get; set; }
-		public int Type { get; set; }
+		public DungeonBlockType Type { get; set; }
 		public int Way { get; set; }
 		public int Top { get; set; }
 		public int Bottom { get; set; }
@@ -36,7 +37,7 @@ namespace Aura.Data.Database
 				data.Style = style;
 				data.PropId = propEntry.ReadInt("id");
 				data.PropName = propEntry.ReadString("name");
-				data.Type = propEntry.ReadInt("type");
+				data.Type = (DungeonBlockType)propEntry.ReadInt("type");
 				data.Way = propEntry.ReadInt("way");
 				data.Top = propEntry.ReadInt("top");
 				data.Bottom = propEntry.ReadInt("bottom");

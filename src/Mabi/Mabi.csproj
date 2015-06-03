@@ -44,6 +44,7 @@
     <Compile Include="Const\Conditions.cs" />
     <Compile Include="Const\Continent.cs" />
     <Compile Include="Const\CreatureStates.cs" />
+    <Compile Include="Const\Dungeons.cs" />
     <Compile Include="Const\Effects.cs" />
     <Compile Include="Const\Items.cs" />
     <Compile Include="Const\Locks.cs" />
