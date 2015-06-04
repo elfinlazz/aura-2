@@ -112,16 +112,19 @@ namespace Aura.Channel.World.Dungeons
 							var prop = new Prop(propEntityId, block.PropId, this.Id, tileCenter.X, tileCenter.Y, MabiMath.DegreeToRadian(block.Rotation), 1, 0, "", "", "");
 							this.AddProp(prop);
 							//if (isRoom)
-							//	foreach (var shape in prop.Shapes)
-							//	{
-							//		foreach (var point in shape.GetPoints())
-							//		{
-							//			//Log.Debug("{2}: {0},{1}", point.X, point.Y, block.PropId);
-							//			var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
-							//			pole.Shapes.Clear();
-							//			this.AddProp(pole);
-							//		}
-							//	}
+							{
+								foreach (var points in prop.Shapes)
+								{
+									foreach (var point in points)
+									{
+										Log.Debug("{2}: {0},{1}", point.X, point.Y, block.PropId);
+										var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
+										pole.Shapes.Clear();
+										this.AddProp(pole);
+									}
+									Log.Debug("");
+								}
+							}
 						}
 					}
 					else
@@ -142,9 +145,9 @@ namespace Aura.Channel.World.Dungeons
 						var tileCenter = new Point(x * Dungeon.TileSize + Dungeon.TileSize / 2, y * Dungeon.TileSize + Dungeon.TileSize);
 						var prop = new Prop(propEntityId, block.PropId, this.Id, tileCenter.X, tileCenter.Y, MabiMath.DegreeToRadian(block.Rotation), 1, 0, "", "", "");
 						this.AddProp(prop);
-						foreach (var shape in prop.Shapes)
+						foreach (var points in prop.Shapes)
 						{
-							foreach (var point in shape.GetPoints())
+							foreach (var point in points)
 							{
 								//Log.Debug("{2}: {0},{1}", point.X, point.Y, block.PropId);
 								var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");

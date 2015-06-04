@@ -14,6 +14,7 @@ using Aura.Channel.Network;
 using Aura.Shared.Util;
 using Aura.Data.Database;
 using Aura.Channel.Network.Sending;
+using System.Drawing;
 
 namespace Aura.Channel.World.Entities
 {
@@ -57,7 +58,7 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// List of shapes for the prop (collision).
 		/// </summary>
-		public List<ShapeData> Shapes { get; protected set; }
+		public List<Point[]> Shapes { get; protected set; }
 
 		/// <summary>
 		/// Specifies whether other entities collide with this one's shape.
@@ -170,7 +171,7 @@ namespace Aura.Channel.World.Entities
 		/// <param name="title"></param>
 		public Prop(long entityId, int id, int regionId, int x, int y, float direction, float scale, float altitude, string state, string name, string title)
 		{
-			this.Shapes = new List<ShapeData>();
+			this.Shapes = new List<Point[]>();
 			this.Temp = new PropTemp();
 
 			_resource = 100;
@@ -212,34 +213,7 @@ namespace Aura.Channel.World.Entities
 					this.State = def.State;
 
 					foreach (var shape in def.Shapes)
-					{
-						var s = shape.Copy();
-
-						// Rotate shape
-						var shapeAngle = this.Info.Direction;
-						shapeAngle += (float)Math.Atan2(s.DirY1, s.DirX1);
-						var cos = (float)Math.Cos(shapeAngle);
-						var sin = (float)Math.Sin(shapeAngle);
-						s.DirX1 = cos;
-						s.DirY1 = sin;
-						s.DirX2 = -sin;
-						s.DirY2 = cos;
-
-						// Adjust position
-						s.PosX += this.Info.X;
-						s.PosY += this.Info.Y;
-
-						// Rotate center
-						cos = (float)Math.Cos(this.Info.Direction);
-						sin = (float)Math.Sin(this.Info.Direction);
-
-						var newX = (cos * (s.PosX - this.Info.X)) - (sin * (s.PosY - this.Info.Y)) + this.Info.X;
-						var newY = (sin * (s.PosX - this.Info.X)) + (cos * (s.PosY - this.Info.Y)) + this.Info.Y;
-						s.PosX = newX;
-						s.PosY = newY;
-
-						this.Shapes.Add(s);
-					}
+						this.Shapes.Add(shape.GetPoints(this.Info.Direction, (int)this.Info.X, (int)this.Info.Y));
 				}
 			}
 

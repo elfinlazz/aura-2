@@ -107,7 +107,7 @@ namespace Aura.Channel.World
 
 					// Replace default shapes with the ones loaded from region.
 					add.Shapes.Clear();
-					add.Shapes.AddRange(prop.Shapes.Select(a => a.Copy()));
+					add.Shapes.AddRange(prop.Shapes.Select(a => a.GetPoints(0, 0, 0)));
 
 					this.AddProp(add);
 				}

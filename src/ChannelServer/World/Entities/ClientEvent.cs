@@ -21,8 +21,6 @@ namespace Aura.Channel.World.Entities
 	/// </remarks>
 	public class ClientEvent : IShapedEntity
 	{
-		private List<Point[]> _shapePoints;
-
 		/// <summary>
 		/// Handler that is called if this event is triggered
 		/// </summary>
@@ -41,7 +39,7 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Shapes of this event.
 		/// </summary>
-		public List<ShapeData> Shapes { get; private set; }
+		public List<Point[]> Shapes { get; private set; }
 
 		/// <summary>
 		/// Specifies whether other entities collide with this one's shape.
@@ -54,8 +52,7 @@ namespace Aura.Channel.World.Entities
 		/// <param name="eventData"></param>
 		public ClientEvent(long id, EventData eventData)
 		{
-			_shapePoints = new List<Point[]>();
-			this.Shapes = new List<ShapeData>();
+			this.Shapes = new List<Point[]>();
 
 			this.EntityId = id;
 			this.Data = eventData;
@@ -63,22 +60,18 @@ namespace Aura.Channel.World.Entities
 			this.Handlers = new Collection<SignalType, Action<Creature, EventData>>();
 
 			foreach (var shape in this.Data.Shapes)
-			{
-				var copy = shape.Copy();
-				this.Shapes.Add(copy);
-				_shapePoints.Add(copy.GetPoints());
-			}
+				this.Shapes.Add(shape.GetPoints(0, 0, 0));
 		}
 
 		public bool IsInside(int x, int y)
 		{
-			if (_shapePoints.Count == 0)
+			if (this.Shapes.Count == 0)
 				return false;
 
 			var result = false;
 			var point = new Point(x, y);
 
-			foreach (var points in _shapePoints)
+			foreach (var points in this.Shapes)
 			{
 				for (int i = 0, j = points.Length - 1; i < points.Length; j = i++)
 				{

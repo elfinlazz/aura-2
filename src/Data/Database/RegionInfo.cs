@@ -254,7 +254,7 @@ namespace Aura.Data.Database
 		public float PosX { get; set; }
 		public float PosY { get; set; }
 
-		public Point[] GetPoints()
+		public Point[] GetPoints(float radianAngle, int pivotX, int pivotY)
 		{
 			var points = new Point[4];
 
@@ -287,7 +287,16 @@ namespace Aura.Data.Database
 				points[1] = new Point((int)sx4, (int)sy4);
 			}
 
-			// TODO: Cache? Should never change.
+			var cosTheta = Math.Cos(radianAngle);
+			var sinTheta = Math.Sin(radianAngle);
+
+			for (int i = 0; i < points.Length; ++i)
+			{
+				var x = (int)(cosTheta * (points[i].X /*- pivotX*/) - sinTheta * (points[i].Y /*- pivotY*/) + pivotX);
+				var y = (int)(sinTheta * (points[i].X /*- pivotX*/) + cosTheta * (points[i].Y /*- pivotY*/) + pivotY);
+				points[i].X = x;
+				points[i].Y = y;
+			}
 
 			return points;
 		}

@@ -36,10 +36,8 @@ namespace Aura.Channel.World
 			if (shapedEntity.Shapes == null || shapedEntity.Shapes.Count == 0 || !shapedEntity.IsCollision)
 				return;
 
-			foreach (var shape in shapedEntity.Shapes)
+			foreach (var points in shapedEntity.Shapes)
 			{
-				var points = shape.GetPoints();
-
 				var line1 = new LinePath(points[0], points[1]);
 				var line2 = new LinePath(points[1], points[2]);
 				var line3 = new LinePath(points[2], points[3]);
@@ -218,6 +216,6 @@ namespace Aura.Channel.World
 	{
 		long EntityId { get; }
 		bool IsCollision { get; }
-		List<ShapeData> Shapes { get; }
+		List<Point[]> Shapes { get; }
 	}
 }
