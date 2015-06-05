@@ -31,6 +31,12 @@ public class AlbyWhiteDayDungeonScript : DungeonScript
 			item.Info.Amount = 1000;
 			item.Drop(dungeon.Regions[1], new Position(endX, endY + Dungeon.TileSize * 2).GetRandomInRange(500, 1000, rnd));
 		}
+
+		for (int i = 0; i < 100; ++i)
+		{
+			var item = new Item(2004); // Check
+			item.MetaData1.SetInt("EVALUE", 1000000);
+			item.Drop(dungeon.Regions[1], new Position(endX, endY + Dungeon.TileSize * 2).GetRandomInRange(500, 1000, rnd));
+		}
 	}
 }
-
