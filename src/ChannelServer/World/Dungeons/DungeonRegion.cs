@@ -108,7 +108,7 @@ namespace Aura.Channel.World.Dungeons
 						{
 							foreach (var point in points)
 							{
-								var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
+								var pole = new Prop(30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
 								pole.Shapes.Clear();
 								this.AddProp(pole);
 							}
@@ -139,8 +139,7 @@ namespace Aura.Channel.World.Dungeons
 						{
 							foreach (var point in points)
 							{
-								//Log.Debug("{2}: {0},{1}", point.X, point.Y, block.PropId);
-								var pole = new Prop(Prop.GetNewEntityId(this.Id, 0), 30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
+								var pole = new Prop(30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
 								pole.Shapes.Clear();
 								this.AddProp(pole);
 							}

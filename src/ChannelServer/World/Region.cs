@@ -29,6 +29,7 @@ namespace Aura.Channel.World
 		public static readonly Region Limbo = new Limbo();
 
 		protected ReaderWriterLockSlim _creaturesRWLS, _propsRWLS, _clientEventsRWLS, _itemsRWLS;
+		private Dictionary<int, int> _propIds;
 
 		protected Dictionary<long, Creature> _creatures;
 		protected Dictionary<long, Prop> _props;
@@ -64,6 +65,8 @@ namespace Aura.Channel.World
 			_propsRWLS = new ReaderWriterLockSlim();
 			_clientEventsRWLS = new ReaderWriterLockSlim();
 			_itemsRWLS = new ReaderWriterLockSlim();
+
+			_propIds = new Dictionary<int, int>();
 
 			this.Id = regionId;
 
@@ -673,6 +676,10 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddProp(Prop prop)
 		{
+			// Generate prop id if it doesn't have one yet.
+			if (prop.EntityId == 0)
+				prop.EntityId = this.GetNewPropEntityId(prop);
+
 			_propsRWLS.EnterWriteLock();
 			try
 			{
@@ -692,6 +699,36 @@ namespace Aura.Channel.World
 			this.Collisions.Add(prop);
 
 			Send.EntityAppears(prop);
+		}
+
+		/// <summary>
+		/// Generates entity id for prop.
+		/// </summary>
+		/// <param name="prop"></param>
+		/// <returns></returns>
+		private long GetNewPropEntityId(Prop prop)
+		{
+			var regionId = this.Id;
+			var areaId = this.GetAreaId((int)prop.Info.X, (int)prop.Info.Y);
+			var propId = 0;
+
+			lock (_propIds)
+			{
+				if (!_propIds.ContainsKey(areaId))
+					_propIds[areaId] = 1;
+
+				propId = _propIds[areaId]++;
+
+				if (propId >= ushort.MaxValue)
+					throw new Exception("Max prop id reached in region '" + regionId + "', area '" + areaId + "'.");
+			}
+
+			var result = MabiId.ServerProps;
+			result |= (long)regionId << 32;
+			result |= (long)areaId << 16;
+			result |= (ushort)propId;
+
+			return result;
 		}
 
 		/// <summary>

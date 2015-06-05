@@ -25,17 +25,6 @@ namespace Aura.Channel.World.Entities
 	public class Prop : Entity, IShapedEntity
 	{
 		/// <summary>
-		/// Base prop id that is increased for every new prop.
-		/// </summary>
-		/// <remarks>
-		/// TODO: Given the way prop ids work, Mabi is limited to 32k/64k props
-		///   per area. But since we use one global id Aura is actually limited
-		///   to that amount globally. This could become a problem for a busy,
-		///   highly customized server. (Custom props, Dungeons, SMs, etc.)
-		/// </remarks>
-		private static long _propId = MabiId.ServerProps;
-
-		/// <summary>
 		/// Returns entity data type "Prop".
 		/// </summary>
 		public override DataType DataType { get { return DataType.Prop; } }
@@ -147,12 +136,6 @@ namespace Aura.Channel.World.Entities
 		public Prop(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0, string state = "", string name = "", string title = "")
 			: this(0, id, regionId, x, y, direction, scale, altitude, state, name, title)
 		{
-			var region = ChannelServer.Instance.World.GetRegion(regionId);
-			if (region == null)
-				throw new ArgumentException("Region '" + regionId + "' doesn't exist.");
-
-			// TODO: Fix 64k server prop restriction
-			this.EntityId = GetNewEntityId(regionId, region.GetAreaId(x, y));
 		}
 
 		/// <summary>
@@ -220,19 +203,6 @@ namespace Aura.Channel.World.Entities
 			// Load prop data
 			if ((this.Data = AuraData.PropsDb.Find(this.Info.Id)) == null)
 				Log.Warning("Prop: No data found for '{0}'.", this.Info.Id);
-		}
-
-		/// <summary>
-		/// Generates new prop entity id (temporary).
-		/// </summary>
-		/// <returns></returns>
-		public static long GetNewEntityId(int regionId, int areaId)
-		{
-			var result = Interlocked.Increment(ref _propId);
-			result |= (long)regionId << 32;
-			result |= (long)areaId << 16;
-
-			return result;
 		}
 
 		/// <summary>
