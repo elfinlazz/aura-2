@@ -304,6 +304,32 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns new stack of gold.
+		/// </summary>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public static Item CreateGold(int amount)
+		{
+			var item = new Item(2000);
+			item.Amount = amount;
+
+			return item;
+		}
+
+		/// <summary>
+		/// Returns new check with the given amount.
+		/// </summary>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public static Item CreateCheck(int amount)
+		{
+			var item = new Item(2004);
+			item.MetaData1.SetInt("EVALUE", amount);
+
+			return item;
+		}
+
+		/// <summary>
 		/// Returns item's position, based on Info.X and Y.
 		/// </summary>
 		/// <returns></returns>

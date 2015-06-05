@@ -24,19 +24,19 @@ public class AlbyWhiteDayDungeonScript : DungeonScript
 		var end = dungeon.Generator.Floors[0].MazeGenerator.EndPos;
 		var endX = end.X * Dungeon.TileSize + Dungeon.TileSize / 2;
 		var endY = end.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
+		var center = new Position(endX, endY + Dungeon.TileSize * 2);
+		var region = dungeon.Regions.Last();
 
 		for (int i = 0; i < 100; ++i)
 		{
-			var item = new Item(2000); // Gold
-			item.Info.Amount = 1000;
-			item.Drop(dungeon.Regions[1], new Position(endX, endY + Dungeon.TileSize * 2).GetRandomInRange(500, 1000, rnd));
+			var item = Item.CreateGold(rnd.Next(500, 1000 + 1));
+			item.Drop(region, center.GetRandomInRange(500, 1000, rnd));
 		}
 
 		for (int i = 0; i < 100; ++i)
 		{
-			var item = new Item(2004); // Check
-			item.MetaData1.SetInt("EVALUE", 1000000);
-			item.Drop(dungeon.Regions[1], new Position(endX, endY + Dungeon.TileSize * 2).GetRandomInRange(500, 1000, rnd));
+			var item = Item.CreateCheck(rnd.Next(5, 10 + 1) * 10000);
+			item.Drop(region, center.GetRandomInRange(500, 1000, rnd));
 		}
 	}
 }
