@@ -46,7 +46,9 @@ namespace Aura.Channel.World.Dungeons
 
 		public Dungeon(long instanceId, string dungeonName, int itemId, Creature creature)
 		{
-			this.Data = AuraData.DungeonDb.Find(dungeonName.ToLower());
+			dungeonName = dungeonName.ToLower();
+
+			this.Data = AuraData.DungeonDb.Find(dungeonName);
 			if (this.Data == null)
 				throw new ArgumentException("Dungeon '" + dungeonName + "' doesn't exist.");
 
