@@ -128,7 +128,15 @@ namespace Aura.Channel.World.Dungeons
 		{
 			var region = this.Regions[i];
 
-			region.GetPropById(this.Data.StairsPropId).Behavior = (cr, pr) =>
+			var stairs = region.GetPropById(this.Data.StairsPropId);
+			if (stairs == null)
+				throw new Exception("Missing stairs prop '" + this.Data.StairsPropId + "'.");
+
+			var statue = region.GetPropById(this.Data.LastStatuePropId);
+			if (statue == null)
+				throw new Exception("Missing statue prop '" + this.Data.LastStatuePropId + "'.");
+
+			stairs.Behavior = (cr, pr) =>
 			{
 				var regionId = this.Regions[1].Id;
 				var x = this.Generator.Floors[0].MazeGenerator.StartPos.X * TileSize + TileSize / 2;
@@ -137,7 +145,7 @@ namespace Aura.Channel.World.Dungeons
 				cr.Warp(regionId, x, y);
 			};
 
-			region.GetPropById(this.Data.LastStatuePropId).Behavior = (cr, pr) =>
+			statue.Behavior = (cr, pr) =>
 			{
 				cr.Warp(this.Data.Exit);
 			};
