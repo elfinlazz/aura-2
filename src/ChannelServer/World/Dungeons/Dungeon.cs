@@ -42,6 +42,8 @@ namespace Aura.Channel.World.Dungeons
 		private List<DungeonBoss> _bosses;
 		private int _bossesCount, _bossesKilled;
 
+		private List<TreasureChest> _treasureChests;
+
 		private Prop _bossDoor, _bossExitDoor;
 
 		public Dungeon(long instanceId, string dungeonName, int itemId, Creature creature)
@@ -53,6 +55,7 @@ namespace Aura.Channel.World.Dungeons
 				throw new ArgumentException("Dungeon '" + dungeonName + "' doesn't exist.");
 
 			_bosses = new List<DungeonBoss>();
+			_treasureChests = new List<TreasureChest>();
 
 			this.InstanceId = instanceId;
 			this.Name = dungeonName;
@@ -275,6 +278,11 @@ namespace Aura.Channel.World.Dungeons
 			_bossesCount += amount;
 		}
 
+		public void AddChest(TreasureChest chest)
+		{
+			_treasureChests.Add(chest);
+		}
+
 		public void BossDoorBehavior(Creature _, Prop prop)
 		{
 			if (prop.State == "open")
@@ -321,7 +329,39 @@ namespace Aura.Channel.World.Dungeons
 				if (this.Script != null)
 					this.Script.OnCleared(this);
 
+				this.SpawnTreasureChests();
+
 				_bossExitDoor.SetState("open");
+			}
+		}
+
+		private void SpawnTreasureChests()
+		{
+			var region = this.Regions.Last();
+			var rnd = RandomProvider.Get();
+			var offsets = new int[,]
+			{
+				{ -600,+800,315 }, { +0,+600,270 }, { +600,+800,225 },
+				{ -600,+0,0 },                        { +600,+0,180 },
+				{ -600,-800,45 },  { +0,-600,90 },  { +600,-800,135 },
+			};
+
+			for (int i = 0, j = rnd.Next(8); i < _treasureChests.Count; ++i, ++j)
+			{
+				var pos = this.Generator.Floors.Last().MazeGenerator.EndPos;
+
+				pos.X *= Dungeon.TileSize;
+				pos.Y *= Dungeon.TileSize;
+
+				pos.X += Dungeon.TileSize / 2;
+				pos.Y += (int)(Dungeon.TileSize * 2.5f);
+
+				pos.X += offsets[j, 0];
+				pos.Y += offsets[j, 1];
+				var rotation = MabiMath.DegreeToRadian(offsets[j, 2]);
+
+				var prop = _treasureChests[i].CreateProp(region, pos.X, pos.Y, rotation);
+				region.AddProp(prop);
 			}
 		}
 	}

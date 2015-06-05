@@ -213,6 +213,7 @@
     <Compile Include="World\Dungeons\Generation\Position.cs" />
     <Compile Include="World\Dungeons\Generation\RandomDirection.cs" />
     <Compile Include="World\Dungeons\Generation\RoomTrait.cs" />
+    <Compile Include="World\Dungeons\TreasureChest.cs" />
     <Compile Include="World\DynamicRegion.cs" />
     <Compile Include="World\Dungeons\DungeonManager.cs" />
     <Compile Include="World\DynamicRegionManager.cs" />
