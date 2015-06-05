@@ -200,8 +200,8 @@ namespace Aura.Shared
 
 				if ((toLoad & DataLoad.Dungeons) != 0)
 				{
-					this.LoadDb(AuraData.DungeonDb, "db/dungeons.txt", reload);
 					this.LoadDb(AuraData.DungeonBlocksDb, "db/dungeon_blocks.txt", reload);
+					this.LoadDb(AuraData.DungeonDb, "db/dungeons.txt", reload);
 				}
 			}
 			catch (DatabaseErrorException ex)

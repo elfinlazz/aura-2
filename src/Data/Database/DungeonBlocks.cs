@@ -3,10 +3,60 @@
 
 using Aura.Mabi.Const;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Aura.Data.Database
 {
+	public class DungeonStyleData
+	{
+		public List<DungeonBlockData> Blocks { get; set; }
+
+		/// <summary>
+		/// Returns the first block with the given type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public DungeonBlockData Get(DungeonBlockType type)
+		{
+			return this.Blocks.FirstOrDefault(a => a.Type == type);
+		}
+
+		/// <summary>
+		/// Returns the first block with the given type and directions.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public DungeonBlockData Get(DungeonBlockType type, int top, int right, int bottom, int left)
+		{
+			return this.Blocks.FirstOrDefault(a => a.Type == type && a.Top == top && a.Right == right && a.Bottom == bottom && a.Left == left);
+		}
+
+		/// <summary>
+		/// Returns the first block with the given type and directions.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public DungeonBlockData Get(DungeonBlockType type, int[] directions)
+		{
+			if (directions.Length != 4)
+				throw new ArgumentException("Expected 4 directions: top, right, bottom, and left, in order.");
+
+			var top = directions[0] != 0 ? 1 : 0;
+			var right = directions[1] != 0 ? 1 : 0;
+			var bottom = directions[2] != 0 ? 1 : 0;
+			var left = directions[3] != 0 ? 1 : 0;
+
+			return this.Get(type, top, right, bottom, left);
+		}
+
+		public DungeonStyleData()
+		{
+			this.Blocks = new List<DungeonBlockData>();
+		}
+	}
+
 	public class DungeonBlockData
 	{
 		public int Style { get; set; }
@@ -21,7 +71,7 @@ namespace Aura.Data.Database
 		public int Rotation { get; set; }
 	}
 
-	public class DungeonBlocksDb : DatabaseJsonIndexed<int, List<DungeonBlockData>>
+	public class DungeonBlocksDb : DatabaseJsonIndexed<int, DungeonStyleData>
 	{
 		protected override void ReadEntry(JObject entry)
 		{
@@ -46,9 +96,9 @@ namespace Aura.Data.Database
 				data.Rotation = propEntry.ReadInt("rotation");
 
 				if (!this.Entries.ContainsKey(data.Style))
-					this.Entries[data.Style] = new List<DungeonBlockData>();
+					this.Entries[data.Style] = new DungeonStyleData();
 
-				this.Entries[data.Style].Add(data);
+				this.Entries[data.Style].Blocks.Add(data);
 			}
 		}
 	}

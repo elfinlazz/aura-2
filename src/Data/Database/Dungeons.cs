@@ -13,7 +13,7 @@ namespace Aura.Data.Database
 	public class DungeonData
 	{
 		public string Name { get; set; }
-		public int Style { get; set; }
+		public DungeonStyleData Style { get; set; }
 		public int BaseSeed { get; set; }
 		public int LobbyRegionId { get; set; }
 		public string Exit { get; set; }
@@ -51,7 +51,6 @@ namespace Aura.Data.Database
 
 			var dungeonData = new DungeonData();
 			dungeonData.Name = entry.ReadString("name").ToLower();
-			dungeonData.Style = entry.ReadInt("style");
 			dungeonData.BaseSeed = entry.ReadInt("baseSeed");
 			dungeonData.LobbyRegionId = entry.ReadInt("lobby");
 			dungeonData.Exit = entry.ReadString("exit");
@@ -61,6 +60,11 @@ namespace Aura.Data.Database
 			dungeonData.DoorId = entry.ReadInt("door");
 			dungeonData.BossDoorId = entry.ReadInt("bossDoor");
 			dungeonData.BossExitDoorId = entry.ReadInt("bossExitDoor");
+
+			var style = entry.ReadInt("style");
+			dungeonData.Style = AuraData.DungeonBlocksDb.Find(style);
+			if (dungeonData.Style == null)
+				throw new DatabaseErrorException("Dungeon style '" + style + "' not found in dungeon_blocks.");
 
 			foreach (JObject floorEntry in entry["floors"])
 			{
