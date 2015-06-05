@@ -13,11 +13,6 @@ namespace Aura.Channel.World.Entities.Creatures
 	public class AimMeter
 	{
 		/// <summary>
-		/// Base time it takes to get from 0 to 99%.
-		/// </summary>
-		private const float BaseAimTimeRequired = 1000;
-
-		/// <summary>
 		/// Maximum aim for walking target
 		/// </summary>
 		private const int MaxChanceWalking = 95;
@@ -91,18 +86,12 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <summary>
 		/// Returns the chance to hit target at the current aim time.
 		/// </summary>
-		/// <remarks>
-		/// Unofficial, works in some cases (maybe 40%), but it's certainly
-		/// far from being perfect.
-		/// 
-		/// Update: Still not perfect, but we're getting there (about 84% now).
-		/// </remarks>
 		/// <param name="target"></param>
 		/// <returns></returns>
 		public double GetAimChance(Creature target)
 		{
-			var d1 = 5000;
-			var d2 = 500;
+			var d1 = 5000.0;
+			var d2 = 500.0;
 
 			var distance = this.Creature.GetPosition().GetDistance(target.GetPosition());
 			var bowRange = this.Creature.RightHand == null ? 0 : this.Creature.RightHand.OptionInfo.EffectiveRange;
@@ -111,23 +100,22 @@ namespace Aura.Channel.World.Entities.Creatures
 				return 0;
 
 			var aimTime = this.GetAimTime();
-
-			double aimTimeRequired = BaseAimTimeRequired;
-			aimTimeRequired = (aimTimeRequired * aimTime) / 100.0;
+			var aimMod = aimTime;
 
 			var rangedAttackSkill = this.Creature.Skills.Get(SkillId.RangedAttack);
 			if (rangedAttackSkill != null)
-				aimTimeRequired /= rangedAttackSkill.RankData.Var3 / 100f;
+				aimMod *= rangedAttackSkill.RankData.Var3 / 100f;
 
-			var hitRatio = 1;
+			var hitRatio = 1.0;
 			hitRatio = ((d1 - d2) / bowRange) * distance * hitRatio + d2;
 
-			var chance = Math.Sqrt(aimTimeRequired / hitRatio * 715);
+			var chance = Math.Sqrt(aimMod / hitRatio) * 100f;
 
-			// 100% after x time
-			var fullAimTime = ((aimTimeRequired + distance) / 99f * (99f * 2));
-			if (aimTime >= fullAimTime)
+			// 100% after x time (unofficial)
+			if (chance >= 120)
 				chance = 100;
+			else
+				chance = Math.Min(99, chance);
 
 			if (target.IsMoving)
 			{
