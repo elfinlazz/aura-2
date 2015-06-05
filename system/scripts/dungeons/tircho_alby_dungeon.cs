@@ -11,7 +11,10 @@ public class AlbyDungeonScript : DungeonScript
 {
 	public override bool Route(Creature creature, Item item, ref string dungeonName)
 	{
-		//dungeonName = "TirCho_Alby_Whiteday_Dungeon";
+		// Access to bunny dungeon with a check worth least 1m
+		if(item.Info.Id == 2004 && item.MetaData1.GetInt("EVALUE") >= 1000000)
+			dungeonName = "TirCho_Alby_Whiteday_Dungeon";
+
 		return true;
 	}
 

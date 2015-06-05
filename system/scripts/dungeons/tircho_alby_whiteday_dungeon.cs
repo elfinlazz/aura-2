@@ -27,15 +27,15 @@ public class AlbyWhiteDayDungeonScript : DungeonScript
 		var center = new Position(endX, endY + Dungeon.TileSize * 2);
 		var region = dungeon.Regions.Last();
 
-		for (int i = 0; i < 100; ++i)
+		for (int i = 0; i < 150; ++i)
 		{
 			var item = Item.CreateGold(rnd.Next(500, 1000 + 1));
 			item.Drop(region, center.GetRandomInRange(500, 1000, rnd));
 		}
 
-		for (int i = 0; i < 100; ++i)
+		for (int i = 0; i < 50; ++i)
 		{
-			var item = Item.CreateCheck(rnd.Next(5, 10 + 1) * 10000);
+			var item = Item.CreateCheck(rnd.Next(1, 4 + 1) * 10000);
 			item.Drop(region, center.GetRandomInRange(500, 1000, rnd));
 		}
 	}
