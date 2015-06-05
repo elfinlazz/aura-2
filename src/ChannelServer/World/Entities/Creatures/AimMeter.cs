@@ -102,9 +102,17 @@ namespace Aura.Channel.World.Entities.Creatures
 			var aimTime = this.GetAimTime();
 			var aimMod = aimTime;
 
-			var rangedAttackSkill = this.Creature.Skills.Get(SkillId.RangedAttack);
-			if (rangedAttackSkill != null)
-				aimMod *= rangedAttackSkill.RankData.Var3 / 100f;
+			var rangedSkill = this.Creature.Skills.ActiveSkill;
+			if (rangedSkill.Info.Id == SkillId.RangedAttack)
+				aimMod *= rangedSkill.RankData.Var3 / 100f;
+			else
+			{
+				if (rangedSkill.Info.Id == SkillId.MagnumShot)
+				{
+					d1 = 8000.0;
+					d2 = 1000.0;
+				}
+			}
 
 			var hitRatio = 1.0;
 			hitRatio = ((d1 - d2) / bowRange) * distance * hitRatio + d2;
