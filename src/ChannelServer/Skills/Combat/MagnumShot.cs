@@ -217,7 +217,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <returns></returns>
 		protected float GetDamage(Creature attacker, Skill skill)
 		{
-			var result = attacker.GetRndTotalDamage();
+			var result = attacker.GetRndRangedDamage();
 			result *= skill.RankData.Var1 / 100f;
 
 			return result;
