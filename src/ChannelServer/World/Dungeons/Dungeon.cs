@@ -201,8 +201,7 @@ namespace Aura.Channel.World.Dungeons
 				region.AddProp(_bossDoor);
 
 				var exitStatue = new Prop(this.Data.LastStatuePropId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize * 2, Rotation(Direction.Up), 1, 0, "single");
-				exitStatue.Xml.SetAttributeValue("dungeon_name", this.Name);
-				exitStatue.Xml.SetAttributeValue("dungeon_id", this.InstanceId);
+				exitStatue.AddExtension("Doyouwant", "message:s:_LT[code.standard.msg.dungeon_exit_notice_msg];title:s:_LT[code.standard.msg.dungeon_exit_notice_title];");
 				exitStatue.Behavior = (cr, pr) => { cr.Warp(this.Data.Exit); };
 				region.AddProp(exitStatue);
 			}

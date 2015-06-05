@@ -122,6 +122,11 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// List of extensions (TODO: needs research).
+		/// </summary>
+		public List<PropExtension> Extensions { get; private set; }
+
+		/// <summary>
 		/// Creates new prop with a newly generated entity id.
 		/// </summary>
 		/// <param name="id"></param>
@@ -156,6 +161,7 @@ namespace Aura.Channel.World.Entities
 		{
 			this.Shapes = new List<Point[]>();
 			this.Temp = new PropTemp();
+			this.Extensions = new List<PropExtension>();
 
 			_resource = 100;
 
@@ -302,6 +308,16 @@ namespace Aura.Channel.World.Entities
 			this.State = state;
 			Send.PropUpdate(this);
 		}
+
+		/// <summary>
+		/// Adds new extension with the given values and types 202 and 1100.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="value"></param>
+		public void AddExtension(string name, string value)
+		{
+			this.Extensions.Add(new PropExtension(202, 1100, name, 2, value));
+		}
 	}
 
 	public delegate void PropFunc(Creature creature, Prop prop);
@@ -313,5 +329,48 @@ namespace Aura.Channel.World.Entities
 	{
 		public SkillRankData CampfireSkillRank;
 		public ItemData CampfireFirewood;
+	}
+
+	public class PropExtension
+	{
+		//010 [........000000CA] Int    : 202
+		//011 [........0000044C] Int    : 1100
+		//012 [................] String : 
+		//013 [..............02] Byte   : 2
+		//014 [................] String : message:s:Do you wish to enter the room?;condition:s:notin(220189,194241,1354);
+
+		//010 [........000000CA] Int    : 202
+		//011 [........0000044C] Int    : 1100
+		//012 [................] String : 
+		//013 [..............02] Byte   : 2
+		//014 [................] String : condition:s:haskey(chest);message:s:Do you wish to open this chest?;
+		//015 [............0000] Short  : 0
+
+		//011 [........000000CA] Int    : 202
+		//012 [........00000064] Int    : 100
+		//013 [................] String : GotoLobby
+		//014 [..............02] Byte   : 2
+		//015 [................] String : globalname:s:Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn;
+
+		//016 [........000000CA] Int    : 202
+		//017 [........0000044C] Int    : 1100
+		//018 [................] String : Doyouwant
+		//019 [..............02] Byte   : 2
+		//020 [................] String : message:s:_LT[code.standard.msg.dungeon_exit_notice_msg];title:s:_LT[code.standard.msg.dungeon_exit_notice_title];
+
+		public int Type1 { get; private set; }
+		public int Type2 { get; private set; }
+		public string Name { get; private set; }
+		public byte UnkByte { get; private set; }
+		public string Value { get; private set; }
+
+		public PropExtension(int type1, int type2, string name, byte unkByte, string value)
+		{
+			this.Type1 = type1;
+			this.Type2 = type2;
+			this.Name = name;
+			this.UnkByte = unkByte;
+			this.Value = value;
+		}
 	}
 }
