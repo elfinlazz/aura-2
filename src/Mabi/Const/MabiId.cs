@@ -47,7 +47,7 @@ namespace Aura.Mabi.Const
 		public const int PetCardType = 102;
 
 		// Start of the dungeon regions id range
-		public const int DungeonRegions = 10001;
+		public const int DungeonRegions = 10010;
 
 		// Start of the dynamic regions id range
 		public const int DynamicRegions = 35001;
