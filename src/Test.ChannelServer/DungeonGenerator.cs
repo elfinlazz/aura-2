@@ -15,6 +15,7 @@ namespace ChannelServer.Tests
 		{
 			public DungeonLayouts()
 			{
+				AuraData.DungeonBlocksDb.Load("../../../../system/db/dungeon_blocks.txt", true);
 				AuraData.DungeonDb.Load("../../../../system/db/dungeons.txt", true);
 			}
 
