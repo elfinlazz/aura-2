@@ -188,7 +188,7 @@ namespace Aura.Channel.Skills.Combat
 			}
 			else
 			{
-				aAction.Set((AttackerOptions)0x800);
+				aAction.Set(AttackerOptions.Missed);
 			}
 
 			// Reduce arrows
