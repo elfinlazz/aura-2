@@ -120,7 +120,7 @@
 { name: "TirCho_Alby_Dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true },
 ]},
-{ name: "TirCho_Alby_Whiteday_Dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 11013, lastStatue: 11014, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
+{ name: "TirCho_Alby_Whiteday_Dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 11013, lastStatue: 10032, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
 	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true },
 ]},
 { name: "TirCho_Alby_Dungeon_Recover", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
