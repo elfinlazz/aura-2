@@ -23,10 +23,6 @@ namespace Aura.Channel.World.Dungeons
 	public class Dungeon
 	{
 		public const int TileSize = 2400;
-		public const int StairsPropId = 10024;
-		public const int StairsDownPropId = 10025;
-		public const int StairsPortalPropId = 10039;
-		public const int StairsDownPortalPropId = 10040;
 
 		public long InstanceId { get; private set; }
 		public string Name { get; private set; }
@@ -158,29 +154,32 @@ namespace Aura.Channel.World.Dungeons
 
 			var startTile = gen.StartPos;
 			var startPos = new Dungeons.Generation.Position(startTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, startTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
-			var startRoom = gen.GetRoom(startTile);
+			var startRoomTrait = floor.GetRoom(startTile);
 
 			var endTile = gen.EndPos;
 			var endPos = new Dungeons.Generation.Position(endTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, endTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
 			var endRoom = gen.GetRoom(endTile);
+			var endRoomTrait = floor.GetRoom(endTile);
 
 			int doorDirection = 0;
-			if (startRoom.Directions[Direction.Up] > 0)
-				doorDirection = Direction.Up;
-			else if (startRoom.Directions[Direction.Right] > 0)
-				doorDirection = Direction.Right;
-			else if (startRoom.Directions[Direction.Down] > 0)
-				doorDirection = Direction.Down;
-			else if (startRoom.Directions[Direction.Left] > 0)
-				doorDirection = Direction.Left;
+			for (int dir = 0; dir < startRoomTrait.Links.Length; ++dir)
+			{
+				if (startRoomTrait.Links[dir] > 0 && startRoomTrait.DoorType[dir] == 0)
+				{
+					doorDirection = dir;
+					break;
+				}
+			}
 
 			var door = new Prop(this.Data.DoorId, region.Id, startPos.X, startPos.Y, Rotation(doorDirection), 1, 0, "open");
 			region.AddProp(door);
 
-			var stairs = new Prop(Dungeon.StairsPropId, region.Id, startPos.X, startPos.Y, Rotation(gen.StartDirection), 1, 0, "single");
+			var stairsBlock = this.Data.Style.Get(DungeonBlockType.StairsUp, startRoomTrait.DoorType);
+			var stairs = new Prop(stairsBlock.PropId, region.Id, startPos.X, startPos.Y, MabiMath.DegreeToRadian(stairsBlock.Rotation), 1, 0, "single");
 			region.AddProp(stairs);
 
-			var portal = new Prop(Dungeon.StairsPortalPropId, region.Id, startPos.X, startPos.Y, Rotation(gen.StartDirection), 1, 0, "single", "_upstairs", Localization.Get("<mini>TO</mini> Upstairs"));
+			var portalBlock = this.Data.Style.Get(DungeonBlockType.PortalUp, startRoomTrait.DoorType);
+			var portal = new Prop(portalBlock.PropId, region.Id, startPos.X, startPos.Y, MabiMath.DegreeToRadian(portalBlock.Rotation), 1, 0, "single", "_upstairs", Localization.Get("<mini>TO</mini> Upstairs"));
 			portal.Behavior = (cr, pr) =>
 			{
 				var regionId = this.Regions[prevRegion].Id;
@@ -219,33 +218,24 @@ namespace Aura.Channel.World.Dungeons
 			else
 			{
 				doorDirection = 0;
-				if (endRoom.Directions[Direction.Up] > 0)
-					doorDirection = Direction.Up;
-				else if (endRoom.Directions[Direction.Right] > 0)
-					doorDirection = Direction.Right;
-				else if (endRoom.Directions[Direction.Down] > 0)
-					doorDirection = Direction.Down;
-				else if (endRoom.Directions[Direction.Left] > 0)
-					doorDirection = Direction.Left;
+				for (int dir = 0; dir < endRoom.Directions.Length; ++dir)
+				{
+					if (endRoom.Directions[dir] > 0)
+					{
+						doorDirection = dir;
+						break;
+					}
+				}
 
 				var endDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y, Rotation(doorDirection), 1, 0, "open");
 				region.AddProp(endDoor);
 
-				var linkDirection = 0;
-				var endRoomTrait = floor.GetRoom(endTile);
-				if (endRoomTrait.Links[Direction.Up] > 0)
-					linkDirection = Direction.Up;
-				else if (endRoomTrait.Links[Direction.Right] > 0)
-					linkDirection = Direction.Right;
-				else if (endRoomTrait.Links[Direction.Down] > 0)
-					linkDirection = Direction.Down;
-				else if (endRoomTrait.Links[Direction.Left] > 0)
-					linkDirection = Direction.Left;
-
-				var stairsDown = new Prop(Dungeon.StairsDownPropId, region.Id, endPos.X, endPos.Y, Rotation(linkDirection), 1, 0, "single");
+				var stairsDownBlock = this.Data.Style.Get(DungeonBlockType.StairsDown, endRoomTrait.DoorType);
+				var stairsDown = new Prop(stairsDownBlock.PropId, region.Id, endPos.X, endPos.Y, MabiMath.DegreeToRadian(stairsDownBlock.Rotation), 1, 0, "single");
 				region.AddProp(stairsDown);
 
-				var portalDown = new Prop(Dungeon.StairsDownPortalPropId, region.Id, endPos.X, endPos.Y, Rotation(linkDirection), 1, 0, "single", "_downstairs", Localization.Get("<mini>TO</mini> Downstairs"));
+				var portalDownBlock = this.Data.Style.Get(DungeonBlockType.PortalDown, endRoomTrait.DoorType);
+				var portalDown = new Prop(portalDownBlock.PropId, region.Id, endPos.X, endPos.Y, MabiMath.DegreeToRadian(portalDownBlock.Rotation), 1, 0, "single", "_downstairs", Localization.Get("<mini>TO</mini> Downstairs"));
 				portalDown.Behavior = (cr, pr) =>
 				{
 					var regionId = this.Regions[nextRegion].Id;

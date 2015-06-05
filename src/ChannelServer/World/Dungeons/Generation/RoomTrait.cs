@@ -8,9 +8,19 @@ namespace Aura.Channel.World.Dungeons.Generation
 	public class RoomTrait
 	{
 		public RoomTrait[] Neighbor { get; private set; }
+
+		/// <summary>
+		/// Paths
+		/// </summary>
 		public int[] Links { get; private set; }
+
+		/// <summary>
+		/// Types of the room's doors (up/down).
+		/// </summary>
 		public int[] DoorType { get; private set; }
+
 		public int RoomType { get; set; }
+
 		//public int ShapeType { get; private set; }
 		//public int ShapeRotationCount { get; private set; }
 

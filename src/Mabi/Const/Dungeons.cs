@@ -15,7 +15,7 @@ namespace Aura.Mabi.Const
 		BossExitDoor = 2100,
 		StairsUp = 3000,
 		StairsDown = 3100,
-		DoorUp = 4000,
-		DoorDown = 4100,
+		PortalUp = 4000,
+		PortalDown = 4100,
 	}
 }
