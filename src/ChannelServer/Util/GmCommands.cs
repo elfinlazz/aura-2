@@ -484,6 +484,19 @@ namespace Aura.Channel.Util
 
 				item.Amount = amount;
 			}
+			else if (item.Info.Id == 2004 && args.Count > 2) // Check
+			{
+				int amount;
+
+				// Get amount
+				if (!int.TryParse(args[2], out amount) || amount <= 0)
+				{
+					Send.ServerMessage(sender, Localization.Get("Invalid amount."));
+					return CommandResult.Fail;
+				}
+
+				item.MetaData1.SetInt("EVALUE", Math.Min(5000000, amount));
+			}
 			// Parse colors
 			else if (itemData.StackType != StackType.Stackable && args.Count > 2)
 			{
