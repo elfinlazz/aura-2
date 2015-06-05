@@ -343,11 +343,24 @@ namespace Aura.Channel.World.Entities
 		//014 [..............02] Byte   : 2
 		//015 [................] String : globalname:s:Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn;
 
+		// 010 [........000000CA] Int    : 202
+		// 011 [........00000064] Int    : 100
+		// 012 [................] String : Gate_Start_RDungeon_10003
+		// 013 [..............02] Byte   : 2
+		// 014 [................] String : globalname:s:RDungeon_10002/_Uladh_Dungeon_Black_Wolfs_Hall2/Indoor_RDungeon_10002_EB;
+		// 015 [............0000] Short  : 0
+
 		//016 [........000000CA] Int    : 202
 		//017 [........0000044C] Int    : 1100
 		//018 [................] String : Doyouwant
 		//019 [..............02] Byte   : 2
 		//020 [................] String : message:s:_LT[code.standard.msg.dungeon_exit_notice_msg];title:s:_LT[code.standard.msg.dungeon_exit_notice_title];
+
+		// 010 [........000000CA] Int    : 202
+		// 011 [........00000A28] Int    : 2600
+		// 012 [................] String : SafeZone_RDungeon_10032
+		// 013 [..............02] Byte   : 2
+		// 014 [................] String : globalname:s:RDungeon_10032/10032_2_2/Start_RDungeon_10032_EB;
 
 		// 1100 - Ok/Cancel confirmation
 		// message: MsgBox content
@@ -358,6 +371,9 @@ namespace Aura.Channel.World.Entities
 		//     - notin(220189,194241,1354): Area check?
 
 		// 100 - Warp? Maybe the behavior.
+		// globalname: Location path
+
+		// 2600 - Save statue, marks save point?
 		// globalname: Location path
 
 		public int Type1 { get; protected set; }
