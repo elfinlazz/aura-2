@@ -36,7 +36,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 					packet.PutInt(ext.Type2);
 					packet.PutString(ext.Name);
 					packet.PutByte(ext.UnkByte);
-					packet.PutString(ext.Value);
+					packet.PutString(ext.Value.ToString());
 				}
 
 				packet.PutShort(0);

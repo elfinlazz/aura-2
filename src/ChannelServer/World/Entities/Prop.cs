@@ -15,6 +15,7 @@ using Aura.Shared.Util;
 using Aura.Data.Database;
 using Aura.Channel.Network.Sending;
 using System.Drawing;
+using Aura.Mabi;
 
 namespace Aura.Channel.World.Entities
 {
@@ -308,16 +309,6 @@ namespace Aura.Channel.World.Entities
 			this.State = state;
 			Send.PropUpdate(this);
 		}
-
-		/// <summary>
-		/// Adds new extension with the given values and types 202 and 1100.
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="value"></param>
-		public void AddExtension(string name, string value)
-		{
-			this.Extensions.Add(new PropExtension(202, 1100, name, 2, value));
-		}
 	}
 
 	public delegate void PropFunc(Creature creature, Prop prop);
@@ -331,7 +322,7 @@ namespace Aura.Channel.World.Entities
 		public ItemData CampfireFirewood;
 	}
 
-	public class PropExtension
+	public abstract class PropExtension
 	{
 		//010 [........000000CA] Int    : 202
 		//011 [........0000044C] Int    : 1100
@@ -358,19 +349,45 @@ namespace Aura.Channel.World.Entities
 		//019 [..............02] Byte   : 2
 		//020 [................] String : message:s:_LT[code.standard.msg.dungeon_exit_notice_msg];title:s:_LT[code.standard.msg.dungeon_exit_notice_title];
 
-		public int Type1 { get; private set; }
-		public int Type2 { get; private set; }
-		public string Name { get; private set; }
-		public byte UnkByte { get; private set; }
-		public string Value { get; private set; }
+		// 1100 - Ok/Cancel confirmation
+		// message: MsgBox content
+		// [title]: MsgBox title
+		// [condition]: Condition for the msg to appear?
+		//     Examples:
+		//     - haskey(chest): Has a key with the meta data? Isn't actually checked by the client?
+		//     - notin(220189,194241,1354): Area check?
 
-		public PropExtension(int type1, int type2, string name, byte unkByte, string value)
+		// 100 - Warp? Maybe the behavior.
+		// globalname: Location path
+
+		public int Type1 { get; protected set; }
+		public int Type2 { get; protected set; }
+		public string Name { get; protected set; }
+		public byte UnkByte { get; protected set; }
+		public MabiDictionary Value { get; protected set; }
+
+		public PropExtension(int type1, int type2, string name, byte unkByte)
 		{
 			this.Type1 = type1;
 			this.Type2 = type2;
 			this.Name = name;
 			this.UnkByte = unkByte;
-			this.Value = value;
+			this.Value = new MabiDictionary();
+		}
+	}
+
+	public class ConfirmationPropExtension : PropExtension
+	{
+		public ConfirmationPropExtension(string name, string message, string title = null, string condition = null)
+			: base(202, 1100, name, 2)
+		{
+			this.Value.SetString("message", message);
+
+			if (title != null)
+				this.Value.SetString("title", title);
+
+			if (condition != null)
+				this.Value.SetString("condition", condition);
 		}
 	}
 }
