@@ -422,8 +422,13 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		public MazeRoomInternal GetRoom(Position pos)
 		{
-			if ((0 <= pos.X) && (pos.X < Width) && (0 <= pos.Y) && (pos.Y < Height))
-				return this.Rooms[pos.X][pos.Y];
+			return this.GetRoom(pos.X, pos.Y);
+		}
+
+		public MazeRoomInternal GetRoom(int x, int y)
+		{
+			if ((0 <= x) && (x < Width) && (0 <= y) && (y < Height))
+				return this.Rooms[x][y];
 
 			return null;
 		}

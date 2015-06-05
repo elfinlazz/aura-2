@@ -72,14 +72,15 @@ namespace Aura.Channel.World.Dungeons
 			{
 				for (int y = 0; y < floor.MazeGenerator.Height; ++y)
 				{
-					var room = floor.MazeGenerator.GetRoom(new Generation.Position(x, y));
+					var room = floor.MazeGenerator.GetRoom(x, y);
+					var roomTrait = floor.GetRoom(x, y);
 
-					if (!floor.MazeGenerator.Rooms[x][y].Visited)
+					if (!room.Visited)
 						continue;
 
-					var isStart = (x == floor.MazeGenerator.StartPos.X && y == floor.MazeGenerator.StartPos.Y);
-					var isEnd = (x == floor.MazeGenerator.EndPos.X && y == floor.MazeGenerator.EndPos.Y);
-					var isRoom = (isStart || isEnd);
+					var isStart = (roomTrait.RoomType == RoomType.Start);
+					var isEnd = (roomTrait.RoomType == RoomType.End);
+					var isRoom = (roomTrait.RoomType >= RoomType.Start);
 					var isBossRoom = (floor.HasBossRoom && isEnd);
 
 					if (!isBossRoom)
@@ -94,7 +95,7 @@ namespace Aura.Channel.World.Dungeons
 
 						this.RegionInfoData.Areas.Add(areaData);
 
-						var type = (isBossRoom ? DungeonBlockType.BossRoom : isRoom ? DungeonBlockType.Room : DungeonBlockType.Alley);
+						var type = (isRoom ? DungeonBlockType.Room : DungeonBlockType.Alley);
 
 						var propEntityId = MabiId.ClientProps | ((long)this.Id << 32) | ((long)areaData.Id << 16) | 1;
 						var block = this.Dungeon.Data.Style.Get(type, room.Directions);

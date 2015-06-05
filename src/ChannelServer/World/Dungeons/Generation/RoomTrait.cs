@@ -19,7 +19,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		/// </summary>
 		public int[] DoorType { get; private set; }
 
-		public int RoomType { get; set; }
+		public RoomType RoomType { get; set; }
 
 		//public int ShapeType { get; private set; }
 		//public int ShapeRotationCount { get; private set; }
@@ -84,5 +84,14 @@ namespace Aura.Channel.World.Dungeons.Generation
 			if (room != null)
 				room.DoorType[opposite_direction] = doorType;
 		}
+	}
+
+	public enum RoomType
+	{
+		None,
+		Alley,
+		Start,
+		End,
+		Room,
 	}
 }

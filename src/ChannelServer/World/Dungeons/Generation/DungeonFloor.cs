@@ -101,10 +101,15 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		public RoomTrait GetRoom(Position pos)
 		{
-			if ((pos.X < 0) || (pos.Y < 0) || (pos.X >= this.Width) || (pos.Y >= this.Height))
+			return this.GetRoom(pos.X, pos.Y);
+		}
+
+		public RoomTrait GetRoom(int x, int y)
+		{
+			if ((x < 0) || (y < 0) || (x >= this.Width) || (y >= this.Height))
 				throw new ArgumentException("Position out of bounds.");
 
-			return _rooms[pos.X][pos.Y];
+			return _rooms[x][y];
 		}
 
 		private bool SetTraits(Position pos, int direction, int doorType)
@@ -157,7 +162,28 @@ namespace Aura.Channel.World.Dungeons.Generation
 			this.CreateCriticalPath(critPathMin, critPathMax);
 			this.CreateSubPath(_coverageFactor, _branchProbability);
 
+			this.SetRoomTypes();
 			this.UpdatePathPosition();
+		}
+
+		private void SetRoomTypes()
+		{
+			for (int y = 0; y < this.MazeGenerator.Height; ++y)
+			{
+				for (int x = 0; x < this.MazeGenerator.Width; ++x)
+				{
+					var pos = new Position(x, y);
+					var room = this.MazeGenerator.GetRoom(pos);
+					var roomTrait = this.GetRoom(pos);
+
+					if (this.MazeGenerator.StartPos.X == x && this.MazeGenerator.StartPos.Y == y)
+						roomTrait.RoomType = RoomType.Start;
+					else if (this.MazeGenerator.EndPos.X == x && this.MazeGenerator.EndPos.Y == y)
+						roomTrait.RoomType = RoomType.End;
+					else if (room.Visited)
+						roomTrait.RoomType = RoomType.Alley;
+				}
+			}
 		}
 
 		private List<MazeMove> CreateCriticalPath(int crit_path_min, int crit_path_max)
@@ -191,8 +217,6 @@ namespace Aura.Channel.World.Dungeons.Generation
 		{
 			var room = GetRoom(pos);
 			var maze_room = this.MazeGenerator.GetRoom(pos);
-
-			room.RoomType = 1;
 
 			for (int direction = 0; direction < 4; direction++)
 			{
