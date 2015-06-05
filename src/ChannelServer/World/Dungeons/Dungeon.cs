@@ -154,6 +154,7 @@ namespace Aura.Channel.World.Dungeons
 
 			var startTile = gen.StartPos;
 			var startPos = new Dungeons.Generation.Position(startTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, startTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
+			var startRoom = gen.GetRoom(startTile);
 			var startRoomTrait = floor.GetRoom(startTile);
 
 			var endTile = gen.EndPos;
@@ -161,17 +162,7 @@ namespace Aura.Channel.World.Dungeons
 			var endRoom = gen.GetRoom(endTile);
 			var endRoomTrait = floor.GetRoom(endTile);
 
-			int doorDirection = 0;
-			for (int dir = 0; dir < startRoomTrait.Links.Length; ++dir)
-			{
-				if (startRoomTrait.Links[dir] > 0 && startRoomTrait.DoorType[dir] == 0)
-				{
-					doorDirection = dir;
-					break;
-				}
-			}
-
-			var door = new Prop(this.Data.DoorId, region.Id, startPos.X, startPos.Y, Rotation(doorDirection), 1, 0, "open");
+			var door = new Prop(this.Data.DoorId, region.Id, startPos.X, startPos.Y, Rotation(GetFirstDirection(startRoom.Directions)), 1, 0, "open");
 			region.AddProp(door);
 
 			var stairsBlock = this.Data.Style.Get(DungeonBlockType.StairsUp, startRoomTrait.DoorType);
@@ -217,17 +208,7 @@ namespace Aura.Channel.World.Dungeons
 			}
 			else
 			{
-				doorDirection = 0;
-				for (int dir = 0; dir < endRoom.Directions.Length; ++dir)
-				{
-					if (endRoom.Directions[dir] > 0)
-					{
-						doorDirection = dir;
-						break;
-					}
-				}
-
-				var endDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y, Rotation(doorDirection), 1, 0, "open");
+				var endDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y, Rotation(GetFirstDirection(endRoom.Directions)), 1, 0, "open");
 				region.AddProp(endDoor);
 
 				var stairsDownBlock = this.Data.Style.Get(DungeonBlockType.StairsDown, endRoomTrait.DoorType);
@@ -246,6 +227,19 @@ namespace Aura.Channel.World.Dungeons
 				};
 				region.AddProp(portalDown);
 			}
+		}
+
+		public static int GetFirstDirection(int[] directions)
+		{
+			for (int dir = 0; dir < directions.Length; ++dir)
+			{
+				if (directions[dir] > 0)
+				{
+					return dir;
+				}
+			}
+
+			return -1;
 		}
 
 		public void SetUpHallwayProps(int i)
