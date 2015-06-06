@@ -36,14 +36,14 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(dungeon.Generator.Floors.Count);
 			foreach (var floor in dungeon.Generator.Floors)
 			{
-				packet.PutInt(0);
+				var rooms = floor.GetRooms();
 
-				//packet.PutInt(floor.Rooms.Values.Count);
-				//foreach (var room in floor.Rooms.Values)
-				//{
-				//	packet.PutByte(room.X);
-				//	packet.PutByte(room.Y);
-				//}
+				packet.PutInt(rooms.Count);
+				foreach (var room in rooms)
+				{
+					packet.PutByte((byte)room.X);
+					packet.PutByte((byte)room.Y);
+				}
 			}
 
 			packet.PutInt(0); // ? look at ciar info

@@ -48,6 +48,15 @@ namespace Aura.Channel.World.Dungeons.Generation
 			this.CalculateSize(floorData);
 			this.InitRoomtraits();
 			this.GenerateMaze(floorData);
+			this.GenerateRooms(floorData);
+		}
+
+		private void GenerateRooms(DungeonFloorData floorData)
+		{
+			var endPos = this.MazeGenerator.EndPos;
+
+			var preEndRoom = this.GetRoom(endPos.X, endPos.Y - 1);
+			preEndRoom.RoomType = RoomType.Room;
 		}
 
 		private void CalculateSize(DungeonFloorData floorData)
@@ -75,11 +84,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 		private void InitRoomtraits()
 		{
 			_rooms = new List<List<RoomTrait>>();
-			for (int h = 0; h < this.Width; h++)
+			for (int x = 0; x < this.Width; x++)
 			{
 				var row = new List<RoomTrait>();
-				for (int w = 0; w < this.Height; w++)
-					row.Add(new RoomTrait());
+				for (int y = 0; y < this.Height; y++)
+					row.Add(new RoomTrait(x, y));
 
 				_rooms.Add(row);
 			}
@@ -97,6 +106,23 @@ namespace Aura.Channel.World.Dungeons.Generation
 					}
 				}
 			}
+		}
+
+		public List<RoomTrait> GetRooms()
+		{
+			var result = new List<RoomTrait>();
+
+			for (int x = 0; x < this.Width; x++)
+			{
+				for (int y = 0; y < this.Height; y++)
+				{
+					var room = this.GetRoom(x, y);
+					if (room.RoomType == RoomType.Room)
+						result.Add(room);
+				}
+			}
+
+			return result;
 		}
 
 		public RoomTrait GetRoom(Position pos)

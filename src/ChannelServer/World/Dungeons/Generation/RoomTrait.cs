@@ -21,14 +21,20 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		public RoomType RoomType { get; set; }
 
+		public int X { get; private set; }
+		public int Y { get; private set; }
+
 		//public int ShapeType { get; private set; }
 		//public int ShapeRotationCount { get; private set; }
 
-		public RoomTrait()
+		public RoomTrait(int x, int y)
 		{
 			this.Neighbor = new RoomTrait[4];
 			this.Links = new int[] { 0, 0, 0, 0 };
 			this.DoorType = new int[] { 0, 0, 0, 0 };
+
+			this.X = x;
+			this.Y = y;
 		}
 
 		public void SetNeighbor(int direction, RoomTrait room)
