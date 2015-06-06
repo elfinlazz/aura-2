@@ -3,6 +3,7 @@
 
 using Aura.Channel.Network.Sending;
 using Aura.Mabi.Const;
+using Aura.Shared.Util;
 using System;
 
 namespace Aura.Channel.World.Entities.Creatures
@@ -90,6 +91,14 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public double GetAimChance(Creature target)
 		{
+			// Check collision, 0 chance if the client didn't prevent this shot.
+			if (this.Creature.Region.Collisions.Any(this.Creature.GetPosition(), target.GetPosition()))
+			{
+				// Only warn, could be caused by lag.
+				Log.Warning("GetAimChance: Creature '{0:X16}' tried to shoot through a wall.", this.Creature.EntityId);
+				return 0;
+			}
+
 			var activeSkill = this.Creature.Skills.ActiveSkill;
 
 			var d1 = 5000.0;
