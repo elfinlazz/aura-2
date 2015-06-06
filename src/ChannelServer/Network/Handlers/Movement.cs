@@ -40,10 +40,17 @@ namespace Aura.Channel.Network.Handlers
 			var to = new Position(x, y);
 			var walk = (packet.Op == Op.Walk);
 
+			// Check for running with meditation active
 			if (creature.Conditions.Has(ConditionsE.Meditation) && !walk && (creature.Inventory.RightHand == null || (!creature.Inventory.RightHand.HasTag("/wand/") && !creature.Inventory.RightHand.HasTag("/staff/"))))
 				throw new ModerateViolation("Tried to run with meditation active.");
 
-			//Position intersection;
+			// Stop aiming when moving
+			if (creature.AimMeter.IsAiming)
+				creature.AimMeter.Stop();
+
+			//Position intersection
+			// TODO: Reset position if intersection found.
+			// TODO: Figure out how to handle getting stuck in props (the client allows walking out).
 			//if (creature.Region.Collissions.Find(from, to, out intersection))
 			//{
 			//    Aura.Shared.Util.Log.Debug("Intersection at '{0}'", intersection);

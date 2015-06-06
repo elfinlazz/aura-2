@@ -46,6 +46,11 @@ namespace Aura.Mabi.Const
 		/// Shows "First Hit"? (0x400)
 		/// </summary>
 		FirstHit = 0x400,
+
+		/// <summary>
+		/// Missed? (0x800)
+		/// </summary>
+		Missed = 0x800,
 	}
 
 	[Flags]

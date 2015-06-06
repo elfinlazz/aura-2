@@ -235,5 +235,17 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.ViewEquipmentR(creature, target);
 		}
+
+		/// <summary>
+		/// Sent when using a skill without ammo, e.g. Ranged without arrows.
+		/// </summary>
+		/// <example>
+		/// 001 [................] String : /arrow/
+		/// </example>
+		[PacketHandler(Op.AmmoRequired)]
+		public void AmmoRequired(ChannelClient client, Packet packet)
+		{
+			// Officials don't do anything here... auto equip ammo? =D
+		}
 	}
 }
