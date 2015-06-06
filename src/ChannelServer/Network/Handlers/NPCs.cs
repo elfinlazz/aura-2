@@ -431,19 +431,28 @@ namespace Aura.Channel.Network.Handlers
 		[PacketHandler(Op.BankWithdrawGold)]
 		public void BankWithdrawGold(ChannelClient client, Packet packet)
 		{
-			var check = packet.GetBool();
+			var createCheck = packet.GetBool();
 			var withdrawAmount = packet.GetInt();
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			var removeAmount = withdrawAmount;
-			if (check) removeAmount += withdrawAmount / 20; // +5%
+			if (createCheck) removeAmount += withdrawAmount / 20; // +5%
 
 			if (client.Account.Bank.Gold < removeAmount)
-				throw new ModerateViolation("BankWithdrawGold: '{0}' ({1}) tried to withdraw more than he has ({2}/{3}).", creature.Name, creature.EntityIdHex, removeAmount, client.Account.Bank.Gold);
+			{
+				// Don't throw a violation, it's possible to accidentally
+				// bypass the client side check, in which case someone would
+				// be banned wrongfully.
+				//throw new ModerateViolation("BankWithdrawGold: '{0}' ({1}) tried to withdraw more than he has ({2}/{3}).", creature.Name, creature.EntityIdHex, removeAmount, client.Account.Bank.Gold);
+
+				Send.MsgBox(creature, Localization.Get("Unable to pay the fee, Insufficient balance."));
+				Send.BankWithdrawGoldR(creature, false);
+				return;
+			}
 
 			// Add gold to inventory if no check
-			if (!check)
+			if (!createCheck)
 			{
 				creature.Inventory.AddGold(withdrawAmount);
 			}
