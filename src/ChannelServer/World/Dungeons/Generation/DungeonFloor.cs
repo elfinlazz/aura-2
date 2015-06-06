@@ -53,10 +53,13 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		private void GenerateRooms(DungeonFloorData floorData)
 		{
-			var endPos = this.MazeGenerator.EndPos;
+			if (this.HasBossRoom)
+			{
+				var endPos = this.MazeGenerator.EndPos;
 
-			var preEndRoom = this.GetRoom(endPos.GetBiasedPosition(Direction.Down));
-			preEndRoom.RoomType = RoomType.Room;
+				var preEndRoom = this.GetRoom(endPos.GetBiasedPosition(Direction.Down));
+				preEndRoom.RoomType = RoomType.Room;
+			}
 		}
 
 		private void CalculateSize(DungeonFloorData floorData)
