@@ -182,6 +182,9 @@ namespace Aura.Channel.Skills.Combat
 				if (damage > 0)
 					target.TakeDamage(tAction.Damage = damage, attacker);
 
+				// Aggro
+				target.Aggro(attacker);
+
 				// Death/Knockback
 				if (target.IsDead)
 				{

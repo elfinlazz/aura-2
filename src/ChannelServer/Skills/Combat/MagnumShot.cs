@@ -178,6 +178,9 @@ namespace Aura.Channel.Skills.Combat
 				// TODO: Target with Defense and shield shouldn't be knocked back
 				attacker.Shove(target, KnockBackDistance);
 
+				// Aggro
+				target.Aggro(attacker);
+
 				tAction.Set(TargetOptions.KnockDownFinish);
 
 				if (target.IsDead)
