@@ -8,22 +8,17 @@ using Aura.Channel.World.Entities;
 using Aura.Mabi.Const;
 using Aura.Mabi.Network;
 using Aura.Shared.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aura.Channel.Skills.Combat
 {
 	/// <summary>
-	/// Ranged Attack handler
+	/// Magnum Shot handler
 	/// </summary>
 	/// <remarks>
-	/// Var1: Min Ranged Attack Damage
-	/// Var2: Max Ranged Attack Damage
-	/// Var3: Aim Speed
-	/// Var5: Ranged Attack Balance
+	/// Var1: Damage
+	/// Var4: Splash Damage
+	/// Var5: Splash Distance
+	/// Var6: ?
 	/// </remarks>
 	[Skill(SkillId.MagnumShot)]
 	public class MagnumShot : ISkillHandler, IPreparable, IReadyable, ICompletable, ICancelable, ICombatSkill,
@@ -37,6 +32,9 @@ namespace Aura.Channel.Skills.Combat
 		/// <summary>
 		/// Stun for the attacker
 		/// </summary>
+		/// <remarks>
+		/// There are actions with 520 stun, dependent on something?
+		/// </remarks>
 		private const int AttackerStun = 600;
 
 		/// <summary>
@@ -66,8 +64,9 @@ namespace Aura.Channel.Skills.Combat
 		/// <returns></returns>
 		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
-			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 			Send.SkillFlashEffect(creature);
+			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
+
 			return true;
 		}
 
@@ -143,12 +142,14 @@ namespace Aura.Channel.Skills.Combat
 			if (rnd.NextDouble() * 100 < chance)
 			{
 				aAction.Set(AttackerOptions.KnockBackHit2);
+
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
 				tAction.Set(TargetOptions.Result | TargetOptions.CleanHit);
 				tAction.Stun = TargetStun;
 				cap.Add(tAction);
 
-				// TODO: add splash damage
+				// TODO: Splash damage
+
 				// Damage
 				var damage = this.GetDamage(attacker, skill);
 
@@ -173,13 +174,12 @@ namespace Aura.Channel.Skills.Combat
 				if (damage > 0)
 					target.TakeDamage(tAction.Damage = damage, attacker);
 
-				// TODO: we have to calculate knockback distance right
-				// TODO: target with defence up shouldn't be knocked back
+				// TODO: We have to calculate knockback distance right
+				// TODO: Target with Defense and shield shouldn't be knocked back
 				attacker.Shove(target, KnockBackDistance);
-				
+
 				tAction.Set(TargetOptions.KnockDownFinish);
 
-				// is dead
 				if (target.IsDead)
 				{
 					aAction.Set(AttackerOptions.KnockBackHit1);

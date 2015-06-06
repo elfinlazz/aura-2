@@ -90,8 +90,16 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <returns></returns>
 		public double GetAimChance(Creature target)
 		{
+			var activeSkill = this.Creature.Skills.ActiveSkill;
+
 			var d1 = 5000.0;
 			var d2 = 500.0;
+
+			if (activeSkill != null && activeSkill.Info.Id == SkillId.MagnumShot)
+			{
+				d1 = 8000.0;
+				d2 = 1000.0;
+			}
 
 			var distance = this.Creature.GetPosition().GetDistance(target.GetPosition());
 			var bowRange = this.Creature.RightHand == null ? 0 : this.Creature.RightHand.OptionInfo.EffectiveRange;
@@ -102,17 +110,9 @@ namespace Aura.Channel.World.Entities.Creatures
 			var aimTime = this.GetAimTime();
 			var aimMod = aimTime;
 
-			var rangedSkill = this.Creature.Skills.ActiveSkill;
-			if (rangedSkill.Info.Id == SkillId.RangedAttack)
-				aimMod *= rangedSkill.RankData.Var3 / 100f;
-			else
-			{
-				if (rangedSkill.Info.Id == SkillId.MagnumShot)
-				{
-					d1 = 8000.0;
-					d2 = 1000.0;
-				}
-			}
+			// Bonus for ranged attack
+			if (activeSkill != null && activeSkill.Info.Id == SkillId.RangedAttack)
+				aimMod *= activeSkill.RankData.Var3 / 100f;
 
 			var hitRatio = 1.0;
 			hitRatio = ((d1 - d2) / bowRange) * distance * hitRatio + d2;
