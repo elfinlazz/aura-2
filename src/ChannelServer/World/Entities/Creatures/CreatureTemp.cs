@@ -46,5 +46,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		public Prop FishingProp;
 		public bool FishingActionRequested;
 		public DropData FishingDrop;
+
+		public bool FireArrow;
 	}
 }

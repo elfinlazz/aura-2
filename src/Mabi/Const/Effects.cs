@@ -12,6 +12,15 @@ namespace Aura.Mabi.Const
 	// but something that can be passed to a function. (No casts ftw.)
 	public static class Effect
 	{
+		/// <summary>
+		/// Fire effect when shooting arrows at a campfire
+		/// byte:1|0 (enable|disable)
+		/// </summary>
+		public static readonly int FireArrow = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public static readonly int Revive = 4;
 
 		/// <summary>

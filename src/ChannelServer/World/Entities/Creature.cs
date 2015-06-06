@@ -59,6 +59,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureConditions Conditions { get; protected set; }
 		public CreatureQuests Quests { get; protected set; }
 		public CreatureDrops Drops { get; protected set; }
+		public AimMeter AimMeter { get; protected set; }
 
 		public ScriptVariables Vars { get; protected set; }
 
@@ -697,6 +698,7 @@ namespace Aura.Channel.World.Entities
 			this.Conditions = new CreatureConditions(this);
 			this.Quests = new CreatureQuests(this);
 			this.Drops = new CreatureDrops(this);
+			this.AimMeter = new AimMeter(this);
 
 			this.Vars = new ScriptVariables();
 		}
@@ -1350,6 +1352,33 @@ namespace Aura.Channel.World.Entities
 			var damage = (float)(baseDamage + Math.Floor(wandBonus * (1 + chargeMultiplier)) + (factor * this.MagicAttack));
 
 			return (damage * this.GetRndMagicBalance());
+		}
+
+		public float GetRndRangedDamage()
+		{
+			// Base damage
+			float min = (this.RightHand == null ? 0 : this.RightHand.OptionInfo.AttackMin);
+			float max = (this.RightHand == null ? 0 : this.RightHand.OptionInfo.AttackMax);
+
+			// Dex bonus
+			min += (this.Dex - 10) / 3.5f;
+			max += (this.Dex - 10) / 2.5f;
+
+			// Base balance
+			var balance = (this.RightHand == null ? this.BalanceBase + this.BalanceBaseMod : this.RightHand.OptionInfo.Balance);
+
+			// Ranged balance bonus
+			var skill = this.Skills.Get(SkillId.RangedAttack);
+			if (skill != null)
+				balance += (int)skill.RankData.Var5;
+
+			// Random balance multiplier
+			var multiplier = this.GetRndBalance(balance) / 100f;
+
+			if (min > max)
+				min = max;
+
+			return (min + (max - min) * multiplier);
 		}
 
 		/// <summary>

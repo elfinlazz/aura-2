@@ -205,7 +205,7 @@ namespace Aura.Mabi.Network
 		public const int SkillReady = 0x6983;
 		public const int SkillUse = 0x6986;
 		public const int SkillComplete = 0x6987;
-		public const int SkillCompleteUnk = 0x6988; // used in gathering fail
+		public const int SkillCompleteUnk = 0x6988; // Used in gathering fail and as SkillComplete for Ranged on Aura?
 		public const int SkillCancel = 0x6989;
 		public const int SkillStart = 0x698A;
 		public const int SkillStop = 0x698B;
@@ -486,6 +486,8 @@ namespace Aura.Mabi.Network
 		// ItemMagnet got increased by one, some time between NA200 and NA204.
 
 		public const int ItemMagnet = 0xABAC; // [190100, NA200 (2015-01-15)]
+
+		public const int AmmoRequired = 0xABBB;
 
 		public const int NpcTalk = 0x13882;
 		public const int NpcTalkSelect = 0x13883;

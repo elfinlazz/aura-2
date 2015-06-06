@@ -162,6 +162,8 @@
     <Compile Include="Skills\Combat\Defense.cs" />
     <Compile Include="Skills\Combat\FinalHit.cs" />
     <Compile Include="Skills\Combat\GlasGhaibhleannSkill.cs" />
+    <Compile Include="Skills\Combat\MagnumShot.cs" />
+    <Compile Include="Skills\Combat\RangedAttack.cs" />
     <Compile Include="Skills\Combat\Smash.cs" />
     <Compile Include="Skills\Combat\SuperWindmill.cs" />
     <Compile Include="Skills\Combat\Windmill.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="World\Entities\Character.cs" />
     <Compile Include="World\Entities\ClientEvent.cs" />
     <Compile Include="World\Entities\Creature.cs" />
+    <Compile Include="World\Entities\Creatures\AimMeter.cs" />
     <Compile Include="World\Entities\Creatures\CreatureConditions.cs" />
     <Compile Include="World\Entities\Creatures\CreatureDrops.cs" />
     <Compile Include="World\Entities\Creatures\CreatureQuests.cs" />

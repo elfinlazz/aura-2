@@ -732,5 +732,26 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends CombatSetAimR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="targetEntityId">Set 0 for negative response.</param>
+		/// <param name="skillId"></param>
+		/// <param name="unkByte"></param>
+		public static void CombatSetAimR(Creature creature, long targetEntityId, SkillId skillId, byte unkByte)
+		{
+			var packet = new Packet(Op.CombatSetAimR, creature.EntityId);
+			packet.PutByte(targetEntityId != 0);
+			if (targetEntityId != 0)
+			{
+				packet.PutLong(targetEntityId);
+				packet.PutShort((short)skillId);
+				packet.PutByte(unkByte);
+			}
+
+			creature.Client.Send(packet);
+		}
 	}
 }
