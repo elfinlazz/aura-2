@@ -66,8 +66,13 @@ namespace Aura.Data.Database
 			if (dungeonData.Style == null)
 				throw new DatabaseErrorException("Dungeon style '" + style + "' not found in dungeon_blocks.");
 
-			foreach (JObject floorEntry in entry["floors"])
+			foreach (var floorObj in entry["floors"])
 			{
+				// Comments
+				var floorEntry = floorObj as JObject;
+				if (floorEntry == null)
+					continue;
+
 				floorEntry.AssertNotMissing("width", "height", "critPathMin", "critPathMax", "branch", "coverage");
 
 				var floorData = new DungeonFloorData();

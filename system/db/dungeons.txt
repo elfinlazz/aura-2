@@ -118,7 +118,25 @@
 // Alby Dungeon
 //---------------------------------------------------------------------------
 { name: "TirCho_Alby_Dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, sets: [
+		{ min: 1, max: 1, puzzles: [
+			{ script: "Entrance_Puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
+			{ script: "Entrance_Puzzle", groups: [ [{ raceId: 30005, amount: 3 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
+			{ script: "Entrance_Puzzle", groups: [ [{ raceId: 120006, amount: 2 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 30005, amount: 6 }] ] },
+		]},
+		{ min: 1, max: 2, puzzles: [
+			{ script: "KeyChest_Monster", groups: [ [{ raceId: 80001, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30001, amount: 6 }] ] },
+			{ script: "KeyChest_Monster", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 120004, amount: 8 }] ] },
+			{ script: "SwitchDoor_SwitchMonster", groups: [ [{ raceId: 120004, amount: 5 }] ] },
+			{ script: "SwitchDoor_SwitchMonster", groups: [ [{ raceId: 80002, amount: 5 }] ] },
+			{ script: "KeyChest_3Mimic", groups: [ [{ raceId: 80001, amount: 4 }], [{ raceId: 30001, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
+			{ script: "KeyChest_3Mimic", groups: [ [{ raceId: 120004, amount: 6 }], [{ raceId: 30001, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
+			{ script: "KeyChest_Monster", groups: [ [{ raceId: 120004, amount: 2 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 30001, amount: 6 }] ] },
+			{ script: "KeyChest_Monster2", groups: [ [{ raceId: 80001, amount: 3 }], [{ raceId: 30001, amount: 4 }], [{ raceId: 120004, amount: 8 }] ] },
+			{ script: "SwitchDoor_SwitchMonster", groups: [ [{ raceId: 80001, amount: 5 }] ] },
+			{ script: "SwitchDoor_SwitchMonster", groups: [ [{ raceId: 30001, amount: 3 }] ] },
+			{ script: "EventProp_Fountain" },
+		]},	]},
 ]},
 { name: "TirCho_Alby_Whiteday_Dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 11013, lastStatue: 10032, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
 	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true },
