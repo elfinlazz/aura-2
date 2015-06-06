@@ -68,8 +68,21 @@ public class AranwenScript : NpcScript
 
 			case "@upgrade":
 				Msg("Please select the weapon you'd like to modify.<br/>Each weapon can be modified according to its kind.<upgrade />");
-				Msg("Unimplemented");
-				Msg("A bow is weaker than a crossbow?<br/>That's because you don't know a bow very well.<br/>Crossbows are advanced weapons for sure,<br/>but a weapon that reflects your strength and senses is closer to nature than machinery.");
+
+				while(true)
+				{
+					var reply = await Select();
+					
+					if(!reply.StartsWith("@upgrade:"))
+						break;
+						
+					var result = Upgrade(reply);
+					if(result.Success)
+						Msg("The modification you've asked for has been done.<br/>Is there anything you want to modify?");
+					else
+						Msg("(Error)");
+				}
+				Msg("A bow is weaker than a crossbow?<br/>That's because you don't know a bow very well.<br/>Crossbows are advanced weapons for sure,<br/>but a weapon that reflects your strength and senses is closer to nature than machinery.<upgrade hide='true'/>");
 				break;
 		}
 		
