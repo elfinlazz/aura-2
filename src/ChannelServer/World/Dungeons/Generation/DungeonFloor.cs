@@ -55,7 +55,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		{
 			var endPos = this.MazeGenerator.EndPos;
 
-			var preEndRoom = this.GetRoom(endPos.X, endPos.Y - 1);
+			var preEndRoom = this.GetRoom(endPos.GetBiasedPosition(Direction.Down));
 			preEndRoom.RoomType = RoomType.Room;
 		}
 
