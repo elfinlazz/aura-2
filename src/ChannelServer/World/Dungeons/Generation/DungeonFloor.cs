@@ -4,6 +4,7 @@
 using Aura.Data.Database;
 using System;
 using System.Collections.Generic;
+using Aura.Mabi.Const;
 
 namespace Aura.Channel.World.Dungeons.Generation
 {
@@ -162,11 +163,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 			if (room.GetDoorType(direction) != 0)
 				throw new Exception();
 
-			int linkType;
-			if (doorType == 3100)
-				linkType = 2;
-			else if (doorType == 3000)
-				linkType = 1;
+			LinkType linkType;
+			if (doorType == (int)DungeonBlockType.StairsDown)
+				linkType = LinkType.To;
+			else if (doorType == (int)DungeonBlockType.StairsUp)
+				linkType = LinkType.From;
 			else
 				throw new Exception("Invalid door_type");
 
@@ -225,7 +226,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 				if (this.MazeGenerator.GenerateCriticalPath(_dungeonGenerator.RngMaze, crit_path_min, crit_path_max))
 				{
 					_startPos = this.MazeGenerator.StartPos;
-					if (this.SetTraits(_startPos, this.MazeGenerator.StartDirection, 3000))
+					if (this.SetTraits(_startPos, this.MazeGenerator.StartDirection, (int)DungeonBlockType.StairsUp))
 						break;
 				}
 
@@ -253,7 +254,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 				{
 					var biased_pos = pos.GetBiasedPosition(direction);
 					if (room != null)
-						room.Link(direction, 2);
+						room.Link(direction, LinkType.To);
 
 					return this.CreateSubPathRecursive(biased_pos);
 				}
@@ -342,7 +343,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 				while (true)
 				{
 					var direction = rndDir.GetDirection(mt);
-					if (this.SetTraits(_pos, direction, 3100))
+					if (this.SetTraits(_pos, direction, (int)DungeonBlockType.StairsDown))
 					{
 						_startDirection = direction;
 						break;

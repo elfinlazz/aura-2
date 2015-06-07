@@ -12,7 +12,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		/// <summary>
 		/// Paths
 		/// </summary>
-		public int[] Links { get; private set; }
+		public LinkType[] Links { get; private set; }
 
 		/// <summary>
 		/// Types of the room's doors (up/down).
@@ -30,7 +30,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		public RoomTrait(int x, int y)
 		{
 			this.Neighbor = new RoomTrait[4];
-			this.Links = new int[] { 0, 0, 0, 0 };
+			this.Links = new LinkType[] { LinkType.None, LinkType.None, LinkType.None, LinkType.None };
 			this.DoorType = new int[] { 0, 0, 0, 0 };
 
 			this.X = x;
@@ -47,7 +47,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			if (direction > 3)
 				throw new ArgumentException("Direction out of bounds.");
 
-			return this.Links[direction] != 0;
+			return this.Links[direction] != LinkType.None;
 		}
 
 		public int GetDoorType(int direction)
@@ -58,7 +58,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			return this.DoorType[direction];
 		}
 
-		public void Link(int direction, int linkType)
+		public void Link(int direction, LinkType linkType)
 		{
 			if (direction > 3)
 				throw new ArgumentException("Direction out of bounds.");
@@ -68,12 +68,12 @@ namespace Aura.Channel.World.Dungeons.Generation
 			if (this.Neighbor[direction] != null)
 			{
 				int opposite_direction = Direction.GetOppositeDirection(direction);
-				if (linkType == 1)
-					this.Neighbor[direction].Links[opposite_direction] = 2;
-				else if (linkType == 2)
-					this.Neighbor[direction].Links[opposite_direction] = 1;
+				if (linkType == LinkType.From)
+					this.Neighbor[direction].Links[opposite_direction] = LinkType.To;
+				else if (linkType == LinkType.To)
+					this.Neighbor[direction].Links[opposite_direction] = LinkType.From;
 				else
-					this.Neighbor[direction].Links[opposite_direction] = 0;
+					this.Neighbor[direction].Links[opposite_direction] = LinkType.None;
 			}
 		}
 
@@ -99,5 +99,12 @@ namespace Aura.Channel.World.Dungeons.Generation
 		Start,
 		End,
 		Room,
+	}
+
+	public enum LinkType
+	{
+		None,
+		From,
+		To,
 	}
 }
