@@ -145,6 +145,7 @@
     <Compile Include="Scripting\Scripts\ItemScript.cs" />
     <Compile Include="Scripting\Scripts\NpcScript.cs" />
     <Compile Include="Scripting\ScriptManager.cs" />
+    <Compile Include="Scripting\Scripts\PuzzleScript.cs" />
     <Compile Include="Scripting\Scripts\QuestScript.cs" />
     <Compile Include="Scripting\Scripts\RegionScript.cs" />
     <Compile Include="Scripting\ScriptVariables.cs" />
