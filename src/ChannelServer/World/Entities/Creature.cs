@@ -1164,10 +1164,10 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public int AttackRangeFor(Creature target)
 		{
-			var attackerRange = this.RaceData.AttackRange;
-			var targetRange = target.RaceData.AttackRange;
+			var attackerRange = this.RaceData.AttackRange * this.Height;
+			var targetRange = target.RaceData.AttackRange * target.Height;
 
-			var result = 156; // Default found in the client (for reference)
+			var result = 156f; // Default found in the client (for reference)
 
 			if ((attackerRange < 300 && targetRange < 300) || (attackerRange >= 300 && attackerRange > targetRange))
 				result = ((attackerRange + targetRange) / 2);
@@ -1176,8 +1176,8 @@ namespace Aura.Channel.World.Entities
 
 			// A little something extra
 			result += 25;
-
-			return result;
+			Log.Debug(result);
+			return (int)result;
 		}
 
 		/// <summary>
