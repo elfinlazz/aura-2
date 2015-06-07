@@ -11,10 +11,21 @@ public class AlbyDungeonScript : DungeonScript
 {
 	public override bool Route(Creature creature, Item item, ref string dungeonName)
 	{
-		// Access to bunny dungeon with a check worth least 1m
-		if(item.Info.Id == 2004 && item.MetaData1.GetInt("EVALUE") >= 1000000)
-			dungeonName = "TirCho_Alby_Whiteday_Dungeon";
+		// Access to bunny dungeon with a check worth at least 1m
+		if (item.Info.Id == 2004 && item.MetaData1.GetInt("EVALUE") >= 1000000)
+		{
+			dungeonName = "tircho_alby_whiteday_dungeon";
+			return true;
+		}
 
+		// Rescue Resident quest dungeon
+		if (item.Info.Id == 63180) // Trefor's Pass
+		{
+			dungeonName = "tircho_alby_dungeon_tutorial_ranald";
+			return true;
+		}
+
+		// tircho_alby_dungeon
 		return true;
 	}
 

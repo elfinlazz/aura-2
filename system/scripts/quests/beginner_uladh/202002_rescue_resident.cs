@@ -61,12 +61,12 @@ public class RescueResidentQuestScript : QuestScript
 			
 			npc.Msg("Good, I see that you're getting the hang of it.<br/>Well, I was able to do that when I was 8, but whatever...<br/>It is now time for you to go and search for the missing Villager.");
 			npc.Msg("Follow the road up and turn right and you'll find the Alby Dungeon.<br/>You can enter the dungeon by dropping this item on the altar.<br/>If you either lose it or fail to rescue her, come back to me so I can give you another one. Please be careful.", npc.Image("dungeonpass", 128, 128));
-			
-			npc.GiveItem(63140, 1);
+
+			npc.GiveItem(63180, 1);
 			
 			return HookResult.Break;
 		}
-		else if(npc.QuestActive(this.Id, "clear_alby"))
+		else if(npc.QuestActive(this.Id, "clear_alby") && npc.HasKeyword("Clear_Tutorial_Alby_Dungeon"))
 		{
 			npc.FinishQuest(this.Id, "clear_alby");
 			
