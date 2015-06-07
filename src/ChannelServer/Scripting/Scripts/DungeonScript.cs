@@ -71,6 +71,13 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Called when one of the boss monsters dies.
+		/// </summary>
+		public virtual void OnBossDeath(Dungeon dungeon, Creature deadBoss)
+		{
+		}
+
+		/// <summary>
 		/// Called when the boss was killed.
 		/// </summary>
 		public virtual void OnCleared(Dungeon dungeon)

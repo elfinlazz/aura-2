@@ -325,15 +325,21 @@ namespace Aura.Channel.World.Dungeons
 		{
 			Interlocked.Increment(ref _bossesKilled);
 
+			if (this.Script != null)
+				this.Script.OnBossDeath(this, creature);
+
 			if (_bossesKilled >= _bossesCount)
-			{
-				if (this.Script != null)
-					this.Script.OnCleared(this);
+				this.Complete();
+		}
 
-				this.SpawnTreasureChests();
+		public void Complete()
+		{
+			if (this.Script != null)
+				this.Script.OnCleared(this);
 
-				_bossExitDoor.SetState("open");
-			}
+			this.SpawnTreasureChests();
+
+			_bossExitDoor.SetState("open");
 		}
 
 		private void SpawnTreasureChests()
