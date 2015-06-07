@@ -41,6 +41,42 @@ namespace Aura.Data.Database
 		public int Coverage { get; set; }
 		public bool HasBoss { get; set; }
 		public bool Custom { get; set; }
+		public List<DungeonSetData> Sets { get; set; }
+
+		public DungeonFloorData()
+		{
+			this.Sets = new List<DungeonSetData>();
+		}
+	}
+
+	public class DungeonSetData
+	{
+		public int Min { get; set; }
+		public int Max { get; set; }
+		public List<DungeonPuzzleData> Puzzles { get; set; }
+
+		public DungeonSetData()
+		{
+			this.Puzzles = new List<DungeonPuzzleData>();
+		}
+	}
+
+	public class DungeonPuzzleData
+	{
+		public string Script { get; set; }
+		public string Arg { get; set; }
+		public List<List<DungeonMonsterData>> Groups { get; set; }
+
+		public DungeonPuzzleData()
+		{
+			this.Groups = new List<List<DungeonMonsterData>>();
+		}
+	}
+
+	public class DungeonMonsterData
+	{
+		public int RaceId { get; set; }
+		public int Amount { get; set; }
 	}
 
 	public class DungeonDb : DatabaseJsonIndexed<string, DungeonData>
@@ -84,6 +120,52 @@ namespace Aura.Data.Database
 				floorData.Coverage = floorEntry.ReadInt("coverage");
 				floorData.HasBoss = floorEntry.ReadBool("hasBoss");
 				floorData.Custom = floorEntry.ReadBool("custom");
+
+				if (floorEntry.ContainsKey("sets"))
+				{
+					foreach (JObject setEntry in floorEntry["sets"])
+					{
+						setEntry.AssertNotMissing("min", "max", "puzzles");
+
+						var setData = new DungeonSetData();
+						setData.Min = setEntry.ReadInt("min");
+						setData.Max = setEntry.ReadInt("max");
+
+						foreach (JObject puzzleEntry in setEntry["puzzles"])
+						{
+							puzzleEntry.AssertNotMissing("script");
+
+							var puzzleData = new DungeonPuzzleData();
+							puzzleData.Script = puzzleEntry.ReadString("script");
+							puzzleData.Arg = puzzleEntry.ReadString("arg", null);
+
+							if (puzzleEntry.ContainsKey("groups"))
+							{
+								foreach (var groupsEntry in puzzleEntry["groups"])
+								{
+									var list = new List<DungeonMonsterData>();
+
+									foreach (JObject groupEntry in groupsEntry)
+									{
+										groupEntry.AssertNotMissing("raceId", "amount");
+
+										var monsterData = new DungeonMonsterData();
+										monsterData.RaceId = groupEntry.ReadInt("raceId");
+										monsterData.Amount = groupEntry.ReadInt("amount");
+
+										list.Add(monsterData);
+									}
+
+									puzzleData.Groups.Add(list);
+								}
+							}
+
+							setData.Puzzles.Add(puzzleData);
+						}
+
+						floorData.Sets.Add(setData);
+					}
+				}
 
 				dungeonData.Floors.Add(floorData);
 			}
