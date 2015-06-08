@@ -162,6 +162,12 @@ namespace Aura.Channel.World
 		public void OnCreatureLevelUp(Creature creature) { CreatureLevelUp.Raise(creature); }
 
 		/// <summary>
+		/// Raised when a creature gets a new keyword.
+		/// </summary>
+		public event Action<Creature, int> CreatureGotKeyword;
+		public void OnCreatureGotKeyword(Creature creature, int keywordId) { CreatureGotKeyword.Raise(creature, keywordId); }
+
+		/// <summary>
 		/// Raised when a creature collects, aka gathers, items.
 		/// </summary>
 		public event Action<CollectEventArgs> CreatureCollected;

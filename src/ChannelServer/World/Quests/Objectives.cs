@@ -6,6 +6,7 @@ using Aura.Data;
 using Aura.Mabi.Const;
 using Aura.Mabi;
 using Aura.Channel.World.Entities;
+using System;
 
 namespace Aura.Channel.World.Quests
 {
@@ -134,6 +135,36 @@ namespace Aura.Channel.World.Quests
 			: base(level)
 		{
 			this.MetaData.SetShort("TGTLVL", (short)level);
+			this.MetaData.SetInt("TARGETCOUNT", 1);
+		}
+	}
+
+	/// <summary>
+	/// Objective to get a specified keyword.
+	/// </summary>
+	public class QuestObjectiveGetKeyword : QuestObjective
+	{
+		public override ObjectiveType Type { get { return ObjectiveType.GetKeyword; } }
+
+		public int KeywordId { get; private set; }
+
+		public QuestObjectiveGetKeyword(string keyword)
+			: base(1)
+		{
+			var keywordData = AuraData.KeywordDb.Find(keyword);
+			if (keywordData == null)
+				throw new ArgumentException("Keyword '" + keyword + "' not found.");
+
+			this.KeywordId = keywordData.Id;
+			this.MetaData.SetInt("TGTKEYWORD", this.KeywordId); // Unofficial
+			this.MetaData.SetInt("TARGETCOUNT", 1);
+		}
+
+		public QuestObjectiveGetKeyword(int keywordId)
+			: base(1)
+		{
+			this.KeywordId = keywordId;
+			this.MetaData.SetInt("TGTKEYWORD", this.KeywordId); // Unofficial
 			this.MetaData.SetInt("TARGETCOUNT", 1);
 		}
 	}

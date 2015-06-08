@@ -92,6 +92,7 @@ namespace Aura.Channel.Scripting.Scripts
 			ChannelServer.Instance.Events.PlayerCompletesQuest -= this.OnPlayerCompletesQuest;
 			ChannelServer.Instance.Events.SkillRankChanged -= this.OnSkillRankChanged;
 			ChannelServer.Instance.Events.CreatureLevelUp -= this.OnCreatureLevelUp;
+			ChannelServer.Instance.Events.CreatureGotKeyword -= this.CreatureGotKeyword;
 		}
 
 		// Setup
@@ -243,6 +244,12 @@ namespace Aura.Channel.Scripting.Scripts
 				ChannelServer.Instance.Events.CreatureLevelUp += this.OnCreatureLevelUp;
 			}
 
+			if (objective.Type == ObjectiveType.GetKeyword)
+			{
+				ChannelServer.Instance.Events.CreatureGotKeyword -= this.CreatureGotKeyword;
+				ChannelServer.Instance.Events.CreatureGotKeyword += this.CreatureGotKeyword;
+			}
+
 			this.Objectives.Add(ident, objective);
 		}
 
@@ -301,6 +308,7 @@ namespace Aura.Channel.Scripting.Scripts
 		protected QuestObjective Talk(string npcName) { return new QuestObjectiveTalk(npcName); }
 		protected QuestObjective ReachRank(SkillId skillId, SkillRank rank) { return new QuestObjectiveReachRank(skillId, rank); }
 		protected QuestObjective ReachLevel(int level) { return new QuestObjectiveReachLevel(level); }
+		protected QuestObjective GetKeyword(string keyword) { return new QuestObjectiveGetKeyword(keyword); }
 
 		// Reward Factory
 		// ------------------------------------------------------------------
@@ -393,6 +401,14 @@ namespace Aura.Channel.Scripting.Scripts
 					progress.Count = count;
 					break;
 
+				case ObjectiveType.GetKeyword:
+					var getKeywordObjective = (objective as QuestObjectiveGetKeyword);
+
+					if (creature.Keywords.Has((ushort)getKeywordObjective.KeywordId))
+						quest.SetDone(progress.Ident);
+
+					break;
+
 				default:
 					// Objective that can't be checked here.
 					break;
@@ -471,6 +487,16 @@ namespace Aura.Channel.Scripting.Scripts
 			if (!creature.Quests.Has(this.Id) && this.CheckPrerequisites(creature))
 				creature.Quests.Start(this.Id, true);
 
+			this.CheckCurrentObjective(creature);
+		}
+
+		/// <summary>
+		/// Checks prerequisites.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="keywordId"></param>
+		private void CreatureGotKeyword(Creature creature, int keywordId)
+		{
 			this.CheckCurrentObjective(creature);
 		}
 	}

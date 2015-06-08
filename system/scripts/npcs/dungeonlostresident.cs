@@ -33,7 +33,6 @@ public class DungeonLostResidentNpcScript : NpcScript
 		}
 
 		GiveKeyword("Clear_Tutorial_Alby_Dungeon");
-		FinishQuest(202002, "clear_alby");
 		Close2(Hide.None, "Thank you so much, now let's leave this horrible place...");
 
 		// TODO: Cutscene "tuto_result"

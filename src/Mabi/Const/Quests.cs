@@ -11,6 +11,7 @@ namespace Aura.Mabi.Const
 		Deliver = 4,
 		ReachRank = 9,
 		ReachLevel = 15,
+		GetKeyword = 99, // TODO: Actual type?
 	}
 
 	public enum RewardType : byte

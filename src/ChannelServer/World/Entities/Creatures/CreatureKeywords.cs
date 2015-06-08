@@ -124,6 +124,9 @@ namespace Aura.Channel.World.Entities.Creatures
 				return false;
 
 			Send.AddKeyword(_creature, keywordId);
+
+			ChannelServer.Instance.Events.OnCreatureGotKeyword(_creature, keywordId);
+
 			return true;
 		}
 
@@ -148,7 +151,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// </summary>
 		/// <param name="keywordId"></param>
 		/// <returns></returns>
-		private bool Has(ushort keywordId)
+		public bool Has(ushort keywordId)
 		{
 			lock (_list)
 				return (_list.Contains(keywordId));

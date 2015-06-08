@@ -22,7 +22,7 @@ public class RescueResidentQuestScript : QuestScript
 		AddObjective("talk_trefor", "Talk with Trefor", 1, 8692, 52637, Talk("trefor"));
 		AddObjective("kill_foxes", "Hunt 5 Young Brown Foxes", 1, 9100, 52000, Kill(5, "/brownfox/"));
 		AddObjective("talk_trefor2", "Talk with Trefor", 1, 8692, 52637, Talk("trefor"));
-		AddObjective("clear_alby", "Rescue a town resident from Alby Dungeon", 13, 3200, 3200, Talk("trefor"));
+		AddObjective("clear_alby", "Rescue a town resident from Alby Dungeon", 13, 3200, 3200, GetKeyword("Clear_Tutorial_Alby_Dungeon"));
 		AddObjective("talk_trefor3", "Talk with Trefor", 1, 8692, 52637, Talk("trefor"));
 		
 		AddReward(Exp(300));
