@@ -43,9 +43,8 @@ public class AlbyTutorialDungeonScript : DungeonScript
 
 	public override void OnCleared(Dungeon dungeon)
 	{
-		// Temp, should be given in the conversation with the lost resident
 		foreach (var member in dungeon.Party)
-			member.Keywords.Give("Clear_Tutorial_Alby_Dungeon");
+			member.TalkToNpc("_dungeonlostresident", "Lost Resident");
 
 		var rnd = RandomProvider.Get();
 

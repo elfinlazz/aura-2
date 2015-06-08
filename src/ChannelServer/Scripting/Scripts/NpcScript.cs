@@ -855,6 +855,17 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Adds given amount of gold to the player's inventory.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public bool GiveGold(int itemId, int amount = 1)
+		{
+			return this.Player.Inventory.AddGold(amount);
+		}
+
+		/// <summary>
 		/// Adds an item to player's inventory with specific colors.
 		/// </summary>
 		/// <param name="itemId"></param>
