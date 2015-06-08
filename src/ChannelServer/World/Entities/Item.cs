@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using System.Linq;
 using System.Threading;
 using Aura.Data;
 using Aura.Data.Database;
@@ -327,6 +328,35 @@ namespace Aura.Channel.World.Entities
 			item.MetaData1.SetInt("EVALUE", amount);
 
 			return item;
+		}
+
+		/// <summary>
+		/// Returns a random drop from the given list as item.
+		/// </summary>
+		/// <param name="rnd"></param>
+		/// <param name="drops"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static Item GetRandomDrop(Random rnd, params DropData[] drops)
+		{
+			if (drops == null || drops.Length == 0)
+				throw new ArgumentException("Drops list empty.");
+
+			var num = rnd.NextDouble() * drops.Sum(a => a.Chance);
+
+			var n = 0.0;
+			DropData data = null;
+			foreach (var drop in drops)
+			{
+				n += drop.Chance;
+				if (num <= n)
+				{
+					data = drop;
+					break;
+				}
+			}
+
+			return new Item(data);
 		}
 
 		/// <summary>

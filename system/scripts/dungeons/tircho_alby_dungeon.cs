@@ -66,8 +66,6 @@ public class AlbyDungeonScript : DungeonScript
 	DropData[] drops;
 	public Item GetRandomTreasureItem(Random rnd)
 	{
-		var num = rnd.NextDouble() * 100;
-
 		if (drops == null)
 		{
 			drops = new DropData[]
@@ -86,18 +84,6 @@ public class AlbyDungeonScript : DungeonScript
 			};
 		}
 
-		var n = 0.0;
-		DropData data = null;
-		foreach (var drop in drops)
-		{
-			n += drop.Chance;
-			if (num <= n)
-			{
-				data = drop;
-				break;
-			}
-		}
-
-		return new Item(data);
+		return Item.GetRandomDrop(rnd, drops);
 	}
 }
