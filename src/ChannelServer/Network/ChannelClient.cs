@@ -133,6 +133,9 @@ namespace Aura.Channel.Network
 						Log.Exception(ex, "Failed to fallback warp character in dungeon.");
 						creature.SetLocation(1, 12800, 38100); // Tir square
 					}
+
+					if (dungeonRegion.Dungeon.Script != null)
+						dungeonRegion.Dungeon.Script.OnLeftEarly(dungeonRegion.Dungeon, creature);
 				}
 
 				// Unspawn creature

@@ -83,6 +83,14 @@ namespace Aura.Channel.Scripting.Scripts
 		public virtual void OnCleared(Dungeon dungeon)
 		{
 		}
+
+		/// <summary>
+		/// Called when a player leaves a dungeon via the first statue,
+		/// logging out, or similar.
+		/// </summary>
+		public virtual void OnLeftEarly(Dungeon dungeon, Creature creature)
+		{
+		}
 	}
 
 	public class DungeonScriptAttribute : Attribute

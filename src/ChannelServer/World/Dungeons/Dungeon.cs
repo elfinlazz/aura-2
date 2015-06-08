@@ -151,6 +151,9 @@ namespace Aura.Channel.World.Dungeons
 			statue.Behavior = (cr, pr) =>
 			{
 				cr.Warp(this.Data.Exit);
+
+				if (this.Script != null)
+					this.Script.OnLeftEarly(this, cr);
 			};
 		}
 
