@@ -23,6 +23,7 @@ public class RescueResidentQuestScript : QuestScript
 		AddObjective("kill_foxes", "Hunt 5 Young Brown Foxes", 1, 9100, 52000, Kill(5, "/brownfox/"));
 		AddObjective("talk_trefor2", "Talk with Trefor", 1, 8692, 52637, Talk("trefor"));
 		AddObjective("clear_alby", "Rescue a town resident from Alby Dungeon", 13, 3200, 3200, Talk("trefor"));
+		AddObjective("talk_trefor3", "Talk with Trefor", 1, 8692, 52637, Talk("trefor"));
 		
 		AddReward(Exp(300));
 		AddReward(Gold(1800));
@@ -66,9 +67,9 @@ public class RescueResidentQuestScript : QuestScript
 			
 			return HookResult.Break;
 		}
-		else if(npc.QuestActive(this.Id, "clear_alby") && npc.HasKeyword("Clear_Tutorial_Alby_Dungeon"))
+		else if(npc.QuestActive(this.Id, "talk_trefor3"))
 		{
-			npc.FinishQuest(this.Id, "clear_alby");
+			npc.FinishQuest(this.Id, "talk_trefor3");
 			
 			npc.Msg("You did it! Good job.<br/>Good thing I asked for your help.<br/>For your great work, I will now teach you how to properly use the Smash skill.<br/>If you open your Skill window and press the 'LEARN' button, you will be able to use a more powerful Smash skill.<br/>I can always use some help here, so drop by often, okay?");
 			

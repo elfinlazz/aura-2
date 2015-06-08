@@ -69,6 +69,13 @@ public class AlbyTutorialDungeonScript : DungeonScript
 		}
 	}
 
+	public override void OnLeftEarly(Dungeon dungeon, Creature creature)
+	{
+		// Give pass again if lost
+		if (!creature.Keywords.Has("Clear_Tutorial_Alby_Dungeon"))
+			creature.Inventory.Add(63180); // Trefor's Pass
+	}
+
 	DropData[] drops;
 	public Item GetRandomTreasureItem(Random rnd)
 	{
