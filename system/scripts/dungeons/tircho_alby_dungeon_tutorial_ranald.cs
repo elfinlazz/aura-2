@@ -18,6 +18,15 @@ public class AlbyTutorialDungeonScript : DungeonScript
 	{
 		dungeon.AddBoss(30022, 1); // Giant Spiderling
 		dungeon.AddBoss(1002, 1);  // Lost Resident
+
+		foreach (var member in dungeon.Party)
+		{
+			var cutscene = new Cutscene("bossroom_tutorial_giantspider_kid", member);
+			cutscene.AddActor("player0", member);
+			cutscene.AddActor("#giant_spider_kid", 30022);
+			cutscene.AddActor("#lostresident", 1002);
+			cutscene.Play();
+		}
 	}
 
 	public override void OnBossDeath(Dungeon dungeon, Creature deadBoss)
@@ -35,8 +44,8 @@ public class AlbyTutorialDungeonScript : DungeonScript
 	public override void OnCleared(Dungeon dungeon)
 	{
 		// Temp, should be given in the conversation with the lost resident
-		foreach (var player in dungeon.Party)
-			player.Keywords.Give("Clear_Tutorial_Alby_Dungeon");
+		foreach (var member in dungeon.Party)
+			member.Keywords.Give("Clear_Tutorial_Alby_Dungeon");
 
 		var rnd = RandomProvider.Get();
 
