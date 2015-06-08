@@ -243,6 +243,9 @@ namespace Aura.Channel.World.Entities
 			if (dropData.Color1 != null) this.Info.Color1 = (uint)dropData.Color1;
 			if (dropData.Color2 != null) this.Info.Color2 = (uint)dropData.Color2;
 			if (dropData.Color3 != null) this.Info.Color3 = (uint)dropData.Color3;
+
+			if (dropData.Durability != -1)
+				this.Durability = dropData.Durability;
 		}
 
 		/// <summary>
