@@ -52,11 +52,6 @@ public class AlbyTutorialDungeonScript : DungeonScript
 		{
 			var treasureChest = new TreasureChest();
 
-			// Gold
-			var gold = new Item(2000);
-			gold.Amount = rnd.Next(153, 768);
-			treasureChest.Add(gold);
-
 			// Enchant
 			var enchant = new Item(62005);
 			switch (rnd.Next(3))
@@ -67,8 +62,8 @@ public class AlbyTutorialDungeonScript : DungeonScript
 			}
 			treasureChest.Add(enchant);
 
-			// Random item
-			treasureChest.Add(GetRandomTreasureItem(rnd));
+			treasureChest.Add(Item.CreateGold(rnd.Next(153, 768))); // Gold
+			treasureChest.Add(GetRandomTreasureItem(rnd)); // Random item
 
 			dungeon.AddChest(treasureChest);
 		}
@@ -87,7 +82,7 @@ public class AlbyTutorialDungeonScript : DungeonScript
 				new DropData(itemId: 51102, chance: 20, amountMin: 1, amountMax: 2), // Mana Herb
 				new DropData(itemId: 71017, chance: 15, amountMin: 1, amountMax: 2), // White Spider Fomor Scroll
 				new DropData(itemId: 71019, chance: 10, amount: 1), // Red Spider Fomor Scroll
-				new DropData(itemId: 40002, chance: 1, amount: 1, color1: 0x000000), // Wooden Blade (black)
+				new DropData(itemId: 40002, chance: 1, amount: 1, color1: 0x000000, durability: 0), // Wooden Blade (black)
 			};
 		}
 

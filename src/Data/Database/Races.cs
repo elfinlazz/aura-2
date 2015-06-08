@@ -116,7 +116,7 @@ namespace Aura.Data.Database
 		{
 		}
 
-		public DropData(int itemId, float chance, int amount = 0, int amountMin = 0, int amountMax = 0, uint? color1 = null, uint? color2 = null, uint? color3 = null, int prefix = 0, int suffix = 0)
+		public DropData(int itemId, float chance, int amount = 0, int amountMin = 0, int amountMax = 0, uint? color1 = null, uint? color2 = null, uint? color3 = null, int prefix = 0, int suffix = 0, int expires = 0, int durability = 0)
 		{
 			if (amount != 0)
 				amountMin = amountMax = amount;
