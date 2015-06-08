@@ -216,6 +216,9 @@ namespace Aura.Channel.World.Dungeons
 				_bossDoor.Behavior = this.BossDoorBehavior;
 				region.AddProp(_bossDoor);
 
+				var dummyDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y - Dungeon.TileSize, Rotation(GetFirstDirection(gen.GetRoom(endTile.GetBiasedPosition(Direction.Down)).Directions, Direction.Right)), 1, 0, "open");
+				region.AddProp(dummyDoor);
+
 				var exitStatue = new Prop(this.Data.LastStatuePropId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize * 2, Rotation(Direction.Up), 1, 0, "single");
 				exitStatue.Info.Color1 = 0xFFFFFF;
 				exitStatue.Extensions.Add(new ConfirmationPropExtension("GotoLobby", "_LT[code.standard.msg.dungeon_exit_notice_msg]", "_LT[code.standard.msg.dungeon_exit_notice_title]", "haskey(chest)"));
@@ -245,9 +248,9 @@ namespace Aura.Channel.World.Dungeons
 			}
 		}
 
-		public static int GetFirstDirection(int[] directions)
+		public static int GetFirstDirection(int[] directions, int start = 0)
 		{
-			for (int dir = 0; dir < directions.Length; ++dir)
+			for (int dir = start; dir < directions.Length; ++dir)
 			{
 				if (directions[dir] > 0)
 				{
