@@ -1176,7 +1176,7 @@ namespace Aura.Channel.World.Entities
 
 			// A little something extra
 			result += 25;
-			Log.Debug(result);
+
 			return (int)result;
 		}
 
@@ -1840,6 +1840,26 @@ namespace Aura.Channel.World.Entities
 
 			this.Direction = MabiMath.DirectionToByte(x, y);
 			Send.TurnTo(this, x, y);
+		}
+
+		/// <summary>
+		/// Starts dialog with NPC, returns false if NPC couldn't be found.
+		/// </summary>
+		/// <param name="npcName">The ident for the NPC, e.g. _duncan.</param>
+		/// <param name="npcNameLocal">Defaults to npcName if null.</param>
+		/// <returns></returns>
+		public bool TalkToNpc(string npcName, string npcNameLocal = null)
+		{
+			npcNameLocal = npcNameLocal ?? npcName;
+
+			var target = ChannelServer.Instance.World.GetNpc(npcName);
+			if (target == null)
+				return false;
+
+			Send.NpcInitiateDialog(this, target.EntityId, npcName, npcNameLocal);
+			this.Client.NpcSession.StartTalk(target, this);
+
+			return true;
 		}
 	}
 }

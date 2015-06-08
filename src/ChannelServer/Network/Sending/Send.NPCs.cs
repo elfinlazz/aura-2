@@ -347,5 +347,25 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends NpcInitiateDialog to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="npcEntityId"></param>
+		/// <param name="npcName">The ident for the NPC, e.g. _duncan.</param>
+		/// <param name="npcLocalName">The actual NPC name displayed.</param>
+		public static void NpcInitiateDialog(Creature creature, long npcEntityId, string npcName, string npcLocalName)
+		{
+			npcLocalName = npcLocalName ?? npcName;
+
+			var packet = new Packet(Op.NpcInitiateDialog, creature.EntityId);
+			packet.PutByte(1);
+			packet.PutLong(npcEntityId);
+			packet.PutString(npcName);
+			packet.PutString(npcLocalName);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

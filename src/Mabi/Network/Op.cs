@@ -112,6 +112,7 @@ namespace Aura.Mabi.Network
 		public const int NpcTalkEndR = 0x55F3;
 		public const int NpcTalkEgo = 0x55F4;
 		public const int NpcTalkEgoR = 0x55F5;
+		public const int NpcInitiateDialog = 0x55F7;
 		public const int NpcTalkPartner = 0x55F8;
 		public const int NpcTalkPartnerR = 0x55F9;
 		public const int ItemBlessed = 0x5BD8;
