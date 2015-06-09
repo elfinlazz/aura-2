@@ -345,7 +345,24 @@ namespace Aura.Channel.World.Entities
 			if (drops == null || drops.Length == 0)
 				throw new ArgumentException("Drops list empty.");
 
-			var num = rnd.NextDouble() * drops.Sum(a => a.Chance);
+			return GetRandomDrop(rnd, drops.Sum(a => a.Chance), drops);
+		}
+
+		/// <summary>
+		/// Returns a random drop from the given list as item.
+		/// Returns null if total wasn't reached.
+		/// </summary>
+		/// <param name="rnd"></param>
+		/// <param name="total"></param>
+		/// <param name="drops"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static Item GetRandomDrop(Random rnd, float total, params DropData[] drops)
+		{
+			if (drops == null || drops.Length == 0)
+				throw new ArgumentException("Drops list empty.");
+
+			var num = rnd.NextDouble() * total;
 
 			var n = 0.0;
 			DropData data = null;
@@ -358,6 +375,9 @@ namespace Aura.Channel.World.Entities
 					break;
 				}
 			}
+
+			if (data == null)
+				return null;
 
 			return new Item(data);
 		}

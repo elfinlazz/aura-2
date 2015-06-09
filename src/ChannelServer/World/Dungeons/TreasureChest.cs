@@ -30,6 +30,9 @@ namespace Aura.Channel.World.Dungeons
 		/// <param name="item"></param>
 		public void Add(Item item)
 		{
+			if (item == null)
+				return;
+
 			this.Items.Add(item);
 		}
 

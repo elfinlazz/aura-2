@@ -25,6 +25,13 @@ public class AlbyDungeonScript : DungeonScript
 			return true;
 		}
 
+		// Alby Beginner
+		if (item.Info.Id == 63140) // Alby Beginner Pass
+		{
+			dungeonName = "tircho_alby_beginner_1_dungeon";
+			return true;
+		}
+
 		// tircho_alby_dungeon
 		return true;
 	}
