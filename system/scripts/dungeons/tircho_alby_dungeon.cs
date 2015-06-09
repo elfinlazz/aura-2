@@ -35,7 +35,17 @@ public class AlbyDungeonScript : DungeonScript
 
 	public override void OnBoss(Dungeon dungeon)
 	{
-		dungeon.AddBoss(30003, 1); // Red Spider
+		dungeon.AddBoss(30004, 1); // Giant Spider
+		dungeon.AddBoss(30003, 6); // Red Spider
+
+		foreach (var member in dungeon.Party)
+		{
+			var cutscene = new Cutscene("bossroom_GiantSpider", member);
+			cutscene.AddActor("player0", member);
+			cutscene.AddActor("#giant_spider", 30004);
+			cutscene.AddActor("#darkred_spider", 30003);
+			cutscene.Play();
+		}
 	}
 
 	public override void OnCleared(Dungeon dungeon)
