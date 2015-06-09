@@ -361,7 +361,7 @@ namespace Aura.Channel.World.Dungeons
 
 			for (int i = 0, j = rnd.Next(8); i < _treasureChests.Count; ++i, ++j)
 			{
-				var pos = this.Generator.Floors.Last().MazeGenerator.EndPos;
+				var pos = new Generation.Position(this.Generator.Floors.Last().MazeGenerator.EndPos);
 
 				pos.X *= Dungeon.TileSize;
 				pos.Y *= Dungeon.TileSize;
