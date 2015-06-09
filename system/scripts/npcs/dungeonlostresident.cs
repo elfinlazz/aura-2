@@ -36,11 +36,31 @@ public class DungeonLostResidentNpcScript : NpcScript
 		}
 
 		GiveKeyword("Clear_Tutorial_Alby_Dungeon");
-		Close2(Hide.None, "Thank you so much, now let's leave this horrible place...");
+		Msg("Thank you so much, now let's leave this horrible place...", Button("End Conversation"));
+		await Select();
+		Close2();
 
-		// TODO: Cutscene "tuto_result"
-		// TODO: Warp to reward room
+		var cutscene = new Cutscene("tuto_result", Player);
+		cutscene.AddActor("me", Player);
+		cutscene.AddActor("#lostresident", 1002);
+		cutscene.Play(_ => WarpToRewardRoom());
+	}
 
-		Exit();
+	// There's no reason for this function to be in the core if this is the
+	// only place we ever need it at. It's literally used in *two* places
+	// in official scripts.
+	private void WarpToRewardRoom()
+	{
+		var dungeonRegion = Player.Region as Aura.Channel.World.Dungeons.DungeonRegion;
+		if (dungeonRegion == null || dungeonRegion.Dungeon == null)
+			return;
+
+		var tileSize = Aura.Channel.World.Dungeons.Dungeon.TileSize;
+		var lastFoor = dungeonRegion.Dungeon.Generator.Floors.Last();
+
+		var x = lastFoor.MazeGenerator.EndPos.X * tileSize + tileSize / 2;
+		var y = lastFoor.MazeGenerator.EndPos.Y * tileSize + tileSize * 2 + tileSize / 3;
+
+		Player.Warp(dungeonRegion.Id, x, y);
 	}
 }
