@@ -860,7 +860,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <param name="itemId"></param>
 		/// <param name="amount"></param>
 		/// <returns></returns>
-		public bool GiveGold(int itemId, int amount = 1)
+		public bool GiveGold(int amount)
 		{
 			return this.Player.Inventory.AddGold(amount);
 		}
