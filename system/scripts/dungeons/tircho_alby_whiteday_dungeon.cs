@@ -16,6 +16,15 @@ public class AlbyWhiteDayDungeonScript : DungeonScript
 	public override void OnBoss(Dungeon dungeon)
 	{
 		dungeon.AddBoss(380001, 3); // Rabbit
+
+		foreach (var member in dungeon.Party)
+		{
+			var cutscene = new Cutscene("bossroom_GiantSpider_kid", member);
+			cutscene.AddActor("player0", member);
+			cutscene.AddActor("#giant_spider_kid", 380001);
+			cutscene.AddActor("#red_spider_kid", 380001);
+			cutscene.Play();
+		}
 	}
 
 	public override void OnCleared(Dungeon dungeon)
