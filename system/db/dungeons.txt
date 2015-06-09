@@ -105,14 +105,110 @@
 // Alby Basic Dungeon
 //---------------------------------------------------------------------------
 { name: "tircho_alby_low_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 20, coverage: 70 },
-	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 15, coverage: 70, hasBoss: true },
+	// Floor 1
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 20, coverage: 70, sets: [
+		{ min: 2, max: 3, puzzles: [
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 20017, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 4 }], [{ raceId: 30013, amount: 6 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 80004, amount: 5 }], [{ raceId: 80004, amount: 6 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 80004, amount: 4 }], [{ raceId: 30013, amount: 4 }], [{ raceId: 20017, amount: 6 }] ] },
+		]},
+		{ min: 3, max: 4, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 30013, amount: 3 }], [{ raceId: 80004, amount: 6 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30004, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 30013, amount: 4 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30013, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30012, amount: 2 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 4 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 80004, amount: 4 }], [{ raceId: 80004, amount: 6 }] ] },
+			{ script: "eventprop_fountain" },
+		]},
+		{ min: 2, max: 3, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 30013, amount: 3 }], [{ raceId: 80004, amount: 6 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30004, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 30013, amount: 4 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 4 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 80004, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "eventprop_fountain" },
+		]},
+		{ min: 2, max: 2, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+		]},	]},
+	// Floor 2
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 15, coverage: 70, hasBoss: true, sets: [
+		{ min: 2, max: 3, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 30013, amount: 3 }], [{ raceId: 80004, amount: 6 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30004, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 30013, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 4 }], [{ raceId: 30012, amount: 2 }], [{ raceId: 70011, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30012, amount: 1 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 20017, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 80004, amount: 4 }], [{ raceId: 80004, amount: 6 }] ] },
+			{ script: "eventprop_fountain" },
+		]},
+		{ min: 2, max: 3, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 80004, amount: 3 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30004, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 30013, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 4 }], [{ raceId: 30012, amount: 1 }], [{ raceId: 70011, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30012, amount: 2 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 4 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 80004, amount: 4 }], [{ raceId: 80004, amount: 6 }] ] },
+			{ script: "eventprop_fountain" },
+		]},
+		{ min: 2, max: 2, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+		]},
+		{ min: 2, max: 3, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 30013, amount: 3 }], [{ raceId: 80004, amount: 6 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30004, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 30013, amount: 4 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 70011, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 80004, amount: 4 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 4 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80004, amount: 3 }], [{ raceId: 80004, amount: 4 }], [{ raceId: 80004, amount: 6 }] ] },
+		]},	]},
 ]},
 
 // Alby Beginner Dungeon
 //---------------------------------------------------------------------------
 { name: "tircho_alby_beginner_1_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, sets: [
+		{ min: 1, max: 1, puzzles: [
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 30005, amount: 3 }], [{ raceId: 120006, amount: 3 }], [{ raceId: 90002, amount: 3 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 2 }], [{ raceId: 120006, amount: 4 }], [{ raceId: 30005, amount: 3 }] ] },
+		]},
+		{ min: 1, max: 2, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 3 }], [{ raceId: 120006, amount: 4 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 120006, amount: 3 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 80002, amount: 3 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 80002, amount: 3 }], [{ raceId: 30005, amount: 5 }], [{ raceId: 90002, amount: 3 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 120006, amount: 5 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 90002, amount: 3 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 120006, amount: 2 }], [{ raceId: 120006, amount: 4 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "keychest_monster2", groups: [ [{ raceId: 80002, amount: 3 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 120006, amount: 5 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 80002, amount: 5 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30005, amount: 3 }] ] },
+			{ script: "eventprop_fountain" },
+		]},	]},
 ]},
 
 // Alby Dungeon
@@ -139,7 +235,25 @@
 		]},	]},
 ]},
 { name: "tircho_alby_whiteday_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 11013, lastStatue: 10032, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
-	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true },
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, sets: [
+		{ min: 1, max: 1, puzzles: [
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 30005, amount: 3 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 2 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 30005, amount: 6 }] ] },
+		]},
+		{ min: 1, max: 2, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80001, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30001, amount: 6 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 120004, amount: 8 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 120004, amount: 5 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 80002, amount: 5 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 80001, amount: 4 }], [{ raceId: 30001, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 120004, amount: 6 }], [{ raceId: 30001, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 120004, amount: 2 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 30001, amount: 6 }] ] },
+			{ script: "keychest_monster2", groups: [ [{ raceId: 80001, amount: 3 }], [{ raceId: 30001, amount: 4 }], [{ raceId: 120004, amount: 8 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 80001, amount: 5 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30001, amount: 3 }] ] },
+			{ script: "eventprop_fountain" },
+		]},	]},
 ]},
 { name: "tircho_alby_dungeon_recover", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true },
