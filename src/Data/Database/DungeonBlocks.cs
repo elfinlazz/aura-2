@@ -24,6 +24,21 @@ namespace Aura.Data.Database
 		}
 
 		/// <summary>
+		/// Returns the first block that has only the given direction.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public DungeonBlockData Get(DungeonBlockType type, int direction)
+		{
+			var top = direction == 0 ? 1 : 0;
+			var right = direction == 1 ? 1 : 0;
+			var bottom = direction == 2 ? 1 : 0;
+			var left = direction == 3 ? 1 : 0;
+
+			return this.Get(type, top, right, bottom, left);
+		}
+
+		/// <summary>
 		/// Returns the first block with the given type and directions.
 		/// </summary>
 		/// <param name="type"></param>
