@@ -1,6 +1,6 @@
 using Aura.Channel.World.Dungeons;
 
-[DungeonScript("gairech_fiodh_dungeon_eu")]
+[DungeonScript("gairech_fiodh_dungeon")]
 public class FiodhDungeonScript : DungeonScript
 {
 	public override void OnCreation(Dungeon dungeon)

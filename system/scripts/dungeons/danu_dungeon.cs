@@ -5,7 +5,7 @@ public class FiodhDungeonRouteScript : DungeonScript
 {
 	public override bool Route(Creature creature, Item item, ref string dungeonName)
 	{
-		dungeonName = "gairech_fiodh_dungeon_eu";
+		dungeonName = "gairech_fiodh_dungeon";
 		return true;
 	}
 }
