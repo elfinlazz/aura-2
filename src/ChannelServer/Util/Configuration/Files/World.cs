@@ -32,6 +32,7 @@ namespace Aura.Channel.Util.Configuration.Files
 		public bool InfiniteResources { get; protected set; }
 		public bool PerfectFishing { get; protected set; }
 		public bool InfiniteBait { get; protected set; }
+		public bool InfiniteArrows { get; protected set; }
 
 		public bool Bagception { get; protected set; }
 		public bool NoDurabilityLoss { get; protected set; }
@@ -73,6 +74,7 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.InfiniteResources = this.GetBool("infinite_resources", false);
 			this.PerfectFishing = this.GetBool("perfect_fishing", false);
 			this.InfiniteBait = this.GetBool("infinite_bait", false);
+			this.InfiniteArrows = this.GetBool("infinite_arrows", false);
 
 			this.Bagception = this.GetBool("bagception", false);
 			this.NoDurabilityLoss = this.GetBool("no_durability_loss", false);

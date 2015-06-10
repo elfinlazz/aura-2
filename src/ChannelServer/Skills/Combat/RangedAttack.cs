@@ -222,8 +222,7 @@ namespace Aura.Channel.Skills.Combat
 				skill.Train(1); // Try ranged attack.
 
 			// Reduce arrows
-			// TODO: option
-			if (attacker.Magazine != null)
+			if (attacker.Magazine != null && !ChannelServer.Instance.Conf.World.InfiniteArrows)
 				attacker.Inventory.Decrement(attacker.Magazine);
 
 			// Disable fire arrow effect
