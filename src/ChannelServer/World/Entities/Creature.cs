@@ -102,6 +102,8 @@ namespace Aura.Channel.World.Entities
 		public float Upper { get { return _upper; } set { _upper = Math2.Clamp(MinWeight, MaxWeight, value); } }
 		public float Lower { get { return _lower; } set { _lower = Math2.Clamp(MinWeight, MaxWeight, value); } }
 
+		public float BodyScale { get { return (this.Height * 0.4f + 0.6f); } }
+
 		public string StandStyle { get; set; }
 		public string StandStyleTalking { get; set; }
 
@@ -1164,8 +1166,8 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public int AttackRangeFor(Creature target)
 		{
-			var attackerRange = this.RaceData.AttackRange * this.Height;
-			var targetRange = target.RaceData.AttackRange * target.Height;
+			var attackerRange = this.RaceData.AttackRange * this.BodyScale;
+			var targetRange = target.RaceData.AttackRange * target.BodyScale;
 
 			var result = 156f; // Default found in the client (for reference)
 
