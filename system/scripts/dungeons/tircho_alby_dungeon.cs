@@ -1,7 +1,7 @@
 //--- Aura Script -----------------------------------------------------------
 // Alby Dungeon
 //--- Description -----------------------------------------------------------
-// Alby router and script for Alby normal.
+// Alby router and script for Alby Normal.
 //---------------------------------------------------------------------------
 
 using Aura.Channel.World.Dungeons;
