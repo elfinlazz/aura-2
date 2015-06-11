@@ -321,6 +321,20 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns new stack of gold.
+		/// </summary>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public static Item CreateEnchanted(int itemId, int prefix = 0, int suffix = 0)
+		{
+			var item = new Item(itemId);
+			if (prefix > 0) item.OptionInfo.Prefix = (ushort)prefix;
+			if (suffix > 0) item.OptionInfo.Suffix = (ushort)suffix;
+
+			return item;
+		}
+
+		/// <summary>
 		/// Returns new check with the given amount.
 		/// </summary>
 		/// <param name="amount"></param>
