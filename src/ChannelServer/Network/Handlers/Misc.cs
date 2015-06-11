@@ -251,5 +251,17 @@ namespace Aura.Channel.Network.Handlers
 		{
 			// Officials don't do anything here... auto equip ammo? =D
 		}
+
+		/// <summary>
+		/// Sent when a cutscene is finished or canceled?
+		/// </summary>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.UnkCutsceneEnd)]
+		public void UnkCutsceneEnd(ChannelClient client, Packet packet)
+		{
+			// Doesn't look like the server sends a response to this.
+		}
 	}
 }

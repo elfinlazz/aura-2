@@ -198,6 +198,8 @@ namespace Aura.Mabi.Network
 
 		public const int SawItemNotification = 0x65D8; // [190100, NA200 (2015-01-15)]
 
+		public const int UnkCutsceneEnd = 0x65DC; // Relatively new? (NA204)
+
 		public const int SkillInfo = 0x6979;
 		public const int SkillTrainingUp = 0x697C;
 		public const int SkillAdvance = 0x697E;
