@@ -52,6 +52,129 @@
 		]},	]},
 ]},
 
+// Alby Dungeon
+{ name: "tircho_alby_fountaintest_high_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, hasBoss: true, sets: [
+		{ min: 1, max: 2, puzzles: [
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
+		]},
+		{ min: 7, max: 8, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+		]},
+		{ min: 7, max: 8, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+		]},
+		{ min: 7, max: 8, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+		]},
+		{ min: 7, max: 8, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+			{ script: "eventprop_fountain" },
+		]},
+		{ min: 1, max: 2, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+		]},	]},
+]},
+
+// Alby Dungeon
+{ name: "tircho_alby_herbtest_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, hasBoss: true, sets: [
+		{ min: 1, max: 2, puzzles: [
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
+		]},
+		{ min: 7, max: 8, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "collectprop_herb", arg: "antidoteherb" },
+			{ script: "collectprop_herb", arg: "bloodyherb" },
+			{ script: "collectprop_herb", arg: "bloodyherb" },
+			{ script: "collectprop_herb", arg: "sunlightherb" },
+			{ script: "collectprop_herb", arg: "manaherb" },
+			{ script: "collectprop_herb", arg: "mandrake" },
+			{ script: "collectprop_herb", arg: "poisonherb" },
+		]},
+		{ min: 7, max: 8, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "collectprop_herb", arg: "antidoteherb" },
+			{ script: "collectprop_herb", arg: "bloodyherb" },
+			{ script: "collectprop_herb", arg: "bloodyherb" },
+			{ script: "collectprop_herb", arg: "sunlightherb" },
+			{ script: "collectprop_herb", arg: "manaherb" },
+			{ script: "collectprop_herb", arg: "mandrake" },
+			{ script: "collectprop_herb", arg: "poisonherb" },
+		]},
+		{ min: 7, max: 8, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "collectprop_herb", arg: "antidoteherb" },
+			{ script: "collectprop_herb", arg: "bloodyherb" },
+			{ script: "collectprop_herb", arg: "bloodyherb" },
+			{ script: "collectprop_herb", arg: "sunlightherb" },
+			{ script: "collectprop_herb", arg: "manaherb" },
+			{ script: "collectprop_herb", arg: "mandrake" },
+			{ script: "collectprop_herb", arg: "poisonherb" },
+		]},
+		{ min: 7, max: 8, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "collectprop_herb", arg: "antidoteherb" },
+			{ script: "collectprop_herb", arg: "bloodyherb" },
+			{ script: "collectprop_herb", arg: "bloodyherb" },
+			{ script: "collectprop_herb", arg: "sunlightherb" },
+			{ script: "collectprop_herb", arg: "manaherb" },
+			{ script: "collectprop_herb", arg: "mandrake" },
+			{ script: "collectprop_herb", arg: "poisonherb" },
+		]},
+		{ min: 1, max: 2, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }], [{ raceId: 30005, amount: 4 }] ] },
+		]},	]},
+]},
+
+// Alby Dungeon
+{ name: "tircho_alby_dungeonnpctest_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 16, branch: 0, coverage: 80, hasBoss: true, sets: [
+		{ min: 2, max: 2, puzzles: [
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
+			{ script: "dungeonnpc" },
+		]},	]},
+]},
+
 // Alby Beginner Dungeon
 { name: "tircho_alby_beginner_1_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, sets: [
