@@ -32,7 +32,7 @@ public class AlbyBeginnerDungeonScript : DungeonScript
 		{
 			var treasureChest = new TreasureChest();
 
-			treasureChest.Add(Item.CreateGold(rnd.Next(58, 86))); // Gold
+			treasureChest.AddGold(rnd.Next(58, 86)); // Gold
 			treasureChest.Add(GetRandomTreasureItem(rnd)); // Random item
 
 			dungeon.AddChest(treasureChest);

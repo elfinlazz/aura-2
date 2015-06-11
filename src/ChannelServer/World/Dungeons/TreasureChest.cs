@@ -3,6 +3,7 @@
 
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
+using System;
 using System.Collections.Generic;
 
 namespace Aura.Channel.World.Dungeons
@@ -34,6 +35,22 @@ namespace Aura.Channel.World.Dungeons
 				return;
 
 			this.Items.Add(item);
+		}
+
+		/// <summary>
+		/// Adds gold stacks based on amount to chest.
+		/// </summary>
+		/// <param name="amount"></param>
+		public void AddGold(int amount)
+		{
+			while (amount > 0)
+			{
+				var n = Math.Min(1000, amount);
+				amount -= n;
+
+				var gold = Item.CreateGold(n);
+				this.Add(gold);
+			}
 		}
 
 		/// <summary>

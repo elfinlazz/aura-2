@@ -44,7 +44,7 @@ public class AlbyIntOneDungeonScript : DungeonScript
 				treasureChest.Add(item);
 			}
 
-			treasureChest.Add(Item.CreateGold(rnd.Next(2080, 4160))); // Gold
+			treasureChest.AddGold(rnd.Next(2080, 4160)); // Gold
 			treasureChest.Add(GetRandomTreasureItem(rnd)); // Random item
 
 			dungeon.AddChest(treasureChest);

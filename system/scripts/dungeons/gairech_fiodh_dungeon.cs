@@ -51,7 +51,7 @@ public class FiodhDungeonScript : DungeonScript
 				treasureChest.Add(cap);
 			}
 
-			treasureChest.Add(Item.CreateGold(rnd.Next(1500, 3600))); // Gold
+			treasureChest.AddGold(rnd.Next(1500, 3600)); // Gold
 			treasureChest.Add(GetRandomTreasureItem(rnd)); // Random item
 
 			dungeon.AddChest(treasureChest);

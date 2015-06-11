@@ -62,7 +62,7 @@ public class AlbyTutorialDungeonScript : DungeonScript
 			}
 			treasureChest.Add(enchant);
 
-			treasureChest.Add(Item.CreateGold(rnd.Next(153, 768))); // Gold
+			treasureChest.AddGold(rnd.Next(153, 768)); // Gold
 			treasureChest.Add(GetRandomTreasureItem(rnd)); // Random item
 
 			dungeon.AddChest(treasureChest);
