@@ -153,6 +153,9 @@ namespace Aura.Data.Database
 										monsterData.RaceId = groupEntry.ReadInt("raceId");
 										monsterData.Amount = groupEntry.ReadInt("amount");
 
+										if (!AuraData.RaceDb.Entries.ContainsKey(monsterData.RaceId))
+											_warnings.Add(new DatabaseWarningException("Race '" + monsterData.RaceId + "' not found."));
+
 										list.Add(monsterData);
 									}
 
