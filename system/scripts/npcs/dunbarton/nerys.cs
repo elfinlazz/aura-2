@@ -65,15 +65,70 @@ public class NerysScript : NpcScript
 				return;
 
 			case "@repair":
-				Msg("You can repair weapons, armor, and equipment here.<br/>I use expensive repair tools, so the fee is fairly high. Is that okay with you?<br/>I do make fewer mistakes because of that, though."); // <repair rate='95' stringid='(*/smith_repairable/*)' />");
-				Msg("Unimplemented");
-				Msg("If the repair fee is too much for you,<br/>try using some Holy Water of Lymilark.<br/>It should be a big help.<br/>Now, come again if there's anything that needs to be repaired."); // <repair hide='true'/>
+				Msg("You can repair weapons, armor, and equipment here.<br/>I use expensive repair tools, so the fee is fairly high. Is that okay with you?<br/>I do make fewer mistakes because of that, though.<repair rate='95' stringid='(*/smith_repairable/*)' />");
+				
+				while (true)
+				{
+					var repair = await Select();
+
+					if (!repair.StartsWith("@repair"))
+						break;
+
+					var result = Repair(repair, 95, "/smith_repairable/");
+					if (!result.HadGold)
+					{
+						RndMsg(
+							"I'd like to do it for free, but I need the money.",
+							"You'll need more money.",
+							"That's not enough money to fix that."
+						);
+					}
+					else if (result.Points == 1)
+					{
+						if (result.Fails == 0)
+							RndMsg(
+								"I raised the Durability by 1 point.",
+								"1 point has been repaired, as you have wanted.",
+								"I finished repairing 1 point."
+							);
+						else
+							Msg("Hmm... Sorry, I think I've failed the repair job.");
+					}
+					else if (result.Points > 1)
+					{
+						if (result.Fails == 0)
+							RndMsg(
+								"There! Perfectly repaired!",
+								"It's as good as new.",
+								"Alright! It's been nicely repaired."
+						);
+						else
+							// TODO: Use string format once we have XML dialogues.
+							Msg("There, it's done.<br/>But I made " + result.Fails + " mistake(s), unfortunately.<br/>I could restore only " + result.Successes + " point(s).");
+					}
+				}
+
+				Msg("If the repair fee is too much for you,<br/>try using some Holy Water of Lymilark.<br/>It should be a big help.<br/>Now, come again if there's anything that needs to be repaired.<repair hide='true'/>");
 				break;
 
 			case "@upgrade":
-				Msg("Modification? Pick an item.<br/>I don't have to explain to you about<br/>the number of possible modification and the types, do I?"); // <upgrade />
-				Msg("Unimplemented");
-				Msg("Is that all for today?<br/>Well, come back anytime you need me."); // <br/><upgrade hide='true'/>
+				Msg("Modification? Pick an item.<br/>I don't have to explain to you about<br/>the number of possible modification and the types, do I?<upgrade />");
+				
+				while(true)
+				{
+					var reply = await Select();
+					
+					if(!reply.StartsWith("@upgrade:"))
+						break;
+						
+					var result = Upgrade(reply);
+					if(result.Success)
+						Msg("The modification you've asked for has been done.<br/>Is there anything you want to modify?");
+					else
+						Msg("(Error)");
+				}
+
+				Msg("Is that all for today?<br/>Well, come back anytime you need me.<upgrade hide='true'/>");
 				break;
 		}
 		
