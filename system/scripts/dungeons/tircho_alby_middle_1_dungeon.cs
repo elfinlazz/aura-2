@@ -61,7 +61,7 @@ public class AlbyIntOneDungeonScript : DungeonScript
 				new DropData(itemId: 62004, chance: 2, amountMin: 2, amountMax: 4), // Magic Powder
 				new DropData(itemId: 51102, chance: 2, amountMin: 2, amountMax: 4), // Mana Herb
 				new DropData(itemId: 51003, chance: 2, amountMin: 2, amountMax: 4), // HP 50 Potion
-				new DropData(itemId: 51003, chance: 2, amountMin: 2, amountMax: 4), // Stamina 50 Potion
+				new DropData(itemId: 51013, chance: 2, amountMin: 2, amountMax: 4), // Stamina 50 Potion
 				new DropData(itemId: 51008, chance: 2, amountMin: 2, amountMax: 4), // MP 50 Potion
 				new DropData(itemId: 63116, chance: 3, amount: 1, expires: 480), // Alby Intermediate Fomor Pass for One
 				new DropData(itemId: 63117, chance: 2, amount: 1, expires: 480), // Alby Intermediate Fomor Pass for Two
