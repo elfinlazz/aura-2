@@ -54,6 +54,13 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <param name="lockPlace"></param>
 		/// <param name="keyName"></param>
 		void LockPlace(IPuzzlePlace lockPlace, string keyName);
+
+		/// <summary>
+		/// Open locked place.
+		/// </summary>
+		/// <param name="lockPlace"></param>
+		void OpenPlace(IPuzzlePlace lockPlace);
+
 		IPuzzleChest NewChest(IPuzzlePlace place, string name);
 		IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, uint color);
 		IMonsterGroup AllocateMonsterGroup(IPuzzlePlace place, string name, int group);
@@ -128,6 +135,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public void LockPlace(IPuzzlePlace lockPlace, string keyName)
 		{
 			var place = lockPlace as PuzzlePlace;
+			if (place == null) throw new CPuzzleException("tried to lock a non-existent place");
 			if (!place.IsLock)
 			{
 				throw new CPuzzleException("tried to lock a place that isn't a Lock");
@@ -136,6 +144,13 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				place.LockPlace(this.GetBoosKey(keyName));
 			else
 				place.LockPlace(this.GetKey(keyName, place.LockColor));
+		}
+
+		public void OpenPlace(IPuzzlePlace lockPlace)
+		{
+			var place = lockPlace as PuzzlePlace;
+			if (place != null) place.OpenPlace();
+			else throw new CPuzzleException("tried to open a non-existent place");
 		}
 
 		public Item GetBoosKey(string name)

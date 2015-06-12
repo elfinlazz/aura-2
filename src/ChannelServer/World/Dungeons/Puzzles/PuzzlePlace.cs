@@ -184,6 +184,15 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Doors[this.DoorDirection].SetKey(key);
 		}
 
+		public void OpenPlace()
+		{
+			if (!IsLock) return;
+			if (this._placeNode.Value.DoorType[this.DoorDirection] == (int)DungeonBlockType.BossDoor)
+				this._puzzle.GetDungeon().BossDoorBehavior(null, this.Doors[this.DoorDirection].GetDoorProp());
+			else
+				this.Doors[this.DoorDirection].Open();
+		}
+
 		public uint GetLockColor()
 		{
 			return this.LockColor;

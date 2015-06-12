@@ -29,7 +29,7 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		if (Switch != null)
 		{
 			if (Switch.GetName() == "Switch1" && propEvent == "on")
-				puzzle.GetPlace("LockedPlace").OpenAllDoors();
+				puzzle.OpenPlace(puzzle.GetPlace("LockedPlace"));
 		}
 	}
 }
