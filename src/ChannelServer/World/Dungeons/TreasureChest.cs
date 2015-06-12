@@ -73,14 +73,14 @@ namespace Aura.Channel.World.Dungeons
 				if (prop.State == "open")
 					return;
 
-				prop.SetState("open");
-
 				if (!creature.Inventory.Has(70028)) // Treasure Chest Key
 				{
 					// Unofficial
 					Send.Notice(creature, Localization.Get("You don't have a key."));
 					return;
 				}
+
+				prop.SetState("open");
 
 				creature.Inventory.Remove(70028);
 
