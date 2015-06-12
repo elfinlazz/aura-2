@@ -145,7 +145,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			var y = position.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
 
 			this._prop = new Prop(SwitchPropId, this._region.Id, x, y, 0.0f, state: this._state);
-			this._prop.Info.Color1 = this._color;
+			this._prop.Info.Color2 = this._color;
 
 			this._prop.Behavior = (creature, prop) =>
 			{
