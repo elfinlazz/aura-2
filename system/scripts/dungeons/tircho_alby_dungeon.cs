@@ -40,6 +40,7 @@ public class AlbyDungeonScript : DungeonScript
 		}
 
 		// Alby Int 2
+		// TODO: Party check
 		if (item.Info.Id == 63117) // Alby Intermediate Fomor Pass for Two
 		{
 			dungeonName = "tircho_alby_middle_2_dungeon";
@@ -47,6 +48,7 @@ public class AlbyDungeonScript : DungeonScript
 		}
 
 		// Alby Int 4
+		// TODO: Party check
 		if (item.Info.Id == 63118) // Alby Intermediate Fomor Pass for Four
 		{
 			dungeonName = "tircho_alby_middle_4_dungeon";
