@@ -335,6 +335,32 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Creates a key.
+		/// </summary>
+		/// <param name="itemId">Id of the key, e.g. 70028 for Treasure Chest Key.</param>
+		/// <param name="lockName">Name of the lock this key is for.</param>
+		/// <param name="ownerEntityId">The entity id of the person who can use this key, set to 0 to ignore.</param>
+		/// <returns></returns>
+		public static Item CreateKey(int itemId, string lockName, long ownerEntityId = 0)
+		{
+			// 70028 - Treasure Chest Key
+			//005 [................] String : prop_to_unlock:s:chest;
+			//006 [................] String : AIEXCLR:8:4503599627466431;
+
+			// 70029 - Dungeon Room Key
+			// 70030 - Boss Room Key
+			//005 [................] String : prop_to_unlock:s:CF273B4974C7C864AFBB2D8C1D86EB9C;
+			//006 [................] String : 
+
+			var item = new Item(itemId);
+			item.MetaData1.SetString("prop_to_unlock", lockName);
+			if (ownerEntityId != 0)
+				item.MetaData1.SetLong("AIEXCLR", ownerEntityId);
+
+			return item;
+		}
+
+		/// <summary>
 		/// Returns new check with the given amount.
 		/// </summary>
 		/// <param name="amount"></param>

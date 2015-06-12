@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 using System;
@@ -67,7 +68,14 @@ namespace Aura.Channel.World.Dungeons
 			result.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?")));
 			result.Behavior = (creature, prop) =>
 			{
-				// TODO: if key
+				if (!creature.Inventory.Has(70028)) // Treasure Chest Key
+				{
+					// Unofficial
+					Send.Notice(creature, Localization.Get("You don't have a key."));
+					return;
+				}
+
+				creature.Inventory.Remove(70028);
 
 				var rnd = RandomProvider.Get();
 				foreach (var item in this.Items)
