@@ -24,10 +24,10 @@ namespace Aura.Mabi.Const
 		public static readonly int Revive = 4;
 
 		/// <summary>
-		/// Used when picking up a dungeon key.
-		/// int:itemId, int:?, int:?, int:?
+		/// Displays item above player's head, e.g. keys in dungeons.
+		/// int:itemId, int:color1, int:color2, int:color3
 		/// </summary>
-		public static readonly int PickUpKey = 8;
+		public static readonly int PickUpItem = 8;
 
 		/// <summary>
 		/// byte:type, byte:? [, long:propId, int:itemId, int:fishSize, string:fishPropname, int:fishPropSize]
