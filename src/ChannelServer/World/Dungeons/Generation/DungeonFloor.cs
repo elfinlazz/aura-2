@@ -5,6 +5,7 @@ using Aura.Data.Database;
 using System;
 using System.Collections.Generic;
 using Aura.Mabi.Const;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Dungeons.Generation
 {
@@ -15,6 +16,8 @@ namespace Aura.Channel.World.Dungeons.Generation
 		//private DungeonFloor next_floor_structure;
 
 		private List<List<RoomTrait>> _rooms;
+
+		public List<DungeonFloorSection> Sections { get; private set; }
 
 		private Position _pos;
 		private Position _startPos;
@@ -37,6 +40,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			this.Width = 1;
 			this.Height = 1;
 			this.MazeGenerator = new MazeGenerator();
+			this.Sections = new List<DungeonFloorSection>();
 
 			_dungeonGenerator = dungeonGenerator;
 			_branchProbability = floorData.Branch;
@@ -50,6 +54,28 @@ namespace Aura.Channel.World.Dungeons.Generation
 			this.InitRoomtraits();
 			this.GenerateMaze(floorData);
 			this.GenerateRooms(floorData);
+			this.InitSections(floorData);
+		}
+
+		private void InitSections(DungeonFloorData floorData)
+		{
+			var criticalPathLength = this.MazeGenerator.CriticalPath.Count;
+			var sectionCount = floorData.Sets.Count;
+			if (sectionCount == 0) return;
+			var sectionLength = criticalPathLength / sectionCount;
+			for (var i = 0; i < sectionCount; ++i)
+			{
+				List<MazeMove> sectionPath;
+				var haveBossDoor = false;
+				// if last section
+				if (i == sectionCount - 1)
+				{
+					sectionPath = this.MazeGenerator.CriticalPath.GetRange(i * sectionLength, criticalPathLength - i * sectionLength);
+					haveBossDoor = this.HasBossRoom;
+				}
+				else sectionPath = this.MazeGenerator.CriticalPath.GetRange(i * sectionLength, sectionLength);
+				this.Sections.Add(new DungeonFloorSection(this.GetRoom(sectionPath[0].PosFrom), sectionPath, haveBossDoor, this._dungeonGenerator.RngPuzzles));
+			}
 		}
 
 		private void GenerateRooms(DungeonFloorData floorData)
@@ -60,6 +86,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 				var preEndRoom = this.GetRoom(endPos.GetBiasedPosition(Direction.Down));
 				preEndRoom.RoomType = RoomType.Room;
+				preEndRoom.SetDoorType(Direction.Up, (int)DungeonBlockType.BossDoor);
 			}
 		}
 
@@ -193,7 +220,6 @@ namespace Aura.Channel.World.Dungeons.Generation
 			this.CreateSubPath(_coverageFactor, _branchProbability);
 
 			this.SetRoomTypes();
-			this.UpdatePathPosition();
 		}
 
 		private void SetRoomTypes()
@@ -256,15 +282,10 @@ namespace Aura.Channel.World.Dungeons.Generation
 					if (room != null)
 						room.Link(direction, LinkType.To);
 
-					return this.CreateSubPathRecursive(biased_pos);
+					this.CreateSubPathRecursive(biased_pos);
 				}
 			}
 			return true;
-		}
-
-		private void UpdatePathPosition()
-		{
-			// TODO: _update_path_position
 		}
 
 		private void SetRandomPathPosition()

@@ -209,11 +209,16 @@
     <Compile Include="World\Dungeons\DungeonRegion.cs" />
     <Compile Include="World\Dungeons\Generation\Direction.cs" />
     <Compile Include="World\Dungeons\Generation\DungeonFloor.cs" />
+    <Compile Include="World\Dungeons\Generation\DungeonFloorSection.cs" />
     <Compile Include="World\Dungeons\Generation\DungeonGenerator.cs" />
     <Compile Include="World\Dungeons\Generation\MazeGenerator.cs" />
     <Compile Include="World\Dungeons\Generation\MazeMove.cs" />
     <Compile Include="World\Dungeons\Generation\MazeRoomInternal.cs" />
     <Compile Include="World\Dungeons\Generation\Position.cs" />
+    <Compile Include="World\Dungeons\Puzzles\MonsterGroup.cs" />
+    <Compile Include="World\Dungeons\Puzzles\Puzzle.cs" />
+    <Compile Include="World\Dungeons\Puzzles\PuzzlePlace.cs" />
+    <Compile Include="World\Dungeons\Puzzles\PuzzleProp.cs" />
     <Compile Include="World\Dungeons\Generation\RandomDirection.cs" />
     <Compile Include="World\Dungeons\Generation\RoomTrait.cs" />
     <Compile Include="World\Dungeons\TreasureChest.cs" />

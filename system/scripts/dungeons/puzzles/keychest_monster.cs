@@ -1,14 +1,14 @@
 //--- Aura Script -----------------------------------------------------------
-// Entrance Puzzle
+// Keychest Monster Puzzle
 //--- Description -----------------------------------------------------------
-// Used as first puzzle in every dungeon because <TODO: insert reason>.
+// Used as 
 //---------------------------------------------------------------------------
 
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Dungeons.Puzzles;
 
-[PuzzleScript("entrance_puzzle")]
-public class EntrancePuzzleScript : PuzzleScript
+[PuzzleScript("keychest_monster")]
+public class KeychestMonsterScript : PuzzleScript
 {
 	public override void OnPrepare(IPuzzle puzzle)
 	{
@@ -26,6 +26,7 @@ public class EntrancePuzzleScript : PuzzleScript
 		puzzle.LockPlace(LockedPlace, "Lock");
 
 		chest.AddKeyForLock(LockedPlace);
+
 	}
 
 	public override void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)

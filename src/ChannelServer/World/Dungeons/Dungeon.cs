@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Aura.Channel.World.Dungeons.Puzzles;
 
 namespace Aura.Channel.World.Dungeons
 {
@@ -157,9 +158,43 @@ namespace Aura.Channel.World.Dungeons
 			};
 		}
 
+		private void InitPuzzles(int i)
+		{
+			var region = this.Regions[i];
+			var floorData = this.Generator.Data.Floors[i - 1];
+			var rng = this.Generator.RngPuzzles;
+			var sections = this.Generator.Floors[i - 1].Sections;
+
+			for (var section = 0; section < sections.Count; ++section)
+			{
+				var puzzleCount = (int)rng.GetUInt32((uint)floorData.Sets[section].Min, (uint)floorData.Sets[section].Max);
+				for (var p = 0; p < puzzleCount; ++p)
+				{
+					var randomPuzzle = (int)rng.GetUInt32((uint)floorData.Sets[section].Puzzles.Count);
+					var scriptName = floorData.Sets[section].Puzzles[randomPuzzle].Script;
+					var puzzleScript = ChannelServer.Instance.ScriptManager.PuzzleScripts.Get(scriptName);
+					var monsterGroups = floorData.Sets[section].Puzzles[randomPuzzle].Groups;
+					if (puzzleScript == null)
+					{
+						Log.Warning("DungeonFloor.GeneratePuzzles: '{0}' puzzle script not found.", scriptName);
+						continue;
+					}
+					try
+					{
+						puzzleScript.OnPrepare(sections[section].NewPuzzle(this, region, puzzleScript, monsterGroups));
+					}
+					catch (CPuzzleException e)
+					{
+						Log.Warning("Section {0}, puzzle '{1}' : {2}", section, scriptName, e.Message);
+					}
+				}
+			}
+		}
+
 		public void InitFloorRegion(int i)
 		{
 			this.SetUpHallwayProps(i);
+			this.InitPuzzles(i);
 
 			var region = this.Regions[i];
 			var floor = this.Generator.Floors[i - 1];
@@ -172,20 +207,29 @@ namespace Aura.Channel.World.Dungeons
 			var startPos = new Dungeons.Generation.Position(startTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, startTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
 			var startRoom = gen.GetRoom(startTile);
 			var startRoomTrait = floor.GetRoom(startTile);
+			var startRoomIncomingDirection = new int[] { 0, 0, 0, 0 };
+			startRoomIncomingDirection[startRoomTrait.GetIncomingDirection()] = 1;
 
 			var endTile = gen.EndPos;
 			var endPos = new Dungeons.Generation.Position(endTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, endTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
 			var endRoom = gen.GetRoom(endTile);
 			var endRoomTrait = floor.GetRoom(endTile);
+			var endRoomDirection = 0;
+			for (int dir = 0; dir < 4; ++dir)
+				if (endRoomTrait.Links[dir] == LinkType.To)
+				{
+					endRoomDirection = dir;
+					break;
+				}
 
-			var door = new Prop(this.Data.DoorId, region.Id, startPos.X, startPos.Y, Rotation(GetFirstDirection(startRoom.Directions)), 1, 0, "open");
-			region.AddProp(door);
+			//var door = new Prop(this.Data.DoorId, region.Id, startPos.X, startPos.Y, Rotation(GetFirstDirection(startRoom.Directions)), 1, 0, "open");
+			//region.AddProp(door);
 
-			var stairsBlock = this.Data.Style.Get(DungeonBlockType.StairsUp, startRoomTrait.DoorType);
+			var stairsBlock = this.Data.Style.Get(DungeonBlockType.StairsUp, startRoomIncomingDirection);
 			var stairs = new Prop(stairsBlock.PropId, region.Id, startPos.X, startPos.Y, MabiMath.DegreeToRadian(stairsBlock.Rotation), 1, 0, "single");
 			region.AddProp(stairs);
 
-			var portalBlock = this.Data.Style.Get(DungeonBlockType.PortalUp, startRoomTrait.DoorType);
+			var portalBlock = this.Data.Style.Get(DungeonBlockType.PortalUp, startRoomIncomingDirection);
 			var portal = new Prop(portalBlock.PropId, region.Id, startPos.X, startPos.Y, MabiMath.DegreeToRadian(portalBlock.Rotation), 1, 0, "single", "_upstairs", Localization.Get("<mini>TO</mini> Upstairs"));
 			portal.Behavior = (cr, pr) =>
 			{
@@ -212,12 +256,20 @@ namespace Aura.Channel.World.Dungeons
 				_bossExitDoor = new Prop(this.Data.BossExitDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Up), 1, 0, "closed");
 				region.AddProp(_bossExitDoor);
 
-				_bossDoor = new Prop(this.Data.BossDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Down), 1, 0, "closed");
-				_bossDoor.Behavior = this.BossDoorBehavior;
-				region.AddProp(_bossDoor);
+				if (endRoomTrait.PuzzleDoors[Direction.Down] == null)
+				{
+					_bossDoor = new Prop(this.Data.BossDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize/2,
+						Rotation(Direction.Down), 1, 0, "closed");
+					_bossDoor.Behavior = this.BossDoorBehavior;
+					region.AddProp(_bossDoor);
+				}
+				else
+				{
+					_bossDoor = endRoomTrait.PuzzleDoors[Direction.Down].GetDoorProp();
+				}
 
-				var dummyDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y - Dungeon.TileSize, Rotation(GetFirstDirection(gen.GetRoom(endTile.GetBiasedPosition(Direction.Down)).Directions, Direction.Right)), 1, 0, "open");
-				region.AddProp(dummyDoor);
+				//var dummyDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y - Dungeon.TileSize, Rotation(GetFirstDirection(gen.GetRoom(endTile.GetBiasedPosition(Direction.Down)).Directions, Direction.Right)), 1, 0, "open");
+				//region.AddProp(dummyDoor);
 
 				var exitStatue = new Prop(this.Data.LastStatuePropId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize * 2, Rotation(Direction.Up), 1, 0, "single");
 				exitStatue.Info.Color1 = 0xFFFFFF;
@@ -227,14 +279,14 @@ namespace Aura.Channel.World.Dungeons
 			}
 			else
 			{
-				var endDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y, Rotation(GetFirstDirection(endRoom.Directions)), 1, 0, "open");
-				region.AddProp(endDoor);
+				//var endDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y, Rotation(GetFirstDirection(endRoom.Directions)), 1, 0, "open");
+				//region.AddProp(endDoor);
 
-				var stairsDownBlock = this.Data.Style.Get(DungeonBlockType.StairsDown, endRoomTrait.DoorType);
+				var stairsDownBlock = this.Data.Style.Get(DungeonBlockType.StairsDown, endRoomDirection);
 				var stairsDown = new Prop(stairsDownBlock.PropId, region.Id, endPos.X, endPos.Y, MabiMath.DegreeToRadian(stairsDownBlock.Rotation), 1, 0, "single");
 				region.AddProp(stairsDown);
 
-				var portalDownBlock = this.Data.Style.Get(DungeonBlockType.PortalDown, endRoomTrait.DoorType);
+				var portalDownBlock = this.Data.Style.Get(DungeonBlockType.PortalDown, endRoomDirection);
 				var portalDown = new Prop(portalDownBlock.PropId, region.Id, endPos.X, endPos.Y, MabiMath.DegreeToRadian(portalDownBlock.Rotation), 1, 0, "single", "_downstairs", Localization.Get("<mini>TO</mini> Downstairs"));
 				portalDown.Behavior = (cr, pr) =>
 				{
@@ -246,6 +298,36 @@ namespace Aura.Channel.World.Dungeons
 				};
 				region.AddProp(portalDown);
 			}
+
+			// Place lacking doors.
+			for (int x = 0; x < floor.MazeGenerator.Width; ++x)
+				for (int y = 0; y < floor.MazeGenerator.Height; ++y)
+				{
+					var room = floor.MazeGenerator.GetRoom(x, y);
+					var roomTrait = floor.GetRoom(x, y);
+
+					if (!room.Visited)
+						continue;
+
+					var isRoom = (roomTrait.RoomType >= RoomType.Start);
+
+					if (isRoom)
+						for (var dir = 0; dir < 4; ++dir)
+							if ((roomTrait.Links[dir] != LinkType.None) && roomTrait.PuzzleDoors[dir] == null)
+								if (roomTrait.DoorType[dir] == (int)DungeonBlockType.Door || roomTrait.DoorType[dir] == (int)DungeonBlockType.Alley)
+								{
+									var doorX = x * Dungeon.TileSize + Dungeon.TileSize / 2;
+									var doorY = y * Dungeon.TileSize + Dungeon.TileSize / 2;
+
+									var doorBlock = this.Data.Style.Get(DungeonBlockType.Door, dir);
+
+									var doorProp = new Prop(doorBlock.PropId, region.Id, doorX, doorY, MabiMath.DegreeToRadian(doorBlock.Rotation), state: "open");
+									doorProp.Info.Color1 = 0xFFFFFF;
+									doorProp.Info.Color2 = 0xFFFFFF;
+									region.AddProp(doorProp);
+								}
+				}
+
 		}
 
 		public static int GetFirstDirection(int[] directions, int start = 0)

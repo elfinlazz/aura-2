@@ -5,10 +5,9 @@ using Aura.Shared.Scripting.Scripts;
 using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using Aura.Channel.World.Dungeons.Puzzles;
+using Aura.Data.Database;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -45,9 +44,15 @@ namespace Aura.Channel.Scripting.Scripts
 			return true;
 		}
 
-		// On ...
+		public virtual void OnPrepare(IPuzzle puzzle)
+		{
 
-		// On ...
+		}
+
+		public virtual void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)
+		{
+			
+		}
 
 		// On ...
 	}

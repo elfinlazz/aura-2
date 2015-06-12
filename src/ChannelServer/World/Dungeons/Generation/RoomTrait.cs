@@ -2,12 +2,39 @@
 // For more information, see license file in the main folder
 
 using System;
+using Aura.Channel.World.Dungeons.Puzzles;
+using Aura.Mabi.Const;
 
 namespace Aura.Channel.World.Dungeons.Generation
 {
 	public class RoomTrait
 	{
 		public RoomTrait[] Neighbor { get; private set; }
+
+		/// <summary>
+		///	Is this room should be walked though to get puzzle done
+		/// </summary>
+		public bool isOnPath;
+
+		/// <summary>
+		/// Doors for puzzles
+		/// </summary>
+		public PuzzleDoor[] PuzzleDoors { get; private set; }
+
+		/// <summary>
+		/// Is door in direction reserved for a puzzle
+		/// </summary>
+		public bool[] ReservedDoor { get; private set; }
+
+		/// <summary>
+		/// Is this room reserved for a puzzle
+		/// </summary>
+		public bool isReserved;
+
+		/// <summary>
+		/// This room is locked, don't try to put UnlockPlace in here
+		/// </summary>
+		public bool isLocked;
 
 		/// <summary>
 		/// Paths
@@ -35,6 +62,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 			this.X = x;
 			this.Y = y;
+
+			this.isOnPath = false;
+			this.isReserved = false;
+			this.PuzzleDoors = new PuzzleDoor[] {null, null, null, null };
+			this.ReservedDoor = new bool[] { false, false, false, false };
 		}
 
 		public void SetNeighbor(int direction, RoomTrait room)
@@ -56,6 +88,47 @@ namespace Aura.Channel.World.Dungeons.Generation
 				throw new ArgumentException("Direction out of bounds.");
 
 			return this.DoorType[direction];
+		}
+
+		public void SetPuzzleDoor(PuzzleDoor door, int direction)
+		{
+			this.PuzzleDoors[direction] = door;
+
+			var opposite_direction = Direction.GetOppositeDirection(direction);
+
+			var room = this.Neighbor[direction];
+			if (room != null)
+				room.PuzzleDoors[opposite_direction] = door;
+		}
+
+		public PuzzleDoor GetPuzzleDoor(int direction)
+		{
+			return this.PuzzleDoors[direction];
+		}
+
+		public void ReserveDoors()
+		{
+			if (this.RoomType != RoomType.End || this.RoomType != RoomType.Start)
+				this.RoomType = RoomType.Room;
+			for (var dir = 0; dir < 4; ++dir)
+			{
+				this.ReserveDoor(dir);
+				this.SetDoorType(dir, (int) DungeonBlockType.Door);
+			}
+		}
+
+		public void ReserveDoor(int direction)
+		{
+			if (direction > 3)
+				throw new ArgumentException("Direction out of bounds.");
+
+			this.ReservedDoor[direction] = true;
+
+			var opposite_direction = Direction.GetOppositeDirection(direction);
+
+			var room = this.Neighbor[direction];
+			if (room != null)
+				room.ReservedDoor[opposite_direction] = true;
 		}
 
 		public void Link(int direction, LinkType linkType)
@@ -89,6 +162,15 @@ namespace Aura.Channel.World.Dungeons.Generation
 			var room = this.Neighbor[direction];
 			if (room != null)
 				room.DoorType[opposite_direction] = doorType;
+		}
+
+		public int GetIncomingDirection()
+		{
+			for (var dir = 0; dir < 4; ++dir)
+			{
+				if (this.Links[dir] == LinkType.From) return dir;
+			}
+			return 0;
 		}
 	}
 
