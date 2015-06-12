@@ -173,17 +173,30 @@ namespace Aura.Channel.World.Dungeons
 				return false;
 			}
 
-			var dungeon = this.CreateDungeon(dungeonName, item.Info.Id, creature);
-			var regionId = dungeon.Regions.First().Id;
+			return this.CreateDungeonAndWarp(dungeonName, item.Info.Id, creature);
+		}
 
-			creature.LastLocation = new Location(creature.RegionId, creature.GetPosition());
-			creature.SetLocation(regionId, creature.LastLocation.X, creature.LastLocation.Y);
-			creature.Warping = true;
-			Send.CharacterLock(creature, Locks.Default);
+		public bool CreateDungeonAndWarp(string dungeonName, int itemId, Creature creature)
+		{
+			try
+			{
+				var dungeon = this.CreateDungeon(dungeonName, itemId, creature);
+				var regionId = dungeon.Regions.First().Id;
 
-			Send.DungeonInfo(creature, dungeon);
+				creature.LastLocation = new Location(creature.RegionId, creature.GetPosition());
+				creature.SetLocation(regionId, creature.LastLocation.X, creature.LastLocation.Y);
+				creature.Warping = true;
+				Send.CharacterLock(creature, Locks.Default);
 
-			return true;
+				Send.DungeonInfo(creature, dungeon);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Log.Exception(ex, "Failed to create and warp to dungeon.");
+				return false;
+			}
 		}
 	}
 }

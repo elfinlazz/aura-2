@@ -80,6 +80,7 @@ namespace Aura.Channel.Util
 
 			// Admins
 			Add(99, 99, "dynamic", "[variant]", HandleDynamic);
+			Add(99, 99, "dungeon", "<dungeon name>", HandleDungeon);
 			Add(99, -1, "reloaddata", "", HandleReloadData);
 			Add(99, -1, "reloadscripts", "", HandleReloadScripts);
 			Add(99, -1, "reloadconf", "", HandleReloadConf);
@@ -1578,6 +1579,30 @@ namespace Aura.Channel.Util
 				if (sender != target)
 					Send.ServerMessage(target, Localization.Get("'{0}' has disabled telewalk for you."), sender.Name);
 				Send.ServerMessage(sender, Localization.Get("Telewalk disabled."));
+			}
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleDungeon(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (args.Count < 2)
+				return CommandResult.InvalidArgument;
+
+			var dungeonName = args[1];
+			var itemId = 2000; // Gold
+
+			// Check dungeon
+			if (!AuraData.DungeonDb.Entries.ContainsKey(dungeonName))
+			{
+				Send.SystemMessage(sender, Localization.Get("Dungeon '{0}' not found in database."), dungeonName);
+				return CommandResult.InvalidArgument;
+			}
+
+			if (!ChannelServer.Instance.World.DungeonManager.CreateDungeonAndWarp(dungeonName, itemId, target))
+			{
+				Send.SystemMessage(sender, Localization.Get("Failed to create dungeon."), dungeonName);
+				return CommandResult.Fail;
 			}
 
 			return CommandResult.Okay;
