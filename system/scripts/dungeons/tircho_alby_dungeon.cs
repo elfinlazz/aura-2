@@ -32,6 +32,13 @@ public class AlbyDungeonScript : DungeonScript
 			return true;
 		}
 
+		// Alby Basic
+		if (item.Info.Id == 63101) // Alby Basic Fomor Pass
+		{
+			dungeonName = "tircho_alby_low_dungeon";
+			return true;
+		}
+
 		// Alby Int 1
 		if (item.Info.Id == 63116) // Alby Intermediate Fomor Pass for One
 		{
