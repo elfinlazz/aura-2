@@ -68,6 +68,13 @@ namespace Aura.Channel.World.Dungeons
 			result.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?")));
 			result.Behavior = (creature, prop) =>
 			{
+				// Make sure the chest was still closed when it was clicked.
+				// No security violation because it could be caused by lag.
+				if (prop.State == "open")
+					return;
+
+				prop.SetState("open");
+
 				if (!creature.Inventory.Has(70028)) // Treasure Chest Key
 				{
 					// Unofficial
@@ -83,8 +90,6 @@ namespace Aura.Channel.World.Dungeons
 					var pos = new Position(x, y).GetRandomInRange(50, rnd);
 					item.Drop(region, pos);
 				}
-
-				prop.SetState("open");
 			};
 
 			return result;
