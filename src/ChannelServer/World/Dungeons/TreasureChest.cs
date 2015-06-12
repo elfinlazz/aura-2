@@ -84,12 +84,8 @@ namespace Aura.Channel.World.Dungeons
 
 				creature.Inventory.Remove(70028);
 
-				var rnd = RandomProvider.Get();
 				foreach (var item in this.Items)
-				{
-					var pos = new Position(x, y).GetRandomInRange(50, rnd);
-					item.Drop(region, pos);
-				}
+					item.Drop(region, new Position(x, y));
 			};
 
 			return result;
