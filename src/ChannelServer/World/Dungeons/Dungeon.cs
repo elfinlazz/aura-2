@@ -295,7 +295,7 @@ namespace Aura.Channel.World.Dungeons
 			if (prop.State == "open")
 				return;
 
-			var end = this.Generator.Floors[0].MazeGenerator.EndPos;
+			var end = this.Generator.Floors.Last().MazeGenerator.EndPos;
 			var endX = end.X * TileSize + TileSize / 2;
 			var endY = end.Y * TileSize + TileSize / 2;
 
@@ -319,7 +319,7 @@ namespace Aura.Channel.World.Dungeons
 					pos = pos.GetRandomInRange(TileSize / 2, rnd);
 
 					// TODO: NPC.Spawn method?
-					var npc = ChannelServer.Instance.World.SpawnManager.Spawn(boss.RaceId, this.Regions[1].Id, pos.X, pos.Y, true, true);
+					var npc = ChannelServer.Instance.World.SpawnManager.Spawn(boss.RaceId, this.Regions.Last().Id, pos.X, pos.Y, true, true);
 					npc.Death += this.OnBossDeath;
 				}
 			}
