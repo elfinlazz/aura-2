@@ -688,6 +688,102 @@
 		]},	]},
 ]},
 
+// Ciar Basic Dungeon
+{ name: "tircho_ciar_low_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+	// Floor 1
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 10, coverage: 70, sets: [
+		{ min: 1, max: 1, puzzles: [
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 30101, amount: 3 }], [{ raceId: 30101, amount: 6 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 140002, amount: 6 }], [{ raceId: 170301, amount: 4 }], [{ raceId: 170301, amount: 5 }] ] },
+			{ script: "entrance_puzzle", groups: [ [{ raceId: 140001, amount: 2 }], [{ raceId: 140002, amount: 6 }], [{ raceId: 140003, amount: 6 }] ] },
+		]},
+		{ min: 2, max: 3, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30101, amount: 3 }], [{ raceId: 30101, amount: 6 }], [{ raceId: 170301, amount: 6 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 170301, amount: 6 }] ] },
+			{ script: "eventprop_fountain" },
+			{ script: "keychest_monster", groups: [ [{ raceId: 140001, amount: 2 }], [{ raceId: 140002, amount: 6 }], [{ raceId: 30101, amount: 6 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 170301, amount: 5 }] ] },
+		]},
+		{ min: 2, max: 3, puzzles: [
+			{ script: "keychest_monster2", groups: [ [{ raceId: 30101, amount: 3 }], [{ raceId: 30101, amount: 6 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30101, amount: 7 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 140001, amount: 2 }], [{ raceId: 30101, amount: 6 }], [{ raceId: 170301, amount: 6 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30101, amount: 5 }] ] },
+		]},
+		{ min: 2, max: 2, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 140001, amount: 2 }], [{ raceId: 30101, amount: 6 }], [{ raceId: 170301, amount: 6 }] ] },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+		]},	]},
+	// Floor 2
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 10, coverage: 20, sets: [
+		{ min: 2, max: 3, puzzles: [
+			{ script: "keychest_monster2", groups: [ [{ raceId: 140001, amount: 8 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }], [{ raceId: 30101, amount: 6 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 90003, amount: 4 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "chestkey_switchdoor_switchmonster", groups: [ [{ raceId: 170301, amount: 4 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 140001, amount: 2 }], [{ raceId: 140003, amount: 6 }], [{ raceId: 30101, amount: 8 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 140002, amount: 5 }], [{ raceId: 140003, amount: 6 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "eventprop_fountain" },
+		]},
+		{ min: 2, max: 2, puzzles: [
+			{ script: "keychest_9chest_ciar", groups: [ [{ raceId: 30101, amount: 3 }], [{ raceId: 140003, amount: 5 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }] ] },
+			{ script: "chestkey_switchdoor_switchmonster", groups: [ [{ raceId: 30102, amount: 5 }] ] },
+		]},
+		{ min: 2, max: 3, puzzles: [
+			{ script: "keychest_monster2", groups: [ [{ raceId: 30101, amount: 3 }], [{ raceId: 30101, amount: 6 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 90003, amount: 4 }], [{ raceId: 170301, amount: 4 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "eventprop_fountain" },
+			{ script: "chestkey_switchdoor_switchmonster", groups: [ [{ raceId: 170301, amount: 5 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 140001, amount: 2 }], [{ raceId: 140003, amount: 6 }], [{ raceId: 30101, amount: 7 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 140002, amount: 5 }], [{ raceId: 140003, amount: 6 }], [{ raceId: 90003, amount: 3 }] ] },
+		]},
+		{ min: 2, max: 2, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 140001, amount: 2 }], [{ raceId: 140003, amount: 6 }], [{ raceId: 30101, amount: 7 }] ] },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+		]},	]},
+	// Floor 3
+	{ width: 8, height: 8, critPathMin: 30, critPathMax: 47, branch: 5, coverage: 65, hasBoss: true, sets: [
+		{ min: 2, max: 4, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30102, amount: 3 }], [{ raceId: 80001, amount: 6 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 90003, amount: 4 }], [{ raceId: 30101, amount: 5 },{ raceId: 30102, amount: 3 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 170301, amount: 6 }] ] },
+			{ script: "keychest_monster", groups: [ [{ raceId: 30102, amount: 4 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }], [{ raceId: 30101, amount: 5 },{ raceId: 30102, amount: 3 }] ] },
+			{ script: "eventprop_fountain" },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 140002, amount: 5 }], [{ raceId: 140003, amount: 6 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30102, amount: 5 }] ] },
+		]},
+		{ min: 2, max: 4, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30102, amount: 3 }], [{ raceId: 80001, amount: 6 }], [{ raceId: 140002, amount: 8 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 90003, amount: 4 }], [{ raceId: 30101, amount: 5 },{ raceId: 30102, amount: 3 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 170301, amount: 4 }] ] },
+			{ script: "eventprop_fountain" },
+			{ script: "keychest_monster2", groups: [ [{ raceId: 140001, amount: 2 }], [{ raceId: 80001, amount: 6 }], [{ raceId: 30101, amount: 5 },{ raceId: 30102, amount: 3 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 140002, amount: 5 }], [{ raceId: 30102, amount: 6 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30102, amount: 5 }] ] },
+		]},
+		{ min: 2, max: 2, puzzles: [
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 140002, amount: 5 }], [{ raceId: 30102, amount: 6 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+			{ script: "collectprop_herb" },
+		]},
+		{ min: 2, max: 4, puzzles: [
+			{ script: "keychest_monster", groups: [ [{ raceId: 30102, amount: 1 },{ raceId: 30102, amount: 2 }], [{ raceId: 80001, amount: 6 }], [{ raceId: 140003, amount: 8 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 90003, amount: 4 }], [{ raceId: 170301, amount: 4 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30101, amount: 5 },{ raceId: 30102, amount: 3 }] ] },
+			{ script: "keychest_monster2", groups: [ [{ raceId: 140001, amount: 2 }], [{ raceId: 140003, amount: 6 }], [{ raceId: 30101, amount: 5 },{ raceId: 30102, amount: 3 }] ] },
+			{ script: "keychest_3mimic", groups: [ [{ raceId: 140002, amount: 5 }], [{ raceId: 30102, amount: 6 }], [{ raceId: 90003, amount: 3 }] ] },
+			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 170301, amount: 1 },{ raceId: 170301, amount: 4 }] ] },
+			{ script: "eventprop_fountain" },
+		]},	]},
+]},
+
 // Fiodh
 //---------------------------------------------------------------------------
 
