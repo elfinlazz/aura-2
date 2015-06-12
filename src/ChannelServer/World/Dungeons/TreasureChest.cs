@@ -64,7 +64,7 @@ namespace Aura.Channel.World.Dungeons
 		/// <returns></returns>
 		public Prop CreateProp(Region region, int x, int y, float direction)
 		{
-			var result = new Prop(ChestPropId, region.Id, x, y, direction);
+			var result = new Prop(ChestPropId, region.Id, x, y, direction, 1, 0, "closed_identified");
 			result.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?")));
 			result.Behavior = (creature, prop) =>
 			{
