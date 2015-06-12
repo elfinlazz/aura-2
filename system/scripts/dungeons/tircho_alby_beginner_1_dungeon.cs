@@ -30,12 +30,15 @@ public class AlbyBeginnerDungeonScript : DungeonScript
 
 		for (int i = 0; i < dungeon.Party.Count; ++i)
 		{
+			var member = dungeon.Party[i];
 			var treasureChest = new TreasureChest();
 
 			treasureChest.AddGold(rnd.Next(58, 86)); // Gold
 			treasureChest.Add(GetRandomTreasureItem(rnd)); // Random item
 
 			dungeon.AddChest(treasureChest);
+
+			member.GiveItemWithEffect(Item.CreateKey(70028, "chest", member.EntityId));
 		}
 	}
 

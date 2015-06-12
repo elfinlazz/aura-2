@@ -50,6 +50,7 @@ public class AlbyTutorialDungeonScript : DungeonScript
 
 		for (int i = 0; i < dungeon.Party.Count; ++i)
 		{
+			var member = dungeon.Party[i];
 			var treasureChest = new TreasureChest();
 
 			// Enchant
@@ -66,6 +67,8 @@ public class AlbyTutorialDungeonScript : DungeonScript
 			treasureChest.Add(GetRandomTreasureItem(rnd)); // Random item
 
 			dungeon.AddChest(treasureChest);
+
+			member.GiveItemWithEffect(Item.CreateKey(70028, "chest"));
 		}
 	}
 

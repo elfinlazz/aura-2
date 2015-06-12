@@ -30,6 +30,7 @@ public class FiodhDungeonScript : DungeonScript
 
 		for (int i = 0; i < dungeon.Party.Count; ++i)
 		{
+			var member = dungeon.Party[i];
 			var treasureChest = new TreasureChest();
 
 			if (i == 0)
@@ -55,6 +56,8 @@ public class FiodhDungeonScript : DungeonScript
 			treasureChest.Add(GetRandomTreasureItem(rnd)); // Random item
 
 			dungeon.AddChest(treasureChest);
+
+			member.GiveItemWithEffect(Item.CreateKey(70028, "chest"));
 		}
 	}
 
