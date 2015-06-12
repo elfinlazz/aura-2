@@ -164,6 +164,7 @@ namespace Aura.Channel.World.Dungeons
 			var region = this.Regions[i];
 			var floor = this.Generator.Floors[i - 1];
 			var gen = floor.MazeGenerator;
+			var floorData = this.Data.Floors[i - 1];
 
 			var prevRegion = i - 1;
 			var nextRegion = i + 1;
@@ -179,14 +180,23 @@ namespace Aura.Channel.World.Dungeons
 			var endRoomTrait = floor.GetRoom(endTile);
 
 			var door = new Prop(this.Data.DoorId, region.Id, startPos.X, startPos.Y, Rotation(GetFirstDirection(startRoom.Directions)), 1, 0, "open");
+			door.Info.Color1 = floorData.Color1;
+			door.Info.Color2 = floorData.Color1;
+			door.Info.Color3 = floorData.Color3;
 			region.AddProp(door);
 
 			var stairsBlock = this.Data.Style.Get(DungeonBlockType.StairsUp, startRoomTrait.DoorType);
 			var stairs = new Prop(stairsBlock.PropId, region.Id, startPos.X, startPos.Y, MabiMath.DegreeToRadian(stairsBlock.Rotation), 1, 0, "single");
+			stairs.Info.Color1 = floorData.Color1;
+			stairs.Info.Color2 = floorData.Color1;
+			stairs.Info.Color3 = floorData.Color3;
 			region.AddProp(stairs);
 
 			var portalBlock = this.Data.Style.Get(DungeonBlockType.PortalUp, startRoomTrait.DoorType);
 			var portal = new Prop(portalBlock.PropId, region.Id, startPos.X, startPos.Y, MabiMath.DegreeToRadian(portalBlock.Rotation), 1, 0, "single", "_upstairs", Localization.Get("<mini>TO</mini> Upstairs"));
+			portal.Info.Color1 = floorData.Color1;
+			portal.Info.Color2 = floorData.Color1;
+			portal.Info.Color3 = floorData.Color3;
 			portal.Behavior = (cr, pr) =>
 			{
 				var regionId = this.Regions[prevRegion].Id;
@@ -210,17 +220,28 @@ namespace Aura.Channel.World.Dungeons
 			if (floor.IsLastFloor)
 			{
 				_bossExitDoor = new Prop(this.Data.BossExitDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Up), 1, 0, "closed");
+				_bossExitDoor.Info.Color1 = floorData.Color1;
+				_bossExitDoor.Info.Color2 = floorData.Color1;
+				_bossExitDoor.Info.Color3 = floorData.Color3;
 				region.AddProp(_bossExitDoor);
 
 				_bossDoor = new Prop(this.Data.BossDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Down), 1, 0, "closed");
+				_bossDoor.Info.Color1 = floorData.Color1;
+				_bossDoor.Info.Color2 = floorData.Color1;
+				_bossDoor.Info.Color3 = floorData.Color3;
 				_bossDoor.Behavior = this.BossDoorBehavior;
 				region.AddProp(_bossDoor);
 
 				var dummyDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y - Dungeon.TileSize, Rotation(GetFirstDirection(gen.GetRoom(endTile.GetBiasedPosition(Direction.Down)).Directions, Direction.Right)), 1, 0, "open");
+				dummyDoor.Info.Color1 = floorData.Color1;
+				dummyDoor.Info.Color2 = floorData.Color1;
+				dummyDoor.Info.Color3 = floorData.Color3;
 				region.AddProp(dummyDoor);
 
 				var exitStatue = new Prop(this.Data.LastStatuePropId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize * 2, Rotation(Direction.Up), 1, 0, "single");
-				exitStatue.Info.Color1 = 0xFFFFFF;
+				exitStatue.Info.Color1 = floorData.Color1;
+				exitStatue.Info.Color2 = floorData.Color1;
+				exitStatue.Info.Color3 = floorData.Color3;
 				exitStatue.Extensions.Add(new ConfirmationPropExtension("GotoLobby", "_LT[code.standard.msg.dungeon_exit_notice_msg]", "_LT[code.standard.msg.dungeon_exit_notice_title]", "haskey(chest)"));
 				exitStatue.Behavior = (cr, pr) => { cr.Warp(this.Data.Exit); };
 				region.AddProp(exitStatue);
@@ -228,14 +249,23 @@ namespace Aura.Channel.World.Dungeons
 			else
 			{
 				var endDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y, Rotation(GetFirstDirection(endRoom.Directions)), 1, 0, "open");
+				endDoor.Info.Color1 = floorData.Color1;
+				endDoor.Info.Color2 = floorData.Color1;
+				endDoor.Info.Color3 = floorData.Color3;
 				region.AddProp(endDoor);
 
 				var stairsDownBlock = this.Data.Style.Get(DungeonBlockType.StairsDown, endRoomTrait.DoorType);
 				var stairsDown = new Prop(stairsDownBlock.PropId, region.Id, endPos.X, endPos.Y, MabiMath.DegreeToRadian(stairsDownBlock.Rotation), 1, 0, "single");
+				stairsDown.Info.Color1 = floorData.Color1;
+				stairsDown.Info.Color2 = floorData.Color1;
+				stairsDown.Info.Color3 = floorData.Color3;
 				region.AddProp(stairsDown);
 
 				var portalDownBlock = this.Data.Style.Get(DungeonBlockType.PortalDown, endRoomTrait.DoorType);
 				var portalDown = new Prop(portalDownBlock.PropId, region.Id, endPos.X, endPos.Y, MabiMath.DegreeToRadian(portalDownBlock.Rotation), 1, 0, "single", "_downstairs", Localization.Get("<mini>TO</mini> Downstairs"));
+				portalDown.Info.Color1 = floorData.Color1;
+				portalDown.Info.Color2 = floorData.Color1;
+				portalDown.Info.Color3 = floorData.Color3;
 				portalDown.Behavior = (cr, pr) =>
 				{
 					var regionId = this.Regions[nextRegion].Id;
