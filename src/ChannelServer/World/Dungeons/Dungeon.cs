@@ -481,9 +481,9 @@ namespace Aura.Channel.World.Dungeons
 				pos.X += Dungeon.TileSize / 2;
 				pos.Y += (int)(Dungeon.TileSize * 2.5f);
 
-				pos.X += offsets[j, 0];
-				pos.Y += offsets[j, 1];
-				var rotation = MabiMath.DegreeToRadian(offsets[j, 2]);
+				pos.X += offsets[j % 8, 0];
+				pos.Y += offsets[j % 8, 1];
+				var rotation = MabiMath.DegreeToRadian(offsets[j % 8, 2]);
 
 				var prop = _treasureChests[i].CreateProp(region, pos.X, pos.Y, rotation);
 				region.AddProp(prop);
