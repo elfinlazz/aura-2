@@ -425,6 +425,35 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Sets SpawnLocation and places NPC in region.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns>Returns false if NPC is spawned already or region doesn't exist.</returns>
+		public bool Spawn(int regionId, int x, int y)
+		{
+			// Already spawned
+			if (this.Region != Region.Limbo)
+			{
+				Log.Error("NPC.Spawn: Failed to spawn '{0}', it was spawned already.", this.RaceId, this.RegionId);
+				return false;
+			}
+
+			// Save spawn location
+			this.SpawnLocation = new Location(this.RegionId, x, y);
+
+			// Warp to spawn point
+			if (!this.Warp(regionId, x, y))
+			{
+				Log.Error("NPC.Spawn: Failed to spawn '{0}', region '{1}' doesn't exist.", this.RaceId, this.RegionId);
+				return false;
+			}
+
+			return true;
+		}
+
+		/// <summary>
 		/// TODO: Move somewhere? =/
 		/// </summary>
 		public class GiftWeightInfo

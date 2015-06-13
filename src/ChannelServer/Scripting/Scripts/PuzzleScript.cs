@@ -51,7 +51,15 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public virtual void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)
 		{
-			
+
+		}
+
+		public virtual void OnMobAllocated(IPuzzle puzzle, MonsterGroup group)
+		{
+		}
+
+		public virtual void OnMonsterDead(IPuzzle puzzle, MonsterGroup group)
+		{
 		}
 
 		// On ...

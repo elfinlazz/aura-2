@@ -6,6 +6,9 @@ using Aura.Channel.World.Dungeons.Generation;
 using Aura.Channel.World.Entities;
 using Aura.Mabi.Const;
 using Aura.Shared.Util;
+using System;
+using Aura.Channel.Network.Sending;
+using Aura.Data.Database;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
 {
@@ -45,6 +48,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		void CloseAllDoors();
 		void OpenAllDoors();
 		uint GetLockColor();
+
+		void SpawnSingleMob(string mobGroupName, string mobName = null);
 	}
 
 	public class PuzzlePlace : IPuzzlePlace
@@ -107,7 +112,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.IsLock = true;
 			this.LockColor = this._section.GetLockColor();
 			this.DoorDirection = doorElement.direction;
-			
+
 			var room = this._placeNode.Value;
 			room.ReserveDoor(this.DoorDirection);
 			room.isLocked = true;
@@ -115,7 +120,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				room.RoomType = RoomType.Room;
 
 			// Boss door - special case
-			if ((DungeonBlockType) room.DoorType[this.DoorDirection] == DungeonBlockType.BossDoor)
+			if ((DungeonBlockType)room.DoorType[this.DoorDirection] == DungeonBlockType.BossDoor)
 			{
 				this.IsBossLock = true;
 				this.AddDoor(this.DoorDirection, DungeonBlockType.BossDoor);
@@ -203,5 +208,31 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return new Position(this._placeNode.Value.X, this._placeNode.Value.Y);
 		}
 
+		public Position GetWorldPosition()
+		{
+			var x = this._placeNode.Value.X * Dungeon.TileSize + Dungeon.TileSize / 2;
+			var y = this._placeNode.Value.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
+
+			return new Position(x, y);
+		}
+
+		/// <summary>
+		/// Creates mob in puzzle, in this place.
+		/// </summary>
+		/// <param name="mobGroupName">Name of the mob, for reference.</param>
+		/// <param name="mobToSpawn">Mob to spawn (Mob1-3), leave as null for auto select.</param>
+		public void SpawnSingleMob(string mobGroupName, string mobToSpawn = null)
+		{
+			DungeonMonsterGroupData data;
+			if (mobToSpawn == null)
+				data = _puzzle.GetMonsterData("Mob3") ?? _puzzle.GetMonsterData("Mob2") ?? _puzzle.GetMonsterData("Mob1");
+			else
+				data = _puzzle.GetMonsterData(mobToSpawn);
+
+			if (data == null)
+				throw new Exception("No monster data found.");
+
+			_puzzle.AllocateAndSpawnMob(this, mobGroupName, data);
+		}
 	}
 }

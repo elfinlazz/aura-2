@@ -71,12 +71,16 @@ namespace Aura.Data.Database
 	{
 		public string Script { get; set; }
 		public string Arg { get; set; }
-		public List<List<DungeonMonsterData>> Groups { get; set; }
+		public List<DungeonMonsterGroupData> Groups { get; set; }
 
 		public DungeonPuzzleData()
 		{
-			this.Groups = new List<List<DungeonMonsterData>>();
+			this.Groups = new List<DungeonMonsterGroupData>();
 		}
+	}
+
+	public class DungeonMonsterGroupData : List<DungeonMonsterData>
+	{
 	}
 
 	public class DungeonMonsterData
@@ -156,7 +160,7 @@ namespace Aura.Data.Database
 							{
 								foreach (var groupsEntry in puzzleEntry["groups"])
 								{
-									var list = new List<DungeonMonsterData>();
+									var list = new DungeonMonsterGroupData();
 
 									foreach (JObject groupEntry in groupsEntry)
 									{

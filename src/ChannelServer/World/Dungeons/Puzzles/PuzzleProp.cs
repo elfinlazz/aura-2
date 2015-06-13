@@ -184,7 +184,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		private DungeonBlockType _doorType;
 		private Item _key;
 
-		public PuzzleDoor(PuzzlePlace place, string name, int direction, DungeonBlockType type) 
+		public PuzzleDoor(PuzzlePlace place, string name, int direction, DungeonBlockType type)
 			: base(place, name)
 		{
 			this._direction = direction;
@@ -234,7 +234,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 								this.SetState("open");
 								Send.Notice(creature, NoticeType.MiddleSystem,
 									Localization.Get("You have opened the door with the key."));
-							} else Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("There is no matching key."));
+							}
+							else Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("There is no matching key."));
 						}
 						else
 							this.SetState("open");
