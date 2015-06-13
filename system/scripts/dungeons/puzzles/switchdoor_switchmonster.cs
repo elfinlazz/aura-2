@@ -21,18 +21,18 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		LockedPlace.ReservePlace();
 
 		puzzle.Set("open", "Switch" + Random(1, 5));
-		puzzle.Set("activated", false);
 	}
 
 	public override void OnPuzzleCreate(IPuzzle puzzle)
 	{
 		var LockedPlace = puzzle.GetPlace("LockedPlace");
+		var color = LockedPlace.GetLockColor();
 
-		uint color = LockedPlace.GetLockColor();
-		var Switch1 = puzzle.NewSwitch(LockedPlace, "Switch1", DungeonPropPositionType.Corner4, color);
-		var Switch2 = puzzle.NewSwitch(LockedPlace, "Switch2", DungeonPropPositionType.Corner4, color);
-		var Switch3 = puzzle.NewSwitch(LockedPlace, "Switch3", DungeonPropPositionType.Corner4, color);
-		var Switch4 = puzzle.NewSwitch(LockedPlace, "Switch4", DungeonPropPositionType.Corner4, color);
+		for (int i = 1; i <= 4; ++i)
+		{
+			puzzle.NewSwitch(LockedPlace, "Switch" + i, DungeonPropPositionType.Corner4, color);
+			puzzle.Set("Switch" + i + "Activated", false);
+		}
 
 		LockedPlace.CloseAllDoors();
 	}
@@ -43,15 +43,14 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		if (Switch == null)
 			return;
 
-		if (Switch.State == "on" && !puzzle.Get("activated"))
+		if (Switch.State == "on" && !puzzle.Get(Switch.InternalName + "Activated"))
 		{
+			puzzle.Set(Switch.InternalName + "Activated", true);
+
 			var lockedPlace = puzzle.GetPlace("LockedPlace");
 
 			if (Switch.InternalName == puzzle.Get("open"))
-			{
 				puzzle.OpenPlace(lockedPlace);
-				puzzle.Set("activated", true);
-			}
 			else
 				lockedPlace.SpawnSingleMob(Switch.InternalName + "Mob", "Mob1");
 		}
