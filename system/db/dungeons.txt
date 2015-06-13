@@ -3,43 +3,12 @@
 //---------------------------------------------------------------------------
 
 [
-// Abbneagh Keep
-//---------------------------------------------------------------------------
-
-// Abb Neagh Castle Dungeon
-{ name: "abbneagh_keep_dungeon", style: 1000000, baseSeed: 10000000, lobby: 216, exit: "Abb_Neagh_keep_DgnHall_before/_Abb_Neagh_keep_DgnHall_before/DG_Abb_Neagh_keep_Before_Outer_Spawn", stairs: 26528, saveStatue: 26525, lastStatue: 26526, door: 26514, bossDoor: 26516, bossExitDoor: 26517, floors: [
-]},
-
 // Alby
 //---------------------------------------------------------------------------
 
-// Alby Intermediate Fomor Dungeon
-{ name: "tircho_alby_middle1_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Intermediate Fomor Dungeon
-{ name: "tircho_alby_middle2_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Intermediate Fomor Dungeon
-{ name: "tircho_alby_middle4_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// AlbyDropTestDungeon
-{ name: "tircho_alby_droptest_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ninja Skill Training Dungeon
-{ name: "tircho_alby_ninja_1_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Shinobi Dungeon
-{ name: "tircho_alby_ninja_2_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
 // Alby Dungeon
 { name: "tircho_alby_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30005, amount: 3 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
@@ -58,15 +27,11 @@
 			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30001, amount: 3 }] ] },
 			{ script: "eventprop_fountain" },
 		]},	]},
-]},
-
-// Alby PC Cafe Dungeon
-{ name: "tircho_albypcbang_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 ]},
 
 // Alby Dungeon
 { name: "tircho_alby_whiteday_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 11013, lastStatue: 10032, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
-	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30005, amount: 3 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
@@ -88,12 +53,8 @@
 ]},
 
 // Alby Dungeon
-{ name: "tircho_alby_dungeon_recover", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
 { name: "tircho_alby_fountaintest_high_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 1, max: 2, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
@@ -152,7 +113,7 @@
 
 // Alby Dungeon
 { name: "tircho_alby_herbtest_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 1, max: 2, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
@@ -207,7 +168,7 @@
 
 // Alby Dungeon
 { name: "tircho_alby_dungeonnpctest_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 6, height: 6, critPathMin: 8, critPathMax: 16, branch: 0, coverage: 80, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 16, branch: 0, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 2, max: 2, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "dungeonnpc" },
@@ -216,7 +177,7 @@
 
 // Alby Beginner Dungeon
 { name: "tircho_alby_beginner_1_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30005, amount: 3 }], [{ raceId: 120006, amount: 3 }], [{ raceId: 90002, amount: 3 }] ] },
@@ -235,10 +196,6 @@
 			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 30005, amount: 3 }] ] },
 			{ script: "eventprop_fountain" },
 		]},	]},
-]},
-
-// Magic Bean Dungon
-{ name: "tircho_alby_magic_bean_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 ]},
 
 // Alby Basic Dungeon
@@ -282,7 +239,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 2
-	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 15, coverage: 70, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 15, coverage: 70, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
 			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
@@ -325,13 +282,9 @@
 		]},	]},
 ]},
 
-// Alby Dungeon
-{ name: "tircho_alby_dungeon_partyquest", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
 // Alby Intermediate Fomor Dungeon
 { name: "tircho_alby_middle_1_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 8, height: 8, critPathMin: 44, critPathMax: 46, branch: 20, coverage: 80, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 46, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30012, amount: 1 },{ raceId: 30012, amount: 2 }], [{ raceId: 20016, amount: 2 }], [{ raceId: 30012, amount: 1 },{ raceId: 30012, amount: 2 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 20016, amount: 2 }], [{ raceId: 30004, amount: 2 }], [{ raceId: 70011, amount: 1 }] ] },
@@ -440,7 +393,7 @@
 			{ script: "keychest_monster", groups: [ [{ raceId: 30012, amount: 6 }], [{ raceId: 30004, amount: 1 }], [{ raceId: 30008, amount: 1 }] ] },
 		]},	]},
 	// Floor 2
-	{ width: 8, height: 8, critPathMin: 45, critPathMax: 52, branch: 25, coverage: 80, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 8, height: 8, critPathMin: 45, critPathMax: 52, branch: 25, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 3, max: 5, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 20016, amount: 3 }], [{ raceId: 170202, amount: 1 },{ raceId: 20016, amount: 2 }], [{ raceId: 20015, amount: 3 }] ] },
 			{ script: "keychest_monster", groups: [ [{ raceId: 30012, amount: 2 }], [{ raceId: 30012, amount: 4 }], [{ raceId: 170202, amount: 1 },{ raceId: 20016, amount: 2 }] ] },
@@ -565,7 +518,7 @@
 			{ script: "eventprop_fountain" },
 		]},	]},
 	// Floor 2
-	{ width: 8, height: 8, critPathMin: 44, critPathMax: 47, branch: 25, coverage: 80, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 47, branch: 25, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 3, max: 5, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 70011, amount: 4 }], [{ raceId: 80101, amount: 4 }], [{ raceId: 30004, amount: 4 }] ] },
 			{ script: "keychest_monster", groups: [ [{ raceId: 170202, amount: 4 }], [{ raceId: 70011, amount: 4 }], [{ raceId: 30012, amount: 2 },{ raceId: 30012, amount: 3 }] ] },
@@ -604,238 +557,8 @@
 		]},	]},
 ]},
 
-// Alby Advanced Fomor Dungeon
-{ name: "tircho_alby_high_1_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby PC Cafe Advanced Fomor Dungeon
-{ name: "tircho_albypcbang_high_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Advanced Fomor Dungeon
-{ name: "tircho_alby_high_3_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Advanced Fomor Dungeon
-{ name: "tircho_alby_high_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// 알비 초보자 이벤트 던전
-{ name: "tircho_alby_japan_event_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_dungeon_tutorial_ranald", style: 100000, baseSeed: 13000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_dungeon_tutorial_malcolm", style: 100000, baseSeed: 13000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_dungeon_tutorial_2010_malcolm", style: 100000, baseSeed: 13000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_dungeon_tutorial_2010_rescuekid", style: 100000, baseSeed: 13000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Hard Mode Alby Dungeon
-{ name: "tircho_alby_hardmode_dungeon", style: 1300000, baseSeed: 10000000, lobby: 120, exit: "Ula_hardmode_DgnHall_TirChonaill_before/_Ula_hardmode_DgnHall_TirChonaill_before/Outer_Spawn", stairs: 11023, saveStatue: 11013, lastStatue: 11014, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
-]},
-
-// Hard Mode Alby Basic Dungeon
-{ name: "tircho_alby_low_hardmode_dungeon", style: 1300000, baseSeed: 10100000, lobby: 120, exit: "Ula_hardmode_DgnHall_TirChonaill_before/_Ula_hardmode_DgnHall_TirChonaill_before/Outer_Spawn", stairs: 11023, saveStatue: 11013, lastStatue: 11014, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
-]},
-
-// Hard Mode Alby Intermediate Dungeon
-{ name: "tircho_alby_middle_hardmode_dungeon", style: 1300000, baseSeed: 10100000, lobby: 120, exit: "Ula_hardmode_DgnHall_TirChonaill_before/_Ula_hardmode_DgnHall_TirChonaill_before/Outer_Spawn", stairs: 11023, saveStatue: 11013, lastStatue: 11014, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
-]},
-
-// Hard Mode Alby Advanced Dungeon
-{ name: "tircho_alby_high_hardmode_dungeon", style: 1300000, baseSeed: 10100000, lobby: 120, exit: "Ula_hardmode_DgnHall_TirChonaill_before/_Ula_hardmode_DgnHall_TirChonaill_before/Outer_Spawn", stairs: 11023, saveStatue: 11013, lastStatue: 11014, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
-]},
-
-// 알비 황금쥐 던전
-{ name: "tircho_alby_golden_rat_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g13_firstfolio", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g13_firstfolio_mid", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g13_firstfolio_high", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g15_contract_of_shylock", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g15_contract_of_shylock_mid", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g15_contract_of_shylock_high", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g15_price_of_love", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g15_price_of_love_mid", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g15_price_of_love_mid_renewal", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_g15_price_of_love_high", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// SAO Dungeon Capture: Alby Zone 1
-{ name: "sao_tircho_alby_1", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// SAO Dungeon Capture: Alby Zone 2
-{ name: "sao_tircho_alby_2", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// SAO Dungeon Capture: Alby Zone 3
-{ name: "sao_tircho_alby_3", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// SAO Dungeon Capture: Alby Zone 4
-{ name: "sao_tircho_alby_4", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// SAO Dungeon Capture: Alby Zone 5
-{ name: "sao_tircho_alby_5", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Herb Dungeon
-{ name: "math_dungeon_herb_test", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Baol
-//---------------------------------------------------------------------------
-
-// Peaca Dungeon
-{ name: "tirnanog_baol_dungeon", style: 800000, baseSeed: 500000000, lobby: 79, exit: "Ula_DgnHall_Tirnanog_G3_before/_Ula_DgnHall_Tirnanog_G3_before/DG_Tirnanog_G3_Outer_Spawn", stairs: 25020, saveStatue: 25168, lastStatue: 25123, door: 25116, bossDoor: 25167, bossExitDoor: 0, floors: [
-]},
-
-// Barri
-//---------------------------------------------------------------------------
-
-// Barri Dungeon
-{ name: "bangor_barri_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "bangor_barri_dungeon_recover", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "bangor_barri_dungeon_recover_easy", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Spirit Dungeon
-{ name: "bangor_barri_fossil_ego_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "bangor_barri_dungeon_paladin", style: 300000, baseSeed: 31100000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Basic Dungeon
-{ name: "bangor_barri_low_dungeon", style: 300000, baseSeed: 31100000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Advanced Fomor Dungeon
-{ name: "bangor_barri_high_2_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri PC Cafe Advanced Dungeon
-{ name: "bangor_barripcbang_high_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Advanced Fomor Dungeon
-{ name: "bangor_barri_high_3_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Advanced Fomor Dungeon
-{ name: "bangor_barri_high_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// 바리 초보자 이벤트 던전
-{ name: "bangor_barri_japan_event_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Hidden Mine
-{ name: "bangor_barri_hidden_gold_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Shadow Dungeon
-{ name: "bangor_barri_dungeon_g9s1_easy", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Shadow Dungeon
-{ name: "bangor_barri_dungeon_g9s1_normal", style: 300000, baseSeed: 31100000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Shadow Dungeon
-{ name: "bangor_barri_dungeon_g9s1_hard", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
 // Ciar
 //---------------------------------------------------------------------------
-
-// Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_mid_1_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_mid_2_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_mid_4_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g14s5_rebalance_tircho_ciar_g13_easy_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g14s5_rebalance_tircho_ciar_g13_mid_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g14s5_rebalance_tircho_ciar_g13_high_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_g13_easy_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_g13_mid_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_g13_high_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_goro_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
 
 // Ciar Beginner Dungeon
 { name: "tircho_ciar_beginner_1_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
@@ -862,7 +585,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 2
-	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 10, coverage: 20, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], hasBoss: true, sets: [
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 10, coverage: 20, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 120002, amount: 3 }], [{ raceId: 120002, amount: 3 }], [{ raceId: 10112, amount: 3 }] ] },
 			{ script: "keychest_monster", groups: [ [{ raceId: 120003, amount: 3 }], [{ raceId: 120003, amount: 3 }], [{ raceId: 10113, amount: 3 }] ] },
@@ -882,10 +605,6 @@
 			{ script: "keychest_monster", groups: [ [{ raceId: 120002, amount: 3 }], [{ raceId: 120002, amount: 3 }], [{ raceId: 10113, amount: 3 }] ] },
 			{ script: "keychest_monster", groups: [ [{ raceId: 120003, amount: 3 }], [{ raceId: 120003, amount: 3 }], [{ raceId: 10114, amount: 3 }] ] },
 		]},	]},
-]},
-
-// Ciar Event Dungeon
-{ name: "tircho_ciar_pet_china_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 ]},
 
 // Ciar Dungeon
@@ -934,7 +653,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 3
-	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 10, coverage: 65, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], hasBoss: true, sets: [
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 10, coverage: 65, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
 		{ min: 2, max: 4, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 30003, amount: 3 }], [{ raceId: 80001, amount: 6 }], [{ raceId: 120003, amount: 8 }] ] },
 			{ script: "keychest_3mimic", groups: [ [{ raceId: 90001, amount: 4 }], [{ raceId: 10102, amount: 4 },{ raceId: 10103, amount: 3 }], [{ raceId: 90001, amount: 3 }] ] },
@@ -967,50 +686,6 @@
 			{ script: "keychest_3mimic", groups: [ [{ raceId: 10101, amount: 5 }], [{ raceId: 120003, amount: 6 }], [{ raceId: 90001, amount: 3 }] ] },
 			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 10101, amount: 5 }] ] },
 		]},	]},
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_japan_event_dungeon_1", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_japan_event_dungeon_2", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_dungeon_recover", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_dungeon_recover_easy", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_dungeon_partyquest", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g3_darkknight_ciar_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g3_darkknight_ciar_dungeon_g2jump_or_g3jump", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g3_darkknight_ciar_dungeon_g2jump_and_g3jump", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_dungeon_elatha_rp", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_dungeon_elatha_rp_renewal", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_dungeon_windbreaker", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 ]},
 
 // Ciar Basic Dungeon
@@ -1071,7 +746,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 3
-	{ width: 8, height: 8, critPathMin: 30, critPathMax: 47, branch: 5, coverage: 65, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], hasBoss: true, sets: [
+	{ width: 8, height: 8, critPathMin: 30, critPathMax: 47, branch: 5, coverage: 65, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
 		{ min: 2, max: 4, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 30102, amount: 3 }], [{ raceId: 80001, amount: 6 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }] ] },
 			{ script: "keychest_3mimic", groups: [ [{ raceId: 90003, amount: 4 }], [{ raceId: 30101, amount: 5 },{ raceId: 30102, amount: 3 }], [{ raceId: 90003, amount: 3 }] ] },
@@ -1173,7 +848,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 2
-	{ width: 7, height: 7, critPathMin: 37, critPathMax: 40, branch: 10, coverage: 80, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], hasBoss: true, sets: [
+	{ width: 7, height: 7, critPathMin: 37, critPathMax: 40, branch: 10, coverage: 80, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 140002, amount: 3 }], [{ raceId: 140003, amount: 3 }], [{ raceId: 140004, amount: 3 }] ] },
 			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 140004, amount: 2 },{ raceId: 140003, amount: 2 }] ] },
@@ -1228,200 +903,12 @@
 		]},	]},
 ]},
 
-// Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_middle_2_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_middle_4_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Advanced Fomor Dungeon
-{ name: "tircho_ciar_high_2_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar PC Cafe Advanced Fomor Dungeon
-{ name: "tircho_ciarpcbang_high_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Advanced Fomor Dungeon
-{ name: "tircho_ciar_high_3_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Advanced Fomor Dungeon
-{ name: "tircho_ciar_high_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Boss Trial 
-{ name: "tircho_ciar_bossrush_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Hard Mode Ciar Dungeon
-{ name: "tircho_ciar_hardmode_dungeon", style: 1400000, baseSeed: 11000000, lobby: 122, exit: "Ula_hardmode_DgnHall_Ciar_before/_Ula_hardmode_DgnHall_Ciar_before/Outer_Spawn", stairs: 11048, saveStatue: 11038, lastStatue: 11039, door: 11044, bossDoor: 11046, bossExitDoor: 11047, floors: [
-]},
-
-// Hard Mode Ciar Basic Dungeon
-{ name: "tircho_ciar_low_hardmode_dungeon", style: 1400000, baseSeed: 11100000, lobby: 122, exit: "Ula_hardmode_DgnHall_Ciar_before/_Ula_hardmode_DgnHall_Ciar_before/Outer_Spawn", stairs: 11048, saveStatue: 11038, lastStatue: 11039, door: 11044, bossDoor: 11046, bossExitDoor: 11047, floors: [
-]},
-
-// Hard Mode Ciar Intermediate Dungeon
-{ name: "tircho_ciar_middle_hardmode_dungeon", style: 1400000, baseSeed: 11100000, lobby: 122, exit: "Ula_hardmode_DgnHall_Ciar_before/_Ula_hardmode_DgnHall_Ciar_before/Outer_Spawn", stairs: 11048, saveStatue: 11038, lastStatue: 11039, door: 11044, bossDoor: 11046, bossExitDoor: 11047, floors: [
-]},
-
-// Hard Mode Ciar Advanced Dungeon
-{ name: "tircho_ciar_high_hardmode_dungeon", style: 1400000, baseSeed: 11100000, lobby: 122, exit: "Ula_hardmode_DgnHall_Ciar_before/_Ula_hardmode_DgnHall_Ciar_before/Outer_Spawn", stairs: 11048, saveStatue: 11038, lastStatue: 11039, door: 11044, bossDoor: 11046, bossExitDoor: 11047, floors: [
-]},
-
-// Ciar Basic Dungeon
-{ name: "tircho_ciar_low_dungeon_2012_sizerenewal", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_middle_1_dungeon_2012_sizerenewal", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_middle_2_dungeon_2012_sizerenewal", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_middle_4_dungeon_2012_sizerenewal", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Advanced Fomor Dungeon
-{ name: "tircho_ciar_high_2_dungeon_2012_sizerenewal", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Advanced Fomor Dungeon
-{ name: "tircho_ciar_high_3_dungeon_2012_sizerenewal", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_middle_g11_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "tircho_ciar_middle_g11_dungeon_renewal", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Advanced Fomor Dungeon
-{ name: "tircho_ciar_high_g11_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Coill
-//---------------------------------------------------------------------------
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_paladin", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_recover", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_recover_easy", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Elemental Dungeon
-{ name: "emain_coill_dungeon_gianticesprite", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coil Elatha RP Dungeon
-{ name: "emain_coill_dungeon_g9_elatharp", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coil Elatha RP Dungeon
-{ name: "emain_coill_dungeon_g9_elatharp_renewal", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_g14s3_golvan1", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_g14s3_golvan1_mid", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_g14s3_golvan1_high", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_g14s3_golvan2", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_g14s3_golvan2_mid", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_g14s3_golvan2_high", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_g14s4_ascon", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_g14s4_ascon_mid", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "emain_coill_dungeon_g14s4_ascon_high", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Paul's Secret Laboratory
-{ name: "emain_coill_dungeon_summerevent1st2011usa", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Cuilin Keep
-//---------------------------------------------------------------------------
-
-// Cuilin Castle Dungeon
-{ name: "cuilin_keep_dungeon", style: 1000000, baseSeed: 10000000, lobby: 60205, exit: "Tara_keep_DgnHall_before/_Tara_keep_DgnHall_before_0/DG_Tara_keep_Before_Outer_Spawn", stairs: 26528, saveStatue: 26525, lastStatue: 26526, door: 26514, bossDoor: 26516, bossExitDoor: 26517, floors: [
-]},
-
-// Dugald Keep
-//---------------------------------------------------------------------------
-
-// Dugald Castle Dungeon
-{ name: "dugald_keep_dungeon", style: 1000000, baseSeed: 10000000, lobby: 204, exit: "Dugald_Aisle_keep_DgnHall_before/_Dugald_Aisle_keep_DgnHall_before/DG_Dugald_keep_Before_Outer_Spawn", stairs: 26528, saveStatue: 26525, lastStatue: 26526, door: 26514, bossDoor: 26516, bossExitDoor: 26517, floors: [
-]},
-
-// Dungeon Minigame Group
-//---------------------------------------------------------------------------
-
-// 꼬리잡기 미니게임
-{ name: "dungeon_minigame_catchingtail", style: 600000, baseSeed: 90000000, lobby: 1008, exit: "Uladh_Dunbarton/_Uladh_Dunbarton/ps00", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 27018, bossDoor: 27018, bossExitDoor: 27018, floors: [
-]},
-
 // Fiodh
 //---------------------------------------------------------------------------
 
-// Fiodh Intermediate Fomor Dungeon
-{ name: "gairech_fiodh_middle1_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Fiodh Intermediate Fomor Dungeon
-{ name: "gairech_fiodh_middle2_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Fiodh Intermediate Fomor Dungeon
-{ name: "gairech_fiodh_middle4_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Fiodh Dungeon
-{ name: "gairech_fiodh_dungeon_eu", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
 // Fiodh Dungeon
 { name: "gairech_fiodh_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 19, coverage: 75, color: [0x00808080,0x00808080,0x00808080], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], hasBoss: true, sets: [
+	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 19, coverage: 75, hasBoss: true, color: [0x00808080,0x00808080,0x00808080], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
 		{ min: 3, max: 3, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30002, amount: 3 }], [{ raceId: 30002, amount: 6 }], [{ raceId: 20501, amount: 5 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120003, amount: 2 }], [{ raceId: 120003, amount: 6 }], [{ raceId: 140002, amount: 6 }] ] },
@@ -1470,1032 +957,5 @@
 			{ script: "keychest_3mimic", groups: [ [{ raceId: 170201, amount: 5 }], [{ raceId: 80101, amount: 2 }], [{ raceId: 90001, amount: 3 }] ] },
 			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 20501, amount: 5 }] ] },
 		]},	]},
-]},
-
-// IF YOU SEE THIS DUNGEON, PLEASE REPORT to devCAT
-{ name: "danu_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Fiodh Dungeon
-{ name: "gairech_fiodh_dungeon_recover", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Fiodh Intermediate Fomor Dungeon
-{ name: "gairech_fiodh_middle_1_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Fiodh Intermediate Fomor Dungeon
-{ name: "gairech_fiodh_middle_2_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Fiodh Intermediate Fomor Dungeon
-{ name: "gairech_fiodh_middle_4_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Fiodh Dungeon, Where Violets Bloom
-{ name: "gairech_fiodh_cai_rp", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Fiodh Advanced Fomor Dungeon
-{ name: "gairech_fiodh_high_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// SAO Dungeon Capture: Fiodh Zone 1
-{ name: "sao_gairech_fiodh_1", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// SAO Dungeon Capture: Fiodh Zone 2
-{ name: "sao_gairech_fiodh_2", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// SAO Dungeon Capture: Fiodh Zone 3
-{ name: "sao_gairech_fiodh_3", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// SAO Dungeon Capture: Fiodh Zone 4
-{ name: "sao_gairech_fiodh_4", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// SAO Dungeon Capture: Fiodh Zone 5
-{ name: "sao_gairech_fiodh_5", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// G1 RP
-//---------------------------------------------------------------------------
-
-// Alby Dungeon
-{ name: "g1rp_05_tircho_alby_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "g1rp_05_tircho_alby_dungeon_gfmainstream2012part1", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g1_10_bangor_barri_dungeon_c1", style: 300000, baseSeed: 31100000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g1_10_bangor_barri_dungeon_eu", style: 300000, baseSeed: 31100000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g1_10_bangor_barri_dungeon", style: 300000, baseSeed: 31100000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Rabbie Dungeon
-{ name: "g1rp_15_dunbarton_rabbie_dungeon", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Dungeon
-{ name: "g1rp_15_dunbarton_rabbie_dungeon_gfmainstream2012part1", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Dungeon
-{ name: "g1rp_18_dunbarton_math_dungeon", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g1_21_tircho_ciar_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g1_21_tircho_ciar_dungeon_c1", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1rp_25_dunbarton_rabbie_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1rp_25_dunbarton_rabbie_dungeon_gfmainstream2012part1", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g1_30_bangor_barri_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Math Dungeon
-{ name: "g1rp_31_dunbarton_math_dungeon", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_39_tirnanog_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_39_tirnanog_dungeon_again", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_39_tirnanog_dungeon_eu", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_39_tirnanog_dungeon_again_eu", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// G2
-//---------------------------------------------------------------------------
-
-// Math Dungeon
-{ name: "g2_08_dunbarton_math_dungeon", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Dungeon
-{ name: "g2_08_dunbarton_math_dungeon_gfmainstream2012part1", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Fiodh Dungeon
-{ name: "g2_11_gairech_fiodh_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Coill Dungeon
-{ name: "g2rp_18_emain_coill_dungeon", style: 500000, baseSeed: 750000000, lobby: 55, exit: "Ula_DgnHall_Coill_before/_Ula_DgnHall_Coill_before/DG_EmainCoill_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-]},
-
-// Barri Mythril Dungeon
-{ name: "g2_24_bangor_barri_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Mythril Dungeon
-{ name: "g2_24_bangor_barri_dungeon_gfmainstream2012part1", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g2rp_28_tircho_ciar_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g2rp_28_tircho_ciar_dungeon_human_gfmainstream2012part1", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g2rp_28_tircho_ciar_dungeon_elf_gfmainstream2012part1", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g2rp_28_tircho_ciar_dungeon_giant_gfmainstream2012part1", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "g2rp_jump_tircho_ciar_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g2_37_bangor_barri_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g2_37_bangor_barri_dungeon_gfmainstream2012part1", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g2_04_bangor_barri_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g2_04_bangor_barri_dungeon_gfmainstream2012part1", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g3_02_bangor_barri_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Baol Dungeon
-{ name: "g3_11_tirnanog_baol_dungeon", style: 800000, baseSeed: 500000000, lobby: 79, exit: "Ula_DgnHall_Tirnanog_G3_before/_Ula_DgnHall_Tirnanog_G3_before/DG_Tirnanog_G3_Outer_Spawn", stairs: 25020, saveStatue: 25168, lastStatue: 25123, door: 25116, bossDoor: 25167, bossExitDoor: 0, floors: [
-]},
-
-// Baol Dungeon
-{ name: "g3_11_tirnanog_baol_dungeon_easy", style: 800000, baseSeed: 500000000, lobby: 79, exit: "Ula_DgnHall_Tirnanog_G3_before/_Ula_DgnHall_Tirnanog_G3_before/DG_Tirnanog_G3_Outer_Spawn", stairs: 25020, saveStatue: 25168, lastStatue: 25123, door: 25116, bossDoor: 25167, bossExitDoor: 0, floors: [
-]},
-
-// Baol Dungeon
-{ name: "g3_16_tirnanog_baol_dungeon", style: 800000, baseSeed: 500000000, lobby: 79, exit: "Ula_DgnHall_Tirnanog_G3_before/_Ula_DgnHall_Tirnanog_G3_before/DG_Tirnanog_G3_Outer_Spawn", stairs: 25020, saveStatue: 25168, lastStatue: 25123, door: 25116, bossDoor: 25167, bossExitDoor: 0, floors: [
-]},
-
-// 바올던전테스트
-{ name: "g3_16_tirnanog_baol_dungeon_test", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// Barri Dungeon
-{ name: "g3rp_darkknight_bari_dungeon", style: 300000, baseSeed: 31100000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// JG
-//---------------------------------------------------------------------------
-
-// 고양이 던전
-{ name: "jg_neko_dungeon", style: 1600000, baseSeed: 11000000, lobby: 601, exit: "JP_Nekojima_islet/_JP_Nekojima_islet004/nekojima_altar_eventbox", stairs: 0, saveStatue: 41838, lastStatue: 41838, door: 41825, bossDoor: 41827, bossExitDoor: 41858, floors: [
-]},
-
-// 고양이 던전
-{ name: "jg_neko_dungeon2", style: 1600000, baseSeed: 11000000, lobby: 601, exit: "JP_Nekojima_islet/_JP_Nekojima_islet004/nekojima_altar_eventbox", stairs: 0, saveStatue: 41838, lastStatue: 41838, door: 41825, bossDoor: 41827, bossExitDoor: 41858, floors: [
-]},
-
-// 고양이 던전
-{ name: "jg_neko_dungeon3", style: 1600000, baseSeed: 11000000, lobby: 601, exit: "JP_Nekojima_islet/_JP_Nekojima_islet004/nekojima_altar_eventbox", stairs: 0, saveStatue: 41838, lastStatue: 41838, door: 41825, bossDoor: 41827, bossExitDoor: 41858, floors: [
-]},
-
-// karuforest group
-//---------------------------------------------------------------------------
-
-// Karu Forest Ruins
-{ name: "karuforest_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Mysterious Karu Forest Ruins
-{ name: "karuforest_dungeon_drama_ep2", style: 900000, baseSeed: 10000000, lobby: 3211, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Mysterious Karu Forest Ruins Undergrounds
-{ name: "karuforest_dungeon_drama_ep2_bottom", style: 900000, baseSeed: 10000000, lobby: 3211, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Karu Forest Ruins
-{ name: "karuforest_dungeon_g10", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Karu Forest Ruins
-{ name: "karuforest_dungeon_g10_renewal", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Karu Forest Ruins
-{ name: "karuforest_twin_sword_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// 카루 숲 초보자 이벤트 유적
-{ name: "karuforest_japan_event_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// longa group
-//---------------------------------------------------------------------------
-
-// Longa Desert Ruins
-{ name: "longa_desert_dungeon", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Ruins
-{ name: "longa_desert_cubic_dungeon_g10", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Ruins
-{ name: "longa_desert_dungeon_4thtaiwan", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Topaz Ruins
-{ name: "longa_desert_topaz_dungeon", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Emerald Ruins
-{ name: "longa_desert_emerald_dungeon", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Amethyst Ruins
-{ name: "longa_desert_amethyst_dungeon", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Protector Ruins
-{ name: "longa_desert_ruingadian_dungeon", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Ruins
-{ name: "longadesert_japan_event_dungeon", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Secret Ruins of Longa Desert
-{ name: "g7rp_ruway_longa_desert_dungeon", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Ruins
-{ name: "longa_desert_dungeon_rp_atrata", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Ruins
-{ name: "longa_desert_dungeon_rp_effie_brother", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Ruins
-{ name: "longa_desert_final_shot_dungeon", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Secret Ruins of Longa Desert
-{ name: "longa_desert_andras_secret_dungeon", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Longa Desert Rain Maker Dungeon
-{ name: "longa_desert_dungeon_g10", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Math
-//---------------------------------------------------------------------------
-
-// Math Dungeon
-{ name: "dunbarton_math_crimath_dungeon", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 44886, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Advanced Fomor Dungeon
-{ name: "dunbarton_math_crimath_dungeon_h1", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 44886, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Advanced Fomor Dungeon
-{ name: "dunbarton_math_crimath_dungeon_h2", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 44886, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Dungeon
-{ name: "dunbarton_math_valentine_dungeon", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Dungeon
-{ name: "dunbarton_math_dungeon", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Dungeon
-{ name: "dunbarton_math_dungeon_recover", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Basic Dungeon
-{ name: "dunbarton_math_low_dungeon", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Advanced Fomor Dungeon
-{ name: "dunbarton_math_high_2_dungeon", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Advanced Fomor Dungeon
-{ name: "dunbarton_math_high_3_dungeon", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Advanced Fomor Dungeon
-{ name: "dunbarton_math_high_dungeon", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Basic Dungeon
-{ name: "dunbarton_math_low_dungeon_2012_sizerenewal", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Advanced Fomor Dungeon
-{ name: "dunbarton_math_high_2_dungeon_2012_sizerenewal", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Advanced Fomor Dungeon
-{ name: "dunbarton_math_high_3_dungeon_2012_sizerenewal", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Advanced Fomor Dungeon
-{ name: "dunbarton_math_high_dungeon_2012_sizerenewal", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// 마스 초보자 이벤트 던전
-{ name: "dunbarton_math_japan_event_dungeon", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// 마스 개들의 천국
-{ name: "dunbarton_math_husky_event_dungeon", style: 200000, baseSeed: 32500000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// SAO Dungeon Capture: Math Zone 1
-{ name: "sao_dunbarton_math_1", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// SAO Dungeon Capture: Math Zone 2
-{ name: "sao_dunbarton_math_2", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// SAO Dungeon Capture: Math Zone 3
-{ name: "sao_dunbarton_math_3", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// SAO Dungeon Capture: Math Zone 4
-{ name: "sao_dunbarton_math_4", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// SAO Dungeon Capture: Math Zone 5
-{ name: "sao_dunbarton_math_5", style: 200000, baseSeed: 21100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// NPC RP
-//---------------------------------------------------------------------------
-
-// Rabbie Dungeon
-{ name: "rp_ranald_dunbarton_rabbie_dungeon", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Ciar Dungeon
-{ name: "rp_tracy_tircho_ciar_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "rp_trefor_tircho_alby_dungeon", style: 100000, baseSeed: 13000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "rp_trefor_tircho_alby_dungeon2", style: 100000, baseSeed: 13000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "rp_lassardilys_tircho_alby_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Math Dungeon
-{ name: "rp_nerysmanus_dunbarton_math_dungeon_1", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Dungeon
-{ name: "rp_nerysmanus_dunbarton_math_dungeon_2", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Math Dungeon
-{ name: "rp_nerysmanus_dunbarton_math_dungeon_3", style: 200000, baseSeed: 21000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before2/_Ula_DgnHall_Dunbarton_before2/DG_DunbartonBefore2_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Alby Dungeon
-{ name: "rp_monster_giantspider", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "rp_monster_chicken", style: 100000, baseSeed: 12345000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Alby Dungeon
-{ name: "tircho_alby_dungeon_keith_rp", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-]},
-
-// Peaca
-//---------------------------------------------------------------------------
-
-// 페카 초급 던전
-{ name: "senmag_peaca_beginner_dungeon", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// Peaca Dungeon
-{ name: "senmag_peaca_dungeon", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// Peaca Dungeon
-{ name: "senmag_peaca_dungeon_recover", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// Peaca Dungeon
-{ name: "senmag_peaca_dungeon_recover_easy", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// Peaca Basic Fomor Dungeon
-{ name: "senmag_peaca_low_dungeon", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// Lucas's Peaca Dungeon
-{ name: "senmag_peaca_dungeon_g11", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// Peaca Dungeon
-{ name: "g12_senmag_peaca_dungeon_hard", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// Peaca Dungeon
-{ name: "g12_senmag_peaca_dungeon_mid", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// Peaca Dungeon
-{ name: "g12_senmag_peaca_dungeon_easy", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// Peaca Intermediate Fomor Dungeon
-{ name: "senmag_peaca_middle_dungeon", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// SAO Dungeon Capture: Peaca Zone 1
-{ name: "sao_senmag_peaca_1", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// SAO Dungeon Capture: Peaca Zone 2
-{ name: "sao_senmag_peaca_2", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// SAO Dungeon Capture: Peaca Zone 3
-{ name: "sao_senmag_peaca_3", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// SAO Dungeon Capture: Peaca Zone 4
-{ name: "sao_senmag_peaca_4", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// SAO Dungeon Capture: Peaca Zone 5
-{ name: "sao_senmag_peaca_5", style: 700000, baseSeed: 400000000, lobby: 75, exit: "Ula_Dgnhall_Peaca_before/_Ula_Dgnhall_Peaca_before/DG_SenmagBefore_Outer_Spawn", stairs: 31052, saveStatue: 31063, lastStatue: 31064, door: 31059, bossDoor: 31061, bossExitDoor: 31062, floors: [
-]},
-
-// potspider group
-//---------------------------------------------------------------------------
-
-// Pot-Belly Spider Leg Artifact
-{ name: "potspider_leg_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Pot-Belly Spider Fang Artifact
-{ name: "potspider_molar_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Pot-Belly Spider Pincer Artifact
-{ name: "potspider_claw_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Pot-Belly Spider's Belly Artifact
-{ name: "potspider_pot_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Pot-Belly Spider's Venom Sac Artifact
-{ name: "potspider_poisongland_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Glowing Pot-Belly Spider Artifact
-{ name: "shining_potspider_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Rabbie
-//---------------------------------------------------------------------------
-
-// Rabbie Dungeon
-{ name: "dunbarton_rabbie_dungeon", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Special Four-Leaf Clover Dungeon
-{ name: "dunbarton_rabbie_four_leaf_clover_dungeon", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// 마법 카카오 던전
-{ name: "dunbarton_rabbie_magic_cacao_bean_dungeon", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// 라비 황금쥐 던전
-{ name: "dunbarton_rabbie_golden_rat_dungeon", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Dungeon
-{ name: "dunbarton_rabbie_dungeon_recover", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Dungeon
-{ name: "dunbarton_rabbie_dungeon_recover_easy", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Dungeon
-{ name: "g3_darkknight_rabbie_dungeon", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Dungeon
-{ name: "g3_darkknight_rabbie_dungeon_g2jump_or_g3jump", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Dungeon
-{ name: "g3_darkknight_rabbie_dungeon_g2jump_and_g3jump", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Basic Dungeon
-{ name: "dunbarton_rabbie_low_dungeon", style: 200000, baseSeed: 20100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie PC Cafe Advanced Fomor Dungeon
-{ name: "dunbarton_rabbiepcbang_low_dungeon", style: 200000, baseSeed: 20100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Advanced Fomor Dungeon
-{ name: "dunbarton_rabbie_high_2_dungeon", style: 200000, baseSeed: 20100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Advanced Fomor Dungeon
-{ name: "dunbarton_rabbie_high_3_dungeon", style: 200000, baseSeed: 20100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Advanced Fomor Dungeon
-{ name: "dunbarton_rabbie_high_dungeon", style: 200000, baseSeed: 20100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// 라비 모험 던전
-{ name: "dunbarton_rabbie_premium_dungeon", style: 200000, baseSeed: 20100000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rabbie Dungeon
-{ name: "dunbarton_rabbie_andras_dungeon", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// 솔로 천국 커플 지옥 던전
-{ name: "dunbarton_rabbie_whiteday_dungeon", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Horrifying Skeleton Dungeon
-{ name: "dunbarton_rabbie_g15_creepy_skull", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Horrifying Skeleton Dungeon
-{ name: "dunbarton_rabbie_g15_creepy_skull_mid", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Horrifying Skeleton Dungeon
-{ name: "dunbarton_rabbie_g15_creepy_skull_mid_renewal", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Horrifying Skeleton Dungeon
-{ name: "dunbarton_rabbie_g15_creepy_skull_high", style: 200000, baseSeed: 20000000, lobby: 26, exit: "Ula_DgnHall_Dunbarton_before1/_Ula_DgnHall_Dunbarton_before1/DG_DunbartonBefore1_Outer_Spawn", stairs: 21043, saveStatue: 21041, lastStatue: 21022, door: 21025, bossDoor: 21027, bossExitDoor: 21028, floors: [
-]},
-
-// Rundal
-//---------------------------------------------------------------------------
-
-// Rundal Siren Dungeon
-{ name: "emain_runda_mid_siren_dungeon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Mysterious Rundal Dungeon
-{ name: "emain_runda_dungeon_g16s1_shakespear", style: 1700000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Mysterious Rundal Dungeon
-{ name: "emain_runda_dungeon_g16s1_shakespear_mid", style: 1700000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Mysterious Rundal Dungeon
-{ name: "emain_runda_dungeon_g16s1_shakespear_high", style: 1700000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Dungeon
-{ name: "emain_runda_dungeon_g13_easy", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Dungeon
-{ name: "emain_runda_dungeon_g14s4_ascon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Dungeon
-{ name: "emain_runda_dungeon_g14s4_ascon_mid", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Dungeon
-{ name: "emain_runda_dungeon_g14s4_ascon_high", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Dungeon
-{ name: "emain_runda_dungeon_g13_mid", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Basic Dungeon
-{ name: "emain_runda_dungeon_g13_hard", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Dungeon
-{ name: "emain_runda_dungeon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// 룬다 던전
-{ name: "emain_runda_dungeon_g2_paladin_rp", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Temple Knights Lair
-{ name: "emain_runda_dungeon_g12_holyknights", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Temple Knights Lair
-{ name: "emain_runda_dungeon_g12_holyknights2", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Temple Knights Lair
-{ name: "emain_runda_dungeon_g12_holyknights3", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Temple Knights Lair
-{ name: "emain_runda_dungeon_g9_holyknights1", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Temple Knights Lair
-{ name: "emain_runda_dungeon_g9_holyknights2", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Temple Knights Lair
-{ name: "emain_runda_dungeon_g9_holyknights3", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// 룬다 황금쥐 던전
-{ name: "emain_runda_golden_rat_dungeon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Dungeon
-{ name: "emain_runda_dungeon_recover", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Dungeon
-{ name: "emain_runda_dungeon_recover_easy", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Basic Dungeon
-{ name: "emain_runda_low_dungeon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Siren Dungeon
-{ name: "emain_runda_middle_siren_dungeon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Advanced Fomor Dungeon
-{ name: "emain_runda_high_2_dungeon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Advanced Fomor Dungeon
-{ name: "emain_runda_high_3_dungeon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Advanced Fomor Dungeon
-{ name: "emain_runda_high_dungeon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Rundal Boss Trial 
-{ name: "emain_runda_bossrush_dungeon", style: 600000, baseSeed: 760000000, lobby: 65, exit: "Ula_DgnHall_Runda_before/_Ula_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 31019, saveStatue: 31031, lastStatue: 31032, door: 31026, bossDoor: 31028, bossExitDoor: 31029, floors: [
-]},
-
-// Hard Mode Rundal Dungeon
-{ name: "emain_runda_hardmode_dungeon", style: 1500000, baseSeed: 760000000, lobby: 124, exit: "Ula_hardmode_DgnHall_Runda_before/_Ula_hardmode_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 11074, saveStatue: 11064, lastStatue: 11065, door: 11070, bossDoor: 11072, bossExitDoor: 11073, floors: [
-]},
-
-// Hard Mode Rundal Basic Dungeon
-{ name: "emain_runda_low_hardmode_dungeon", style: 1500000, baseSeed: 760000000, lobby: 124, exit: "Ula_hardmode_DgnHall_Runda_before/_Ula_hardmode_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 11074, saveStatue: 11064, lastStatue: 11065, door: 11070, bossDoor: 11072, bossExitDoor: 11073, floors: [
-]},
-
-// Hard Mode Rundal Siren Dungeon
-{ name: "emain_runda_middle_hardmode_siren_dungeon", style: 1500000, baseSeed: 760000000, lobby: 124, exit: "Ula_hardmode_DgnHall_Runda_before/_Ula_hardmode_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 11074, saveStatue: 11064, lastStatue: 11065, door: 11070, bossDoor: 11072, bossExitDoor: 11073, floors: [
-]},
-
-// Hard Mode Rundal Advanced Dungeon
-{ name: "emain_runda_high_hardmode_dungeon", style: 1500000, baseSeed: 760000000, lobby: 124, exit: "Ula_hardmode_DgnHall_Runda_before/_Ula_hardmode_DgnHall_Runda_before/DG_RundaBefore_Outer_Spawn", stairs: 11074, saveStatue: 11064, lastStatue: 11065, door: 11070, bossDoor: 11072, bossExitDoor: 11073, floors: [
-]},
-
-// Senmag Keep
-//---------------------------------------------------------------------------
-
-// Sen Mag Castle Dungeon
-{ name: "senmag_keep_dungeon", style: 1000000, baseSeed: 10000000, lobby: 206, exit: "Sen_Mag_keep_DgnHall_before/_Sen_Mag_keep_DgnHall_before/DG_SenMag_keep_Before_Outer_Spawn", stairs: 26528, saveStatue: 26525, lastStatue: 26526, door: 26514, bossDoor: 26516, bossExitDoor: 26517, floors: [
-]},
-
-// StoneBison group
-//---------------------------------------------------------------------------
-
-// Stone Bison Tail Artifact
-{ name: "stonebison_tail_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Bison Teeth Artifact
-{ name: "stonebison_tooth_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Bison Hoof Artifact
-{ name: "stonebison_hoof_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Bison Horn Artifact
-{ name: "stonebison_horn_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Glowing Stone Bison Artifact
-{ name: "shining_stonebison_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Glowing Stone Bison Artifact
-{ name: "karuforest_windbreaker_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// stonegargoyle group
-//---------------------------------------------------------------------------
-
-// Maiz Prairie Artifact
-{ name: "maizplain_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Maiz Prairie Ruins
-{ name: "maizplain_dungeon_g10", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Maiz Prairie Artifact
-{ name: "maizplain_twin_sword_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Gargoyle Pauldron Artifact
-{ name: "stonegargoyle_shoulderaccessory_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Gargoyle Glove Artifact
-{ name: "stonegargoyle_glove_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Gargoyle Boots Artifact
-{ name: "stonegargoyle_boots_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Glowing Stone Gargoyle Artifact
-{ name: "shining_stonegargoyle_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Glowing Stone Gargoyle Artifact
-{ name: "shining_stonegargoyle_dungeon_gfmainstream2012part1", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// 메이즈 평원 초보자 이벤트 유적
-{ name: "maizplain_japan_event_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Maiz Prairie Ruins
-{ name: "maizplain_dungeon_voight_rp", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Maiz Prairie Ruins
-{ name: "maizplain_dungeon_arneng_rp", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stonehound group
-//---------------------------------------------------------------------------
-
-// Stone Hound Ear Artifact
-{ name: "stonehound_ear_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Hound Bracelet Artifact
-{ name: "stonehound_anklet_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Hound Tail Artifact
-{ name: "stonehound_tail_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Hound Teeth Artifact
-{ name: "stonehound_tooth_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Hound Claw Artifact
-{ name: "stonehound_claw_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Glowing Stone Hound Artifact
-{ name: "shining_stonehound_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// StoneImp group
-//---------------------------------------------------------------------------
-
-// Stone Imp Nose Artifact
-{ name: "stoneimp_nose_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Imp Ear Artifact
-{ name: "stoneimp_ear_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Imp Hat Artifact
-{ name: "stoneimp_cap_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Imp Hat Decoration Artifact
-{ name: "stoneimp_capaccessory_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Imp Sandal Artifact
-{ name: "stoneimp_sandal_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Imp Jewel Artifact
-{ name: "stoneimp_jewel_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Glowing Stone Imp Artifact
-{ name: "shining_stoneimp_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// StoneZombie group
-//---------------------------------------------------------------------------
-
-// Stone Zombie Circlet Artifact
-{ name: "stonezombie_circlet_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Zombie Headband Artifact
-{ name: "stonezombie_hairaccessory_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Zombie Pauldron Artifact
-{ name: "stonezombie_shoulderaccessory_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Zombie Bracelet Artifact
-{ name: "stonezombie_wristlet_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Zombie Belt Artifact
-{ name: "stonezombie_belt_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Stone Zombie Eye Artifact
-{ name: "stonezombie_eye_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Glowing Stone Zombie Artifact
-{ name: "shining_stonezombie_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// test group
-//---------------------------------------------------------------------------
-
-// test_dungeon
-{ name: "test_dungeon", style: 900000, baseSeed: 10000000, lobby: 105, exit: "", stairs: 27122, saveStatue: 27126, lastStatue: 27126, door: 27114, bossDoor: 27116, bossExitDoor: 27117, floors: [
-]},
-
-// Tirnanog
-//---------------------------------------------------------------------------
-
-// Albey Dungeon
-{ name: "tirnanog_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_37_c1_tirnanog_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_37_green_tirnanog_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_37_blue_tirnanog_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_37_red_tirnanog_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_37_silver_tirnanog_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g1_37_black_tirnanog_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g3_darkknight_tirnanog_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g3_darkknight_tirnanog_dungeon_g2jump_or_g3jump", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g3_darkknight_tirnanog_dungeon_g2jump_and_g3jump", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Albey Dungeon
-{ name: "g3_darkknight_tirnanog_again_dungeon", style: 400000, baseSeed: 330000000, lobby: 46, exit: "Ula_DgnHall_Tirnanog_before1/_Ula_DgnHall_Tirnanog_before1/DG_TirnanogBefore1_Outer_Spawn", stairs: 25018, saveStatue: 25029, lastStatue: 25030, door: 25022, bossDoor: 25024, bossExitDoor: 25025, floors: [
-]},
-
-// Una
-//---------------------------------------------------------------------------
-
-// Una Dungeon
-{ name: "bangor_una_dungeon", style: 300000, baseSeed: 320000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before2/_Ula_DgnHall_Bangor_before2/DG_BangorBefore2_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
-]},
-
-// vales group
-//---------------------------------------------------------------------------
-
-// Longa Desert Delivery Person Dungeon
-{ name: "longa_desert_dungeon_summerevent1st2011usa", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Portia's Memory RP Dungeon
-{ name: "longa_desert_dungeon_rp_portia", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Portia's Memory RP Dungeon
-{ name: "longa_desert_dungeon_rp_portia_renewal", style: 1100000, baseSeed: 10000000, lobby: 108, exit: "", stairs: 24944, saveStatue: 24942, lastStatue: 24942, door: 24923, bossDoor: 24925, bossExitDoor: 24926, floors: [
-]},
-
-// Par Ruins
-{ name: "par_dungeon", style: 1200000, baseSeed: 10000000, lobby: 9000, exit: "Iria_NW_glacier01_DG_after/_Iria_NW_glacier01_DG_after/Indoor_RDungeon_EB", stairs: 35112, saveStatue: 35103, lastStatue: 35117, door: 35105, bossDoor: 35107, bossExitDoor: 35108, floors: [
-]},
-
-// Par Ruins
-{ name: "par_dungeon_4thtaiwan", style: 1200000, baseSeed: 10000000, lobby: 9000, exit: "Iria_NW_glacier01_DG_after/_Iria_NW_glacier01_DG_after/Indoor_RDungeon_EB", stairs: 35112, saveStatue: 35103, lastStatue: 35117, door: 35105, bossDoor: 35107, bossExitDoor: 35108, floors: [
-]},
-
-// Par Ruins
-{ name: "par_dungeon_g10", style: 1200000, baseSeed: 10000000, lobby: 9000, exit: "Iria_NW_glacier01_DG_after/_Iria_NW_glacier01_DG_after/Indoor_RDungeon_EB", stairs: 35112, saveStatue: 35103, lastStatue: 35117, door: 35105, bossDoor: 35107, bossExitDoor: 35108, floors: [
-]},
-
-// Par Ruins
-{ name: "par_dungeon_g7s4", style: 1200000, baseSeed: 10000000, lobby: 9000, exit: "Iria_NW_glacier01_DG_after/_Iria_NW_glacier01_DG_after/Indoor_RDungeon_EB", stairs: 35112, saveStatue: 35103, lastStatue: 35117, door: 35105, bossDoor: 35107, bossExitDoor: 35108, floors: [
-]},
-
-// Par Dungeon
-{ name: "par_dungeon_g8s1", style: 1200000, baseSeed: 10000000, lobby: 9000, exit: "Iria_NW_glacier01_DG_after/_Iria_NW_glacier01_DG_after/Indoor_RDungeon_EB", stairs: 35112, saveStatue: 35103, lastStatue: 35117, door: 35105, bossDoor: 35107, bossExitDoor: 35108, floors: [
-]},
-
-// Par Snow Crystal Artifact
-{ name: "par_snow_crystal_dungeon", style: 1200000, baseSeed: 10000000, lobby: 9000, exit: "Iria_NW_glacier01_DG_after/_Iria_NW_glacier01_DG_after/Indoor_RDungeon_EB", stairs: 35112, saveStatue: 35103, lastStatue: 35117, door: 35105, bossDoor: 35107, bossExitDoor: 35108, floors: [
-]},
-
-// Par Dungeon
-{ name: "par_dungeon_windbreaker", style: 1200000, baseSeed: 10000000, lobby: 9000, exit: "Iria_NW_glacier01_DG_after/_Iria_NW_glacier01_DG_after/Indoor_RDungeon_EB", stairs: 35112, saveStatue: 35103, lastStatue: 35117, door: 35105, bossDoor: 35107, bossExitDoor: 35108, floors: [
 ]},
 ]
