@@ -181,7 +181,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public IPuzzleChest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType)
 		{
 			var p = place as PuzzlePlace;
-			var pos = p.GetPropPosition(positionType);
+			var pos = p.GetPropPosition(positionType, 300);
 			this.Props[name] = new PuzzleChest(pos, place as PuzzlePlace, name);
 			return (IPuzzleChest)this.Props[name];
 		}

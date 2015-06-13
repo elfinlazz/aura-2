@@ -218,10 +218,17 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return this.LockColor;
 		}
 
-		public int[] GetPropPosition(DungeonPropPositionType positionType)
+		public int[] GetPropPosition(DungeonPropPositionType positionType, int border=-1)
 		{
 			// todo: check those values
-			var radius = _placeNode.Value.RoomType == RoomType.Alley ? 200 : 800;
+			var radius = 0;
+			if (border >= 0)
+			{
+				radius = _placeNode.Value.RoomType == RoomType.Alley ? 300 - border : 900 - border;
+				if (radius < 0) radius = 0;
+			}
+			else
+				radius = _placeNode.Value.RoomType == RoomType.Alley ? 200 : 800;
 			if (_positionProviders[(int) positionType] == null)
 				_positionProviders[(int)positionType] = new DungeonPropPositionProvider(positionType, radius);
 			var pos = _positionProviders[(int) positionType].GetPosition();
