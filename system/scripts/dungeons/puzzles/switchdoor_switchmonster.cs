@@ -28,11 +28,17 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 
 	public override void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)
 	{
-		var Switch = prop as IPuzzleSwitch;
-		if (Switch != null)
+		if (!(prop is IPuzzleSwitch))
+			return;
+
+		if (propEvent == "on")
 		{
-			if (Switch.GetName() == "Switch1" && propEvent == "on")
-				puzzle.OpenPlace(puzzle.GetPlace("LockedPlace"));
+			var lockedPlace = puzzle.GetPlace("LockedPlace");
+
+			if (prop.GetName() == "Switch1")
+				puzzle.OpenPlace(lockedPlace);
+			else
+				lockedPlace.SpawnSingleMob(prop.GetName() + "Mob", "Mob1");
 		}
 	}
 }
