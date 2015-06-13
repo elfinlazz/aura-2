@@ -9,6 +9,7 @@ using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Dungeons.Puzzles;
 using Aura.Channel.World.Entities;
+using Aura.Shared.Util;
 
 [PuzzleScript("keychest_monster")]
 public class KeychestMonsterScript : PuzzleScript
@@ -22,6 +23,12 @@ public class KeychestMonsterScript : PuzzleScript
 		chestPlace.DeclareUnlock(lockedPlace);
 		chestPlace.ReservePlace();
 		chestPlace.ReserveDoors();
+	}
+
+	public override void OnPuzzleCreate(IPuzzle puzzle)
+	{
+		var lockedPlace = puzzle.GetPlace("LockedPlace");
+		var chestPlace = puzzle.GetPlace("ChestPlace");
 
 		var chest = puzzle.NewChest(chestPlace, "KeyChest", DungeonPropPositionType.Random);
 

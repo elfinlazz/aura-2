@@ -65,7 +65,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public bool IsBossLock { get; private set; }
 		public Item Key { get; private set; }
 		public int DoorDirection { get; private set; }
-		private Door[] _doors;
+		public Door[] Doors { get; private set; }
 		private DungeonPropPositionProvider[] _positionProviders;
 
 
@@ -81,7 +81,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Key = null;
 			this.IsBossLock = false;
 			this.DoorDirection = 0;
-			_doors = new Door[] { null, null, null, null };
+			Doors = new Door[] { null, null, null, null };
 			var positionTypesCount = Enum.GetValues(typeof (DungeonPropPositionType)).Length;
 			_positionProviders = new DungeonPropPositionProvider[positionTypesCount];
 		}
@@ -102,7 +102,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			var room = this._placeNode.Value;
 			Door door = room.GetPuzzleDoor(direction);
 			if (door != null)
-				_doors[direction] = door;
+				Doors[direction] = door;
 			else
 			{
 				// create new door
@@ -110,17 +110,15 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				var doorBlock = _puzzle.GetDungeon().Data.Style.Get(doorType, direction);
 				string doorName = String.Format("{0}_door_{1}{2}_{3}",this._name, X, Y, direction);
 
-				door = Door.CreateDoor(doorBlock.PropId, X, Y, doorBlock.Rotation, doorType, 
-					regionId: _puzzle.GetRegion().Id, name: doorName);
+				door = Door.CreateDoor(doorBlock.PropId, X, Y, doorBlock.Rotation, doorType, name: doorName);
 				door.Info.Color1 = floorData.Color1;
 				door.Info.Color2 = floorData.Color2;
 				door.Info.Color3 = this.LockColor;
 				if (doorType == DungeonBlockType.BossDoor)
 					door.Behavior += this._puzzle.GetDungeon().BossDoorBehavior;
 				door.Behavior += _puzzle.PuzzleEvent;
-				_puzzle.GetRegion().AddProp(door);
 
-				_doors[direction] = door;
+				Doors[direction] = door;
 				this._puzzle.Props[doorName] = door;
 				room.SetPuzzleDoor(door, direction);
 				room.SetDoorType(direction, (int)doorType);
@@ -194,7 +192,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public void CloseAllDoors()
 		{
-			foreach (var door in _doors)
+			foreach (var door in Doors)
 			{
 				if (door == null) continue;
 				door.Close();
@@ -203,7 +201,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public void OpenAllDoors()
 		{
-			foreach (var door in _doors)
+			foreach (var door in Doors)
 			{
 				if (door == null) continue;
 				door.Open();
@@ -218,7 +216,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public Door GetLockDoor()
 		{
-			var door = _doors[this.DoorDirection];
+			var door = Doors[this.DoorDirection];
 			if (!IsLock) 
 				throw new CPuzzleException("Tried GetLockDoor on a place that isn't a lock");
 			if (door == null) 
@@ -229,10 +227,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public void OpenPlace()
 		{
 			if (!IsLock) return;
-			_doors[this.DoorDirection].IsLocked = false;
-			_doors[this.DoorDirection].Open();
+			Doors[this.DoorDirection].IsLocked = false;
+			Doors[this.DoorDirection].Open();
 			if (this._placeNode.Value.DoorType[this.DoorDirection] == (int)DungeonBlockType.BossDoor)
-				this._puzzle.GetDungeon().BossDoorBehavior(null, _doors[this.DoorDirection]);
+				this._puzzle.GetDungeon().BossDoorBehavior(null, Doors[this.DoorDirection]);
 		}
 
 		public uint GetLockColor()
@@ -242,6 +240,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public int[] GetPropPosition(DungeonPropPositionType positionType, int border=-1)
 		{
+			if (_placeNode == null)
+				throw new CPuzzleException(String.Format("We haven't declared this place to be something or didn't reserved a place"));
 			// todo: check those values
 			var radius = 0;
 			if (border >= 0)

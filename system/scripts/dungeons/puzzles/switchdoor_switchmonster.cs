@@ -20,14 +20,19 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		LockedPlace.DeclareLockSelf();
 		LockedPlace.ReservePlace();
 
+		puzzle.Set("open", "Switch" + RandomProvider.Get().Next(1, 5));
+		puzzle.Set("activated", "no");
+	}
+
+	public override void OnPuzzleCreate(IPuzzle puzzle)
+	{
+		var LockedPlace = puzzle.GetPlace("LockedPlace");
+
 		uint color = LockedPlace.GetLockColor();
 		var Switch1 = puzzle.NewSwitch(LockedPlace, "Switch1", DungeonPropPositionType.Corner4, color);
 		var Switch2 = puzzle.NewSwitch(LockedPlace, "Switch2", DungeonPropPositionType.Corner4, color);
 		var Switch3 = puzzle.NewSwitch(LockedPlace, "Switch3", DungeonPropPositionType.Corner4, color);
 		var Switch4 = puzzle.NewSwitch(LockedPlace, "Switch4", DungeonPropPositionType.Corner4, color);
-
-		puzzle.Set("open", "Switch" + RandomProvider.Get().Next(1, 5));
-		puzzle.Set("activated", "no");
 
 		LockedPlace.CloseAllDoors();
 	}

@@ -50,6 +50,11 @@ namespace Aura.Channel.Scripting.Scripts
 
 		}
 
+		public virtual void OnPuzzleCreate(IPuzzle puzzle)
+		{
+			
+		}
+
 		public virtual void OnPropEvent(IPuzzle puzzle, Prop prop)
 		{
 

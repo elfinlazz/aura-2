@@ -21,6 +21,12 @@ public class EntrancePuzzleScript : PuzzleScript
 		chestPlace.DeclareUnlock(lockedPlace);
 		chestPlace.ReservePlace();
 		chestPlace.ReserveDoors();
+	}
+
+	public override void OnPuzzleCreate(IPuzzle puzzle)
+	{
+		var lockedPlace = puzzle.GetPlace("LockedPlace");
+		var chestPlace = puzzle.GetPlace("ChestPlace");
 
 		var chest = puzzle.NewChest(chestPlace, "KeyChest", DungeonPropPositionType.Random);
 

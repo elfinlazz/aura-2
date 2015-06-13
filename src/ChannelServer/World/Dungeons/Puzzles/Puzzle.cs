@@ -85,7 +85,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public PuzzleScript Script { get { return _puzzleScript; } }
 
-		public Puzzle(Dungeon dungeon, DungeonFloorSection section, Region region, DungeonFloorData floorData, PuzzleScript puzzleScript, List<DungeonMonsterGroupData> monsterGroups)
+		public Puzzle(Dungeon dungeon, DungeonFloorSection section, DungeonFloorData floorData, PuzzleScript puzzleScript, List<DungeonMonsterGroupData> monsterGroups)
 		{
 			this._dungeon = dungeon;
 			this._section = section;
@@ -94,13 +94,28 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Keys = new Dictionary<string, Item>();
 			_variables = new Dictionary<string, Object>();
 			this.Name = puzzleScript.Name;
-			this._region = region;
+			_region = null;
 			this.FloorData = floorData;
 
 			_monsterGroups = new Dictionary<string, MonsterGroup>();
 			_monsterGroupData = new Dictionary<string, DungeonMonsterGroupData>();
 			for (int i = 1; i <= monsterGroups.Count; ++i)
 				_monsterGroupData["Mob" + i] = monsterGroups[i - 1];
+		}
+
+		public void OnCreate(Region region)
+		{
+			_region = region;
+			foreach (var place in _places)
+				Array.ForEach(Array.FindAll(place.Value.Doors, x => x!= null), (door) =>
+				{
+					// Beware, some doors are shared between puzzles
+					if (door.EntityId != 0) 
+						return;
+					door.Info.Region = region.Id;
+					region.AddProp(door);
+				});
+			Script.OnPuzzleCreate(this);
 		}
 
 		public IPuzzlePlace NewPlace(string name)
@@ -111,7 +126,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public Region GetRegion()
 		{
-			return this._region;
+			return _region;
 		}
 
 
@@ -182,6 +197,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public Chest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType)
 		{
+			if (_region == null)
+				throw new CPuzzleException("NewChest outside of OnPuzzleCreate.");
 			var p = place as PuzzlePlace;
 			var pos = p.GetPropPosition(positionType, 300);
 			var chest = Chest.CreateChest(pos[0], pos[1], pos[2], regionId: _region.Id, name: name);
@@ -193,6 +210,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public Switch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType,  uint color)
 		{
+			if (_region == null)
+				throw new CPuzzleException("NewSwitch outside of OnPuzzleCreate.");
 			var p = place as PuzzlePlace;
 			var pos = p.GetPropPosition(positionType);
 			var s = Switch.CreateSwitch(pos[0], pos[1], pos[2], color, regionId: _region.Id, name: name);

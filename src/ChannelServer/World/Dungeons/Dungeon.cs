@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Xml.Linq;
 using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Dungeons.Puzzles;
@@ -88,6 +89,10 @@ namespace Aura.Channel.World.Dungeons
 			this.Script = ChannelServer.Instance.ScriptManager.DungeonScripts.Get(this.Name);
 			if (this.Script == null)
 				Log.Warning("Dungeon: No script found for '{0}'.", this.Name);
+
+			// Prepare puzzles
+			for (int i = 0; i < this.Generator.Floors.Count; ++i)
+				this.InitPuzzles(i);
 
 			// Create lobby
 			var dungeonEntryRegionId = ChannelServer.Instance.World.DungeonManager.GetRegionId();
@@ -162,10 +167,9 @@ namespace Aura.Channel.World.Dungeons
 
 		private void InitPuzzles(int i)
 		{
-			var region = this.Regions[i];
-			var floorData = this.Generator.Data.Floors[i - 1];
+			var floorData = this.Generator.Data.Floors[i];
 			var rng = this.Generator.RngPuzzles;
-			var sections = this.Generator.Floors[i - 1].Sections;
+			var sections = this.Generator.Floors[i].Sections;
 
 			for (var section = 0; section < sections.Count; ++section)
 			{
@@ -183,7 +187,7 @@ namespace Aura.Channel.World.Dungeons
 					}
 					try
 					{
-						puzzleScript.OnPrepare(sections[section].NewPuzzle(this, region, floorData, puzzleScript, monsterGroups));
+						puzzleScript.OnPrepare(sections[section].NewPuzzle(this, floorData, puzzleScript, monsterGroups));
 					}
 					catch (CPuzzleException e)
 					{
@@ -193,10 +197,29 @@ namespace Aura.Channel.World.Dungeons
 			}
 		}
 
+		private void CreatePuzzles(int i)
+		{
+			var sections = this.Generator.Floors[i - 1].Sections;
+			var region = this.Regions[i];
+
+			foreach (var section in sections)
+				foreach (var puzzle in section.Puzzles)
+				{
+					try
+					{
+						puzzle.OnCreate(region);
+					}
+					catch (CPuzzleException e)
+					{
+						Log.Warning("Section {0}, puzzle '{1}' : {2}", section, puzzle.Script.Name, e.Message);
+					}
+				}
+		}
+
 		public void InitFloorRegion(int i)
 		{
 			this.SetUpHallwayProps(i);
-			this.InitPuzzles(i);
+			this.CreatePuzzles(i);
 
 			var region = this.Regions[i];
 			var floor = this.Generator.Floors[i - 1];
