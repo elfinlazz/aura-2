@@ -47,7 +47,7 @@ public class KeychestMonsterScript : PuzzleScript
 				chestPlace.CloseAllDoors();
 
 				var rnd = RandomProvider.Get();
-				if (rnd.NextDouble() < 0.01)
+				if (rnd.NextDouble() < 0.5)
 					chestPlace.SpawnSingleMob("LastMob");
 				else
 					chestPlace.SpawnSingleMob("ChainMob1", "Mob1");
