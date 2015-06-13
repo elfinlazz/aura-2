@@ -30,17 +30,25 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		private class LockColorProvider
 		{
+			public static readonly uint[] Colors = new uint[]
+			{ 
+				0xe76c74, // Red
+				0x654e9f, // Purple
+				0x4fbcee, // Blue
+				0xbfd46c, // Green
+				0xf7b356, // Orange
+				0xfdf06c, // Yellow
+				0xff76bd, // Pink
+				0x6df8f3, // Turquoise
+			};
+
 			private Queue<uint> _availableColors;
 
 			public LockColorProvider()
 			{
-				// todo: add more colors, suffle
-				this._availableColors = new Queue<uint>(new uint[]
-				{
-					0x0000FF, 
-					0xFFFFFF, 
-					0x00FF00,
-				});
+				var rnd = RandomProvider.Get();
+
+				_availableColors = new Queue<uint>(Colors.OrderBy(a => rnd.Next()));
 			}
 
 			/// <summary>
@@ -48,12 +56,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 			/// </summary>
 			public uint GetLockColor()
 			{
-				if (this._availableColors.Count == 0)
-				{
+				if (_availableColors.Count == 0)
 					// We out of awailable colours, lets return random one
 					return (uint)RandomProvider.Get().Next(0xFFFFFF);
-				}
-				return this._availableColors.Dequeue();
+
+				return _availableColors.Dequeue();
 			}
 		}
 
