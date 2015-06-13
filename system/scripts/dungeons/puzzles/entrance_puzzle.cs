@@ -21,6 +21,8 @@ public class EntrancePuzzleScript : PuzzleScript
 		chestPlace.DeclareUnlock(lockedPlace);
 		chestPlace.ReservePlace();
 		chestPlace.ReserveDoors();
+
+		puzzle.Set("ChestOpen", false);
 	}
 
 	public override void OnPuzzleCreate(IPuzzle puzzle)
@@ -37,8 +39,10 @@ public class EntrancePuzzleScript : PuzzleScript
 	public override void OnPropEvent(IPuzzle puzzle, Prop prop)
 	{
 		var chest = prop as Chest;
-		if (chest != null && chest.InternalName == "KeyChest" && chest.State == "open")
+		if (chest != null && chest.InternalName == "KeyChest" && !puzzle.Get("ChestOpen"))
 		{
+			puzzle.Set("ChestOpen", true);
+
 			var chestPlace = puzzle.GetPlace("ChestPlace");
 			chestPlace.CloseAllDoors();
 			chestPlace.SpawnSingleMob("SingleMob1");

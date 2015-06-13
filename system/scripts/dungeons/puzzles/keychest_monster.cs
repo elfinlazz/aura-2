@@ -23,6 +23,8 @@ public class KeychestMonsterScript : PuzzleScript
 		chestPlace.DeclareUnlock(lockedPlace);
 		chestPlace.ReservePlace();
 		chestPlace.ReserveDoors();
+
+		puzzle.Set("ChestOpen", false);
 	}
 
 	public override void OnPuzzleCreate(IPuzzle puzzle)
@@ -41,8 +43,10 @@ public class KeychestMonsterScript : PuzzleScript
 		var chest = prop as Chest;
 		if (chest != null)
 		{
-			if (chest.InternalName == "KeyChest" && chest.State == "open")
+			if (chest.InternalName == "KeyChest" && !puzzle.Get("ChestOpen"))
 			{
+				puzzle.Set("ChestOpen", true);
+
 				var chestPlace = puzzle.GetPlace("ChestPlace");
 				chestPlace.CloseAllDoors();
 
