@@ -34,7 +34,7 @@ public class KeychestMonsterScript : PuzzleScript
 		var chest = prop as Chest;
 		if (chest != null)
 		{
-			if (chest.InternalName == "Key_Chest" && chest.State == "open")
+			if (chest.InternalName == "KeyChest" && chest.State == "open")
 			{
 				var chestPlace = puzzle.GetPlace("ChestPlace");
 				chestPlace.CloseAllDoors();
