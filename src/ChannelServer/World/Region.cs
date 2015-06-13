@@ -885,18 +885,6 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
-		/// Drops item into region and makes it disappear after x seconds.
-		/// Sends EntityAppears.
-		/// </summary>
-		public void DropItem(Item item, int x, int y)
-		{
-			item.Move(this.Id, x, y);
-			item.DisappearTime = DateTime.Now.AddSeconds(Math.Max(60, (item.OptionInfo.Price / 100) * 60));
-
-			this.AddItem(item);
-		}
-
-		/// <summary>
 		/// Returns new list of all entities within range of source.
 		/// </summary>
 		public List<Entity> GetEntitiesInRange(Entity source, int range = -1)
