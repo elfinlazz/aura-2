@@ -153,14 +153,19 @@ namespace Aura.Channel.Network.Handlers
 				}
 			}
 
-			var success = creature.Inventory.PickUp(item);
-			if (!success)
+			if (!creature.Inventory.PickUp(item))
 			{
 				Send.SystemMessage(creature, Localization.Get("Not enough space."));
 				creature.Inventory.Remove(item.OptionInfo.LinkedPocketId);
+				Send.ItemPickUpR(creature, false);
+				return;
 			}
 
-			Send.ItemPickUpR(creature, success);
+			// Pick up effect for keys
+			if (item.HasTag("/key/"))
+				Send.Effect(creature, Effect.PickUpItem, (byte)1, item.Info.Id, item.Info.Color1, item.Info.Color2, item.Info.Color3);
+
+			Send.ItemPickUpR(creature, true);
 		}
 
 		/// <summary>
