@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Dungeons.Generation;
+using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Entities;
+using Aura.Channel.World.Quests;
 using Aura.Data.Database;
-using Aura.Shared.Util;
-using Aura.Mabi.Const;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
 {
@@ -45,7 +45,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		IPuzzlePlace GetPlace(string name);
 		Region GetRegion();
 		Dungeon GetDungeon();
-		IPuzzleProp FindProp(string name);
+		Prop FindProp(string name);
 		void Set(string name, Object value);
 		Object Get(string name);
 
@@ -54,7 +54,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// </summary>
 		/// <param name="lockPlace"></param>
 		/// <param name="keyName"></param>
-		void LockPlace(IPuzzlePlace lockPlace, string keyName);
+		Item LockPlace(IPuzzlePlace lockPlace, string keyName);
 
 		/// <summary>
 		/// Open locked place.
@@ -62,8 +62,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <param name="lockPlace"></param>
 		void OpenPlace(IPuzzlePlace lockPlace);
 
-		IPuzzleChest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType);
-		IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType, uint color);
+		Chest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType);
+		Switch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType, uint color);
 		//IMonsterGroup AllocateMonsterGroup(IPuzzlePlace place, string name, int group);
 		//IMonsterGroup GetMonsterGroup(string name);
 	}
@@ -72,9 +72,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 	{
 		private Dungeon _dungeon;
 		private DungeonFloorSection _section;
+		public DungeonFloorData FloorData { get; private set; }
 		private Region _region;
 		private PuzzleScript _puzzleScript;
-		public Dictionary<string, PuzzleProp> Props;
+		public Dictionary<string, Prop> Props;
 		public Dictionary<string, Item> Keys { get; private set; }
 		public string Name { get; private set; }
 		private Dictionary<string, Object> _variables;
@@ -84,15 +85,17 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public PuzzleScript Script { get { return _puzzleScript; } }
 
-		public Puzzle(Dungeon dungeon, DungeonFloorSection section, Region region, PuzzleScript puzzleScript, List<DungeonMonsterGroupData> monsterGroups)
+		public Puzzle(Dungeon dungeon, DungeonFloorSection section, Region region, DungeonFloorData floorData, PuzzleScript puzzleScript, List<DungeonMonsterGroupData> monsterGroups)
 		{
 			this._dungeon = dungeon;
 			this._section = section;
 			this._puzzleScript = puzzleScript;
-			this.Props = new Dictionary<string, PuzzleProp>();
+			this.Props = new Dictionary<string, Prop>();
 			this.Keys = new Dictionary<string, Item>();
+			_variables = new Dictionary<string, Object>();
 			this.Name = puzzleScript.Name;
 			this._region = region;
+			this.FloorData = floorData;
 
 			_monsterGroups = new Dictionary<string, MonsterGroup>();
 			_monsterGroupData = new Dictionary<string, DungeonMonsterGroupData>();
@@ -122,7 +125,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return this._places[name];
 		}
 
-		public IPuzzleProp FindProp(string name)
+		public Prop FindProp(string name)
 		{
 			if (this.Props.ContainsKey(name)) return this.Props[name];
 			return null;
@@ -139,7 +142,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return null;
 		}
 
-		public void LockPlace(IPuzzlePlace lockPlace, string keyName)
+		public Item LockPlace(IPuzzlePlace lockPlace, string keyName)
 		{
 			var place = lockPlace as PuzzlePlace;
 			if (place == null) throw new CPuzzleException("tried to lock a non-existent place");
@@ -147,10 +150,21 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			{
 				throw new CPuzzleException("tried to lock a place that isn't a Lock");
 			}
+			Item key;
+			string doorName = place.GetLockDoor().InternalName;
 			if (place.IsBossLock)
-				place.LockPlace(this.GetBoosKey(keyName));
+			{
+				key = Item.CreateKey(70030, doorName);
+				key.Info.Color1 = 0xFF0000;
+			}
 			else
-				place.LockPlace(this.GetKey(keyName, place.LockColor));
+			{
+				key = Item.CreateKey(70029, doorName);
+				key.Info.Color1 = place.LockColor;
+			}
+			place.LockPlace(key);
+			this.Keys[keyName] = key;
+			return key;
 		}
 
 		public void OpenPlace(IPuzzlePlace lockPlace)
@@ -160,43 +174,37 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			else throw new CPuzzleException("tried to open a non-existent place");
 		}
 
-		public Item GetBoosKey(string name)
-		{
-			if (this.Keys.ContainsKey(name)) return this.Keys[name];
-			var key = new Item(70030);
-			key.Info.Color1 = 0xFF0000;
-			this.Keys[name] = key;
-			return key;
-		}
-
 		public Item GetKey(string name, uint color)
 		{
 			if (this.Keys.ContainsKey(name)) return this.Keys[name];
-			var key = new Item(70029);
-			key.Info.Color1 = color;
-			this.Keys[name] = key;
-			return key;
+			return null;
 		}
 
-		public IPuzzleChest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType)
+		public Chest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType)
 		{
 			var p = place as PuzzlePlace;
 			var pos = p.GetPropPosition(positionType, 300);
-			this.Props[name] = new PuzzleChest(pos, place as PuzzlePlace, name);
-			return (IPuzzleChest)this.Props[name];
+			var chest = Chest.CreateChest(pos[0], pos[1], pos[2], regionId: _region.Id, name: name);
+			chest.Behavior += PuzzleEvent;
+			_region.AddProp(chest);
+			this.Props[name] = chest;
+			return chest;
 		}
 
-		public IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType, uint color)
+		public Switch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType,  uint color)
 		{
 			var p = place as PuzzlePlace;
 			var pos = p.GetPropPosition(positionType);
-			this.Props[name] = new PuzzleSwitch(pos, p, name, color);
-			return (IPuzzleSwitch)this.Props[name];
+			var s = Switch.CreateSwitch(pos[0], pos[1], pos[2], color, regionId: _region.Id, name: name);
+			s.Behavior += PuzzleEvent;
+			_region.AddProp(s);
+			this.Props[name] = s;
+			return s;
 		}
 
-		public void PuzzleEvent(PuzzleProp prop, string propEvent)
+		public void PuzzleEvent(Creature creature, Prop prop)
 		{
-			this._puzzleScript.OnPropEvent(this, prop, propEvent);
+			this._puzzleScript.OnPropEvent(this, prop);
 		}
 
 		public void AllocateAndSpawnMob(PuzzlePlace place, string name, DungeonMonsterGroupData group)

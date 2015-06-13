@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using System;
+using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Dungeons.Puzzles;
 using Aura.Mabi.Const;
 
@@ -19,7 +20,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		/// <summary>
 		/// Doors for puzzles
 		/// </summary>
-		public PuzzleDoor[] PuzzleDoors { get; private set; }
+		public Door[] PuzzleDoors { get; private set; }
 
 		/// <summary>
 		/// Is door in direction reserved for a puzzle
@@ -65,7 +66,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 			this.isOnPath = false;
 			this.isReserved = false;
-			this.PuzzleDoors = new PuzzleDoor[] {null, null, null, null };
+			this.PuzzleDoors = new Door[] {null, null, null, null };
 			this.ReservedDoor = new bool[] { false, false, false, false };
 		}
 
@@ -90,7 +91,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			return this.DoorType[direction];
 		}
 
-		public void SetPuzzleDoor(PuzzleDoor door, int direction)
+		public void SetPuzzleDoor(Door door, int direction)
 		{
 			this.PuzzleDoors[direction] = door;
 
@@ -101,7 +102,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 				room.PuzzleDoors[opposite_direction] = door;
 		}
 
-		public PuzzleDoor GetPuzzleDoor(int direction)
+		public Door GetPuzzleDoor(int direction)
 		{
 			return this.PuzzleDoors[direction];
 		}

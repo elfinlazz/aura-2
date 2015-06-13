@@ -6,7 +6,7 @@ using Aura.Channel.World.Dungeons.Generation;
 using Aura.Channel.World.Entities;
 using Aura.Mabi.Const;
 using System;
-using Aura.Channel.Network.Sending;
+using Aura.Channel.World.Dungeons.Props;
 using Aura.Data.Database;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
@@ -65,7 +65,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public bool IsBossLock { get; private set; }
 		public Item Key { get; private set; }
 		public int DoorDirection { get; private set; }
-		private PuzzleDoor[] Doors;
+		private Door[] _doors;
 		private DungeonPropPositionProvider[] _positionProviders;
 
 
@@ -81,7 +81,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Key = null;
 			this.IsBossLock = false;
 			this.DoorDirection = 0;
-			this.Doors = new PuzzleDoor[] { null, null, null, null };
+			_doors = new Door[] { null, null, null, null };
 			var positionTypesCount = Enum.GetValues(typeof (DungeonPropPositionType)).Length;
 			_positionProviders = new DungeonPropPositionProvider[positionTypesCount];
 		}
@@ -100,15 +100,27 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		private void AddDoor(int direction, DungeonBlockType doorType)
 		{
 			var room = this._placeNode.Value;
-			PuzzleDoor door = room.GetPuzzleDoor(direction);
+			Door door = room.GetPuzzleDoor(direction);
 			if (door != null)
-				this.Doors[direction] = door;
+				_doors[direction] = door;
 			else
 			{
 				// create new door
-				string doorName = this._name + "_door_" + direction;
-				door = new PuzzleDoor(this, doorName, direction, doorType);
-				this.Doors[direction] = door;
+				var floorData = _puzzle.FloorData;
+				var doorBlock = _puzzle.GetDungeon().Data.Style.Get(doorType, direction);
+				string doorName = String.Format("{0}_door_{1}{2}_{3}",this._name, X, Y, direction);
+
+				door = Door.CreateDoor(doorBlock.PropId, X, Y, doorBlock.Rotation, doorType, 
+					regionId: _puzzle.GetRegion().Id, name: doorName);
+				door.Info.Color1 = floorData.Color1;
+				door.Info.Color2 = floorData.Color2;
+				door.Info.Color3 = this.LockColor;
+				if (doorType == DungeonBlockType.BossDoor)
+					door.Behavior += this._puzzle.GetDungeon().BossDoorBehavior;
+				door.Behavior += _puzzle.PuzzleEvent;
+				_puzzle.GetRegion().AddProp(door);
+
+				_doors[direction] = door;
 				this._puzzle.Props[doorName] = door;
 				room.SetPuzzleDoor(door, direction);
 				room.SetDoorType(direction, (int)doorType);
@@ -144,6 +156,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public void DeclareLockSelf()
 		{
 			this.DeclareLock();
+			this.GetLockDoor().IsLocked = true;
 		}
 
 		public void DeclareUnlock(IPuzzlePlace lockPlace)
@@ -181,7 +194,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public void CloseAllDoors()
 		{
-			foreach (var door in Doors)
+			foreach (var door in _doors)
 			{
 				if (door == null) continue;
 				door.Close();
@@ -190,7 +203,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public void OpenAllDoors()
 		{
-			foreach (var door in Doors)
+			foreach (var door in _doors)
 			{
 				if (door == null) continue;
 				door.Open();
@@ -199,18 +212,27 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public void LockPlace(Item key)
 		{
-			if (!IsLock) return;
+			this.GetLockDoor().IsLocked = true;
 			this.Key = key;
-			this.Doors[this.DoorDirection].SetKey(key);
+		}
+
+		public Door GetLockDoor()
+		{
+			var door = _doors[this.DoorDirection];
+			if (!IsLock) 
+				throw new CPuzzleException("Tried GetLockDoor on a place that isn't a lock");
+			if (door == null) 
+				throw new CPuzzleException("Tried GetLockDoor but door wasn't found.");
+			return door;
 		}
 
 		public void OpenPlace()
 		{
 			if (!IsLock) return;
+			_doors[this.DoorDirection].IsLocked = false;
+			_doors[this.DoorDirection].Open();
 			if (this._placeNode.Value.DoorType[this.DoorDirection] == (int)DungeonBlockType.BossDoor)
-				this._puzzle.GetDungeon().BossDoorBehavior(null, this.Doors[this.DoorDirection].GetDoorProp());
-			else
-				this.Doors[this.DoorDirection].Open();
+				this._puzzle.GetDungeon().BossDoorBehavior(null, _doors[this.DoorDirection]);
 		}
 
 		public uint GetLockColor()

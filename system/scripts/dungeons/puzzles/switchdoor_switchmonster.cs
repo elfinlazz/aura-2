@@ -5,7 +5,9 @@
 //---------------------------------------------------------------------------
 
 using Aura.Channel.Scripting.Scripts;
+using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Dungeons.Puzzles;
+using Aura.Channel.World.Entities;
 
 [PuzzleScript("switchdoor_switchmonster")]
 public class SwitchdoorSwitchmonsterScript : PuzzleScript
@@ -26,19 +28,20 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		LockedPlace.CloseAllDoors();
 	}
 
-	public override void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)
+	public override void OnPropEvent(IPuzzle puzzle, Prop prop)
 	{
-		if (!(prop is IPuzzleSwitch))
+		var Switch = prop as Switch;
+		if (Switch == null)
 			return;
 
-		if (propEvent == "on")
+		if (Switch.State == "on")
 		{
 			var lockedPlace = puzzle.GetPlace("LockedPlace");
 
-			if (prop.GetName() == "Switch1")
+			if (Switch.InternalName == "Switch1")
 				puzzle.OpenPlace(lockedPlace);
 			else
-				lockedPlace.SpawnSingleMob(prop.GetName() + "Mob", "Mob1");
+				lockedPlace.SpawnSingleMob(Switch.InternalName + "Mob", "Mob1");
 		}
 	}
 }

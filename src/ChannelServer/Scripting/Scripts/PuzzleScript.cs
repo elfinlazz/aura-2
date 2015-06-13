@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Aura.Channel.World.Dungeons.Puzzles;
+using Aura.Channel.World.Entities;
 using Aura.Data.Database;
 
 namespace Aura.Channel.Scripting.Scripts
@@ -49,7 +50,7 @@ namespace Aura.Channel.Scripting.Scripts
 
 		}
 
-		public virtual void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)
+		public virtual void OnPropEvent(IPuzzle puzzle, Prop prop)
 		{
 
 		}

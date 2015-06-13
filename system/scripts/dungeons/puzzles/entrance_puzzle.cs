@@ -5,7 +5,9 @@
 //---------------------------------------------------------------------------
 
 using Aura.Channel.Scripting.Scripts;
+using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Dungeons.Puzzles;
+using Aura.Channel.World.Entities;
 
 [PuzzleScript("entrance_puzzle")]
 public class EntrancePuzzleScript : PuzzleScript
@@ -26,9 +28,10 @@ public class EntrancePuzzleScript : PuzzleScript
 		puzzle.LockPlace(lockedPlace, "Lock");
 	}
 
-	public override void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)
+	public override void OnPropEvent(IPuzzle puzzle, Prop prop)
 	{
-		if (prop.GetName() == "KeyChest" && propEvent == "open")
+		var chest = prop as Chest;
+		if (chest != null && chest.InternalName == "KeyChest" && chest.State == "open")
 		{
 			var chestPlace = puzzle.GetPlace("ChestPlace");
 			chestPlace.CloseAllDoors();

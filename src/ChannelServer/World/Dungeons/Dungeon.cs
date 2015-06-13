@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Dungeons.Puzzles;
 
 namespace Aura.Channel.World.Dungeons
@@ -45,7 +46,8 @@ namespace Aura.Channel.World.Dungeons
 
 		private List<TreasureChest> _treasureChests;
 
-		private Prop _bossDoor, _bossExitDoor;
+		private Door _bossDoor;
+		private Prop _bossExitDoor;
 
 		public Dungeon(long instanceId, string dungeonName, int itemId, Creature creature)
 		{
@@ -181,7 +183,7 @@ namespace Aura.Channel.World.Dungeons
 					}
 					try
 					{
-						puzzleScript.OnPrepare(sections[section].NewPuzzle(this, region, puzzleScript, monsterGroups));
+						puzzleScript.OnPrepare(sections[section].NewPuzzle(this, region, floorData, puzzleScript, monsterGroups));
 					}
 					catch (CPuzzleException e)
 					{
@@ -271,17 +273,17 @@ namespace Aura.Channel.World.Dungeons
 
 				if (endRoomTrait.PuzzleDoors[Direction.Down] == null)
 				{
-					_bossDoor = new Prop(this.Data.BossDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Down), 1, 0, "closed");
+					_bossDoor = Door.CreateDoor(this.Data.BossDoorId, endPos.X, endPos.Y, Rotation(Direction.Down),
+						DungeonBlockType.BossDoor, regionId: region.Id);
 					_bossDoor.Info.Color1 = floorData.Color1;
 					_bossDoor.Info.Color2 = floorData.Color1;
 					_bossDoor.Info.Color3 = floorData.Color3;
-					_bossDoor.Behavior = this.BossDoorBehavior;
-					_bossDoor.Behavior = this.BossDoorBehavior;
+					_bossDoor.Behavior += this.BossDoorBehavior;
 					region.AddProp(_bossDoor);
 				}
 				else
 				{
-					_bossDoor = endRoomTrait.PuzzleDoors[Direction.Down].GetDoorProp();
+					_bossDoor = endRoomTrait.PuzzleDoors[Direction.Down];
 				}
 
 				//var dummyDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y - Dungeon.TileSize, Rotation(GetFirstDirection(gen.GetRoom(endTile.GetBiasedPosition(Direction.Down)).Directions, Direction.Right)), 1, 0, "open");
@@ -404,8 +406,15 @@ namespace Aura.Channel.World.Dungeons
 
 		public void BossDoorBehavior(Creature _, Prop prop)
 		{
-			if (prop.State == "open")
-				return;
+			var door = prop as Door;
+			if (door != null)
+			{
+				if (door.IsLocked)
+					return;
+			}
+			else
+				if (prop.State == "closed")
+					return;
 
 			var end = this.Generator.Floors.Last().MazeGenerator.EndPos;
 			var endX = end.X * TileSize + TileSize / 2;
@@ -436,7 +445,7 @@ namespace Aura.Channel.World.Dungeons
 				}
 			}
 
-			prop.SetState("open");
+			//prop.SetState("open");
 		}
 
 		private void OnBossDeath(Creature creature, Creature killer)

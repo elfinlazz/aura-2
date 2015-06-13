@@ -6,7 +6,9 @@
 //---------------------------------------------------------------------------
 
 using Aura.Channel.Scripting.Scripts;
+using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Dungeons.Puzzles;
+using Aura.Channel.World.Entities;
 
 [PuzzleScript("keychest_monster")]
 public class KeychestMonsterScript : PuzzleScript
@@ -27,18 +29,22 @@ public class KeychestMonsterScript : PuzzleScript
 		puzzle.LockPlace(lockedPlace, "Lock");
 	}
 
-	public override void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)
+	public override void OnPropEvent(IPuzzle puzzle, Prop prop)
 	{
-		if (prop.GetName() == "KeyChest" && propEvent == "open")
+		var chest = prop as Chest;
+		if (chest != null)
 		{
-			var chestPlace = puzzle.GetPlace("ChestPlace");
-			chestPlace.CloseAllDoors();
+			if (chest.InternalName == "Key_Chest" && chest.State == "open")
+			{
+				var chestPlace = puzzle.GetPlace("ChestPlace");
+				chestPlace.CloseAllDoors();
 
-			var rnd = RandomProvider.Get();
-			if (rnd.NextDouble() < 0.01)
-				chestPlace.SpawnSingleMob("LastMob");
-			else
-				chestPlace.SpawnSingleMob("ChainMob1", "Mob1");
+				var rnd = RandomProvider.Get();
+				if (rnd.NextDouble() < 0.01)
+					chestPlace.SpawnSingleMob("LastMob");
+				else
+					chestPlace.SpawnSingleMob("ChainMob1", "Mob1");
+			}
 		}
 	}
 
