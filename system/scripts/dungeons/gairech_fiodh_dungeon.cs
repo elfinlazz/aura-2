@@ -36,20 +36,20 @@ public class FiodhDungeonScript : DungeonScript
 			if (i == 0)
 			{
 				// Mongo's Fashion Cap
-				var cap = new Item(18004);
+				int prefix = 0, suffix = 0;
 				switch (rnd.Next(3))
 				{
-					case 0: cap.OptionInfo.Prefix = 20401; break; // Smart
-					case 1: cap.OptionInfo.Prefix = 20601; break; // Blessing
-					case 2: cap.OptionInfo.Prefix = 20202; break; // Hyena's
+					case 0: prefix = 20401; break; // Smart
+					case 1: prefix = 20601; break; // Blessing
+					case 2: prefix = 20202; break; // Wild Dog
 				}
 				switch (rnd.Next(3))
 				{
-					case 0: cap.OptionInfo.Suffix = 30307; break; // Red Bear
-					case 1: cap.OptionInfo.Suffix = 30601; break; // Thief
-					case 2: cap.OptionInfo.Suffix = 30503; break; // White Spider
+					case 0: suffix = 30307; break; // Red Bear
+					case 1: suffix = 30601; break; // Thief
+					case 2: suffix = 30503; break; // White Spider
 				}
-				treasureChest.Add(cap);
+				treasureChest.Add(Item.CreateEnchanted(18004, prefix, suffix));
 			}
 
 			treasureChest.AddGold(rnd.Next(1500, 3600)); // Gold

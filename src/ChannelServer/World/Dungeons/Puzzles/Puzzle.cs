@@ -9,6 +9,7 @@ using Aura.Channel.World.Dungeons.Generation;
 using Aura.Channel.World.Entities;
 using Aura.Data.Database;
 using Aura.Shared.Util;
+using Aura.Mabi.Const;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
 {
@@ -63,8 +64,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		IPuzzleChest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType);
 		IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType, uint color);
-		IMonsterGroup AllocateMonsterGroup(IPuzzlePlace place, string name, int group);
-		IMonsterGroup FindMonsterGroup(string name);
+		//IMonsterGroup AllocateMonsterGroup(IPuzzlePlace place, string name, int group);
+		//IMonsterGroup GetMonsterGroup(string name);
 	}
 
 	public class Puzzle : IPuzzle
@@ -78,10 +79,12 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public string Name { get; private set; }
 		private Dictionary<string, Object> _variables;
 		private Dictionary<string, PuzzlePlace> _places = new Dictionary<string, PuzzlePlace>();
-		private List<List<DungeonMonsterData>> _monsterGroupData;
+		private Dictionary<string, DungeonMonsterGroupData> _monsterGroupData;
 		private Dictionary<string, MonsterGroup> _monsterGroups;
 
-		public Puzzle(Dungeon dungeon, DungeonFloorSection section, Region region, PuzzleScript puzzleScript, List<List<DungeonMonsterData>> monsterGroups)
+		public PuzzleScript Script { get { return _puzzleScript; } }
+
+		public Puzzle(Dungeon dungeon, DungeonFloorSection section, Region region, PuzzleScript puzzleScript, List<DungeonMonsterGroupData> monsterGroups)
 		{
 			this._dungeon = dungeon;
 			this._section = section;
@@ -89,8 +92,12 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Props = new Dictionary<string, PuzzleProp>();
 			this.Keys = new Dictionary<string, Item>();
 			this.Name = puzzleScript.Name;
-			this._monsterGroupData = monsterGroups;
 			this._region = region;
+
+			_monsterGroups = new Dictionary<string, MonsterGroup>();
+			_monsterGroupData = new Dictionary<string, DungeonMonsterGroupData>();
+			for (int i = 1; i <= monsterGroups.Count; ++i)
+				_monsterGroupData["Mob" + i] = monsterGroups[i - i];
 		}
 
 		public IPuzzlePlace NewPlace(string name)
@@ -192,17 +199,27 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this._puzzleScript.OnPropEvent(this, prop, propEvent);
 		}
 
-		public IMonsterGroup AllocateMonsterGroup(IPuzzlePlace place, string name, int group)
+		public void AllocateAndSpawnMob(PuzzlePlace place, string name, DungeonMonsterGroupData group)
 		{
-			// todo:
-			return null;
+			var mob = new MonsterGroup(name, this, place);
+			_monsterGroups.Add(name, mob);
+
+			mob.Allocate(group);
+			mob.Spawn();
 		}
 
-		public IMonsterGroup FindMonsterGroup(string name)
+		public MonsterGroup GetMonsterGroup(string name)
 		{
-			// todo:
-			return null;
+			MonsterGroup result;
+			_monsterGroups.TryGetValue(name, out result);
+			return result;
 		}
 
+		public DungeonMonsterGroupData GetMonsterData(string name)
+		{
+			DungeonMonsterGroupData result;
+			_monsterGroupData.TryGetValue(name, out result);
+			return result;
+		}
 	}
 }

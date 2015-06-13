@@ -93,7 +93,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 			this._placeBossDoor = haveBossRoom;
 			this._rng = rng;
-			
+
 			var room = startRoom;
 			var endMove = path.Last();
 			LinkedListNode<RoomTrait> currentPlace;
@@ -127,7 +127,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			{
 				if (room.Links[direction] == LinkType.To)
 				{
-					if (room.Neighbor[direction].X == lastMove.PosTo.X && 
+					if (room.Neighbor[direction].X == lastMove.PosTo.X &&
 						room.Neighbor[direction].Y == lastMove.PosTo.Y) continue;
 					var nextRoom = room.Neighbor[direction];
 					if (nextRoom != null)
@@ -207,7 +207,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 				place = place.Previous;
 			}
 
-			if(possibleUnlockRooms.Count == 0)
+			if (possibleUnlockRooms.Count == 0)
 				throw new CPuzzleException("We out of unlock places");
 
 			var random_index = (int)this._rng.GetUInt32(0, (uint)possibleUnlockRooms.Count - 1);
@@ -248,7 +248,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			var place = this._emptyPlaces.Last;
 			if (this._emptyPlaces.Count < 3)
 				throw new CPuzzleException("We out of empty places");
-			var count = (int)this._rng.GetUInt32(1, (uint)this._emptyPlaces.Count-2);
+			var count = (int)this._rng.GetUInt32(1, (uint)this._emptyPlaces.Count - 2);
 			while (count-- > 0)
 			{
 				place = place.Previous;
@@ -271,7 +271,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			}
 		}
 
-		public Puzzle NewPuzzle(Dungeon dungeon, Region region, PuzzleScript puzzleScript, List<List<DungeonMonsterData>> monsterGroups)
+		public Puzzle NewPuzzle(Dungeon dungeon, Region region, PuzzleScript puzzleScript, List<DungeonMonsterGroupData> monsterGroups)
 		{
 			var puzzle = new Puzzle(dungeon, this, region, puzzleScript, monsterGroups);
 			this.Puzzles.Add(puzzle);

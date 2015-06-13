@@ -39,6 +39,12 @@ namespace Aura.Data.Database
 		public int CritPathMax { get; set; }
 		public int Branch { get; set; }
 		public int Coverage { get; set; }
+		public uint Color1 { get; set; }
+		public uint Color2 { get; set; }
+		public uint Color3 { get; set; }
+		public uint LightColor1 { get; set; }
+		public uint LightColor2 { get; set; }
+		public uint LightColor3 { get; set; }
 		public bool HasBoss { get; set; }
 		public bool Custom { get; set; }
 		public List<DungeonSetData> Sets { get; set; }
@@ -65,12 +71,16 @@ namespace Aura.Data.Database
 	{
 		public string Script { get; set; }
 		public string Arg { get; set; }
-		public List<List<DungeonMonsterData>> Groups { get; set; }
+		public List<DungeonMonsterGroupData> Groups { get; set; }
 
 		public DungeonPuzzleData()
 		{
-			this.Groups = new List<List<DungeonMonsterData>>();
+			this.Groups = new List<DungeonMonsterGroupData>();
 		}
+	}
+
+	public class DungeonMonsterGroupData : List<DungeonMonsterData>
+	{
 	}
 
 	public class DungeonMonsterData
@@ -109,7 +119,7 @@ namespace Aura.Data.Database
 				if (floorEntry == null)
 					continue;
 
-				floorEntry.AssertNotMissing("width", "height", "critPathMin", "critPathMax", "branch", "coverage");
+				floorEntry.AssertNotMissing("width", "height", "critPathMin", "critPathMax", "branch", "coverage", "color", "lightColor");
 
 				var floorData = new DungeonFloorData();
 				floorData.Width = floorEntry.ReadInt("width");
@@ -120,6 +130,13 @@ namespace Aura.Data.Database
 				floorData.Coverage = floorEntry.ReadInt("coverage");
 				floorData.HasBoss = floorEntry.ReadBool("hasBoss");
 				floorData.Custom = floorEntry.ReadBool("custom");
+
+				floorData.Color1 = (uint)floorEntry["color"][0];
+				floorData.Color2 = (uint)floorEntry["color"][1];
+				floorData.Color3 = (uint)floorEntry["color"][2];
+				floorData.LightColor1 = (uint)floorEntry["lightColor"][0];
+				floorData.LightColor2 = (uint)floorEntry["lightColor"][1];
+				floorData.LightColor3 = (uint)floorEntry["lightColor"][2];
 
 				if (floorEntry.ContainsKey("sets"))
 				{
@@ -143,7 +160,7 @@ namespace Aura.Data.Database
 							{
 								foreach (var groupsEntry in puzzleEntry["groups"])
 								{
-									var list = new List<DungeonMonsterData>();
+									var list = new DungeonMonsterGroupData();
 
 									foreach (JObject groupEntry in groupsEntry)
 									{

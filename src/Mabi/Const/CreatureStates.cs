@@ -24,6 +24,10 @@ namespace Aura.Mabi.Const
 		TransformCutsceneSkip = 0x00004000,
 		EscortNpc = 0x02000000,
 		UntouchableNpc = 0x08000000,
+
+		/// <summary>
+		/// This, in combination with Spawned, plays a spawn effect on spawn.
+		/// </summary>
 		InstantNpc = 0x10000000,
 
 		/// <summary>

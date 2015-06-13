@@ -12,29 +12,37 @@ public class EntrancePuzzleScript : PuzzleScript
 {
 	public override void OnPrepare(IPuzzle puzzle)
 	{
-		var LockedPlace = puzzle.NewPlace("LockedPlace");
-		var ChestPlace = puzzle.NewPlace("ChestPlace");
+		var lockedPlace = puzzle.NewPlace("LockedPlace");
+		var chestPlace = puzzle.NewPlace("ChestPlace");
 
-		LockedPlace.DeclareLock();
-		ChestPlace.DeclareUnlock(LockedPlace);
-		ChestPlace.ReservePlace();
-		ChestPlace.ReserveDoors();
+		lockedPlace.DeclareLock();
+		chestPlace.DeclareUnlock(lockedPlace);
+		chestPlace.ReservePlace();
+		chestPlace.ReserveDoors();
 
-		var chest = puzzle.NewChest(ChestPlace, "Key_Chest", DungeonPropPositionType.Random);
+		var chest = puzzle.NewChest(chestPlace, "KeyChest", DungeonPropPositionType.Random);
 
-		LockedPlace.CloseAllDoors();
-		puzzle.LockPlace(LockedPlace, "Lock");
+		lockedPlace.CloseAllDoors();
+		puzzle.LockPlace(lockedPlace, "Lock");
 
-		chest.AddKeyForLock(LockedPlace);
+		chest.AddKeyForLock(lockedPlace);
 	}
 
 	public override void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)
 	{
-		var chest = prop as IPuzzleChest;
-		if (chest != null)
+		if (prop.GetName() == "KeyChest" && propEvent == "open")
 		{
-			if (chest.GetName() == "Key_Chest" && propEvent == "open")
-				puzzle.GetPlace("ChestPlace").CloseAllDoors();
+			var chestPlace = puzzle.GetPlace("ChestPlace");
+			chestPlace.CloseAllDoors();
+			chestPlace.SpawnSingleMob("SingleMob1");
 		}
+	}
+
+	public override void OnMonsterDead(IPuzzle puzzle, MonsterGroup group)
+	{
+		if (group.Remaining != 0)
+			return;
+
+		puzzle.GetPlace("ChestPlace").OpenAllDoors();
 	}
 }
