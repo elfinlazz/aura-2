@@ -8,6 +8,7 @@ using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Dungeons.Puzzles;
 using Aura.Channel.World.Entities;
+using Aura.Shared.Util;
 
 [PuzzleScript("switchdoor_switchmonster")]
 public class SwitchdoorSwitchmonsterScript : PuzzleScript
@@ -25,6 +26,9 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		var Switch3 = puzzle.NewSwitch(LockedPlace, "Switch3", DungeonPropPositionType.Corner4, color);
 		var Switch4 = puzzle.NewSwitch(LockedPlace, "Switch4", DungeonPropPositionType.Corner4, color);
 
+		puzzle.Set("open", "Switch" + RandomProvider.Get().Next(1, 5));
+		puzzle.Set("activated", "no");
+
 		LockedPlace.CloseAllDoors();
 	}
 
@@ -34,12 +38,17 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		if (Switch == null)
 			return;
 
-		if (Switch.State == "on")
+		var isActivated = puzzle.Get("activated") as string;
+		if (Switch.State == "on" && isActivated != "yes")
 		{
 			var lockedPlace = puzzle.GetPlace("LockedPlace");
+			var openSwitchName = puzzle.Get("open") as string;
 
-			if (Switch.InternalName == "Switch1")
+			if (Switch.InternalName == openSwitchName)
+			{
 				puzzle.OpenPlace(lockedPlace);
+				puzzle.Set("activated", "yes");
+			}
 			else
 				lockedPlace.SpawnSingleMob(Switch.InternalName + "Mob", "Mob1");
 		}
