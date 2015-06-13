@@ -307,7 +307,8 @@ namespace Aura.Channel.World.Entities
 		public void SetState(string state)
 		{
 			this.State = state;
-			Send.PropUpdate(this);
+			if (this.Region != Region.Limbo)
+				Send.PropUpdate(this);
 		}
 	}
 
