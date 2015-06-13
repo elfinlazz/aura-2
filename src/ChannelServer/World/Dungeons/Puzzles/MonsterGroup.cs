@@ -117,9 +117,28 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Puzzle.Script.OnMonsterDead(this.Puzzle, this);
 		}
 
+		/// <summary>
+		/// Adds key for lock place to a random monster of this group as a drop.
+		/// </summary>
+		/// <param name="lockPlace"></param>
 		public void AddKeyForLock(IPuzzlePlace lockPlace)
 		{
-			throw new System.NotImplementedException();
+			var place = lockPlace as PuzzlePlace;
+			if (!place.IsLock)
+			{
+				Log.Warning("PuzzleChest.AddKeyForLock: This place isn't a Lock. ({0})", this.Puzzle.Name);
+				return;
+			}
+
+			if (this.Count == 0)
+			{
+				Log.Warning("MonsterGroup.AddKeyForLock: No monsters in group.");
+				return;
+			}
+
+			var rnd = RandomProvider.Get();
+			var rndMonster = _monsters[rnd.Next(_monsters.Count)];
+			rndMonster.Drops.Add(place.Key);
 		}
 	}
 }

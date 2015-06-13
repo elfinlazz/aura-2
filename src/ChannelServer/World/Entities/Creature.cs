@@ -1528,6 +1528,12 @@ namespace Aura.Channel.World.Entities
 					dropped.Add(drop.ItemId);
 				}
 			}
+			foreach (var item in this.Drops.StaticDrops)
+			{
+				item.DisappearTime = DateTime.Now.AddSeconds(60);
+				item.Drop(this.Region, pos);
+			}
+			this.Drops.ClearStaticDrops();
 		}
 
 		/// <summary>

@@ -24,8 +24,6 @@ public class EntrancePuzzleScript : PuzzleScript
 
 		lockedPlace.CloseAllDoors();
 		puzzle.LockPlace(lockedPlace, "Lock");
-
-		chest.AddKeyForLock(lockedPlace);
 	}
 
 	public override void OnPropEvent(IPuzzle puzzle, IPuzzleProp prop, string propEvent)
@@ -36,6 +34,12 @@ public class EntrancePuzzleScript : PuzzleScript
 			chestPlace.CloseAllDoors();
 			chestPlace.SpawnSingleMob("SingleMob1");
 		}
+	}
+
+	public override void OnMobAllocated(IPuzzle puzzle, MonsterGroup group)
+	{
+		if (group.Name == "SingleMob1")
+			group.AddKeyForLock(puzzle.GetPlace("LockedPlace"));
 	}
 
 	public override void OnMonsterDead(IPuzzle puzzle, MonsterGroup group)

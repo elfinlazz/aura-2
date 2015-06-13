@@ -25,15 +25,22 @@ namespace Aura.Channel.World.Entities.Creatures
 
 		private Creature _creature;
 		private List<DropData> _drops;
+		private List<Item> _staticDrops;
 
 		public int GoldMin { get; set; }
 		public int GoldMax { get; set; }
 		public ICollection<DropData> Drops { get { lock (_drops) return _drops.ToArray(); } }
 
+		/// <summary>
+		/// List of unique items that are dropped once.
+		/// </summary>
+		public ICollection<Item> StaticDrops { get { lock (_staticDrops) return _staticDrops.ToArray(); } }
+
 		public CreatureDrops(Creature creature)
 		{
 			_creature = creature;
 			_drops = new List<DropData>();
+			_staticDrops = new List<Item>();
 		}
 
 		/// <summary>
@@ -58,6 +65,25 @@ namespace Aura.Channel.World.Entities.Creatures
 				foreach (var drop in drops)
 					_drops.Add(drop.Copy());
 			}
+		}
+
+		/// <summary>
+		///  Adds item as drop.
+		/// </summary>
+		/// <param name="drops"></param>
+		public void Add(Item item)
+		{
+			lock (_staticDrops)
+				_staticDrops.Add(item);
+		}
+
+		/// <summary>
+		/// Clears static drops, so they can only ever be dropped once.
+		/// </summary>
+		public void ClearStaticDrops()
+		{
+			lock (_staticDrops)
+				_staticDrops.Clear();
 		}
 	}
 }
