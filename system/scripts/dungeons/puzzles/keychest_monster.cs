@@ -32,10 +32,25 @@ public class KeychestMonsterScript : PuzzleScript
 		var lockedPlace = puzzle.GetPlace("LockedPlace");
 		var chestPlace = puzzle.GetPlace("ChestPlace");
 
-		var chest = puzzle.NewChest(chestPlace, "KeyChest", DungeonPropPositionType.Random);
-
 		lockedPlace.CloseAllDoors();
 		puzzle.LockPlace(lockedPlace, "Lock");
+
+		var chest = puzzle.NewChest(chestPlace, "KeyChest", DungeonPropPositionType.Random);
+		AddChestDrops(chest);
+	}
+
+	protected virtual void AddChestDrops(Chest chest)
+	{
+		if (Random(100) != 0)
+		{
+			for (int i = 0; i < 2; ++i)
+				chest.Add(Item.Create(id: 2000, amountMin: 10, amountMax: 50));
+		}
+		else
+		{
+			for (int i = 0; i < 5; ++i)
+				chest.Add(Item.Create(id: 2000, amountMin: 100, amountMax: 200));
+		}
 	}
 
 	public override void OnPropEvent(IPuzzle puzzle, Prop prop)
