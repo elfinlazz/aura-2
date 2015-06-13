@@ -17,7 +17,7 @@ namespace Aura.Channel.World.Dungeons.Props
 
 		public Chest(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0,
 			string state = "closed", string name = "", string title = "", string intName = "")
-			: base (id, regionId, x, y, direction, scale, altitude, state, name, title)
+			: base(id, regionId, x, y, direction, scale, altitude, state, name, title)
 		{
 			this.Items = new List<Item>();
 			this.InternalName = intName;
@@ -32,7 +32,7 @@ namespace Aura.Channel.World.Dungeons.Props
 			this.SetState("open");
 
 			foreach (var item in this.Items)
-				item.Drop(this.Region, new Position((int)this.Info.X, (int)this.Info.Y));
+				item.Drop(this.Region, this.GetPosition());
 		}
 
 		/// <summary>
@@ -60,7 +60,7 @@ namespace Aura.Channel.World.Dungeons.Props
 			}
 		}
 
-		public static Chest CreateChest(int x, int y, float direction, int propId = 10201, int regionId=0, string name = "")
+		public static Chest CreateChest(int x, int y, float direction, int propId = 10201, int regionId = 0, string name = "")
 		{
 			direction = MabiMath.DegreeToRadian((int)direction);
 			return new Chest(propId, regionId, x, y, direction, intName: name);
@@ -69,9 +69,9 @@ namespace Aura.Channel.World.Dungeons.Props
 
 	public class TreasureChest_temp : Chest
 	{
-		private TreasureChest_temp(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0, 
+		private TreasureChest_temp(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0,
 			string state = "", string name = "", string title = "")
-			: base (id, regionId, x, y, direction, scale, altitude, state, name, title)
+			: base(id, regionId, x, y, direction, scale, altitude, state, name, title)
 		{
 			this.Behavior = TreasureChestBehavior + this.Behavior;
 		}
