@@ -47,7 +47,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		Dungeon GetDungeon();
 		Prop FindProp(string name);
 		void Set(string name, Object value);
-		Object Get(string name);
+		dynamic Get(string name);
 
 		/// <summary>
 		/// Lock this place with a key.
@@ -107,10 +107,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		{
 			_region = region;
 			foreach (var place in _places)
-				Array.ForEach(Array.FindAll(place.Value.Doors, x => x!= null), (door) =>
+				Array.ForEach(Array.FindAll(place.Value.Doors, x => x != null), (door) =>
 				{
 					// Beware, some doors are shared between puzzles
-					if (door.EntityId != 0) 
+					if (door.EntityId != 0)
 						return;
 					door.Info.Region = region.Id;
 					region.AddProp(door);
@@ -151,7 +151,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this._variables[name] = value;
 		}
 
-		public Object Get(string name)
+		public dynamic Get(string name)
 		{
 			if (this._variables.ContainsKey(name)) return this._variables[name];
 			return null;
@@ -208,7 +208,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return chest;
 		}
 
-		public Switch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType,  uint color)
+		public Switch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType, uint color)
 		{
 			if (_region == null)
 				throw new CPuzzleException("NewSwitch outside of OnPuzzleCreate.");
