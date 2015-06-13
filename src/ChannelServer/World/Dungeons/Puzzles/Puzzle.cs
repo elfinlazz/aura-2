@@ -97,7 +97,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			_monsterGroups = new Dictionary<string, MonsterGroup>();
 			_monsterGroupData = new Dictionary<string, DungeonMonsterGroupData>();
 			for (int i = 1; i <= monsterGroups.Count; ++i)
-				_monsterGroupData["Mob" + i] = monsterGroups[i - i];
+				_monsterGroupData["Mob" + i] = monsterGroups[i - 1];
 		}
 
 		public IPuzzlePlace NewPlace(string name)
@@ -186,7 +186,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return (IPuzzleChest)this.Props[name];
 		}
 
-		public IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType,  uint color)
+		public IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType, uint color)
 		{
 			var p = place as PuzzlePlace;
 			var pos = p.GetPropPosition(positionType);
