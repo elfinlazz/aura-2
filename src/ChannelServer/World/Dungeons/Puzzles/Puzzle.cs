@@ -61,8 +61,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <param name="lockPlace"></param>
 		void OpenPlace(IPuzzlePlace lockPlace);
 
-		IPuzzleChest NewChest(IPuzzlePlace place, string name);
-		IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, uint color);
+		IPuzzleChest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType);
+		IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType, uint color);
 		IMonsterGroup AllocateMonsterGroup(IPuzzlePlace place, string name, int group);
 		IMonsterGroup FindMonsterGroup(string name);
 	}
@@ -171,15 +171,19 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return key;
 		}
 
-		public IPuzzleChest NewChest(IPuzzlePlace place, string name)
+		public IPuzzleChest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType)
 		{
-			this.Props[name] = new PuzzleChest(place as PuzzlePlace, name);
+			var p = place as PuzzlePlace;
+			var pos = p.GetPropPosition(positionType);
+			this.Props[name] = new PuzzleChest(pos, place as PuzzlePlace, name);
 			return (IPuzzleChest)this.Props[name];
 		}
 
-		public IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, uint color)
+		public IPuzzleSwitch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType,  uint color)
 		{
-			this.Props[name] = new PuzzleSwitch(place as PuzzlePlace, name, color);
+			var p = place as PuzzlePlace;
+			var pos = p.GetPropPosition(positionType);
+			this.Props[name] = new PuzzleSwitch(pos, p, name, color);
 			return (IPuzzleSwitch)this.Props[name];
 		}
 

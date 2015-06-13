@@ -246,6 +246,8 @@ namespace Aura.Channel.World.Dungeons.Generation
 		public LinkedListNode<RoomTrait> ReservePlace()
 		{
 			var place = this._emptyPlaces.Last;
+			if (this._emptyPlaces.Count < 3)
+				throw new CPuzzleException("We out of empty places");
 			var count = (int)this._rng.GetUInt32(1, (uint)this._emptyPlaces.Count-2);
 			while (count-- > 0)
 			{

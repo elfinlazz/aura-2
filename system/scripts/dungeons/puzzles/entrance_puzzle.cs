@@ -20,7 +20,7 @@ public class EntrancePuzzleScript : PuzzleScript
 		ChestPlace.ReservePlace();
 		ChestPlace.ReserveDoors();
 
-		var chest = puzzle.NewChest(ChestPlace, "Key_Chest");
+		var chest = puzzle.NewChest(ChestPlace, "Key_Chest", DungeonPropPositionType.Random);
 
 		LockedPlace.CloseAllDoors();
 		puzzle.LockPlace(LockedPlace, "Lock");

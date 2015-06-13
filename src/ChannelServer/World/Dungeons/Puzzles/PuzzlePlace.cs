@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System;
 using System.Collections.Generic;
 using Aura.Channel.World.Dungeons.Generation;
 using Aura.Channel.World.Entities;
 using Aura.Mabi.Const;
-using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
 {
@@ -52,6 +52,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		private DungeonFloorSection _section;
 		private Puzzle _puzzle;
 		private string _name;
+		public int X { get; private set; }
+		public int Y { get; private set; }
 		private LinkedListNode<RoomTrait> _placeNode = null;
 		public bool IsLock { get; private set; }
 		public uint LockColor { get; private set; }
@@ -60,6 +62,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public Item Key { get; private set; }
 		public int DoorDirection { get; private set; }
 		private PuzzleDoor[] Doors;
+		private DungeonPropPositionProvider[] _positionProviders;
 
 
 		public PuzzlePlace(DungeonFloorSection section, Puzzle puzzle, string name)
@@ -67,12 +70,22 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this._section = section;
 			this._puzzle = puzzle;
 			this._name = name;
+			this.X = 0;
+			this.Y = 0;
 			this.IsLock = false;
 			this.LockColor = 0;
 			this.Key = null;
 			this.IsBossLock = false;
 			this.DoorDirection = 0;
 			this.Doors = new PuzzleDoor[] { null, null, null, null };
+			var positionTypesCount = Enum.GetValues(typeof (DungeonPropPositionType)).Length;
+			_positionProviders = new DungeonPropPositionProvider[positionTypesCount];
+		}
+
+		private void UpdatePosition()
+		{
+			this.X = this._placeNode.Value.X * Dungeon.TileSize + Dungeon.TileSize / 2;
+			this.Y = this._placeNode.Value.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
 		}
 
 		public IPuzzle GetPuzzle()
@@ -104,6 +117,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			if (doorElement == null)
 				return;
 			this._placeNode = doorElement.placeNode;
+			this.UpdatePosition();
 			this.IsLock = true;
 			this.LockColor = this._section.GetLockColor();
 			this.DoorDirection = doorElement.direction;
@@ -138,12 +152,14 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this._placeNode = this._section.GetUnlock(place._placeNode);
 			if (this._placeNode != null)
 				this.IsUnlock = true;
+			this.UpdatePosition();
 		}
 
 		public void ReservePlace()
 		{
 			if (this.IsUnlock || this.IsLock || this.IsBossLock) this._section.ReservePlace(this._placeNode);
 			else this._placeNode = this._section.ReservePlace();
+			this.UpdatePosition();
 		}
 
 		public void ReserveDoors()
@@ -198,7 +214,21 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return this.LockColor;
 		}
 
-		public Position GetPosition()
+		public int[] GetPropPosition(DungeonPropPositionType positionType)
+		{
+			// todo: check those values
+			var radius = _placeNode.Value.RoomType == RoomType.Alley ? 200 : 800;
+			if (_positionProviders[(int) positionType] == null)
+				_positionProviders[(int)positionType] = new DungeonPropPositionProvider(positionType, radius);
+			var pos = _positionProviders[(int) positionType].GetPosition();
+			if (pos == null)
+				throw new CPuzzleException(String.Format("We out of positions of type {0}", positionType));
+			pos[0] += this.X;
+			pos[1] += this.Y;
+			return pos;
+		}
+
+		public Position GetRoomPosition()
 		{
 			return new Position(this._placeNode.Value.X, this._placeNode.Value.Y);
 		}

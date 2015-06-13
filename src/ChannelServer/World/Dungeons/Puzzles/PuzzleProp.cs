@@ -70,22 +70,24 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 	{
 		public const int ChestPropId = 10201;
 
+		private int[] _position;
 		public List<Item> Items { get; private set; }
 
-		public PuzzleChest(PuzzlePlace place, string name)
+		public PuzzleChest(int[] position, PuzzlePlace place, string name)
 			: base(place, name)
 		{
 			this.Items = new List<Item>();
+			_position = position;
 			this.Spawn();
 		}
 
 		private void Spawn()
 		{
-			var position = this._place.GetPosition();
-			var x = position.X * Dungeon.TileSize + Dungeon.TileSize / 2;
-			var y = position.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
+			var x = _position[0];
+			var y = _position[1];
+			var rot = MabiMath.DegreeToRadian(_position[2]);
 
-			this._prop = new Prop(ChestPropId, this._region.Id, x, y, 0.0f);
+			this._prop = new Prop(ChestPropId, this._region.Id, x, y, rot);
 			this._prop.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?")));
 			this._prop.Behavior = (creature, prop) =>
 			{
@@ -129,22 +131,24 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 	{
 		public const int SwitchPropId = 10202;
 		private uint _color;
+		private int[] _position;
 
-		public PuzzleSwitch(PuzzlePlace place, string name, uint color)
+		public PuzzleSwitch(int[] position, PuzzlePlace place, string name, uint color)
 			: base(place, name)
 		{
 			this._color = color;
 			this._state = "off";
+			this._position = position;
 			this.Spawn();
 		}
 
 		public void Spawn()
 		{
-			var position = this._place.GetPosition();
-			var x = position.X * Dungeon.TileSize + Dungeon.TileSize / 2;
-			var y = position.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
+			var x = _position[0];
+			var y = _position[1];
+			var rot = MabiMath.DegreeToRadian(_position[2]);
 
-			this._prop = new Prop(SwitchPropId, this._region.Id, x, y, 0.0f, state: this._state);
+			this._prop = new Prop(SwitchPropId, this._region.Id, x, y, rot, state: this._state);
 			this._prop.Info.Color2 = this._color;
 
 			this._prop.Behavior = (creature, prop) =>
@@ -197,7 +201,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public void Spawn()
 		{
-			var position = this._place.GetPosition();
+			var position = this._place.GetRoomPosition();
 			var x = position.X * Dungeon.TileSize + Dungeon.TileSize / 2;
 			var y = position.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
 			var doorBlock = this._data.Style.Get(this._doorType, this._direction);

@@ -18,7 +18,10 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		LockedPlace.ReservePlace();
 
 		uint color = LockedPlace.GetLockColor();
-		var Switch = puzzle.NewSwitch(LockedPlace, "Switch1", color);
+		var Switch1 = puzzle.NewSwitch(LockedPlace, "Switch1", DungeonPropPositionType.Corner4, color);
+		var Switch2 = puzzle.NewSwitch(LockedPlace, "Switch2", DungeonPropPositionType.Corner4, color);
+		var Switch3 = puzzle.NewSwitch(LockedPlace, "Switch3", DungeonPropPositionType.Corner4, color);
+		var Switch4 = puzzle.NewSwitch(LockedPlace, "Switch4", DungeonPropPositionType.Corner4, color);
 
 		LockedPlace.CloseAllDoors();
 	}
