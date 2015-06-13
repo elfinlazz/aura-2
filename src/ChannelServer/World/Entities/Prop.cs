@@ -188,24 +188,7 @@ namespace Aura.Channel.World.Entities
 			this.Info.Color9 = 0xFF808080;
 
 			this.State = state;
-
-			var defaultsList = AuraData.PropDefaultsDb.Find(this.Info.Id);
-			if (defaultsList != null && defaultsList.Count != 0)
-			{
-				var def = string.IsNullOrWhiteSpace(state)
-					? defaultsList.First()
-					: defaultsList.FirstOrDefault(a => a.State == state);
-
-				if (def == null)
-					Log.Warning("Prop: No defaults found for state '{0}' and prop '{1}'.", state, this.Info.Id);
-				else
-				{
-					this.State = def.State;
-
-					foreach (var shape in def.Shapes)
-						this.Shapes.Add(shape.GetPoints(this.Info.Direction, (int)this.Info.X, (int)this.Info.Y));
-				}
-			}
+			this.UpdateShapes();
 
 			// Load prop data
 			if ((this.Data = AuraData.PropsDb.Find(this.Info.Id)) == null)
@@ -307,8 +290,49 @@ namespace Aura.Channel.World.Entities
 		public void SetState(string state)
 		{
 			this.State = state;
+			this.UpdateCollisions();
 			if (this.Region != Region.Limbo)
 				Send.PropUpdate(this);
+		}
+
+		/// <summary>
+		/// Updates shapes for current state from defaults db.
+		/// </summary>
+		private void UpdateShapes()
+		{
+			this.Shapes.Clear();
+
+			var defaultsList = AuraData.PropDefaultsDb.Find(this.Info.Id);
+			if (defaultsList != null && defaultsList.Count != 0)
+			{
+				var def = string.IsNullOrWhiteSpace(this.State)
+					? defaultsList.First()
+					: defaultsList.FirstOrDefault(a => a.State == this.State);
+
+				if (def == null)
+					Log.Warning("Prop.UpdateShapes: No defaults found for state '{0}' and prop '{1}'.", this.State, this.Info.Id);
+				else
+				{
+					this.State = def.State;
+
+					foreach (var shape in def.Shapes)
+						this.Shapes.Add(shape.GetPoints(this.Info.Direction, (int)this.Info.X, (int)this.Info.Y));
+				}
+			}
+		}
+
+		/// <summary>
+		/// Updates prop's shapes and collisions in current region.
+		/// </summary>
+		private void UpdateCollisions()
+		{
+			this.UpdateShapes();
+
+			if (this.Region != Region.Limbo)
+			{
+				this.Region.Collisions.Remove(this.EntityId);
+				this.Region.Collisions.Add(this);
+			}
 		}
 	}
 
