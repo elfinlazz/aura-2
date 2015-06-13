@@ -100,3 +100,27 @@ public class KeychestMonsterScript : PuzzleScript
 		}
 	}
 }
+
+[PuzzleScript("keychest_monster2")]
+public class KeychestMonster2Script : KeychestMonsterScript
+{
+	protected override void AddChestDrops(Chest chest)
+	{
+		if (Random(100) != 0)
+		{
+			switch (Random(5))
+			{
+				case 0: chest.Add(Item.Create(id: 63002, amountMin: 1, amountMax: 5)); break;
+				case 1: chest.Add(Item.Create(id: 60005, amountMin: 1, amountMax: 5)); break;
+				case 2: chest.Add(Item.Create(id: 51001, amountMin: 1, amountMax: 2)); break;
+				case 3: chest.Add(Item.Create(id: 52002, amountMin: 1, amountMax: 3)); break;
+				case 4: chest.Add(Item.Create(id: 50009, amountMin: 1, amountMax: 3)); break;
+			}
+		}
+		else
+		{
+			for (int i = 0; i < 5; ++i)
+				chest.Add(Item.Create(id: 2000, amountMin: 100, amountMax: 200));
+		}
+	}
+}
