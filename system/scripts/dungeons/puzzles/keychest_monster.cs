@@ -46,8 +46,7 @@ public class KeychestMonsterScript : PuzzleScript
 				var chestPlace = puzzle.GetPlace("ChestPlace");
 				chestPlace.CloseAllDoors();
 
-				var rnd = RandomProvider.Get();
-				if (rnd.NextDouble() < 0.5)
+				if (Random() < 0.5)
 					chestPlace.SpawnSingleMob("LastMob");
 				else
 					chestPlace.SpawnSingleMob("ChainMob1", "Mob1");

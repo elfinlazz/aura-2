@@ -45,19 +45,49 @@ namespace Aura.Channel.Scripting.Scripts
 			return true;
 		}
 
+		/// <summary>
+		/// Returns random number between 0.0 and 100.0.
+		/// </summary>
+		/// <returns></returns>
+		protected double Random()
+		{
+			var rnd = RandomProvider.Get();
+			return (100 * rnd.NextDouble());
+		}
+
+		/// <summary>
+		/// Returns random number between 0 and max-1.
+		/// </summary>
+		/// <param name="max">Exclusive upper bound</param>
+		/// <returns></returns>
+		protected int Random(int max)
+		{
+			var rnd = RandomProvider.Get();
+			return rnd.Next(max);
+		}
+
+		/// <summary>
+		/// Returns random number between min and max-1.
+		/// </summary>
+		/// <param name="min">Inclusive lower bound</param>
+		/// <param name="max">Exclusive upper bound</param>
+		/// <returns></returns>
+		protected int Random(int min, int max)
+		{
+			var rnd = RandomProvider.Get();
+			return rnd.Next(min, max);
+		}
+
 		public virtual void OnPrepare(IPuzzle puzzle)
 		{
-
 		}
 
 		public virtual void OnPuzzleCreate(IPuzzle puzzle)
 		{
-			
 		}
 
 		public virtual void OnPropEvent(IPuzzle puzzle, Prop prop)
 		{
-
 		}
 
 		public virtual void OnMobAllocated(IPuzzle puzzle, MonsterGroup group)
@@ -67,8 +97,6 @@ namespace Aura.Channel.Scripting.Scripts
 		public virtual void OnMonsterDead(IPuzzle puzzle, MonsterGroup group)
 		{
 		}
-
-		// On ...
 	}
 
 	public class PuzzleScriptAttribute : Attribute

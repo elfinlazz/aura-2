@@ -20,7 +20,7 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		LockedPlace.DeclareLockSelf();
 		LockedPlace.ReservePlace();
 
-		puzzle.Set("open", "Switch" + RandomProvider.Get().Next(1, 5));
+		puzzle.Set("open", "Switch" + Random(1, 5));
 		puzzle.Set("activated", "no");
 	}
 
