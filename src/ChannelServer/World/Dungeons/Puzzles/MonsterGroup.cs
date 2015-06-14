@@ -9,6 +9,7 @@ using Aura.Data.Database;
 using Aura.Shared.Util;
 using Aura.Mabi.Const;
 using System.Threading;
+using Aura.Mabi;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
 {
@@ -101,8 +102,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 			foreach (var monster in _monsters)
 			{
-				// TODO: Rotate monster to pos[2] direction
 				var pos = this.Place.GetPropPosition(_spawnPosition);
+				monster.Direction = MabiMath.DegreeToByte(pos[2]);
 				monster.Spawn(region.Id, pos[0], pos[1]);
 
 				if (monster.AI != null)

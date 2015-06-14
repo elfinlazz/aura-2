@@ -33,6 +33,16 @@ namespace Aura.Mabi
 		}
 
 		/// <summary>
+		/// Converts degree into Mabi's byte direction.
+		/// </summary>
+		/// <param name="degree"></param>
+		/// <returns></returns>
+		public static byte DegreeToByte(int degree)
+		{
+			return (byte)(degree * 255 / 360);
+		}
+
+		/// <summary>
 		/// Converts vector direction into a radian.
 		/// </summary>
 		/// <param name="x"></param>
