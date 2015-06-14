@@ -93,12 +93,12 @@ namespace Aura.Channel.World.Entities
 			this.Color1 = this.RaceData.Color1;
 			this.Color2 = this.RaceData.Color2;
 			this.Color3 = this.RaceData.Color3;
-			this.Height = (float)(this.RaceData.SizeMin + RandomProvider.Get().NextDouble() * (this.RaceData.SizeMax - this.RaceData.SizeMin));
+			this.Height = (float)(this.RaceData.SizeMin + rnd.NextDouble() * (this.RaceData.SizeMax - this.RaceData.SizeMin));
 			this.Life = this.LifeMaxBase = this.RaceData.Life;
 			this.Mana = this.ManaMaxBase = this.RaceData.Mana;
 			this.Stamina = this.StaminaMaxBase = this.RaceData.Stamina;
 			this.State = (CreatureStates)this.RaceData.DefaultState;
-			this.Direction = (byte)RandomProvider.Get().Next(256);
+			this.Direction = (byte)rnd.Next(256);
 
 			// Set drops
 			this.Drops.GoldMin = this.RaceData.GoldMin;
