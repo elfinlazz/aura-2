@@ -17,7 +17,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 	/// </summary>
 	public interface IPuzzlePlace
 	{
-		IPuzzle GetPuzzle();
+		Puzzle GetPuzzle();
 
 		/// <summary>
 		/// Makes it a locked place with a locked door.
@@ -82,7 +82,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.IsBossLock = false;
 			this.DoorDirection = 0;
 			Doors = new Door[] { null, null, null, null };
-			var positionTypesCount = Enum.GetValues(typeof (DungeonPropPositionType)).Length;
+			var positionTypesCount = Enum.GetValues(typeof(DungeonPropPositionType)).Length;
 			_positionProviders = new DungeonPropPositionProvider[positionTypesCount];
 		}
 
@@ -92,7 +92,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Y = this._placeNode.Value.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
 		}
 
-		public IPuzzle GetPuzzle()
+		public Puzzle GetPuzzle()
 		{
 			return this._puzzle;
 		}
@@ -107,15 +107,15 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			{
 				// create new door
 				var floorData = _puzzle.FloorData;
-				var doorBlock = _puzzle.GetDungeon().Data.Style.Get(doorType, direction);
-				string doorName = String.Format("{0}_door_{1}{2}_{3}",this._name, X, Y, direction);
+				var doorBlock = _puzzle.Dungeon.Data.Style.Get(doorType, direction);
+				string doorName = String.Format("{0}_door_{1}{2}_{3}", this._name, X, Y, direction);
 
 				door = Door.CreateDoor(doorBlock.PropId, X, Y, doorBlock.Rotation, doorType, name: doorName);
 				door.Info.Color1 = floorData.Color1;
 				door.Info.Color2 = floorData.Color2;
 				door.Info.Color3 = this.LockColor;
 				if (doorType == DungeonBlockType.BossDoor)
-					door.Behavior += this._puzzle.GetDungeon().BossDoorBehavior;
+					door.Behavior += this._puzzle.Dungeon.BossDoorBehavior;
 				door.Behavior += _puzzle.PuzzleEvent;
 
 				Doors[direction] = door;
@@ -162,7 +162,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			var place = lockPlace as PuzzlePlace;
 			if (place == null || place._placeNode == null)
 			{
-				throw new CPuzzleException("We can't declare unlock");
+				throw new PuzzleException("We can't declare unlock");
 			}
 			this._placeNode = this._section.GetUnlock(place._placeNode);
 			if (this._placeNode != null)
@@ -217,10 +217,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public Door GetLockDoor()
 		{
 			var door = Doors[this.DoorDirection];
-			if (!IsLock) 
-				throw new CPuzzleException("Tried GetLockDoor on a place that isn't a lock");
-			if (door == null) 
-				throw new CPuzzleException("Tried GetLockDoor but door wasn't found.");
+			if (!IsLock)
+				throw new PuzzleException("Tried GetLockDoor on a place that isn't a lock");
+			if (door == null)
+				throw new PuzzleException("Tried GetLockDoor but door wasn't found.");
 			return door;
 		}
 
@@ -230,7 +230,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			Doors[this.DoorDirection].IsLocked = false;
 			Doors[this.DoorDirection].Open();
 			if (this._placeNode.Value.DoorType[this.DoorDirection] == (int)DungeonBlockType.BossDoor)
-				this._puzzle.GetDungeon().BossDoorBehavior(null, Doors[this.DoorDirection]);
+				this._puzzle.Dungeon.BossDoorBehavior(null, Doors[this.DoorDirection]);
 		}
 
 		public uint GetLockColor()
@@ -238,10 +238,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return this.LockColor;
 		}
 
-		public int[] GetPropPosition(DungeonPropPositionType positionType, int border=-1)
+		public int[] GetPropPosition(DungeonPropPositionType positionType, int border = -1)
 		{
 			if (_placeNode == null)
-				throw new CPuzzleException(String.Format("We haven't declared this place to be something or didn't reserved a place"));
+				throw new PuzzleException(String.Format("We haven't declared this place to be something or didn't reserved a place"));
 			// todo: check those values
 			var radius = 0;
 			if (border >= 0)
@@ -251,11 +251,11 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			}
 			else
 				radius = _placeNode.Value.RoomType == RoomType.Alley ? 200 : 800;
-			if (_positionProviders[(int) positionType] == null)
+			if (_positionProviders[(int)positionType] == null)
 				_positionProviders[(int)positionType] = new DungeonPropPositionProvider(positionType, radius);
-			var pos = _positionProviders[(int) positionType].GetPosition();
+			var pos = _positionProviders[(int)positionType].GetPosition();
 			if (pos == null)
-				throw new CPuzzleException(String.Format("We out of positions of type {0}", positionType));
+				throw new PuzzleException(String.Format("We out of positions of type {0}", positionType));
 			pos[0] += this.X;
 			pos[1] += this.Y;
 			return pos;

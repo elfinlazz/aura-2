@@ -13,7 +13,7 @@ using Aura.Shared.Util;
 [PuzzleScript("switchdoor_switchmonster")]
 public class SwitchdoorSwitchmonsterScript : PuzzleScript
 {
-	public override void OnPrepare(IPuzzle puzzle)
+	public override void OnPrepare(Puzzle puzzle)
 	{
 		var LockedPlace = puzzle.NewPlace("LockedPlace");
 
@@ -23,7 +23,7 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		puzzle.Set("open", "Switch" + Random(1, 5));
 	}
 
-	public override void OnPuzzleCreate(IPuzzle puzzle)
+	public override void OnPuzzleCreate(Puzzle puzzle)
 	{
 		var LockedPlace = puzzle.GetPlace("LockedPlace");
 		var color = LockedPlace.GetLockColor();
@@ -37,7 +37,7 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 		LockedPlace.CloseAllDoors();
 	}
 
-	public override void OnPropEvent(IPuzzle puzzle, Prop prop)
+	public override void OnPropEvent(Puzzle puzzle, Prop prop)
 	{
 		var Switch = prop as Switch;
 		if (Switch == null)

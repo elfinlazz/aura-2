@@ -78,23 +78,23 @@ namespace Aura.Channel.Scripting.Scripts
 			return rnd.Next(min, max);
 		}
 
-		public virtual void OnPrepare(IPuzzle puzzle)
+		public virtual void OnPrepare(Puzzle puzzle)
 		{
 		}
 
-		public virtual void OnPuzzleCreate(IPuzzle puzzle)
+		public virtual void OnPuzzleCreate(Puzzle puzzle)
 		{
 		}
 
-		public virtual void OnPropEvent(IPuzzle puzzle, Prop prop)
+		public virtual void OnPropEvent(Puzzle puzzle, Prop prop)
 		{
 		}
 
-		public virtual void OnMobAllocated(IPuzzle puzzle, MonsterGroup group)
+		public virtual void OnMobAllocated(Puzzle puzzle, MonsterGroup group)
 		{
 		}
 
-		public virtual void OnMonsterDead(IPuzzle puzzle, MonsterGroup group)
+		public virtual void OnMonsterDead(Puzzle puzzle, MonsterGroup group)
 		{
 		}
 	}

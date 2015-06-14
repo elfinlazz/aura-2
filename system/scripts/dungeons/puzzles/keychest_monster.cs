@@ -14,7 +14,7 @@ using Aura.Shared.Util;
 [PuzzleScript("keychest_monster")]
 public class KeychestMonsterScript : PuzzleScript
 {
-	public override void OnPrepare(IPuzzle puzzle)
+	public override void OnPrepare(Puzzle puzzle)
 	{
 		var lockedPlace = puzzle.NewPlace("LockedPlace");
 		var chestPlace = puzzle.NewPlace("ChestPlace");
@@ -27,7 +27,7 @@ public class KeychestMonsterScript : PuzzleScript
 		puzzle.Set("ChestOpen", false);
 	}
 
-	public override void OnPuzzleCreate(IPuzzle puzzle)
+	public override void OnPuzzleCreate(Puzzle puzzle)
 	{
 		var lockedPlace = puzzle.GetPlace("LockedPlace");
 		var chestPlace = puzzle.GetPlace("ChestPlace");
@@ -53,7 +53,7 @@ public class KeychestMonsterScript : PuzzleScript
 		}
 	}
 
-	public override void OnPropEvent(IPuzzle puzzle, Prop prop)
+	public override void OnPropEvent(Puzzle puzzle, Prop prop)
 	{
 		var chest = prop as Chest;
 		if (chest != null)
@@ -73,13 +73,13 @@ public class KeychestMonsterScript : PuzzleScript
 		}
 	}
 
-	public override void OnMobAllocated(IPuzzle puzzle, MonsterGroup group)
+	public override void OnMobAllocated(Puzzle puzzle, MonsterGroup group)
 	{
 		if (group.Name == "LastMob")
 			group.AddKeyForLock(puzzle.GetPlace("LockedPlace"));
 	}
 
-	public override void OnMonsterDead(IPuzzle puzzle, MonsterGroup group)
+	public override void OnMonsterDead(Puzzle puzzle, MonsterGroup group)
 	{
 		if (group.Remaining != 0)
 			return;

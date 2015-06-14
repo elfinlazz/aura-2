@@ -92,7 +92,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		{
 			var rnd = RandomProvider.Get();
 
-			var region = this.Puzzle.GetRegion();
+			var region = this.Puzzle.Region;
 			var worldPos = this.Place.GetWorldPosition();
 
 			foreach (var monster in _monsters)

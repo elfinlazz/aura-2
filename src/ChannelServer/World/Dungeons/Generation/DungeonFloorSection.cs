@@ -118,7 +118,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 					currentPlace = currentPlace.Next;
 				}
 				if (currentPlace == null)
-					throw new CPuzzleException("Can't find a path room in generated _emptyPlaces");
+					throw new PuzzleException("Can't find a path room in generated _emptyPlaces");
 				var lockedDoorCandidate = new LockedDoorCandidateNode(room, move.Direction, currentPlace);
 				_lockedDoorCandidates.AddLast(lockedDoorCandidate);
 				room = room.Neighbor[move.Direction];
@@ -151,7 +151,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			{
 				result = result.Next;
 				if (result == null)
-					throw new CPuzzleException("Can't find specified room in _emptyPlaces");
+					throw new PuzzleException("Can't find specified room in _emptyPlaces");
 			}
 			return result;
 		}
@@ -168,7 +168,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			var count = this._lockedDoorCandidates.Count;
 			if (count == 0)
 			{
-				throw new CPuzzleException("We out of locked door candidates");
+				throw new PuzzleException("We out of locked door candidates");
 			}
 
 			// Always place locked place before the boss door.
@@ -215,7 +215,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			}
 
 			if (possibleUnlockRooms.Count == 0)
-				throw new CPuzzleException("We out of unlock places");
+				throw new PuzzleException("We out of unlock places");
 
 			var random_index = (int)this._rng.GetUInt32(0, (uint)possibleUnlockRooms.Count - 1);
 			place = possibleUnlockRooms[random_index];
@@ -254,7 +254,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		{
 			var place = this._emptyPlaces.Last;
 			if (this._emptyPlaces.Count < 3)
-				throw new CPuzzleException("We out of empty places");
+				throw new PuzzleException("We out of empty places");
 			var count = (int)this._rng.GetUInt32(1, (uint)this._emptyPlaces.Count - 2);
 			while (count-- > 0)
 			{

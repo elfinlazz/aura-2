@@ -189,7 +189,7 @@ namespace Aura.Channel.World.Dungeons
 					{
 						puzzleScript.OnPrepare(sections[section].NewPuzzle(this, floorData, puzzleScript, monsterGroups));
 					}
-					catch (CPuzzleException e)
+					catch (PuzzleException e)
 					{
 						Log.Warning("Section {0}, puzzle '{1}' : {2}", section, scriptName, e.Message);
 					}
@@ -209,7 +209,7 @@ namespace Aura.Channel.World.Dungeons
 					{
 						puzzle.OnCreate(region);
 					}
-					catch (CPuzzleException e)
+					catch (PuzzleException e)
 					{
 						Log.Warning("Section {0}, puzzle '{1}' : {2}", section, puzzle.Script.Name, e.Message);
 					}
