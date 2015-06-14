@@ -231,14 +231,11 @@ namespace Aura.Channel.World.Dungeons
 
 			var startTile = gen.StartPos;
 			var startPos = new Dungeons.Generation.Position(startTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, startTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
-			var startRoom = gen.GetRoom(startTile);
 			var startRoomTrait = floor.GetRoom(startTile);
-			var startRoomIncomingDirection = new int[] { 0, 0, 0, 0 };
-			startRoomIncomingDirection[startRoomTrait.GetIncomingDirection()] = 1;
+			var startRoomIncomingDirection = startRoomTrait.GetIncomingDirection();
 
 			var endTile = gen.EndPos;
 			var endPos = new Dungeons.Generation.Position(endTile.X * Dungeon.TileSize + Dungeon.TileSize / 2, endTile.Y * Dungeon.TileSize + Dungeon.TileSize / 2);
-			var endRoom = gen.GetRoom(endTile);
 			var endRoomTrait = floor.GetRoom(endTile);
 			var endRoomDirection = 0;
 			for (int dir = 0; dir < 4; ++dir)
@@ -247,12 +244,6 @@ namespace Aura.Channel.World.Dungeons
 					endRoomDirection = dir;
 					break;
 				}
-
-			//var door = new Prop(this.Data.DoorId, region.Id, startPos.X, startPos.Y, Rotation(GetFirstDirection(startRoom.Directions)), 1, 0, "open");
-			//door.Info.Color1 = floorData.Color1;
-			//door.Info.Color2 = floorData.Color1;
-			//door.Info.Color3 = floorData.Color3;
-			//region.AddProp(door);
 
 			var stairsBlock = this.Data.Style.Get(DungeonBlockType.StairsUp, startRoomIncomingDirection);
 			var stairs = new Prop(stairsBlock.PropId, region.Id, startPos.X, startPos.Y, MabiMath.DegreeToRadian(stairsBlock.Rotation), 1, 0, "single");
@@ -296,8 +287,7 @@ namespace Aura.Channel.World.Dungeons
 
 				if (endRoomTrait.PuzzleDoors[Direction.Down] == null)
 				{
-					_bossDoor = Door.CreateDoor(this.Data.BossDoorId, endPos.X, endPos.Y, Rotation(Direction.Down),
-						DungeonBlockType.BossDoor, regionId: region.Id);
+					_bossDoor = Door.CreateDoor(this.Data.BossDoorId, endPos.X, endPos.Y - Dungeon.TileSize, 0f, DungeonBlockType.BossDoor, region.Id, state: "closed");
 					_bossDoor.Info.Color1 = floorData.Color1;
 					_bossDoor.Info.Color2 = floorData.Color1;
 					_bossDoor.Info.Color3 = floorData.Color3;
@@ -309,12 +299,6 @@ namespace Aura.Channel.World.Dungeons
 					_bossDoor = endRoomTrait.PuzzleDoors[Direction.Down];
 				}
 
-				//var dummyDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y - Dungeon.TileSize, Rotation(GetFirstDirection(gen.GetRoom(endTile.GetBiasedPosition(Direction.Down)).Directions, Direction.Right)), 1, 0, "open");
-				//dummyDoor.Info.Color1 = floorData.Color1;
-				//dummyDoor.Info.Color2 = floorData.Color1;
-				//dummyDoor.Info.Color3 = floorData.Color3;
-				//region.AddProp(dummyDoor);
-
 				var exitStatue = new Prop(this.Data.LastStatuePropId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize * 2, Rotation(Direction.Up), 1, 0, "single");
 				exitStatue.Info.Color1 = floorData.Color1;
 				exitStatue.Info.Color2 = floorData.Color1;
@@ -325,12 +309,6 @@ namespace Aura.Channel.World.Dungeons
 			}
 			else
 			{
-				//var endDoor = new Prop(this.Data.DoorId, region.Id, endPos.X, endPos.Y, Rotation(GetFirstDirection(endRoom.Directions)), 1, 0, "open");
-				//endDoor.Info.Color1 = floorData.Color1;
-				//endDoor.Info.Color2 = floorData.Color1;
-				//endDoor.Info.Color3 = floorData.Color3;
-				//region.AddProp(endDoor);
-
 				var stairsDownBlock = this.Data.Style.Get(DungeonBlockType.StairsDown, endRoomDirection);
 				var stairsDown = new Prop(stairsDownBlock.PropId, region.Id, endPos.X, endPos.Y, MabiMath.DegreeToRadian(stairsDownBlock.Rotation), 1, 0, "single");
 				stairsDown.Info.Color1 = floorData.Color1;
@@ -377,8 +355,9 @@ namespace Aura.Channel.World.Dungeons
 									var doorBlock = this.Data.Style.Get(DungeonBlockType.Door, dir);
 
 									var doorProp = new Prop(doorBlock.PropId, region.Id, doorX, doorY, MabiMath.DegreeToRadian(doorBlock.Rotation), state: "open");
-									doorProp.Info.Color1 = 0xFFFFFF;
-									doorProp.Info.Color2 = 0xFFFFFF;
+									doorProp.Info.Color1 = floorData.Color1;
+									doorProp.Info.Color2 = floorData.Color2;
+									doorProp.Info.Color3 = floorData.Color3;
 									region.AddProp(doorProp);
 								}
 				}

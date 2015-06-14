@@ -16,8 +16,8 @@ namespace Aura.Channel.World.Dungeons.Props
 		public bool IsLocked;
 		public string InternalName;
 
-		public Door(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0, 
-			string state = "", string name = "", string title = "", string intName = "")
+		public Door(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0,
+			string state = "open", string name = "", string title = "", string intName = "")
 			: base (id, regionId, x, y, direction, scale, altitude, state, name, title)
 		{
 			this.Behavior = DefaultDoorBehavior;
@@ -26,8 +26,8 @@ namespace Aura.Channel.World.Dungeons.Props
 			this.InternalName = intName;
 		}
 
-		private Door(int id, int regionId, int x, int y, float propDirection, DungeonBlockType doorType, string name)
-			: this(id, regionId, x, y, propDirection, state: "open", intName: name)
+		private Door(int id, int regionId, int x, int y, float propDirection, DungeonBlockType doorType, string name, string state = "open")
+			: this(id, regionId, x, y, propDirection, state: state, intName: name)
 		{
 			this.isDungeonDoor = true;
 			_doorType = doorType;
@@ -92,13 +92,13 @@ namespace Aura.Channel.World.Dungeons.Props
 		}
 
 		public static Door CreateDoor(int doorPropId, int regionId, int x, int y, float direction, 
-			float scale = 1f, float altitude = 0, string state = "", string name = "", string title = "", string intName = "")
+			float scale = 1f, float altitude = 0, string state = "open", string name = "", string title = "", string intName = "")
 		{
 			return new Door(doorPropId, regionId, x, y, direction, scale, altitude, state, name, title, intName);
 		}
 
 		public static Door CreateDoor(int doorPropId, int x, int y, float direction,
-			DungeonBlockType doorType, int regionId = 0, string name = "")
+			DungeonBlockType doorType, int regionId = 0, string name = "", string state = "open")
 		{
 			direction = MabiMath.DegreeToRadian((int)direction);
 			if (doorType == DungeonBlockType.BossDoor)
@@ -106,7 +106,7 @@ namespace Aura.Channel.World.Dungeons.Props
 				direction = MabiMath.DirectionToRadian(0, 1);
 				y += Dungeon.TileSize + Dungeon.TileSize / 2;
 			}
-			return new Door(doorPropId, regionId, x, y, direction, doorType, name);
+			return new Door(doorPropId, regionId, x, y, direction, doorType, name, state);
 		}
 
 	}
