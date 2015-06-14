@@ -424,6 +424,12 @@ namespace Aura.Channel.World
 			// TODO: Technically not required? Handled by LookAround.
 			Send.EntityAppears(creature);
 
+			// Remove Spawned state, so effect only plays the first time.
+			// This probably only works because of the EntityAppears above,
+			// otherwise the state would be gone by the time LookAround
+			// kicks in. Maybe we need a better solution.
+			creature.State &= ~CreatureStates.Spawned;
+
 			//if (creature.EntityId < MabiId.Npcs)
 			//	Log.Status("Creatures currently in region {0}: {1}", this.Id, _creatures.Count);
 		}
