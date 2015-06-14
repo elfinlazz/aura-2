@@ -165,7 +165,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return null;
 		}
 
-		public Chest NewChest(IPuzzlePlace place, string name, DungeonPropPositionType positionType)
+		public void AddProp(IPuzzlePlace place, DungeonProp prop, DungeonPropPositionType positionType)
 		{
 			if (this.Region == null)
 				throw new PuzzleException("NewChest outside of OnPuzzleCreate.");
@@ -173,30 +173,14 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			var p = place as PuzzlePlace;
 			var pos = p.GetPropPosition(positionType, 300);
 
-			var chest = Chest.CreateChest(pos[0], pos[1], pos[2], regionId: Region.Id, name: name);
-			chest.Behavior += PuzzleEvent;
+			prop.RegionId = this.Region.Id;
+			prop.Info.X = pos[0];
+			prop.Info.Y = pos[1];
+			prop.Info.Direction = pos[2];
+			prop.Behavior += PuzzleEvent;
 
-			this.Region.AddProp(chest);
-			this.Props[name] = chest;
-
-			return chest;
-		}
-
-		public Switch NewSwitch(IPuzzlePlace place, string name, DungeonPropPositionType positionType, uint color)
-		{
-			if (this.Region == null)
-				throw new PuzzleException("NewSwitch outside of OnPuzzleCreate.");
-
-			var p = place as PuzzlePlace;
-			var pos = p.GetPropPosition(positionType);
-
-			var s = Switch.CreateSwitch(pos[0], pos[1], pos[2], color, regionId: Region.Id, name: name);
-			s.Behavior += PuzzleEvent;
-
-			this.Region.AddProp(s);
-			this.Props[name] = s;
-
-			return s;
+			this.Region.AddProp(prop);
+			this.Props[prop.InternalName] = prop;
 		}
 
 		public void PuzzleEvent(Creature creature, Prop prop)

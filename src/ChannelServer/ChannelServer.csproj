@@ -217,6 +217,7 @@
     <Compile Include="World\Dungeons\Generation\Position.cs" />
     <Compile Include="World\Dungeons\Props\Chest.cs" />
     <Compile Include="World\Dungeons\Props\Door.cs" />
+    <Compile Include="World\Dungeons\Props\DungeonProp.cs" />
     <Compile Include="World\Dungeons\Props\Switch.cs" />
     <Compile Include="World\Dungeons\Puzzles\DungeonPropPositionProvider.cs" />
     <Compile Include="World\Dungeons\Puzzles\MonsterGroup.cs" />

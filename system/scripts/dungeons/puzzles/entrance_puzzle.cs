@@ -30,10 +30,10 @@ public class EntrancePuzzleScript : PuzzleScript
 		var lockedPlace = puzzle.GetPlace("LockedPlace");
 		var chestPlace = puzzle.GetPlace("ChestPlace");
 
-		var chest = puzzle.NewChest(chestPlace, "KeyChest", DungeonPropPositionType.Random);
-
 		lockedPlace.CloseAllDoors();
 		puzzle.LockPlace(lockedPlace, "Lock");
+
+		chestPlace.AddProp(new Chest(puzzle, "KeyChest"), DungeonPropPositionType.Random);
 	}
 
 	public override void OnPropEvent(Puzzle puzzle, Prop prop)

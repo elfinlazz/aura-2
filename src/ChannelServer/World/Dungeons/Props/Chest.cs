@@ -7,32 +7,45 @@ using Aura.Channel.Network.Sending;
 using Aura.Channel.World.Entities;
 using Aura.Mabi;
 using Aura.Shared.Util;
+using Aura.Channel.World.Dungeons.Puzzles;
 
 namespace Aura.Channel.World.Dungeons.Props
 {
-	public class Chest : Prop
+	public class Chest : DungeonProp
 	{
-		public List<Item> Items { get; private set; }
-		public string InternalName;
+		protected List<Item> _items;
 
-		public Chest(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0,
-			string state = "closed", string name = "", string title = "", string intName = "")
-			: base(id, regionId, x, y, direction, scale, altitude, state, name, title)
+		public Chest(int propId, string name)
+			: base(propId, name)
 		{
-			this.Items = new List<Item>();
-			this.InternalName = intName;
-			this.Behavior = DefaultChestBehavior;
+			_items = new List<Item>();
+
+			this.InternalName = name;
+			this.Behavior = this.DefaultBehavior;
 		}
 
-		private void DefaultChestBehavior(Creature creature, Prop prop)
+		public Chest(Puzzle puzzle, string name)
+			: this(puzzle.Dungeon.Data.ChestId, name)
+		{
+		}
+
+		protected virtual void DefaultBehavior(Creature creature, Prop prop)
 		{
 			if (this.State == "open")
 				return;
 
 			this.SetState("open");
+			this.DropItems();
+		}
 
-			foreach (var item in this.Items)
-				item.Drop(this.Region, this.GetPosition());
+		public void DropItems()
+		{
+			lock (_items)
+			{
+				foreach (var item in _items)
+					item.Drop(this.Region, this.GetPosition());
+				_items.Clear();
+			}
 		}
 
 		/// <summary>
@@ -41,7 +54,8 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// <param name="item"></param>
 		public void Add(Item item)
 		{
-			this.Items.Add(item);
+			lock (_items)
+				_items.Add(item);
 		}
 
 		/// <summary>
@@ -59,38 +73,39 @@ namespace Aura.Channel.World.Dungeons.Props
 				this.Add(gold);
 			}
 		}
-
-		public static Chest CreateChest(int x, int y, float direction, int propId = 10201, int regionId = 0, string name = "")
-		{
-			direction = MabiMath.DegreeToRadian((int)direction);
-			return new Chest(propId, regionId, x, y, direction, intName: name);
-		}
 	}
 
-	public class TreasureChest_temp : Chest
+	public class LockedChest : Chest
 	{
-		private TreasureChest_temp(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0,
-			string state = "", string name = "", string title = "")
-			: base(id, regionId, x, y, direction, scale, altitude, state, name, title)
+		public LockedChest(int propId, string name)
+			: base(propId, name)
 		{
-			this.Behavior = TreasureChestBehavior + this.Behavior;
+			this.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?")));
 		}
 
-		private void TreasureChestBehavior(Creature creature, Prop prop)
+		public LockedChest(Puzzle puzzle, string name)
+			: this(puzzle.Dungeon.Data.ChestId, name)
+		{
+		}
+
+		protected override void DefaultBehavior(Creature creature, Prop prop)
 		{
 			// Make sure the chest was still closed when it was clicked.
 			// No security violation because it could be caused by lag.
-			if (this.State == "open")
+			if (prop.State == "open")
 				return;
 
 			if (!creature.Inventory.Has(70028)) // Treasure Chest Key
 			{
-				// Unofficial
-				Send.Notice(creature, Localization.Get("You don't have a key."));
+				Send.Notice(creature, Localization.Get("There is no matching key."));
 				return;
 			}
+
+			prop.SetState("open");
+
 			creature.Inventory.Remove(70028);
+
+			this.DropItems();
 		}
 	}
-
 }

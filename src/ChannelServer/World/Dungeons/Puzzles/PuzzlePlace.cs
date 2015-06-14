@@ -48,6 +48,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		void OpenAllDoors();
 		uint GetLockColor();
 
+		void AddProp(DungeonProp prop, DungeonPropPositionType positionType);
+
 		void SpawnSingleMob(string mobGroupName, string mobName = null);
 	}
 
@@ -100,7 +102,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		private void AddDoor(int direction, DungeonBlockType doorType)
 		{
 			var room = this._placeNode.Value;
-			Door door = room.GetPuzzleDoor(direction);
+			var door = room.GetPuzzleDoor(direction);
 			if (door != null)
 				Doors[direction] = door;
 			else
@@ -110,7 +112,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				var doorBlock = _puzzle.Dungeon.Data.Style.Get(doorType, direction);
 				string doorName = String.Format("{0}_door_{1}{2}_{3}", this._name, X, Y, direction);
 
-				door = Door.CreateDoor(doorBlock.PropId, X, Y, doorBlock.Rotation, doorType, name: doorName);
+				door = new Door(doorBlock.PropId, 0, X, Y, doorBlock.Rotation, doorType, doorName);
 				door.Info.Color1 = floorData.Color1;
 				door.Info.Color2 = floorData.Color2;
 				door.Info.Color3 = this.LockColor;
@@ -123,6 +125,11 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				room.SetPuzzleDoor(door, direction);
 				room.SetDoorType(direction, (int)doorType);
 			}
+		}
+
+		public void AddProp(DungeonProp prop, DungeonPropPositionType positionType)
+		{
+			_puzzle.AddProp(this, prop, positionType);
 		}
 
 		public void DeclareLock()

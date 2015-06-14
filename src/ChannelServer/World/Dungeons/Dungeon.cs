@@ -287,7 +287,7 @@ namespace Aura.Channel.World.Dungeons
 
 				if (endRoomTrait.PuzzleDoors[Direction.Down] == null)
 				{
-					_bossDoor = Door.CreateDoor(this.Data.BossDoorId, endPos.X, endPos.Y - Dungeon.TileSize, 0f, DungeonBlockType.BossDoor, region.Id, state: "closed");
+					_bossDoor = new Door(this.Data.BossDoorId, region.Id, endPos.X, endPos.Y - Dungeon.TileSize, 0, DungeonBlockType.BossDoor, "", "");
 					_bossDoor.Info.Color1 = floorData.Color1;
 					_bossDoor.Info.Color2 = floorData.Color1;
 					_bossDoor.Info.Color3 = floorData.Color3;
