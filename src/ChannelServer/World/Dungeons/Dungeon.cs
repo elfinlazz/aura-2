@@ -188,7 +188,7 @@ namespace Aura.Channel.World.Dungeons
 					Puzzle puzzle = null;
 					try
 					{
-						puzzle = sections[section].NewPuzzle(this, floorData, puzzleScript, monsterGroups);
+						puzzle = sections[section].NewPuzzle(this, floorData, floorData.Sets[section].Puzzles[randomPuzzle], puzzleScript);
 						puzzleScript.OnPrepare(puzzle);
 					}
 					catch (PuzzleException e)

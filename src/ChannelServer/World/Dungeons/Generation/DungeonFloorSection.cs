@@ -281,15 +281,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 			}
 		}
 
-		public Puzzle NewPuzzle(Dungeon dungeon, DungeonFloorData floorData,
-			PuzzleScript puzzleScript, List<DungeonMonsterGroupData> monsterGroups)
+		public Puzzle NewPuzzle(Dungeon dungeon, DungeonFloorData floorData, DungeonPuzzleData puzzleData, PuzzleScript puzzleScript)
 		{
-			var puzzle = new Puzzle(dungeon, this, floorData, puzzleScript, monsterGroups);
+			var puzzle = new Puzzle(dungeon, this, floorData, puzzleData, puzzleScript);
 			this.Puzzles.Add(puzzle);
 			return puzzle;
 		}
-
 	}
-
-
 }

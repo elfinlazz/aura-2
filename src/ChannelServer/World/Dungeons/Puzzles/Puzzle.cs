@@ -47,6 +47,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		private Dictionary<string, MonsterGroup> _monsterGroups;
 
 		public string Name { get; private set; }
+		public DungeonPuzzleData Data { get; private set; }
 		public PuzzleScript Script { get; private set; }
 		public Dungeon Dungeon { get; private set; }
 		public Region Region { get; private set; }
@@ -54,7 +55,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public Dictionary<string, Item> Keys { get; private set; }
 		public DungeonFloorData FloorData { get; private set; }
 
-		public Puzzle(Dungeon dungeon, DungeonFloorSection section, DungeonFloorData floorData, PuzzleScript puzzleScript, List<DungeonMonsterGroupData> monsterGroups)
+		public Puzzle(Dungeon dungeon, DungeonFloorSection section, DungeonFloorData floorData, DungeonPuzzleData puzzleData, PuzzleScript puzzleScript)
 		{
 			_variables = new Dictionary<string, Object>();
 			_monsterGroups = new Dictionary<string, MonsterGroup>();
@@ -64,12 +65,13 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 			_section = section;
 			this.Name = puzzleScript.Name;
+			this.Data = puzzleData;
 			this.Dungeon = dungeon;
 			this.Script = puzzleScript;
 			this.FloorData = floorData;
 
-			for (int i = 1; i <= monsterGroups.Count; ++i)
-				_monsterGroupData["Mob" + i] = monsterGroups[i - 1];
+			for (int i = 1; i <= puzzleData.Groups.Count; ++i)
+				_monsterGroupData["Mob" + i] = puzzleData.Groups[i - 1];
 		}
 
 		public void OnCreate(Region region)
