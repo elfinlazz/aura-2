@@ -98,7 +98,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			foreach (var monster in _monsters)
 			{
 				// TODO: Fit range to surroundings.
-				var pos = worldPos.GetRandomInRange(1000, rnd);
+				var pos = worldPos.GetRandomInRange(750, rnd);
 				monster.Spawn(region.Id, pos.X, pos.Y);
 
 				if (monster.AI != null)
