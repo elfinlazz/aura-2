@@ -49,6 +49,7 @@ namespace Aura.Data.Database
 		public uint LightColor3 { get; set; }
 		public bool HasBoss { get; set; }
 		public bool Custom { get; set; }
+		public string Extra { get; set; }
 		public List<DungeonSetData> Sets { get; set; }
 
 		public DungeonFloorData()
@@ -134,6 +135,7 @@ namespace Aura.Data.Database
 				floorData.Coverage = floorEntry.ReadInt("coverage");
 				floorData.HasBoss = floorEntry.ReadBool("hasBoss");
 				floorData.Custom = floorEntry.ReadBool("custom");
+				floorData.Extra = floorEntry.ReadString("extra", null);
 
 				floorData.Color1 = (uint)floorEntry["color"][0];
 				floorData.Color2 = (uint)floorEntry["color"][1];
