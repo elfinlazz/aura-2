@@ -38,7 +38,7 @@ public class KeychestMonsterScript : PuzzleScript
 		var chest = new Chest(puzzle, "KeyChest");
 		AddChestDrops(chest);
 
-		chestPlace.AddProp(chest, DungeonPropPositionType.Random);
+		chestPlace.AddProp(chest, Placement.Random);
 	}
 
 	protected virtual void AddChestDrops(Chest chest)

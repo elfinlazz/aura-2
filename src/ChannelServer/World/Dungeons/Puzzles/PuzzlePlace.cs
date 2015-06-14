@@ -48,9 +48,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		void OpenAllDoors();
 		uint GetLockColor();
 
-		void AddProp(DungeonProp prop, DungeonPropPositionType positionType);
+		void AddProp(DungeonProp prop, Placement positionType);
 
-		void SpawnSingleMob(string mobGroupName, string mobName = null, DungeonPropPositionType spawnPosition = DungeonPropPositionType.Random);
+		void SpawnSingleMob(string mobGroupName, string mobName = null, Placement spawnPosition = Placement.Random);
 	}
 
 	public class PuzzlePlace : IPuzzlePlace
@@ -68,7 +68,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public Item Key { get; private set; }
 		public int DoorDirection { get; private set; }
 		public Door[] Doors { get; private set; }
-		private DungeonPropPositionProvider[] _positionProviders;
+		private PlacementProvider[] _placementProviders;
 
 
 		public PuzzlePlace(DungeonFloorSection section, Puzzle puzzle, string name)
@@ -84,8 +84,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.IsBossLock = false;
 			this.DoorDirection = 0;
 			Doors = new Door[] { null, null, null, null };
-			var positionTypesCount = Enum.GetValues(typeof(DungeonPropPositionType)).Length;
-			_positionProviders = new DungeonPropPositionProvider[positionTypesCount];
+			var placementTypesCount = Enum.GetValues(typeof(Placement)).Length;
+			_placementProviders = new PlacementProvider[placementTypesCount];
 		}
 
 		private void UpdatePosition()
@@ -127,7 +127,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			}
 		}
 
-		public void AddProp(DungeonProp prop, DungeonPropPositionType positionType)
+		public void AddProp(DungeonProp prop, Placement positionType)
 		{
 			_puzzle.AddProp(this, prop, positionType);
 		}
@@ -245,7 +245,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return this.LockColor;
 		}
 
-		public int[] GetPropPosition(DungeonPropPositionType positionType, int border = -1)
+		public int[] GetPropPosition(Placement placementType, int border = -1)
 		{
 			if (_placeNode == null)
 				throw new PuzzleException(String.Format("We haven't declared this place to be something or didn't reserved a place"));
@@ -258,11 +258,11 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			}
 			else
 				radius = _placeNode.Value.RoomType == RoomType.Alley ? 200 : 800;
-			if (_positionProviders[(int)positionType] == null)
-				_positionProviders[(int)positionType] = new DungeonPropPositionProvider(positionType, radius);
-			var pos = _positionProviders[(int)positionType].GetPosition();
+			if (_placementProviders[(int)placementType] == null)
+				_placementProviders[(int)placementType] = new PlacementProvider(placementType, radius);
+			var pos = _placementProviders[(int)placementType].GetPosition();
 			if (pos == null)
-				throw new PuzzleException(String.Format("We out of positions of type {0}", positionType));
+				throw new PuzzleException(String.Format("We out of positions of type {0}", placementType));
 			pos[0] += this.X;
 			pos[1] += this.Y;
 			return pos;
@@ -283,7 +283,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// </summary>
 		/// <param name="mobGroupName">Name of the mob, for reference.</param>
 		/// <param name="mobToSpawn">Mob to spawn (Mob1-3), leave as null for auto select.</param>
-		public void SpawnSingleMob(string mobGroupName, string mobToSpawn = null, DungeonPropPositionType spawnPosition=DungeonPropPositionType.Random)
+		public void SpawnSingleMob(string mobGroupName, string mobToSpawn = null, Placement spawnPosition=Placement.Random)
 		{
 			DungeonMonsterGroupData data;
 			if (mobToSpawn == null)

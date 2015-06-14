@@ -33,7 +33,7 @@ public class EntrancePuzzleScript : PuzzleScript
 		lockedPlace.CloseAllDoors();
 		puzzle.LockPlace(lockedPlace, "Lock");
 
-		chestPlace.AddProp(new Chest(puzzle, "KeyChest"), DungeonPropPositionType.Random);
+		chestPlace.AddProp(new Chest(puzzle, "KeyChest"), Placement.Random);
 	}
 
 	public override void OnPropEvent(Puzzle puzzle, Prop prop)

@@ -30,7 +30,7 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 
 		for (int i = 1; i <= 4; ++i)
 		{
-			LockedPlace.AddProp(new Switch("Switch" + i, color), DungeonPropPositionType.Corner4);
+			LockedPlace.AddProp(new Switch("Switch" + i, color), Placement.Corner4);
 			puzzle.Set("Switch" + i + "Activated", false);
 		}
 

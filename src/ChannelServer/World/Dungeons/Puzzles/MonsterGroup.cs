@@ -47,7 +47,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public int Remaining { get { return _remaining; } }
 		private int _remaining;
 
-		private DungeonPropPositionType _spawnPosition;
+		private Placement _spawnPosition;
 
 		/// <summary>
 		/// Creates new monster group.
@@ -56,7 +56,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <param name="puzzle"></param>
 		/// <param name="place"></param>
 		/// <param name="spawnPosition"></param>
-		public MonsterGroup(string name, Puzzle puzzle, PuzzlePlace place, DungeonPropPositionType spawnPosition=DungeonPropPositionType.Random)
+		public MonsterGroup(string name, Puzzle puzzle, PuzzlePlace place, Placement spawnPosition=Placement.Random)
 		{
 			_monsters = new List<NPC>();
 

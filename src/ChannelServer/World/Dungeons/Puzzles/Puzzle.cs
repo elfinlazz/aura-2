@@ -165,7 +165,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return null;
 		}
 
-		public void AddProp(IPuzzlePlace place, DungeonProp prop, DungeonPropPositionType positionType)
+		public void AddProp(IPuzzlePlace place, DungeonProp prop, Placement positionType)
 		{
 			if (this.Region == null)
 				throw new PuzzleException("NewChest outside of OnPuzzleCreate.");
@@ -188,7 +188,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Script.OnPropEvent(this, prop);
 		}
 
-		public void AllocateAndSpawnMob(PuzzlePlace place, string name, DungeonMonsterGroupData group, DungeonPropPositionType spawnPosition)
+		public void AllocateAndSpawnMob(PuzzlePlace place, string name, DungeonMonsterGroupData group, Placement spawnPosition)
 		{
 			var mob = new MonsterGroup(name, this, place, spawnPosition);
 			_monsterGroups.Add(name, mob);

@@ -34,9 +34,9 @@ internal class Keychest3Mimic : PuzzleScript
 		var chest = new Chest(puzzle, "KeyChest");
 		chest.Add(Item.Create(id: 2000, amountMin: 10, amountMax: 30));
 		chest.Add(key);
-		chestPlace.AddProp(chest, DungeonPropPositionType.Corner4);
+		chestPlace.AddProp(chest, Placement.Corner4);
 
-		chestPlace.SpawnSingleMob("Trap", "Mob3", DungeonPropPositionType.Corner4);
+		chestPlace.SpawnSingleMob("Trap", "Mob3", Placement.Corner4);
 		chestPlace.SpawnSingleMob("ChestMob1", "Mob1");
 		chestPlace.SpawnSingleMob("ChestMob2", "Mob2");
 	}

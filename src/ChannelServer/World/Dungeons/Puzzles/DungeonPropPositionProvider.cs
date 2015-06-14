@@ -3,7 +3,7 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
 {
-	public enum DungeonPropPositionType
+	public enum Placement
 	{
 		Corner4,
 		Corner8,
@@ -12,7 +12,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		Random,
 	}
 
-	public class DungeonPropPositionProvider
+	public class PlacementProvider
 	{
 		private static readonly int[,] _corner4Offsets =
 			{
@@ -37,10 +37,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			};
 
 		private Queue<int[]> _positionQueue;
-		private DungeonPropPositionType _positionType;
+		private Placement _positionType;
 		private int _radius;
 
-		public DungeonPropPositionProvider(DungeonPropPositionType positionType, int radius=600)
+		public PlacementProvider(Placement positionType, int radius=600)
 		{
 			_positionQueue = new Queue<int[]>();
 			_positionType = positionType;
@@ -48,19 +48,19 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			int[,] offsets = null;
 			switch (positionType)
 			{
-				case DungeonPropPositionType.Corner4:
+				case Placement.Corner4:
 					offsets = _corner4Offsets;
 					break;
-				case DungeonPropPositionType.Corner8:
+				case Placement.Corner8:
 					offsets = _corner8Offsets;
 					break;
-				case DungeonPropPositionType.Center9:
+				case Placement.Center9:
 					offsets = _center9Offsets;
 					break;
-				case DungeonPropPositionType.Center:
+				case Placement.Center:
 					offsets = _centerOffset;
 					break;
-				case DungeonPropPositionType.Random:
+				case Placement.Random:
 					return;
 			}
 			if (offsets == null) return;
@@ -71,7 +71,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		public int[] GetPosition()
 		{
-			if (_positionType == DungeonPropPositionType.Random)
+			if (_positionType == Placement.Random)
 			{
 				var rnd = RandomProvider.Get();
 				var pos = new int[] { rnd.Next(-_radius, _radius), rnd.Next(-_radius, _radius), rnd.Next(360) };
