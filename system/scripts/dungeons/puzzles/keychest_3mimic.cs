@@ -38,6 +38,6 @@ internal class Keychest3Mimic : PuzzleScript
 
 		chestPlace.SpawnSingleMob("Trap", "Mob3", Placement.Corner4);
 		chestPlace.SpawnSingleMob("ChestMob1", "Mob1");
-		chestPlace.SpawnSingleMob("ChestMob2", "Mob2");
+		lockedPlace.SpawnSingleMob("ChestMob2", "Mob2");
 	}
 }
