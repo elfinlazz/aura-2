@@ -74,7 +74,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			if (_positionType == DungeonPropPositionType.Random)
 			{
 				var rnd = RandomProvider.Get();
-				return new int[] { rnd.Next(-_radius, _radius), rnd.Next(-_radius, _radius), rnd.Next(360) };
+				var pos = new int[] { rnd.Next(-_radius, _radius), rnd.Next(-_radius, _radius), rnd.Next(360) };
+				pos[0] = (int)(pos[0] * 0.8f);
+				pos[1] = (int)(pos[1] * 0.8f);
+				return pos;
 			}
 			return _positionQueue.Dequeue();
 		}

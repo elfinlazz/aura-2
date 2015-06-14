@@ -47,19 +47,23 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public int Remaining { get { return _remaining; } }
 		private int _remaining;
 
+		private DungeonPropPositionType _spawnPosition;
+
 		/// <summary>
 		/// Creates new monster group.
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="puzzle"></param>
 		/// <param name="place"></param>
-		public MonsterGroup(string name, Puzzle puzzle, PuzzlePlace place)
+		/// <param name="spawnPosition"></param>
+		public MonsterGroup(string name, Puzzle puzzle, PuzzlePlace place, DungeonPropPositionType spawnPosition=DungeonPropPositionType.Random)
 		{
 			_monsters = new List<NPC>();
 
 			this.Name = name;
 			this.Puzzle = puzzle;
 			this.Place = place;
+			_spawnPosition = spawnPosition;
 		}
 
 		/// <summary>
@@ -97,9 +101,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 			foreach (var monster in _monsters)
 			{
-				// TODO: Fit range to surroundings.
-				var pos = worldPos.GetRandomInRange(750, rnd);
-				monster.Spawn(region.Id, pos.X, pos.Y);
+				// TODO: Rotate monster to pos[2] direction
+				var pos = this.Place.GetPropPosition(_spawnPosition);
+				monster.Spawn(region.Id, pos[0], pos[1]);
 
 				if (monster.AI != null)
 					monster.AI.Activate(1000);

@@ -50,7 +50,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		void AddProp(DungeonProp prop, DungeonPropPositionType positionType);
 
-		void SpawnSingleMob(string mobGroupName, string mobName = null);
+		void SpawnSingleMob(string mobGroupName, string mobName = null, DungeonPropPositionType spawnPosition = DungeonPropPositionType.Random);
 	}
 
 	public class PuzzlePlace : IPuzzlePlace
@@ -253,7 +253,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			var radius = 0;
 			if (border >= 0)
 			{
-				radius = _placeNode.Value.RoomType == RoomType.Alley ? 300 - border : 900 - border;
+				radius = _placeNode.Value.RoomType == RoomType.Alley ? 200 - border : 800 - border;
 				if (radius < 0) radius = 0;
 			}
 			else
@@ -283,7 +283,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// </summary>
 		/// <param name="mobGroupName">Name of the mob, for reference.</param>
 		/// <param name="mobToSpawn">Mob to spawn (Mob1-3), leave as null for auto select.</param>
-		public void SpawnSingleMob(string mobGroupName, string mobToSpawn = null)
+		public void SpawnSingleMob(string mobGroupName, string mobToSpawn = null, DungeonPropPositionType spawnPosition=DungeonPropPositionType.Random)
 		{
 			DungeonMonsterGroupData data;
 			if (mobToSpawn == null)
@@ -294,7 +294,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			if (data == null)
 				throw new Exception("No monster data found.");
 
-			_puzzle.AllocateAndSpawnMob(this, mobGroupName, data);
+			_puzzle.AllocateAndSpawnMob(this, mobGroupName, data, spawnPosition);
 		}
 	}
 }

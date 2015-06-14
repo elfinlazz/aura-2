@@ -80,7 +80,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				{
 					// Beware, some doors are shared between puzzles
 					if (door.EntityId != 0)
-						return;
+						continue;
 					door.Info.Region = region.Id;
 					region.AddProp(door);
 				}
@@ -171,7 +171,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				throw new PuzzleException("NewChest outside of OnPuzzleCreate.");
 
 			var p = place as PuzzlePlace;
-			var pos = p.GetPropPosition(positionType, 300);
+			var pos = p.GetPropPosition(positionType);
 
 			prop.RegionId = this.Region.Id;
 			prop.Info.X = pos[0];
@@ -188,9 +188,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Script.OnPropEvent(this, prop);
 		}
 
-		public void AllocateAndSpawnMob(PuzzlePlace place, string name, DungeonMonsterGroupData group)
+		public void AllocateAndSpawnMob(PuzzlePlace place, string name, DungeonMonsterGroupData group, DungeonPropPositionType spawnPosition)
 		{
-			var mob = new MonsterGroup(name, this, place);
+			var mob = new MonsterGroup(name, this, place, spawnPosition);
 			_monsterGroups.Add(name, mob);
 
 			mob.Allocate(group);

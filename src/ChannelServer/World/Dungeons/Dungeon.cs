@@ -185,12 +185,15 @@ namespace Aura.Channel.World.Dungeons
 						Log.Warning("DungeonFloor.GeneratePuzzles: '{0}' puzzle script not found.", scriptName);
 						continue;
 					}
+					Puzzle puzzle = null;
 					try
 					{
-						puzzleScript.OnPrepare(sections[section].NewPuzzle(this, floorData, puzzleScript, monsterGroups));
+						puzzle = sections[section].NewPuzzle(this, floorData, puzzleScript, monsterGroups);
+						puzzleScript.OnPrepare(puzzle);
 					}
 					catch (PuzzleException e)
 					{
+						sections[section].Puzzles.Remove(puzzle);
 						Log.Warning("Section {0}, puzzle '{1}' : {2}", section, scriptName, e.Message);
 					}
 				}
@@ -346,20 +349,32 @@ namespace Aura.Channel.World.Dungeons
 
 					if (isRoom)
 						for (var dir = 0; dir < 4; ++dir)
-							if ((roomTrait.Links[dir] != LinkType.None) && roomTrait.PuzzleDoors[dir] == null)
-								if (roomTrait.DoorType[dir] == (int)DungeonBlockType.Door || roomTrait.DoorType[dir] == (int)DungeonBlockType.Alley)
+							if (roomTrait.Links[dir] != LinkType.None)
+							{
+								if (roomTrait.PuzzleDoors[dir] == null)
 								{
-									var doorX = x * Dungeon.TileSize + Dungeon.TileSize / 2;
-									var doorY = y * Dungeon.TileSize + Dungeon.TileSize / 2;
+									var doorX = x*Dungeon.TileSize + Dungeon.TileSize/2;
+									var doorY = y*Dungeon.TileSize + Dungeon.TileSize/2;
 
 									var doorBlock = this.Data.Style.Get(DungeonBlockType.Door, dir);
 
-									var doorProp = new Prop(doorBlock.PropId, region.Id, doorX, doorY, MabiMath.DegreeToRadian(doorBlock.Rotation), state: "open");
+									var doorProp = new Prop(doorBlock.PropId, region.Id, doorX, doorY, MabiMath.DegreeToRadian(doorBlock.Rotation),
+										state: "open");
 									doorProp.Info.Color1 = floorData.Color1;
 									doorProp.Info.Color2 = floorData.Color2;
 									doorProp.Info.Color3 = floorData.Color3;
 									region.AddProp(doorProp);
 								}
+								else
+								{
+									// Add doors from failed puzzles
+									if (roomTrait.PuzzleDoors[dir].EntityId == 0)
+									{
+										roomTrait.PuzzleDoors[dir].Info.Region = region.Id;
+										region.AddProp(roomTrait.PuzzleDoors[dir]);
+									}
+								}
+							}
 				}
 
 		}

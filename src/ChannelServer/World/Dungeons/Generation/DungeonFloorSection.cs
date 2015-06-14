@@ -215,7 +215,10 @@ namespace Aura.Channel.World.Dungeons.Generation
 			}
 
 			if (possibleUnlockRooms.Count == 0)
+			{
+				// TODO: Return locked place to list on available doors.
 				throw new PuzzleException("We out of unlock places");
+			}
 
 			var random_index = (int)this._rng.GetUInt32(0, (uint)possibleUnlockRooms.Count - 1);
 			place = possibleUnlockRooms[random_index];
