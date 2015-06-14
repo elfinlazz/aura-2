@@ -349,17 +349,23 @@ namespace Aura.Channel.World.Dungeons
 
 					if (isRoom)
 						for (var dir = 0; dir < 4; ++dir)
+						{
+							// Skip stairs.
+							if (roomTrait.RoomType == RoomType.Start && dir == startRoomIncomingDirection)
+								continue;
+							if (roomTrait.RoomType == RoomType.End && dir == endRoomDirection)
+								continue;
+							
 							if (roomTrait.Links[dir] != LinkType.None)
 							{
 								if (roomTrait.PuzzleDoors[dir] == null)
 								{
-									var doorX = x*Dungeon.TileSize + Dungeon.TileSize/2;
-									var doorY = y*Dungeon.TileSize + Dungeon.TileSize/2;
+									var doorX = x * Dungeon.TileSize + Dungeon.TileSize / 2;
+									var doorY = y * Dungeon.TileSize + Dungeon.TileSize / 2;
 
 									var doorBlock = this.Data.Style.Get(DungeonBlockType.Door, dir);
 
-									var doorProp = new Prop(doorBlock.PropId, region.Id, doorX, doorY, MabiMath.DegreeToRadian(doorBlock.Rotation),
-										state: "open");
+									var doorProp = new Prop(doorBlock.PropId, region.Id, doorX, doorY, MabiMath.DegreeToRadian(doorBlock.Rotation), state: "open");
 									doorProp.Info.Color1 = floorData.Color1;
 									doorProp.Info.Color2 = floorData.Color2;
 									doorProp.Info.Color3 = floorData.Color3;
@@ -375,6 +381,7 @@ namespace Aura.Channel.World.Dungeons
 									}
 								}
 							}
+						}
 				}
 
 		}
