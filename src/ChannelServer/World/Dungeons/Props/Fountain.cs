@@ -1,0 +1,255 @@
+﻿// Copyright (c) Aura development team - Licensed under GNU GPL
+// For more information, see license file in the main folder
+
+using Aura.Channel.Network.Sending;
+using Aura.Channel.World.Entities;
+using Aura.Mabi.Const;
+using Aura.Shared.Util;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Aura.Channel.World.Dungeons.Props
+{
+	public class Fountain : DungeonProp
+	{
+		private const int MaxTouch = 8;
+
+		private HashSet<long> _touchedBy;
+		private int count;
+
+		public bool IsOn { get { return (this.State == "on"); } }
+
+		public Fountain(string name)
+			: base(311, name, "on")
+		{
+			_touchedBy = new HashSet<long>();
+
+			this.Info.Color1 = 0xE4DFCB;
+			this.Info.Color2 = 0x8EFCFF;
+			this.Behavior = this.DefaultBehavior;
+		}
+
+		public void TurnOn()
+		{
+			this.SetState("on");
+		}
+
+		public void TurnOff()
+		{
+			this.SetState("off");
+		}
+
+		protected virtual void DefaultBehavior(Creature creature, Prop prop)
+		{
+			if (!this.IsOn)
+				return;
+
+			lock (_touchedBy)
+			{
+				if (_touchedBy.Contains(creature.EntityId))
+					return;
+				_touchedBy.Add(creature.EntityId);
+			}
+
+			this.Touch(creature);
+
+			Interlocked.Increment(ref count);
+			if (count >= MaxTouch)
+				this.TurnOff();
+		}
+
+		protected virtual void Touch(Creature creature)
+		{
+			var rnd = RandomProvider.Get();
+
+			// All notices are unofficial
+
+			switch (rnd.Next(15))
+			{
+				case 0: // Full Life
+					{
+						creature.FullLifeHeal();
+						Send.Notice(creature, Localization.Get("Full Life"));
+						break;
+					}
+
+				case 1: // 0 Injuries
+					{
+						creature.Injuries = 0;
+						Send.StatUpdateDefault(creature);
+						Send.Notice(creature, Localization.Get("No Injuries"));
+						break;
+					}
+
+				case 2: // Full Stamina
+					{
+						creature.Stamina = creature.StaminaMax;
+						Send.StatUpdateDefault(creature);
+						Send.Notice(creature, Localization.Get("Full Stamina"));
+						break;
+					}
+
+				case 3: // Full Mana
+					{
+						creature.Mana = creature.ManaMax;
+						Send.StatUpdateDefault(creature);
+						Send.Notice(creature, Localization.Get("Full Mana"));
+						break;
+					}
+
+				case 4: // No Hunger
+					{
+						creature.Hunger = 0;
+						Send.StatUpdateDefault(creature);
+						Send.Notice(creature, Localization.Get("No Hunger"));
+						break;
+					}
+
+				case 5: // Gold
+					{
+						creature.GiveItem(Item.CreateGold(rnd.Next(100, 200 + 1)));
+						Send.Notice(creature, Localization.Get("Gold"));
+						break;
+					}
+
+				case 6: // Exp
+					{
+						creature.GiveExp(1000);
+						Send.Notice(creature, Localization.Get("Exp"));
+						break;
+					}
+
+				case 7: // Bless All
+					{
+						foreach (var item in creature.Inventory.ActualEquipment)
+						{
+							item.OptionInfo.Flags |= ItemFlags.Blessed;
+							Send.ItemBlessed(creature, item);
+						}
+						Send.Notice(creature, Localization.Get("Blessed All"));
+						break;
+					}
+
+				case 8: // Bless One
+					{
+						var equip = creature.Inventory.ActualEquipment.Where(a => !a.IsBlessed);
+						var count = equip.Count();
+
+						if (count == 0)
+							break;
+
+						var item = equip.ElementAt(rnd.Next());
+						item.OptionInfo.Flags |= ItemFlags.Blessed;
+						Send.ItemBlessed(creature, item);
+
+						Send.Notice(creature, Localization.Get("Blessed {0}"), item.Data.Name);
+						break;
+					}
+
+				case 9: // Repair One
+					{
+						var equip = creature.Inventory.ActualEquipment.Where(a => a.OptionInfo.Durability != a.OptionInfo.DurabilityMax);
+						var count = equip.Count();
+
+						if (count == 0)
+							break;
+
+						var item = equip.ElementAt(rnd.Next());
+						item.OptionInfo.Durability = item.OptionInfo.DurabilityMax;
+						Send.ItemDurabilityUpdate(creature, item);
+
+						Send.Notice(creature, Localization.Get("Repaired {0}"), item.Data.Name);
+						break;
+					}
+
+				case 10: // No Stamina and Hungry
+					{
+						creature.Stamina = 0;
+						creature.Hunger = creature.StaminaMax;
+						Send.StatUpdateDefault(creature);
+						Send.Notice(creature, Localization.Get("No Stamina and Hungry"));
+						break;
+					}
+
+				case 11: // Lose one blessing
+					{
+						var equip = creature.Inventory.ActualEquipment.Where(a => a.IsBlessed);
+						var count = equip.Count();
+
+						if (count == 0)
+							break;
+
+						var item = equip.ElementAt(rnd.Next());
+						item.OptionInfo.Flags &= ~ItemFlags.Blessed;
+						Send.ItemBlessed(creature, item);
+
+						Send.Notice(creature, Localization.Get("Lost blessing on {0}"), item.Data.Name);
+						break;
+					}
+
+				case 12: // No Stamina
+					{
+						creature.Stamina = 0;
+						Send.StatUpdateDefault(creature);
+						Send.Notice(creature, Localization.Get("No Stamina"));
+						break;
+					}
+
+				case 13: // Random Injuries
+					{
+						creature.Injuries = rnd.Next((int)(creature.Life * 0.9f) + 1);
+						Send.StatUpdateDefault(creature);
+						Send.Notice(creature, Localization.Get("Random Injuries"));
+						break;
+					}
+
+				case 14: // Lose one durability on random equip
+					{
+						var equip = creature.Inventory.ActualEquipment.Where(a => a.OptionInfo.Durability >= 1000);
+						var count = equip.Count();
+
+						if (count == 0)
+							break;
+
+						var item = equip.ElementAt(rnd.Next());
+						item.OptionInfo.Durability -= 1000;
+						Send.ItemDurabilityUpdate(creature, item);
+
+						Send.Notice(creature, Localization.Get("Repaired {0}"), item.Data.Name);
+						break;
+					}
+			}
+		}
+	}
+
+	public class RedFountain : Fountain
+	{
+		public RedFountain(string name)
+			: base(name)
+		{
+			this.Info.Color2 = 0xA21515;
+		}
+
+		protected override void Touch(Creature creature)
+		{
+			var rnd = RandomProvider.Get();
+
+			// All notices are unofficial
+
+			// Good
+			if (rnd.Next(100) < 60)
+			{
+			}
+			// Bad
+			else
+			{
+			}
+
+			Send.Notice(creature, "Unimplemented.");
+		}
+	}
+}
