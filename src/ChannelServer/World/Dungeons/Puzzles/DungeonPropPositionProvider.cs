@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
@@ -64,8 +65,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 					return;
 			}
 			if (offsets == null) return;
-			// should we shuffle ?
-			for (int i = 0; i < offsets.GetLength(0); i++)
+			var rnd = RandomProvider.Get();
+			var shuffle = Enumerable.Range(0, offsets.GetLength(0));
+			shuffle = shuffle.OrderBy(a => rnd.Next());
+			foreach (int i in shuffle)
 				_positionQueue.Enqueue(new int[] { offsets[i, 0] * radius, offsets[i, 1] * radius, offsets[i, 2] });
 		}
 
