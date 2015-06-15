@@ -17,6 +17,7 @@ public class EventPropFountainScript : PuzzleScript
 		var propPlace = puzzle.NewPlace("PropPlace");
 		propPlace.ReservePlace();
 
+		if (Random(3) == 0)
 			propPlace.ReserveDoors();
 	}
 
@@ -33,7 +34,7 @@ public class EventPropFountainScript : PuzzleScript
 		}
 		else
 		{
-			if (CheckSpawn(puzzle, 10, 15, 30, 0))
+			if (CheckSpawn(puzzle, 0, 10, 15, 30))
 				fountain = new RedFountain("Fountain");
 		}
 
