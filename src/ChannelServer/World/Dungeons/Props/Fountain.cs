@@ -142,7 +142,7 @@ namespace Aura.Channel.World.Dungeons.Props
 						if (count == 0)
 							break;
 
-						var item = equip.ElementAt(rnd.Next());
+						var item = equip.ElementAt(rnd.Next(count));
 						item.OptionInfo.Flags |= ItemFlags.Blessed;
 						Send.ItemBlessed(creature, item);
 
@@ -158,7 +158,7 @@ namespace Aura.Channel.World.Dungeons.Props
 						if (count == 0)
 							break;
 
-						var item = equip.ElementAt(rnd.Next());
+						var item = equip.ElementAt(rnd.Next(count));
 						item.OptionInfo.Durability = item.OptionInfo.DurabilityMax;
 						Send.ItemDurabilityUpdate(creature, item);
 
@@ -183,7 +183,7 @@ namespace Aura.Channel.World.Dungeons.Props
 						if (count == 0)
 							break;
 
-						var item = equip.ElementAt(rnd.Next());
+						var item = equip.ElementAt(rnd.Next(count));
 						item.OptionInfo.Flags &= ~ItemFlags.Blessed;
 						Send.ItemBlessed(creature, item);
 
@@ -215,7 +215,7 @@ namespace Aura.Channel.World.Dungeons.Props
 						if (count == 0)
 							break;
 
-						var item = equip.ElementAt(rnd.Next());
+						var item = equip.ElementAt(rnd.Next(count));
 						item.OptionInfo.Durability -= 1000;
 						Send.ItemDurabilityUpdate(creature, item);
 
