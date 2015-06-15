@@ -114,6 +114,7 @@ namespace Aura.Channel.Scripting
 			this.QuestScripts.Clear();
 			this.NpcScriptHooks.Clear();
 			this.DungeonScripts.Clear();
+			this.PuzzleScripts.Clear();
 
 			this.DisposeScripts();
 			ChannelServer.Instance.World.RemoveScriptedEntities();
