@@ -19,7 +19,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		private DungeonFloorSection _section;
 		private string _name;
 		private LinkedListNode<RoomTrait> _placeNode;
-		private PlacementProvider[] _placementProviders;
+		private Dictionary<Placement, PlacementProvider> _placementProviders;
 
 		/// <summary>
 		/// X world coordinate of this place.
@@ -79,10 +79,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <param name="name"></param>
 		public PuzzlePlace(DungeonFloorSection section, Puzzle puzzle, string name)
 		{
+			_placementProviders = new Dictionary<Placement, PlacementProvider>();
 			this.Doors = new Door[] { null, null, null, null };
-
-			var placementTypesCount = Enum.GetValues(typeof(Placement)).Length;
-			_placementProviders = new PlacementProvider[placementTypesCount];
 
 			_section = section;
 			_name = name;
@@ -321,12 +319,12 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			else
 				radius = (_placeNode.Value.RoomType == RoomType.Alley ? 200 : 800);
 
-			if (_placementProviders[(int)placement] == null)
-				_placementProviders[(int)placement] = new PlacementProvider(placement, radius);
+			if (!_placementProviders.ContainsKey(placement))
+				_placementProviders[placement] = new PlacementProvider(placement, radius);
 
-			var pos = _placementProviders[(int)placement].GetPosition();
+			var pos = _placementProviders[placement].GetPosition();
 			if (pos == null)
-				throw new PuzzleException(String.Format("We out of positions of type {0}", placement));
+				throw new PuzzleException(string.Format("Out of positions for placement type '{0}'.", placement));
 
 			pos[0] += this.X;
 			pos[1] += this.Y;
