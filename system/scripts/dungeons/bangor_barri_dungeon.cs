@@ -82,7 +82,13 @@ public class BarriDungeonScript : DungeonScript
 			drops.Add(new DropData(itemId: 71037, chance: 5, amountMin: 2, amountMax: 4));  // Goblin Fomor Scroll (officially Imp duplicate #officialFix)
 			drops.Add(new DropData(itemId: 40025, chance: 1, amount: 1, color1: 0xC00010, durability: 0)); // Pickaxe (bronze)
 			drops.Add(new DropData(itemId: 63113, chance: 5, amount: 1, expires: 600)); // Barri Basic
-			// adv, G3
+
+			if (IsEnabled("G3S3"))
+			{
+				drops.Add(new DropData(itemId: 63133, chance: 5, amount: 1, expires: 360)); // Barri Adv. Fomor Pass for 2
+				drops.Add(new DropData(itemId: 63134, chance: 5, amount: 1, expires: 360)); // Barri Adv. Fomor Pass for 3
+				drops.Add(new DropData(itemId: 63135, chance: 5, amount: 1, expires: 360)); // Barri Adv. Fomor Pass
+			}
 		}
 
 		return Item.GetRandomDrop(rnd, drops);
