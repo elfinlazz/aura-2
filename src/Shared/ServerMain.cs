@@ -85,6 +85,11 @@ namespace Aura.Shared
 
 			try
 			{
+				if ((toLoad & DataLoad.Features) != 0)
+				{
+					this.LoadDb(AuraData.FeaturesDb, "db/features.txt", reload);
+				}
+
 				if ((toLoad & DataLoad.Races) != 0)
 				{
 					this.LoadDb(AuraData.AncientDropDb, "db/ancient_drops.txt", reload);
@@ -305,10 +310,11 @@ namespace Aura.Shared
 		Collecting = 0x100000,
 		Fishing = 0x200000,
 		Dungeons = 0x400000,
+		Features = 0x800000,
 
 		All = 0xFFFFFFFF,
 
-		LoginServer = Races | StatsBase | Cards | Colors | Items | Pets,
+		LoginServer = Features | Races | StatsBase | Cards | Colors | Items | Pets,
 		ChannelServer = All,
 		Npcs = Races,
 	}

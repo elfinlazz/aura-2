@@ -20,6 +20,7 @@ namespace Aura.Data
 		public static DungeonBlocksDb DungeonBlocksDb = new DungeonBlocksDb();
 		public static ExpDb ExpDb = new ExpDb();
 		//public static FlightDb FlightDb = new FlightDb();
+		public static FeaturesDb FeaturesDb = new FeaturesDb();
 		public static FishDb FishDb = new FishDb();
 		public static FishingGroundsDb FishingGroundsDb = new FishingGroundsDb();
 		public static ItemDb ItemDb = new ItemDb();

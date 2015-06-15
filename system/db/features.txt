@@ -1,0 +1,23 @@
+// Aura
+// Database file
+//---------------------------------------------------------------------------
+
+[
+{ name: "G1", enabled: true, children: [
+	{ name: "G1S1", enabled: true },
+	{ name: "G1S2", enabled: true },
+]},
+{ name: "G2", enabled: false, children: [
+	{ name: "G2S1", enabled: true },
+	{ name: "G2S2", enabled: true },
+	{ name: "G2S3", enabled: true },
+	{ name: "G2S4", enabled: true },
+]},
+{ name: "G3", enabled: false, children: [
+	{ name: "G3S1", enabled: true },
+	{ name: "G3S2", enabled: true },
+	{ name: "G3S3", enabled: true },
+	{ name: "G3S4", enabled: true },
+	{ name: "G3S5", enabled: true },
+]},
+]
