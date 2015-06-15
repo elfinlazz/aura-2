@@ -9,11 +9,40 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 	/// </summary>
 	public enum Placement
 	{
+		/// <summary>
+		/// Places one in each corner.
+		/// </summary>
 		Corner4,
+
+		/// <summary>
+		/// Places one in all 8 directions.
+		/// </summary>
 		Corner8,
+
+		/// <summary>
+		/// Places one in all 8 directions and one in the center.
+		/// </summary>
 		Center9,
+
+		/// <summary>
+		/// Places one in the center.
+		/// </summary>
 		Center,
+
+		/// <summary>
+		/// Places randomly.
+		/// </summary>
 		Random,
+
+		/// <summary>
+		/// Places randomly, while maintaining a min distance to others.
+		/// </summary>
+		Herb,
+
+		/// <summary>
+		/// Places two in each corner.
+		/// </summary>
+		Ore,
 	}
 
 	/// <summary>
@@ -21,34 +50,44 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 	/// </summary>
 	public class PlacementProvider
 	{
-		private static readonly int[,] _corner4Offsets =
+		private static readonly float[,] _corner4Offsets =
 		{
 			{ -1,1,315 }, { 1,1,225 },
 			{ -1,-1,45 }, { 1,-1,135 },
 		};
 
-		private static readonly int[,] _corner8Offsets =
+		private static readonly float[,] _corner8Offsets =
 		{
 			{ -1,1,315 }, { 0,1,270 }, { 1,1,225 },
 			{ -1,0,0 },                { 1,0,180 },
 			{ -1,-1,45 }, { 0,-1,90 }, { 1,-1,135 },
 		};
 
-		private static readonly int[,] _center9Offsets =
+		private static readonly float[,] _center9Offsets =
 		{
 			{ -1,1,0 }, { 0,1,0 }, { 1,1,0 },
 			{ -1,0,0 }, { 0,0,0 }, { 1,0,0 },
 			{ -1,-1,0 },{ 0,-1,0 },{ 1,-1,0 },
 		};
 
-		private static readonly int[,] _centerOffset =
+		private static readonly float[,] _centerOffset =
 		{
 			{ 0,0,0 },
+		};
+
+		private static readonly float[,] _oreOffsets =
+		{
+			    { -0.9f,+1.3f,315 }, { 0.9f,+1.3f,225 },
+			{ -1.3f,+0.9f,315 },          { 1.3f,+0.9f,225 },
+
+			{ -1.3f,-0.9f,45 },           { 1.3f,-0.9f,135 },
+			    { -0.9f,-1.3f,45 },  { 0.9f,-1.3f,135 },
 		};
 
 		private Queue<int[]> _positionQueue;
 		private Placement _positionType;
 		private int _radius;
+		private List<Position> _reservedPositions;
 
 		/// <summary>
 		/// Creates new placement provider.
@@ -60,8 +99,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			_positionQueue = new Queue<int[]>();
 			_positionType = positionType;
 			_radius = radius;
+			_reservedPositions = new List<Position>();
 
-			int[,] offsets = null;
+			float[,] offsets = null;
 			switch (positionType)
 			{
 				case Placement.Corner4:
@@ -76,8 +116,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				case Placement.Center:
 					offsets = _centerOffset;
 					break;
-				case Placement.Random:
-					return;
+				case Placement.Ore:
+					offsets = _oreOffsets;
+					break;
 			}
 
 			if (offsets == null)
@@ -87,7 +128,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			var shuffle = Enumerable.Range(0, offsets.GetLength(0));
 			shuffle = shuffle.OrderBy(a => rnd.Next());
 			foreach (int i in shuffle)
-				_positionQueue.Enqueue(new int[] { offsets[i, 0] * radius, offsets[i, 1] * radius, offsets[i, 2] });
+				_positionQueue.Enqueue(new int[] { (int)(offsets[i, 0] * radius), (int)(offsets[i, 1] * radius), (int)offsets[i, 2] });
 		}
 
 		/// <summary>
@@ -107,6 +148,27 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				pos[1] = (int)(pos[1] * 0.8f);
 				return pos;
 			}
+
+			if (_positionType == Placement.Herb)
+			{
+				var rnd = RandomProvider.Get();
+				var direction = rnd.Next(360);
+				int x = 0, y = 0;
+				var emptySpotFound = false;
+
+				// Try 10 positions max
+				for (int i = 0; i < 10 && !emptySpotFound; ++i)
+				{
+					x = rnd.Next(-_radius, _radius);
+					y = rnd.Next(-_radius, _radius);
+					emptySpotFound = !_reservedPositions.Any(a => a.InRange(new Position(x, y), 100));
+				}
+
+				_reservedPositions.Add(new Position(x, y));
+
+				return new int[] { x, y, direction };
+			}
+
 			return _positionQueue.Dequeue();
 		}
 	}

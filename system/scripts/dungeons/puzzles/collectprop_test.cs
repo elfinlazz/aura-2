@@ -29,7 +29,7 @@ public class CollectPropTestScript : PuzzleScript
 		for (int i = 1; i <= 3; ++i)
 		{
 			var oreDeposit = new OreDeposit(22000, "Deposit" + i);
-			propPlace.AddProp(oreDeposit, Placement.Random);
+			propPlace.AddProp(oreDeposit, Placement.Ore);
 		}
 	}
 }

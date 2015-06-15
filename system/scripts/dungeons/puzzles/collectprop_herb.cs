@@ -30,7 +30,7 @@ public class CollectPropHerbScript : PuzzleScript
 		{
 			GetRandom(puzzle, out propId, out color);
 			var patch = new HerbPatch(propId, "Herb" + i, color);
-			propPlace.AddProp(patch, Placement.Random);
+			propPlace.AddProp(patch, Placement.Herb);
 		}
 	}
 
