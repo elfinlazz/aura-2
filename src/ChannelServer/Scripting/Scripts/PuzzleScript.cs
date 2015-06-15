@@ -9,6 +9,7 @@ using System.Reflection;
 using Aura.Channel.World.Dungeons.Puzzles;
 using Aura.Channel.World.Entities;
 using Aura.Data.Database;
+using Aura.Data;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -76,6 +77,19 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			var rnd = RandomProvider.Get();
 			return rnd.Next(min, max);
+		}
+
+		/// <summary>
+		/// Returns true if feature is enabled.
+		/// </summary>
+		/// <remarks>
+		/// TODO: Make another more general script base class for this and Random?
+		/// </remarks>
+		/// <param name="featureName"></param>
+		/// <returns></returns>
+		protected bool IsEnabled(string featureName)
+		{
+			return AuraData.FeaturesDb.IsEnabled(featureName);
 		}
 
 		public virtual void OnPrepare(Puzzle puzzle)

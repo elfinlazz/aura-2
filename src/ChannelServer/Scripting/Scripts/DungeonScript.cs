@@ -4,6 +4,7 @@
 using Aura.Channel.World;
 using Aura.Channel.World.Dungeons;
 using Aura.Channel.World.Entities;
+using Aura.Data;
 using Aura.Shared.Scripting.Scripts;
 using Aura.Shared.Util;
 using System;
@@ -49,6 +50,19 @@ namespace Aura.Channel.Scripting.Scripts
 		/// </summary>
 		public virtual void Load()
 		{
+		}
+
+		/// <summary>
+		/// Returns true if feature is enabled.
+		/// </summary>
+		/// <remarks>
+		/// TODO: Make another more general script base class for this and Random?
+		/// </remarks>
+		/// <param name="featureName"></param>
+		/// <returns></returns>
+		protected bool IsEnabled(string featureName)
+		{
+			return AuraData.FeaturesDb.IsEnabled(featureName);
 		}
 
 		public virtual bool Route(Creature creature, Item item, ref string dungeonName)

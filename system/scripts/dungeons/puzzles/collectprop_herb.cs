@@ -47,8 +47,9 @@ public class CollectPropHerbScript : PuzzleScript
 
 			if (puzzle.Dungeon.Name.Contains("_low_"))
 			{
-				// TODO: Others, G3+
-				if (num < 13)
+				if (IsEnabled("G3S2") && num < 5)
+					arg = "mandrake";
+				else if (num < 13)
 					arg = "goldherb";
 				else if (num < 23)
 					arg = "manaherb";
@@ -61,6 +62,12 @@ public class CollectPropHerbScript : PuzzleScript
 			{
 				if (num < 8)
 					arg = "goldherb";
+				else if (IsEnabled("G3S2") && num < 18)
+					arg = "mandrake";
+				else if (IsEnabled("G3S2") && num < 22)
+					arg = "poisonherb";
+				else if (IsEnabled("G3S2") && num < 28)
+					arg = "antidoteherb";
 				else if (num < 40)
 					arg = "manaherb";
 				else if (num < 55)
@@ -72,6 +79,12 @@ public class CollectPropHerbScript : PuzzleScript
 			{
 				if (num < 10)
 					arg = "goldherb";
+				else if (IsEnabled("G3S2") && num < 14)
+					arg = "mandrake";
+				else if (IsEnabled("G3S2") && num < 22)
+					arg = "poisonherb";
+				else if (IsEnabled("G3S2") && num < 34)
+					arg = "antidoteherb";
 				else if (num < 46)
 					arg = "manaherb";
 				else if (num < 68)
@@ -93,6 +106,12 @@ public class CollectPropHerbScript : PuzzleScript
 			{
 				if (num < 11)
 					arg = "goldherb";
+				else if (IsEnabled("G3S2") && num < 16)
+					arg = "mandrake";
+				else if (IsEnabled("G3S2") && num < 25)
+					arg = "poisonherb";
+				else if (IsEnabled("G3S2") && num < 38)
+					arg = "antidoteherb";
 				else if (num < 51)
 					arg = "manaherb";
 				else if (num < 62)
@@ -104,6 +123,12 @@ public class CollectPropHerbScript : PuzzleScript
 			{
 				if (num < 12)
 					arg = "goldherb";
+				else if (IsEnabled("G3S2") && num < 18)
+					arg = "mandrake";
+				else if (IsEnabled("G3S2") && num < 28)
+					arg = "poisonherb";
+				else if (IsEnabled("G3S2") && num < 42)
+					arg = "antidoteherb";
 				else if (num < 56)
 					arg = "manaherb";
 				else if (num < 68)
@@ -113,7 +138,9 @@ public class CollectPropHerbScript : PuzzleScript
 			}
 			else
 			{
-				if (num < 10)
+				if (IsEnabled("G3S2") && num < 3)
+					arg = "mandrake";
+				else if (num < 10)
 					arg = "goldherb";
 				else if (num < 20)
 					arg = "manaherb";
@@ -123,8 +150,12 @@ public class CollectPropHerbScript : PuzzleScript
 					arg = "bloodyherb";
 			}
 		}
-		else if (arg == "mandrake" || arg == "poisonherb" || arg == "antidoteherb")
+		else if ((arg == "mandrake" || arg == "poisonherb" || arg == "antidoteherb") && !IsEnabled("G3S2"))
 		{
+			// Officials do this only if G3S2 is *enabled*, but that doesn't
+			// make sense, since you would then *get* the above in G1.
+			// That also means you actually can't get them from non-random
+			// patches in G3S2+ officialy. I assume that was a bug. #officialFix
 			switch (Random(4))
 			{
 				case 0: arg = "goldherb"; break;
