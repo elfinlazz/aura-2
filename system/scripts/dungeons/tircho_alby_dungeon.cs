@@ -113,25 +113,23 @@ public class AlbyDungeonScript : DungeonScript
 		}
 	}
 
-	DropData[] drops;
+	List<DropData> drops;
 	public Item GetRandomTreasureItem(Random rnd)
 	{
 		if (drops == null)
 		{
-			drops = new DropData[]
-			{
-				new DropData(itemId: 62004, chance: 44, amountMin: 1, amountMax: 2), // Magic Powder
-				new DropData(itemId: 51102, chance: 44, amountMin: 1, amountMax: 2), // Mana Herb
-				new DropData(itemId: 71017, chance: 2, amountMin: 1, amountMax: 2),  // White Spider Fomor Scroll
-				new DropData(itemId: 71019, chance: 2, amountMin: 1, amountMax: 1), // Red Spider Fomor Scroll
-				new DropData(itemId: 63116, chance: 1, amount: 1, expires: 480), // Alby Int 1
-				new DropData(itemId: 63117, chance: 1, amount: 1, expires: 480), // Alby Int 2
-				new DropData(itemId: 63118, chance: 1, amount: 1, expires: 480), // Alby Int 4
-				new DropData(itemId: 63101, chance: 2, amount: 1, expires: 480), // Alby Basic
-				new DropData(itemId: 63160, chance: 1, amount: 1, expires: 360), // Alby Advanced 3
-				new DropData(itemId: 63161, chance: 1, amount: 1, expires: 360), // Alby Advanced
-				new DropData(itemId: 40002, chance: 1, amount: 1, color1: 0x000000, durability: 0), // Wooden Blade (black)
-			};
+			drops = new List<DropData>();
+			drops.Add(new DropData(itemId: 62004, chance: 44, amountMin: 1, amountMax: 2)); // Magic Powder
+			drops.Add(new DropData(itemId: 51102, chance: 44, amountMin: 1, amountMax: 2)); // Mana Herb
+			drops.Add(new DropData(itemId: 71017, chance: 2, amountMin: 1, amountMax: 2));  // White Spider Fomor Scroll
+			drops.Add(new DropData(itemId: 71019, chance: 2, amountMin: 1, amountMax: 1)); // Red Spider Fomor Scroll
+			drops.Add(new DropData(itemId: 63116, chance: 1, amount: 1, expires: 480)); // Alby Int 1
+			drops.Add(new DropData(itemId: 63117, chance: 1, amount: 1, expires: 480)); // Alby Int 2
+			drops.Add(new DropData(itemId: 63118, chance: 1, amount: 1, expires: 480)); // Alby Int 4
+			drops.Add(new DropData(itemId: 63101, chance: 2, amount: 1, expires: 480)); // Alby Basic
+			drops.Add(new DropData(itemId: 63160, chance: 1, amount: 1, expires: 360)); // Alby Advanced 3
+			drops.Add(new DropData(itemId: 63161, chance: 1, amount: 1, expires: 360)); // Alby Advanced
+			drops.Add(new DropData(itemId: 40002, chance: 1, amount: 1, color1: 0x000000, durability: 0)); // Wooden Blade (black)
 		}
 
 		return Item.GetRandomDrop(rnd, drops);

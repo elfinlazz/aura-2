@@ -66,25 +66,23 @@ public class BarriDungeonScript : DungeonScript
 		}
 	}
 
-	DropData[] drops;
+	List<DropData> drops;
 	public Item GetRandomTreasureItem(Random rnd)
 	{
 		if (drops == null)
 		{
-			drops = new DropData[]
-			{
-				new DropData(itemId: 62004, chance: 14, amountMin: 1, amountMax: 2), // Magic Powder
-				new DropData(itemId: 51102, chance: 15, amountMin: 1, amountMax: 2), // Mana Herb
-				new DropData(itemId: 51003, chance: 10, amountMin: 1, amountMax: 2), // HP 50 Potion
-				new DropData(itemId: 51008, chance: 10, amountMin: 1, amountMax: 2), // MP 50 Potion
-				new DropData(itemId: 51013, chance: 10, amountMin: 1, amountMax: 2), // Stamina 50 Potion
-				new DropData(itemId: 60039, chance: 10, amountMin: 3, amountMax: 5),  // Fomor Token
-				new DropData(itemId: 71044, chance: 5, amountMin: 2, amountMax: 5),  // Imp Fomor Scroll
-				new DropData(itemId: 71037, chance: 5, amountMin: 2, amountMax: 4),  // Goblin Fomor Scroll (officially Imp duplicate #officialFix)
-				new DropData(itemId: 40025, chance: 1, amount: 1, color1: 0xC00010, durability: 0), // Pickaxe (bronze)
-				new DropData(itemId: 63113, chance: 5, amount: 1, expires: 600), // Barri Basic
-				// adv, G3
-			};
+			drops = new List<DropData>();
+			drops.Add(new DropData(itemId: 62004, chance: 14, amountMin: 1, amountMax: 2)); // Magic Powder
+			drops.Add(new DropData(itemId: 51102, chance: 15, amountMin: 1, amountMax: 2)); // Mana Herb
+			drops.Add(new DropData(itemId: 51003, chance: 10, amountMin: 1, amountMax: 2)); // HP 50 Potion
+			drops.Add(new DropData(itemId: 51008, chance: 10, amountMin: 1, amountMax: 2)); // MP 50 Potion
+			drops.Add(new DropData(itemId: 51013, chance: 10, amountMin: 1, amountMax: 2)); // Stamina 50 Potion
+			drops.Add(new DropData(itemId: 60039, chance: 10, amountMin: 3, amountMax: 5));  // Fomor Token
+			drops.Add(new DropData(itemId: 71044, chance: 5, amountMin: 2, amountMax: 5));  // Imp Fomor Scroll
+			drops.Add(new DropData(itemId: 71037, chance: 5, amountMin: 2, amountMax: 4));  // Goblin Fomor Scroll (officially Imp duplicate #officialFix)
+			drops.Add(new DropData(itemId: 40025, chance: 1, amount: 1, color1: 0xC00010, durability: 0)); // Pickaxe (bronze)
+			drops.Add(new DropData(itemId: 63113, chance: 5, amount: 1, expires: 600)); // Barri Basic
+			// adv, G3
 		}
 
 		return Item.GetRandomDrop(rnd, drops);

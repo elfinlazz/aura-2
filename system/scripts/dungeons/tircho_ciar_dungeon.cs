@@ -89,7 +89,7 @@ public class CiarDungeonScript : DungeonScript
 					case 0: prefix = 207; break; // Fox
 					case 1: prefix = 306; break; // Sharp
 					case 2: prefix = 303; break; // Rusty
-					case 3: prefix = 7;   break; // Fox Hunter's
+					case 3: prefix = 7; break; // Fox Hunter's
 				}
 				switch (rnd.Next(3))
 				{
@@ -109,27 +109,25 @@ public class CiarDungeonScript : DungeonScript
 		}
 	}
 
-	DropData[] drops;
+	List<DropData> drops;
 	public Item GetRandomTreasureItem(Random rnd)
 	{
 		if (drops == null)
 		{
-			drops = new DropData[]
-			{
-				new DropData(itemId: 62004, chance: 15, amountMin: 1, amountMax: 2), // Magic Powder
-				new DropData(itemId: 51102, chance: 15, amountMin: 1, amountMax: 2), // Mana Herb
-				new DropData(itemId: 51003, chance: 15, amountMin: 1, amountMax: 2), // HP 50 Potion
-				new DropData(itemId: 51008, chance: 15, amountMin: 1, amountMax: 2), // MP 50 Potion
-				new DropData(itemId: 51013, chance: 15, amountMin: 1, amountMax: 2), // Stamina 50 Potion
-				new DropData(itemId: 71037, chance: 4, amountMin: 2, amountMax: 4), // Goblin Fomor Scroll
-				new DropData(itemId: 71035, chance: 4, amountMin: 3, amountMax: 5), // Gray Town Rat Fomor Scroll
-				new DropData(itemId: 63104, chance: 3, amount: 1, expires: 480), // Ciar Basic Fomor Pass
-				new DropData(itemId: 63123, chance: 2, amount: 1, expires: 480), // Ciar Intermediate Fomor Pass for One
-				new DropData(itemId: 63124, chance: 2, amount: 1, expires: 480), // Ciar Intermediate Fomor Pass for Two
-				new DropData(itemId: 63125, chance: 2, amount: 1, expires: 480), // Ciar Intermediate Fomor Pass for Four
-				new DropData(itemId: 40006, chance: 2, amount: 1, color1: 0xFFDB60, durability: 0), // Dagger (gold)
-				// advanced passes gX
-			};
+			drops = new List<DropData>();
+			drops.Add(new DropData(itemId: 62004, chance: 15, amountMin: 1, amountMax: 2)); // Magic Powder
+			drops.Add(new DropData(itemId: 51102, chance: 15, amountMin: 1, amountMax: 2)); // Mana Herb
+			drops.Add(new DropData(itemId: 51003, chance: 15, amountMin: 1, amountMax: 2)); // HP 50 Potion
+			drops.Add(new DropData(itemId: 51008, chance: 15, amountMin: 1, amountMax: 2)); // MP 50 Potion
+			drops.Add(new DropData(itemId: 51013, chance: 15, amountMin: 1, amountMax: 2)); // Stamina 50 Potion
+			drops.Add(new DropData(itemId: 71037, chance: 4, amountMin: 2, amountMax: 4)); // Goblin Fomor Scroll
+			drops.Add(new DropData(itemId: 71035, chance: 4, amountMin: 3, amountMax: 5)); // Gray Town Rat Fomor Scroll
+			drops.Add(new DropData(itemId: 63104, chance: 3, amount: 1, expires: 480)); // Ciar Basic Fomor Pass
+			drops.Add(new DropData(itemId: 63123, chance: 2, amount: 1, expires: 480)); // Ciar Intermediate Fomor Pass for One
+			drops.Add(new DropData(itemId: 63124, chance: 2, amount: 1, expires: 480)); // Ciar Intermediate Fomor Pass for Two
+			drops.Add(new DropData(itemId: 63125, chance: 2, amount: 1, expires: 480)); // Ciar Intermediate Fomor Pass for Four
+			drops.Add(new DropData(itemId: 40006, chance: 2, amount: 1, color1: 0xFFDB60, durability: 0)); // Dagger (gold)
+			// advanced passes gX
 		}
 
 		return Item.GetRandomDrop(rnd, drops);

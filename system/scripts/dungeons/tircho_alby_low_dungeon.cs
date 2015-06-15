@@ -55,21 +55,19 @@ public class AlbyBasicDungeonScript : DungeonScript
 		}
 	}
 
-	DropData[] drops;
+	List<DropData> drops;
 	public Item GetRandomTreasureItem(Random rnd)
 	{
 		if (drops == null)
 		{
-			drops = new DropData[]
-			{
-				new DropData(itemId: 62004, chance: 38, amountMin: 1, amountMax: 2), // Magic Powder
-				new DropData(itemId: 51102, chance: 38, amountMin: 1, amountMax: 2), // Mana Herb
-				new DropData(itemId: 60042, chance: 9, amountMin: 1, amountMax: 5), // Magical Silver Thread
-				new DropData(itemId: 63101, chance: 9, amount: 1, expires: 600), // Alby Basic Fomor Pass
-				new DropData(itemId: 63116, chance: 2, amount: 1, expires: 480), // Alby Intermediate Fomor Pass for One
-				new DropData(itemId: 63117, chance: 2, amount: 1, expires: 480), // Alby Intermediate Fomor Pass for Two
-				new DropData(itemId: 63118, chance: 2, amount: 1, expires: 480), // Alby Intermediate Fomor Pass for Four
-			};
+			drops = new List<DropData>();
+			drops.Add(new DropData(itemId: 62004, chance: 38, amountMin: 1, amountMax: 2)); // Magic Powder
+			drops.Add(new DropData(itemId: 51102, chance: 38, amountMin: 1, amountMax: 2)); // Mana Herb
+			drops.Add(new DropData(itemId: 60042, chance: 9, amountMin: 1, amountMax: 5)); // Magical Silver Thread
+			drops.Add(new DropData(itemId: 63101, chance: 9, amount: 1, expires: 600)); // Alby Basic Fomor Pass
+			drops.Add(new DropData(itemId: 63116, chance: 2, amount: 1, expires: 480)); // Alby Intermediate Fomor Pass for One
+			drops.Add(new DropData(itemId: 63117, chance: 2, amount: 1, expires: 480)); // Alby Intermediate Fomor Pass for Two
+			drops.Add(new DropData(itemId: 63118, chance: 2, amount: 1, expires: 480)); // Alby Intermediate Fomor Pass for Four
 		}
 
 		return Item.GetRandomDrop(rnd, drops);

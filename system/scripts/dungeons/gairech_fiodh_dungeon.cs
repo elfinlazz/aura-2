@@ -61,27 +61,25 @@ public class FiodhDungeonScript : DungeonScript
 		}
 	}
 
-	DropData[] drops;
+	List<DropData> drops;
 	public Item GetRandomTreasureItem(Random rnd)
 	{
 		if (drops == null)
 		{
-			drops = new DropData[]
-			{
-				new DropData(itemId: 62004, chance: 17, amountMin: 1, amountMax: 2), // Magic Powder
-				new DropData(itemId: 51102, chance: 17, amountMin: 1, amountMax: 2), // Mana Herb
-				new DropData(itemId: 51003, chance: 17, amountMin: 1, amountMax: 2), // HP 50 Potion
-				new DropData(itemId: 51008, chance: 17, amountMin: 1, amountMax: 2), // MP 50 Potion
-				new DropData(itemId: 51013, chance: 17, amountMin: 1, amountMax: 2), // Stamina 50 Potion
-				new DropData(itemId: 71049, chance: 2, amountMin: 2, amountMax: 5), // Snake Fomor Scroll
-				new DropData(itemId: 71018, chance: 2, amountMin: 3, amountMax: 5), // Black Spider Fomor Scroll
-				new DropData(itemId: 71019, chance: 2, amountMin: 3, amountMax: 5), // Red Spider Fomor Scroll (officially Black Spider duplicate #officialFix)
-				new DropData(itemId: 71029, chance: 1, amount: 1), // Red Grizzly Fomor Scroll (officially Jackal duplicate #officialFix)
-				new DropData(itemId: 71052, chance: 2, amount: 5), // Jackal Fomor Scroll
-				new DropData(itemId: 63119, chance: 2, amount: 1, expires: 480), // Fiodh Intermediate Fomor Pass for One
-				new DropData(itemId: 63120, chance: 2, amount: 1, expires: 480), // Fiodh Intermediate Fomor Pass for Two
-				new DropData(itemId: 63121, chance: 2, amount: 1, expires: 480), // Fiodh Intermediate Fomor Pass for Four
-			};
+			drops = new List<DropData>();
+			drops.Add(new DropData(itemId: 62004, chance: 17, amountMin: 1, amountMax: 2)); // Magic Powder
+			drops.Add(new DropData(itemId: 51102, chance: 17, amountMin: 1, amountMax: 2)); // Mana Herb
+			drops.Add(new DropData(itemId: 51003, chance: 17, amountMin: 1, amountMax: 2)); // HP 50 Potion
+			drops.Add(new DropData(itemId: 51008, chance: 17, amountMin: 1, amountMax: 2)); // MP 50 Potion
+			drops.Add(new DropData(itemId: 51013, chance: 17, amountMin: 1, amountMax: 2)); // Stamina 50 Potion
+			drops.Add(new DropData(itemId: 71049, chance: 2, amountMin: 2, amountMax: 5)); // Snake Fomor Scroll
+			drops.Add(new DropData(itemId: 71018, chance: 2, amountMin: 3, amountMax: 5)); // Black Spider Fomor Scroll
+			drops.Add(new DropData(itemId: 71019, chance: 2, amountMin: 3, amountMax: 5)); // Red Spider Fomor Scroll (officially Black Spider duplicate #officialFix)
+			drops.Add(new DropData(itemId: 71029, chance: 1, amount: 1)); // Red Grizzly Fomor Scroll (officially Jackal duplicate #officialFix)
+			drops.Add(new DropData(itemId: 71052, chance: 2, amount: 5)); // Jackal Fomor Scroll
+			drops.Add(new DropData(itemId: 63119, chance: 2, amount: 1, expires: 480)); // Fiodh Intermediate Fomor Pass for One
+			drops.Add(new DropData(itemId: 63120, chance: 2, amount: 1, expires: 480)); // Fiodh Intermediate Fomor Pass for Two
+			drops.Add(new DropData(itemId: 63121, chance: 2, amount: 1, expires: 480)); // Fiodh Intermediate Fomor Pass for Four
 		}
 
 		return Item.GetRandomDrop(rnd, drops);

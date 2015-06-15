@@ -54,22 +54,20 @@ public class AlbyIntOneDungeonScript : DungeonScript
 		}
 	}
 
-	DropData[] drops;
+	List<DropData> drops;
 	public Item GetRandomTreasureItem(Random rnd)
 	{
 		if (drops == null)
 		{
-			drops = new DropData[]
-			{
-				new DropData(itemId: 62004, chance: 2, amountMin: 2, amountMax: 4), // Magic Powder
-				new DropData(itemId: 51102, chance: 2, amountMin: 2, amountMax: 4), // Mana Herb
-				new DropData(itemId: 51003, chance: 2, amountMin: 2, amountMax: 4), // HP 50 Potion
-				new DropData(itemId: 51013, chance: 2, amountMin: 2, amountMax: 4), // Stamina 50 Potion
-				new DropData(itemId: 51008, chance: 2, amountMin: 2, amountMax: 4), // MP 50 Potion
-				new DropData(itemId: 63116, chance: 3, amount: 1, expires: 480), // Alby Intermediate Fomor Pass for One
-				new DropData(itemId: 63117, chance: 2, amount: 1, expires: 480), // Alby Intermediate Fomor Pass for Two
-				new DropData(itemId: 63118, chance: 2, amount: 1, expires: 480), // Alby Intermediate Fomor Pass for Four
-			};
+			drops = new List<DropData>();
+			drops.Add(new DropData(itemId: 62004, chance: 2, amountMin: 2, amountMax: 4)); // Magic Powder
+			drops.Add(new DropData(itemId: 51102, chance: 2, amountMin: 2, amountMax: 4)); // Mana Herb
+			drops.Add(new DropData(itemId: 51003, chance: 2, amountMin: 2, amountMax: 4)); // HP 50 Potion
+			drops.Add(new DropData(itemId: 51013, chance: 2, amountMin: 2, amountMax: 4)); // Stamina 50 Potion
+			drops.Add(new DropData(itemId: 51008, chance: 2, amountMin: 2, amountMax: 4)); // MP 50 Potion
+			drops.Add(new DropData(itemId: 63116, chance: 3, amount: 1, expires: 480)); // Alby Intermediate Fomor Pass for One
+			drops.Add(new DropData(itemId: 63117, chance: 2, amount: 1, expires: 480)); // Alby Intermediate Fomor Pass for Two
+			drops.Add(new DropData(itemId: 63118, chance: 2, amount: 1, expires: 480)); // Alby Intermediate Fomor Pass for Four
 		}
 
 		return Item.GetRandomDrop(rnd, drops);

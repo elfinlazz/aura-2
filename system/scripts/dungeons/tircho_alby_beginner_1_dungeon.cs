@@ -42,18 +42,16 @@ public class AlbyBeginnerDungeonScript : DungeonScript
 		}
 	}
 
-	DropData[] drops;
+	List<DropData> drops;
 	public Item GetRandomTreasureItem(Random rnd)
 	{
 		if (drops == null)
 		{
-			drops = new DropData[]
-			{
-				new DropData(itemId: 51001, chance: 35, amountMin: 5, amountMax: 10), // HP 10 Potion
-				new DropData(itemId: 51011, chance: 35, amountMin: 5, amountMax: 10), // Stamina 10 Potion
-			};
+			drops = new List<DropData>();
+			drops.Add(new DropData(itemId: 51001, chance: 35, amountMin: 5, amountMax: 10)); // HP 10 Potion
+			drops.Add(new DropData(itemId: 51011, chance: 35, amountMin: 5, amountMax: 10)); // Stamina 10 Potion
 		}
 
-		return Item.GetRandomDrop(rnd, 100, drops);
+		return Item.GetRandomDrop(rnd, drops);
 	}
 }

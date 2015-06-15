@@ -10,6 +10,7 @@ using Aura.Mabi.Const;
 using Aura.Mabi.Structs;
 using Aura.Shared.Util;
 using Aura.Mabi;
+using System.Collections.Generic;
 
 namespace Aura.Channel.World.Entities
 {
@@ -392,9 +393,9 @@ namespace Aura.Channel.World.Entities
 		/// <param name="drops"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
-		public static Item GetRandomDrop(Random rnd, params DropData[] drops)
+		public static Item GetRandomDrop(Random rnd, List<DropData> drops)
 		{
-			if (drops == null || drops.Length == 0)
+			if (drops == null || drops.Count == 0)
 				throw new ArgumentException("Drops list empty.");
 
 			return GetRandomDrop(rnd, drops.Sum(a => a.Chance), drops);
@@ -409,9 +410,9 @@ namespace Aura.Channel.World.Entities
 		/// <param name="drops"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
-		public static Item GetRandomDrop(Random rnd, float total, params DropData[] drops)
+		public static Item GetRandomDrop(Random rnd, float total, List<DropData> drops)
 		{
-			if (drops == null || drops.Length == 0)
+			if (drops == null || drops.Count == 0)
 				throw new ArgumentException("Drops list empty.");
 
 			var num = rnd.NextDouble() * total;
