@@ -169,6 +169,13 @@ namespace Aura.Channel.Skills.Life
 			{
 				var targetProp = (Prop)targetEntity;
 
+				// Check if prop was emptied
+				if (targetProp.State == "empty")
+				{
+					this.DoComplete(creature, entityId, collectId, false, 2);
+					return;
+				}
+
 				targetProp.Resource += (float)((DateTime.Now - targetProp.LastCollect).TotalMinutes * collectData.ResourceRecovering);
 				if (targetProp.Resource < collectData.ResourceReduction)
 				{
@@ -182,6 +189,11 @@ namespace Aura.Channel.Skills.Life
 						targetProp.Resource -= collectData.ResourceReduction;
 					targetProp.LastCollect = DateTime.Now;
 				}
+
+				// Set props to empty that are supposed to only have one
+				// set of resources
+				if (targetProp.IsOneResource && targetProp.Resource < collectData.ResourceReduction)
+					targetProp.SetState("empty");
 			}
 			else
 			{

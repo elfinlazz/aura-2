@@ -128,6 +128,11 @@ namespace Aura.Channel.World.Entities
 		public List<PropExtension> Extensions { get; private set; }
 
 		/// <summary>
+		/// Returns true if this prop has only one set of resources.
+		/// </summary>
+		public bool IsOneResource { get { return (this.HasTag("/*ore*/") || (this.HasTag("/herb/") && !this.HasTag("/field/"))); } }
+
+		/// <summary>
 		/// Creates new prop with a newly generated entity id.
 		/// </summary>
 		/// <param name="id"></param>
