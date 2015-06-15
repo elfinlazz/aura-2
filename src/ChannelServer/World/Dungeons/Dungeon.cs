@@ -522,6 +522,15 @@ namespace Aura.Channel.World.Dungeons
 				region.AddProp(prop);
 			}
 		}
+
+		/// <summary>
+		/// Returns amount of players in all regions that are part of the dungeon.
+		/// </summary>
+		/// <returns></returns>
+		public int CountPlayers()
+		{
+			return this.Regions.Sum(a => a.CountPlayers());
+		}
 	}
 
 	public class DungeonBoss

@@ -61,16 +61,53 @@ namespace Aura.Channel.World.Dungeons
 		{
 			_dungeons = new Dictionary<long, Dungeon>();
 			_regionIds = new HashSet<int>();
+
+			ChannelServer.Instance.Events.MabiTick += this.OnMabiTick;
 		}
 
-		public Dungeon CreateDungeon(string dungeonName, int itemId, Creature creature)
+		/// <summary>
+		/// Raised every 5 minutes, removes empty dungeons.
+		/// </summary>
+		/// <param name="time"></param>
+		private void OnMabiTick(ErinnTime time)
+		{
+			lock (_sync)
+			{
+				Log.Debug("Dungeons: " + _dungeons.Count);
+				Log.Debug("Players: " + _dungeons.Values.Sum(a => a.CountPlayers()));
+			}
+
+			List<long> remove;
+			lock (_sync)
+				remove = _dungeons.Values.Where(a => a.CountPlayers() == 0).Select(b => b.InstanceId).ToList();
+
+			foreach (var instanceId in remove)
+				this.Remove(instanceId);
+		}
+
+		/// <summary>
+		/// Generates instance id and creates dungeon.
+		/// </summary>
+		/// <param name="dungeonName"></param>
+		/// <param name="itemId"></param>
+		/// <param name="creature"></param>
+		/// <returns></returns>
+		private Dungeon CreateDungeon(string dungeonName, int itemId, Creature creature)
 		{
 			var instanceId = this.GetInstanceId();
 			var dungeon = new Dungeon(instanceId, dungeonName, itemId, creature);
 
+			lock (_sync)
+				_dungeons.Add(instanceId, dungeon);
+
 			return dungeon;
 		}
 
+		/// <summary>
+		/// Removes dungeon with given instance id, incl all regions.
+		/// </summary>
+		/// <param name="instanceId"></param>
+		/// <returns></returns>
 		private bool Remove(long instanceId)
 		{
 			Dungeon dungeon;
@@ -129,6 +166,14 @@ namespace Aura.Channel.World.Dungeons
 			return Interlocked.Increment(ref _instanceId);
 		}
 
+		/// <summary>
+		/// Checks if creature is able to enter a dungeon with the given item,
+		/// at his current position, if so, a dungeon is created and the
+		/// party is moved inside.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		/// <returns></returns>
 		public bool CheckDrop(Creature creature, Item item)
 		{
 			var currentRegionId = creature.RegionId;
@@ -176,6 +221,14 @@ namespace Aura.Channel.World.Dungeons
 			return this.CreateDungeonAndWarp(dungeonName, item.Info.Id, creature);
 		}
 
+		/// <summary>
+		/// Creates a dungeon with the given parameters and warps the creature's
+		/// party inside.
+		/// </summary>
+		/// <param name="dungeonName"></param>
+		/// <param name="itemId"></param>
+		/// <param name="creature"></param>
+		/// <returns></returns>
 		public bool CreateDungeonAndWarp(string dungeonName, int itemId, Creature creature)
 		{
 			try
