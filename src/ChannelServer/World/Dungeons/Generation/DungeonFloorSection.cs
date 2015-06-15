@@ -157,7 +157,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			return _lockColorProvider.GetLockColor();
 		}
 
-		public LockedDoorCandidateNode GetLock()
+		public LockedDoorCandidateNode GetLock(bool lockSelf=false)
 		{
 			LockedDoorCandidateNode result = null;
 
@@ -179,7 +179,13 @@ namespace Aura.Channel.World.Dungeons.Generation
 			{
 				//var random_index = (int)this._rng.GetUInt32(0, (uint)count - 1);
 				//result = this._lockedDoorCandidates.ElementAt(random_index);
-				result = _lockedDoorCandidates.Last.Value;
+				var lockedDoor = _lockedDoorCandidates.Last;
+				if(lockSelf)
+					while (lockedDoor != null && lockedDoor.Value.Room.isReserved)
+						lockedDoor = lockedDoor.Previous;
+				if (lockedDoor == null)
+					throw new PuzzleException("We out of candidates for self lock.");
+				result = lockedDoor.Value;
 			}
 
 			if (_placeBossDoor)

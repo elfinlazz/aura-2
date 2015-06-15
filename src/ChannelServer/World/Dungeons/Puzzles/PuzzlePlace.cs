@@ -144,9 +144,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <summary>
 		/// Makes it a locked place with a locked door.
 		/// </summary>
-		public void DeclareLock()
+		public void DeclareLock(bool lockSelf = false)
 		{
-			var doorElement = _section.GetLock();
+			var doorElement = _section.GetLock(lockSelf);
 			if (doorElement == null)
 				return;
 
@@ -170,6 +170,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			}
 			else
 				this.AddDoor(this.DoorDirection, DungeonBlockType.DoorWithLock);
+
+			if (lockSelf)
+				this.GetLockDoor().IsLocked = true;
 		}
 
 		/// <summary>
@@ -177,8 +180,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// </summary>
 		public void DeclareLockSelf()
 		{
-			this.DeclareLock();
-			this.GetLockDoor().IsLocked = true;
+			this.DeclareLock(true);
 		}
 
 		/// <summary>
