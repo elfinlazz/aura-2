@@ -59,7 +59,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		private void InitSections(DungeonFloorData floorData)
 		{
-			var criticalPathLength = this.MazeGenerator.CriticalPath.Count;
+			var criticalPathLength = this.MazeGenerator.CriticalPath.Count - 1;
 			var sectionCount = floorData.Sections.Count;
 			if (sectionCount == 0) return;
 			var sectionLength = criticalPathLength / sectionCount;
@@ -70,10 +70,10 @@ namespace Aura.Channel.World.Dungeons.Generation
 				// if last section
 				if (i == sectionCount - 1)
 				{
-					sectionPath = this.MazeGenerator.CriticalPath.GetRange(i * sectionLength, criticalPathLength - i * sectionLength);
+					sectionPath = this.MazeGenerator.CriticalPath.GetRange(i * sectionLength + 1, criticalPathLength - i * sectionLength);
 					haveBossDoor = this.HasBossRoom;
 				}
-				else sectionPath = this.MazeGenerator.CriticalPath.GetRange(i * sectionLength, sectionLength);
+				else sectionPath = this.MazeGenerator.CriticalPath.GetRange(i * sectionLength + 1, sectionLength);
 				this.Sections.Add(new DungeonFloorSection(this.GetRoom(sectionPath[0].PosFrom), sectionPath, haveBossDoor, this._dungeonGenerator.RngPuzzles));
 			}
 		}

@@ -18,7 +18,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 	{
 		private DungeonFloorSection _section;
 		private string _name;
-		private LinkedListNode<RoomTrait> _placeNode;
+		private RoomTrait _room;
+		private int _placeIndex;
 		private Dictionary<Placement, PlacementProvider> _placementProviders;
 
 		/// <summary>
@@ -84,6 +85,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 			_section = section;
 			_name = name;
+			_placeIndex = -1;
 			this.Puzzle = puzzle;
 		}
 
@@ -92,8 +94,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// </summary>
 		private void UpdatePosition()
 		{
-			this.X = _placeNode.Value.X * Dungeon.TileSize + Dungeon.TileSize / 2;
-			this.Y = _placeNode.Value.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
+			this.X = _room.X * Dungeon.TileSize + Dungeon.TileSize / 2;
+			this.Y = _room.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
 		}
 
 		/// <summary>
@@ -103,8 +105,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <param name="doorType"></param>
 		private void AddDoor(int direction, DungeonBlockType doorType)
 		{
-			var room = _placeNode.Value;
-			var door = room.GetPuzzleDoor(direction);
+			var door = _room.GetPuzzleDoor(direction);
 			if (door != null)
 			{
 				this.Doors[direction] = door;
@@ -126,8 +127,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 			this.Doors[direction] = door;
 			this.Puzzle.Props[doorName] = door;
-			room.SetPuzzleDoor(door, direction);
-			room.SetDoorType(direction, (int)doorType);
+			_room.SetPuzzleDoor(door, direction);
+			_room.SetDoorType(direction, (int)doorType);
 		}
 
 		/// <summary>
@@ -149,20 +150,20 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			if (doorElement == null)
 				return;
 
-			_placeNode = doorElement.placeNode;
+			_placeIndex = doorElement.PlaceIndex;
+			_room = doorElement.Room;
 			this.UpdatePosition();
 			this.IsLock = true;
 			this.LockColor = _section.GetLockColor();
-			this.DoorDirection = doorElement.direction;
+			this.DoorDirection = doorElement.Direction;
 
-			var room = _placeNode.Value;
-			room.ReserveDoor(this.DoorDirection);
-			room.isLocked = true;
-			if (room.RoomType != RoomType.End || room.RoomType != RoomType.Start)
-				room.RoomType = RoomType.Room;
+			_room.ReserveDoor(this.DoorDirection);
+			_room.isLocked = true;
+			if (_room.RoomType != RoomType.End || _room.RoomType != RoomType.Start)
+				_room.RoomType = RoomType.Room;
 
 			// Boss door - special case
-			if ((DungeonBlockType)room.DoorType[this.DoorDirection] == DungeonBlockType.BossDoor)
+			if ((DungeonBlockType)_room.DoorType[this.DoorDirection] == DungeonBlockType.BossDoor)
 			{
 				this.IsBossLock = true;
 				this.AddDoor(this.DoorDirection, DungeonBlockType.BossDoor);
@@ -187,12 +188,12 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public void DeclareUnlock(PuzzlePlace lockPlace)
 		{
 			var place = lockPlace as PuzzlePlace;
-			if (place == null || place._placeNode == null)
+			if (place == null || place._placeIndex == -1)
 				throw new PuzzleException("We can't declare unlock");
 
-			_placeNode = _section.GetUnlock(place._placeNode);
-			if (_placeNode != null)
-				this.IsUnlock = true;
+			_placeIndex = _section.GetUnlock(place._placeIndex);
+			_room = _section.Places[_placeIndex].Room;
+			this.IsUnlock = true;
 
 			this.UpdatePosition();
 		}
@@ -204,11 +205,14 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public void ReservePlace()
 		{
 			if (this.IsUnlock || this.IsLock || this.IsBossLock)
-				_section.ReservePlace(_placeNode);
+				_section.ReservePlace(_placeIndex);
 			else
-				_placeNode = _section.ReservePlace();
+			{
+				_placeIndex = _section.ReservePlace();
+				_room = _section.Places[_placeIndex].Room;
 
-			this.UpdatePosition();
+				this.UpdatePosition();
+			}
 		}
 
 		/// <summary>
@@ -217,15 +221,14 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// </summary>
 		public void ReserveDoors()
 		{
-			var room = _placeNode.Value;
-			room.ReserveDoors();
+			_room.ReserveDoors();
 
 			_section.CleanLockedDoorCandidates();
 
 			for (var dir = 0; dir < 4; ++dir)
 			{
-				if (room.Links[dir] == LinkType.From || room.Links[dir] == LinkType.To)
-					this.AddDoor(dir, DungeonBlockType.Door);
+				if (_room.Links[dir] == LinkType.From || _room.Links[dir] == LinkType.To)
+					AddDoor(dir, DungeonBlockType.Door);
 			}
 
 			this.OpenAllDoors();
@@ -293,7 +296,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Doors[this.DoorDirection].IsLocked = false;
 			this.Doors[this.DoorDirection].Open();
 
-			if (_placeNode.Value.DoorType[this.DoorDirection] == (int)DungeonBlockType.BossDoor)
+			if (_room.DoorType[this.DoorDirection] == (int)DungeonBlockType.BossDoor)
 				this.Puzzle.Dungeon.BossDoorBehavior(null, Doors[this.DoorDirection]);
 		}
 
@@ -305,19 +308,19 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <returns>3 values, X, Y, and Direction (in degree).</returns>
 		public int[] GetPropPosition(Placement placement, int border = -1)
 		{
-			if (_placeNode == null)
+			if (_placeIndex == -1)
 				throw new PuzzleException("Place hasn't been declared anything or it wasn't reserved.");
 
 			// todo: check those values
 			var radius = 0;
 			if (border >= 0)
 			{
-				radius = (_placeNode.Value.RoomType == RoomType.Alley ? 200 - border : 800 - border);
+				radius = (_room.RoomType == RoomType.Alley ? 200 - border : 800 - border);
 				if (radius < 0)
 					radius = 0;
 			}
 			else
-				radius = (_placeNode.Value.RoomType == RoomType.Alley ? 200 : 800);
+				radius = (_room.RoomType == RoomType.Alley ? 200 : 800);
 
 			if (!_placementProviders.ContainsKey(placement))
 				_placementProviders[placement] = new PlacementProvider(placement, radius);
@@ -338,7 +341,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <returns></returns>
 		public Position GetRoomPosition()
 		{
-			return new Position(_placeNode.Value.X, _placeNode.Value.Y);
+			return new Position(_room.X, _room.Y);
 		}
 
 		/// <summary>

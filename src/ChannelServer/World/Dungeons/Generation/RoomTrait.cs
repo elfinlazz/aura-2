@@ -38,6 +38,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 		public bool isLocked;
 
 		/// <summary>
+		/// Index of this room in DungeonFloorSection.UnusedPlaces list
+		/// </summary>
+		public int RoomIndex;
+
+		/// <summary>
 		/// Paths
 		/// </summary>
 		public LinkType[] Links { get; private set; }
