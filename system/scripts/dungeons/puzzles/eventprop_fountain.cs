@@ -16,7 +16,8 @@ public class EventPropFountainScript : PuzzleScript
 	{
 		var propPlace = puzzle.NewPlace("PropPlace");
 		propPlace.ReservePlace();
-		propPlace.ReserveDoors();
+
+			propPlace.ReserveDoors();
 	}
 
 	public override void OnPuzzleCreate(Puzzle puzzle)
@@ -25,7 +26,7 @@ public class EventPropFountainScript : PuzzleScript
 
 		Fountain fountain = null;
 
-		if (Random() < 66.6)
+		if (Random(3) < 2)
 		{
 			if (CheckSpawn(puzzle, 10, 20, 30, 50))
 				fountain = new Fountain("Fountain");
