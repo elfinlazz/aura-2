@@ -15,26 +15,26 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 {
 	public override void OnPrepare(Puzzle puzzle)
 	{
-		var LockedPlace = puzzle.NewPlace("LockedPlace");
+		var lockedPlace = puzzle.NewPlace("LockedPlace");
 
-		LockedPlace.DeclareLockSelf();
-		LockedPlace.ReservePlace();
+		lockedPlace.DeclareLockSelf();
+		lockedPlace.ReservePlace();
 
 		puzzle.Set("open", "Switch" + Random(1, 5));
 	}
 
 	public override void OnPuzzleCreate(Puzzle puzzle)
 	{
-		var LockedPlace = puzzle.GetPlace("LockedPlace");
-		var color = LockedPlace.GetLockColor();
+		var lockedPlace = puzzle.GetPlace("LockedPlace");
+		var color = lockedPlace.LockColor;
 
 		for (int i = 1; i <= 4; ++i)
 		{
-			LockedPlace.AddProp(new Switch("Switch" + i, color), Placement.Corner4);
+			lockedPlace.AddProp(new Switch("Switch" + i, color), Placement.Corner4);
 			puzzle.Set("Switch" + i + "Activated", false);
 		}
 
-		LockedPlace.CloseAllDoors();
+		lockedPlace.CloseAllDoors();
 	}
 
 	public override void OnPropEvent(Puzzle puzzle, Prop prop)

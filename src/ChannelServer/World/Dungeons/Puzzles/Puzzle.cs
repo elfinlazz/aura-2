@@ -92,13 +92,13 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Script.OnPuzzleCreate(this);
 		}
 
-		public IPuzzlePlace NewPlace(string name)
+		public PuzzlePlace NewPlace(string name)
 		{
 			this._places[name] = new PuzzlePlace(_section, this, name);
 			return this._places[name];
 		}
 
-		public IPuzzlePlace GetPlace(string name)
+		public PuzzlePlace GetPlace(string name)
 		{
 			return this._places[name];
 		}
@@ -122,7 +122,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return null;
 		}
 
-		public Item LockPlace(IPuzzlePlace lockPlace, string keyName)
+		public Item LockPlace(PuzzlePlace lockPlace, string keyName)
 		{
 			var place = lockPlace as PuzzlePlace;
 			if (place == null)
@@ -151,7 +151,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return key;
 		}
 
-		public void OpenPlace(IPuzzlePlace lockPlace)
+		public void OpenPlace(PuzzlePlace lockPlace)
 		{
 			var place = lockPlace as PuzzlePlace;
 
@@ -168,7 +168,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return null;
 		}
 
-		public void AddProp(IPuzzlePlace place, DungeonProp prop, Placement positionType)
+		public void AddProp(PuzzlePlace place, DungeonProp prop, Placement positionType)
 		{
 			if (this.Region == null)
 				throw new PuzzleException("NewChest outside of OnPuzzleCreate.");

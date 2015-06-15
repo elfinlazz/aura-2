@@ -13,12 +13,7 @@ using Aura.Mabi;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
 {
-	public interface IMonsterGroup
-	{
-		void AddKeyForLock(IPuzzlePlace lockPlace);
-	}
-
-	public class MonsterGroup : IMonsterGroup
+	public class MonsterGroup
 	{
 		private List<NPC> _monsters;
 
@@ -57,7 +52,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <param name="puzzle"></param>
 		/// <param name="place"></param>
 		/// <param name="spawnPosition"></param>
-		public MonsterGroup(string name, Puzzle puzzle, PuzzlePlace place, Placement spawnPosition=Placement.Random)
+		public MonsterGroup(string name, Puzzle puzzle, PuzzlePlace place, Placement spawnPosition = Placement.Random)
 		{
 			_monsters = new List<NPC>();
 
@@ -126,7 +121,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// Adds key for lock place to a random monster of this group as a drop.
 		/// </summary>
 		/// <param name="lockPlace"></param>
-		public void AddKeyForLock(IPuzzlePlace lockPlace)
+		public void AddKeyForLock(PuzzlePlace lockPlace)
 		{
 			var place = lockPlace as PuzzlePlace;
 			if (!place.IsLock)
