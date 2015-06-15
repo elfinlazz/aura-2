@@ -60,7 +60,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		private void InitSections(DungeonFloorData floorData)
 		{
 			var criticalPathLength = this.MazeGenerator.CriticalPath.Count;
-			var sectionCount = floorData.Sets.Count;
+			var sectionCount = floorData.Sections.Count;
 			if (sectionCount == 0) return;
 			var sectionLength = criticalPathLength / sectionCount;
 			for (var i = 0; i < sectionCount; ++i)

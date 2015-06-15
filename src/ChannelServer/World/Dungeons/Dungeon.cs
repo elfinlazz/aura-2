@@ -173,13 +173,13 @@ namespace Aura.Channel.World.Dungeons
 
 			for (var section = 0; section < sections.Count; ++section)
 			{
-				var puzzleCount = (int)rng.GetUInt32((uint)floorData.Sets[section].Min, (uint)floorData.Sets[section].Max);
+				var puzzleCount = (int)rng.GetUInt32((uint)floorData.Sections[section].Min, (uint)floorData.Sections[section].Max);
 				for (var p = 0; p < puzzleCount; ++p)
 				{
-					var randomPuzzle = (int)rng.GetUInt32((uint)floorData.Sets[section].Puzzles.Count);
-					var scriptName = floorData.Sets[section].Puzzles[randomPuzzle].Script;
+					var randomPuzzle = (int)rng.GetUInt32((uint)floorData.Sections[section].Puzzles.Count);
+					var scriptName = floorData.Sections[section].Puzzles[randomPuzzle].Script;
 					var puzzleScript = ChannelServer.Instance.ScriptManager.PuzzleScripts.Get(scriptName);
-					var monsterGroups = floorData.Sets[section].Puzzles[randomPuzzle].Groups;
+					var monsterGroups = floorData.Sections[section].Puzzles[randomPuzzle].Groups;
 					if (puzzleScript == null)
 					{
 						Log.Warning("DungeonFloor.GeneratePuzzles: '{0}' puzzle script not found.", scriptName);
@@ -188,7 +188,7 @@ namespace Aura.Channel.World.Dungeons
 					Puzzle puzzle = null;
 					try
 					{
-						puzzle = sections[section].NewPuzzle(this, floorData, floorData.Sets[section].Puzzles[randomPuzzle], puzzleScript);
+						puzzle = sections[section].NewPuzzle(this, floorData, floorData.Sections[section].Puzzles[randomPuzzle], puzzleScript);
 						puzzleScript.OnPrepare(puzzle);
 					}
 					catch (PuzzleException e)

@@ -8,7 +8,7 @@
 
 // Alby Dungeon
 { name: "tircho_alby_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30005, amount: 3 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
@@ -30,8 +30,8 @@
 ]},
 
 // Alby Dungeon
-{ name: "tircho_alby_whiteday_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 11013, lastStatue: 10032, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
-	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+{ name: "tircho_alby_whiteday_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 11013, lastStatue: 11014, door: 11019, bossDoor: 11021, bossExitDoor: 11022, floors: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30005, amount: 3 }], [{ raceId: 120004, amount: 6 }], [{ raceId: 90002, amount: 3 }] ] },
@@ -54,7 +54,7 @@
 
 // Alby Dungeon
 { name: "tircho_alby_fountaintest_high_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 1, max: 2, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
@@ -113,7 +113,7 @@
 
 // Alby Dungeon
 { name: "tircho_alby_herbtest_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 62, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 1, max: 2, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
@@ -168,7 +168,7 @@
 
 // Alby Dungeon
 { name: "tircho_alby_dungeonnpctest_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 6, height: 6, critPathMin: 8, critPathMax: 16, branch: 0, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 16, branch: 0, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 2, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 6 }], [{ raceId: 30005, amount: 8 }] ] },
 			{ script: "dungeonnpc" },
@@ -177,7 +177,7 @@
 
 // Alby Beginner Dungeon
 { name: "tircho_alby_beginner_1_dungeon", style: 100000, baseSeed: 10000000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 6, height: 6, critPathMin: 10, critPathMax: 12, branch: 10, coverage: 30, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120006, amount: 3 }], [{ raceId: 80002, amount: 4 }], [{ raceId: 30005, amount: 3 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30005, amount: 3 }], [{ raceId: 120006, amount: 3 }], [{ raceId: 90002, amount: 3 }] ] },
@@ -201,7 +201,7 @@
 // Alby Basic Dungeon
 { name: "tircho_alby_low_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	// Floor 1
-	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 20, coverage: 70, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 20, coverage: 70, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 20017, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
@@ -239,7 +239,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 2
-	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 15, coverage: 70, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 7, height: 8, critPathMin: 30, critPathMax: 40, branch: 15, coverage: 70, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 30013, amount: 3 }], [{ raceId: 30013, amount: 6 }], [{ raceId: 80004, amount: 4 },{ raceId: 30013, amount: 1 }] ] },
 			{ script: "keychest_monster", groups: [ [{ raceId: 20017, amount: 2 }], [{ raceId: 20017, amount: 4 }], [{ raceId: 20017, amount: 2 },{ raceId: 30013, amount: 2 }] ] },
@@ -284,7 +284,7 @@
 
 // Alby Intermediate Fomor Dungeon
 { name: "tircho_alby_middle_1_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
-	{ width: 8, height: 8, critPathMin: 44, critPathMax: 46, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 46, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30012, amount: 1 },{ raceId: 30012, amount: 2 }], [{ raceId: 20016, amount: 2 }], [{ raceId: 30012, amount: 1 },{ raceId: 30012, amount: 2 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 20016, amount: 2 }], [{ raceId: 30004, amount: 2 }], [{ raceId: 70011, amount: 1 }] ] },
@@ -340,7 +340,7 @@
 // Alby Intermediate Fomor Dungeon
 { name: "tircho_alby_middle_2_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	// Floor 1
-	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 20, coverage: 70, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 20, coverage: 70, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 4, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30004, amount: 1 }], [{ raceId: 30012, amount: 2 },{ raceId: 30012, amount: 2 }], [{ raceId: 30004, amount: 1 },{ raceId: 30004, amount: 1 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 70011, amount: 3 }], [{ raceId: 20016, amount: 3 }], [{ raceId: 80101, amount: 3 }] ] },
@@ -393,7 +393,7 @@
 			{ script: "keychest_monster", groups: [ [{ raceId: 30012, amount: 6 }], [{ raceId: 30004, amount: 1 }], [{ raceId: 30008, amount: 1 }] ] },
 		]},	]},
 	// Floor 2
-	{ width: 8, height: 8, critPathMin: 45, critPathMax: 52, branch: 25, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 8, height: 8, critPathMin: 45, critPathMax: 52, branch: 25, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 3, max: 5, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 20016, amount: 3 }], [{ raceId: 170202, amount: 1 },{ raceId: 20016, amount: 2 }], [{ raceId: 20015, amount: 3 }] ] },
 			{ script: "keychest_monster", groups: [ [{ raceId: 30012, amount: 2 }], [{ raceId: 30012, amount: 4 }], [{ raceId: 170202, amount: 1 },{ raceId: 20016, amount: 2 }] ] },
@@ -457,7 +457,7 @@
 // Alby Intermediate Fomor Dungeon
 { name: "tircho_alby_middle_4_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	// Floor 1
-	{ width: 8, height: 8, critPathMin: 52, critPathMax: 60, branch: 25, coverage: 90, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 8, height: 8, critPathMin: 52, critPathMax: 60, branch: 25, coverage: 90, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 3, max: 4, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 20016, amount: 5 }], [{ raceId: 70011, amount: 4 }], [{ raceId: 30012, amount: 2 },{ raceId: 30012, amount: 3 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 20015, amount: 5 }], [{ raceId: 20016, amount: 5 }], [{ raceId: 70011, amount: 2 },{ raceId: 70011, amount: 2 }] ] },
@@ -518,7 +518,7 @@
 			{ script: "eventprop_fountain" },
 		]},	]},
 	// Floor 2
-	{ width: 8, height: 8, critPathMin: 44, critPathMax: 47, branch: 25, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 8, height: 8, critPathMin: 44, critPathMax: 47, branch: 25, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 3, max: 5, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 70011, amount: 4 }], [{ raceId: 80101, amount: 4 }], [{ raceId: 30004, amount: 4 }] ] },
 			{ script: "keychest_monster", groups: [ [{ raceId: 170202, amount: 4 }], [{ raceId: 70011, amount: 4 }], [{ raceId: 30012, amount: 2 },{ raceId: 30012, amount: 3 }] ] },
@@ -563,7 +563,7 @@
 // Barri Dungeon
 { name: "bangor_barri_dungeon", style: 300000, baseSeed: 31000000, lobby: 34, exit: "Ula_DgnHall_Bangor_before1/_Ula_DgnHall_Bangor_before1/DG_BangorBefore1_Outer_Spawn", stairs: 23032, saveStatue: 23030, lastStatue: 23036, door: 23022, bossDoor: 23024, bossExitDoor: 23025, floors: [
 	// Floor 1
-	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 15, coverage: 20, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00BB9486,0x00BB9486,0x00BB9486], sets: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 15, coverage: 20, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00BB9486,0x00BB9486,0x00BB9486], sections: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30002, amount: 3 }], [{ raceId: 30002, amount: 6 }], [{ raceId: 10101, amount: 4 },{ raceId: 10103, amount: 3 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 10601, amount: 1 }], [{ raceId: 10601, amount: 1 }], [{ raceId: 10101, amount: 4 }] ] },
@@ -585,7 +585,7 @@
 			{ script: "collectprop_test" },
 		]},	]},
 	// Floor 2
-	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 15, coverage: 40, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00BB9486,0x00BB9486,0x00BB9486], sets: [
+	{ width: 6, height: 6, critPathMin: 20, critPathMax: 26, branch: 15, coverage: 40, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00BB9486,0x00BB9486,0x00BB9486], sections: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "keychest_monster2", groups: [ [{ raceId: 30002, amount: 3 }], [{ raceId: 30002, amount: 6 }], [{ raceId: 10601, amount: 2 }] ] },
 			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 10103, amount: 4 }] ] },
@@ -615,7 +615,7 @@
 			{ script: "collectprop_test" },
 		]},	]},
 	// Floor 3
-	{ width: 6, height: 7, critPathMin: 26, critPathMax: 30, branch: 15, coverage: 60, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00BB9486,0x00BB9486,0x00BB9486], sets: [
+	{ width: 6, height: 7, critPathMin: 26, critPathMax: 30, branch: 15, coverage: 60, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00BB9486,0x00BB9486,0x00BB9486], sections: [
 		{ min: 2, max: 4, puzzles: [
 			{ script: "keychest_3mimic", groups: [ [{ raceId: 90003, amount: 4 }], [{ raceId: 10102, amount: 4 },{ raceId: 10103, amount: 3 }], [{ raceId: 90003, amount: 3 }] ] },
 			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 10103, amount: 4 }] ] },
@@ -649,7 +649,7 @@
 // Ciar Beginner Dungeon
 { name: "tircho_ciar_beginner_1_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	// Floor 1
-	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 10, coverage: 20, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 10, coverage: 20, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120002, amount: 3 }], [{ raceId: 120002, amount: 3 }], [{ raceId: 90001, amount: 3 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120003, amount: 3 }], [{ raceId: 120003, amount: 6 }], [{ raceId: 90001, amount: 3 }] ] },
@@ -671,7 +671,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 2
-	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 10, coverage: 20, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 5, height: 5, critPathMin: 16, critPathMax: 22, branch: 10, coverage: 20, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 120002, amount: 3 }], [{ raceId: 120002, amount: 3 }], [{ raceId: 10112, amount: 3 }] ] },
 			{ script: "keychest_monster", groups: [ [{ raceId: 120003, amount: 3 }], [{ raceId: 120003, amount: 3 }], [{ raceId: 10113, amount: 3 }] ] },
@@ -696,7 +696,7 @@
 // Ciar Dungeon
 { name: "tircho_ciar_dungeon", style: 100000, baseSeed: 11000000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	// Floor 1
-	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 10, coverage: 30, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 6, height: 6, critPathMin: 16, critPathMax: 26, branch: 10, coverage: 30, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30002, amount: 3 }], [{ raceId: 30002, amount: 6 }], [{ raceId: 10101, amount: 4 },{ raceId: 10103, amount: 3 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120003, amount: 2 }], [{ raceId: 120003, amount: 6 }], [{ raceId: 10101, amount: 6 }] ] },
@@ -722,7 +722,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 2
-	{ width: 6, height: 6, critPathMin: 8, critPathMax: 20, branch: 10, coverage: 20, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 6, height: 6, critPathMin: 8, critPathMax: 20, branch: 10, coverage: 20, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 1, max: 2, puzzles: [
 			{ script: "keychest_monster2", groups: [ [{ raceId: 30002, amount: 3 }], [{ raceId: 30002, amount: 6 }], [{ raceId: 120003, amount: 8 }] ] },
 			{ script: "keychest_3mimic", groups: [ [{ raceId: 90001, amount: 4 }], [{ raceId: 10101, amount: 4 },{ raceId: 10103, amount: 3 }], [{ raceId: 90001, amount: 3 }] ] },
@@ -739,7 +739,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 3
-	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 10, coverage: 65, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 8, height: 7, critPathMin: 30, critPathMax: 40, branch: 10, coverage: 65, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 2, max: 4, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 30003, amount: 3 }], [{ raceId: 80001, amount: 6 }], [{ raceId: 120003, amount: 8 }] ] },
 			{ script: "keychest_3mimic", groups: [ [{ raceId: 90001, amount: 4 }], [{ raceId: 10102, amount: 4 },{ raceId: 10103, amount: 3 }], [{ raceId: 90001, amount: 3 }] ] },
@@ -777,7 +777,7 @@
 // Ciar Basic Dungeon
 { name: "tircho_ciar_low_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	// Floor 1
-	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 10, coverage: 70, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 6, height: 6, critPathMin: 18, critPathMax: 26, branch: 10, coverage: 70, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 1, max: 1, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30101, amount: 3 }], [{ raceId: 30101, amount: 6 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 140002, amount: 6 }], [{ raceId: 170301, amount: 4 }], [{ raceId: 170301, amount: 5 }] ] },
@@ -803,7 +803,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 2
-	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 10, coverage: 20, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 10, coverage: 20, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "keychest_monster2", groups: [ [{ raceId: 140001, amount: 8 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }], [{ raceId: 30101, amount: 6 }] ] },
 			{ script: "keychest_3mimic", groups: [ [{ raceId: 90003, amount: 4 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }], [{ raceId: 90003, amount: 3 }] ] },
@@ -832,7 +832,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 3
-	{ width: 8, height: 8, critPathMin: 30, critPathMax: 47, branch: 5, coverage: 65, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 8, height: 8, critPathMin: 30, critPathMax: 47, branch: 5, coverage: 65, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 2, max: 4, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 30102, amount: 3 }], [{ raceId: 80001, amount: 6 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }] ] },
 			{ script: "keychest_3mimic", groups: [ [{ raceId: 90003, amount: 4 }], [{ raceId: 30101, amount: 5 },{ raceId: 30102, amount: 3 }], [{ raceId: 90003, amount: 3 }] ] },
@@ -873,7 +873,7 @@
 // Ciar Intermediate Fomor Dungeon
 { name: "tircho_ciar_middle_1_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
 	// Floor 1
-	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 10, coverage: 80, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 10, coverage: 80, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 2, max: 2, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30101, amount: 3 }], [{ raceId: 30101, amount: 6 }], [{ raceId: 140001, amount: 2 },{ raceId: 140002, amount: 2 },{ raceId: 140003, amount: 1 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 140002, amount: 6 }], [{ raceId: 170301, amount: 4 }], [{ raceId: 170301, amount: 5 }] ] },
@@ -934,7 +934,7 @@
 			{ script: "collectprop_herb" },
 		]},	]},
 	// Floor 2
-	{ width: 7, height: 7, critPathMin: 37, critPathMax: 40, branch: 10, coverage: 80, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sets: [
+	{ width: 7, height: 7, critPathMin: 37, critPathMax: 40, branch: 10, coverage: 80, hasBoss: true, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "keychest_monster", groups: [ [{ raceId: 140002, amount: 3 }], [{ raceId: 140003, amount: 3 }], [{ raceId: 140004, amount: 3 }] ] },
 			{ script: "switchdoor_switchmonster", groups: [ [{ raceId: 140004, amount: 2 },{ raceId: 140003, amount: 2 }] ] },
@@ -994,7 +994,7 @@
 
 // Fiodh Dungeon
 { name: "gairech_fiodh_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
-	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 19, coverage: 75, hasBoss: true, color: [0x00808080,0x00808080,0x00808080], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sets: [
+	{ width: 8, height: 8, critPathMin: 42, critPathMax: 47, branch: 19, coverage: 75, hasBoss: true, color: [0x00808080,0x00808080,0x00808080], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 3, max: 3, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30002, amount: 3 }], [{ raceId: 30002, amount: 6 }], [{ raceId: 20501, amount: 5 }] ] },
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 120003, amount: 2 }], [{ raceId: 120003, amount: 6 }], [{ raceId: 140002, amount: 6 }] ] },

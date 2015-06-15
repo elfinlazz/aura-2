@@ -50,21 +50,21 @@ namespace Aura.Data.Database
 		public bool HasBoss { get; set; }
 		public bool Custom { get; set; }
 		public string Extra { get; set; }
-		public List<DungeonSetData> Sets { get; set; }
+		public List<DungeonSectionData> Sections { get; set; }
 
 		public DungeonFloorData()
 		{
-			this.Sets = new List<DungeonSetData>();
+			this.Sections = new List<DungeonSectionData>();
 		}
 	}
 
-	public class DungeonSetData
+	public class DungeonSectionData
 	{
 		public int Min { get; set; }
 		public int Max { get; set; }
 		public List<DungeonPuzzleData> Puzzles { get; set; }
 
-		public DungeonSetData()
+		public DungeonSectionData()
 		{
 			this.Puzzles = new List<DungeonPuzzleData>();
 		}
@@ -144,17 +144,17 @@ namespace Aura.Data.Database
 				floorData.LightColor2 = (uint)floorEntry["lightColor"][1];
 				floorData.LightColor3 = (uint)floorEntry["lightColor"][2];
 
-				if (floorEntry.ContainsKey("sets"))
+				if (floorEntry.ContainsKey("sections"))
 				{
-					foreach (JObject setEntry in floorEntry["sets"])
+					foreach (JObject sectionEntry in floorEntry["sections"])
 					{
-						setEntry.AssertNotMissing("min", "max", "puzzles");
+						sectionEntry.AssertNotMissing("min", "max", "puzzles");
 
-						var setData = new DungeonSetData();
-						setData.Min = setEntry.ReadInt("min");
-						setData.Max = setEntry.ReadInt("max");
+						var sectionData = new DungeonSectionData();
+						sectionData.Min = sectionEntry.ReadInt("min");
+						sectionData.Max = sectionEntry.ReadInt("max");
 
-						foreach (JObject puzzleEntry in setEntry["puzzles"])
+						foreach (JObject puzzleEntry in sectionEntry["puzzles"])
 						{
 							puzzleEntry.AssertNotMissing("script");
 
@@ -186,10 +186,10 @@ namespace Aura.Data.Database
 								}
 							}
 
-							setData.Puzzles.Add(puzzleData);
+							sectionData.Puzzles.Add(puzzleData);
 						}
 
-						floorData.Sets.Add(setData);
+						floorData.Sections.Add(sectionData);
 					}
 				}
 
