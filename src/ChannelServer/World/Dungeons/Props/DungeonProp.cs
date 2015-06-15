@@ -10,10 +10,22 @@ using System.Threading.Tasks;
 
 namespace Aura.Channel.World.Dungeons.Props
 {
+	/// <summary>
+	/// Base class for dungeon props, like chests and switches.
+	/// </summary>
 	public abstract class DungeonProp : Prop
 	{
+		/// <summary>
+		/// Internal name of the prop, used in puzzles.
+		/// </summary>
 		public string InternalName { get; protected set; }
 
+		/// <summary>
+		/// Initializes prop.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="name"></param>
+		/// <param name="state"></param>
 		public DungeonProp(int id, string name, string state = "")
 			: base(id, 0, 0, 0, 0, 1, 0, state, "", "")
 		{

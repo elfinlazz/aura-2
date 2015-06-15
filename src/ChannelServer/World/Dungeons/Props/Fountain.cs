@@ -14,15 +14,28 @@ using System.Threading.Tasks;
 
 namespace Aura.Channel.World.Dungeons.Props
 {
+	/// <summary>
+	/// Fountain prop, as found in dungeons.
+	/// </summary>
 	public class Fountain : DungeonProp
 	{
+		/// <summary>
+		/// Maximum amount of times the fountain can be used before it's empty.
+		/// </summary>
 		private const int MaxTouch = 8;
 
 		private HashSet<long> _touchedBy;
 		private int count;
 
+		/// <summary>
+		/// Returns true if the fountain is on.
+		/// </summary>
 		public bool IsOn { get { return (this.State == "on"); } }
 
+		/// <summary>
+		/// Creates new fountain.
+		/// </summary>
+		/// <param name="name"></param>
 		public Fountain(string name)
 			: base(311, name, "on")
 		{
@@ -33,16 +46,28 @@ namespace Aura.Channel.World.Dungeons.Props
 			this.Behavior = this.DefaultBehavior;
 		}
 
+		/// <summary>
+		/// Turns fountain on.
+		/// </summary>
 		public void TurnOn()
 		{
 			this.SetState("on");
 		}
 
+		/// <summary>
+		/// Turns fountain off.
+		/// </summary>
 		public void TurnOff()
 		{
 			this.SetState("off");
 		}
 
+		/// <summary>
+		/// Fountain's default behavior, checking state, who and how many times
+		/// they used the fountain, and calling Touch.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="prop"></param>
 		protected virtual void DefaultBehavior(Creature creature, Prop prop)
 		{
 			if (!this.IsOn)
@@ -62,6 +87,10 @@ namespace Aura.Channel.World.Dungeons.Props
 				this.TurnOff();
 		}
 
+		/// <summary>
+		/// Applies random fountain effect to creature.
+		/// </summary>
+		/// <param name="creature"></param>
 		protected virtual void Touch(Creature creature)
 		{
 			var rnd = RandomProvider.Get();
@@ -226,14 +255,29 @@ namespace Aura.Channel.World.Dungeons.Props
 		}
 	}
 
+	/// <summary>
+	/// Red Fountain, as found in dungeons.
+	/// </summary>
 	public class RedFountain : Fountain
 	{
+		/// <summary>
+		/// Creates new red fountain.
+		/// </summary>
+		/// <param name="name"></param>
 		public RedFountain(string name)
 			: base(name)
 		{
 			this.Info.Color2 = 0xA21515;
 		}
 
+		/// <summary>
+		/// Applies random fountain effect to creature.
+		/// </summary>
+		/// <remarks>
+		/// We're currently missing time limited status affects, which are
+		/// needed for the red fountain's effects.
+		/// </remarks>
+		/// <param name="creature"></param>
 		protected override void Touch(Creature creature)
 		{
 			var rnd = RandomProvider.Get();

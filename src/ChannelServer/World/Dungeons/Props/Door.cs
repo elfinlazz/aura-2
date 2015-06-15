@@ -9,11 +9,32 @@ using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Dungeons.Props
 {
+	/// <summary>
+	/// A door, as found in dungeons.
+	/// </summary>
 	public class Door : Prop
 	{
+		/// <summary>
+		/// Internal name of the door, used from puzzles.
+		/// </summary>
 		public string InternalName { get; protected set; }
+
+		/// <summary>
+		/// Specifies whether the door is locked or not.
+		/// </summary>
 		public bool IsLocked { get; set; }
 
+		/// <summary>
+		/// Creates new door prop.
+		/// </summary>
+		/// <param name="propId"></param>
+		/// <param name="regionId"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="direction">Direction the door faces in, in degree.</param>
+		/// <param name="doorType"></param>
+		/// <param name="name"></param>
+		/// <param name="state"></param>
 		public Door(int propId, int regionId, int x, int y, int direction, DungeonBlockType doorType, string name, string state = "open")
 			: base(propId, regionId, x, y, direction, 1, 0, state, "", "")
 		{
@@ -43,6 +64,11 @@ namespace Aura.Channel.World.Dungeons.Props
 			}
 		}
 
+		/// <summary>
+		/// Door's behavior when it's not locked.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="prop"></param>
 		private void UnlockedBehavior(Creature creature, Prop prop)
 		{
 			// TODO: Allow teleporting into the room.
@@ -59,6 +85,14 @@ namespace Aura.Channel.World.Dungeons.Props
 			//005 [................] String : message:s:Do you wish to go inside the room?;condition:s:notfrom(1,4);
 		}
 
+		/// <summary>
+		/// Door's behavior when it's locked.
+		/// </summary>
+		/// <remarks>
+		/// TODO: Couldn't this be done in one behavior?
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="prop"></param>
 		private void LockedDoorBehavior(Creature creature, Prop prop)
 		{
 			// todo: sometimes we don't want to open a door, only unlock it and teleport in
@@ -80,6 +114,12 @@ namespace Aura.Channel.World.Dungeons.Props
 			}
 		}
 
+		/// <summary>
+		/// Returns true if character has the key to unlock this door,
+		/// and removes it from his inventory.
+		/// </summary>
+		/// <param name="character"></param>
+		/// <returns></returns>
 		private bool OpenWithKey(Creature character)
 		{
 			foreach (var item in character.Inventory.Items)
@@ -96,11 +136,17 @@ namespace Aura.Channel.World.Dungeons.Props
 			return false;
 		}
 
+		/// <summary>
+		/// Closes door.
+		/// </summary>
 		public void Close()
 		{
 			this.SetState("closed");
 		}
 
+		/// <summary>
+		/// Opens door.
+		/// </summary>
 		public void Open()
 		{
 			this.SetState("open");
