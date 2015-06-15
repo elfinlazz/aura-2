@@ -71,12 +71,6 @@ namespace Aura.Channel.World.Dungeons
 		/// <param name="time"></param>
 		private void OnMabiTick(ErinnTime time)
 		{
-			lock (_sync)
-			{
-				Log.Debug("Dungeons: " + _dungeons.Count);
-				Log.Debug("Players: " + _dungeons.Values.Sum(a => a.CountPlayers()));
-			}
-
 			List<long> remove;
 			lock (_sync)
 				remove = _dungeons.Values.Where(a => a.CountPlayers() == 0).Select(b => b.InstanceId).ToList();
