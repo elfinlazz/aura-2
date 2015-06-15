@@ -176,9 +176,8 @@ namespace Aura.Channel.Skills.Life
 					return;
 				}
 
-				// No resource regeneration for OneResource
-				if (!targetProp.IsOneResource)
-					targetProp.Resource += (float)((DateTime.Now - targetProp.LastCollect).TotalMinutes * collectData.ResourceRecovering);
+				// Regenerate resources
+				targetProp.Resource += (float)((DateTime.Now - targetProp.LastCollect).TotalMinutes * collectData.ResourceRecovering);
 
 				// Fail if currently no resources available
 				if (targetProp.Resource < collectData.ResourceReduction)
@@ -195,9 +194,9 @@ namespace Aura.Channel.Skills.Life
 					targetProp.LastCollect = DateTime.Now;
 				}
 
-				// Set props to empty that are supposed to only have one
-				// set of resources
-				if (targetProp.IsOneResource && targetProp.Resource < collectData.ResourceReduction)
+				// Set prop's state to "empty" if it was emptied and is not
+				// regenerating resources.
+				if (collectData.ResourceRecovering == 0 && targetProp.Resource < collectData.ResourceReduction)
 					targetProp.SetState("empty");
 			}
 			else
