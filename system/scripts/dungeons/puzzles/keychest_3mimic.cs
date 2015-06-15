@@ -1,7 +1,7 @@
 ﻿//--- Aura Script -----------------------------------------------------------
-// Keychest 3 Mimic Puzzle
+// Mimic Pit Puzzle
 //--- Description -----------------------------------------------------------
-// Spawns a chest in a alley with 3 mimics, key chest and mobs.
+// Spawns a chest in an alley, with 3 mimics and mobs.
 //---------------------------------------------------------------------------
 
 using Aura.Channel.Scripting.Scripts;

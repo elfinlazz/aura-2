@@ -1,7 +1,8 @@
 //--- Aura Script -----------------------------------------------------------
-// Keychest Monster Puzzle
+// Switch Room Puzzle
 //--- Description -----------------------------------------------------------
-// Used as 
+// Creates a room with 4 switches in the corners, of which one opens
+// the locked door.
 //---------------------------------------------------------------------------
 
 using Aura.Channel.Scripting.Scripts;
@@ -11,7 +12,7 @@ using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 
 [PuzzleScript("switchdoor_switchmonster")]
-public class SwitchdoorSwitchmonsterScript : PuzzleScript
+public class SwitchDoorSwitchMonsterScript : PuzzleScript
 {
 	public override void OnPrepare(Puzzle puzzle)
 	{
@@ -26,11 +27,10 @@ public class SwitchdoorSwitchmonsterScript : PuzzleScript
 	public override void OnPuzzleCreate(Puzzle puzzle)
 	{
 		var lockedPlace = puzzle.GetPlace("LockedPlace");
-		var color = lockedPlace.LockColor;
 
 		for (int i = 1; i <= 4; ++i)
 		{
-			lockedPlace.AddProp(new Switch("Switch" + i, color), Placement.Corner4);
+			lockedPlace.AddProp(new Switch("Switch" + i, lockedPlace.LockColor), Placement.Corner4);
 			puzzle.Set("Switch" + i + "Activated", false);
 		}
 

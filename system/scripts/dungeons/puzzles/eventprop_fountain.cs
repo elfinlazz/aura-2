@@ -1,7 +1,8 @@
 //--- Aura Script -----------------------------------------------------------
-// Collect Prop Puzzle
+// Fountain Puzzle
 //--- Description -----------------------------------------------------------
-// Spawns herb patches in a room.
+// Spawns a blue or red fountain by a random chance, either in a room
+// or in an alley.
 //---------------------------------------------------------------------------
 
 using Aura.Channel.Scripting.Scripts;
