@@ -45,8 +45,18 @@ namespace Aura.Channel.World.Dungeons.Props
 
 		private void UnlockedBehavior(Creature creature, Prop prop)
 		{
-			// TODO: allow to teleport into closed room. Don't open
-			this.Open();
+			// TODO: Allow teleporting into the room.
+
+			// Confirmation extension added when the door closes,
+			// condition might be directions, so the message only
+			// appears when going in?
+			//
+			//Op: 0000908D, Id: 00A1273000070001
+			//001 [........000000CA] Int    : 202
+			//002 [........0000044C] Int    : 1100
+			//003 [................] String : directed_ask(1,4)
+			//004 [..............02] Byte   : 2
+			//005 [................] String : message:s:Do you wish to go inside the room?;condition:s:notfrom(1,4);
 		}
 
 		private void LockedDoorBehavior(Creature creature, Prop prop)
@@ -65,6 +75,7 @@ namespace Aura.Channel.World.Dungeons.Props
 			}
 			else
 			{
+				// Why would a locked door ever be opened on click without a key? [exec]
 				this.Open();
 			}
 		}
