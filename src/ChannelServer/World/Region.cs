@@ -104,6 +104,10 @@ namespace Aura.Channel.World
 				{
 					var add = new Prop(prop.EntityId, prop.Id, this.Id, (int)prop.X, (int)prop.Y, prop.Direction, prop.Scale, 0, "", "", "");
 
+					// Add copy of extensions
+					foreach (var para in prop.Parameters)
+						add.Extensions.Add(new PropExtension(para.SignalType, para.EventType, para.Name, 0));
+
 					// Add drop behaviour if drop type exists
 					var dropType = prop.GetDropType();
 					if (dropType != -1) add.Behavior = Prop.GetDropBehavior(dropType);

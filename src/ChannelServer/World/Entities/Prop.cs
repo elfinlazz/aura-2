@@ -352,7 +352,7 @@ namespace Aura.Channel.World.Entities
 		public ItemData CampfireFirewood;
 	}
 
-	public abstract class PropExtension
+	public class PropExtension
 	{
 		//010 [........000000CA] Int    : 202
 		//011 [........0000044C] Int    : 1100

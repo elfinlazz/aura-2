@@ -35,10 +35,20 @@ namespace Aura.Channel.World.Dungeons
 		/// <returns></returns>
 		public Prop GetPropById(int propId)
 		{
+			return this.GetProp(a => a.Info.Id == propId);
+		}
+
+		/// <summary>
+		/// Returns the first prop that matches the given predicate.
+		/// </summary>
+		/// <param name="propId"></param>
+		/// <returns></returns>
+		public Prop GetProp(Func<Prop, bool> predicate)
+		{
 			_propsRWLS.EnterReadLock();
 			try
 			{
-				return _props.Values.FirstOrDefault(a => a.Info.Id == propId);
+				return _props.Values.FirstOrDefault(predicate);
 			}
 			finally
 			{

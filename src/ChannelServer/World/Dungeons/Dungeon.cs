@@ -143,7 +143,7 @@ namespace Aura.Channel.World.Dungeons
 			if (stairs == null)
 				throw new Exception("Missing stairs prop '" + this.Data.StairsPropId + "'.");
 
-			var statue = region.GetPropById(this.Data.LastStatuePropId);
+			var statue = region.GetProp(a => a.Extensions.Any(x => x.Type1 == 202 && x.Type2 == 1100));
 			if (statue == null)
 				throw new Exception("Missing statue prop '" + this.Data.LastStatuePropId + "'.");
 
@@ -355,7 +355,7 @@ namespace Aura.Channel.World.Dungeons
 								continue;
 							if (roomTrait.RoomType == RoomType.End && dir == endRoomDirection)
 								continue;
-							
+
 							if (roomTrait.Links[dir] != LinkType.None)
 							{
 								if (roomTrait.PuzzleDoors[dir] == null)
