@@ -23,9 +23,6 @@ public class CollectPropTestScript : PuzzleScript
 	{
 		var propPlace = puzzle.GetPlace("PropPlace");
 
-		int propId;
-		uint color;
-
 		for (int i = 1; i <= 3; ++i)
 		{
 			var oreDeposit = new OreDeposit(22000, "Deposit" + i);
