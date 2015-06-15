@@ -169,7 +169,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				return new int[] { x, y, direction };
 			}
 
-			return _positionQueue.Dequeue();
+			if (_positionQueue.Any())
+				return _positionQueue.Dequeue();
+
+			return null;
 		}
 	}
 }
