@@ -176,13 +176,18 @@ namespace Aura.Channel.Skills.Life
 					return;
 				}
 
-				targetProp.Resource += (float)((DateTime.Now - targetProp.LastCollect).TotalMinutes * collectData.ResourceRecovering);
+				// No resource regeneration for OneResource
+				if (!targetProp.IsOneResource)
+					targetProp.Resource += (float)((DateTime.Now - targetProp.LastCollect).TotalMinutes * collectData.ResourceRecovering);
+
+				// Fail if currently no resources available
 				if (targetProp.Resource < collectData.ResourceReduction)
 				{
 					this.DoComplete(creature, entityId, collectId, false, 2);
 					return;
 				}
 
+				// Reduce resources on success
 				if (collectSuccess)
 				{
 					if (!ChannelServer.Instance.Conf.World.InfiniteResources)
