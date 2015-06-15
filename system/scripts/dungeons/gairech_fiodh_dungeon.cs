@@ -75,8 +75,8 @@ public class FiodhDungeonScript : DungeonScript
 				new DropData(itemId: 51013, chance: 17, amountMin: 1, amountMax: 2), // Stamina 50 Potion
 				new DropData(itemId: 71049, chance: 2, amountMin: 2, amountMax: 5), // Snake Fomor Scroll
 				new DropData(itemId: 71018, chance: 2, amountMin: 3, amountMax: 5), // Black Spider Fomor Scroll
-				new DropData(itemId: 71018, chance: 2, amountMin: 3, amountMax: 5), // Black Spider Fomor Scroll (supposed to be Red, devCAT error)
-				new DropData(itemId: 71052, chance: 1, amount: 1), // Jackal Fomor Scroll (supposed to be Red Grizzley, devCAT error)
+				new DropData(itemId: 71019, chance: 2, amountMin: 3, amountMax: 5), // Red Spider Fomor Scroll (officially Black Spider duplicate #officialFix)
+				new DropData(itemId: 71029, chance: 1, amount: 1), // Red Grizzly Fomor Scroll (officially Jackal duplicate #officialFix)
 				new DropData(itemId: 71052, chance: 2, amount: 5), // Jackal Fomor Scroll
 				new DropData(itemId: 63119, chance: 2, amount: 1, expires: 480), // Fiodh Intermediate Fomor Pass for One
 				new DropData(itemId: 63120, chance: 2, amount: 1, expires: 480), // Fiodh Intermediate Fomor Pass for Two

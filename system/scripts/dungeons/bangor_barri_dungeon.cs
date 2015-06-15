@@ -80,7 +80,7 @@ public class BarriDungeonScript : DungeonScript
 				new DropData(itemId: 51013, chance: 10, amountMin: 1, amountMax: 2), // Stamina 50 Potion
 				new DropData(itemId: 60039, chance: 10, amountMin: 3, amountMax: 5),  // Fomor Token
 				new DropData(itemId: 71044, chance: 5, amountMin: 2, amountMax: 5),  // Imp Fomor Scroll
-				new DropData(itemId: 71037, chance: 5, amountMin: 2, amountMax: 4),  // Goblin Fomor Scroll (officially Imp duplicate)
+				new DropData(itemId: 71037, chance: 5, amountMin: 2, amountMax: 4),  // Goblin Fomor Scroll (officially Imp duplicate #officialFix)
 				new DropData(itemId: 40025, chance: 1, amount: 1, color1: 0xC00010, durability: 0), // Pickaxe (bronze)
 				new DropData(itemId: 63113, chance: 5, amount: 1, expires: 600), // Barri Basic
 				// adv, G3
