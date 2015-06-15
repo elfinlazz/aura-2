@@ -299,6 +299,8 @@ namespace Aura.Mabi.Network
 		public const int CombatActionPack = 0x7926;
 		public const int CombatUsedSkill = 0x7927;
 		public const int CombatAttackR = 0x7D01;
+		public const int TouchMimic = 0x7D03;
+		public const int TouchMimicR = 0x7D04;
 
 		public const int EventInform = 0x88B8;
 		public const int NewQuest = 0x8CA0;

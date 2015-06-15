@@ -310,5 +310,17 @@ namespace Aura.Channel.Network.Sending
 
 			receiver.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends TouchMimicR to creature's client.
+		/// </summary>
+		/// <param name="receiver"></param>
+		/// <param name="creature"></param>
+		public static void TouchMimicR(Creature receiver)
+		{
+			var packet = new Packet(Op.TouchMimicR, receiver.EntityId);
+
+			receiver.Client.Send(packet);
+		}
 	}
 }

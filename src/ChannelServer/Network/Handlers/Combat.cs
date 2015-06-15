@@ -197,5 +197,20 @@ namespace Aura.Channel.Network.Handlers
 			// 0002 [..............01] Byte   : 1
 			// 0003 [........40590000] Float  : 100.0
 		}
+
+		/// <summary>
+		/// Sent when touching a sleeping mimic.
+		/// </summary>
+		[PacketHandler(Op.TouchMimic)]
+		public void TouchMimic(ChannelClient client, Packet packet)
+		{
+			var targetEntityId = packet.GetLong();
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			var target = creature.Region.GetCreature(targetEntityId);
+			target.Aggro(creature);
+
+			Send.TouchMimicR(creature);
+		}
 	}
 }
