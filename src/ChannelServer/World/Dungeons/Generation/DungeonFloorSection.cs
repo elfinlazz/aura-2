@@ -199,7 +199,8 @@ namespace Aura.Channel.World.Dungeons.Generation
 		public int GetUnlock(PuzzlePlace lockedPlace)
 		{
 			var lockedPlaceIndex = lockedPlace.PlaceIndex;
-			List<int> possibleUnlockRooms = new List<int>();
+			List<int> possiblePlacesOnPath = new List<int>();
+			List<int> possiblePlacesNotOnPath = new List<int>();
 			var deadEnd = -1;
 			var deadEndDepth = 0;
 			RoomTrait room;
@@ -226,7 +227,10 @@ namespace Aura.Channel.World.Dungeons.Generation
 							if (deadEndDepth < this.Places[i].Depth)
 								deadEnd = i;
 						}
-						possibleUnlockRooms.Add(i);
+						if(room.isOnPath)
+							possiblePlacesOnPath.Add(i);
+						else
+							possiblePlacesNotOnPath.Add(i);
 					}
 				}
 			}
@@ -235,7 +239,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			if (_rng.GetUInt32(100) < 40)
 				deadEnd = -1;
 
-			if (possibleUnlockRooms.Count == 0)
+			if (possiblePlacesOnPath.Count == 0 && possiblePlacesNotOnPath.Count == 0)
 			{
 				// Convert locked place room back to alley if there are no more locked doors.
 				room = this.Places[lockedPlaceIndex].Room;
@@ -254,7 +258,9 @@ namespace Aura.Channel.World.Dungeons.Generation
 				throw new PuzzleException("We out of unlock places");
 			}
 
-			var placeIndex = deadEnd != -1 ? deadEnd : possibleUnlockRooms[(int)_rng.GetUInt32((uint)possibleUnlockRooms.Count)];
+			var possiblePlaces = (possiblePlacesNotOnPath.Count > 0 ? possiblePlacesNotOnPath : possiblePlacesOnPath);
+
+			var placeIndex = deadEnd != -1 ? deadEnd : possiblePlaces[(int)_rng.GetUInt32((uint)possiblePlaces.Count)];
 
 			// Walk down from current place to our path and add new possible doors to this._lockedDoorCandidates
 			room = this.Places[placeIndex].Room;
