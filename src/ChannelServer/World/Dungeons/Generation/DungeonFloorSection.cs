@@ -209,40 +209,38 @@ namespace Aura.Channel.World.Dungeons.Generation
 				{
 					var haveLockedDoors = false;
 					for (var j = 0; j < 4; ++j)
-						if (room.DoorType[j] == (int) DungeonBlockType.DoorWithLock && room.Links[j] == LinkType.To)
+						if (room.DoorType[j] == (int)DungeonBlockType.DoorWithLock && room.Links[j] == LinkType.To)
 						{
 							haveLockedDoors = true;
 							break;
 						}
 					if (!haveLockedDoors)
 					{
-						if (room.isOnPath)
+						var emptyNeighborCount = 0;
+						for (var dir = 0; dir < 4; ++dir)
+							if (room.IsLinked(dir) && !room.Neighbor[dir].isReserved)
+								emptyNeighborCount++;
+						if (emptyNeighborCount < 2)
 						{
-							possibleUnlockRooms.Add(i);
+							if (deadEndDepth < this.Places[i].Depth)
+								deadEnd = i;
 						}
-						else
-						{
-							var emptyNeighborCount = 0;
-							for (var dir = 0; dir < 4; ++dir)
-								if (room.IsLinked(dir) && !room.Neighbor[dir].isReserved)
-									emptyNeighborCount++;
-							if (emptyNeighborCount < 2)
-							{
-								if (deadEndDepth < this.Places[i].Depth)
-									deadEnd = i;
-							}
-						}
+						possibleUnlockRooms.Add(i);
 					}
 				}
 			}
 
-			if (!possibleUnlockRooms.Any() && deadEnd == -1)
+			// Chance to not use deepest corner for unlock place.
+			if (_rng.GetUInt32(100) < 40)
+				deadEnd = -1;
+
+			if (possibleUnlockRooms.Count == 0)
 			{
 				// TODO: Return locked place to list on available doors.
 				throw new PuzzleException("We out of unlock places");
 			}
 
-			var placeIndex = deadEnd != -1 ? deadEnd : possibleUnlockRooms[0];
+			var placeIndex = deadEnd != -1 ? deadEnd : possibleUnlockRooms[(int)_rng.GetUInt32((uint)possibleUnlockRooms.Count)];
 
 			// Walk down from current place to our path and add new possible doors to this._lockedDoorCandidates
 			room = this.Places[placeIndex].Room;
