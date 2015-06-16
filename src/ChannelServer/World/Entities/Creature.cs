@@ -398,12 +398,22 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// AttMin from monster xml.
 		/// </summary>
-		public int AttackMinBase { get { return (this.RightHand == null ? this.RaceData.AttackMinBase : 0); } }
+		/// <remarks>
+		/// This seems to count towards the creature's damage even if a weapon
+		/// is equipped. This assumption is based on the fact that Golems
+		/// have a 0 attack weapon, that would make them almost no damage.
+		/// </remarks>
+		public int AttackMinBase { get { return this.RaceData.AttackMinBase; } }
 
 		/// <summary>
-		/// AttMin from monster xml.
+		/// AttMax from monster xml.
 		/// </summary>
-		public int AttackMaxBase { get { return (this.RightHand == null ? this.RaceData.AttackMaxBase : 0); } }
+		/// <remarks>
+		/// This seems to count towards the creature's damage even if a weapon
+		/// is equipped. This assumption is based on the fact that Golems
+		/// have a 0 attack weapon, that would make them almost no damage.
+		/// </remarks>
+		public int AttackMaxBase { get { return this.RaceData.AttackMaxBase; } }
 
 		/// <summary>
 		/// AttackMin from races xml.
@@ -1253,25 +1263,13 @@ namespace Aura.Channel.World.Entities
 					balance = (balance + this.LeftBalanceMod) / 2;
 			}
 
-			var min = 0;
-			if (this.RightHand == null)
-				min = this.AttackMinBase + this.AttackMinBaseMod;
-			else
-			{
-				min = this.RightAttackMinMod;
-				if (this.LeftHand != null)
-					min = (min + this.LeftAttackMinMod) / 2;
-			}
+			var min = this.AttackMinBase + this.AttackMinBaseMod + this.RightAttackMinMod;
+			if (this.LeftHand != null)
+				min = (min + this.LeftAttackMinMod) / 2;
 
-			var max = 0;
-			if (this.RightHand == null)
-				max = this.AttackMaxBase + this.AttackMaxBaseMod;
-			else
-			{
-				max = this.RightAttackMaxMod;
-				if (this.LeftHand != null)
-					max = (max + this.LeftAttackMaxMod) / 2;
-			}
+			var max = this.AttackMaxBase + this.AttackMaxBaseMod + this.RightAttackMaxMod;
+			if (this.LeftHand != null)
+				max = (max + this.LeftAttackMaxMod) / 2;
 
 			return this.GetRndDamage(min, max, balance);
 		}
