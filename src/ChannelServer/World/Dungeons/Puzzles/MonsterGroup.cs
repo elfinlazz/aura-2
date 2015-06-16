@@ -136,9 +136,18 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				return;
 			}
 
+			this.AddDrop(place.Key);
+		}
+
+		/// <summary>
+		/// Adds item to the drops of one random monster in this group.
+		/// </summary>
+		/// <param name="item"></param>
+		public void AddDrop(Item item)
+		{
 			var rnd = RandomProvider.Get();
 			var rndMonster = _monsters[rnd.Next(_monsters.Count)];
-			rndMonster.Drops.Add(place.Key);
+			rndMonster.Drops.Add(item);
 		}
 	}
 }

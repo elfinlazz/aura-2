@@ -56,3 +56,14 @@ public class SwitchDoorSwitchMonsterScript : PuzzleScript
 		}
 	}
 }
+
+// The monsters that spawn when you hit the wrong switch
+// drop chest keys.
+[PuzzleScript("chestkey_switchdoor_switchmonster")]
+public class ChestKeySwitchDoorSwitchMonsterScript : SwitchDoorSwitchMonsterScript
+{
+	public override void OnMobAllocated(Puzzle puzzle, MonsterGroup group)
+	{
+		group.AddDrop(Item.CreateKey(70028, "chest"));
+	}
+}

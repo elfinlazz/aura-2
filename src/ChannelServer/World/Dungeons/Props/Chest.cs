@@ -15,6 +15,8 @@ namespace Aura.Channel.World.Dungeons.Props
 	{
 		protected List<Item> _items;
 
+		public bool IsOpen { get { return (this.State == "open"); } }
+
 		public Chest(int propId, string name)
 			: base(propId, name)
 		{

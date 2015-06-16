@@ -4,6 +4,7 @@
 using Aura.Shared.Scripting.Scripts;
 using Aura.Shared.Util;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using Aura.Channel.World.Dungeons.Puzzles;
@@ -77,6 +78,23 @@ namespace Aura.Channel.Scripting.Scripts
 		{
 			var rnd = RandomProvider.Get();
 			return rnd.Next(min, max);
+		}
+
+		/// <summary>
+		/// Returns the specified amount of random values from the parameters.
+		/// The returned values contain every parameter only once.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="amount"></param>
+		/// <param name="values"></param>
+		/// <returns></returns>
+		protected T[] UniqueRnd<T>(int amount, params T[] values)
+		{
+			if (values == null || values.Length == 0 || values.Length < amount)
+				throw new ArgumentException("Values might not be null, empty, or be smaller than amount.");
+
+			var rnd = RandomProvider.Get();
+			return values.OrderBy(a => rnd.Next()).Take(amount).ToArray();
 		}
 
 		/// <summary>
