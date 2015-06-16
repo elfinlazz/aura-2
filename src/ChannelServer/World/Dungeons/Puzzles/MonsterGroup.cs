@@ -97,7 +97,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 			foreach (var monster in _monsters)
 			{
-				var pos = this.Place.GetPropPosition(_spawnPosition);
+				var pos = this.Place.GetPosition(_spawnPosition);
 				monster.Direction = MabiMath.DegreeToByte(pos[2]);
 				monster.Spawn(region.Id, pos[0], pos[1]);
 

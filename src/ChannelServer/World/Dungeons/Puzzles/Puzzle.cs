@@ -174,7 +174,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				throw new PuzzleException("NewChest outside of OnPuzzleCreate.");
 
 			var p = place as PuzzlePlace;
-			var pos = p.GetPropPosition(positionType);
+			var pos = p.GetPosition(positionType);
 
 			prop.RegionId = this.Region.Id;
 			prop.Info.X = pos[0];

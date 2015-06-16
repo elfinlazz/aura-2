@@ -303,12 +303,12 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		}
 
 		/// <summary>
-		/// Returns prop position and direction for placement.
+		/// Returns position and direction for placement.
 		/// </summary>
 		/// <param name="placement"></param>
 		/// <param name="border"></param>
 		/// <returns>3 values, X, Y, and Direction (in degree).</returns>
-		public int[] GetPropPosition(Placement placement, int border = -1)
+		public int[] GetPosition(Placement placement, int border = -1)
 		{
 			if (_placeIndex == -1)
 				throw new PuzzleException("Place hasn't been declared anything or it wasn't reserved.");
@@ -329,7 +329,11 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 			var pos = _placementProviders[placement].GetPosition();
 			if (pos == null)
-				throw new PuzzleException(string.Format("Out of positions for placement type '{0}'.", placement));
+			{
+				if (!_placementProviders.ContainsKey(Placement.Random))
+					_placementProviders[Placement.Random] = new PlacementProvider(Placement.Random, radius);
+				pos = _placementProviders[Placement.Random].GetPosition();
+			}
 
 			pos[0] += this.X;
 			pos[1] += this.Y;
