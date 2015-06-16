@@ -207,7 +207,13 @@ namespace Aura.Channel.World.Dungeons.Generation
 				room = this.Places[i].Room;
 				if (!this.Places[i].IsUsed && !room.isLocked && room.RoomType != RoomType.Start)
 				{
-					var haveLockedDoors = room.DoorType.Contains((int) DungeonBlockType.DoorWithLock);
+					var haveLockedDoors = false;
+					for (var j = 0; j < 4; ++j)
+						if (room.DoorType[j] == (int) DungeonBlockType.DoorWithLock && room.Links[j] == LinkType.To)
+						{
+							haveLockedDoors = true;
+							break;
+						}
 					if (!haveLockedDoors)
 					{
 						if (room.isOnPath)
