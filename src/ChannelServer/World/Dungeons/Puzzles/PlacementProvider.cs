@@ -65,9 +65,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 		private static readonly float[,] _center9Offsets =
 		{
-			{ -1,1,0 }, { 0,1,0 }, { 1,1,0 },
-			{ -1,0,0 }, { 0,0,0 }, { 1,0,0 },
-			{ -1,-1,0 },{ 0,-1,0 },{ 1,-1,0 },
+			{ -0.8f,0.8f,315 },{ 0,0.8f,270 }, { 0.8f,0.8f,225 },
+			{ -0.8f,0,0 },       { 0,0,270 },     { 0.8f,0,180 },
+			{ -0.8f,-0.8f,45 },{ 0,-0.8f,90 },{ 0.8f,-0.8f,135 },
 		};
 
 		private static readonly float[,] _centerOffset =
