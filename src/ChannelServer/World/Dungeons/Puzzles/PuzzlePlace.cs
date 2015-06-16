@@ -19,8 +19,12 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		private DungeonFloorSection _section;
 		private string _name;
 		private RoomTrait _room;
-		private int _placeIndex;
 		private Dictionary<Placement, PlacementProvider> _placementProviders;
+
+		/// <summary>
+		/// Index of this place in DungeonFloorSection.Places list
+		/// </summary>
+		public int PlaceIndex { get; private set; }
 
 		/// <summary>
 		/// X world coordinate of this place.
@@ -85,7 +89,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 			_section = section;
 			_name = name;
-			_placeIndex = -1;
+			PlaceIndex = -1;
 			this.Puzzle = puzzle;
 		}
 
@@ -150,7 +154,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			if (doorElement == null)
 				return;
 
-			_placeIndex = doorElement.PlaceIndex;
+			PlaceIndex = doorElement.PlaceIndex;
 			_room = doorElement.Room;
 			this.UpdatePosition();
 			this.IsLock = true;
@@ -190,11 +194,11 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public void DeclareUnlock(PuzzlePlace lockPlace)
 		{
 			var place = lockPlace as PuzzlePlace;
-			if (place == null || place._placeIndex == -1)
+			if (place == null || place.PlaceIndex == -1)
 				throw new PuzzleException("We can't declare unlock");
 
-			_placeIndex = _section.GetUnlock(place._placeIndex);
-			_room = _section.Places[_placeIndex].Room;
+			PlaceIndex = _section.GetUnlock(place);
+			_room = _section.Places[PlaceIndex].Room;
 			this.IsUnlock = true;
 
 			this.UpdatePosition();
@@ -207,11 +211,11 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public void ReservePlace()
 		{
 			if (this.IsUnlock || this.IsLock || this.IsBossLock)
-				_section.ReservePlace(_placeIndex);
+				_section.ReservePlace(PlaceIndex);
 			else
 			{
-				_placeIndex = _section.ReservePlace();
-				_room = _section.Places[_placeIndex].Room;
+				PlaceIndex = _section.ReservePlace();
+				_room = _section.Places[PlaceIndex].Room;
 
 				this.UpdatePosition();
 			}
@@ -310,7 +314,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <returns>3 values, X, Y, and Direction (in degree).</returns>
 		public int[] GetPosition(Placement placement, int border = -1)
 		{
-			if (_placeIndex == -1)
+			if (PlaceIndex == -1)
 				throw new PuzzleException("Place hasn't been declared anything or it wasn't reserved.");
 
 			// todo: check those values

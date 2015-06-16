@@ -196,8 +196,9 @@ namespace Aura.Channel.World.Dungeons.Generation
 			return result;
 		}
 
-		public int GetUnlock(int lockedPlaceIndex)
+		public int GetUnlock(PuzzlePlace lockedPlace)
 		{
+			var lockedPlaceIndex = lockedPlace.PlaceIndex;
 			List<int> possibleUnlockRooms = new List<int>();
 			var deadEnd = -1;
 			var deadEndDepth = 0;
@@ -236,7 +237,20 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 			if (possibleUnlockRooms.Count == 0)
 			{
-				// TODO: Return locked place to list on available doors.
+				// Convert locked place room back to alley if there are no more locked doors.
+				room = this.Places[lockedPlaceIndex].Room;
+				room.SetDoorType(lockedPlace.DoorDirection, (int) DungeonBlockType.Alley);
+				room.SetPuzzleDoor(null, lockedPlace.DoorDirection);
+				var isLockedRoom = room.DoorType.Any(x => (x == (int)DungeonBlockType.DoorWithLock || x == (int)DungeonBlockType.BossDoor));
+				if (!isLockedRoom)
+				{
+					room.isLocked = false;
+					room.RoomType = RoomType.Alley;
+				}
+
+				// Return locked place door to list on available doors.
+				var lockedDoorCandidate = new LockedDoorCandidateNode(room, lockedPlace.DoorDirection, room.RoomIndex);
+				_lockedDoorCandidates.AddFirst(lockedDoorCandidate);
 				throw new PuzzleException("We out of unlock places");
 			}
 
