@@ -59,6 +59,7 @@ namespace Aura.Channel.World.Entities
 		public CreatureConditions Conditions { get; protected set; }
 		public CreatureQuests Quests { get; protected set; }
 		public CreatureDrops Drops { get; protected set; }
+		public CreatureDeadMenu DeadMenu { get; protected set; }
 		public AimMeter AimMeter { get; protected set; }
 
 		public ScriptVariables Vars { get; protected set; }
@@ -148,7 +149,7 @@ namespace Aura.Channel.World.Entities
 		public double MoveDuration { get { return _moveDuration; } }
 
 		/// <summary>
-		/// Location if the creature before the warp.
+		/// Location of the creature before the warp.
 		/// </summary>
 		public Location LastLocation { get; set; }
 
@@ -156,6 +157,11 @@ namespace Aura.Channel.World.Entities
 		/// Location to fall back to, when saving in a temp region.
 		/// </summary>
 		public Location FallbackLocation { get; set; }
+
+		/// <summary>
+		/// Location the player has saved at in a dungeon.
+		/// </summary>
+		public Location DungeonSaveLocation { get; set; }
 
 		/// <summary>
 		/// True while character is warping somewhere.
@@ -710,6 +716,7 @@ namespace Aura.Channel.World.Entities
 			this.Conditions = new CreatureConditions(this);
 			this.Quests = new CreatureQuests(this);
 			this.Drops = new CreatureDrops(this);
+			this.DeadMenu = new CreatureDeadMenu(this);
 			this.AimMeter = new AimMeter(this);
 
 			this.Vars = new ScriptVariables();
@@ -931,6 +938,17 @@ namespace Aura.Channel.World.Entities
 		/// <param name="y"></param>
 		/// <returns></returns>
 		public abstract bool Warp(int regionId, int x, int y);
+
+		/// <summary>
+		/// Warps creature to target location,
+		/// returns false if warp is unsuccessful.
+		/// </summary>
+		/// <param name="location"></param>
+		/// <returns></returns>
+		public bool Warp(Location loc)
+		{
+			return this.Warp(loc.RegionId, loc.X, loc.Y);
+		}
 
 		/// <summary>
 		/// Warps creature to target location path,

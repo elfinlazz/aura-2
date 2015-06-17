@@ -8,7 +8,14 @@ namespace Aura.Channel.World.Entities.Creatures
 {
 	public class CreatureDeadMenu
 	{
+		public Creature Creature { get; private set; }
+
 		public ReviveOptions Options { get; set; }
+
+		public CreatureDeadMenu(Creature creature)
+		{
+			this.Creature = creature;
+		}
 
 		public void Add(ReviveOptions option)
 		{
@@ -18,6 +25,11 @@ namespace Aura.Channel.World.Entities.Creatures
 		public bool Has(ReviveOptions option)
 		{
 			return ((this.Options & option) != 0);
+		}
+
+		public void Clear()
+		{
+			this.Options = ReviveOptions.None;
 		}
 
 		public override string ToString()

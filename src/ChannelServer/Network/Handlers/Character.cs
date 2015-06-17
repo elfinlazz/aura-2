@@ -11,6 +11,7 @@ using Aura.Shared.Util;
 using Aura.Mabi.Const;
 using Aura.Channel.World.Entities.Creatures;
 using Aura.Mabi.Network;
+using Aura.Channel.World.Dungeons;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -58,12 +59,30 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
-			// ...
+			creature.DeadMenu.Clear();
 
-			var menu = new CreatureDeadMenu();
-			menu.Add(ReviveOptions.HereNoPenalty);
+			// Defaults
+			creature.DeadMenu.Add(ReviveOptions.Town);
+			creature.DeadMenu.Add(ReviveOptions.WaitForRescue);
 
-			Send.DeadMenuR(creature, menu);
+			// Dungeons
+			if (creature.Region is DungeonRegion)
+			{
+				creature.DeadMenu.Add(ReviveOptions.DungeonEntrance);
+				creature.DeadMenu.Add(ReviveOptions.StatueOfGoddess);
+			}
+			// Fields
+			else
+			{
+				//if(creature.Exp > -90%)
+				creature.DeadMenu.Add(ReviveOptions.Here);
+			}
+
+			// Special
+			if (creature.Titles.SelectedTitle == 60001) // devCAT
+				creature.DeadMenu.Add(ReviveOptions.HereNoPenalty);
+
+			Send.DeadMenuR(creature, creature.DeadMenu);
 		}
 
 		/// <summary>
@@ -84,15 +103,70 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 			if (creature == null) return;
 
-			if (!creature.IsDead)
+			if (!creature.IsDead || !creature.DeadMenu.Has(option))
 			{
 				Send.Revive_Fail(creature);
 				return;
 			}
 
-			// ...
+			var dungeonRegion = creature.Region as DungeonRegion;
 
-			creature.Revive();
+			// TODO: Penalty
+
+			switch (option)
+			{
+				case ReviveOptions.WaitForRescue:
+					// TODO: Implement hidden revive skill
+					//Send.DeadFeather(creature, ...);
+					//Send.Revived(creature, true, 0, 0, 0);
+					break;
+
+				case ReviveOptions.Here:
+					goto case ReviveOptions.HereNoPenalty;
+
+				case ReviveOptions.HereNoPenalty:
+					creature.Revive();
+					creature.DeadMenu.Clear();
+					return;
+
+				case ReviveOptions.Town:
+					creature.Warp(1, 12800, 38100); // TODO: Implement LastTown
+					creature.Revive();
+					creature.DeadMenu.Clear();
+					return;
+
+				case ReviveOptions.DungeonEntrance:
+					if (dungeonRegion == null || creature.DungeonSaveLocation.RegionId == 0)
+					{
+						Log.Warning("Dungeon revive outside of dungeon or without save location (Creature: {0:X16})", creature.EntityId);
+						break;
+					}
+
+					creature.Warp(dungeonRegion.Dungeon.Data.Exit);
+					creature.Revive();
+					creature.DeadMenu.Clear();
+					return;
+
+				case ReviveOptions.StatueOfGoddess:
+					if (dungeonRegion == null || creature.DungeonSaveLocation.RegionId == 0)
+					{
+						Log.Warning("Dungeon revive outside of dungeon or without save location (Creature: {0:X16})", creature.EntityId);
+						break;
+					}
+
+					creature.Warp(creature.DungeonSaveLocation);
+					creature.Revive();
+					creature.DeadMenu.Clear();
+					return;
+
+				default:
+					Log.Unimplemented("ReviveOption '{0}'", option);
+					Send.ServerMessage(creature, "Unimplemented: ReviveOption '{0}'", option);
+					break;
+			}
+
+			Send.ServerMessage(creature, "Revive failed.");
+			Send.Revive_Fail(creature);
 		}
 	}
 }
