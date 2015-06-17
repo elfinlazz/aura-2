@@ -10,8 +10,7 @@ using Aura.Channel.World.Dungeons.Puzzles;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 
-[PuzzleScript("keychest_9chest_ciar")]
-public class Keychest9ChestScript : PuzzleScript
+public abstract class Keychest9ChestScript : PuzzleScript
 {
 	public override void OnPrepare(Puzzle puzzle)
 	{
@@ -40,29 +39,7 @@ public class Keychest9ChestScript : PuzzleScript
 		}
 	}
 
-	protected virtual void AddChestDrops(Chest chest, int i, bool monsterChest)
-	{
-		if (!monsterChest)
-			chest.Add(Item.Create(id: 2000, amountMin: 100, amountMax: 250));
-
-		// Enchant
-		int prefix = 0, suffix = 0;
-		switch (Random(10))
-		{
-			case 0:
-			case 1:
-			case 2:
-			case 3: prefix = 20205; break; // Restfull
-			case 4:
-			case 5:
-			case 6: prefix = 20204; break; // Foggy
-			case 7:
-			case 8: suffix = 30501; break; // Giant
-			case 9: suffix = 30602; break; // Healer
-		}
-
-		chest.Add(Item.Create(id: 62005, prefix: prefix, suffix: suffix));
-	}
+	protected abstract void AddChestDrops(Chest chest, int chestNum, bool monsterChest);
 
 	public override void OnPropEvent(Puzzle puzzle, Prop prop)
 	{
@@ -87,5 +64,61 @@ public class Keychest9ChestScript : PuzzleScript
 			return;
 
 		puzzle.GetPlace("Place").OpenAllDoors();
+	}
+}
+
+[PuzzleScript("keychest_9chest_ciar")]
+public class Keychest9ChestCiarScript : Keychest9ChestScript
+{
+	protected override void AddChestDrops(Chest chest, int chestNum, bool monsterChest)
+	{
+		if (!monsterChest)
+			chest.Add(Item.Create(id: 2000, amountMin: 100, amountMax: 250));
+
+		// Enchant
+		int prefix = 0, suffix = 0;
+		switch (Random(10))
+		{
+			case 0:
+			case 1:
+			case 2:
+			case 3: prefix = 20205; break; // Restfull
+			case 4:
+			case 5:
+			case 6: prefix = 20204; break; // Foggy
+			case 7:
+			case 8: suffix = 30501; break; // Giant
+			case 9: suffix = 30602; break; // Healer
+		}
+
+		chest.Add(Item.Create(id: 62005, prefix: prefix, suffix: suffix));
+	}
+}
+
+[PuzzleScript("keychest_9chest_barri")]
+public class Keychest9ChestBarriScript : Keychest9ChestScript
+{
+	protected override void AddChestDrops(Chest chest, int chestNum, bool monsterChest)
+	{
+		if (!monsterChest)
+			chest.Add(Item.Create(id: 2000, amountMin: 250, amountMax: 400));
+
+		// Enchant
+		int prefix = 0, suffix = 0;
+		switch (Random(10))
+		{
+			case 0:
+			case 1:
+			case 2: prefix = 20401; break; // Smart
+			case 3:
+			case 4:
+			case 5: prefix = 20402; break; // Strong
+			case 6:
+			case 7: suffix = 30702; break; // Raven
+			case 8: suffix = 30704; break; // Deadly
+			case 9: suffix = 30805; break; // Falcon
+		}
+
+		chest.Add(Item.Create(id: 62005, prefix: prefix, suffix: suffix));
 	}
 }
