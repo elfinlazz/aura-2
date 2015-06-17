@@ -74,9 +74,14 @@ namespace Aura.Channel.World.Entities
 		public PropFunc Behavior { get; set; }
 
 		/// <summary>
-		/// Prop's name (only supported by specific props)
+		/// Prop's ident? Name?
 		/// </summary>
-		public string Name { get; set; }
+		/// <remarks>
+		/// It's not clear what this is used for, dungeon portals specify
+		/// "_upstairs" and "_downstairs", but what's displayed above them
+		/// is the title, same with Guild Stones.
+		/// </remarks>
+		public string Ident { get; set; }
 
 		/// <summary>
 		/// Prop's title (only supported by specific props)
@@ -137,10 +142,10 @@ namespace Aura.Channel.World.Entities
 		/// <param name="direction"></param>
 		/// <param name="scale"></param>
 		/// <param name="altitude"></param>
-		/// <param name="name"></param>
+		/// <param name="ident"></param>
 		/// <param name="title"></param>
-		public Prop(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0, string state = "", string name = "", string title = "")
-			: this(0, id, regionId, x, y, direction, scale, altitude, state, name, title)
+		public Prop(int id, int regionId, int x, int y, float direction, float scale = 1f, float altitude = 0, string state = "", string ident = "", string title = "")
+			: this(0, id, regionId, x, y, direction, scale, altitude, state, ident, title)
 		{
 		}
 
@@ -156,9 +161,9 @@ namespace Aura.Channel.World.Entities
 		/// <param name="scale"></param>
 		/// <param name="altitude"></param>
 		/// <param name="state"></param>
-		/// <param name="name"></param>
+		/// <param name="ident"></param>
 		/// <param name="title"></param>
-		public Prop(long entityId, int id, int regionId, int x, int y, float direction, float scale, float altitude, string state, string name, string title)
+		public Prop(long entityId, int id, int regionId, int x, int y, float direction, float scale, float altitude, string state, string ident, string title)
 		{
 			this.Shapes = new List<Point[]>();
 			this.Temp = new PropTemp();
@@ -167,7 +172,7 @@ namespace Aura.Channel.World.Entities
 			_resource = 100;
 
 			this.EntityId = entityId;
-			this.Name = name;
+			this.Ident = ident;
 			this.Title = title;
 			this.Info.Id = id;
 			this.Info.Region = regionId;

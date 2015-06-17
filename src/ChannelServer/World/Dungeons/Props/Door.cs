@@ -15,7 +15,7 @@ namespace Aura.Channel.World.Dungeons.Props
 	public class Door : Prop
 	{
 		/// <summary>
-		/// Internal name of the door, used from puzzles.
+		/// Name of the door, used from puzzles.
 		/// </summary>
 		public string InternalName { get; protected set; }
 

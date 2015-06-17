@@ -16,9 +16,9 @@ namespace Aura.Channel.World.Dungeons.Props
 	public abstract class DungeonProp : Prop
 	{
 		/// <summary>
-		/// Internal name of the prop, used in puzzles.
+		/// Name of the prop, used in puzzles.
 		/// </summary>
-		public string InternalName { get; protected set; }
+		public string Name { get; protected set; }
 
 		/// <summary>
 		/// Initializes prop.
@@ -29,7 +29,7 @@ namespace Aura.Channel.World.Dungeons.Props
 		public DungeonProp(int id, string name, string state = "")
 			: base(id, 0, 0, 0, 0, 1, 0, state, "", "")
 		{
-			this.InternalName = name;
+			this.Name = name;
 		}
 	}
 }

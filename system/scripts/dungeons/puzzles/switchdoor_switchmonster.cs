@@ -43,16 +43,16 @@ public class SwitchDoorSwitchMonsterScript : PuzzleScript
 		if (Switch == null)
 			return;
 
-		if (Switch.State == "on" && !puzzle.Get(Switch.InternalName + "Activated"))
+		if (Switch.State == "on" && !puzzle.Get(Switch.Name + "Activated"))
 		{
-			puzzle.Set(Switch.InternalName + "Activated", true);
+			puzzle.Set(Switch.Name + "Activated", true);
 
 			var lockedPlace = puzzle.GetPlace("LockedPlace");
 
-			if (Switch.InternalName == puzzle.Get("open"))
+			if (Switch.Name == puzzle.Get("open"))
 				puzzle.OpenPlace(lockedPlace);
 			else
-				lockedPlace.SpawnSingleMob(Switch.InternalName + "Mob", "Mob1");
+				lockedPlace.SpawnSingleMob(Switch.Name + "Mob", "Mob1");
 		}
 	}
 }

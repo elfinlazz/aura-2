@@ -22,7 +22,7 @@ namespace Aura.Channel.World.Dungeons.Props
 		{
 			_items = new List<Item>();
 
-			this.InternalName = name;
+			this.Name = name;
 			this.Behavior = this.DefaultBehavior;
 		}
 

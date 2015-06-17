@@ -20,7 +20,7 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// <summary>
 		/// Creates new switch prop with a default prop id.
 		/// </summary>
-		/// <param name="name">Internal name of the prop.</param>
+		/// <param name="name">Name of the prop.</param>
 		/// <param name="color">Color of the orb.</param>
 		public Switch(string name, uint color)
 			: this(10202, name, color)
@@ -31,12 +31,12 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// Creates new switch prop.
 		/// </summary>
 		/// <param name="propId">Id of the switch prop.</param>
-		/// <param name="name">Internal name of the prop.</param>
+		/// <param name="name">Name of the prop.</param>
 		/// <param name="color">Color of the orb.</param>
 		public Switch(int propId, string name, uint color)
 			: base(propId, name)
 		{
-			this.InternalName = name;
+			this.Name = name;
 			this.State = "off";
 			this.Info.Color2 = color;
 

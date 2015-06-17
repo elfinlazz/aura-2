@@ -183,7 +183,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			prop.Behavior += PuzzleEvent;
 
 			this.Region.AddProp(prop);
-			this.Props[prop.InternalName] = prop;
+			this.Props[prop.Name] = prop;
 		}
 
 		public void PuzzleEvent(Creature creature, Prop prop)

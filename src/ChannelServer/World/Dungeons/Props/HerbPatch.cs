@@ -18,7 +18,7 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// Creates new herb patch prop.
 		/// </summary>
 		/// <param name="propId">Id of the herb prop.</param>
-		/// <param name="name">Internal name of the prop.</param>
+		/// <param name="name">Name of the prop.</param>
 		/// <param name="color">Color of the leaves.</param>
 		public HerbPatch(int propId, string name, uint color)
 			: base(propId, name)

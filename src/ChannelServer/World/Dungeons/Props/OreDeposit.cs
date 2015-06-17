@@ -18,7 +18,7 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// Creates new ore deposit.
 		/// </summary>
 		/// <param name="propId">Id of the ore prop.</param>
-		/// <param name="name">Internal name of the prop.</param>
+		/// <param name="name">Name of the prop.</param>
 		public OreDeposit(int propId, string name)
 			: base(propId, name, "normal")
 		{

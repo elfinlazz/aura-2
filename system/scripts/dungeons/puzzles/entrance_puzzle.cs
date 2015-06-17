@@ -39,7 +39,7 @@ public class EntrancePuzzleScript : PuzzleScript
 	public override void OnPropEvent(Puzzle puzzle, Prop prop)
 	{
 		var chest = prop as Chest;
-		if (chest != null && chest.InternalName == "KeyChest" && !puzzle.Get("ChestOpen"))
+		if (chest != null && chest.Name == "KeyChest" && !puzzle.Get("ChestOpen"))
 		{
 			puzzle.Set("ChestOpen", true);
 

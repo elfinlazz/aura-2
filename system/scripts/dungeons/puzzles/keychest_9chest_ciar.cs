@@ -67,16 +67,16 @@ public class Keychest9ChestScript : PuzzleScript
 	public override void OnPropEvent(Puzzle puzzle, Prop prop)
 	{
 		var chest = prop as LockedChest;
-		if (chest == null || puzzle.Get(chest.InternalName + "Open") || !chest.IsOpen)
+		if (chest == null || puzzle.Get(chest.Name + "Open") || !chest.IsOpen)
 			return;
 
-		puzzle.Set(chest.InternalName + "Open", true);
+		puzzle.Set(chest.Name + "Open", true);
 
-		if (puzzle.Get(chest.InternalName + "Monster"))
+		if (puzzle.Get(chest.Name + "Monster"))
 		{
 			var place = puzzle.GetPlace("Place");
 			place.CloseAllDoors();
-			place.SpawnSingleMob(chest.InternalName + "Mob", "Mob" + puzzle.Get("MonsterI"));
+			place.SpawnSingleMob(chest.Name + "Mob", "Mob" + puzzle.Get("MonsterI"));
 			puzzle.Set("MonsterI", puzzle.Get("MonsterI") + 1);
 		}
 	}

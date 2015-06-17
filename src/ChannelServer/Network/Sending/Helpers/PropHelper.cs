@@ -19,7 +19,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			// look a bit different.
 			if (prop.ServerSide)
 			{
-				packet.PutString(prop.Name);
+				packet.PutString(prop.Ident);
 				packet.PutString(prop.Title);
 				packet.PutBin(prop.Info);
 				packet.PutString(prop.State);

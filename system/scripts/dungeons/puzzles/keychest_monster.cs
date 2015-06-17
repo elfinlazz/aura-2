@@ -60,7 +60,7 @@ public class KeychestMonsterScript : PuzzleScript
 		var chest = prop as Chest;
 		if (chest != null)
 		{
-			if (chest.InternalName == "KeyChest" && !puzzle.Get("ChestOpen"))
+			if (chest.Name == "KeyChest" && !puzzle.Get("ChestOpen"))
 			{
 				puzzle.Set("ChestOpen", true);
 
