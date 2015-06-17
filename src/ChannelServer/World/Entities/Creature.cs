@@ -164,6 +164,16 @@ namespace Aura.Channel.World.Entities
 		public Location DungeonSaveLocation { get; set; }
 
 		/// <summary>
+		/// Event path to last visited town.
+		/// </summary>
+		public string LastTown
+		{
+			get { return (string.IsNullOrWhiteSpace(_lastTown) ? "Uladh_main/town_TirChonaill/TirChonaill_Spawn_A" : _lastTown); }
+			set { _lastTown = value; }
+		}
+		private string _lastTown;
+
+		/// <summary>
 		/// True while character is warping somewhere.
 		/// </summary>
 		public bool Warping { get; set; }

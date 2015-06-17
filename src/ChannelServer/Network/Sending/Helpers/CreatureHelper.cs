@@ -126,8 +126,8 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutShort(0);			         // RightInjuryMaxMod
 				packet.PutFloat(creature.LeftCriticalMod);
 				packet.PutFloat(creature.RightCriticalMod);
-				packet.PutShort((short)creature.LeftBalanceMod);			         
-				packet.PutShort((short)creature.RightBalanceMod);			        
+				packet.PutShort((short)creature.LeftBalanceMod);
+				packet.PutShort((short)creature.RightBalanceMod);
 				packet.PutFloat(0);			         // MagicDefenseMod
 				// [180300, NA166 (18.09.2013)] Magic Protection
 				{
@@ -198,7 +198,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutFloat(0);			         // toxicDex
 				packet.PutFloat(0);			         // toxicWill
 				packet.PutFloat(0);			         // toxicLuck
-				packet.PutString("Uladh_main/town_TirChonaill/TirChonaill_Spawn_A"); // Last town
+				packet.PutString(creature.LastTown);
 				packet.PutShort(1);					 // ExploLevel
 				packet.PutShort(0);					 // ExploMaxKeyLevel
 				packet.PutInt(0);					 // ExploCumLevel

@@ -48,6 +48,7 @@ namespace Aura.Channel.Util
 			Add(01, 50, "who", "", HandleWho);
 			Add(01, 50, "motion", "<category> <motion>", HandleMotion);
 			Add(01, 50, "gesture", "<gesture>", HandleGesture);
+			Add(01, 50, "lasttown", "", HandleLastTown);
 
 			// GMs
 			Add(50, 50, "warp", "<region> [x] [y]", HandleWarp);
@@ -1604,6 +1605,16 @@ namespace Aura.Channel.Util
 				Send.SystemMessage(sender, Localization.Get("Failed to create dungeon."), dungeonName);
 				return CommandResult.Fail;
 			}
+
+			return CommandResult.Okay;
+		}
+
+		private CommandResult HandleLastTown(ChannelClient client, Creature sender, Creature target, string message, IList<string> args)
+		{
+			if (string.IsNullOrWhiteSpace(target.LastTown))
+				Send.ServerMessage(sender, Localization.Get("No last town found."));
+			else if (!target.Warp(target.LastTown))
+				Send.ServerMessage(sender, Localization.Get("Warp failed."));
 
 			return CommandResult.Okay;
 		}

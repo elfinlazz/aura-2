@@ -130,7 +130,7 @@ namespace Aura.Channel.Network.Handlers
 					return;
 
 				case ReviveOptions.Town:
-					creature.Warp(1, 12800, 38100); // TODO: Implement LastTown
+					creature.Warp(creature.LastTown);
 					creature.Revive();
 					creature.DeadMenu.Clear();
 					return;

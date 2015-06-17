@@ -9,6 +9,7 @@ namespace Aura.Mabi.Const
 		AreaChange = 10, // ? (texts, bgm change)
 		Collision = 14,
 		CreatureSpawn = 2000,
+		SaveTown = 2610,
 	}
 
 	public enum SignalType : int

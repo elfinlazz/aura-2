@@ -220,6 +220,7 @@ namespace Aura.Channel.Database
 					character.AbilityPoints = reader.GetInt16("ap");
 					character.Age = reader.GetInt16("age");
 					character.State = (CreatureStates)reader.GetUInt32("state");
+					character.LastTown = reader.GetStringSafe("lastTown");
 
 					character.CreationTime = reader.GetDateTimeSafe("creationTime");
 					character.LastRebirth = reader.GetDateTimeSafe("lastRebirth");
@@ -958,6 +959,7 @@ namespace Aura.Channel.Database
 				cmd.Set("state", (uint)creature.State);
 				cmd.Set("age", creature.Age);
 				cmd.Set("rebirthCount", creature.RebirthCount);
+				cmd.Set("lastTown", creature.LastTown);
 
 				cmd.Set("lastAging", creature.LastAging);
 				if (creature.LastRebirth != DateTime.MinValue)
