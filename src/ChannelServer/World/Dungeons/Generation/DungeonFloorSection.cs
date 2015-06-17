@@ -292,13 +292,20 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		public int ReservePlace()
 		{
-			var unused = this.Places.FindAll(x => !x.IsUsed);
-			if (unused.Count == 0)
+			var unusedCount = this.Places.Count(x => !x.IsUsed);
+			if (unusedCount == 0)
 				throw new PuzzleException("We out of empty places");
-			var i = (int)this._rng.GetUInt32(0, (uint)unused.Count - 1);
-			unused[i].IsUsed = true;
-			unused[i].Room.isReserved = true;
-			return i;
+			var i = (int)this._rng.GetUInt32(0, (uint)unusedCount - 1);
+			var placeIndex = 0;
+			for (; placeIndex < this.Places.Count; ++placeIndex)
+			{
+				if (this.Places[placeIndex].IsUsed) continue;
+				if (i == 0) break;
+				--i;
+			}
+			this.Places[placeIndex].IsUsed = true;
+			this.Places[placeIndex].Room.isReserved = true;
+			return placeIndex;
 		}
 
 		/// <summary>
