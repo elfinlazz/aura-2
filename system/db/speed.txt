@@ -437,4 +437,4 @@ PetLamb/*/Walk,                164.226000
 albangolem/*/run,              900.000000
 albangolem/*/walk,             207.689000
 PetSouloftuan/*/run,          1245.000000
-PetSouloftuan/*/walk,          187.500000
+PetSouloftuan/*/walk,          176.894000

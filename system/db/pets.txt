@@ -237,7 +237,6 @@
 { raceId: 490027, name: "Night Sweeper", timeLimit: 102, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
 { raceId: 490028, name: "Courageous Night Sweeper", timeLimit: 102, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
 { raceId: 490029, name: "Bashful Night Sweeper", timeLimit: 102, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
-{ raceId: 490042, name: "SoulOfTuan", timeLimit: 90, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 100, str: 40, int: 60, dex: 48, will: 46, luck: 30, defense: 15, protection: 8 },
 
 // Wild Cats
 //---------------------------------------------------------------------------
@@ -312,7 +311,7 @@
 { raceId: 270904, name: "Floral Fairy (M)", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 40, str: 40, int: 60, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 { raceId: 270905, name: "Floral Fairy (F)", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 40, str: 40, int: 60, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 
-// The 7 sheeps
+// The 7 sheep
 //---------------------------------------------------------------------------
 { raceId: 490033, name: "Brainy Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
 { raceId: 490035, name: "Smarmy Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
@@ -321,6 +320,10 @@
 { raceId: 490038, name: "Gloomy Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
 { raceId: 490039, name: "Cranky Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
 { raceId: 490040, name: "Meany Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
+
+// ?
+//---------------------------------------------------------------------------
+{ raceId: 490042, name: "Spirit of Tuan", timeLimit: 90, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 100, str: 40, int: 60, dex: 48, will: 46, luck: 30, defense: 15, protection: 8 },
 
 // Partners
 //---------------------------------------------------------------------------
