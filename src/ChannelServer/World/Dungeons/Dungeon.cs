@@ -171,15 +171,25 @@ namespace Aura.Channel.World.Dungeons
 			var rng = this.Generator.RngPuzzles;
 			var sections = this.Generator.Floors[i].Sections;
 
+			var indexList = new List<int>();
 			for (var section = 0; section < sections.Count; ++section)
 			{
-				var puzzleCount = (int)rng.GetUInt32((uint)floorData.Sections[section].Min, (uint)floorData.Sections[section].Max);
+				var puzzleCount = floorData.Sections[section].Max;
+				var allPuzzlesCount = floorData.Sections[section].Puzzles.Count;
+				indexList.Clear();
+				for (var s = 0; s < allPuzzlesCount; indexList.Add(s++)) ;
+				for (var s = 0; s < allPuzzlesCount; ++s)
+				{
+					var pos = (int)rng.GetUInt32(0, (uint)allPuzzlesCount - 1);
+					var tmp = indexList[pos];
+					indexList[pos] = indexList[s];
+					indexList[s] = tmp;
+				}
 				for (var p = 0; p < puzzleCount; ++p)
 				{
-					var randomPuzzle = (int)rng.GetUInt32((uint)floorData.Sections[section].Puzzles.Count);
+					var randomPuzzle = indexList[p % puzzleCount];
 					var scriptName = floorData.Sections[section].Puzzles[randomPuzzle].Script;
 					var puzzleScript = ChannelServer.Instance.ScriptManager.PuzzleScripts.Get(scriptName);
-					var monsterGroups = floorData.Sections[section].Puzzles[randomPuzzle].Groups;
 					if (puzzleScript == null)
 					{
 						Log.Warning("DungeonFloor.GeneratePuzzles: '{0}' puzzle script not found.", scriptName);
