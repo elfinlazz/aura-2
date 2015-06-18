@@ -135,6 +135,7 @@ namespace Aura.Data.Database
 		{
 			var result = new AreaData();
 			result.Id = this.Id;
+			result.Name = this.Name;
 			result.X1 = this.X1;
 			result.Y1 = this.Y1;
 			result.X2 = this.X2;
@@ -226,6 +227,7 @@ namespace Aura.Data.Database
 			var result = new PropData();
 			result.EntityId = this.EntityId;
 			result.Id = this.Id;
+			result.Name = this.Name;
 			result.X = this.X;
 			result.Y = this.Y;
 			result.Direction = this.Direction;
@@ -340,6 +342,7 @@ namespace Aura.Data.Database
 		{
 			var result = new EventData();
 			result.Id = this.Id;
+			result.Name = this.Name;
 			result.Type = this.Type;
 			result.RegionId = this.RegionId;
 			result.X = this.X;
