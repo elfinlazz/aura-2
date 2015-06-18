@@ -252,11 +252,13 @@ namespace Aura.Channel.World.Dungeons
 			var endRoomTrait = floor.GetRoom(endTile);
 			var endRoomDirection = 0;
 			for (int dir = 0; dir < 4; ++dir)
+			{
 				if (endRoomTrait.Links[dir] == LinkType.To)
 				{
 					endRoomDirection = dir;
 					break;
 				}
+			}
 
 			var stairsBlock = this.Data.Style.Get(DungeonBlockType.StairsUp, startRoomIncomingDirection);
 			var stairs = new Prop(stairsBlock.PropId, region.Id, startPos.X, startPos.Y, MabiMath.DegreeToRadian(stairsBlock.Rotation), 1, 0, "single");
@@ -277,8 +279,15 @@ namespace Aura.Channel.World.Dungeons
 
 				if (prevRegion == 0)
 				{
-					x = 3200;
-					y = 4100;
+					var clientEvent = this.Regions[prevRegion].GetClientEvent("Indoor_RDungeon_EB");
+					if (clientEvent == null)
+					{
+						Log.Error("Event 'Indoor_RDungeon_EB' not found while trying to warp to lobby.");
+						return;
+					}
+
+					x = (int)clientEvent.Data.X;
+					y = (int)clientEvent.Data.Y;
 				}
 				else
 				{

@@ -159,6 +159,16 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns event by name or null if it doesn't exist.
+		/// </summary>
+		/// <param name="eventId"></param>
+		/// <returns></returns>
+		public ClientEvent GetClientEvent(string eventName)
+		{
+			return this.GetClientEvent(a => a.Data.Name == eventName);
+		}
+
+		/// <summary>
 		/// Adds client event to region.
 		/// </summary>
 		/// <param name="clientEvent"></param>
