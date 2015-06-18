@@ -361,6 +361,7 @@ namespace Aura.Channel.World.Inventory
 						item.Info.Amount = 0;
 						changed.Add(item);
 						_items.Remove(item.EntityId);
+						this.ClearFromMap(item);
 					}
 
 					// Sacs/Stackables
