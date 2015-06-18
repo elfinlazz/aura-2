@@ -149,9 +149,16 @@ namespace Aura.Channel.World.Dungeons
 
 			stairs.Behavior = (cr, pr) =>
 			{
+				var clientEvent = this.Regions[1].GetClientEvent("Indoor_RDungeon_SB");
+				if (clientEvent == null)
+				{
+					Log.Error("Event 'Indoor_RDungeon_SB' not found while trying to warp to '{0}'.", this.Regions[1].Name);
+					return;
+				}
+
 				var regionId = this.Regions[1].Id;
-				var x = this.Generator.Floors[0].MazeGenerator.StartPos.X * TileSize + TileSize / 2;
-				var y = this.Generator.Floors[0].MazeGenerator.StartPos.Y * TileSize + TileSize / 2;
+				var x = (int)clientEvent.Data.X;
+				var y = (int)clientEvent.Data.Y;
 
 				cr.Warp(regionId, x, y);
 			};
@@ -274,26 +281,16 @@ namespace Aura.Channel.World.Dungeons
 			portal.Info.Color3 = floorData.Color3;
 			portal.Behavior = (cr, pr) =>
 			{
+				var clientEvent = this.Regions[prevRegion].GetClientEvent("Indoor_RDungeon_EB");
+				if (clientEvent == null)
+				{
+					Log.Error("Event 'Indoor_RDungeon_EB' not found while trying to warp to '{0}'.", this.Regions[prevRegion].Name);
+					return;
+				}
+
 				var regionId = this.Regions[prevRegion].Id;
-				int x, y;
-
-				if (prevRegion == 0)
-				{
-					var clientEvent = this.Regions[prevRegion].GetClientEvent("Indoor_RDungeon_EB");
-					if (clientEvent == null)
-					{
-						Log.Error("Event 'Indoor_RDungeon_EB' not found while trying to warp to lobby.");
-						return;
-					}
-
-					x = (int)clientEvent.Data.X;
-					y = (int)clientEvent.Data.Y;
-				}
-				else
-				{
-					x = this.Generator.Floors[prevRegion - 1].MazeGenerator.EndPos.X * TileSize + TileSize / 2;
-					y = this.Generator.Floors[prevRegion - 1].MazeGenerator.EndPos.Y * TileSize + TileSize / 2;
-				}
+				var x = (int)clientEvent.Data.X;
+				var y = (int)clientEvent.Data.Y;
 
 				cr.Warp(regionId, x, y);
 			};
@@ -345,9 +342,16 @@ namespace Aura.Channel.World.Dungeons
 				portalDown.Info.Color3 = floorData.Color3;
 				portalDown.Behavior = (cr, pr) =>
 				{
+					var clientEvent = this.Regions[nextRegion].GetClientEvent("Indoor_RDungeon_SB");
+					if (clientEvent == null)
+					{
+						Log.Error("Event 'Indoor_RDungeon_SB' not found while trying to warp to '{0}'.", this.Regions[nextRegion].Name);
+						return;
+					}
+
 					var regionId = this.Regions[nextRegion].Id;
-					var x = this.Generator.Floors[nextRegion - 1].MazeGenerator.StartPos.X * TileSize + TileSize / 2;
-					var y = this.Generator.Floors[nextRegion - 1].MazeGenerator.StartPos.Y * TileSize + TileSize / 2;
+					var x = (int)clientEvent.Data.X;
+					var y = (int)clientEvent.Data.Y;
 
 					cr.Warp(regionId, x, y);
 				};

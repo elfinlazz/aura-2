@@ -93,11 +93,13 @@ namespace Aura.Channel.World.Dungeons
 					var isEnd = (roomTrait.RoomType == RoomType.End);
 					var isRoom = (roomTrait.RoomType >= RoomType.Start);
 					var isBossRoom = (floor.HasBossRoom && isEnd);
+					var eventId = 0L;
 
 					if (!isBossRoom)
 					{
 						var areaData = new AreaData();
 						areaData.Id = areaId++;
+						areaData.Name = "Tile" + areaData.Id;
 
 						areaData.X1 = x * Dungeon.TileSize;
 						areaData.Y1 = y * Dungeon.TileSize;
@@ -125,12 +127,50 @@ namespace Aura.Channel.World.Dungeons
 								this.AddProp(pole);
 							}
 						}
+
+						// TODO: This region/data stuff is a mess... create
+						//   proper classes, put them in the regions and be
+						//   done with it.
+
+						if (isStart || isEnd)
+						{
+							var xp = tileCenter.X;
+							var yp = tileCenter.Y;
+
+							if (roomTrait.DoorType[Direction.Up] >= 3000)
+								yp += 400;
+							else if (roomTrait.DoorType[Direction.Right] >= 3000)
+								xp += 400;
+							else if (roomTrait.DoorType[Direction.Down] >= 3000)
+								yp -= 400;
+							else if (roomTrait.DoorType[Direction.Left] >= 3000)
+								xp -= 400;
+
+							var eventData = new EventData();
+							eventData.Id = MabiId.AreaEvents | ((long)this.Id << 32) | ((long)areaData.Id << 16) | eventId++;
+							eventData.Name = (isStart ? "Indoor_RDungeon_SB" : "Indoor_RDungeon_EB");
+							eventData.X = xp;
+							eventData.Y = yp;
+
+							var shape = new ShapeData();
+							shape.DirX1 = 1;
+							shape.DirY2 = 1;
+							shape.LenX = 100;
+							shape.LenY = 100;
+							shape.PosX = xp;
+							shape.PosY = yp;
+							eventData.Shapes.Add(shape);
+
+							areaData.Events.Add(eventData.Id, eventData);
+							_clientEvents.Add(eventData.Id, new ClientEvent(eventData.Id, eventData));
+						}
 					}
 					else
 					{
 						// Big main room
 						var areaData = new AreaData();
 						areaData.Id = areaId++;
+						areaData.Name = "Tile" + areaData.Id;
 
 						areaData.X1 = x * Dungeon.TileSize - Dungeon.TileSize;
 						areaData.Y1 = y * Dungeon.TileSize;
@@ -160,6 +200,7 @@ namespace Aura.Channel.World.Dungeons
 						// Treasure room
 						areaData = new AreaData();
 						areaData.Id = areaId++;
+						areaData.Name = "Tile" + areaData.Id;
 
 						areaData.X1 = x * Dungeon.TileSize;
 						areaData.Y1 = y * Dungeon.TileSize + Dungeon.TileSize * 2;
