@@ -26,6 +26,7 @@ namespace Aura.Channel.World.Dungeons
 			: base(regionId)
 		{
 			this.Dungeon = dungeon;
+			this.Name = dungeon.Name + "_" + regionId;
 		}
 
 		/// <summary>

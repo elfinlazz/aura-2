@@ -69,49 +69,53 @@ namespace Aura.Channel.World
 			var split = location.Split('/');
 
 			// Get region
-			var region = AuraData.RegionInfoDb.GetRegion(split[0]);
+			var region = ChannelServer.Instance.World.GetRegion(split[0]);
 			if (region == null)
 				throw new Exception("Region '" + split[0] + "' not found.");
 
+			var regionData = region.RegionInfoData;
+			if (region == null)
+				throw new Exception("Region '" + region.Id + "' doesn't have data.");
+
 			// Get area
-			AreaData area = null;
+			AreaData areaData = null;
 			if (split.Length > 1)
 			{
-				area = region.GetArea(split[1]);
-				if (area == null)
-					throw new Exception("Area '" + split[1] + "' not found in region '" + region.Name + "'.");
+				areaData = regionData.GetArea(split[1]);
+				if (areaData == null)
+					throw new Exception("Area '" + split[1] + "' not found in region '" + regionData.Name + "'.");
 			}
 
 			// Get event
-			EventData ev = null;
+			EventData eventData = null;
 			if (split.Length > 2)
 			{
-				ev = area.GetEvent(split[2]);
-				if (ev == null)
-					throw new Exception("Event '" + split[2] + "' not found in area '" + area.Name + "' of region '" + region.Name + "'.");
+				eventData = areaData.GetEvent(split[2]);
+				if (eventData == null)
+					throw new Exception("Event '" + split[2] + "' not found in area '" + areaData.Name + "' of region '" + regionData.Name + "'.");
 			}
 
 			// Set region id
-			this.RegionId = region.Id;
+			this.RegionId = regionData.Id;
 
 			// Set coordinates
-			if (ev != null)
+			if (eventData != null)
 			{
 				// Based on event
-				this.X = (int)ev.X;
-				this.Y = (int)ev.Y;
+				this.X = (int)eventData.X;
+				this.Y = (int)eventData.Y;
 			}
-			else if (area != null)
+			else if (areaData != null)
 			{
 				// Based on area
-				this.X = (area.X1 + area.X2) / 2;
-				this.Y = (area.Y1 + area.Y2) / 2;
+				this.X = (areaData.X1 + areaData.X2) / 2;
+				this.Y = (areaData.Y1 + areaData.Y2) / 2;
 			}
 			else
 			{
 				// Based on region
-				this.X = (region.X1 + region.X2) / 2;
-				this.Y = (region.Y1 + region.Y2) / 2;
+				this.X = (regionData.X1 + regionData.X2) / 2;
+				this.Y = (regionData.Y1 + regionData.Y2) / 2;
 			}
 		}
 	}

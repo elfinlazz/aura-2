@@ -250,6 +250,17 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns region by name, or null if it doesn't exist.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <returns></returns>
+		public Region GetRegion(string regionName)
+		{
+			lock (_regions)
+				return _regions.Values.FirstOrDefault(a => a.Name == regionName);
+		}
+
+		/// <summary>
 		/// Returns true if region exists.
 		/// </summary>
 		/// <param name="regionId"></param>

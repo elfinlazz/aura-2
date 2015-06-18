@@ -19,6 +19,8 @@ namespace Aura.Channel.World
 			if (this.RegionInfoData == null)
 				throw new Exception("Region.CreateNormal: No region info data found for '" + this.Id + "'.");
 
+			this.Name = this.RegionInfoData.Name;
+
 			this.InitializeFromData();
 		}
 	}
