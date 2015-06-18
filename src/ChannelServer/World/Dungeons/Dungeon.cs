@@ -296,6 +296,17 @@ namespace Aura.Channel.World.Dungeons
 			};
 			region.AddProp(portal);
 
+			var saveStatue = new Prop(this.Data.SaveStatuePropId, region.Id, startPos.X, startPos.Y, MabiMath.DegreeToRadian(stairsBlock.Rotation + 180), 1, 0, "single");
+			saveStatue.Info.Color1 = floorData.Color1;
+			saveStatue.Info.Color2 = floorData.Color1;
+			saveStatue.Info.Color3 = floorData.Color3;
+			saveStatue.Behavior = (cr, pr) =>
+			{
+				cr.DungeonSaveLocation = new Location(cr.RegionId, cr.GetPosition());
+				Send.Notice(cr, Localization.Get("You have memorized this location."));
+			};
+			region.AddProp(saveStatue);
+
 			if (floor.IsLastFloor)
 			{
 				_bossExitDoor = new Prop(this.Data.BossExitDoorId, region.Id, endPos.X, endPos.Y + Dungeon.TileSize / 2, Rotation(Direction.Up), 1, 0, "closed");
