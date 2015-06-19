@@ -1,3 +1,11 @@
+//--- Aura Script -----------------------------------------------------------
+// Fiodh Router
+//--- Description -----------------------------------------------------------
+// Danu was renamed to Fiodh, but the name of the altar is still "Danu",
+// which is why we route from here to to the Fiodh scripts, unlike other
+// dungeons, where the script for the normal version is also the router.
+//---------------------------------------------------------------------------
+
 using Aura.Channel.World.Dungeons;
 
 [DungeonScript("danu_dungeon")]
