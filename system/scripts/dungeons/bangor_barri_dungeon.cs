@@ -11,6 +11,13 @@ public class BarriDungeonScript : DungeonScript
 {
 	public override bool Route(Creature creature, Item item, ref string dungeonName)
 	{
+		// Barri Basic
+		if (item.Info.Id == 63113) // Barri Basic Fomor Pass
+		{
+			dungeonName = "bangor_barri_low_dungeon";
+			return true;
+		}
+
 		// bangor_barri_dungeon
 		return true;
 	}
