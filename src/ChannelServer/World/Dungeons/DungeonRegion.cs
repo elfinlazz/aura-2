@@ -118,15 +118,15 @@ namespace Aura.Channel.World.Dungeons
 						this.AddProp(prop);
 
 						// Debug
-						foreach (var points in prop.Shapes)
-						{
-							foreach (var point in points)
-							{
-								var pole = new Prop(30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
-								pole.Shapes.Clear();
-								this.AddProp(pole);
-							}
-						}
+						//foreach (var points in prop.Shapes)
+						//{
+						//	foreach (var point in points)
+						//	{
+						//		var pole = new Prop(30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
+						//		pole.Shapes.Clear();
+						//		this.AddProp(pole);
+						//	}
+						//}
 
 						// TODO: This region/data stuff is a mess... create
 						//   proper classes, put them in the regions and be
@@ -187,15 +187,15 @@ namespace Aura.Channel.World.Dungeons
 						this.AddProp(prop);
 
 						// Debug
-						foreach (var points in prop.Shapes)
-						{
-							foreach (var point in points)
-							{
-								var pole = new Prop(30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
-								pole.Shapes.Clear();
-								this.AddProp(pole);
-							}
-						}
+						//foreach (var points in prop.Shapes)
+						//{
+						//	foreach (var point in points)
+						//	{
+						//		var pole = new Prop(30, this.Id, point.X, point.Y, 0, 1, 0, "", "", "");
+						//		pole.Shapes.Clear();
+						//		this.AddProp(pole);
+						//	}
+						//}
 
 						// Treasure room
 						areaData = new AreaData();
