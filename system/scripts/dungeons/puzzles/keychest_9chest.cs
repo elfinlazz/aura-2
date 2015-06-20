@@ -91,7 +91,7 @@ public class Keychest9ChestCiarScript : Keychest9ChestScript
 			case 9: suffix = 30602; break; // Healer
 		}
 
-		chest.Add(Item.Create(id: 62005, prefix: prefix, suffix: suffix));
+		chest.Add(Item.CreateEnchanted(62005, prefix, suffix));
 	}
 }
 
@@ -119,6 +119,34 @@ public class Keychest9ChestBarriScript : Keychest9ChestScript
 			case 9: suffix = 30805; break; // Falcon
 		}
 
-		chest.Add(Item.Create(id: 62005, prefix: prefix, suffix: suffix));
+		chest.Add(Item.CreateEnchanted(62005, prefix, suffix));
+	}
+}
+
+[PuzzleScript("keychest_9chest_rabbie")]
+public class Keychest9ChestRabbieScript : Keychest9ChestScript
+{
+	protected override void AddChestDrops(Chest chest, int chestNum, bool monsterChest)
+	{
+		if (!monsterChest)
+			chest.Add(Item.Create(id: 2000, amountMin: 150, amountMax: 350));
+
+		// Enchant
+		int prefix = 0, suffix = 0;
+		switch (Random(10))
+		{
+			case 0:
+			case 1:
+			case 2:
+			case 3: prefix = 20205; break; // Restfull
+			case 4:
+			case 5:
+			case 6: prefix = 20204; break; // Mist
+			case 7:
+			case 8: suffix = 30501; break; // Giant
+			case 9: suffix = 30602; break; // Healer
+		}
+
+		chest.Add(Item.CreateEnchanted(62005, prefix, suffix));
 	}
 }
