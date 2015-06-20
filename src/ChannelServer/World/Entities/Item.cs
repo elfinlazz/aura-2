@@ -200,6 +200,18 @@ namespace Aura.Channel.World.Entities
 		public bool IsBlessed { get { return ((this.OptionInfo.Flags & ItemFlags.Blessed) != 0); } }
 
 		/// <summary>
+		/// Returns true if item is a dungeon key.
+		/// </summary>
+		/// <remarks>
+		/// We could check for /dungeon/key/ here, but there's more items with
+		/// that tag, especially event keys, and I don't think we want to drop
+		/// those automatically in dungeons.
+		/// Instead we're gonna check the 3 key ids used for (presumably) every
+		/// dungeon in the game.
+		/// </remarks>
+		public bool IsDungeonKey { get { return (this.Info.Id >= 70028 && this.Info.Id <= 70030); } }
+
+		/// <summary>
 		/// New item based on item id.
 		/// </summary>
 		/// <param name="itemId"></param>

@@ -115,9 +115,11 @@ namespace Aura.Channel.Network
 				if (creature.Client.NpcSession.Script != null)
 					creature.Client.NpcSession.Clear();
 
+				var newLocation = new Location();
+
 				// Use fallback location if creature is in a temp region.
 				if (creature.Region is DynamicRegion)
-					creature.SetLocation(creature.FallbackLocation);
+					newLocation = creature.FallbackLocation;
 
 				// Use fallback location if creature is in a temp region.
 				var dungeonRegion = creature.Region as DungeonRegion;
@@ -125,13 +127,23 @@ namespace Aura.Channel.Network
 				{
 					try
 					{
-						var loc = new Location(dungeonRegion.Dungeon.Data.Exit);
-						creature.SetLocation(loc);
+						newLocation = new Location(dungeonRegion.Dungeon.Data.Exit);
 					}
 					catch (Exception ex)
 					{
 						Log.Exception(ex, "Failed to fallback warp character in dungeon.");
-						creature.SetLocation(1, 12800, 38100); // Tir square
+						newLocation = new Location(1, 12800, 38100); // Tir square
+					}
+
+					// TODO: This should go into the RemoveCreature method of
+					//   DungeonRegion, but for that to work we have to
+					//   rethink our warping logic. Moving it there will
+					//   also fix only dropping keys on logout, but not
+					//   on map change or leaving the dungeon.
+					foreach (var item in creature.Inventory.Items.ToList().Where(a => a.IsDungeonKey))
+					{
+						creature.Inventory.Remove(item);
+						item.Drop(creature.Region, creature.GetPosition());
 					}
 
 					if (dungeonRegion.Dungeon.Script != null)
@@ -140,6 +152,12 @@ namespace Aura.Channel.Network
 
 				// Unspawn creature
 				creature.Region.RemoveCreature(creature);
+
+				// Set new location (if applicable) after everyting else is done,
+				// in case on of the previous calls needs the creature's
+				// original position.
+				if (newLocation.RegionId != 0)
+					creature.SetLocation(newLocation);
 			}
 
 			// Save everything after we're done cleaning up

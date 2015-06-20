@@ -143,6 +143,7 @@ namespace Aura.Channel.World.Entities
 				return true;
 			}
 
+			// TODO: SetLocation if same map?
 			Send.EnterRegion(this);
 
 			return true;
