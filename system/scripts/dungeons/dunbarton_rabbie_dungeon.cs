@@ -11,6 +11,13 @@ public class RabbieDungeonScript : DungeonScript
 {
 	public override bool Route(Creature creature, Item item, ref string dungeonName)
 	{
+		// Rabbie Basic
+		if (item.Info.Id == 63110) // Rabbie Basic Fomor Pass
+		{
+			dungeonName = "dunbarton_rabbie_low_dungeon";
+			return true;
+		}
+
 		// dunbarton_rabbie_dungeon
 		return true;
 	}
