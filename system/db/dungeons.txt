@@ -199,7 +199,7 @@
 ]},
 
 // Alby Basic Dungeon
-{ name: "tircho_alby_low_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+{ name: "tircho_alby_low_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, blockBoss: true, floors: [
 	// Floor 1
 	{ width: 7, height: 7, critPathMin: 24, critPathMax: 34, branch: 20, coverage: 70, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 3, puzzles: [
@@ -283,7 +283,7 @@
 ]},
 
 // Alby Intermediate Fomor Dungeon
-{ name: "tircho_alby_middle_1_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+{ name: "tircho_alby_middle_1_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, blockBoss: true, floors: [
 	{ width: 8, height: 8, critPathMin: 44, critPathMax: 46, branch: 20, coverage: 80, hasBoss: true, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 30012, amount: 1 },{ raceId: 30012, amount: 2 }], [{ raceId: 20016, amount: 2 }], [{ raceId: 30012, amount: 1 },{ raceId: 30012, amount: 2 }] ] },
@@ -338,7 +338,7 @@
 ]},
 
 // Alby Intermediate Fomor Dungeon
-{ name: "tircho_alby_middle_2_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+{ name: "tircho_alby_middle_2_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, blockBoss: true, floors: [
 	// Floor 1
 	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 20, coverage: 70, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 4, puzzles: [
@@ -455,7 +455,7 @@
 ]},
 
 // Alby Intermediate Fomor Dungeon
-{ name: "tircho_alby_middle_4_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+{ name: "tircho_alby_middle_4_dungeon", style: 100000, baseSeed: 10100000, lobby: 12, exit: "Uladh_Dungeon_Beginners_Hall1/_Uladh_Dungeon_Beginners_Hall1/Dungeon_Beginners_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, blockBoss: true, floors: [
 	// Floor 1
 	{ width: 8, height: 8, critPathMin: 52, critPathMax: 60, branch: 25, coverage: 90, color: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 3, max: 4, puzzles: [
@@ -1020,7 +1020,7 @@
 ]},
 
 // Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_middle_1_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+{ name: "tircho_ciar_middle_1_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, blockBoss: true, floors: [
 	// Floor 1
 	{ width: 7, height: 7, critPathMin: 40, critPathMax: 44, branch: 10, coverage: 80, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 2, max: 2, puzzles: [
@@ -1139,7 +1139,7 @@
 ]},
 
 // Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_middle_2_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+{ name: "tircho_ciar_middle_2_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, blockBoss: true, floors: [
 	// Floor 1
 	{ width: 7, height: 6, critPathMin: 31, critPathMax: 36, branch: 10, coverage: 70, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 2, max: 2, puzzles: [
@@ -1278,7 +1278,7 @@
 ]},
 
 // Ciar Intermediate Fomor Dungeon
-{ name: "tircho_ciar_middle_4_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, floors: [
+{ name: "tircho_ciar_middle_4_dungeon", style: 100000, baseSeed: 11100000, lobby: 12, exit: "Uladh_Dungeon_Black_Wolfs_Hall1/_Uladh_Dungeon_Black_Wolfs_Hall1/Dungeon_BlackWolfs_Outer_Spawn", stairs: 10038, saveStatue: 10035, lastStatue: 10032, door: 10102, bossDoor: 10104, bossExitDoor: 10105, blockBoss: true, floors: [
 	// Floor 1
 	{ width: 7, height: 7, critPathMin: 35, critPathMax: 44, branch: 10, coverage: 80, color: [0x0074AFBA,0x0074AFBA,0x0074AFBA], lightColor: [0x0074AFBA,0x0074AFBA,0x0074AFBA], sections: [
 		{ min: 2, max: 2, puzzles: [
@@ -1492,7 +1492,7 @@
 ]},
 
 // Fiodh Intermediate Fomor Dungeon
-{ name: "gairech_fiodh_middle_1_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
+{ name: "gairech_fiodh_middle_1_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, blockBoss: true, floors: [
 	{ width: 7, height: 7, critPathMin: 35, critPathMax: 40, branch: 20, coverage: 70, hasBoss: true, color: [0x00808080,0x00808080,0x00808080], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 3, puzzles: [
 			{ script: "entrance_puzzle", groups: [ [{ raceId: 40103, amount: 2 }], [{ raceId: 40103, amount: 3 }], [{ raceId: 20503, amount: 3 }] ] },
@@ -1547,7 +1547,7 @@
 ]},
 
 // Fiodh Intermediate Fomor Dungeon
-{ name: "gairech_fiodh_middle_2_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
+{ name: "gairech_fiodh_middle_2_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, blockBoss: true, floors: [
 	// Floor 1
 	{ width: 7, height: 7, critPathMin: 36, critPathMax: 44, branch: 20, coverage: 90, color: [0x00808080,0x00808080,0x00808080], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 2, max: 3, puzzles: [
@@ -1706,7 +1706,7 @@
 ]},
 
 // Fiodh Intermediate Fomor Dungeon
-{ name: "gairech_fiodh_middle_4_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, floors: [
+{ name: "gairech_fiodh_middle_4_dungeon", style: 500000, baseSeed: 340000000, lobby: 50, exit: "Ula_DgnHall_Danu_before/_Ula_DgnHall_Danu_before/DG_Danu_Outer_Spawn", stairs: 27025, saveStatue: 27027, lastStatue: 27016, door: 27018, bossDoor: 27020, bossExitDoor: 27021, blockBoss: true, floors: [
 	// Floor 1
 	{ width: 8, height: 7, critPathMin: 46, critPathMax: 52, branch: 20, coverage: 70, color: [0x00808080,0x00808080,0x00808080], lightColor: [0x00FFFFFF,0x00FFFFFF,0x00FFFFFF], sections: [
 		{ min: 3, max: 3, puzzles: [

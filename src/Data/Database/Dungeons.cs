@@ -25,6 +25,7 @@ namespace Aura.Data.Database
 		public int BossExitDoorId { get; set; }
 		public int ChestId { get; set; }
 		public int LockedChestId { get; set; }
+		public bool BlockBoss { get; set; }
 		public List<DungeonFloorData> Floors { get; set; }
 
 		public DungeonData()
@@ -111,6 +112,7 @@ namespace Aura.Data.Database
 			dungeonData.BossExitDoorId = entry.ReadInt("bossExitDoor");
 			dungeonData.ChestId = entry.ReadInt("chest", 10200);
 			dungeonData.LockedChestId = entry.ReadInt("lockedChest", 10201);
+			dungeonData.BlockBoss = entry.ReadBool("blockBoss");
 
 			var style = entry.ReadInt("style");
 			dungeonData.Style = AuraData.DungeonBlocksDb.Find(style);
