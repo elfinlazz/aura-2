@@ -88,11 +88,36 @@ namespace Aura.Channel.World.Dungeons
 		/// <returns></returns>
 		private Dungeon CreateDungeon(string dungeonName, int itemId, Creature creature)
 		{
-			var instanceId = this.GetInstanceId();
-			var dungeon = new Dungeon(instanceId, dungeonName, itemId, creature);
+			Dungeon dungeon;
+			long instanceId = 0;
+			var rnd = RandomProvider.Get();
+			var itemData = AuraData.ItemDb.Find(itemId);
 
-			lock (_sync)
-				_dungeons.Add(instanceId, dungeon);
+			// Create new dungeon for passes (includes quest items)
+			if (itemData != null && itemData.HasTag("/dungeon_pass/"))
+			{
+				instanceId = this.GetInstanceId();
+				dungeon = new Dungeon(instanceId, dungeonName, itemId, rnd.Next(), rnd.Next(), creature);
+			}
+			else
+			{
+				// Create new dungeon if there is non yet or it's Tuesday
+				var existing = this.Get(a => a.ItemId == itemId);
+				if (existing == null || ErinnTime.Now.Month == 2)
+				{
+					instanceId = this.GetInstanceId();
+					dungeon = new Dungeon(instanceId, dungeonName, itemId, rnd.Next(), rnd.Next(), creature);
+				}
+				else
+					dungeon = existing;
+			}
+
+			// Add new dungeon to list
+			if (instanceId != 0)
+			{
+				lock (_sync)
+					_dungeons.Add(instanceId, dungeon);
+			}
 
 			return dungeon;
 		}
@@ -121,6 +146,17 @@ namespace Aura.Channel.World.Dungeons
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// Returns first dungeon that matches the predicate, or null.
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
+		private Dungeon Get(Func<Dungeon, bool> predicate)
+		{
+			lock (_sync)
+				return _dungeons.Values.FirstOrDefault(predicate);
 		}
 
 		/// <summary>

@@ -50,7 +50,7 @@ namespace Aura.Channel.World.Dungeons
 		private Door _bossDoor;
 		private Prop _bossExitDoor;
 
-		public Dungeon(long instanceId, string dungeonName, int itemId, Creature creature)
+		public Dungeon(long instanceId, string dungeonName, int itemId, int seed, int floorPlan, Creature creature)
 		{
 			dungeonName = dungeonName.ToLower();
 
@@ -64,8 +64,8 @@ namespace Aura.Channel.World.Dungeons
 			this.InstanceId = instanceId;
 			this.Name = dungeonName;
 			this.ItemId = itemId;
-			this.Seed = 0;
-			this.FloorPlan = 0;
+			this.Seed = seed;
+			this.FloorPlan = floorPlan;
 
 			this.Option = XElement.Parse("<option />");
 			this.Option.SetAttributeValue("bossmusic", "Boss_Nuadha.mp3");
@@ -85,7 +85,7 @@ namespace Aura.Channel.World.Dungeons
 
 			this.Regions = new List<DungeonRegion>();
 
-			this.Generator = new DungeonGenerator(this.Name, this.ItemId, 0, this.FloorPlan, this.Option.ToString());
+			this.Generator = new DungeonGenerator(this.Name, this.ItemId, this.Seed, this.FloorPlan, this.Option.ToString());
 			this.Script = ChannelServer.Instance.ScriptManager.DungeonScripts.Get(this.Name);
 			if (this.Script == null)
 				Log.Warning("Dungeon: No script found for '{0}'.", this.Name);
