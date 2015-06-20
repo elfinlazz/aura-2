@@ -52,7 +52,17 @@ namespace Aura.Channel.World.Dungeons
 		private Dictionary<long, Dungeon> _dungeons;
 		private HashSet<int> _regionIds;
 
-		private object _sync = new Object();
+		/// <summary>
+		/// Lock for the manager's lists.
+		/// </summary>
+		private object _syncLock = new Object();
+
+		/// <summary>
+		/// Lock for creating new dungeons and removing them, so a player
+		/// isn't accidentally warped into a dungeon that is removed
+		/// a nano second later.
+		/// </summary>
+		private object _createAndCleanUpLock = new Object();
 
 		/// <summary>
 		/// Creates new dungeon manager.
@@ -68,15 +78,23 @@ namespace Aura.Channel.World.Dungeons
 		/// <summary>
 		/// Raised every 5 minutes, removes empty dungeons.
 		/// </summary>
+		/// <remarks>
+		/// TODO: Is removing on MabiTick what we want? How long do dungeons
+		///   stay active before they're removed? This could remove a dungeon
+		///   the minute, even the second, the last player leaves it.
+		/// </remarks>
 		/// <param name="time"></param>
 		private void OnMabiTick(ErinnTime time)
 		{
-			List<long> remove;
-			lock (_sync)
-				remove = _dungeons.Values.Where(a => a.CountPlayers() == 0).Select(b => b.InstanceId).ToList();
+			lock (_createAndCleanUpLock)
+			{
+				List<long> remove;
+				lock (_syncLock)
+					remove = _dungeons.Values.Where(a => a.CountPlayers() == 0).Select(b => b.InstanceId).ToList();
 
-			foreach (var instanceId in remove)
-				this.Remove(instanceId);
+				foreach (var instanceId in remove)
+					this.Remove(instanceId);
+			}
 		}
 
 		/// <summary>
@@ -115,7 +133,7 @@ namespace Aura.Channel.World.Dungeons
 			// Add new dungeon to list
 			if (instanceId != 0)
 			{
-				lock (_sync)
+				lock (_syncLock)
 					_dungeons.Add(instanceId, dungeon);
 			}
 
@@ -131,7 +149,7 @@ namespace Aura.Channel.World.Dungeons
 		{
 			Dungeon dungeon;
 
-			lock (_sync)
+			lock (_syncLock)
 			{
 				if (!_dungeons.TryGetValue(instanceId, out dungeon))
 					return false;
@@ -155,7 +173,7 @@ namespace Aura.Channel.World.Dungeons
 		/// <returns></returns>
 		private Dungeon Get(Func<Dungeon, bool> predicate)
 		{
-			lock (_sync)
+			lock (_syncLock)
 				return _dungeons.Values.FirstOrDefault(predicate);
 		}
 
@@ -167,7 +185,7 @@ namespace Aura.Channel.World.Dungeons
 		{
 			var id = -1;
 
-			lock (_sync)
+			lock (_syncLock)
 			{
 				for (int i = MabiId.DungeonRegions; i < MabiId.DynamicRegions; ++i)
 				{
@@ -261,26 +279,29 @@ namespace Aura.Channel.World.Dungeons
 		/// <returns></returns>
 		public bool CreateDungeonAndWarp(string dungeonName, int itemId, Creature creature)
 		{
-			try
+			lock (_createAndCleanUpLock)
 			{
-				var dungeon = this.CreateDungeon(dungeonName, itemId, creature);
-				var regionId = dungeon.Regions.First().Id;
-				var pos = creature.GetPosition();
+				try
+				{
+					var dungeon = this.CreateDungeon(dungeonName, itemId, creature);
+					var regionId = dungeon.Regions.First().Id;
+					var pos = creature.GetPosition();
 
-				creature.LastLocation = new Location(creature.RegionId, pos);
-				creature.DungeonSaveLocation = new Location(regionId, pos);
-				creature.SetLocation(creature.DungeonSaveLocation);
-				creature.Warping = true;
-				Send.CharacterLock(creature, Locks.Default);
+					creature.LastLocation = new Location(creature.RegionId, pos);
+					creature.DungeonSaveLocation = new Location(regionId, pos);
+					creature.SetLocation(creature.DungeonSaveLocation);
+					creature.Warping = true;
+					Send.CharacterLock(creature, Locks.Default);
 
-				Send.DungeonInfo(creature, dungeon);
+					Send.DungeonInfo(creature, dungeon);
 
-				return true;
-			}
-			catch (Exception ex)
-			{
-				Log.Exception(ex, "Failed to create and warp to dungeon.");
-				return false;
+					return true;
+				}
+				catch (Exception ex)
+				{
+					Log.Exception(ex, "Failed to create and warp to dungeon.");
+					return false;
+				}
 			}
 		}
 	}
