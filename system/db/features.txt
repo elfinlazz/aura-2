@@ -1,5 +1,8 @@
 // Aura
 // Database file
+// 
+// Warning: Enabling/disabling features in an unusual order might have
+//   unexpected side-effects (e.g. enabling G8 without 4-6).
 //---------------------------------------------------------------------------
 
 [
@@ -31,7 +34,7 @@
 { name: "G6", enabled: false, children: [
 	{ name: "G6S3", enabled: true, children: [
 		{ name: "AlbyAdvanced", enabled: true },
-	]
+	]},
 ]},
 { name: "G7", enabled: false, children: [
 ]},
