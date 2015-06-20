@@ -474,6 +474,8 @@ namespace Aura.Channel.World.Dungeons
 				if (prop.State == "closed")
 					return;
 
+			this.Regions.ForEach(a => a.RemoveAllMonsters());
+
 			var end = this.Generator.Floors.Last().MazeGenerator.EndPos;
 			var endX = end.X * TileSize + TileSize / 2;
 			var endY = end.Y * TileSize + TileSize / 2;
@@ -502,8 +504,6 @@ namespace Aura.Channel.World.Dungeons
 					npc.Death += this.OnBossDeath;
 				}
 			}
-
-			//prop.SetState("open");
 		}
 
 		private void OnBossDeath(Creature creature, Creature killer)

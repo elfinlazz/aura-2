@@ -56,6 +56,15 @@ namespace Aura.Channel.World.Dungeons
 				_propsRWLS.ExitReadLock();
 			}
 		}
+
+		/// <summary>
+		/// Kills all monster NPCs in this region.
+		/// </summary>
+		public void RemoveAllMonsters()
+		{
+			foreach (var creature in this.GetCreatures(a => a is NPC && !a.Has(CreatureStates.GoodNpc)))
+				this.RemoveCreature(creature);
+		}
 	}
 
 	public class DungeonFloorRegion : DungeonRegion
