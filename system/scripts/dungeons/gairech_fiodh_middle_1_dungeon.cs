@@ -69,7 +69,7 @@ public class FiodhIntOneDungeonScript : DungeonScript
 			drops.Add(new DropData(itemId: 63120, chance: 3, amount: 1, expires: 480)); // Fiodh Intermediate Fomor Pass for Two
 			drops.Add(new DropData(itemId: 63121, chance: 2, amount: 1, expires: 480)); // Fiodh Intermediate Fomor Pass for Four
 
-			if (IsEnabled("G3S3"))
+			if (IsEnabled("FiodhAdvanced"))
 				drops.Add(new DropData(itemId: 63253, chance: 2, amount: 1, expires: 480)); // Fiodh Advanced Fomor Pass
 		}
 

@@ -75,7 +75,7 @@ public class CiarIntOneDungeonScript : DungeonScript
 			drops.Add(new DropData(itemId: 63124, chance: 10, amount: 1, expires: 480)); // Ciar Intermediate Fomor Pass for Two
 			drops.Add(new DropData(itemId: 63125, chance: 10, amount: 1, expires: 480)); // Ciar Intermediate Fomor Pass for Four
 
-			if (IsEnabled("G3S3"))
+			if (IsEnabled("CiarAdvanced"))
 			{
 				drops.Add(new DropData(itemId: 63136, chance: 5, amount: 1, expires: 360)); // Ciar Adv. Fomor Pass for 2
 				drops.Add(new DropData(itemId: 63137, chance: 5, amount: 1, expires: 360)); // Ciar Adv. Fomor Pass for 3

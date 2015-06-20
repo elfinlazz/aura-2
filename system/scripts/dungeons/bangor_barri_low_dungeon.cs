@@ -67,7 +67,7 @@ public class BarriBasicDungeonScript : DungeonScript
 			drops.Add(new DropData(itemId: 40010, chance: 1, amount: 1, color1: 0x6383CA, durability: 0)); // Longsword (purple)
 			drops.Add(new DropData(itemId: 63113, chance: 9, amount: 1, expires: 600)); // Barri Basic
 
-			if (IsEnabled("G3S3"))
+			if (IsEnabled("BarriAdvanced"))
 			{
 				drops.Add(new DropData(itemId: 63133, chance: 5, amount: 1, expires: 360)); // Barri Adv. Fomor Pass for 2
 				drops.Add(new DropData(itemId: 63134, chance: 5, amount: 1, expires: 360)); // Barri Adv. Fomor Pass for 3

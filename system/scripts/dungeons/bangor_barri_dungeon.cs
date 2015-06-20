@@ -90,7 +90,7 @@ public class BarriDungeonScript : DungeonScript
 			drops.Add(new DropData(itemId: 40025, chance: 1, amount: 1, color1: 0xC00010, durability: 0)); // Pickaxe (bronze)
 			drops.Add(new DropData(itemId: 63113, chance: 5, amount: 1, expires: 600)); // Barri Basic
 
-			if (IsEnabled("G3S3"))
+			if (IsEnabled("BarriAdvanced"))
 			{
 				drops.Add(new DropData(itemId: 63133, chance: 5, amount: 1, expires: 360)); // Barri Adv. Fomor Pass for 2
 				drops.Add(new DropData(itemId: 63134, chance: 5, amount: 1, expires: 360)); // Barri Adv. Fomor Pass for 3

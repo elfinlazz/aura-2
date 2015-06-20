@@ -69,7 +69,7 @@ public class AlbyBasicDungeonScript : DungeonScript
 			drops.Add(new DropData(itemId: 63117, chance: 2, amount: 1, expires: 480)); // Alby Intermediate Fomor Pass for Two
 			drops.Add(new DropData(itemId: 63118, chance: 2, amount: 1, expires: 480)); // Alby Intermediate Fomor Pass for Four
 
-			if (IsEnabled("G6S3"))
+			if (IsEnabled("AlbyAdvanced"))
 			{
 				drops.Add(new DropData(itemId: 63160, chance: 5, amount: 1, expires: 360)); // Alby Advanced 3-person Fomor Pass
 				drops.Add(new DropData(itemId: 63161, chance: 5, amount: 1, expires: 360)); // Alby Advanced Fomor Pass

@@ -15,9 +15,81 @@
 ]},
 { name: "G3", enabled: false, children: [
 	{ name: "G3S1", enabled: true },
-	{ name: "G3S2", enabled: true },
-	{ name: "G3S3", enabled: true },
+	{ name: "G3S2", enabled: true, children: [
+		{ name: "BarriAdvanced", enabled: true },
+	]},
+	{ name: "G3S3", enabled: true, children: [
+		{ name: "CiarAdvanced", enabled: true },
+	]},
 	{ name: "G3S4", enabled: true },
 	{ name: "G3S5", enabled: true },
+]},
+{ name: "G4", enabled: false, children: [
+]},
+{ name: "G5", enabled: false, children: [
+]},
+{ name: "G6", enabled: false, children: [
+	{ name: "G6S3", enabled: true, children: [
+		{ name: "AlbyAdvanced", enabled: true },
+	]
+]},
+{ name: "G7", enabled: false, children: [
+]},
+{ name: "G8", enabled: false, children: [
+]},
+{ name: "G9", enabled: false, children: [
+	{ name: "G9S1", enabled: true },
+	{ name: "G9S2", enabled: true },
+	{ name: "G9S3", enabled: true },
+]},
+{ name: "G10", enabled: false, children: [
+]},
+{ name: "G11", enabled: false, children: [
+	{ name: "G11S1", enabled: true },
+	{ name: "G11S2", enabled: true },
+]},
+{ name: "G12", enabled: false, children: [
+	{ name: "G12S1", enabled: true },
+	{ name: "G12S2", enabled: true },
+]},
+{ name: "G13", enabled: false, children: [
+	{ name: "G13S1", enabled: true, children: [
+		{ name: "FiodhAdvanced", enabled: true },
+	]},
+	{ name: "G13S2", enabled: true },
+]},
+{ name: "G14", enabled: false, children: [
+	{ name: "G14S1", enabled: true },
+	{ name: "G14S2", enabled: true },
+	{ name: "G14S3", enabled: true },
+	{ name: "G14S4", enabled: true },
+]},
+{ name: "G15", enabled: false, children: [
+	{ name: "G15S1", enabled: true },
+	{ name: "G15S2", enabled: true },
+	{ name: "G15S3", enabled: true },
+	{ name: "G15S4", enabled: true },
+]},
+{ name: "G16", enabled: false, children: [
+	{ name: "G16S1", enabled: true },
+	{ name: "G16S2", enabled: true },
+]},
+{ name: "G17", enabled: false, children: [
+	{ name: "G17S1", enabled: true },
+	{ name: "G17S2", enabled: true },
+	{ name: "G17S3", enabled: true },
+	{ name: "G17S4", enabled: true },
+]},
+{ name: "G18", enabled: false, children: [
+	{ name: "G18E01", enabled: true },
+	{ name: "G18E02", enabled: true },
+	{ name: "G18E03", enabled: true },
+	{ name: "G18E04", enabled: true },
+	{ name: "G18E05", enabled: true },
+	{ name: "G18E06", enabled: true },
+	{ name: "G18E07", enabled: true },
+	{ name: "G18E08", enabled: true },
+	{ name: "G18E09", enabled: true },
+	{ name: "G18E10", enabled: true },
 ]},
 ]
