@@ -121,7 +121,7 @@ namespace Aura.Channel.World.Dungeons
 			{
 				// Create new dungeon if there is non yet or it's Tuesday
 				var existing = this.Get(a => a.ItemId == itemId);
-				if (existing == null || ErinnTime.Now.Month == 2)
+				if (existing == null || ErinnTime.Now.Month == 2 || ChannelServer.Instance.Conf.World.PrivateDungeons)
 				{
 					instanceId = this.GetInstanceId();
 					dungeon = new Dungeon(instanceId, dungeonName, itemId, rnd.Next(), rnd.Next(), creature);
