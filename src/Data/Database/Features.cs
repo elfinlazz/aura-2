@@ -32,25 +32,25 @@ namespace Aura.Data.Database
 
 		protected override void ReadEntry(JObject entry)
 		{
-			this.ParseObject(entry);
+			this.ParseObjectRecursive(entry, true);
 		}
 
-		private void ParseObject(JObject entry)
+		private void ParseObjectRecursive(JObject entry, bool parentEnabled)
 		{
 			entry.AssertNotMissing("name", "enabled");
 
 			var data = new FeatureData();
 			data.Name = entry.ReadString("name");
-			data.Enabled = entry.ReadBool("enabled");
+			data.Enabled = entry.ReadBool("enabled") && parentEnabled;
 
 			this.Entries[data.Name] = data;
 
-			// Stop if there are no children or the parent is disabled
-			if (!entry.ContainsKeys("children") || data.Enabled == false)
+			// Stop if there are no children
+			if (!entry.ContainsKeys("children"))
 				return;
 
 			foreach (JObject child in entry["children"].Where(a => a.Type == JTokenType.Object))
-				this.ParseObject(child);
+				this.ParseObjectRecursive(child, data.Enabled);
 		}
 	}
 }
