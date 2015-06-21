@@ -54,8 +54,8 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.PetRegister(creature, pet);
 			Send.SummonPetR(creature, pet);
-			Send.CharacterLock(pet, Locks.Default);
-			Send.EnterRegion(pet);
+
+			pet.Warp(pet.GetLocation());
 		}
 
 		/// <summary>

@@ -74,9 +74,7 @@ namespace Aura.Channel.Network.Handlers
 
 				character.Activate(CreatureStates.EverEnteredWorld);
 
-				Send.CharacterLock(character, Locks.Default);
-				Send.EnterRegion(character);
-				character.Warping = true;
+				character.Warp(character.GetLocation());
 			}
 			// Special login to Soul Stream for new chars
 			else
@@ -269,9 +267,7 @@ namespace Aura.Channel.Network.Handlers
 
 			Send.LeaveSoulStreamR(creature);
 
-			Send.CharacterLock(creature, Locks.Default);
-			Send.EnterRegion(creature);
-			creature.Warping = true;
+			creature.Warp(creature.GetLocation());
 		}
 
 		/// <summary>

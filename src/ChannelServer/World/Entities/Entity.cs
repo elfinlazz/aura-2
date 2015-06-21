@@ -47,6 +47,15 @@ namespace Aura.Channel.World.Entities
 		public abstract Position GetPosition();
 
 		/// <summary>
+		/// Returns entity's current location.
+		/// </summary>
+		/// <returns></returns>
+		public Location GetLocation()
+		{
+			return new Location(this.RegionId, this.GetPosition());
+		}
+
+		/// <summary>
 		/// Entity type used in EntityAppears.
 		/// </summary>
 		public abstract DataType DataType { get; }
