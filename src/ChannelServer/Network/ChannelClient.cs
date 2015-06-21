@@ -135,17 +135,6 @@ namespace Aura.Channel.Network
 						newLocation = new Location(1, 12800, 38100); // Tir square
 					}
 
-					// TODO: This should go into the RemoveCreature method of
-					//   DungeonRegion, but for that to work we have to
-					//   rethink our warping logic. Moving it there will
-					//   also fix only dropping keys on logout, but not
-					//   on map change or leaving the dungeon.
-					foreach (var item in creature.Inventory.Items.ToList().Where(a => a.IsDungeonKey))
-					{
-						creature.Inventory.Remove(item);
-						item.Drop(creature.Region, creature.GetPosition());
-					}
-
 					if (dungeonRegion.Dungeon.Script != null)
 						dungeonRegion.Dungeon.Script.OnLeftEarly(dungeonRegion.Dungeon, creature);
 				}

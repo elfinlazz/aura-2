@@ -452,6 +452,9 @@ namespace Aura.Channel.World
 			}
 
 			// TODO: Technically not required? Handled by LookAround.
+			// TODO: This could actually cause problems if a creatures appears
+			//   but a creature then warps, before LookAround ticks again.
+			//   This need to be looked at.
 			Send.EntityAppears(creature);
 
 			// Remove Spawned state, so effect only plays the first time.
@@ -736,7 +739,7 @@ namespace Aura.Channel.World
 			// Add collisions
 			this.Collisions.Add(prop);
 
-			Send.EntityAppears(prop);
+			//Send.EntityAppears(prop);
 		}
 
 		/// <summary>
@@ -859,7 +862,7 @@ namespace Aura.Channel.World
 
 			item.Region = this;
 
-			Send.EntityAppears(item);
+			//Send.EntityAppears(item);
 		}
 
 		/// <summary>

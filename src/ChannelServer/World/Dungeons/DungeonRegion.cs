@@ -65,6 +65,17 @@ namespace Aura.Channel.World.Dungeons
 			foreach (var creature in this.GetCreatures(a => a is NPC && !a.Has(CreatureStates.GoodNpc)))
 				this.RemoveCreature(creature);
 		}
+
+		public override void RemoveCreature(Creature creature)
+		{
+			foreach (var item in creature.Inventory.Items.ToList().Where(a => a.IsDungeonKey))
+			{
+				creature.Inventory.Remove(item);
+				item.Drop(creature.Region, creature.GetPosition());
+			}
+
+			base.RemoveCreature(creature);
+		}
 	}
 
 	public class DungeonFloorRegion : DungeonRegion
