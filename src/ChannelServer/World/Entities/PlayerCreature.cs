@@ -18,6 +18,7 @@ namespace Aura.Channel.World.Entities
 	public abstract class PlayerCreature : Creature
 	{
 		private List<Entity> _visibleEntities = new List<Entity>();
+		private object _lookAroundLock = new Object();
 
 		/// <summary>
 		/// Creature id, for creature database.
@@ -176,15 +177,18 @@ namespace Aura.Channel.World.Entities
 			if (!this.Watching)
 				return;
 
-			var currentlyVisible = this.Region.GetVisibleEntities(this);
+			lock (_lookAroundLock)
+			{
+				var currentlyVisible = this.Region.GetVisibleEntities(this);
 
-			var appear = currentlyVisible.Except(_visibleEntities);
-			var disappear = _visibleEntities.Except(currentlyVisible);
+				var appear = currentlyVisible.Except(_visibleEntities);
+				var disappear = _visibleEntities.Except(currentlyVisible);
 
-			Send.EntitiesAppear(this.Client, appear);
-			Send.EntitiesDisappear(this.Client, disappear);
+				Send.EntitiesAppear(this.Client, appear);
+				Send.EntitiesDisappear(this.Client, disappear);
 
-			_visibleEntities = currentlyVisible;
+				_visibleEntities = currentlyVisible;
+			}
 		}
 
 		/// <summary>

@@ -451,10 +451,7 @@ namespace Aura.Channel.World
 					_clients.Add(creature.Client);
 			}
 
-			// TODO: Technically not required? Handled by LookAround.
-			// TODO: This could actually cause problems if a creatures appears
-			//   but a creature then warps, before LookAround ticks again.
-			//   This need to be looked at.
+			// Send appear packets, so there's no delay.
 			Send.EntityAppears(creature);
 
 			// Remove Spawned state, so effect only plays the first time.
@@ -486,6 +483,12 @@ namespace Aura.Channel.World
 			Send.EntityDisappears(creature);
 
 			ChannelServer.Instance.Events.OnPlayerLeavesRegion(creature);
+
+			// Update visible entities before leaving the region, so the client
+			// gets and up-to-date list.
+			var playerCreature = creature as PlayerCreature;
+			if (playerCreature != null)
+				playerCreature.LookAround();
 
 			creature.Region = Region.Limbo;
 
@@ -739,7 +742,7 @@ namespace Aura.Channel.World
 			// Add collisions
 			this.Collisions.Add(prop);
 
-			//Send.EntityAppears(prop);
+			Send.EntityAppears(prop);
 		}
 
 		/// <summary>
@@ -862,7 +865,7 @@ namespace Aura.Channel.World
 
 			item.Region = this;
 
-			//Send.EntityAppears(item);
+			Send.EntityAppears(item);
 		}
 
 		/// <summary>
