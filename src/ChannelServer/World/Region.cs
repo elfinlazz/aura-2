@@ -56,6 +56,21 @@ namespace Aura.Channel.World
 		public RegionCollision Collisions { get; protected set; }
 
 		/// <summary>
+		/// Returns true if region is a dynamic region, judged by its id.
+		/// </summary>
+		public bool IsDynamic { get { return Math2.Between(this.Id, MabiId.DynamicRegions, MabiId.DynamicRegions + 5000); } }
+
+		/// <summary>
+		/// Returns true if region is a dungeon region, judged by its id.
+		/// </summary>
+		public bool IsDungeon { get { return Math2.Between(this.Id, MabiId.DungeonRegions, MabiId.DungeonRegions + 10000); } }
+
+		/// <summary>
+		/// Returns true if region is temporary, i.e. a dungeon or a dynamic region.
+		/// </summary>
+		public bool IsTemp { get { return (this.IsDynamic || this.IsDungeon); } }
+
+		/// <summary>
 		/// Initializes class.
 		/// </summary>
 		/// <param name="regionId"></param>
@@ -410,8 +425,8 @@ namespace Aura.Channel.World
 		/// </summary>
 		public void AddCreature(Creature creature)
 		{
-			if (creature.Region != Region.Limbo)
-				creature.Region.RemoveCreature(creature);
+			//if (creature.Region != Region.Limbo)
+			//	creature.Region.RemoveCreature(creature);
 
 			_creaturesRWLS.EnterWriteLock();
 			try
@@ -427,6 +442,7 @@ namespace Aura.Channel.World
 			}
 
 			creature.Region = this;
+			ChannelServer.Instance.Events.OnPlayerEntersRegion(creature);
 
 			// Save reference to client if it's mainly controlling this creature.
 			if (creature.Client.Controlling == creature)
@@ -465,6 +481,8 @@ namespace Aura.Channel.World
 
 			// TODO: Technically not required? Handled by LookAround.
 			Send.EntityDisappears(creature);
+
+			ChannelServer.Instance.Events.OnPlayerLeavesRegion(creature);
 
 			creature.Region = Region.Limbo;
 

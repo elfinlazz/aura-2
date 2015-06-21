@@ -43,16 +43,16 @@ namespace Aura.Channel.Network.Sending
 		/// Sends EnterRegion to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
-		public static void EnterRegion(Creature creature)
+		public static void EnterRegion(Creature creature, int regionId, int x, int y)
 		{
 			var pos = creature.GetPosition();
 
 			var packet = new Packet(Op.EnterRegion, MabiId.Channel);
 			packet.PutLong(creature.EntityId);
 			packet.PutByte(true); // success?
-			packet.PutInt(creature.RegionId);
-			packet.PutInt(pos.X);
-			packet.PutInt(pos.Y);
+			packet.PutInt(regionId);
+			packet.PutInt(x);
+			packet.PutInt(y);
 
 			creature.Client.Send(packet);
 		}
@@ -63,7 +63,7 @@ namespace Aura.Channel.Network.Sending
 		/// <param name="creature"></param>
 		/// <param name="warpFromRegionId"></param>
 		/// <param name="warpToRegion"></param>
-		public static void EnterDynamicRegion(Creature creature, int warpFromRegionId, Region warpToRegion)
+		public static void EnterDynamicRegion(Creature creature, int warpFromRegionId, Region warpToRegion, int x, int y)
 		{
 			var warpTo = warpToRegion as DynamicRegion;
 			if (warpTo == null)
@@ -90,8 +90,8 @@ namespace Aura.Channel.Network.Sending
 			//	pp.PutByte(1);
 			//	pp.PutInt(3100); // some region id?
 			//}
-			packet.PutInt(pos.X); // target x pos
-			packet.PutInt(pos.Y); // target y pos
+			packet.PutInt(x); // target x pos
+			packet.PutInt(y); // target y pos
 
 			creature.Client.Send(packet);
 		}

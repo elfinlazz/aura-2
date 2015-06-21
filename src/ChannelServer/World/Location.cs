@@ -118,5 +118,14 @@ namespace Aura.Channel.World
 				this.Y = (regionData.Y1 + regionData.Y2) / 2;
 			}
 		}
+
+		/// <summary>
+		/// Returns a string representing this Location.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return string.Format("(RegionId: {0}, X: {1}, Y: {2})", this.RegionId, this.X, this.Y);
+		}
 	}
 }

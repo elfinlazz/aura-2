@@ -287,13 +287,7 @@ namespace Aura.Channel.World.Dungeons
 					var regionId = dungeon.Regions.First().Id;
 					var pos = creature.GetPosition();
 
-					creature.LastLocation = new Location(creature.RegionId, pos);
-					creature.DungeonSaveLocation = new Location(regionId, pos);
-					creature.SetLocation(creature.DungeonSaveLocation);
-					creature.Warping = true;
-					Send.CharacterLock(creature, Locks.Default);
-
-					Send.DungeonInfo(creature, dungeon);
+					creature.Warp(regionId, pos);
 
 					return true;
 				}

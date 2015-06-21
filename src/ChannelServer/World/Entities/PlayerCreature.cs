@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Channel.Network.Sending;
+using Aura.Channel.World.Dungeons;
 using Aura.Data;
 using Aura.Mabi.Const;
 using Aura.Shared.Util;
@@ -123,28 +124,46 @@ namespace Aura.Channel.World.Entities
 				return false;
 			}
 
-			var isCurrentRegionDynamic = this.Region is DynamicRegion;
 			var currentRegionId = this.RegionId;
 			var loc = new Location(currentRegionId, this.GetPosition());
 
 			this.LastLocation = loc;
-			this.SetLocation(regionId, x, y);
+			this.WarpLocation = new Location(regionId, x, y);
 			this.Warping = true;
 			Send.CharacterLock(this, Locks.Default);
 
+			// TODO: We don't have to send the "create warps" every time,
+			//   only when the player is warped there for the first time.
+
+			// Dynamic Region warp
 			var dynamicRegion = targetRegion as DynamicRegion;
 			if (dynamicRegion != null)
 			{
-				if (!isCurrentRegionDynamic)
+				if (!this.Region.IsTemp)
 					this.FallbackLocation = loc;
 
-				Send.EnterDynamicRegion(this, currentRegionId, targetRegion);
+				Send.EnterDynamicRegion(this, currentRegionId, targetRegion, x, y);
 
 				return true;
 			}
 
-			// TODO: SetLocation if same map?
-			Send.EnterRegion(this);
+			// Dungeon warp
+			var dungeonRegion = targetRegion as DungeonRegion;
+			if (dungeonRegion != null)
+			{
+				if (!this.Region.IsTemp)
+				{
+					this.FallbackLocation = loc;
+					this.DungeonSaveLocation = this.WarpLocation;
+				}
+
+				Send.DungeonInfo(this, dungeonRegion.Dungeon);
+
+				return true;
+			}
+
+			// Normal warp
+			Send.EnterRegion(this, regionId, x, y);
 
 			return true;
 		}

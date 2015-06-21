@@ -149,6 +149,11 @@ namespace Aura.Channel.World.Entities
 		public double MoveDuration { get { return _moveDuration; } }
 
 		/// <summary>
+		/// Location to warp to.
+		/// </summary>
+		public Location WarpLocation { get; set; }
+
+		/// <summary>
 		/// Location of the creature before the warp.
 		/// </summary>
 		public Location LastLocation { get; set; }
@@ -958,6 +963,18 @@ namespace Aura.Channel.World.Entities
 		public bool Warp(Location loc)
 		{
 			return this.Warp(loc.RegionId, loc.X, loc.Y);
+		}
+
+		/// <summary>
+		/// Warps creature to target location,
+		/// returns false if warp is unsuccessful.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="position"></param>
+		/// <returns></returns>
+		public bool Warp(int regionId, Position position)
+		{
+			return this.Warp(regionId, position.X, position.Y);
 		}
 
 		/// <summary>
