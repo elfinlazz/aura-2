@@ -12,6 +12,7 @@ using Aura.Shared.Util;
 using Aura.Mabi.Const;
 using Aura.Mabi.Network;
 using System.Globalization;
+using Aura.Channel.World;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -112,7 +113,9 @@ namespace Aura.Channel.Network.Handlers
 
 			this.EnsureGmcpAuthority(client);
 
-			creature.Warp(regionId, x, y);
+			//creature.Warp(regionId, x, y);
+			creature.SetPosition(x, y);
+			Send.SetLocation(creature, x, y);
 		}
 
 		/// <summary>

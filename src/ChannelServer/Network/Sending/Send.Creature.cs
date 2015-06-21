@@ -453,6 +453,23 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Region.Broadcast(packet, creature);
 		}
+
+		/// <summary>
+		/// Sends SetLocation to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public static void SetLocation(Creature creature, int x, int y)
+		{
+			var packet = new Packet(Op.SetLocation, creature.EntityId);
+			packet.PutByte(0);
+			// if ^ 1: put region id
+			packet.PutInt(x);
+			packet.PutInt(y);
+
+			creature.Client.Send(packet);
+		}
 	}
 
 	public enum StatUpdateType : byte { Private = 3, Public = 4 }
