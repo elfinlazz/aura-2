@@ -8,6 +8,7 @@ using Aura.Mabi.Const;
 using System;
 using Aura.Channel.World.Dungeons.Props;
 using Aura.Data.Database;
+using Aura.Shared.Util;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
 {
@@ -125,8 +126,13 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			door.Info.Color1 = floorData.Color1;
 			door.Info.Color2 = floorData.Color2;
 			door.Info.Color3 = this.LockColor;
+
 			if (doorType == DungeonBlockType.BossDoor)
+			{
+				if (this.Puzzle.Dungeon.Data.BlockBoss)
+					door.BlockBoss = true;
 				door.Behavior += this.Puzzle.Dungeon.BossDoorBehavior;
+			}
 			door.Behavior += this.Puzzle.PuzzleEvent;
 
 			this.Doors[direction] = door;

@@ -382,7 +382,8 @@ namespace Aura.Mabi.Network
 		public const int HittingProp = 0x908A;
 		public const int TouchProp = 0x908B;
 		public const int TouchPropR = 0x908C;
-		public const int PropInteraction = 0x908D; // Doors?
+		public const int AddPropExtension = 0x908D;
+		public const int RemovePropExtension = 0x908E;
 		public const int PlaySound = 0x908F;
 
 		// [190100, NA198 (11.12.2014)] Something added here?

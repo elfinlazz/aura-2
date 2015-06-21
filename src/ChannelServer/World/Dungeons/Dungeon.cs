@@ -49,6 +49,7 @@ namespace Aura.Channel.World.Dungeons
 
 		private Door _bossDoor;
 		private Prop _bossExitDoor;
+		private bool _bossSpawned;
 
 		public Dungeon(long instanceId, string dungeonName, int itemId, int seed, int floorPlan, Creature creature)
 		{
@@ -60,6 +61,7 @@ namespace Aura.Channel.World.Dungeons
 
 			_bosses = new List<DungeonBoss>();
 			_treasureChests = new List<TreasureChest>();
+			_bossSpawned = false;
 
 			this.InstanceId = instanceId;
 			this.Name = dungeonName;
@@ -143,7 +145,7 @@ namespace Aura.Channel.World.Dungeons
 			if (stairs == null)
 				throw new Exception("Missing stairs prop '" + this.Data.StairsPropId + "'.");
 
-			var statue = region.GetProp(a => a.Extensions.Any(x => x.Type1 == 202 && x.Type2 == 1100));
+			var statue = region.GetProp(a => a.Extensions.Any(x => x.SignalType == 202 && x.EventType == 1100));
 			if (statue == null)
 				throw new Exception("Missing statue prop '" + this.Data.LastStatuePropId + "'.");
 
@@ -474,6 +476,9 @@ namespace Aura.Channel.World.Dungeons
 				if (prop.State == "closed")
 					return;
 
+			if (_bossSpawned)
+				return;
+
 			this.Regions.ForEach(a => a.RemoveAllMonsters());
 
 			var end = this.Generator.Floors.Last().MazeGenerator.EndPos;
@@ -482,6 +487,8 @@ namespace Aura.Channel.World.Dungeons
 
 			if (this.Script != null)
 				this.Script.OnBoss(this);
+
+			_bossSpawned = true;
 
 			if (_bossesCount == 0)
 			{

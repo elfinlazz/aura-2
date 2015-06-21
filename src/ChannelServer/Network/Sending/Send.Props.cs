@@ -68,5 +68,35 @@ namespace Aura.Channel.Network.Sending
 
 			prop.Region.Broadcast(packet);
 		}
+
+		/// <summary>
+		/// Broadcasts new prop extension.
+		/// </summary>
+		/// <param name="prop"></param>
+		/// <param name="ext"></param>
+		public static void AddPropExtension(Prop prop, PropExtension ext)
+		{
+			var packet = new Packet(Op.AddPropExtension, prop.EntityId);
+			packet.PutInt(ext.SignalType);
+			packet.PutInt(ext.EventType);
+			packet.PutString(ext.Name);
+			packet.PutByte(ext.Mode);
+			packet.PutString(ext.Value.ToString());
+
+			prop.Region.Broadcast(packet);
+		}
+
+		/// <summary>
+		/// Broadcasts prop extension remove.
+		/// </summary>
+		/// <param name="prop"></param>
+		/// <param name="ext"></param>
+		public static void RemovePropExtension(Prop prop, PropExtension ext)
+		{
+			var packet = new Packet(Op.RemovePropExtension, prop.EntityId);
+			packet.PutString(ext.Name);
+
+			prop.Region.Broadcast(packet);
+		}
 	}
 }

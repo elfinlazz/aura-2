@@ -301,6 +301,29 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		///	Adds new extention and broadcast update.
+		/// </summary>
+		/// <param name="ext"></param>
+		public void AddExtension(PropExtension ext)
+		{
+			this.Extensions.Add(ext);
+			Send.AddPropExtension(this, ext);
+		}
+
+		/// <summary>
+		///	Removes all extensions from prop and broadcast update.
+		/// </summary>
+		/// <param name="ext"></param>
+		public void RemoveAllExtensions()
+		{
+			foreach (var ext in this.Extensions)
+			{
+				Send.RemovePropExtension(this, ext);
+			}
+			this.Extensions.Clear();
+		}
+
+		/// <summary>
 		/// Updates shapes for current state from defaults db.
 		/// </summary>
 		private void UpdateShapes()
@@ -406,18 +429,18 @@ namespace Aura.Channel.World.Entities
 		// 2600 - Save statue, marks save point?
 		// globalname: Location path
 
-		public int Type1 { get; protected set; }
-		public int Type2 { get; protected set; }
+		public int SignalType { get; protected set; }
+		public int EventType { get; protected set; }
 		public string Name { get; protected set; }
-		public byte UnkByte { get; protected set; }
+		public byte Mode { get; protected set; }
 		public MabiDictionary Value { get; protected set; }
 
-		public PropExtension(int type1, int type2, string name, byte unkByte)
+		public PropExtension(int signalType, int eventType, string name, byte mode)
 		{
-			this.Type1 = type1;
-			this.Type2 = type2;
+			this.SignalType = signalType;
+			this.EventType = eventType;
 			this.Name = name;
-			this.UnkByte = unkByte;
+			this.Mode = mode;
 			this.Value = new MabiDictionary();
 		}
 	}

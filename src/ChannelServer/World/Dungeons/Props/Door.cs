@@ -6,6 +6,7 @@ using Aura.Mabi;
 using Aura.Mabi.Const;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
+using Aura.Mabi.Network;
 
 namespace Aura.Channel.World.Dungeons.Props
 {
@@ -20,9 +21,19 @@ namespace Aura.Channel.World.Dungeons.Props
 		public string InternalName { get; protected set; }
 
 		/// <summary>
+		/// Type of the door.
+		/// </summary>
+		public DungeonBlockType DoorType { get; protected set; }
+
+		/// <summary>
 		/// Specifies whether the door is locked or not.
 		/// </summary>
 		public bool IsLocked { get; set; }
+
+		/// <summary>
+		/// Boss door stays closed when unlocked.
+		/// </summary>
+		public bool BlockBoss { get; set; }
 
 		/// <summary>
 		/// Creates new door prop.
@@ -39,6 +50,8 @@ namespace Aura.Channel.World.Dungeons.Props
 			: base(propId, regionId, x, y, direction, 1, 0, state, "", "")
 		{
 			this.InternalName = name;
+			this.DoorType = doorType;
+			this.BlockBoss = false;
 
 			switch (doorType)
 			{
@@ -71,18 +84,32 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// <param name="prop"></param>
 		private void UnlockedBehavior(Creature creature, Prop prop)
 		{
-			// TODO: Allow teleporting into the room.
+			var creaturePos = creature.GetPosition();
+			var propPos = new Position(prop.GetPosition().X, prop.GetPosition().Y - (this.BlockBoss ? Dungeon.TileSize / 2 : 0));
 
-			// Confirmation extension added when the door closes,
-			// condition might be directions, so the message only
-			// appears when going in?
-			//
-			//Op: 0000908D, Id: 00A1273000070001
-			//001 [........000000CA] Int    : 202
-			//002 [........0000044C] Int    : 1100
-			//003 [................] String : directed_ask(1,4)
-			//004 [..............02] Byte   : 2
-			//005 [................] String : message:s:Do you wish to go inside the room?;condition:s:notfrom(1,4);
+			var cCoord = new Position(creaturePos.X / Dungeon.TileSize, creaturePos.Y / Dungeon.TileSize);
+			var pCoord = new Position(propPos.X / Dungeon.TileSize, propPos.Y / Dungeon.TileSize);
+
+			if (cCoord == pCoord)
+			{
+				Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("There is a monster still standing.\nYou must defeat all the monsters for the door to open."));
+				return;
+			}
+
+			var x = propPos.X;
+			var y = propPos.Y;
+
+			if (cCoord.X < pCoord.X)
+				x -= 1000;
+			else if (cCoord.X > pCoord.X)
+				x += 1000;
+			else if (cCoord.Y < pCoord.Y)
+				y -= 1000;
+			else if (cCoord.Y > pCoord.Y)
+				y += 1000;
+
+			creature.SetPosition(x, y);
+			Send.SetLocation(creature, x, y);
 		}
 
 		/// <summary>
@@ -95,12 +122,18 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// <param name="prop"></param>
 		private void LockedDoorBehavior(Creature creature, Prop prop)
 		{
-			// todo: sometimes we don't want to open a door, only unlock it and teleport in
 			if (this.IsLocked)
 			{
 				if (this.OpenWithKey(creature))
 				{
-					this.Open();
+					if (this.BlockBoss)
+					{
+						this.SetState("unlocked");
+						this.UnlockedBehavior(creature, prop);
+						this.AddConfirmation();
+					}
+					else
+						this.Open();
 					this.IsLocked = false;
 					Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("You have opened the door with the key."));
 				}
@@ -109,8 +142,7 @@ namespace Aura.Channel.World.Dungeons.Props
 			}
 			else
 			{
-				// Why would a locked door ever be opened on click without a key? [exec]
-				this.Open();
+				this.UnlockedBehavior(creature, prop);
 			}
 		}
 
@@ -141,6 +173,8 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// </summary>
 		public void Close()
 		{
+			if (this.DoorType == DungeonBlockType.Door)
+				this.AddConfirmation();
 			this.SetState("closed");
 		}
 
@@ -149,7 +183,25 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// </summary>
 		public void Open()
 		{
+			if (!this.IsLocked)
+				this.RemoveAllExtensions();
 			this.SetState("open");
 		}
+
+		/// <summary>
+		/// Adds confirmation to get into the room.
+		/// </summary>
+		public void AddConfirmation()
+		{
+			var propPos = new Position(this.GetPosition().X, this.GetPosition().Y - (this.BlockBoss ? Dungeon.TileSize / 2 : 0));
+			var x = propPos.X / Dungeon.TileSize;
+			var y = propPos.Y / Dungeon.TileSize;
+
+			var extname = string.Format("directed_ask({0},{1})", x, y);
+			var condition = string.Format("notfrom({0},{1})", x, y);
+			var ext = new ConfirmationPropExtension(extname, Localization.Get("Do you wish to go inside the room?"), condition: condition);
+			this.AddExtension(ext);
+		}
+
 	}
 }
