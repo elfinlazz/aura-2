@@ -89,6 +89,20 @@ namespace Aura.Channel.World.Inventory
 		public abstract Item GetItem(long entityId);
 
 		/// <summary>
+		/// Returns first item to match predicate, or null.
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
+		public abstract Item GetItem(Func<Item, bool> predicate);
+
+		/// <summary>
+		/// Returns items that match predicate.
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
+		public abstract List<Item> GetItems(Func<Item, bool> predicate);
+
+		/// <summary>
 		/// Removes items by item id and amount. Modified items are returned
 		/// as a list.
 		/// </summary>
@@ -414,6 +428,18 @@ namespace Aura.Channel.World.Inventory
 		{
 			get { return _items.Count; }
 		}
+
+		public override Item GetItem(Func<Item, bool> predicate)
+		{
+			// TODO: Search from bottom right
+			return _items.Values.FirstOrDefault(predicate);
+		}
+
+		public override List<Item> GetItems(Func<Item, bool> predicate)
+		{
+			// TODO: Search from bottom right
+			return _items.Values.Where(predicate).ToList();
+		}
 	}
 
 	/// <summary>
@@ -532,6 +558,24 @@ namespace Aura.Channel.World.Inventory
 		{
 			get { return (_item != null ? 1 : 0); }
 		}
+
+		public override Item GetItem(Func<Item, bool> predicate)
+		{
+			if (_item != null && predicate(_item))
+				return _item;
+
+			return null;
+		}
+
+		public override List<Item> GetItems(Func<Item, bool> predicate)
+		{
+			var result = new List<Item>();
+
+			if (_item != null && predicate(_item))
+				result.Add(_item);
+
+			return result;
+		}
 	}
 
 	/// <summary>
@@ -614,6 +658,16 @@ namespace Aura.Channel.World.Inventory
 		public override int Count
 		{
 			get { return _items.Count; }
+		}
+
+		public override Item GetItem(Func<Item, bool> predicate)
+		{
+			return _items.FirstOrDefault(predicate);
+		}
+
+		public override List<Item> GetItems(Func<Item, bool> predicate)
+		{
+			return _items.Where(predicate).ToList();
 		}
 	}
 }

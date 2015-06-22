@@ -266,6 +266,38 @@ namespace Aura.Channel.World.Inventory
 		}
 
 		/// <summary>
+		/// Returns first item to match predicate, or null.
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
+		public Item GetItem(Func<Item, bool> predicate)
+		{
+			foreach (var pocket in _pockets.Values)
+			{
+				var item = pocket.GetItem(predicate);
+				if (item != null)
+					return item;
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Returns items that match predicate.
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
+		public List<Item> GetItems(Func<Item, bool> predicate)
+		{
+			var result = new List<Item>();
+
+			foreach (var pocket in _pockets.Values)
+				result.AddRange(pocket.GetItems(predicate));
+
+			return result;
+		}
+
+		/// <summary>
 		/// Returns item or throws security violation exception,
 		/// if item didn't exist or isn't allowed to be accessed.
 		/// </summary>

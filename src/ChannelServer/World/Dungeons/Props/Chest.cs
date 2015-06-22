@@ -101,17 +101,19 @@ namespace Aura.Channel.World.Dungeons.Props
 			if (prop.State == "open")
 				return;
 
-			// TODO: Check MetaData?
-			if (!creature.Inventory.Has(70028)) // Treasure Chest Key
+			// Check key
+			var key = creature.Inventory.GetItem(a => a.Info.Id == 70028 && a.MetaData1.GetString("prop_to_unlock") == this.Key);
+			if (key == null)
 			{
 				Send.Notice(creature, Localization.Get("There is no matching key."));
 				return;
 			}
 
+			// Remove key
+			creature.Inventory.Remove(key);
+
+			// Open and drop
 			prop.SetState("open");
-
-			creature.Inventory.Remove(70028);
-
 			this.DropItems();
 		}
 	}
