@@ -30,10 +30,7 @@ public class RabbieDungeonScript : DungeonScript
 		}
 		else
 		{
-			// TODO: Add a way to spawn more bosses after the initial spawn.
-			//dungeon.AddBoss(10101, 1); // Goblin
-			dungeon.AddBoss(10104, 12); // Gold Goblin
-			dungeon.AddBoss(10103, 6); // Goblin Archer
+			dungeon.AddBoss(10101, 1); // Goblin
 
 			foreach (var member in dungeon.Party)
 			{
@@ -44,6 +41,15 @@ public class RabbieDungeonScript : DungeonScript
 				cutscene.Play();
 			}
 		}
+	}
+
+	public override void OnBossDeath(Dungeon dungeon, Creature boss)
+	{
+		if (boss.RaceId != 10101)
+			return;
+
+		dungeon.AddBoss(10104, 12); // Gold Goblin
+		dungeon.AddBoss(10103, 6); // Goblin Archer
 	}
 
 	public override void OnCleared(Dungeon dungeon)
