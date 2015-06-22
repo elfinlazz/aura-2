@@ -20,6 +20,11 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		Corner8,
 
 		/// <summary>
+		/// Places one in all 8 directions, with the bottom one slightly higher.
+		/// </summary>
+		Treasure8,
+
+		/// <summary>
 		/// Places one in all 8 directions and one in the center.
 		/// </summary>
 		Center9,
@@ -61,6 +66,13 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			{ -1,1,315 }, { 0,1,270 }, { 1,1,225 },
 			{ -1,0,0 },                { 1,0,180 },
 			{ -1,-1,45 }, { 0,-1,90 }, { 1,-1,135 },
+		};
+
+		private static readonly float[,] _treasure8Offsets =
+		{
+			{ -1,1,315 },  { 0,1,270 },    { 1,1,225 },
+			{ -1,0,0 },                    { 1,0,180 },
+			{ -1,-1,45 }, { 0,-0.8f,90 }, { 1,-1,135 },
 		};
 
 		private static readonly float[,] _center9Offsets =
@@ -109,6 +121,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 					break;
 				case Placement.Corner8:
 					offsets = _corner8Offsets;
+					break;
+				case Placement.Treasure8:
+					offsets = _treasure8Offsets;
 					break;
 				case Placement.Center9:
 					offsets = _center9Offsets;

@@ -32,6 +32,7 @@ namespace Aura.Channel.World.Dungeons
 		private int _bossesCount, _bossesKilled;
 
 		private List<TreasureChest> _treasureChests;
+		private PlacementProvider _treasurePlacementProvider;
 
 		private Door _bossDoor;
 		private Prop _bossExitDoor;
@@ -131,6 +132,7 @@ namespace Aura.Channel.World.Dungeons
 
 			_bosses = new List<DungeonBoss>();
 			_treasureChests = new List<TreasureChest>();
+			_treasurePlacementProvider = new PlacementProvider(Placement.Treasure8, 750);
 			this.Regions = new List<DungeonRegion>();
 
 			this.InstanceId = instanceId;
@@ -660,14 +662,8 @@ namespace Aura.Channel.World.Dungeons
 		{
 			var region = this.Regions.Last();
 			var rnd = RandomProvider.Get();
-			var offsets = new int[,]
-			{
-				{ -750,+750,315 }, { +0,+750,270 }, { +750,+750,225 },
-				{ -750,+0,0 },                        { +750,+0,180 },
-				{ -750,-750,45 },  { +0,-600,90 },  { +750,-750,135 },
-			};
 
-			for (int i = 0, j = rnd.Next(8); i < _treasureChests.Count; ++i, ++j)
+			for (int i = 0; i < _treasureChests.Count; ++i)
 			{
 				var pos = new Generation.Position(this.Generator.Floors.Last().MazeGenerator.EndPos);
 
@@ -677,9 +673,11 @@ namespace Aura.Channel.World.Dungeons
 				pos.X += Dungeon.TileSize / 2;
 				pos.Y += (int)(Dungeon.TileSize * 2.5f);
 
-				pos.X += offsets[j % 8, 0];
-				pos.Y += offsets[j % 8, 1];
-				var rotation = MabiMath.DegreeToRadian(offsets[j % 8, 2]);
+				var placement = _treasurePlacementProvider.GetPosition();
+
+				pos.X += placement[0];
+				pos.Y += placement[1];
+				var rotation = MabiMath.DegreeToRadian(placement[2]);
 
 				var prop = _treasureChests[i].CreateProp(region, pos.X, pos.Y, rotation);
 				region.AddProp(prop);
