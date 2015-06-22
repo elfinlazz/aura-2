@@ -77,8 +77,8 @@ namespace Aura.Channel.Network.Sending
 		public static void AddPropExtension(Prop prop, PropExtension ext)
 		{
 			var packet = new Packet(Op.AddPropExtension, prop.EntityId);
-			packet.PutInt(ext.SignalType);
-			packet.PutInt(ext.EventType);
+			packet.PutInt((int)ext.SignalType);
+			packet.PutInt((int)ext.EventType);
 			packet.PutString(ext.Name);
 			packet.PutByte(ext.Mode);
 			packet.PutString(ext.Value.ToString());

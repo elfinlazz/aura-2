@@ -363,8 +363,8 @@ namespace Aura.Data.Database
 
 	public class RegionElementData
 	{
-		public int EventType { get; set; }
-		public int SignalType { get; set; }
+		public EventType EventType { get; set; }
+		public SignalType SignalType { get; set; }
 		public string Name { get; set; }
 		public XElement XML { get; set; }
 
@@ -486,8 +486,8 @@ namespace Aura.Data.Database
 						for (int k = 0; k < cElements; ++k)
 						{
 							var red = new RegionElementData();
-							red.EventType = br.ReadInt32();
-							red.SignalType = br.ReadInt32();
+							red.EventType = (EventType)br.ReadInt32();
+							red.SignalType = (SignalType)br.ReadInt32();
 							red.Name = br.ReadString();
 
 							var xml = br.ReadString();
@@ -531,14 +531,14 @@ namespace Aura.Data.Database
 						for (int k = 0; k < cElements; ++k)
 						{
 							var red = new RegionElementData();
-							red.EventType = br.ReadInt32();
-							red.SignalType = br.ReadInt32();
+							red.EventType = (EventType)br.ReadInt32();
+							red.SignalType = (SignalType)br.ReadInt32();
 							red.Name = br.ReadString();
 
 							var xml = br.ReadString();
 							red.XML = !string.IsNullOrWhiteSpace(xml) ? XElement.Parse(xml) : null;
 
-							if (!ei.IsAltar && red.EventType == 2110 && red.SignalType == 103)
+							if (!ei.IsAltar && red.EventType == EventType.Altar && red.SignalType == SignalType.StepOn)
 								ei.IsAltar = true;
 
 							ei.Parameters.Add(red);

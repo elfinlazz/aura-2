@@ -32,8 +32,8 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutInt(prop.Extensions.Count);
 				foreach (var ext in prop.Extensions)
 				{
-					packet.PutInt(ext.SignalType);
-					packet.PutInt(ext.EventType);
+					packet.PutInt((int)ext.SignalType);
+					packet.PutInt((int)ext.EventType);
 					packet.PutString(ext.Name);
 					packet.PutByte(ext.Mode);
 					packet.PutString(ext.Value.ToString());

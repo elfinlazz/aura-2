@@ -125,7 +125,7 @@ namespace Aura.Channel.Network.Handlers
 
 			// Save town
 			var pos = creature.GetPosition();
-			var saveTownParam = clientEvent.Data.Parameters.FirstOrDefault(a => a.EventType == (int)EventType.SaveTown);
+			var saveTownParam = clientEvent.Data.Parameters.FirstOrDefault(a => a.EventType == EventType.SaveTown);
 			if (saveTownParam != null && signalType == SignalType.Enter && clientEvent.IsInside(pos.X, pos.Y))
 			{
 				if (saveTownParam.XML != null)
