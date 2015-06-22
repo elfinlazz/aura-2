@@ -85,7 +85,7 @@ namespace Aura.Channel.World.Dungeons.Props
 			: base(propId, name)
 		{
 			this.LockName = lockName;
-			this.State = "closed_identified";
+			this.State = "closed";
 			this.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?"), null, "haskey(" + lockName + ")"));
 		}
 
@@ -123,6 +123,7 @@ namespace Aura.Channel.World.Dungeons.Props
 		public TreasureChest()
 			: base(10201, "TreasureChest", "chest")
 		{
+			this.State = "closed_identified";
 		}
 	}
 }
