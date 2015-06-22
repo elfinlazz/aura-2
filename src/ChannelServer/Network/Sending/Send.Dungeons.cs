@@ -31,7 +31,7 @@ namespace Aura.Channel.Network.Sending
 			foreach (var floor in dungeon.Regions)
 				packet.PutInt(floor.Id);
 
-			packet.PutString(dungeon.Option.ToString());
+			packet.PutString(dungeon.Options.ToString());
 
 			packet.PutInt(dungeon.Generator.Floors.Count);
 			foreach (var floor in dungeon.Generator.Floors)
