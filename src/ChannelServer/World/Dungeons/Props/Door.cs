@@ -7,6 +7,7 @@ using Aura.Mabi.Const;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
 using Aura.Mabi.Network;
+using System.Linq;
 
 namespace Aura.Channel.World.Dungeons.Props
 {
@@ -18,7 +19,7 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// <summary>
 		/// Name of the door, used from puzzles.
 		/// </summary>
-		public string InternalName { get; protected set; }
+		public string Name { get; protected set; }
 
 		/// <summary>
 		/// Type of the door.
@@ -49,23 +50,12 @@ namespace Aura.Channel.World.Dungeons.Props
 		public Door(int propId, int regionId, int x, int y, int direction, DungeonBlockType doorType, string name, string state = "open")
 			: base(propId, regionId, x, y, direction, 1, 0, state, "", "")
 		{
-			this.InternalName = name;
+			this.Name = name;
 			this.DoorType = doorType;
 			this.BlockBoss = false;
+			this.Behavior = this.DefaultBehavior;
 
-			switch (doorType)
-			{
-				default:
-				case DungeonBlockType.Door:
-					this.Behavior = this.UnlockedBehavior;
-					break;
-
-				case DungeonBlockType.BossDoor:
-				case DungeonBlockType.DoorWithLock:
-					this.Behavior = LockedDoorBehavior;
-					break;
-			}
-
+			// Set direction and adjust Y for boss doors
 			if (doorType == DungeonBlockType.BossDoor)
 			{
 				this.Info.Direction = MabiMath.DirectionToRadian(0, 1);
@@ -78,14 +68,58 @@ namespace Aura.Channel.World.Dungeons.Props
 		}
 
 		/// <summary>
+		/// Door's behavior.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="prop"></param>
+		private void DefaultBehavior(Creature creature, Prop prop)
+		{
+			// Open doors can't be interacted with
+			if (this.State == "open")
+				return;
+
+			// If it's unlocked, warp inside
+			if (!this.IsLocked)
+			{
+				this.WarpInside(creature, prop);
+				return;
+			}
+
+			// Check if character has the key
+			if (!this.RemoveKey(creature))
+			{
+				Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("There is no matching key."));
+				return;
+			}
+
+			// Unlock the door, but don't open it if it's supposed to block the bosses
+			if (this.BlockBoss)
+			{
+				if (this.State != "unlocked")
+				{
+					this.SetState("unlocked");
+					this.AddConfirmation();
+				}
+				this.WarpInside(creature, prop);
+			}
+			else
+				this.Open();
+
+			this.IsLocked = false;
+			Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("You have opened the door with the key."));
+		}
+
+		/// <summary>
 		/// Door's behavior when it's not locked.
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="prop"></param>
-		private void UnlockedBehavior(Creature creature, Prop prop)
+		private void WarpInside(Creature creature, Prop prop)
 		{
 			var creaturePos = creature.GetPosition();
-			var propPos = new Position(prop.GetPosition().X, prop.GetPosition().Y - (this.BlockBoss ? Dungeon.TileSize / 2 : 0));
+			var propPos = prop.GetPosition();
+			if (this.DoorType == DungeonBlockType.BossDoor)
+				propPos = new Position(propPos.X, propPos.Y - Dungeon.TileSize / 2);
 
 			var cCoord = new Position(creaturePos.X / Dungeon.TileSize, creaturePos.Y / Dungeon.TileSize);
 			var pCoord = new Position(propPos.X / Dungeon.TileSize, propPos.Y / Dungeon.TileSize);
@@ -113,59 +147,21 @@ namespace Aura.Channel.World.Dungeons.Props
 		}
 
 		/// <summary>
-		/// Door's behavior when it's locked.
-		/// </summary>
-		/// <remarks>
-		/// TODO: Couldn't this be done in one behavior?
-		/// </remarks>
-		/// <param name="creature"></param>
-		/// <param name="prop"></param>
-		private void LockedDoorBehavior(Creature creature, Prop prop)
-		{
-			if (this.IsLocked)
-			{
-				if (this.OpenWithKey(creature))
-				{
-					if (this.BlockBoss)
-					{
-						this.SetState("unlocked");
-						this.UnlockedBehavior(creature, prop);
-						this.AddConfirmation();
-					}
-					else
-						this.Open();
-					this.IsLocked = false;
-					Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("You have opened the door with the key."));
-				}
-				else
-					Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("There is no matching key."));
-			}
-			else
-			{
-				this.UnlockedBehavior(creature, prop);
-			}
-		}
-
-		/// <summary>
 		/// Returns true if character has the key to unlock this door,
 		/// and removes it from his inventory.
 		/// </summary>
 		/// <param name="character"></param>
 		/// <returns></returns>
-		private bool OpenWithKey(Creature character)
+		private bool RemoveKey(Creature character)
 		{
-			foreach (var item in character.Inventory.Items)
-			{
-				if (item.Info.Id == 70029 || item.Info.Id == 70030)
-				{
-					if (item.MetaData1.GetString("prop_to_unlock") == this.InternalName)
-					{
-						character.Inventory.Remove(item);
-						return true;
-					}
-				}
-			}
-			return false;
+			var items = character.Inventory.Items.ToList();
+
+			var key = items.FirstOrDefault(item => (item.Info.Id == 70029 || item.Info.Id == 70030) && item.MetaData1.GetString("prop_to_unlock") == this.Name);
+			if (key == null)
+				return false;
+
+			character.Inventory.Remove(key);
+			return true;
 		}
 
 		/// <summary>
@@ -193,7 +189,10 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// </summary>
 		public void AddConfirmation()
 		{
-			var propPos = new Position(this.GetPosition().X, this.GetPosition().Y - (this.BlockBoss ? Dungeon.TileSize / 2 : 0));
+			var propPos = this.GetPosition();
+			if (this.DoorType == DungeonBlockType.BossDoor)
+				propPos = new Position(propPos.X, propPos.Y - Dungeon.TileSize / 2);
+
 			var x = propPos.X / Dungeon.TileSize;
 			var y = propPos.Y / Dungeon.TileSize;
 
@@ -202,6 +201,5 @@ namespace Aura.Channel.World.Dungeons.Props
 			var ext = new ConfirmationPropExtension(extname, Localization.Get("Do you wish to go inside the room?"), condition: condition);
 			this.AddExtension(ext);
 		}
-
 	}
 }

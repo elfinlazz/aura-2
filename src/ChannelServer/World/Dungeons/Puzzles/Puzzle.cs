@@ -131,7 +131,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			if (!place.IsLock)
 				throw new PuzzleException("tried to lock a place that isn't a Lock");
 
-			var doorName = place.GetLockDoor().InternalName;
+			var doorName = place.GetLockDoor().Name;
 
 			Item key;
 			if (place.IsBossLock)

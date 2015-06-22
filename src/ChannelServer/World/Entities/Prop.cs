@@ -317,9 +317,7 @@ namespace Aura.Channel.World.Entities
 		public void RemoveAllExtensions()
 		{
 			foreach (var ext in this.Extensions)
-			{
 				Send.RemovePropExtension(this, ext);
-			}
 			this.Extensions.Clear();
 		}
 

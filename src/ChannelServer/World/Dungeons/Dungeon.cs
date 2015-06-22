@@ -569,24 +569,22 @@ namespace Aura.Channel.World.Dungeons
 		/// <param name="prop"></param>
 		public void BossDoorBehavior(Creature _, Prop prop)
 		{
+			// Get door
 			var door = prop as Door;
-			if (door != null)
+			if (door == null)
 			{
-				if (door.IsLocked)
-					return;
+				Log.Error("Dungeon.BossDoorBehavior: Boss door... is not a door!?");
+				return;
 			}
-			else
-				if (prop.State == "closed")
-					return;
 
-			if (_bossSpawned)
+			// Make sure it got unlocked
+			if (door.IsLocked)
 				return;
 
-			this.Regions.ForEach(a => a.RemoveAllMonsters());
-
-			var end = this.Generator.Floors.Last().MazeGenerator.EndPos;
-			var endX = end.X * TileSize + TileSize / 2;
-			var endY = end.Y * TileSize + TileSize / 2;
+			// Check if bosses were already spawned
+			if (_bossSpawned)
+				return;
+			_bossSpawned = true;
 
 			// Remove all monsters
 			this.Regions.ForEach(a => a.RemoveAllMonsters());
@@ -594,8 +592,6 @@ namespace Aura.Channel.World.Dungeons
 			// Call OnBoss
 			if (this.Script != null)
 				this.Script.OnBoss(this);
-
-			_bossSpawned = true;
 
 			// Open boss and exit door if no bosses were spawned
 			if (_bossesCount == 0)
@@ -607,6 +603,9 @@ namespace Aura.Channel.World.Dungeons
 
 			// Spawn bosses
 			var rnd = RandomProvider.Get();
+			var end = this.Generator.Floors.Last().MazeGenerator.EndPos;
+			var endX = end.X * TileSize + TileSize / 2;
+			var endY = end.Y * TileSize + TileSize / 2;
 			foreach (var boss in _bosses)
 			{
 				for (int i = 0; i < boss.Amount; ++i)
