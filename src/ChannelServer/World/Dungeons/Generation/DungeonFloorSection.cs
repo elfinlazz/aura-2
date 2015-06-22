@@ -16,8 +16,19 @@ namespace Aura.Channel.World.Dungeons.Generation
 	{
 		public class LockedDoorCandidateNode
 		{
+			/// <summary>
+			/// Dungeon room reference.
+			/// </summary>
 			public RoomTrait Room = null;
+
+			/// <summary>
+			/// Direction of the door.
+			/// </summary>
 			public int Direction = -1;
+
+			/// <summary>
+			/// Index of this place in DungeonFloorSection.Places list.
+			/// </summary>
 			public int PlaceIndex = -1;
 
 			public LockedDoorCandidateNode(RoomTrait room, int direction, int placeIndex)
@@ -30,8 +41,19 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 		public class PlaceNode
 		{
+			/// <summary>
+			/// Dungeon room reference.
+			/// </summary>
 			public RoomTrait Room;
+
+			/// <summary>
+			/// Moves needed to get to this place from the start.
+			/// </summary>
 			public int Depth;
+
+			/// <summary>
+			/// Is this place used by puzzle.
+			/// </summary>
 			public bool IsUsed;
 
 			public PlaceNode(RoomTrait room, int depth, bool isUsed)
@@ -79,23 +101,33 @@ namespace Aura.Channel.World.Dungeons.Generation
 		}
 
 		/// <summary>
-		/// List of nodes that can serve as locked place.
+		///	Random generator used by this section.
 		/// </summary>
-		private LinkedList<LockedDoorCandidateNode> _lockedDoorCandidates = null;
-
-		/// <summary>
-		/// List of all places for this section.
-		/// </summary>
-		public List<PlaceNode> Places { get; private set; }
+		private MTRandom _rng;
 
 		/// <summary>
 		/// Was boss door placed in last floor last section or not.
 		/// </summary>
 		private bool _placeBossDoor;
 
+		/// <summary>
+		/// Provides unique colors for this section locked doors.
+		/// </summary>
 		private LockColorProvider _lockColorProvider;
-		private MTRandom _rng;
 
+		/// <summary>
+		/// List of nodes that can serve as locked place.
+		/// </summary>
+		private LinkedList<LockedDoorCandidateNode> _lockedDoorCandidates = null;
+
+		/// <summary>
+		/// Linear list of all places for this section, so N-th place always behind N+1 place.
+		/// </summary>
+		public List<PlaceNode> Places { get; private set; }
+
+		/// <summary>
+		/// List of puzzles this section contains.
+		/// </summary>
 		public List<Puzzle> Puzzles { get; private set; }
 
 		/// <summary>
@@ -115,6 +147,17 @@ namespace Aura.Channel.World.Dungeons.Generation
 			_placeBossDoor = haveBossRoom;
 			_rng = rng;
 
+			this.InitLists(startRoom, path);
+		}
+
+		/// <summary>
+		/// Creates Places list, walking critical path and adding subpaths recursively.
+		/// Creates _lockedDoorCandidates list, places on the way to end room and to chest places.
+		/// </summary>
+		/// <param name="startRoom"></param>
+		/// <param name="path"></param>
+		private void InitLists(RoomTrait startRoom, List<MazeMove> path)
+		{
 			var room = startRoom;
 			var depth = 0;
 			foreach (var move in path)
@@ -136,9 +179,17 @@ namespace Aura.Channel.World.Dungeons.Generation
 				room = room.Neighbor[move.Direction];
 				depth++;
 			}
+			// I remove first item, to prevent using it for locked place, because there no more places behind it for chest room
+			// but I could use it for self locked place...
+			// todo: allow first door candidate to be used by self locked place.
 			_lockedDoorCandidates.RemoveFirst();
 		}
 
+		/// <summary>
+		///	Recursively add subpath rooms to Places list.
+		/// </summary>
+		/// <param name="room"></param>
+		/// <param name="depth"></param>
 		private void CreateEmptyPlacesRecursive(RoomTrait room, int depth)
 		{
 			this.Places.Add(new PlaceNode(room, depth, false));
@@ -157,6 +208,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 			return _lockColorProvider.GetLockColor();
 		}
 
+		/// <summary>
+		/// Gets a node from _lockedDoorCandidates, that will be used to make locked place, and removes it from the list.
+		/// </summary>
+		/// <param name="lockSelf"></param>
+		/// <returns></returns>
 		public LockedDoorCandidateNode GetLock(bool lockSelf=false)
 		{
 			LockedDoorCandidateNode result = null;
@@ -196,6 +252,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 			return result;
 		}
 
+		/// <summary>
+		/// Finds appropriate place to use as unlock place for given locked place.
+		/// </summary>
+		/// <param name="lockedPlace"></param>
+		/// <returns>Index of unlock place in Places list</returns>
 		public int GetUnlock(PuzzlePlace lockedPlace)
 		{
 			var lockedPlaceIndex = lockedPlace.PlaceIndex;
@@ -204,11 +265,15 @@ namespace Aura.Channel.World.Dungeons.Generation
 			var deadEnd = -1;
 			var deadEndDepth = 0;
 			RoomTrait room;
+			// places before lockedPlaceIndex are always behind it.
 			for (var i = 0; i < lockedPlaceIndex; ++i)
 			{
 				room = this.Places[i].Room;
 				if (!this.Places[i].IsUsed && !room.isLocked && room.RoomType != RoomType.Start)
 				{
+					// Check is this place have locked doors.
+					// Locked places tend to not reserve themselves, so they could share place with some puzzle, like another locked place.
+					// But they couldn't be shared with unlock places, because they have to control all doors.
 					var haveLockedDoors = false;
 					for (var j = 0; j < 4; ++j)
 						if (room.DoorType[j] == (int)DungeonBlockType.DoorWithLock && room.Links[j] == LinkType.To)
@@ -290,12 +355,16 @@ namespace Aura.Channel.World.Dungeons.Generation
 			this.Places[placeIndex].Room.isReserved = true;
 		}
 
+		/// <summary>
+		/// Get random unused place from Places list.
+		/// </summary>
+		/// <returns>Index of place in Places list.</returns>
 		public int ReservePlace()
 		{
 			var unusedCount = this.Places.Count(x => !x.IsUsed);
 			if (unusedCount == 0)
 				throw new PuzzleException("We out of empty places");
-			var i = (int)this._rng.GetUInt32(0, (uint)unusedCount - 1);
+			var i = (int)_rng.GetUInt32(0, (uint)unusedCount - 1);
 			var placeIndex = 0;
 			for (; placeIndex < this.Places.Count; ++placeIndex)
 			{
@@ -309,7 +378,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		}
 
 		/// <summary>
-		///  Remove reserved doors from this._lockedDoorCandidates
+		/// Remove reserved doors from this._lockedDoorCandidates
 		/// </summary>
 		public void CleanLockedDoorCandidates()
 		{
