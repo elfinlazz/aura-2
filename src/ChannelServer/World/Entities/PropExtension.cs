@@ -54,7 +54,8 @@ namespace Aura.Channel.World.Entities
 		// [condition]: Condition for the msg to appear?
 		//     Examples:
 		//     - haskey(chest): Has a key with the meta data? Isn't actually checked by the client?
-		//     - notin(220189,194241,1354): Area check?
+		//     - notin(1,2): Checks if not on dungeon tile x,y.
+		//     - notin(220189,194241,1354): Checks if not in radius (?) of x,y.
 
 		// 100 - Warp? Maybe the behavior.
 		// globalname: Location path

@@ -65,7 +65,7 @@ namespace Aura.Channel.World.Dungeons
 		public Prop CreateProp(Region region, int x, int y, float direction)
 		{
 			var result = new Prop(ChestPropId, region.Id, x, y, direction, 1, 0, "closed_identified");
-			result.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?")));
+			result.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?"), null, "haskey(chest)"));
 			result.Behavior = (creature, prop) =>
 			{
 				// Make sure the chest was still closed when it was clicked.
