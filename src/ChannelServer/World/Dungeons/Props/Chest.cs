@@ -79,14 +79,14 @@ namespace Aura.Channel.World.Dungeons.Props
 
 	public class LockedChest : Chest
 	{
-		public string Key { get; protected set; }
+		public string LockName { get; protected set; }
 
-		public LockedChest(int propId, string name, string key)
+		public LockedChest(int propId, string name, string lockName)
 			: base(propId, name)
 		{
-			this.Key = key;
+			this.LockName = lockName;
 			this.State = "closed_identified";
-			this.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?"), null, "haskey(" + key + ")"));
+			this.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?"), null, "haskey(" + lockName + ")"));
 		}
 
 		public LockedChest(Puzzle puzzle, string name, string key)
@@ -102,7 +102,7 @@ namespace Aura.Channel.World.Dungeons.Props
 				return;
 
 			// Check key
-			var key = creature.Inventory.GetItem(a => a.Info.Id == 70028 && a.MetaData1.GetString("prop_to_unlock") == this.Key);
+			var key = creature.Inventory.GetItem(a => a.Info.Id == 70028 && a.MetaData1.GetString("prop_to_unlock") == this.LockName);
 			if (key == null)
 			{
 				Send.Notice(creature, Localization.Get("There is no matching key."));

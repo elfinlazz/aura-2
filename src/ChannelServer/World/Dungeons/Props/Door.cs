@@ -154,12 +154,12 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// <returns></returns>
 		private bool RemoveKey(Creature character)
 		{
-			var items = character.Inventory.Items.ToList();
-
-			var key = items.FirstOrDefault(item => (item.Info.Id == 70029 || item.Info.Id == 70030) && item.MetaData1.GetString("prop_to_unlock") == this.Name);
+			// Check key
+			var key = character.Inventory.GetItem(item => (item.Info.Id == 70029 || item.Info.Id == 70030) && item.MetaData1.GetString("prop_to_unlock") == this.Name);
 			if (key == null)
 				return false;
 
+			// Remove key
 			character.Inventory.Remove(key);
 			return true;
 		}
