@@ -23,6 +23,14 @@ public class KeychestSkeletonScript : PuzzleScript
 		chestPlace.DeclareUnlock(lockedPlace);
 		chestPlace.ReservePlace();
 		chestPlace.ReserveDoors();
+		
+		// 20% chance for small skeletons
+		if (Random(100) < 20)
+		{
+			puzzle.GetMonsterData("Mob1")[0].RaceId = 11101; // Small Red Skeleton
+			puzzle.GetMonsterData("Mob2")[0].RaceId = 11102; // Small Light Armor Skeleton
+			puzzle.GetMonsterData("Mob3")[0].RaceId = 11103; // Small Heavy Armor Skeleton
+		}
 
 		puzzle.Set("ChestOpen", false);
 	}
@@ -65,12 +73,7 @@ public class KeychestSkeletonScript : PuzzleScript
 				var chestPlace = puzzle.GetPlace("ChestPlace");
 				chestPlace.CloseAllDoors();
 				
-				// TODO: Add a way to spawn different monsters not based on groups.
-				// 20% chance for small skeletons
-				if (Random(5) == 0)
-					chestPlace.SpawnSingleMob("ChainMob1", "Mob1");
-				else
-					chestPlace.SpawnSingleMob("ChainMob1", "Mob1");
+				chestPlace.SpawnSingleMob("ChainMob1", "Mob1");
 			}
 		}
 	}

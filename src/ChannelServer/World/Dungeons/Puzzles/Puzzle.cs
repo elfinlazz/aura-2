@@ -71,7 +71,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.FloorData = floorData;
 
 			for (int i = 1; i <= puzzleData.Groups.Count; ++i)
-				_monsterGroupData["Mob" + i] = puzzleData.Groups[i - 1];
+				_monsterGroupData["Mob" + i] = puzzleData.Groups[i - 1].Copy();
 		}
 
 		public void OnCreate(Region region)

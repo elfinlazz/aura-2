@@ -85,12 +85,29 @@ namespace Aura.Data.Database
 
 	public class DungeonMonsterGroupData : List<DungeonMonsterData>
 	{
+		public DungeonMonsterGroupData Copy()
+		{
+			var result = new DungeonMonsterGroupData();
+			foreach (var monsterData in this)
+				result.Add(monsterData.Copy());
+
+			return result;
+		}
 	}
 
 	public class DungeonMonsterData
 	{
 		public int RaceId { get; set; }
 		public int Amount { get; set; }
+
+		public DungeonMonsterData Copy()
+		{
+			var result = new DungeonMonsterData();
+			result.RaceId = this.RaceId;
+			result.Amount = this.Amount;
+
+			return result;
+		}
 	}
 
 	public class DungeonDb : DatabaseJsonIndexed<string, DungeonData>
