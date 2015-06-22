@@ -22,6 +22,7 @@ public class SwitchDoorSwitchMonsterScript : PuzzleScript
 		lockedPlace.ReservePlace();
 
 		puzzle.Set("open", "Switch" + Random(1, 5));
+		puzzle.Set("activated", false);
 	}
 
 	public override void OnPuzzleCreate(Puzzle puzzle)
@@ -43,6 +44,9 @@ public class SwitchDoorSwitchMonsterScript : PuzzleScript
 		if (Switch == null)
 			return;
 
+		if (puzzle.Get("activated"))
+			return;
+
 		if (Switch.State == "on" && !puzzle.Get(Switch.Name + "Activated"))
 		{
 			puzzle.Set(Switch.Name + "Activated", true);
@@ -50,7 +54,10 @@ public class SwitchDoorSwitchMonsterScript : PuzzleScript
 			var lockedPlace = puzzle.GetPlace("LockedPlace");
 
 			if (Switch.Name == puzzle.Get("open"))
+			{
 				puzzle.OpenPlace(lockedPlace);
+				puzzle.Set("activated", true);
+			}
 			else
 				lockedPlace.SpawnSingleMob(Switch.Name + "Mob", "Mob1");
 		}
