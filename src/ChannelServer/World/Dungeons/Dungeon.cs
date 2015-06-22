@@ -28,8 +28,7 @@ namespace Aura.Channel.World.Dungeons
 	/// </summary>
 	public class Dungeon
 	{
-		private List<DungeonBoss> _bosses;
-		private int _bossesCount, _bossesKilled;
+		private int _bossesRemaining;
 
 		private List<TreasureChest> _treasureChests;
 		private PlacementProvider _treasurePlacementProvider;
@@ -130,7 +129,6 @@ namespace Aura.Channel.World.Dungeons
 			if (this.Data == null)
 				throw new ArgumentException("Dungeon '" + dungeonName + "' doesn't exist.");
 
-			_bosses = new List<DungeonBoss>();
 			_treasureChests = new List<TreasureChest>();
 			_treasurePlacementProvider = new PlacementProvider(Placement.Treasure8, 750);
 			this.Regions = new List<DungeonRegion>();
@@ -551,8 +549,26 @@ namespace Aura.Channel.World.Dungeons
 		/// <param name="amount"></param>
 		public void AddBoss(int raceId, int amount = 1)
 		{
-			_bosses.Add(new DungeonBoss(raceId, amount));
-			_bossesCount += amount;
+			var rnd = RandomProvider.Get();
+			var end = this.Generator.Floors.Last().MazeGenerator.EndPos;
+			var endX = end.X * TileSize + TileSize / 2;
+			var endY = end.Y * TileSize + TileSize / 2;
+			var regionId = this.Regions.Last().Id;
+
+			for (int i = 0; i < amount; ++i)
+			{
+				var pos = new Position(endX, endY + TileSize / 2);
+				pos = pos.GetRandomInRange(TileSize / 2, rnd);
+
+				var npc = new NPC(raceId);
+				npc.Death += this.OnBossDeath;
+				npc.Spawn(regionId, pos.X, pos.Y);
+				Send.SpawnEffect(SpawnEffect.Monster, regionId, pos.X, pos.Y, npc, npc);
+				if (npc.AI != null)
+					npc.AI.Activate(0);
+			}
+
+			Interlocked.Add(ref _bossesRemaining, amount);
 		}
 
 		/// <summary>
@@ -596,29 +612,10 @@ namespace Aura.Channel.World.Dungeons
 				this.Script.OnBoss(this);
 
 			// Open boss and exit door if no bosses were spawned
-			if (_bossesCount == 0)
+			if (_bossesRemaining == 0)
 			{
 				_bossDoor.SetState("open");
 				_bossExitDoor.SetState("open");
-				return;
-			}
-
-			// Spawn bosses
-			var rnd = RandomProvider.Get();
-			var end = this.Generator.Floors.Last().MazeGenerator.EndPos;
-			var endX = end.X * TileSize + TileSize / 2;
-			var endY = end.Y * TileSize + TileSize / 2;
-			foreach (var boss in _bosses)
-			{
-				for (int i = 0; i < boss.Amount; ++i)
-				{
-					var pos = new Position(endX, endY + TileSize / 2);
-					pos = pos.GetRandomInRange(TileSize / 2, rnd);
-
-					// TODO: NPC.Spawn method?
-					var npc = ChannelServer.Instance.World.SpawnManager.Spawn(boss.RaceId, this.Regions.Last().Id, pos.X, pos.Y, true, true);
-					npc.Death += this.OnBossDeath;
-				}
 			}
 		}
 
@@ -629,14 +626,14 @@ namespace Aura.Channel.World.Dungeons
 		/// <param name="killer"></param>
 		private void OnBossDeath(Creature creature, Creature killer)
 		{
-			Interlocked.Increment(ref _bossesKilled);
+			Interlocked.Add(ref _bossesRemaining, -1);
 
 			// Call OnBossDeath
 			if (this.Script != null)
 				this.Script.OnBossDeath(this, creature);
 
 			// Complete dungeon when all bosses were killed
-			if (_bossesKilled >= _bossesCount)
+			if (_bossesRemaining == 0)
 				this.Complete();
 		}
 
