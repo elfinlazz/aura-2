@@ -24,7 +24,7 @@ public class RabbieBasicDungeonScript : DungeonScript
 			{
 				var cutscene = new Cutscene("bossroom_Lycanthrope2", member);
 				cutscene.AddActor("me", member);
-				cutscene.AddActor("#lycan", 10104);
+				cutscene.AddActor("#lycan", 170101);
 				cutscene.Play();
 			}
 		}
