@@ -179,6 +179,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			prop.RegionId = this.Region.Id;
 			prop.Info.X = pos[0];
 			prop.Info.Y = pos[1];
+			prop.UpdateShapes();
 			prop.Info.Direction = MabiMath.DegreeToRadian(pos[2]);
 			prop.Behavior += PuzzleEvent;
 

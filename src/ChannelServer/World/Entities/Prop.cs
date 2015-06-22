@@ -324,7 +324,7 @@ namespace Aura.Channel.World.Entities
 		/// <summary>
 		/// Updates shapes for current state from defaults db.
 		/// </summary>
-		private void UpdateShapes()
+		public void UpdateShapes()
 		{
 			this.Shapes.Clear();
 
