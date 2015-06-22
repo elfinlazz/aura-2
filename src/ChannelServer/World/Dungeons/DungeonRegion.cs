@@ -18,11 +18,22 @@ using System.Threading.Tasks;
 
 namespace Aura.Channel.World.Dungeons
 {
+	/// <summary>
+	/// Base class for dungeon regions.
+	/// </summary>
 	public abstract class DungeonRegion : Region
 	{
+		/// <summary>
+		/// Dungeon this region belongs to.
+		/// </summary>
 		public Dungeon Dungeon { get; private set; }
 
-		public DungeonRegion(int regionId, Dungeon dungeon)
+		/// <summary>
+		/// Initializes region.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="dungeon"></param>
+		protected DungeonRegion(int regionId, Dungeon dungeon)
 			: base(regionId)
 		{
 			this.Dungeon = dungeon;
@@ -66,6 +77,10 @@ namespace Aura.Channel.World.Dungeons
 				this.RemoveCreature(creature);
 		}
 
+		/// <summary>
+		/// Removes creature from region, after making him drop all his dungeon keys.
+		/// </summary>
+		/// <param name="creature"></param>
 		public override void RemoveCreature(Creature creature)
 		{
 			foreach (var item in creature.Inventory.Items.ToList().Where(a => a.IsDungeonKey))
@@ -78,11 +93,27 @@ namespace Aura.Channel.World.Dungeons
 		}
 	}
 
+	/// <summary>
+	/// Floor (not lobby) region of a dungeon.
+	/// </summary>
 	public class DungeonFloorRegion : DungeonRegion
 	{
+		/// <summary>
+		/// Id of the floor in the dungeon's generator.
+		/// </summary>
 		public int FloorId { get; private set; }
+
+		/// <summary>
+		/// The floor from the generator.
+		/// </summary>
 		public DungeonFloor Floor { get; private set; }
 
+		/// <summary>
+		/// Creates new floor region.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="dungeon"></param>
+		/// <param name="floorId"></param>
 		public DungeonFloorRegion(int regionId, Dungeon dungeon, int floorId)
 			: base(regionId, dungeon)
 		{
@@ -92,6 +123,9 @@ namespace Aura.Channel.World.Dungeons
 			this.GenerateAreas();
 		}
 
+		/// <summary>
+		/// Generates areas, incl (client) props and events.
+		/// </summary>
 		private void GenerateAreas()
 		{
 			this.RegionInfoData = new RegionInfoData();
@@ -234,8 +268,17 @@ namespace Aura.Channel.World.Dungeons
 		}
 	}
 
+	/// <summary>
+	/// Lobby region of a dungeon.
+	/// </summary>
 	public class DungeonLobbyRegion : DungeonRegion
 	{
+		/// <summary>
+		/// Creates new lobby region.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="baseRegionId"></param>
+		/// <param name="dungeon"></param>
 		public DungeonLobbyRegion(int regionId, int baseRegionId, Dungeon dungeon)
 			: base(regionId, dungeon)
 		{
@@ -249,6 +292,11 @@ namespace Aura.Channel.World.Dungeons
 			this.InitializeFromData();
 		}
 
+		/// <summary>
+		/// Fixes the region data's entity ids.
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="regionId"></param>
 		private static void FixIds(RegionInfoData data, int regionId)
 		{
 			var areaId = 1;
