@@ -679,7 +679,11 @@ namespace Aura.Channel.World.Dungeons
 				pos.Y += placement[1];
 				var rotation = MabiMath.DegreeToRadian(placement[2]);
 
-				var prop = _treasureChests[i].CreateProp(region, pos.X, pos.Y, rotation);
+				var prop = _treasureChests[i];
+				prop.RegionId = region.Id;
+				prop.Info.X = pos.X;
+				prop.Info.Y = pos.Y;
+				prop.Info.Direction = rotation;
 				region.AddProp(prop);
 			}
 		}

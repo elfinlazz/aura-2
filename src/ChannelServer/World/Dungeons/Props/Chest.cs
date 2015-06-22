@@ -79,14 +79,18 @@ namespace Aura.Channel.World.Dungeons.Props
 
 	public class LockedChest : Chest
 	{
-		public LockedChest(int propId, string name)
+		public string Key { get; protected set; }
+
+		public LockedChest(int propId, string name, string key)
 			: base(propId, name)
 		{
-			this.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?")));
+			this.Key = key;
+			this.State = "closed_identified";
+			this.Extensions.Add(new ConfirmationPropExtension("", Localization.Get("Do you wish to open this chest?"), null, "haskey(" + key + ")"));
 		}
 
-		public LockedChest(Puzzle puzzle, string name)
-			: this(puzzle.Dungeon.Data.ChestId, name)
+		public LockedChest(Puzzle puzzle, string name, string key)
+			: this(puzzle.Dungeon.Data.ChestId, name, key)
 		{
 		}
 
@@ -97,6 +101,7 @@ namespace Aura.Channel.World.Dungeons.Props
 			if (prop.State == "open")
 				return;
 
+			// TODO: Check MetaData?
 			if (!creature.Inventory.Has(70028)) // Treasure Chest Key
 			{
 				Send.Notice(creature, Localization.Get("There is no matching key."));
@@ -108,6 +113,14 @@ namespace Aura.Channel.World.Dungeons.Props
 			creature.Inventory.Remove(70028);
 
 			this.DropItems();
+		}
+	}
+
+	public class TreasureChest : LockedChest
+	{
+		public TreasureChest()
+			: base(10201, "TreasureChest", "chest")
+		{
 		}
 	}
 }

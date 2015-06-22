@@ -30,7 +30,7 @@ public abstract class Keychest9ChestScript : PuzzleScript
 		{
 			var monsterChest = monsterChests.Contains(i);
 
-			var chest = new LockedChest(puzzle, "Chest" + i);
+			var chest = new LockedChest(puzzle, "Chest" + i, "lock1");
 			AddChestDrops(chest, i, monsterChest);
 			place.AddProp(chest, Placement.Center9);
 
