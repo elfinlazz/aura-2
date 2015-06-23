@@ -1083,7 +1083,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var skill = this.Creature.Skills.Get(skillId);
 			if (skill == null)
 			{
-				Log.Warning("AI.PrepareSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.RaceId);
+				Log.Warning("AI.PrepareSkill: AI '{0}' tried to prepare skill '{0}', that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.RaceId, skillId);
 				yield break;
 			}
 
@@ -1219,7 +1219,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var skill = this.Creature.Skills.Get(skillId);
 			if (skill == null)
 			{
-				Log.Warning("AI.StartSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.RaceId);
+				Log.Warning("AI.StartSkill: AI '{0}' tried to start skill '{0}', that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.RaceId, skillId);
 				yield break;
 			}
 
@@ -1265,7 +1265,7 @@ namespace Aura.Channel.Scripting.Scripts
 			var skill = this.Creature.Skills.Get(skillId);
 			if (skill == null)
 			{
-				Log.Warning("AI.StopSkill: AI '{0}' tried to preapre skill that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.RaceId);
+				Log.Warning("AI.StopSkill: AI '{0}' tried to stop skill '{0}', that its creature '{1}' doesn't have.", this.GetType().Name, this.Creature.RaceId, skillId);
 				yield break;
 			}
 
