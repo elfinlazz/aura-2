@@ -4,12 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.World.Dungeons.Generation;
 using Aura.Channel.World.Dungeons.Props;
 using Aura.Channel.World.Entities;
-using Aura.Channel.World.Quests;
 using Aura.Data.Database;
 using Aura.Mabi;
 
@@ -216,10 +214,9 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		public void AddProp(PuzzlePlace place, DungeonProp prop, Placement positionType)
 		{
 			if (this.Region == null)
-				throw new PuzzleException("NewChest outside of OnPuzzleCreate.");
+				throw new PuzzleException("AddProp outside of OnPuzzleCreate.");
 
-			var p = place as PuzzlePlace;
-			var pos = p.GetPosition(positionType);
+			var pos = place.GetPosition(positionType);
 
 			prop.RegionId = this.Region.Id;
 			prop.Info.X = pos[0];
