@@ -226,6 +226,7 @@
     <Compile Include="World\Dungeons\Puzzles\PlacementProvider.cs" />
     <Compile Include="World\Dungeons\Puzzles\MonsterGroup.cs" />
     <Compile Include="World\Dungeons\Puzzles\Puzzle.cs" />
+    <Compile Include="World\Dungeons\Puzzles\PuzzleException.cs" />
     <Compile Include="World\Dungeons\Puzzles\PuzzlePlace.cs" />
     <Compile Include="World\Dungeons\Generation\RandomDirection.cs" />
     <Compile Include="World\Dungeons\Generation\RoomTrait.cs" />

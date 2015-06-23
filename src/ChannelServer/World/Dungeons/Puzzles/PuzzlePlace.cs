@@ -90,7 +90,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 
 			_section = section;
 			_name = name;
-			PlaceIndex = -1;
+			this.PlaceIndex = -1;
 			this.Puzzle = puzzle;
 		}
 
@@ -160,7 +160,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			if (doorElement == null)
 				return;
 
-			PlaceIndex = doorElement.PlaceIndex;
+			this.PlaceIndex = doorElement.PlaceIndex;
 			_room = doorElement.Room;
 			this.UpdatePosition();
 			this.IsLock = true;
@@ -203,7 +203,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			if (place == null || place.PlaceIndex == -1)
 				throw new PuzzleException("We can't declare unlock");
 
-			PlaceIndex = _section.GetUnlock(place);
+			this.PlaceIndex = _section.GetUnlock(place);
 			_room = _section.Places[PlaceIndex].Room;
 			this.IsUnlock = true;
 
@@ -240,7 +240,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			for (var dir = 0; dir < 4; ++dir)
 			{
 				if (_room.Links[dir] == LinkType.From || _room.Links[dir] == LinkType.To)
-					AddDoor(dir, DungeonBlockType.Door);
+					this.AddDoor(dir, DungeonBlockType.Door);
 			}
 
 			this.OpenAllDoors();
@@ -251,7 +251,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// </summary>
 		public void CloseAllDoors()
 		{
-			foreach (var door in Doors)
+			foreach (var door in this.Doors)
 			{
 				if (door != null)
 					door.Close();
@@ -263,7 +263,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// </summary>
 		public void OpenAllDoors()
 		{
-			foreach (var door in Doors)
+			foreach (var door in this.Doors)
 			{
 				if (door != null)
 					door.Open();
@@ -287,7 +287,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <exception cref="PuzzleException">Thrown if there is no lock or no door.</exception>
 		public Door GetLockDoor()
 		{
-			var door = Doors[this.DoorDirection];
+			var door = this.Doors[this.DoorDirection];
 
 			if (!this.IsLock)
 				throw new PuzzleException("Place isn't a lock.");
@@ -300,16 +300,16 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <summary>
 		/// Opens locked place.
 		/// </summary>
-		public void OpenPlace()
+		public void Open()
 		{
-			if (!IsLock)
+			if (!this.IsLock)
 				return;
 
 			this.Doors[this.DoorDirection].IsLocked = false;
 			this.Doors[this.DoorDirection].Open();
 
 			if (_room.DoorType[this.DoorDirection] == (int)DungeonBlockType.BossDoor)
-				this.Puzzle.Dungeon.BossDoorBehavior(null, Doors[this.DoorDirection]);
+				this.Puzzle.Dungeon.BossDoorBehavior(null, this.Doors[this.DoorDirection]);
 		}
 
 		/// <summary>
@@ -320,7 +320,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <returns>3 values, X, Y, and Direction (in degree).</returns>
 		public int[] GetPosition(Placement placement, int border = -1)
 		{
-			if (PlaceIndex == -1)
+			if (this.PlaceIndex == -1)
 				throw new PuzzleException("Place hasn't been declared anything or it wasn't reserved.");
 
 			// todo: check those values

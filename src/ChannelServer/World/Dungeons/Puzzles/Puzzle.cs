@@ -15,29 +15,13 @@ using Aura.Mabi;
 
 namespace Aura.Channel.World.Dungeons.Puzzles
 {
-	[Serializable]
-	public class PuzzleException : Exception
-	{
-		public PuzzleException()
-		{
-		}
-
-		public PuzzleException(string message)
-			: base(message)
-		{
-		}
-
-		public PuzzleException(string message, Exception inner)
-			: base(message, inner)
-		{
-		}
-
-		protected PuzzleException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-		}
-	}
-
+	/// <summary>
+	/// Dungeon puzzle
+	/// </summary>
+	/// <remarks>
+	/// Aka something that may or may not spawn props and monsters and may or
+	/// may not create rooms.
+	/// </remarks>
 	public class Puzzle
 	{
 		private DungeonFloorSection _section;
@@ -46,15 +30,54 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		private Dictionary<string, DungeonMonsterGroupData> _monsterGroupData;
 		private Dictionary<string, MonsterGroup> _monsterGroups;
 
+		/// <summary>
+		/// Name of the puzzle.
+		/// </summary>
 		public string Name { get; private set; }
+
+		/// <summary>
+		/// Puzzle's data from db.
+		/// </summary>
 		public DungeonPuzzleData Data { get; private set; }
-		public PuzzleScript Script { get; private set; }
-		public Dungeon Dungeon { get; private set; }
-		public Region Region { get; private set; }
-		public Dictionary<string, Prop> Props;
-		public Dictionary<string, Item> Keys { get; private set; }
+
+		/// <summary>
+		/// Data of the floor this puzzle is spawned on.
+		/// </summary>
 		public DungeonFloorData FloorData { get; private set; }
 
+		/// <summary>
+		/// Script that controls this puzzle.
+		/// </summary>
+		public PuzzleScript Script { get; private set; }
+
+		/// <summary>
+		/// Dungeon this puzzle is part of.
+		/// </summary>
+		public Dungeon Dungeon { get; private set; }
+
+		/// <summary>
+		/// Region this puzzle is in.
+		/// </summary>
+		public Region Region { get; private set; }
+
+		/// <summary>
+		/// List of props spawned by this puzzle.
+		/// </summary>
+		public Dictionary<string, Prop> Props { get; private set; }
+
+		/// <summary>
+		/// List of keys created for this puzzle.
+		/// </summary>
+		public Dictionary<string, Item> Keys { get; private set; }
+
+		/// <summary>
+		/// Creates new puzzle.
+		/// </summary>
+		/// <param name="dungeon"></param>
+		/// <param name="section"></param>
+		/// <param name="floorData"></param>
+		/// <param name="puzzleData"></param>
+		/// <param name="puzzleScript"></param>
 		public Puzzle(Dungeon dungeon, DungeonFloorSection section, DungeonFloorData floorData, DungeonPuzzleData puzzleData, PuzzleScript puzzleScript)
 		{
 			_variables = new Dictionary<string, Object>();
@@ -74,6 +97,10 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 				_monsterGroupData["Mob" + i] = puzzleData.Groups[i - 1].Copy();
 		}
 
+		/// <summary>
+		/// Creates doors for puzzle and calls OnPuzzleCreate.
+		/// </summary>
+		/// <param name="region"></param>
 		public void OnCreate(Region region)
 		{
 			this.Region = region;
@@ -92,17 +119,34 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Script.OnPuzzleCreate(this);
 		}
 
+		/// <summary>
+		/// Creates a new place for the puzzle to use.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
 		public PuzzlePlace NewPlace(string name)
 		{
-			this._places[name] = new PuzzlePlace(_section, this, name);
-			return this._places[name];
+			_places[name] = new PuzzlePlace(_section, this, name);
+			return _places[name];
 		}
 
+		/// <summary>
+		/// Returns the place with the given name, or null if it doesn't exist.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
 		public PuzzlePlace GetPlace(string name)
 		{
-			return this._places[name];
+			if (_places.ContainsKey(name))
+				return _places[name];
+			return null;
 		}
 
+		/// <summary>
+		/// Returns prop with the given name, or null if it doesn't exist.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
 		public Prop FindProp(string name)
 		{
 			if (this.Props.ContainsKey(name))
@@ -110,38 +154,50 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return null;
 		}
 
-		public void Set(string name, Object value)
+		/// <summary>
+		/// Sets temporary variable.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="value"></param>
+		public void Set(string name, object value)
 		{
-			this._variables[name] = value;
+			_variables[name] = value;
 		}
 
+		/// <summary>
+		/// Gets value of temporary variable, returns null if variable doesn't exist.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
 		public dynamic Get(string name)
 		{
-			if (this._variables.ContainsKey(name))
-				return this._variables[name];
+			if (_variables.ContainsKey(name))
+				return _variables[name];
 			return null;
 		}
 
-		public Item LockPlace(PuzzlePlace lockPlace, string keyName)
+		/// <summary>
+		/// Locks place and creates and returns a key for it.
+		/// </summary>
+		/// <param name="place"></param>
+		/// <param name="keyName"></param>
+		/// <returns></returns>
+		public Item LockPlace(PuzzlePlace place, string keyName)
 		{
-			var place = lockPlace as PuzzlePlace;
-			if (place == null)
-				throw new PuzzleException("tried to lock a non-existent place");
-
 			if (!place.IsLock)
-				throw new PuzzleException("tried to lock a place that isn't a Lock");
+				throw new PuzzleException("Tried to lock a place that isn't a Lock");
 
 			var doorName = place.GetLockDoor().Name;
 
 			Item key;
 			if (place.IsBossLock)
 			{
-				key = Item.CreateKey(70030, doorName);
-				key.Info.Color1 = 0xFF0000;
+				key = Item.CreateKey(70030, doorName); // Boss Room Key
+				key.Info.Color1 = 0xFF0000; // Red
 			}
 			else
 			{
-				key = Item.CreateKey(70029, doorName);
+				key = Item.CreateKey(70029, doorName); // Dungeon Room Key
 				key.Info.Color1 = place.LockColor;
 			}
 
@@ -151,23 +207,12 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return key;
 		}
 
-		public void OpenPlace(PuzzlePlace lockPlace)
-		{
-			var place = lockPlace as PuzzlePlace;
-
-			if (place == null)
-				throw new PuzzleException("tried to open a non-existent place");
-
-			place.OpenPlace();
-		}
-
-		public Item GetKey(string name, uint color)
-		{
-			if (this.Keys.ContainsKey(name))
-				return this.Keys[name];
-			return null;
-		}
-
+		/// <summary>
+		/// Adds prop to puzzle in place.
+		/// </summary>
+		/// <param name="place"></param>
+		/// <param name="prop"></param>
+		/// <param name="positionType"></param>
 		public void AddProp(PuzzlePlace place, DungeonProp prop, Placement positionType)
 		{
 			if (this.Region == null)
@@ -187,11 +232,23 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			this.Props[prop.Name] = prop;
 		}
 
+		/// <summary>
+		/// Calls OnPropEvent.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="prop"></param>
 		public void PuzzleEvent(Creature creature, Prop prop)
 		{
 			this.Script.OnPropEvent(this, prop);
 		}
 
+		/// <summary>
+		/// Spawns mob in place.
+		/// </summary>
+		/// <param name="place"></param>
+		/// <param name="name"></param>
+		/// <param name="group"></param>
+		/// <param name="spawnPosition"></param>
 		public void AllocateAndSpawnMob(PuzzlePlace place, string name, DungeonMonsterGroupData group, Placement spawnPosition)
 		{
 			var mob = new MonsterGroup(name, this, place, spawnPosition);
@@ -201,6 +258,11 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			mob.Spawn();
 		}
 
+		/// <summary>
+		/// Returns monster group, or null if it doesn't exist.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
 		public MonsterGroup GetMonsterGroup(string name)
 		{
 			MonsterGroup result;
@@ -208,6 +270,11 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			return result;
 		}
 
+		/// <summary>
+		/// Returns monster data, or null if it doesn't exist.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
 		public DungeonMonsterGroupData GetMonsterData(string name)
 		{
 			DungeonMonsterGroupData result;

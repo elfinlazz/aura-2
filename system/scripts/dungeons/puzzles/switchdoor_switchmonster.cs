@@ -55,7 +55,7 @@ public class SwitchDoorSwitchMonsterScript : PuzzleScript
 
 			if (Switch.Name == puzzle.Get("open"))
 			{
-				puzzle.OpenPlace(lockedPlace);
+				lockedPlace.Open();
 				puzzle.Set("activated", true);
 			}
 			else
