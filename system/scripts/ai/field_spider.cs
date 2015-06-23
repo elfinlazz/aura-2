@@ -1,15 +1,15 @@
 //--- Aura Script -----------------------------------------------------------
-// Spider AI
+// Field Spider AI
 //--- Description -----------------------------------------------------------
-// AI for dungeon spiders, that hate players.
+// AI for spiders that doubt players.
 //---------------------------------------------------------------------------
 
-[AiScript("spider")]
-public class SpiderAi : AiScript
+[AiScript("field_spider")]
+public class FieldSpiderAi : AiScript
 {
-	public SpiderAi()
+	public FieldSpiderAi()
 	{
-		Hates("/pc/", "/pet/");
+		Doubts("/pc/", "/pet/");
 		
 		On(AiState.Aggro, AiEvent.DefenseHit, OnDefenseHit);
 	}
