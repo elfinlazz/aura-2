@@ -233,7 +233,7 @@ namespace Aura.Channel.World.Dungeons
 					catch (PuzzleException e)
 					{
 						sections[section].Puzzles.Remove(puzzle);
-						Log.Warning("Section {0}, puzzle '{1}' : {2}", section, scriptName, e.Message);
+						Log.Debug("Section {0}, puzzle '{1}' : {2}", section, scriptName, e.Message);
 					}
 				}
 			}

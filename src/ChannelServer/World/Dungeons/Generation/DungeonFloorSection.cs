@@ -213,15 +213,13 @@ namespace Aura.Channel.World.Dungeons.Generation
 		/// </summary>
 		/// <param name="lockSelf"></param>
 		/// <returns></returns>
-		public LockedDoorCandidateNode GetLock(bool lockSelf=false)
+		public LockedDoorCandidateNode GetLock(bool lockSelf = false)
 		{
 			LockedDoorCandidateNode result = null;
 
 			var count = _lockedDoorCandidates.Count;
 			if (count == 0)
-			{
-				throw new PuzzleException("We out of locked door candidates");
-			}
+				throw new PuzzleException("Out of locked door candidates.");
 
 			// Always place locked place before the boss door.
 			// todo: always place a locked place at the end of section, add script handler
@@ -236,11 +234,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 				//var random_index = (int)this._rng.GetUInt32(0, (uint)count - 1);
 				//result = this._lockedDoorCandidates.ElementAt(random_index);
 				var lockedDoor = _lockedDoorCandidates.Last;
-				if(lockSelf)
+				if (lockSelf)
 					while (lockedDoor != null && lockedDoor.Value.Room.isReserved)
 						lockedDoor = lockedDoor.Previous;
 				if (lockedDoor == null)
-					throw new PuzzleException("We out of candidates for self lock.");
+					throw new PuzzleException("Out of candidates for self lock.");
 				result = lockedDoor.Value;
 			}
 
@@ -292,7 +290,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 							if (deadEndDepth < this.Places[i].Depth)
 								deadEnd = i;
 						}
-						if(room.isOnPath)
+						if (room.isOnPath)
 							possiblePlacesOnPath.Add(i);
 						else
 							possiblePlacesNotOnPath.Add(i);
@@ -308,7 +306,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			{
 				// Convert locked place room back to alley if there are no more locked doors.
 				room = this.Places[lockedPlaceIndex].Room;
-				room.SetDoorType(lockedPlace.DoorDirection, (int) DungeonBlockType.Alley);
+				room.SetDoorType(lockedPlace.DoorDirection, (int)DungeonBlockType.Alley);
 				room.SetPuzzleDoor(null, lockedPlace.DoorDirection);
 				var isLockedRoom = room.DoorType.Any(x => (x == (int)DungeonBlockType.DoorWithLock || x == (int)DungeonBlockType.BossDoor));
 				if (!isLockedRoom)
@@ -320,7 +318,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 				// Return locked place door to list on available doors.
 				var lockedDoorCandidate = new LockedDoorCandidateNode(room, lockedPlace.DoorDirection, room.RoomIndex);
 				_lockedDoorCandidates.AddFirst(lockedDoorCandidate);
-				throw new PuzzleException("We out of unlock places");
+				throw new PuzzleException("Out of unlock places.");
 			}
 
 			var possiblePlaces = (possiblePlacesNotOnPath.Count > 0 ? possiblePlacesNotOnPath : possiblePlacesOnPath);
@@ -336,7 +334,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 				var dir = room.GetIncomingDirection();
 				room.isOnPath = true;
 				room = room.Neighbor[dir];
-				
+
 				// skip reserved doors
 				if (room.ReservedDoor[Direction.GetOppositeDirection(dir)]) continue;
 				// skip reserved places
@@ -363,7 +361,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		{
 			var unusedCount = this.Places.Count(x => !x.IsUsed);
 			if (unusedCount == 0)
-				throw new PuzzleException("We out of empty places");
+				throw new PuzzleException("Out of empty places.");
 			var i = (int)_rng.GetUInt32(0, (uint)unusedCount - 1);
 			var placeIndex = 0;
 			for (; placeIndex < this.Places.Count; ++placeIndex)
