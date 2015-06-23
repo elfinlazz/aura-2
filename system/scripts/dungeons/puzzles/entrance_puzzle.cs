@@ -4,11 +4,6 @@
 // Used as first puzzle in every dungeon because <TODO: insert reason>.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.World.Dungeons.Props;
-using Aura.Channel.World.Dungeons.Puzzles;
-using Aura.Channel.World.Entities;
-
 [PuzzleScript("entrance_puzzle")]
 public class EntrancePuzzleScript : PuzzleScript
 {

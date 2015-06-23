@@ -4,8 +4,6 @@
 // Script for Alby Intermediate for Two.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("tircho_alby_middle_2_dungeon")]
 public class AlbyIntTwoDungeonScript : DungeonScript
 {

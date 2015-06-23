@@ -4,8 +4,6 @@
 // Alby router and script for Alby Normal.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("tircho_alby_dungeon")]
 public class AlbyDungeonScript : DungeonScript
 {

@@ -4,8 +4,6 @@
 // Script for Fiodh Normal.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("gairech_fiodh_dungeon")]
 public class FiodhDungeonScript : DungeonScript
 {

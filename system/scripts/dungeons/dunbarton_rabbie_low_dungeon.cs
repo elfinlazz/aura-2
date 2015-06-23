@@ -4,8 +4,6 @@
 // Script for Rabbie Basic.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("dunbarton_rabbie_low_dungeon")]
 public class RabbieBasicDungeonScript : DungeonScript
 {

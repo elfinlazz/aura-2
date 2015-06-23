@@ -6,8 +6,6 @@
 // dungeons, where the script for the normal version is also the router.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("danu_dungeon")]
 public class FiodhDungeonRouteScript : DungeonScript
 {

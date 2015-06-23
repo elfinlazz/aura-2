@@ -5,12 +5,6 @@
 // a 20% chance to get mini skeletons instead of the normal mobs.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.World.Dungeons.Props;
-using Aura.Channel.World.Dungeons.Puzzles;
-using Aura.Channel.World.Entities;
-using Aura.Shared.Util;
-
 [PuzzleScript("keychest_skeleton")]
 public class KeychestSkeletonScript : PuzzleScript
 {

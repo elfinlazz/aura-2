@@ -4,11 +4,6 @@
 // Spawns a chest in an alley, with 3 mimics and mobs.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.World.Dungeons.Props;
-using Aura.Channel.World.Dungeons.Puzzles;
-using Aura.Channel.World.Entities;
-
 [PuzzleScript("keychest_3mimic")]
 internal class Keychest3Mimic : PuzzleScript
 {

@@ -4,8 +4,6 @@
 // Rabbie router and script for Rabbie Normal.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("dunbarton_rabbie_dungeon")]
 public class RabbieDungeonScript : DungeonScript
 {

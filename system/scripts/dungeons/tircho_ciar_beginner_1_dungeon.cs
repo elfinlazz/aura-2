@@ -4,8 +4,6 @@
 // Script for Ciar Beginner.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("tircho_ciar_beginner_1_dungeon")]
 public class CiarBeginnerDungeonScript : DungeonScript
 {

@@ -4,8 +4,6 @@
 // Custom dungeon, involving a band of evil bunnies and their gold.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("tircho_alby_whiteday_dungeon")]
 public class AlbyWhiteDayDungeonScript : DungeonScript
 {

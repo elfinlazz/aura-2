@@ -4,11 +4,6 @@
 // Spawns ore deposits in a room.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.World.Dungeons.Props;
-using Aura.Channel.World.Dungeons.Puzzles;
-using Aura.Channel.World.Entities;
-
 [PuzzleScript("collectprop_test")]
 public class CollectPropTestScript : PuzzleScript
 {

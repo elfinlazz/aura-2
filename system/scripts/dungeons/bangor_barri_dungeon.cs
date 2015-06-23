@@ -4,8 +4,6 @@
 // Barri router and script for Barri Normal.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("bangor_barri_dungeon")]
 public class BarriDungeonScript : DungeonScript
 {

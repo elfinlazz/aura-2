@@ -4,8 +4,6 @@
 // Script for Ciar Intermediate for Four.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("tircho_ciar_middle_4_dungeon")]
 public class CiarIntFourDungeonScript : DungeonScript
 {

@@ -4,8 +4,6 @@
 // Script for Fiodh Intermediate for Two.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("gairech_fiodh_middle_2_dungeon")]
 public class FiodhIntTwoDungeonScript : DungeonScript
 {

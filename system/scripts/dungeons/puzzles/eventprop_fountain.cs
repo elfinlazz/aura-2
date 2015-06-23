@@ -5,11 +5,6 @@
 // or in an alley.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.World.Dungeons.Props;
-using Aura.Channel.World.Dungeons.Puzzles;
-using Aura.Channel.World.Entities;
-
 [PuzzleScript("eventprop_fountain")]
 public class EventPropFountainScript : PuzzleScript
 {

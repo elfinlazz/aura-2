@@ -4,8 +4,6 @@
 // Script for Barri Basic.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("bangor_barri_low_dungeon")]
 public class BarriBasicDungeonScript : DungeonScript
 {

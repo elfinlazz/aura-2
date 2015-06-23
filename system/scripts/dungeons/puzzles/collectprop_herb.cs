@@ -4,11 +4,6 @@
 // Spawns herb patches in a room.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.World.Dungeons.Props;
-using Aura.Channel.World.Dungeons.Puzzles;
-using Aura.Channel.World.Entities;
-
 [PuzzleScript("collectprop_herb")]
 public class CollectPropHerbScript : PuzzleScript
 {

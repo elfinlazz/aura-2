@@ -4,12 +4,6 @@
 // A room with 9 chests, that can be opened with keys dropped from mobs.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.Scripting.Scripts;
-using Aura.Channel.World.Dungeons.Props;
-using Aura.Channel.World.Dungeons.Puzzles;
-using Aura.Channel.World.Entities;
-using Aura.Shared.Util;
-
 public abstract class Keychest9ChestScript : PuzzleScript
 {
 	public override void OnPrepare(Puzzle puzzle)

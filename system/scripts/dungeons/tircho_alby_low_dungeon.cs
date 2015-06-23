@@ -4,8 +4,6 @@
 // Script for Alby Basic.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("tircho_alby_low_dungeon")]
 public class AlbyBasicDungeonScript : DungeonScript
 {

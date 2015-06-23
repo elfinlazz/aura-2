@@ -4,8 +4,6 @@
 // Easier version of Alby, accessible via Alby Beginner Pass.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("tircho_alby_beginner_1_dungeon")]
 public class AlbyBeginnerDungeonScript : DungeonScript
 {

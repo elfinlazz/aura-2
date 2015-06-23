@@ -4,8 +4,6 @@
 // Ciar router and script for Ciar Normal.
 //---------------------------------------------------------------------------
 
-using Aura.Channel.World.Dungeons;
-
 [DungeonScript("tircho_ciar_dungeon")]
 public class CiarDungeonScript : DungeonScript
 {
