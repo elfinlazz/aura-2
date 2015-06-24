@@ -1546,6 +1546,12 @@ namespace Aura.Channel.World.Entities
 			var dropped = new HashSet<int>();
 			foreach (var drop in this.Drops.Drops)
 			{
+				if (drop == null || !AuraData.ItemDb.Exists(drop.ItemId))
+				{
+					Log.Warning("Creature.Kill: Invalid drop '{0}' from '{1}'.", (drop == null ? "null" : drop.ItemId.ToString()), this.RaceId);
+					continue;
+				}
+
 				if (rnd.NextDouble() * 100 < drop.Chance * ChannelServer.Instance.Conf.World.DropRate)
 				{
 					// Only drop any item once
