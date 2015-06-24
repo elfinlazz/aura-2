@@ -136,8 +136,8 @@ namespace Aura.Channel.World
 			// region again.
 			Send.RemoveDynamicRegion(creature, this.Id);
 
-			// Remove empty region from world
-			if (this.CountPlayers() == 0 && this.Mode == RegionMode.RemoveWhenEmpty)
+			// Remove empty region from world when last *player* was removed
+			if (creature.IsPlayer && this.CountPlayers() == 0 && this.Mode == RegionMode.RemoveWhenEmpty)
 			{
 				ChannelServer.Instance.World.RemoveRegion(this.Id);
 				ChannelServer.Instance.World.DynamicRegions.Remove(this.Id);
