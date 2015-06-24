@@ -19,7 +19,7 @@ public class GolemQuestScript : QuestScript
 		AddObjective("kill_golem", "Hunt 1 Golem", 11, 3213, 3209, Kill(1, "/golem/"));
 
 		AddReward(Exp(40000));
-		AddReward(Item(40262, 1));
+		AddReward(Item(46001, 1));
 	}
 }
 
