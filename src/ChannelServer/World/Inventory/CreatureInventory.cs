@@ -1056,12 +1056,10 @@ namespace Aura.Channel.World.Inventory
 		/// <param name="target"></param>
 		private void CheckRightHand(Item item, Pocket source, Pocket target)
 		{
-			var rightHandPocket = (this.WeaponSet == WeaponSet.First ? Pocket.RightHand1 : Pocket.RightHand2);
-			var leftHandPocket = (this.WeaponSet == WeaponSet.First ? Pocket.LeftHand1 : Pocket.LeftHand2);
 			var rightItem = this.RightHand;
 
 			// Move 2H weapon if shield is euipped
-			if (target == leftHandPocket && item.IsShieldLike && (rightItem != null && rightItem.IsTwoHand))
+			if (target == this.LeftHandPocket && item.IsShieldLike && (rightItem != null && rightItem.IsTwoHand))
 			{
 				// Switch item
 				var success = _pockets[source].Add(rightItem);
@@ -1072,13 +1070,12 @@ namespace Aura.Channel.World.Inventory
 
 				if (success)
 				{
-					_pockets[rightHandPocket].Remove(rightItem);
+					_pockets[this.RightHandPocket].Remove(rightItem);
 
-					Send.ItemMoveInfo(_creature, rightItem, rightHandPocket, null);
-					Send.EquipmentMoved(_creature, rightHandPocket);
+					Send.ItemMoveInfo(_creature, rightItem, this.RightHandPocket, null);
+					Send.EquipmentMoved(_creature, this.RightHandPocket);
 				}
 			}
-
 		}
 
 		/// <summary>

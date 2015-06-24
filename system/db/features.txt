@@ -27,7 +27,10 @@
 	{ name: "G3S4", enabled: true },
 	{ name: "G3S5", enabled: true },
 ]},
-{ name: "G4", enabled: false, children: [
+{ name: "G4", enabled: true, children: [
+	{ name: "G4S4", enabled: true, children: [
+		{ name: "TwinSword", enabled: true },
+	]},
 ]},
 { name: "G5", enabled: false, children: [
 ]},

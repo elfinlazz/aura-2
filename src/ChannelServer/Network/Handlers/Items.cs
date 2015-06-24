@@ -17,6 +17,7 @@ using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Channel.World.Inventory;
 using Aura.Mabi.Network;
+using Aura.Data;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -50,6 +51,13 @@ namespace Aura.Channel.Network.Handlers
 			if (item.IsBag && target.IsBag() && !ChannelServer.Instance.Conf.World.Bagception)
 			{
 				Send.ServerMessage(creature, Localization.Get("Item bags can't be stored inside other bags."));
+				goto L_Fail;
+			}
+
+			// Check TwinSword feature
+			if (target == creature.Inventory.LeftHandPocket && !item.IsShieldLike && creature.RightHand != null && !AuraData.FeaturesDb.IsEnabled("TwinSword"))
+			{
+				Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("Dual Wielding is not available yet."));
 				goto L_Fail;
 			}
 
