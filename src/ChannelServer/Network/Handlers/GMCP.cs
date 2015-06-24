@@ -113,9 +113,7 @@ namespace Aura.Channel.Network.Handlers
 
 			this.EnsureGmcpAuthority(client);
 
-			//creature.Warp(regionId, x, y);
-			creature.SetPosition(x, y);
-			Send.SetLocation(creature, x, y);
+			creature.Jump(x, y);
 		}
 
 		/// <summary>

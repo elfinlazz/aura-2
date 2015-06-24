@@ -117,6 +117,12 @@ namespace Aura.Channel.World.Entities
 		/// <returns></returns>
 		public override bool Warp(int regionId, int x, int y)
 		{
+			if (regionId == this.RegionId && this.Region != Region.Limbo)
+			{
+				this.Jump(x, y);
+				return true;
+			}
+
 			var targetRegion = ChannelServer.Instance.World.GetRegion(regionId);
 			if (targetRegion == null)
 			{

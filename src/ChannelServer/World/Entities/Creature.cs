@@ -1005,6 +1005,29 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Warps creature to given coordinates in its current region.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public void Jump(int x, int y)
+		{
+			this.SetPosition(x, y);
+			Send.SetLocation(this, x, y);
+
+			// TODO: Warp followers?
+		}
+
+		/// <summary>
+		/// Warps creature to given coordinates in its current region.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public void Jump(Position position)
+		{
+			this.Jump(position.X, position.Y);
+		}
+
+		/// <summary>
 		/// Called every 5 minutes, checks changes through food.
 		/// </summary>
 		/// <param name="time"></param>
