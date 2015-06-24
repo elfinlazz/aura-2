@@ -25,7 +25,11 @@ public class SwitchDoorSwitchMonsterScript : PuzzleScript
 
 		for (int i = 1; i <= 4; ++i)
 		{
-			lockedPlace.AddProp(new Switch("Switch" + i, lockedPlace.LockColor), Placement.Corner4);
+			var zwitch = new Switch("Switch" + i, lockedPlace.LockColor);
+			if (ChannelServer.Instance.Conf.World.EasySwitch && puzzle.Get("open") == "Switch" + i)
+				zwitch.Info.Color2 = 0xFFFFFF;
+
+			lockedPlace.AddProp(zwitch, Placement.Corner4);
 			puzzle.Set("Switch" + i + "Activated", false);
 		}
 

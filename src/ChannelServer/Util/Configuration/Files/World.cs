@@ -46,6 +46,7 @@ namespace Aura.Channel.Util.Configuration.Files
 		public bool PtjInfiniteMemory { get; protected set; }
 
 		public bool PrivateDungeons { get; protected set; }
+		public bool EasySwitch { get; protected set; }
 
 		public void Load()
 		{
@@ -90,6 +91,7 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.PtjInfiniteMemory = this.GetBool("ptj_infinite_memory", false);
 
 			this.PrivateDungeons = this.GetBool("private_dungeons", false);
+			this.EasySwitch = this.GetBool("easy_switch", false);
 		}
 	}
 
