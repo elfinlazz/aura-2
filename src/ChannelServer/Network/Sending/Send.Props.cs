@@ -20,13 +20,14 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="propEntityId"></param>
-		public static void HittingProp(Creature creature, long propEntityId)
+		/// <param name="stunTime"></param>
+		public static void HittingProp(Creature creature, long propEntityId, int stunTime)
 		{
 			var pos = creature.GetPosition();
 
 			var packet = new Packet(Op.HittingProp, creature.EntityId);
 			packet.PutLong(propEntityId);
-			packet.PutInt(2000);
+			packet.PutInt(stunTime);
 			packet.PutFloat(pos.X);
 			packet.PutFloat(pos.Y);
 

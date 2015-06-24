@@ -40,7 +40,8 @@ namespace Aura.Channel.Network.Handlers
 			{
 				if (creature.GetPosition().InRange(prop.GetPosition(), 1500))
 				{
-					Send.HittingProp(creature, prop.EntityId);
+					creature.Stun = 1000;
+					Send.HittingProp(creature, prop.EntityId, 1000);
 
 					if (prop.Behavior != null)
 					{
