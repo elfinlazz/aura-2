@@ -212,6 +212,26 @@ namespace Aura.Channel.World.Entities
 		public bool IsDungeonKey { get { return (this.Info.Id >= 70028 && this.Info.Id <= 70030); } }
 
 		/// <summary>
+		/// Reutrns true if item is a shield.
+		/// </summary>
+		public bool IsShield { get { return this.HasTag("/shield/"); } }
+
+		/// <summary>
+		/// Reutrns true if item is a shield or is equipped like a shield (e.g. books).
+		/// </summary>
+		public bool IsShieldLike { get { return (this.IsShield || this.IsEquippableBook); } }
+
+		/// <summary>
+		/// Reutrns true if item is two handed.
+		/// </summary>
+		public bool IsTwoHand { get { return this.HasTag("/twohand/"); } }
+
+		/// <summary>
+		/// Reutnrs true if item is a book that can be equipped.
+		/// </summary>
+		public bool IsEquippableBook { get { return this.HasTag("/equip/*/book/"); } }
+
+		/// <summary>
 		/// New item based on item id.
 		/// </summary>
 		/// <param name="itemId"></param>

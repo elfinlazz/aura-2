@@ -1043,8 +1043,42 @@ namespace Aura.Channel.World.Inventory
 		private void UpdateInventory(Item item, Pocket source, Pocket target)
 		{
 			this.CheckLeftHand(item, source, target);
+			this.CheckRightHand(item, source, target);
 			this.UpdateEquipReferences(source, target);
 			this.CheckEquipMoved(item, source, target);
+		}
+
+		/// <summary>
+		/// Makes sure you can't combine invalid equipment, like 2H and shields.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="source"></param>
+		/// <param name="target"></param>
+		private void CheckRightHand(Item item, Pocket source, Pocket target)
+		{
+			var rightHandPocket = (this.WeaponSet == WeaponSet.First ? Pocket.RightHand1 : Pocket.RightHand2);
+			var leftHandPocket = (this.WeaponSet == WeaponSet.First ? Pocket.LeftHand1 : Pocket.LeftHand2);
+			var rightItem = this.RightHand;
+
+			// Move 2H weapon if shield is euipped
+			if (target == leftHandPocket && item.IsShieldLike && (rightItem != null && rightItem.IsTwoHand))
+			{
+				// Switch item
+				var success = _pockets[source].Add(rightItem);
+
+				// Fallback, temp inv
+				if (!success)
+					success = _pockets[Pocket.Temporary].Add(rightItem);
+
+				if (success)
+				{
+					_pockets[rightHandPocket].Remove(rightItem);
+
+					Send.ItemMoveInfo(_creature, rightItem, rightHandPocket, null);
+					Send.EquipmentMoved(_creature, rightHandPocket);
+				}
+			}
+
 		}
 
 		/// <summary>
