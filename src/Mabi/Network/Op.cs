@@ -292,6 +292,8 @@ namespace Aura.Mabi.Network
 		public const int StatUpdatePrivate = 0x7530;
 		public const int StatUpdatePublic = 0x7532;
 		public const int CombatTargetUpdate = 0x791A; // ?
+		public const int UnkCombat = 0x791B; // ?
+		public const int UnkCombatR = 0x791C; // ?
 		public const int CombatSetAim = 0x791D;
 		public const int CombatSetAimR = 0x791E;
 		public const int SetCombatTarget = 0x7920;
