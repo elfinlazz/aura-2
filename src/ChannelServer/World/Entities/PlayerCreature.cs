@@ -119,8 +119,17 @@ namespace Aura.Channel.World.Entities
 		{
 			if (regionId == this.RegionId && this.Region != Region.Limbo)
 			{
-				this.Jump(x, y);
-				return true;
+				// The Tin cutscene at the very beginning requires a Warp to
+				// fade away, otherwise the screen will stay black. However,
+				// the cutscene in the first dungeon includes a jump to the
+				// treasure room, where we can't warp, because that would drop
+				// the treasure chest key. This is basically a hack until we
+				// find a better way to properly get out of the Tin cutscene.
+				if (this.Temp.CurrentCutscene == null || this.Region.IsDungeon)
+				{
+					this.Jump(x, y);
+					return true;
+				}
 			}
 
 			var targetRegion = ChannelServer.Instance.World.GetRegion(regionId);

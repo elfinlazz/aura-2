@@ -104,10 +104,12 @@ namespace Aura.Channel.World
 			Send.CharacterUnlock(this.Leader, Locks.Default);
 			Send.CutsceneUnk(this);
 
-			this.Leader.Temp.CurrentCutscene = null;
-
+			// Call callback before setting cutscene to null so it can
+			// be referenced from the core during the callback.
 			if (_callback != null)
 				_callback(this);
+
+			this.Leader.Temp.CurrentCutscene = null;
 		}
 	}
 }
