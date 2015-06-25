@@ -90,8 +90,11 @@ namespace Aura.Channel.Skills.Combat
 		public void Use(Creature attacker, Skill skill, Packet packet)
 		{
 			var targetAreaId = packet.GetLong();
-			var unkInt1 = packet.GetInt();
-			var unkInt2 = packet.GetInt();
+
+			// There exists a seemingly rare case where these parameters
+			// aren't sent.
+			var unkInt1 = (packet.Peek() != PacketElementType.None ? packet.GetInt() : 0);
+			var unkInt2 = (packet.Peek() != PacketElementType.None ? packet.GetInt() : 0);
 
 			this.Use(attacker, skill, targetAreaId, unkInt1, unkInt2);
 		}
