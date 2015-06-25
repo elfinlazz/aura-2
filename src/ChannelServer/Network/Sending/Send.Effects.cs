@@ -65,6 +65,56 @@ namespace Aura.Channel.Network.Sending
 		}
 
 		/// <summary>
+		/// Broadcasts EffectDelayed in range of creature.
+		/// </summary>
+		/// <remarks>
+		/// Parameters have to be casted to the proper type, use carefully!
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="delay">Delay in milliseconds</param>
+		/// <param name="effectId"></param>
+		/// <param name="parameters"></param>
+		public static void EffectDelayed(Creature creature, int delay, int effectId, params object[] parameters)
+		{
+			EffectDelayed(creature.EntityId, creature, delay, effectId, parameters);
+		}
+
+		/// <summary>
+		/// Broadcasts Effect in range of creature, with the given packet id.
+		/// </summary>
+		/// <remarks>
+		/// Parameters have to be casted to the proper type, use carefully!
+		/// </remarks>
+		/// <param name="id"></param>
+		/// <param name="creature"></param>
+		/// <param name="delay">Delay in milliseconds</param>
+		/// <param name="effectId"></param>
+		/// <param name="parameters"></param>
+		public static void EffectDelayed(long id, Creature creature, int delay, int effectId, params object[] parameters)
+		{
+			var packet = new Packet(Op.EffectDelayed, id);
+			packet.PutInt(delay);
+			packet.PutInt(effectId);
+			foreach (var p in parameters)
+			{
+				if (p is byte) packet.PutByte((byte)p);
+				else if (p is bool) packet.PutByte((bool)p);
+				else if (p is short) packet.PutShort((short)p);
+				else if (p is ushort) packet.PutUShort((ushort)p);
+				else if (p is int) packet.PutInt((int)p);
+				else if (p is uint) packet.PutUInt((uint)p);
+				else if (p is long) packet.PutLong((long)p);
+				else if (p is ulong) packet.PutULong((ulong)p);
+				else if (p is float) packet.PutFloat((float)p);
+				else if (p is string) packet.PutString((string)p);
+				else
+					throw new Exception("Unsupported effect parameter: " + p.GetType());
+			}
+
+			creature.Region.Broadcast(packet, creature);
+		}
+
+		/// <summary>
 		/// Broadcasts skill init effect (Effect, SkillInit, "flashing")
 		/// in range of creature.
 		/// </summary>
