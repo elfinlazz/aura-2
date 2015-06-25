@@ -46,6 +46,17 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// New Location based on location id (i.e. 0x3000RRRRXXXXYYYY).
+		/// </summary>
+		/// <param name="locationId"></param>
+		public Location(long locationId)
+		{
+			this.RegionId = (ushort)(locationId >> 32);
+			this.X = (ushort)(locationId >> 16) * 20;
+			this.Y = (ushort)(locationId >> 00) * 20;
+		}
+
+		/// <summary>
 		/// Creates new location based on "client path".
 		/// E.g. "Ula_DgnHall_Runda_after/_Ula_DgnHall_Runda_after"
 		/// </summary>
@@ -117,6 +128,20 @@ namespace Aura.Channel.World
 				this.X = (regionData.X1 + regionData.X2) / 2;
 				this.Y = (regionData.Y1 + regionData.Y2) / 2;
 			}
+		}
+
+		/// <summary>
+		/// Returns location id (i.e. 0x3000RRRRXXXXYYYY).
+		/// </summary>
+		public long ToLocationId()
+		{
+			var result = 0x3000000000000000;
+
+			result |= (long)(0xFFFF & this.RegionId) << 32;
+			result |= (long)(0xFFFF & this.X / 20) << 16;
+			result |= (long)(0xFFFF & this.Y / 20) << 0;
+
+			return result;
 		}
 
 		/// <summary>
