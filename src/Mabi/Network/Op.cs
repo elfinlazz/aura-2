@@ -72,7 +72,10 @@ namespace Aura.Mabi.Network
 		public const int WarpUnk1 = 0x4E39;
 		public const int RequestRebirth = 0x4E84;
 		public const int RequestRebirthR = 0x4E85;
-		public const int PonsUpdate = 0x4E8F; // b:2, i:amount, sent on login
+
+		// PonsUpdate changed by +1 some time.
+
+		public const int PonsUpdate = 0x4E90;
 
 		public const int ChannelCharacterInfoRequest = 0x5208;
 		public const int ChannelCharacterInfoRequestR = 0x5209;
@@ -449,6 +452,8 @@ namespace Aura.Mabi.Network
 		public const int SosButtonRequest = 0xA9A9;
 		public const int SosButtonRequestR = 0xA9AA;
 		public const int SkillTeleport = 0xA9F0;
+		public const int EnterRebirth = 0xA9F9;
+		public const int EnterRebirthR = 0xA9FA;
 
 		// [150000~180000] Something was added? Next two ops changed.
 		// [180800, NA196] Something was added? Ops 0xAAXX - 0xABXX increased by 4.

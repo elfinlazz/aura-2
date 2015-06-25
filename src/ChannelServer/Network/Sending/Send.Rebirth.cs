@@ -25,5 +25,30 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends EnterRebirthR to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void EnterRebirthR(Creature creature)
+		{
+			var packet = new Packet(Op.EnterRebirthR, creature.EntityId);
+			packet.PutByte(0);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends PonsUpdate to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void PonsUpdate(Creature creature, int ponsAmount)
+		{
+			var packet = new Packet(Op.PonsUpdate, MabiId.Channel);
+			packet.PutByte(2);
+			packet.PutInt(ponsAmount);
+
+			creature.Client.Send(packet);
+		}
 	}
 }

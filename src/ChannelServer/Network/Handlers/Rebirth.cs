@@ -170,5 +170,23 @@ namespace Aura.Channel.Network.Handlers
 			// Success
 			Send.RequestRebirthR(creature, true);
 		}
+
+		/// <summary>
+		/// Sent upon entering the rebirth screen.
+		/// </summary>
+		/// <remarks>
+		/// A lack of a response does not lock the client.
+		/// </remarks>
+		/// <example>
+		/// No parameters.
+		/// </example>
+		[PacketHandler(Op.EnterRebirth)]
+		public void EnterRebirth(ChannelClient client, Packet packet)
+		{
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			Send.EnterRebirthR(creature);
+			Send.PonsUpdate(creature, 9999);
+		}
 	}
 }
