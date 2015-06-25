@@ -54,6 +54,10 @@ namespace Aura.Data.Database
 		public byte Balance { get; set; }
 		public AttackSpeed AttackSpeed { get; set; }
 		public byte KnockCount { get; set; }
+		public float SplashRadius { get; set; }
+		public float SplashAngle { get; set; }
+		public float SplashDamage { get; set; }
+		public float StaminaUsage { get; set; }
 
 		public int BagWidth { get; set; }
 		public int BagHeight { get; set; }
@@ -145,6 +149,10 @@ namespace Aura.Data.Database
 				info.Balance = entry.ReadByte("balance");
 				info.AttackSpeed = (AttackSpeed)entry.ReadByte("attackSpeed");
 				info.KnockCount = entry.ReadByte("knockCount");
+				info.SplashRadius = entry.ReadFloat("splashRadius");
+				info.SplashAngle = entry.ReadFloat("splashAngle");
+				info.SplashDamage = entry.ReadFloat("splashDamage");
+				info.StaminaUsage = entry.ReadFloat("splashUsage");
 			}
 
 			info.BagWidth = entry.ReadInt("bagWidth");
