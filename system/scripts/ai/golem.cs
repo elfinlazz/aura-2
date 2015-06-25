@@ -43,7 +43,14 @@ public class GolemAi : AiScript
 			Do(CancelSkill());
 			Do(Wait(2000));
 		}
-		else  // 60%
+		else if(rndn < 70) // 30%
+		{
+			Do(PrepareSkill(SkillId.Windmill));
+			Do(Wait(2000));
+			Do(UseSkill());
+			Do(Wait(1500));
+		}
+		else  // 30%
 		{
 			Do(Attack());
 		}

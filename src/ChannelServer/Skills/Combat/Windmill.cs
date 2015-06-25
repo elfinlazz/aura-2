@@ -93,6 +93,19 @@ namespace Aura.Channel.Skills.Combat
 			var unkInt1 = packet.GetInt();
 			var unkInt2 = packet.GetInt();
 
+			this.Use(attacker, skill, targetAreaId, unkInt1, unkInt2);
+		}
+
+		/// <summary>
+		/// Uses WM, attacking targets.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skill"></param>
+		/// <param name="targetAreaId"></param>
+		/// <param name="unkInt1"></param>
+		/// <param name="unkInt2"></param>
+		public void Use(Creature attacker, Skill skill, long targetAreaId, int unkInt1, int unkInt2)
+		{
 			var range = this.GetRange(attacker, skill);
 			var targets = attacker.GetTargetableCreaturesInRange(range);
 

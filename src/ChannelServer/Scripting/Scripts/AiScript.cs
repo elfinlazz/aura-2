@@ -4,6 +4,7 @@
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills;
 using Aura.Channel.Skills.Base;
+using Aura.Channel.Skills.Combat;
 using Aura.Channel.Skills.Life;
 using Aura.Channel.World;
 using Aura.Channel.World.Entities;
@@ -1167,6 +1168,29 @@ namespace Aura.Channel.Scripting.Scripts
 			}
 
 			yield break;
+		}
+
+		/// <summary>
+		/// Makes creature use currently loaded skill.
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable UseSkill()
+		{
+			var activeSkillId = this.Creature.Skills.ActiveSkill != null ? this.Creature.Skills.ActiveSkill.Info.Id : SkillId.None;
+
+			if (activeSkillId == SkillId.None)
+				yield break;
+
+			if (activeSkillId == SkillId.Windmill)
+			{
+				var wmHandler = ChannelServer.Instance.SkillManager.GetHandler<Windmill>(activeSkillId);
+				wmHandler.Use(this.Creature, this.Creature.Skills.ActiveSkill, 0, 0, 0);
+				this.SharpMind(activeSkillId, SharpMindStatus.Cancelling);
+			}
+			else
+			{
+				Log.Unimplemented("AI.UseSkill: Skill '{0}'", activeSkillId);
+			}
 		}
 
 		/// <summary>
