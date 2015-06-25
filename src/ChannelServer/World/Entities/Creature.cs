@@ -1863,16 +1863,26 @@ namespace Aura.Channel.World.Entities
 
 			return this.RaceData.HasTag(tag);
 		}
+
 		/// <summary>
-		/// Returns a list of creatures in range that are targetable.
-		/// Checks for collisions.
+		/// Returns targetable creatures in given range of creature.
+		/// Factors in actual attack range.
 		/// </summary>
 		/// <param name="range"></param>
 		/// <returns></returns>
 		public ICollection<Creature> GetTargetableCreaturesInRange(int range)
 		{
-			var visible = this.Region.GetVisibleCreaturesInRange(this, range);
-			var targetable = visible.FindAll(a => this.CanTarget(a) && !this.Region.Collisions.Any(this.GetPosition(), a.GetPosition()));
+			var pos = this.GetPosition();
+			var targetable = this.Region.GetCreatures(target =>
+			{
+				var targetPos = target.GetPosition();
+
+				return target != this // Exclude creature
+					&& this.CanTarget(target) // Check targetability
+					&& targetPos.InRange(pos, range + this.AttackRangeFor(target)) // Check range
+					&& !this.Region.Collisions.Any(pos, targetPos) // Check collisions between creatures
+					&& !target.Conditions.Has(ConditionsA.Invisible); // Check visiblility (GM)
+			});
 
 			return targetable;
 		}

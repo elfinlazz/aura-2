@@ -525,19 +525,15 @@ namespace Aura.Channel.World
 		/// </summary>
 		public ICollection<Creature> GetCreatures(Func<Creature, bool> predicate)
 		{
-			var result = new List<Creature>();
-
 			_creaturesRWLS.EnterReadLock();
 			try
 			{
-				result.AddRange(_creatures.Values.Where(predicate));
+				return _creatures.Values.Where(predicate).ToList();
 			}
 			finally
 			{
 				_creaturesRWLS.ExitReadLock();
 			}
-
-			return result;
 		}
 
 		/// <summary>
@@ -702,17 +698,9 @@ namespace Aura.Channel.World
 		/// <param name="entity"></param>
 		/// <param name="range"></param>
 		/// <returns></returns>
-		public List<Creature> GetVisibleCreaturesInRange(Entity entity, int range = VisibleRange)
+		public ICollection<Creature> GetVisibleCreaturesInRange(Entity entity, int range = VisibleRange)
 		{
-			_creaturesRWLS.EnterReadLock();
-			try
-			{
-				return _creatures.Values.Where(a => a != entity && a.GetPosition().InRange(entity.GetPosition(), range) && !a.Conditions.Has(ConditionsA.Invisible)).ToList();
-			}
-			finally
-			{
-				_creaturesRWLS.ExitReadLock();
-			}
+			return this.GetCreatures(a => a != entity && a.GetPosition().InRange(entity.GetPosition(), range) && !a.Conditions.Has(ConditionsA.Invisible));
 		}
 
 		/// <summary>

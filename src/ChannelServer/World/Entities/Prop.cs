@@ -360,6 +360,32 @@ namespace Aura.Channel.World.Entities
 				this.Region.Collisions.Add(this);
 			}
 		}
+
+		/// <summary>
+		/// Returns targetable creatures in given range of prop.
+		/// Owner of the prop and creatures he can't target are excluded.
+		/// </summary>
+		/// <param name="owner">Owner of the prop, who is excluded and used as reference for CanTarget (null to ignore).</param>
+		/// <param name="range"></param>
+		/// <returns></returns>
+		public ICollection<Creature> GetTargetableCreaturesInRange(Creature owner, int range)
+		{
+			var pos = this.GetPosition();
+			var targetable = this.Region.GetCreatures(target =>
+			{
+				var targetPos = target.GetPosition();
+
+				return target != owner // Exclude owner
+					&& (owner == null || owner.CanTarget(target)) // Check targetability
+					&& !target.IsDead // Check if target's alive (in case owner is null)
+					&& !target.Has(CreatureStates.GoodNpc) // Don't hit good NPCs (in case owner is null)
+					&& targetPos.InRange(pos, range) // Check range
+					&& !this.Region.Collisions.Any(pos, targetPos) // Check collisions between entities
+					&& !target.Conditions.Has(ConditionsA.Invisible); // Check visiblility (GM)
+			});
+
+			return targetable;
+		}
 	}
 
 	public delegate void PropFunc(Creature creature, Prop prop);
