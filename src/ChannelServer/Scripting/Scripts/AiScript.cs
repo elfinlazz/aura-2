@@ -853,7 +853,13 @@ namespace Aura.Channel.Scripting.Scripts
 			// Check for collision
 			Position intersection;
 			if (this.Creature.Region.Collisions.Find(pos, destination, out intersection))
-				destination = pos.GetRelative(intersection, -10);
+			{
+				destination = pos.GetRelative(intersection, -100);
+
+				// If new destination is invalid as well don't move at all
+				if (this.Creature.Region.Collisions.Any(pos, destination))
+					destination = pos;
+			}
 
 			this.Creature.Move(destination, walk);
 
