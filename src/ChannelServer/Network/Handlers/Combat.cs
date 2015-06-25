@@ -223,6 +223,11 @@ namespace Aura.Channel.Network.Handlers
 		/// Sent sometimes during combat? Reproducable by spamming attack
 		/// and movement packets. Response seems to be a single byte,
 		/// probably a bool.
+		/// If this is triggered, and you suddenly log out, the client
+		/// might send a SetCombatTarget packet after/during DisconnectRequest,
+		/// which might cause a security violation, because the creature
+		/// has been removed from the client by then. This isn't too
+		/// much of a problem but we should probably look into it some time.
 		/// </remarks>
 		/// <example>
 		/// No parameters.
