@@ -1865,22 +1865,34 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Returns targetable creatures in given range of creature.
-		/// Factors in actual attack range.
+		/// Returns targetable creatures in given range around creature.
 		/// </summary>
-		/// <param name="range"></param>
+		/// <param name="range">Radius around position.</param>
+		/// <param name="addAttackRange">Factor in attack range?</param>
 		/// <returns></returns>
-		public ICollection<Creature> GetTargetableCreaturesInRange(int range)
+		public ICollection<Creature> GetTargetableCreaturesInRange(int range, bool addAttackRange)
 		{
-			var pos = this.GetPosition();
+			return this.GetTargetableCreaturesAround(this.GetPosition(), range, addAttackRange);
+		}
+
+		/// <summary>
+		/// Returns targetable creatures in given range around position.
+		/// Optionally factors in attack range.
+		/// </summary>
+		/// <param name="position">Reference position.</param>
+		/// <param name="range">Radius around position.</param>
+		/// <param name="addAttackRange">Factor in attack range?</param>
+		/// <returns></returns>
+		public ICollection<Creature> GetTargetableCreaturesAround(Position position, int range, bool addAttackRange)
+		{
 			var targetable = this.Region.GetCreatures(target =>
 			{
 				var targetPos = target.GetPosition();
 
 				return target != this // Exclude creature
 					&& this.CanTarget(target) // Check targetability
-					&& targetPos.InRange(pos, range + this.AttackRangeFor(target)) // Check range
-					&& !this.Region.Collisions.Any(pos, targetPos) // Check collisions between creatures
+					&& targetPos.InRange(position, range + this.AttackRangeFor(target)) // Check range
+					&& !this.Region.Collisions.Any(position, targetPos) // Check collisions between position
 					&& !target.Conditions.Has(ConditionsA.Invisible); // Check visiblility (GM)
 			});
 

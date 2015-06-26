@@ -110,7 +110,7 @@ namespace Aura.Channel.Skills.Combat
 		public void Use(Creature attacker, Skill skill, long targetAreaId, int unkInt1, int unkInt2)
 		{
 			var range = this.GetRange(attacker, skill);
-			var targets = attacker.GetTargetableCreaturesInRange(range);
+			var targets = attacker.GetTargetableCreaturesInRange(range, true);
 
 			// Check targets
 			if (targets.Count == 0)
