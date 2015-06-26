@@ -6,96 +6,368 @@
 //---------------------------------------------------------------------------
 
 [
+// Generation 1
 { name: "G1", enabled: true, children: [
-	{ name: "G1S1", enabled: true },
-	{ name: "G1S2", enabled: true },
-]},
-{ name: "G2", enabled: false, children: [
-	{ name: "G2S1", enabled: true },
-	{ name: "G2S2", enabled: true },
-	{ name: "G2S3", enabled: true },
-	{ name: "G2S4", enabled: true },
-]},
-{ name: "G3", enabled: false, children: [
-	{ name: "G3S1", enabled: true },
-	{ name: "G3S2", enabled: true, children: [
-		{ name: "BarriAdvanced", enabled: true },
-	]},
-	{ name: "G3S3", enabled: true, children: [
+	{ name: "MainStreamG1", enabled: true },
+	{ name: "Rebirth", enabled: true },
+	{ name: "SystemGuild", enabled: true },
+	{ name: "PersonalShop", enabled: true },
+	
+	// Season 1
+	{ name: "G1S1", enabled: true, children: [
 		{ name: "CiarAdvanced", enabled: true },
 	]},
-	{ name: "G3S4", enabled: true },
-	{ name: "G3S5", enabled: true },
+	
+	// Season 2
+	{ name: "G1S2", enabled: true, children: []},
 ]},
-{ name: "G4", enabled: true, children: [
+
+// Generation 2
+{ name: "G2", enabled: false, children: [
+	{ name: "MainStreamG2", enabled: true },
+	
+	// Season 1
+	{ name: "G2S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G2S2", enabled: true, children: [
+		{ name: "SystemPet", enabled: true },
+	]},
+	
+	// Season 3
+	{ name: "G2S3", enabled: true, children: [
+		{ name: "PotionPartyMaking", enabled: true },
+	]},
+	
+	// Season 4
+	{ name: "G2S4", enabled: true, children: []},
+]},
+
+// Generation 3
+{ name: "G3", enabled: false, children: [
+	{ name: "EnchantEntrust", enabled: true },
+	{ name: "Mate", enabled: true },
+	
+	// Season 1
+	{ name: "G3S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G3S2", enabled: true, children: [
+		{ name: "BarriAdvanced", enabled: true },
+		{ name: "Poison", enabled: true },
+	]},
+	
+	// Season 3
+	{ name: "G3S3", enabled: true, children: [
+		{ name: "CiarAdvanced", enabled: true },
+		{ name: "PaladinPassiveDefence", enabled: true },
+	]},
+	
+	// Season 4
+	{ name: "G3S4", enabled: true, children: [
+		{ name: "Housing", enabled: true },
+	]},
+	
+	// Season 5
+	{ name: "G3S5", enabled: true, children: [
+		{ name: "DarkKnight", enabled: true },
+	]},
+]},
+
+// Generation 4
+{ name: "G4", enabled: false, children: [
+	// Season 1
+	{ name: "G4S1", enabled: true, children: [
+		{ name: "BlowDelayReduce", enabled: true },
+	]},
+	
+	// Season 2
+	{ name: "G4S2", enabled: true, children: [
+		{ name: "Ruin", enabled: true },
+		{ name: "IriaRebirth", enabled: true },
+		{ name: "Exploration", enabled: true },
+	]},
+	
+	// Season 3
+	{ name: "G4S3", enabled: true, children: []},
+	
+	// Season 4
 	{ name: "G4S4", enabled: true, children: [
 		{ name: "TwinSword", enabled: true },
 	]},
 ]},
+
+// Temp
+{ name: "TwinSword", enabled: true },
+
+// Generation 5
 { name: "G5", enabled: false, children: [
-]},
-{ name: "G6", enabled: false, children: [
-	{ name: "G6S3", enabled: true, children: [
-		{ name: "AlbyAdvanced", enabled: true },
+	// Season 1
+	{ name: "G5S1", enabled: true, children: [
+		{ name: "Elf", enabled: true },
+		{ name: "LostPeopleQuest", enabled: true },
+		{ name: "RangedAttackOnHorse", enabled: true },
+		{ name: "AntHell", enabled: true },
+	]},
+	
+	// Season 2
+	{ name: "G5S2", enabled: true, children: [
+		{ name: "NaoBombRenewal", enabled: true },
+	]},
+	
+	// Season 3
+	{ name: "G5S3", enabled: true, children: [
+		{ name: "DynamicMonsterAllocation", enabled: true },
+	]},
+	
+	// Season 4
+	{ name: "G5S4", enabled: true, children: [
+		{ name: "EgoSpecialAttack", enabled: true },
+		{ name: "BossRushDungeon", enabled: true },
 	]},
 ]},
+
+// Generation 6
+{ name: "G6", enabled: false, children: [
+	// Season 1
+	{ name: "G6S1", enabled: true, children: [
+		{ name: "Giant", enabled: true },
+		{ name: "IceFishing", enabled: true },
+	]},
+	
+	// Season 2
+	{ name: "G6S2", enabled: true, children: [
+		{ name: "EnsemblePlay", enabled: true },
+		{ name: "WandUpgradeAndChainCasting", enabled: true },
+	]},
+	
+	// Season 3
+	{ name: "G6S3", enabled: true, children: [
+		{ name: "AlbyAdvanced", enabled: true },
+		{ name: "FemaleGiant", enabled: true },
+		{ name: "FoodStatLimit", enabled: true },
+	]},
+	
+	// Season 4
+	{ name: "G6S4", enabled: true, children: [
+		{ name: "ElfGiantTransform", enabled: true },
+		{ name: "SearchItemByPet", enabled: true },
+	]},
+]},
+
+// Generation 7
 { name: "G7", enabled: false, children: [
+	// Season 1
+	{ name: "G7S1", enabled: true, children: [
+		{ name: "Ship", enabled: true },
+		{ name: "MagicShield", enabled: true },
+		{ name: "AnimalTraining", enabled: true },
+		{ name: "CombatRenewal", enabled: true },
+		{ name: "AdvancedItemRenewal", enabled: true },
+		{ name: "Aviation", enabled: true },
+	]},
+	
+	// Season 2
+	{ name: "G7S2", enabled: true, children: [
+		{ name: "Waterfall", enabled: true },
+	]},
+	
+	// Season 3
+	{ name: "G7S3", enabled: true, children: [
+		{ name: "RoarSkill", enabled: true },
+		{ name: "JumpingStompSkill", enabled: true },
+		{ name: "LionDashSkill", enabled: true },
+	]},
+	
+	// Season 4
+	{ name: "G7S4", enabled: true, children: [
+		{ name: "PaperAirplaneAction", enabled: true },
+	]},
 ]},
+
+// Generation 8
 { name: "G8", enabled: false, children: [
+	// Season 1
+	{ name: "G8S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G8S2", enabled: true, children: [
+		{ name: "PerformanceOption", enabled: true },
+		{ name: "MagicMotionRenewal", enabled: true },
+	]},
+	
+	// Season 3
+	{ name: "G8S3", enabled: true, children: [
+		{ name: "ManaShield", enabled: true },
+		{ name: "HotspringEffect", enabled: true },
+	]},
+	
+	// Season 4
+	{ name: "G8S4", enabled: true, children: [
+		{ name: "PartyBoard", enabled: true },
+		{ name: "GuildRobe", enabled: true },
+		{ name: "MarkerMyGuildStone", enabled: true },
+	]},
+	
+	// Season 5
+	{ name: "G8S5", enabled: true, children: []},
 ]},
+
+// Generation 9
 { name: "G9", enabled: false, children: [
-	{ name: "G9S1", enabled: true },
-	{ name: "G9S2", enabled: true },
-	{ name: "G9S3", enabled: true },
+	// Season 1
+	{ name: "G9S1", enabled: true, children: [
+		{ name: "ServiceModelRenewal2008", enabled: true },
+		{ name: "Dissolution", enabled: true },
+		{ name: "Synthesis", enabled: true },
+		{ name: "FreeRebirth", enabled: true },
+		{ name: "ShadowMissionBoard", enabled: true },
+		{ name: "Alchemy", enabled: true },
+		{ name: "IceMine", enabled: true },
+	]},
+	
+	// Season 2
+	{ name: "G9S2", enabled: true, children: [
+		{ name: "LakeNeaghBoss", enabled: true },
+		{ name: "Farming", enabled: true },
+	]},
+	
+	// Season 3
+	{ name: "G9S3", enabled: true, children: [
+		{ name: "MagicCombatRenewal", enabled: true },
+	]},
 ]},
+
+// Generation 10
 { name: "G10", enabled: false, children: [
+	// Season 1
+	{ name: "G10S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G10S2", enabled: true, children: []},
+	
+	// Season 3
+	{ name: "G10S2", enabled: true, children: []},
 ]},
+
+// Generation 11
 { name: "G11", enabled: false, children: [
-	{ name: "G11S1", enabled: true },
-	{ name: "G11S2", enabled: true },
+	// Season 1
+	{ name: "G11S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G11S2", enabled: true, children: []},
 ]},
+
+// Generation 12
 { name: "G12", enabled: false, children: [
-	{ name: "G12S1", enabled: true },
-	{ name: "G12S2", enabled: true },
+	// Season 1
+	{ name: "G12S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G12S2", enabled: true, children: []},
 ]},
+
+// Generation 13
 { name: "G13", enabled: false, children: [
+	// Season 1
 	{ name: "G13S1", enabled: true, children: [
 		{ name: "FiodhAdvanced", enabled: true },
 	]},
-	{ name: "G13S2", enabled: true },
+	
+	// Season 2
+	{ name: "G13S2", enabled: true, children: []},
 ]},
+
+// Generation 14
 { name: "G14", enabled: false, children: [
-	{ name: "G14S1", enabled: true },
-	{ name: "G14S2", enabled: true },
-	{ name: "G14S3", enabled: true },
-	{ name: "G14S4", enabled: true },
+	// Season 1
+	{ name: "G14S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G14S2", enabled: true, children: []},
+	
+	// Season 3
+	{ name: "G14S3", enabled: true, children: []},
+	
+	// Season 4
+	{ name: "G14S4", enabled: true, children: []},
 ]},
+
+// Generation 15
 { name: "G15", enabled: false, children: [
-	{ name: "G15S1", enabled: true },
-	{ name: "G15S2", enabled: true },
-	{ name: "G15S3", enabled: true },
-	{ name: "G15S4", enabled: true },
+	// Season 1
+	{ name: "G15S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G15S2", enabled: true, children: []},
+	
+	// Season 3
+	{ name: "G15S3", enabled: true, children: []},
+	
+	// Season 4
+	{ name: "G15S4", enabled: true, children: []},
 ]},
+
+// Generation 16
 { name: "G16", enabled: false, children: [
-	{ name: "G16S1", enabled: true },
-	{ name: "G16S2", enabled: true },
+	// Season 1
+	{ name: "G16S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G16S2", enabled: true, children: [
+		{ name: "CombatSystemRenewal", enabled: true },
+	]},
 ]},
+
+// Generation 17
 { name: "G17", enabled: false, children: [
-	{ name: "G17S1", enabled: true },
-	{ name: "G17S2", enabled: true },
-	{ name: "G17S3", enabled: true },
-	{ name: "G17S4", enabled: true },
+	// Season 1
+	{ name: "G17S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G17S2", enabled: true, children: []},
+	
+	// Season 3
+	{ name: "G17S3", enabled: true, children: []},
+	
+	// Season 4
+	{ name: "G17S4", enabled: true, children: []},
 ]},
+
+// Generation 18
 { name: "G18", enabled: false, children: [
-	{ name: "G18E01", enabled: true },
-	{ name: "G18E02", enabled: true },
-	{ name: "G18E03", enabled: true },
-	{ name: "G18E04", enabled: true },
-	{ name: "G18E05", enabled: true },
-	{ name: "G18E06", enabled: true },
-	{ name: "G18E07", enabled: true },
-	{ name: "G18E08", enabled: true },
-	{ name: "G18E09", enabled: true },
-	{ name: "G18E10", enabled: true },
+	// Season 1
+	{ name: "G18S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G18S2", enabled: true, children: []},
+	
+	// Season 3
+	{ name: "G18S3", enabled: true, children: []},
+	
+	// Season 4
+	{ name: "G18S4", enabled: true, children: []},
+	
+	// Season 5
+	{ name: "G18S5", enabled: true, children: []},
+	
+	// Season 6
+	{ name: "G18S6", enabled: true, children: []},
+	
+	// Season 7
+	{ name: "G18S7", enabled: true, children: []},
+	
+	// Season 8
+	{ name: "G18S8", enabled: true, children: []},
+]},
+
+// Generation 19
+{ name: "G19", enabled: false, children: [
+	// Season 1
+	{ name: "G19S1", enabled: true, children: []},
+	
+	// Season 2
+	{ name: "G19S2", enabled: true, children: []},
 ]},
 ]
