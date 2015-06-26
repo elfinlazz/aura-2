@@ -521,6 +521,24 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns true if creature with given entity id exists.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <returns></returns>
+		public bool CreatureExists(long entityId)
+		{
+			_creaturesRWLS.EnterReadLock();
+			try
+			{
+				return _creatures.ContainsKey(entityId);
+			}
+			finally
+			{
+				_creaturesRWLS.ExitReadLock();
+			}
+		}
+
+		/// <summary>
 		/// Returns list of creatures that match predicate.
 		/// </summary>
 		public ICollection<Creature> GetCreatures(Func<Creature, bool> predicate)

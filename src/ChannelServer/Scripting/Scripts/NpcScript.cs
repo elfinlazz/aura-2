@@ -132,7 +132,10 @@ namespace Aura.Channel.Scripting.Scripts
 					return false;
 				}
 
-				region.AddCreature(this.NPC);
+				// Add creature to region, unless the script already did it
+				// for some reason.
+				if (!region.CreatureExists(this.NPC.EntityId))
+					region.AddCreature(this.NPC);
 			}
 
 			this.NPC.SpawnLocation = new Location(this.NPC.RegionId, this.NPC.GetPosition());
