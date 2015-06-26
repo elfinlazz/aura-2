@@ -398,6 +398,12 @@ namespace Aura.Channel.World.Dungeons
 					_bossDoor.Info.Color2 = floorData.Color1;
 					_bossDoor.Info.Color3 = floorData.Color3;
 					_bossDoor.Behavior += this.BossDoorBehavior;
+
+					// Update the shapes after the rotation change in Door.
+					// I assume this is done automatically to the other doors
+					// during setting their initial state.
+					_bossDoor.UpdateShapes();
+
 					region.AddProp(_bossDoor);
 				}
 				else
