@@ -254,7 +254,7 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 			foreach (var door in this.Doors)
 			{
 				if (door != null)
-					door.Close();
+					door.Close(_room.X, _room.Y);
 			}
 		}
 
@@ -276,8 +276,17 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		/// <param name="key"></param>
 		public void LockPlace(Item key)
 		{
-			this.GetLockDoor().IsLocked = true;
+			var door = this.GetLockDoor();
+			door.Lock();
 			this.Key = key;
+		}
+
+		/// <summary>
+		/// Locks this place.
+		/// </summary>
+		public void LockPlace()
+		{
+			this.GetLockDoor().Lock(true);
 		}
 
 		/// <summary>

@@ -33,7 +33,7 @@ public class SwitchDoorSwitchMonsterScript : PuzzleScript
 			puzzle.Set("Switch" + i + "Activated", false);
 		}
 
-		lockedPlace.CloseAllDoors();
+		puzzle.LockPlace(lockedPlace);
 	}
 
 	public override void OnPropEvent(Puzzle puzzle, Prop prop)

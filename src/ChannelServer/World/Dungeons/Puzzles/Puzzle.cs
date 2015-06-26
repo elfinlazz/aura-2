@@ -206,6 +206,19 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		}
 
 		/// <summary>
+		/// Locks place without a key.
+		/// </summary>
+		/// <param name="place"></param>
+		/// <returns></returns>
+		public void LockPlace(PuzzlePlace place)
+		{
+			if (!place.IsLock)
+				throw new PuzzleException("Tried to lock a place that isn't a Lock");
+
+			place.LockPlace();
+		}
+
+		/// <summary>
 		/// Adds prop to puzzle in place.
 		/// </summary>
 		/// <param name="place"></param>
