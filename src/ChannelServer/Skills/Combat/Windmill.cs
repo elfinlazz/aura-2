@@ -234,7 +234,8 @@ namespace Aura.Channel.Skills.Combat
 				range = 400f;
 				knuckleMod = 0.5f;
 			}
-			else if (skill.Info.Rank >= SkillRank.R1)
+
+			if (skill.Info.Rank >= SkillRank.R1)
 			{
 				range = 500f;
 				knuckleMod = 0.6f;
