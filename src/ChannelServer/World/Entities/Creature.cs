@@ -1888,10 +1888,18 @@ namespace Aura.Channel.World.Entities
 			var targetable = this.Region.GetCreatures(target =>
 			{
 				var targetPos = target.GetPosition();
+				var radius = range;
+				if (addAttackRange)
+				{
+					// This is unofficial, the target's "hitbox" should be
+					// factored in, but the total attack range is too much.
+					// Using 50% for now until we know more.
+					radius += this.AttackRangeFor(target) / 2;
+				}
 
 				return target != this // Exclude creature
 					&& this.CanTarget(target) // Check targetability
-					&& targetPos.InRange(position, range + this.AttackRangeFor(target)) // Check range
+					&& targetPos.InRange(position, radius) // Check range
 					&& !this.Region.Collisions.Any(position, targetPos) // Check collisions between position
 					&& !target.Conditions.Has(ConditionsA.Invisible); // Check visiblility (GM)
 			});
