@@ -23,12 +23,12 @@ namespace Aura.Channel.Network.Sending
 		/// <remarks>
 		/// Parameters have to be casted to the proper type, use carefully!
 		/// </remarks>
-		/// <param name="creature"></param>
+		/// <param name="entity"></param>
 		/// <param name="effectId"></param>
 		/// <param name="parameters"></param>
-		public static void Effect(Creature creature, int effectId, params object[] parameters)
+		public static void Effect(Entity entity, int effectId, params object[] parameters)
 		{
-			Effect(creature.EntityId, creature, effectId, parameters);
+			Effect(entity.EntityId, entity, effectId, parameters);
 		}
 
 		/// <summary>
@@ -38,10 +38,10 @@ namespace Aura.Channel.Network.Sending
 		/// Parameters have to be casted to the proper type, use carefully!
 		/// </remarks>
 		/// <param name="id"></param>
-		/// <param name="creature"></param>
+		/// <param name="entity"></param>
 		/// <param name="effectId"></param>
 		/// <param name="parameters"></param>
-		public static void Effect(long id, Creature creature, int effectId, params object[] parameters)
+		public static void Effect(long id, Entity entity, int effectId, params object[] parameters)
 		{
 			var packet = new Packet(Op.Effect, id);
 			packet.PutInt(effectId);
@@ -61,7 +61,7 @@ namespace Aura.Channel.Network.Sending
 					throw new Exception("Unsupported effect parameter: " + p.GetType());
 			}
 
-			creature.Region.Broadcast(packet, creature);
+			entity.Region.Broadcast(packet, entity);
 		}
 
 		/// <summary>
@@ -70,13 +70,13 @@ namespace Aura.Channel.Network.Sending
 		/// <remarks>
 		/// Parameters have to be casted to the proper type, use carefully!
 		/// </remarks>
-		/// <param name="creature"></param>
+		/// <param name="entity"></param>
 		/// <param name="delay">Delay in milliseconds</param>
 		/// <param name="effectId"></param>
 		/// <param name="parameters"></param>
-		public static void EffectDelayed(Creature creature, int delay, int effectId, params object[] parameters)
+		public static void EffectDelayed(Entity entity, int delay, int effectId, params object[] parameters)
 		{
-			EffectDelayed(creature.EntityId, creature, delay, effectId, parameters);
+			EffectDelayed(entity.EntityId, entity, delay, effectId, parameters);
 		}
 
 		/// <summary>
@@ -86,11 +86,11 @@ namespace Aura.Channel.Network.Sending
 		/// Parameters have to be casted to the proper type, use carefully!
 		/// </remarks>
 		/// <param name="id"></param>
-		/// <param name="creature"></param>
+		/// <param name="entity"></param>
 		/// <param name="delay">Delay in milliseconds</param>
 		/// <param name="effectId"></param>
 		/// <param name="parameters"></param>
-		public static void EffectDelayed(long id, Creature creature, int delay, int effectId, params object[] parameters)
+		public static void EffectDelayed(long id, Entity entity, int delay, int effectId, params object[] parameters)
 		{
 			var packet = new Packet(Op.EffectDelayed, id);
 			packet.PutInt(delay);
@@ -111,7 +111,7 @@ namespace Aura.Channel.Network.Sending
 					throw new Exception("Unsupported effect parameter: " + p.GetType());
 			}
 
-			creature.Region.Broadcast(packet, creature);
+			entity.Region.Broadcast(packet, entity);
 		}
 
 		/// <summary>
