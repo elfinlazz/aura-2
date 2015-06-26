@@ -393,17 +393,14 @@ namespace Aura.Channel.World.Dungeons
 				{
 					Log.Warning("Dungeon.InitFloorRegion: No locked place in last section of '{0}'.", this.Name);
 
-					_bossDoor = new Door(this.Data.BossDoorId, region.Id, endPos.X, endPos.Y - Dungeon.TileSize, 0, DungeonBlockType.BossDoor, "", "");
+					_bossDoor = new Door(this.Data.BossDoorId, region.Id, endPos.X, endPos.Y - Dungeon.TileSize, Direction.Up, DungeonBlockType.BossDoor, "", "closed");
 					_bossDoor.Info.Color1 = floorData.Color1;
 					_bossDoor.Info.Color2 = floorData.Color1;
 					_bossDoor.Info.Color3 = floorData.Color3;
+					_bossDoor.Behavior = (cr, pr) => { _bossDoor.Open(); };
 					_bossDoor.Behavior += this.BossDoorBehavior;
-
-					// Update the shapes after the rotation change in Door.
-					// I assume this is done automatically to the other doors
-					// during setting their initial state.
 					_bossDoor.UpdateShapes();
-
+					endRoomTrait.PuzzleDoors[Direction.Down] = _bossDoor; // making sure another open dummy door won't be added here
 					region.AddProp(_bossDoor);
 				}
 				else
