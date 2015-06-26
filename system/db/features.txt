@@ -1,6 +1,10 @@
 // Aura
 // Database file
 // 
+// This file is for the server, enabling features here does not enable them
+// in the client, which might be necessary in some cases for them to
+// work as expected.
+// 
 // Warning: Enabling/disabling features in an unusual order might have
 //   unexpected side-effects (e.g. enabling G8 without 4-6).
 //---------------------------------------------------------------------------
