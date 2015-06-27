@@ -22,8 +22,6 @@ internal class Keychest3Mimic : PuzzleScript
 		var lockedPlace = puzzle.GetPlace("LockedPlace");
 		var chestPlace = puzzle.GetPlace("ChestPlace");
 
-		lockedPlace.CloseAllDoors();
-
 		var key = puzzle.LockPlace(lockedPlace, "Lock");
 
 		var chest = new Chest(puzzle, "KeyChest");

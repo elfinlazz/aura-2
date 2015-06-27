@@ -6,8 +6,6 @@ using Aura.Mabi;
 using Aura.Mabi.Const;
 using Aura.Channel.World.Entities;
 using Aura.Shared.Util;
-using Aura.Mabi.Network;
-using System.Linq;
 
 namespace Aura.Channel.World.Dungeons.Props
 {
@@ -37,6 +35,16 @@ namespace Aura.Channel.World.Dungeons.Props
 		public bool BlockBoss { get; set; }
 
 		/// <summary>
+		/// Position of a room, from which this door was closed.
+		/// </summary>
+		private Position _closedFrom;
+
+		/// <summary>
+		/// Is this door used for switch room (won't display notice about a key).
+		/// </summary>
+		private bool _isSwitchDoor;
+
+		/// <summary>
 		/// Creates new door prop.
 		/// </summary>
 		/// <param name="propId"></param>
@@ -54,6 +62,8 @@ namespace Aura.Channel.World.Dungeons.Props
 			this.DoorType = doorType;
 			this.BlockBoss = false;
 			this.Behavior = this.DefaultBehavior;
+			_isSwitchDoor = false;
+			_closedFrom = new Position(x / Dungeon.TileSize, y / Dungeon.TileSize);
 
 			// Set direction and adjust Y for boss doors
 			if (doorType == DungeonBlockType.BossDoor)
@@ -85,6 +95,10 @@ namespace Aura.Channel.World.Dungeons.Props
 				return;
 			}
 
+			// Check if it's switch room door
+			if (_isSwitchDoor)
+				return;
+
 			// Check if character has the key
 			if (!this.RemoveKey(creature))
 			{
@@ -98,6 +112,8 @@ namespace Aura.Channel.World.Dungeons.Props
 				if (this.State != "unlocked")
 				{
 					this.SetState("unlocked");
+					this.IsLocked = false;
+					_closedFrom = new Position(_closedFrom.X, _closedFrom.Y + 1); // Fix closed from to be inside boss room.
 					this.AddConfirmation();
 				}
 				this.WarpInside(creature, prop);
@@ -105,7 +121,6 @@ namespace Aura.Channel.World.Dungeons.Props
 			else
 				this.Open();
 
-			this.IsLocked = false;
 			Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("You have opened the door with the key."));
 		}
 
@@ -117,29 +132,24 @@ namespace Aura.Channel.World.Dungeons.Props
 		private void WarpInside(Creature creature, Prop prop)
 		{
 			var creaturePos = creature.GetPosition();
-			var propPos = prop.GetPosition();
-			if (this.DoorType == DungeonBlockType.BossDoor)
-				propPos = new Position(propPos.X, propPos.Y - Dungeon.TileSize / 2);
-
 			var cCoord = new Position(creaturePos.X / Dungeon.TileSize, creaturePos.Y / Dungeon.TileSize);
-			var pCoord = new Position(propPos.X / Dungeon.TileSize, propPos.Y / Dungeon.TileSize);
 
-			if (cCoord == pCoord)
+			if (cCoord == _closedFrom)
 			{
 				Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("There is a monster still standing.\nYou must defeat all the monsters for the door to open."));
 				return;
 			}
 
-			var x = propPos.X;
-			var y = propPos.Y;
+			var x = _closedFrom.X * Dungeon.TileSize + Dungeon.TileSize / 2;
+			var y = _closedFrom.Y * Dungeon.TileSize + Dungeon.TileSize / 2;
 
-			if (cCoord.X < pCoord.X)
+			if (cCoord.X < _closedFrom.X)
 				x -= 1000;
-			else if (cCoord.X > pCoord.X)
+			else if (cCoord.X > _closedFrom.X)
 				x += 1000;
-			else if (cCoord.Y < pCoord.Y)
+			else if (cCoord.Y < _closedFrom.Y)
 				y -= 1000;
-			else if (cCoord.Y > pCoord.Y)
+			else if (cCoord.Y > _closedFrom.Y)
 				y += 1000;
 
 			creature.SetPosition(x, y);
@@ -167,10 +177,10 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// <summary>
 		/// Closes door.
 		/// </summary>
-		public void Close()
+		public void Close(int x, int y)
 		{
-			if (this.DoorType == DungeonBlockType.Door)
-				this.AddConfirmation();
+			_closedFrom = new Position(x, y);
+			this.AddConfirmation();
 			this.SetState("closed");
 		}
 
@@ -181,7 +191,19 @@ namespace Aura.Channel.World.Dungeons.Props
 		{
 			if (!this.IsLocked)
 				this.RemoveAllExtensions();
+			this.IsLocked = false;
 			this.SetState("open");
+		}
+
+		/// <summary>
+		/// Locks the door.
+		/// </summary>
+		/// <param name="isSwitchDoor"></param>
+		public void Lock(bool isSwitchDoor = false)
+		{
+			_isSwitchDoor = isSwitchDoor;
+			this.IsLocked = true;
+			this.SetState("closed");
 		}
 
 		/// <summary>
@@ -189,15 +211,8 @@ namespace Aura.Channel.World.Dungeons.Props
 		/// </summary>
 		public void AddConfirmation()
 		{
-			var propPos = this.GetPosition();
-			if (this.DoorType == DungeonBlockType.BossDoor)
-				propPos = new Position(propPos.X, propPos.Y - Dungeon.TileSize / 2);
-
-			var x = propPos.X / Dungeon.TileSize;
-			var y = propPos.Y / Dungeon.TileSize;
-
-			var extname = string.Format("directed_ask({0},{1})", x, y);
-			var condition = string.Format("notfrom({0},{1})", x, y);
+			var extname = string.Format("directed_ask({0},{1})", _closedFrom.X, _closedFrom.Y);
+			var condition = string.Format("notfrom({0},{1})", _closedFrom.X, _closedFrom.Y);
 			var ext = new ConfirmationPropExtension(extname, Localization.Get("Do you wish to go inside the room?"), condition: condition);
 			this.AddExtension(ext);
 		}

@@ -25,7 +25,6 @@ public class EntrancePuzzleScript : PuzzleScript
 		var lockedPlace = puzzle.GetPlace("LockedPlace");
 		var chestPlace = puzzle.GetPlace("ChestPlace");
 
-		lockedPlace.CloseAllDoors();
 		puzzle.LockPlace(lockedPlace, "Lock");
 
 		chestPlace.AddProp(new Chest(puzzle, "KeyChest"), Placement.Random);
