@@ -61,18 +61,69 @@ public class SimonScript : NpcScript
 				return;
 				
 			case "@repair":
-				Msg("Want to mend your clothes?<br/>Rest assured, I am the best this kingdom has to offer. I never make mistakes.<br/>Because of that, I charge a higher repair fee.<br/>If you can stomach a cheap repair, go find someone else. I only work with top quality."); 
-				// <repair rate='98' stringid='(*/cloth/*)|(*/glove/*)|(*/bracelet/*)|(*/shoes/*)|(*/headgear/*)|(*/robe/*)|(*/headband/*)' />
-				Msg("Unimplemented");
-				Msg("No more?<br/>Then, bye!"); 
-				// <repair hide='true'/>
+				Msg("Want to mend your clothes?<br/>Rest assured, I am the best this kingdom has to offer. I never make mistakes.<br/>Because of that, I charge a higher repair fee.<br/>If you can stomach a cheap repair, go find someone else. I only work with top quality.<repair rate='98' stringid='(*/cloth/*)|(*/glove/*)|(*/bracelet/*)|(*/shoes/*)|(*/headgear/*)|(*/robe/*)|(*/headband/*)' />");
 
-				// Repair lines: It's a perfect repair job. 98% success.
+				while (true)
+				{
+					var repair = await Select();
+
+					if (!repair.StartsWith("@repair"))
+						break;
+
+					var result = Repair(repair, 98, "/cloth/", "/glove/", "/bracelet/", "/shoes/", "/headgear/", "/robe/", "/headband/");
+					if (!result.HadGold)
+					{
+						RndMsg(
+							"You don't have any money, do you?",
+							"You probably won't have enough money for the repair job.",
+							"Hey, hey. Take a look at your wallet before you ask."
+						);
+					}
+					else if (result.Points == 1)
+					{
+						if (result.Fails == 0)
+							RndMsg(
+								"It's a perfect repair job.",
+								"There. 1 point, just like that.",
+								"Repairing 1 point is nothing."
+							);
+						else
+							Msg("Hmm... Sorry, I think I've failed the repair job.");
+					}
+					else if (result.Points > 1)
+					{
+						if (result.Fails == 0)
+							RndMsg(
+								"\"A supernatural needlework\" would describe it.",
+								"The repair was perfect, but the quality of the clothing is rather cheap.",
+								"The clothes I repair are just like brand new."
+						);
+						else
+							// TODO: Use string format once we have XML dialogues.
+							Msg("There, it's done.<br/>But I made " + result.Fails + " mistake(s), unfortunately.<br/>I could restore only " + result.Successes + " point(s).");
+					}
+				}
+
+				Msg("No more?<br/>Then, bye!<repair hide='true'/>"); 
 				break;
 				
 			case "@upgrade":
-				Msg("Hmm... You want to modify your clothes? Like custom-made?<br/>Well, show me what you want modified. I'll make sure it fits you like a glove.<br/>But, you know that once I modify it, no one else can wear it anymore, right?");
-				Msg("Unimplemented");
+				Msg("Hmm... You want to modify your clothes? Like custom-made?<br/>Well, show me what you want modified. I'll make sure it fits you like a glove.<br/>But, you know that once I modify it, no one else can wear it anymore, right?<upgrade />");
+				
+				while(true)
+				{
+					var reply = await Select();
+					
+					if(!reply.StartsWith("@upgrade:"))
+						break;
+						
+					var result = Upgrade(reply);
+					if(result.Success)
+						Msg("Modification done.<br/>Anything else you want modified?");
+					else
+						Msg("(Error)");
+				}
+
 				break;
 		}
 		
