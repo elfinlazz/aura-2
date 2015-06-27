@@ -14,6 +14,7 @@ using Aura.Channel.Skills.Base;
 using Aura.Channel.Skills;
 using Aura.Mabi.Network;
 using Aura.Channel.Skills.Life;
+using Aura.Data;
 
 namespace Aura.Channel.Network.Handlers
 {
@@ -414,6 +415,18 @@ namespace Aura.Channel.Network.Handlers
 				// Reset active skill if all stacks are used up
 				creature.Skills.ActiveSkill = null;
 				skill.State = SkillState.Completed;
+
+				if (skill.RankData.CoolDown != 0)
+				{
+					// Reset cooldown in old combat system, if the skill has a
+					// "new-system-cooldown". That check is important,
+					// there were cooldowns in the old system, like for FH,
+					// but they didn't use the CoolDown field.
+					if (!AuraData.FeaturesDb.IsEnabled("CombatSystemRenewal"))
+						Send.ResetCooldown(creature, skill.Info.Id);
+
+					// else TODO: Set skill's cooldown for security reasons.
+				}
 			}
 			else if (skill.State != SkillState.Canceled)
 			{

@@ -753,5 +753,19 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends ResetCooldown to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		public static void ResetCooldown(Creature creature, SkillId skillId)
+		{
+			var packet = new Packet(Op.ResetCooldown, creature.EntityId);
+			packet.PutUShort((ushort)skillId);
+			packet.PutByte(0); // end of list?
+
+			creature.Client.Send(packet);
+		}
 	}
 }
