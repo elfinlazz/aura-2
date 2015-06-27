@@ -111,7 +111,8 @@ namespace Aura.Channel.World.Dungeons.Puzzles
 		private void AddDoor(int direction, DungeonBlockType doorType)
 		{
 			var door = _room.GetPuzzleDoor(direction);
-			if (door != null)
+			// We'll create new door and replace if we want locked door instead of normal one here
+			if (door != null && doorType == DungeonBlockType.Door)
 			{
 				this.Doors[direction] = door;
 				return;

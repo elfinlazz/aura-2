@@ -4,6 +4,7 @@
 using Aura.Data.Database;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Aura.Mabi.Const;
 using Aura.Shared.Util;
 
@@ -57,29 +58,109 @@ namespace Aura.Channel.World.Dungeons.Generation
 			this.InitSections(floorData);
 		}
 
+		/// <summary>
+		/// Split this floor into sections.
+		/// </summary>
+		/// <param name="floorData"></param>
 		private void InitSections(DungeonFloorData floorData)
 		{
 			var criticalPathLength = this.MazeGenerator.CriticalPath.Count - 1;
+			var criticalPathLeft = criticalPathLength;
 			var sectionCount = floorData.Sections.Count;
 			if (sectionCount == 0) return;
 			var sectionStart = 0;
 			var puzzleCountSum = 0f;
+			var weightsList = CalculateWeights();
+			Log.Debug("Floor weightsList: " + string.Join(",", weightsList));
+			var pathWeight = weightsList.Sum();
 			floorData.Sections.ForEach(x => puzzleCountSum += x.Max);
 			for (var i = 0; i < sectionCount; ++i)
 			{
 				List<MazeMove> sectionPath;
 				var haveBossDoor = false;
-				var sectionLength = (int) Math.Round(floorData.Sections[i].Max / puzzleCountSum * criticalPathLength);
+				var sectionLength = (int)Math.Round(floorData.Sections[i].Max / puzzleCountSum * pathWeight);
+				var sectionEnd = sectionStart;
+				var currentWeight = 0;
+				for (; sectionEnd < weightsList.Length; ++sectionEnd)
+				{
+					currentWeight += weightsList[sectionEnd];
+					if (currentWeight >= sectionLength)
+						break;
+				}
+				if (currentWeight > sectionLength)
+				{
+					if (currentWeight - weightsList[sectionEnd] >= (int) Math.Round(floorData.Sections[i].Max/puzzleCountSum*criticalPathLeft))
+					{
+						currentWeight -= weightsList[sectionEnd];
+						--sectionEnd;
+					}
+				}
+
+				pathWeight -= currentWeight;
+				criticalPathLeft -= sectionEnd - sectionStart + 1;
+				puzzleCountSum -= floorData.Sections[i].Max;
+
 				// if last section
 				if (i == sectionCount - 1)
 				{
 					sectionPath = this.MazeGenerator.CriticalPath.GetRange(sectionStart + 1, criticalPathLength - sectionStart);
 					haveBossDoor = this.HasBossRoom;
 				}
-				else sectionPath = this.MazeGenerator.CriticalPath.GetRange(sectionStart + 1, sectionLength);
+				else sectionPath = this.MazeGenerator.CriticalPath.GetRange(sectionStart + 1, sectionEnd - sectionStart + 1);
 				this.Sections.Add(new DungeonFloorSection(this.GetRoom(sectionPath[0].PosFrom), sectionPath, haveBossDoor, this._dungeonGenerator.RngPuzzles));
-				sectionStart += sectionLength;
+				var weightsListSegment = (i == sectionCount - 1 ? 
+					new ArraySegment<int>(weightsList, sectionStart, criticalPathLength - sectionStart) : 
+					new ArraySegment<int>(weightsList, sectionStart, sectionEnd - sectionStart + 1));
+				Log.Debug("section weightsList: " + string.Join(",", weightsListSegment));
+				Log.Debug(string.Format("section {0}: max puzzles: {1}, wanted length: {2}, length: {3}", i, floorData.Sections[i].Max, sectionLength, weightsListSegment.Sum()));
+				sectionStart = sectionEnd + 1;
 			}
+		}
+
+		/// <summary>
+		/// InitSections helper method.
+		/// Walks critical path and for each room calculates number of subpath rooms.
+		/// </summary>
+		/// <returns></returns>
+		private int[] CalculateWeights()
+		{
+			var criticalPathLength = this.MazeGenerator.CriticalPath.Count - 1;
+			var weightsList = new int[criticalPathLength];
+			
+			for (var i = 0; i < criticalPathLength; ++i)
+			{
+				var move = this.MazeGenerator.CriticalPath[i + 1];
+				var room = this.GetRoom(move.PosFrom);
+				weightsList[i] = 1;
+				for (var direction = 0; direction < 4; direction++)
+				{
+					if (move.Direction != direction && room.Links[direction] == LinkType.To)
+					{
+						var nextRoom = room.Neighbor[direction];
+						if (nextRoom != null)
+							weightsList[i] += CalculateSubPathWeightRecursive(nextRoom, 1);
+					}
+				}
+			}
+			return weightsList;
+		}
+
+		/// <summary>
+		/// CalculateWeights helper method.
+		/// </summary>
+		/// <param name="room"></param>
+		/// <param name="count"></param>
+		/// <returns></returns>
+		private int CalculateSubPathWeightRecursive(RoomTrait room, int count)
+		{
+			for (var direction = 0; direction < 4; direction++)
+			{
+				if (room.Links[direction] != LinkType.To) continue;
+				var nextRoom = room.Neighbor[direction];
+				if (nextRoom != null)
+					count = CalculateSubPathWeightRecursive(nextRoom, count + 1);
+			}
+			return count;
 		}
 
 		private void GenerateRooms(DungeonFloorData floorData)
