@@ -86,6 +86,9 @@ namespace Aura.Mabi.Const
 		/// </summary>
 		/// <remarks>
 		/// Some have it, some don't.
+		/// 
+		/// Required for the target to target the attacker automatically.
+		/// (Makes the client send SetTarget.)
 		/// </remarks>
 		Result = 0x20,
 

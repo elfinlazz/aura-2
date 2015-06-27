@@ -78,7 +78,10 @@ namespace Aura.Channel.Skills.Combat
 				var weaponIsKnuckle = (weapon != null && weapon.Data.HasTag("/knuckle/"));
 
 				var aAction = new AttackerAction(CombatActionType.Hit, attacker, skill.Info.Id, targetEntityId);
+				aAction.Set(AttackerOptions.Result);
+
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
+				tAction.Set(TargetOptions.Result);
 
 				var cap = new CombatActionPack(attacker, skill.Info.Id, aAction, tAction);
 				cap.Hit = i;
