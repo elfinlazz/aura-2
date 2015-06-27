@@ -27,7 +27,6 @@ namespace Aura.Channel.Util.Configuration.Files
 
 		public int GmcpMinAuth { get; protected set; }
 
-		public CombatSystem CombatSystem { get; protected set; }
 		public bool PerfectPlay { get; protected set; }
 		public bool InfiniteResources { get; protected set; }
 		public bool PerfectFishing { get; protected set; }
@@ -73,7 +72,6 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.GmcpMinAuth = gmcpCommand != null ? gmcpCommand.Auth : this.GetInt("gmcp_min_auth", 50);
 
 			this.PerfectPlay = this.GetBool("perfect_play", false);
-			this.CombatSystem = (this.GetString("combat_system", "dynamic") == "classic" ? CombatSystem.Classic : CombatSystem.Dynamic);
 			this.InfiniteResources = this.GetBool("infinite_resources", false);
 			this.PerfectFishing = this.GetBool("perfect_fishing", false);
 			this.InfiniteBait = this.GetBool("infinite_bait", false);
@@ -94,6 +92,4 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.EasySwitch = this.GetBool("easy_switch", false);
 		}
 	}
-
-	public enum CombatSystem { Dynamic, Classic }
 }

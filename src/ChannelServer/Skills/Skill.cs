@@ -256,10 +256,8 @@ namespace Aura.Channel.Skills
 		/// <returns></returns>
 		public int GetCastTime()
 		{
-			var dynamic = (ChannelServer.Instance.Conf.World.CombatSystem == CombatSystem.Dynamic);
-
 			// Characters/Dynamic
-			if (_creature.IsCharacter && dynamic)
+			if (_creature.IsCharacter && AuraData.FeaturesDb.IsEnabled("CombatSystemRenewal"))
 				return this.RankData.NewLoadTime;
 
 			// Monsters/Pets

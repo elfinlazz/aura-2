@@ -101,9 +101,6 @@
 	]},
 ]},
 
-// Temp
-{ name: "TwinSword", enabled: true },
-
 // Generation 5
 { name: "G5", enabled: false, children: [
 	// Season 1
@@ -374,4 +371,8 @@
 	// Season 2
 	{ name: "G19S2", enabled: true, children: []},
 ]},
+
+// Temporarily enabled until we go full G1.
+{ name: "TwinSword", enabled: true },
+{ name: "CombatSystemRenewal", enabled: true },
 ]
