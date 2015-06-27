@@ -57,7 +57,9 @@ namespace Aura.Channel.Network.Handlers
 			// Check TwinSword feature
 			if (target == creature.Inventory.LeftHandPocket && !item.IsShieldLike && creature.RightHand != null && !AuraData.FeaturesDb.IsEnabled("TwinSword"))
 			{
-				Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("Dual Wielding is not available yet."));
+				// TODO: Is this message sufficient? Do we need a better one?
+				//   Do we need one at all? Or would that confuse people even more?
+				Send.Notice(creature, NoticeType.MiddleSystem, Localization.Get("The Dual Wielding feature hasn't been enabled yet."));
 				goto L_Fail;
 			}
 
