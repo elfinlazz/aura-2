@@ -378,7 +378,7 @@ namespace Aura.Channel.World.Entities
 				return target != owner // Exclude owner
 					&& (owner == null || owner.CanTarget(target)) // Check targetability
 					&& !target.IsDead // Check if target's alive (in case owner is null)
-					&& !target.Has(CreatureStates.GoodNpc) // Don't hit good NPCs (in case owner is null)
+					&& !target.Has(CreatureStates.NamedNpc) // Don't hit NamedNpcs (in case owner is null)
 					&& targetPos.InRange(pos, range) // Check range
 					&& !this.Region.Collisions.Any(pos, targetPos) // Check collisions between entities
 					&& !target.Conditions.Has(ConditionsA.Invisible); // Check visiblility (GM)
