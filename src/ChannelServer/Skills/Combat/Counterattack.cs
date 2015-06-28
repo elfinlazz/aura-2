@@ -45,6 +45,16 @@ namespace Aura.Channel.Skills.Combat
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
+			// Disable movement and update client if renovation isn't enabled.
+			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+				creature.Lock(Locks.Move, true);
+			// Disable running if combat weapon is equipped
+			else if (creature.RightHand != null && creature.RightHand.HasTag("/weapontype_combat/"))
+				creature.Lock(Locks.Run);
+			// Disable movement
+			else
+				creature.Lock(Locks.Move);
+
 			return true;
 		}
 
@@ -57,10 +67,6 @@ namespace Aura.Channel.Skills.Combat
 		public override bool Ready(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillReady(creature, skill.Info.Id);
-
-			// Disable movement if renovation isn't enabled.
-			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
-				creature.Lock(Locks.Move, true);
 
 			// Training
 			if (skill.Info.Rank == SkillRank.RF)

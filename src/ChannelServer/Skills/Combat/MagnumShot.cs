@@ -67,6 +67,8 @@ namespace Aura.Channel.Skills.Combat
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
+			creature.Lock(Locks.Run);
+
 			return true;
 		}
 

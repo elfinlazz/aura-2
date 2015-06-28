@@ -58,6 +58,7 @@ namespace Aura.Channel.Skills.Combat
 		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
 			creature.StopMove();
+			creature.Lock(Locks.Move);
 
 			Send.SkillInitEffect(creature, null);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());

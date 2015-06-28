@@ -52,9 +52,12 @@ namespace Aura.Channel.Skills.Combat
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
-			// Disable movement if renovation isn't enabled.
+			// Disable movement and update client if renovation isn't enabled.
 			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
 				creature.Lock(Locks.Run, true);
+			// Disable running if no shield is equipped
+			else if (creature.LeftHand == null || !creature.LeftHand.IsShield)
+				creature.Lock(Locks.Run);
 
 			return true;
 		}

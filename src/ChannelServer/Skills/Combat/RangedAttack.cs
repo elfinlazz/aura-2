@@ -72,6 +72,10 @@ namespace Aura.Channel.Skills.Combat
 		{
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
+			// Lock running if not elf
+			if (!creature.IsElf)
+				creature.Lock(Locks.Run);
+
 			return true;
 		}
 
