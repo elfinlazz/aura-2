@@ -104,12 +104,25 @@ namespace Aura.Channel.Skills.Combat
 			if (defenseSkill != null)
 				damage = Math.Max(1, damage - defenseSkill.RankData.Var3);
 
-			// TODO: Add renovation check once we're sure this works.
-			tAction.Creature.Unlock(Locks.Run, true);
+			// Updating unlock because of the updating lock for pre-renovation
+			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+				tAction.Creature.Unlock(Locks.Run, true);
 
 			Send.SkillUseStun(tAction.Creature, SkillId.Defense, DefenseTargetStun, 0);
 
 			return true;
+		}
+
+		/// <summary>
+		/// Cancels special effects.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		public override void Cancel(Creature creature, Skill skill)
+		{
+			// Updating unlock because of the updating lock for pre-renovation
+			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+				creature.Unlock(Locks.Run, true);
 		}
 
 		/// <summary>

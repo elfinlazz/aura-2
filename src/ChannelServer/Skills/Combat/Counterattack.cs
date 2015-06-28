@@ -76,6 +76,18 @@ namespace Aura.Channel.Skills.Combat
 		}
 
 		/// <summary>
+		/// Cancels special effects.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		public override void Cancel(Creature creature, Skill skill)
+		{
+			// Updating unlock because of the updating lock for pre-renovation
+			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+				creature.Unlock(Locks.Move, true);
+		}
+
+		/// <summary>
 		/// Returns true if target has counter active and used it.
 		/// </summary>
 		/// <param name="target"></param>
@@ -108,8 +120,11 @@ namespace Aura.Channel.Skills.Combat
 		/// <param name="target"></param>
 		public void Use(Creature attacker, Creature target)
 		{
-			// TODO: Add renovation check once we're sure this works.
-			target.Unlock(Locks.Move, true);
+			// Updating unlock because of the updating lock for pre-renovation
+			// Has to be done here because we can't have an updating unlock
+			// after the combat action, it resets the stun.
+			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+				target.Unlock(Locks.Move, true);
 
 			var skill = attacker.Skills.Get(SkillId.Counterattack);
 
