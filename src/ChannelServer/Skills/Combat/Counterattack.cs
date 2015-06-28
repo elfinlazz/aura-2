@@ -86,6 +86,9 @@ namespace Aura.Channel.Skills.Combat
 			if (!target.Skills.IsReady(SkillId.Counterattack))
 				return false;
 
+			// TODO: Add renovation check once we're sure this works.
+			target.Unlock(Locks.Move, true);
+
 			var handler = ChannelServer.Instance.SkillManager.GetHandler<Counterattack>(SkillId.Counterattack);
 			handler.Use(target, attacker);
 

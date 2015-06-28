@@ -104,6 +104,9 @@ namespace Aura.Channel.Skills.Combat
 			if (defenseSkill != null)
 				damage = Math.Max(1, damage - defenseSkill.RankData.Var3);
 
+			// TODO: Add renovation check once we're sure this works.
+			tAction.Creature.Unlock(Locks.Run, true);
+
 			Send.SkillUseStun(tAction.Creature, SkillId.Defense, DefenseTargetStun, 0);
 
 			return true;
