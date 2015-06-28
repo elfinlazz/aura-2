@@ -74,6 +74,10 @@ namespace Aura.Channel.Network.Handlers
 			if (!creature.Inventory.Move(item, target, targetX, targetY))
 				goto L_Fail;
 
+			// Give Ranged Attack when equipping a (cross)bow
+			if (target.IsEquip() && (item.HasTag("/bow/|/crossbow/")) && !creature.Skills.Has(SkillId.RangedAttack))
+				creature.Skills.Give(SkillId.RangedAttack, SkillRank.Novice);
+
 			// Inform about temp moves (items in temp don't count for quest objectives?)
 			if (source == Pocket.Temporary && target == Pocket.Cursor)
 				ChannelServer.Instance.Events.OnPlayerReceivesItem(creature, item.Info.Id, item.Info.Amount);
