@@ -442,7 +442,7 @@ namespace Aura.Channel.Network.Handlers
 					// else TODO: Set skill's cooldown for security reasons.
 				}
 
-				creature.Unlock(Locks.Move, true);
+				creature.Unlock(Locks.Move);
 			}
 			else if (skill.State != SkillState.Canceled)
 			{
