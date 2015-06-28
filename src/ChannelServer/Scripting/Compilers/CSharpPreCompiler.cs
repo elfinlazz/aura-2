@@ -48,6 +48,7 @@ namespace Aura.Channel.Scripting.Compilers
 			add.Append("using Aura.Shared.Network;");
 			add.Append("using Aura.Shared.Util;");
 			add.Append("using Aura.Shared.Util.Commands;");
+			add.Append("using Aura.Shared.Scripting;");
 			script = add + script;
 
 			// Return();

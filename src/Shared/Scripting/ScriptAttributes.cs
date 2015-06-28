@@ -37,4 +37,34 @@ namespace Aura.Shared.Scripting
 			this.TypeNames = typeNames;
 		}
 	}
+
+	/// <summary>
+	/// Makes script only load if feature is enabled.
+	/// </summary>
+	public class IfEnabledAttribute : Attribute
+	{
+		public string Feature { get; protected set; }
+
+		public IfEnabledAttribute(string feature)
+		{
+			this.Feature = feature;
+		}
+	}
+
+	/// <summary>
+	/// Makes script only load if feature is not enabled.
+	/// </summary>
+	/// <remarks>
+	/// Don't inherit from IfEnabledAttribute, by default reflection
+	/// picks up on the base type and never checks this one.
+	/// </remarks>
+	public class IfNotEnabledAttribute : Attribute
+	{
+		public string Feature { get; protected set; }
+
+		public IfNotEnabledAttribute(string feature)
+		{
+			this.Feature = feature;
+		}
+	}
 }

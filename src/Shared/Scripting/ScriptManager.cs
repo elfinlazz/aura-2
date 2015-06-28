@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Data;
 using Aura.Shared.Scripting.Compilers;
 using Aura.Shared.Scripting.Scripts;
 using Aura.Shared.Util;
@@ -384,6 +385,16 @@ namespace Aura.Shared.Scripting
 								Log.Warning("Remove: Script class '{0}' not found ({1} @ {2}).", rm, type.Name, Path.GetFileName(filePath));
 						}
 					}
+
+					// Don't load script if feature is not enabled
+					var enabled = type.GetCustomAttribute<IfEnabledAttribute>();
+					if (enabled != null && !AuraData.FeaturesDb.IsEnabled(enabled.Feature))
+						continue;
+
+					// Don't load script if feature is enabled
+					var notEnabled = type.GetCustomAttribute<IfNotEnabledAttribute>();
+					if (notEnabled != null && AuraData.FeaturesDb.IsEnabled(notEnabled.Feature))
+						continue;
 
 					// Add class to load list, even if it's a dummy for remove,
 					// we can't be sure it's not supposed to get initialized.
