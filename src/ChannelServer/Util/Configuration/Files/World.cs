@@ -20,7 +20,6 @@ namespace Aura.Channel.Util.Configuration.Files
 		public float HugeLuckyFinishChance { get; protected set; }
 		public float PropDropChance { get; protected set; }
 
-		public bool EnableContinentWarp { get; protected set; }
 		public bool DeadlyNpcs { get; protected set; }
 		public bool EnableHunger { get; protected set; }
 		public bool YouAreWhatYouEat { get; protected set; }
@@ -63,7 +62,6 @@ namespace Aura.Channel.Util.Configuration.Files
 			this.HugeLuckyFinishChance = this.GetFloat("huge_lucky_finish_chance", 0.001f) / 100.0f;
 			this.PropDropChance = this.GetFloat("prop_drop_chance", 30) / 100.0f;
 
-			this.EnableContinentWarp = this.GetBool("enable_continent_warp", true);
 			this.DeadlyNpcs = this.GetBool("deadly_npcs", true);
 			this.EnableHunger = this.GetBool("enable_hunger", true);
 			this.YouAreWhatYouEat = this.GetBool("you_are_what_you_eat", true);

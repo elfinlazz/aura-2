@@ -103,6 +103,7 @@
 		{ name: "Ruin", enabled: true },
 		{ name: "IriaRebirth", enabled: true },
 		{ name: "Exploration", enabled: true },
+		{ name: "ContinentWarp", enabled: true },
 	]},
 	
 	// Season 3

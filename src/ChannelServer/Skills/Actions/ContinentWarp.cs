@@ -12,6 +12,7 @@ using Aura.Mabi.Const;
 using Aura.Shared.Network;
 using Aura.Shared.Util;
 using Aura.Mabi.Network;
+using Aura.Data;
 
 namespace Aura.Channel.Skills.Actions
 {
@@ -47,9 +48,9 @@ namespace Aura.Channel.Skills.Actions
 		/// <param name="packet"></param>
 		public bool Prepare(Creature creature, Skill skill, Packet packet)
 		{
-			if (!ChannelServer.Instance.Conf.World.EnableContinentWarp)
+			if (!AuraData.FeaturesDb.IsEnabled("ContinentWarp"))
 			{
-				Send.ServerMessage(creature, Localization.Get("Continent Warp has been disabled by the Admin."));
+				Send.ServerMessage(creature, Localization.Get("The Continent Warp feature hasn't been enabled yet."));
 				return false;
 			}
 
