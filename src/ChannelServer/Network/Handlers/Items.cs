@@ -42,10 +42,13 @@ namespace Aura.Channel.Network.Handlers
 			// Get creature
 			var creature = client.GetCreatureSafe(packet.Id);
 
-			// Check item
+			// Get item
 			var item = creature.Inventory.GetItemSafe(entityId);
-
 			var source = item.Info.Pocket;
+
+			// Check lock
+			if ((source.IsEquip() || target.IsEquip()) && !creature.Can(Locks.ChangeEquipment))
+				goto L_Fail;
 
 			// Check bag
 			if (item.IsBag && target.IsBag() && !ChannelServer.Instance.Conf.World.Bagception)
@@ -98,6 +101,13 @@ namespace Aura.Channel.Network.Handlers
 			if (creature.Region == Region.Limbo)
 				return;
 
+			// Check lock
+			if (!creature.Can(Locks.PickUpAndDrop))
+			{
+				Send.ItemDropR(creature, false);
+				return;
+			}
+
 			// Check item
 			var item = creature.Inventory.GetItem(entityId);
 			if (item == null)
@@ -143,6 +153,13 @@ namespace Aura.Channel.Network.Handlers
 			var creature = client.GetCreatureSafe(packet.Id);
 			if (creature.Region == Region.Limbo)
 				return;
+
+			// Check lock
+			if (!creature.Can(Locks.PickUpAndDrop))
+			{
+				Send.ItemPickUpR(creature, false);
+				return;
+			}
 
 			var item = creature.Region.GetItem(entityId);
 			if (item == null)
@@ -270,6 +287,12 @@ namespace Aura.Channel.Network.Handlers
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
+			if (!creature.Can(Locks.ChangeEquipment))
+			{
+				Send.SwitchSetR(creature, false);
+				return;
+			}
+
 			creature.StopMove();
 
 			creature.Inventory.WeaponSet = set;
@@ -338,6 +361,10 @@ namespace Aura.Channel.Network.Handlers
 				Log.Warning("Player '{0}' tried to use item while being dead.", creature.Name);
 				goto L_Fail;
 			}
+
+			// Check lock
+			if (!creature.Can(Locks.UseItem))
+				goto L_Fail;
 
 			// Get item
 			var item = creature.Inventory.GetItem(entityId);

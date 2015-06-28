@@ -29,37 +29,44 @@ namespace Aura.Channel.Network.Handlers
 			if (creature.Region == Region.Limbo || creature.IsDead)
 				return;
 
+			// Check lock
+			if (!creature.Can(Locks.Attack))
+			{
+				Send.HitPropR(creature, false);
+				return;
+			}
+
 			// Check prop
 			var prop = creature.Region.GetProp(entityId);
 			if (prop == null)
 			{
 				Log.Warning("HitProp: Player '{0}' tried to hit unknown prop '{1}'.", creature.Name, entityId.ToString("X16"));
 				Send.ServerMessage(creature, "Unknown target.");
+				Send.HitPropR(creature, false);
+				return;
 			}
-			else
-			{
-				if (creature.GetPosition().InRange(prop.GetPosition(), 1500))
-				{
-					creature.Stun = 1000;
-					Send.HittingProp(creature, prop.EntityId, 1000);
 
-					if (prop.Behavior != null)
-					{
-						prop.Behavior(creature, prop);
-					}
-					else
-					{
-						Log.Unimplemented("HitProp: No prop behavior for '{0}'.", prop.EntityIdHex);
-					}
+			if (creature.GetPosition().InRange(prop.GetPosition(), 1500))
+			{
+				creature.Stun = 1000;
+				Send.HittingProp(creature, prop.EntityId, 1000);
+
+				if (prop.Behavior != null)
+				{
+					prop.Behavior(creature, prop);
 				}
 				else
 				{
-					Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("You're too far away."));
-					Log.Warning("HitProp: Player '{0}' tried to hit prop out of range.", creature.Name);
+					Log.Unimplemented("HitProp: No prop behavior for '{0}'.", prop.EntityIdHex);
 				}
 			}
+			else
+			{
+				Send.Notice(creature, NoticeType.MiddleLower, Localization.Get("You're too far away."));
+				Log.Warning("HitProp: Player '{0}' tried to hit prop out of range.", creature.Name);
+			}
 
-			Send.HitPropR(creature);
+			Send.HitPropR(creature, true);
 		}
 
 		/// <summary>

@@ -136,7 +136,7 @@ namespace Aura.Channel.Network.Handlers
 			region.AddCreature(creature);
 
 			// Unlock and warp
-			Send.CharacterUnlock(creature, Locks.Default);
+			creature.Unlock(Locks.Default, true);
 			if (firstSpawn)
 				Send.EnterRegionRequestR(client, creature);
 			else

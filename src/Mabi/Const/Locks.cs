@@ -28,7 +28,7 @@ namespace Aura.Mabi.Const
 		/// props either.
 		/// Was 0x02 in older clients?
 		/// </remarks>
-		Stance = 0x04,
+		ChanceStance = 0x04,
 
 		/// <summary>
 		/// Prevents walking entirely.

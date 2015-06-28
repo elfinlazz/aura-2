@@ -38,10 +38,11 @@ namespace Aura.Channel.Network.Sending
 		/// Sends HitPropR to creature's client.
 		/// </summary>
 		/// <param name="creature"></param>
-		public static void HitPropR(Creature creature)
+		/// <param name="success"></param>
+		public static void HitPropR(Creature creature, bool success)
 		{
 			var packet = new Packet(Op.HitPropR, creature.EntityId);
-			packet.PutByte(true);
+			packet.PutByte(success);
 
 			creature.Client.Send(packet);
 		}

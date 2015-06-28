@@ -82,7 +82,7 @@ namespace Aura.Channel.World
 			this.Leader.Temp.CurrentCutscene = this;
 
 			// TODO: All viewers
-			Send.CharacterLock(this.Leader, Locks.Default);
+			this.Leader.Lock(Locks.Default);
 			Send.PlayCutscene(this.Leader, this);
 		}
 
@@ -101,7 +101,7 @@ namespace Aura.Channel.World
 		public void Finish()
 		{
 			Send.CutsceneEnd(this);
-			Send.CharacterUnlock(this.Leader, Locks.Default);
+			this.Leader.Unlock(Locks.Default);
 			Send.CutsceneUnk(this);
 
 			// Call callback before setting cutscene to null so it can

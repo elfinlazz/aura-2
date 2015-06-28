@@ -92,6 +92,13 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
+			// Check lock
+			if (!creature.Can(Locks.StartSkills))
+			{
+				Send.SkillStartSilentCancel(creature, skillId);
+				return;
+			}
+
 			// TODO: Move mana/stm checks here?
 
 			try
@@ -176,6 +183,13 @@ namespace Aura.Channel.Network.Handlers
 			// This should prevent a simultaneous Prepare.
 			// If it's the same skill as the active one it *probably* is stackable.
 			if (creature.Skills.ActiveSkill != null && creature.Skills.ActiveSkill.Info.Id != skillId)
+			{
+				Send.SkillPrepareSilentCancel(creature, skillId);
+				return;
+			}
+
+			// Check lock
+			if (!creature.Can(Locks.PrepareSkills))
 			{
 				Send.SkillPrepareSilentCancel(creature, skillId);
 				return;
@@ -427,6 +441,8 @@ namespace Aura.Channel.Network.Handlers
 
 					// else TODO: Set skill's cooldown for security reasons.
 				}
+
+				creature.Unlock(Locks.Move, true);
 			}
 			else if (skill.State != SkillState.Canceled)
 			{

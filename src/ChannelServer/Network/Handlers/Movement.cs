@@ -41,9 +41,20 @@ namespace Aura.Channel.Network.Handlers
 			var to = new Position(x, y);
 			var walk = (packet.Op == Op.Walk);
 
-			// Check for running with meditation active
-			if (creature.Conditions.Has(ConditionsE.Meditation) && !walk && (creature.Inventory.RightHand == null || (!creature.Inventory.RightHand.HasTag("/wand/") && !creature.Inventory.RightHand.HasTag("/staff/"))))
-				throw new ModerateViolation("Tried to run with meditation active.");
+			// Reset position if creature can't walk.
+			if (walk && !creature.Can(Locks.Walk))
+			{
+				creature.Jump(from);
+				return;
+			}
+
+			// Reset position if creature can't run.
+			// (Force walk instead?)
+			if (!walk && !creature.Can(Locks.Run))
+			{
+				creature.Jump(from);
+				return;
+			}
 
 			// Stop aiming when moving
 			if (creature.AimMeter.IsAiming)

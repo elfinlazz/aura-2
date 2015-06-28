@@ -146,7 +146,7 @@ namespace Aura.Channel.World.Entities
 			this.LastLocation = loc;
 			this.WarpLocation = new Location(regionId, x, y);
 			this.Warping = true;
-			Send.CharacterLock(this, Locks.Default);
+			this.Lock(Locks.Default, true);
 
 			// TODO: We don't have to send the "create warps" every time,
 			//   only when the player is warped there for the first time.

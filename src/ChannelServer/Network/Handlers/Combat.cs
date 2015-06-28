@@ -38,7 +38,8 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Change stance
-			creature.IsInBattleStance = Convert.ToBoolean(stance);
+			if (creature.Can(Locks.ChanceStance))
+				creature.IsInBattleStance = Convert.ToBoolean(stance);
 
 			// Response (unlocks the char)
 			Send.ChangeStanceRequestR(creature);
@@ -108,6 +109,10 @@ namespace Aura.Channel.Network.Handlers
 			var unkString = packet.GetString();
 
 			var creature = client.GetCreatureSafe(packet.Id);
+
+			// Check lock
+			if (!creature.Can(Locks.Attack))
+				goto L_End;
 
 			// Check target
 			var target = creature.Region.GetCreature(targetEntityId);

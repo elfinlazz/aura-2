@@ -78,6 +78,8 @@ namespace Aura.Channel.World.Entities
 
 		public override int RegionId { get; set; }
 
+		public Locks Locks { get; protected set; }
+
 		/// <summary>
 		/// Returns whether creature is able to receive exp and level up.
 		/// </summary>
@@ -1977,6 +1979,54 @@ namespace Aura.Channel.World.Entities
 		{
 			this.GiveItem(item);
 			Send.Effect(this, Effect.PickUpItem, (byte)1, item.Info.Id, item.Info.Color1, item.Info.Color2, item.Info.Color3);
+		}
+
+		/// <summary>
+		/// Activates given Locks for creature.
+		/// </summary>
+		/// <remarks>
+		/// Some locks are lifted automatically on Warp, SkillComplete,
+		/// and SkillCancel.
+		/// </remarks>
+		/// <param name="locks">Locks to activate.</param>
+		/// <param name="updateClient">Sends CharacterLock to client if true.</param>
+		/// <returns>Creature's current lock value after activating given locks.</returns>
+		public Locks Lock(Locks locks, bool updateClient = false)
+		{
+			var prev = this.Locks;
+			this.Locks |= locks;
+
+			if (updateClient && prev != this.Locks)
+				Send.CharacterLock(this, locks);
+
+			return this.Locks;
+		}
+
+		/// <summary>
+		/// Deactivates given Locks for creature.
+		/// </summary>
+		/// <param name="locks">Locks to deactivate.</param>
+		/// <param name="updateClient">Sends CharacterUnlock to client if true.</param>
+		/// <returns>Creature's current lock value after deactivating given locks.</returns>
+		public Locks Unlock(Locks locks, bool updateClient = false)
+		{
+			var prev = this.Locks;
+			this.Locks &= ~locks;
+
+			if (updateClient && prev != this.Locks)
+				Send.CharacterUnlock(this, locks);
+
+			return this.Locks;
+		}
+
+		/// <summary>
+		/// Returns true if given lock isn't activated.
+		/// </summary>
+		/// <param name="locks"></param>
+		/// <returns></returns>
+		public bool Can(Locks locks)
+		{
+			return ((this.Locks & locks) == 0);
 		}
 	}
 }

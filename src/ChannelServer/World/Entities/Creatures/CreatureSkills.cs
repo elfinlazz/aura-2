@@ -348,6 +348,8 @@ namespace Aura.Channel.World.Entities.Creatures
 
 			this.ActiveSkill.State = SkillState.Canceled;
 			this.ActiveSkill = null;
+
+			_creature.Unlock(Locks.Move, true);
 		}
 
 		/// <summary>
