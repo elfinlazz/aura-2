@@ -1,7 +1,0 @@
-// Aura
-// Script list file
-//
-// All scripts listed here will be loaded.
-//---------------------------------------------------------------------------
-
-include "scripts_others.txt"

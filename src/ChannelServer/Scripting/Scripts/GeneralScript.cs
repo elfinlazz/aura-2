@@ -16,6 +16,7 @@ using System.Threading;
 using System.Collections.Generic;
 using Aura.Shared.Util.Commands;
 using Aura.Shared.Scripting.Scripts;
+using Aura.Data;
 
 namespace Aura.Channel.Scripting.Scripts
 {
@@ -180,6 +181,19 @@ namespace Aura.Channel.Scripting.Scripts
 		protected T[] A<T>(params T[] coordinates)
 		{
 			return coordinates;
+		}
+
+		/// <summary>
+		/// Returns true if feature is enabled.
+		/// </summary>
+		/// <remarks>
+		/// TODO: Make another more general script base class for this and Random?
+		/// </remarks>
+		/// <param name="featureName"></param>
+		/// <returns></returns>
+		protected bool IsEnabled(string featureName)
+		{
+			return AuraData.FeaturesDb.IsEnabled(featureName);
 		}
 
 		#region Extension

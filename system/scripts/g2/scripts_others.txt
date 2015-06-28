@@ -1,9 +1,0 @@
-// Aura
-// Script list file
-//
-// All scripts listed here will be loaded.
-//---------------------------------------------------------------------------
-
-others/sealstones.cs
-
-include "/user/scripts/g2/scripts_others.txt"

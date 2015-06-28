@@ -32,6 +32,7 @@
 // Generation 2
 { name: "G2", enabled: false, children: [
 	{ name: "MainStreamG2", enabled: true },
+	{ name: "EmainMacha", enabled: true },
 	
 	// Season 1
 	{ name: "G2S1", enabled: true, children: []},
