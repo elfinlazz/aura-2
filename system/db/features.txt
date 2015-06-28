@@ -369,10 +369,15 @@
 	{ name: "G19S1", enabled: true, children: []},
 	
 	// Season 2
-	{ name: "G19S2", enabled: true, children: []},
+	{ name: "G19S2", enabled: true, children: [
+		{ name: "TalentRenovationCloseCombat", enabled: true },
+		{ name: "TalentRenovationMagic", enabled: true },
+		{ name: "TalentRenovationArchery", enabled: true },
+	]},
 ]},
 
 // Temporarily enabled until we go full G1.
 { name: "TwinSword", enabled: true },
 { name: "CombatSystemRenewal", enabled: true },
+{ name: "TalentRenovationCloseCombat", enabled: true },
 ]

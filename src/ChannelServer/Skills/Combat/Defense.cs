@@ -4,6 +4,7 @@
 using Aura.Channel.Network.Sending;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.World.Entities;
+using Aura.Data;
 using Aura.Mabi.Const;
 using Aura.Mabi.Network;
 using Aura.Shared.Network;
@@ -50,6 +51,10 @@ namespace Aura.Channel.Skills.Combat
 		{
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
+
+			// Disable movement if renovation isn't enabled.
+			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+				creature.Lock(Locks.Run, true);
 
 			return true;
 		}
