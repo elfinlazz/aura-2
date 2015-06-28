@@ -96,6 +96,14 @@ public class DuncanBaseScript : NpcScript
 				break;
 				
 			case "about_skill":
+				if(HasSkill(SkillId.RangedAttack) && !HasSkill(SkillId.MagnumShot))
+				{
+					// Unofficial
+					Msg("You know about the Ranged Attack skill? I've heard about another skill called Magnum Shot.<br/>Supposedly it's very strong.");
+					GiveKeyword("skill_magnum_shot");
+					break;
+				}
+				
 				Msg("I don't know of any skills... Why don't you ask Malcom?");
 				//Msg("You know about the Combat Mastery skill?<br/>It's one of the basic skills needed to protect yourself in combat.<br/>It may look simple, but never underestimate its efficiency.<br/>Continue training the skill diligently and you will soon reap the rewards. That's a promise.");
 				break;
