@@ -16,6 +16,9 @@
 	{ name: "Rebirth", enabled: true },
 	{ name: "SystemGuild", enabled: true },
 	{ name: "PersonalShop", enabled: true },
+	{ name: "EnchantEntrust", enabled: true },
+	{ name: "DynamicMonsterAllocation", enabled: true },
+	{ name: "FoodStatLimit", enabled: true },
 	
 	// Season 1
 	{ name: "G1S1", enabled: true, children: [
@@ -49,11 +52,12 @@
 
 // Generation 3
 { name: "G3", enabled: false, children: [
-	{ name: "EnchantEntrust", enabled: true },
 	{ name: "Mate", enabled: true },
 	
 	// Season 1
-	{ name: "G3S1", enabled: true, children: []},
+	{ name: "G3S1", enabled: true, children: [
+		{ name: "SearchItemByPet", enabled: true },
+	]},
 	
 	// Season 2
 	{ name: "G3S2", enabled: true, children: [
@@ -64,17 +68,20 @@
 	// Season 3
 	{ name: "G3S3", enabled: true, children: [
 		{ name: "CiarAdvanced", enabled: true },
+		{ name: "BarriAdvanced", enabled: true },
 		{ name: "PaladinPassiveDefence", enabled: true },
 	]},
 	
 	// Season 4
 	{ name: "G3S4", enabled: true, children: [
-		{ name: "Housing", enabled: true },
+		{ name: "RabbieAdvanced", enabled: true },
+		{ name: "PeacaBasic", enabled: true },
 	]},
 	
 	// Season 5
 	{ name: "G3S5", enabled: true, children: [
 		{ name: "DarkKnight", enabled: true },
+		{ name: "Mounts", enabled: true },
 	]},
 ]},
 
@@ -83,6 +90,11 @@
 	// Season 1
 	{ name: "G4S1", enabled: true, children: [
 		{ name: "BlowDelayReduce", enabled: true },
+		{ name: "Housing", enabled: true },
+		{ name: "Mailbox", enabled: true },
+		{ name: "PartyBoard", enabled: true },
+		{ name: "GuildRobe", enabled: true },
+		{ name: "MarkerMyGuildStone", enabled: true },
 	]},
 	
 	// Season 2
@@ -118,13 +130,11 @@
 	
 	// Season 3
 	{ name: "G5S3", enabled: true, children: [
-		{ name: "DynamicMonsterAllocation", enabled: true },
 	]},
 	
 	// Season 4
 	{ name: "G5S4", enabled: true, children: [
 		{ name: "EgoSpecialAttack", enabled: true },
-		{ name: "BossRushDungeon", enabled: true },
 	]},
 ]},
 
@@ -137,22 +147,29 @@
 	]},
 	
 	// Season 2
-	{ name: "G6S2", enabled: true, children: [
-		{ name: "EnsemblePlay", enabled: true },
-		{ name: "WandUpgradeAndChainCasting", enabled: true },
-	]},
+	{ name: "G6S2", enabled: true, children: []},
 	
 	// Season 3
 	{ name: "G6S3", enabled: true, children: [
 		{ name: "AlbyAdvanced", enabled: true },
 		{ name: "FemaleGiant", enabled: true },
-		{ name: "FoodStatLimit", enabled: true },
 	]},
 	
 	// Season 4
 	{ name: "G6S4", enabled: true, children: [
 		{ name: "ElfGiantTransform", enabled: true },
-		{ name: "SearchItemByPet", enabled: true },
+		{ name: "FreeRebirth", enabled: true },
+	]},
+	
+	// Season 5
+	{ name: "G6S5", enabled: true, children: [
+		{ name: "BossRushDungeon", enabled: true },
+	]},
+	
+	// Season 6
+	{ name: "G6S6", enabled: true, children: [
+		{ name: "EnsemblePlay", enabled: true },
+		{ name: "WandUpgradeAndChainCasting", enabled: true },
 	]},
 ]},
 
@@ -204,11 +221,7 @@
 	]},
 	
 	// Season 4
-	{ name: "G8S4", enabled: true, children: [
-		{ name: "PartyBoard", enabled: true },
-		{ name: "GuildRobe", enabled: true },
-		{ name: "MarkerMyGuildStone", enabled: true },
-	]},
+	{ name: "G8S4", enabled: true, children: []},
 	
 	// Season 5
 	{ name: "G8S5", enabled: true, children: []},
@@ -221,7 +234,6 @@
 		{ name: "ServiceModelRenewal2008", enabled: true },
 		{ name: "Dissolution", enabled: true },
 		{ name: "Synthesis", enabled: true },
-		{ name: "FreeRebirth", enabled: true },
 		{ name: "ShadowMissionBoard", enabled: true },
 		{ name: "Alchemy", enabled: true },
 		{ name: "IceMine", enabled: true },
