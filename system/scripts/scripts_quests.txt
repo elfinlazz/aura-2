@@ -55,4 +55,7 @@ quests/ptj/502163_endelyon_wheat_adv.cs
 quests/ptj/502165_endelyon_eggs_adv.cs
 quests/ptj/church_endelyon.cs
 
+// Skills
+quests/20007_ranald_windmill.cs
+
 include "/user/scripts/scripts_quests.txt"

@@ -90,9 +90,12 @@ public class RanaldBaseScript : NpcScript
 				break;
 
 			case "about_skill":
-				//If player knows Windmill
-				Msg("How was the Windmill skill? Was it of any help?<br/>You will one day become a great warrior<br/>as long as you remain an ardent student eager for training just like you are now.");
-				break;
+				if(HasSkill(SkillId.Windmill))
+				{
+					Msg("How was the Windmill skill? Was it of any help?<br/>You will one day become a great warrior<br/>as long as you remain an ardent student eager for training just like you are now.");
+					break;
+				}
+				goto default;
 
 			case "about_study":
 				Msg("This is not the time for class. Come back tomorrow morning.");
