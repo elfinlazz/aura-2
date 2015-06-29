@@ -1128,6 +1128,11 @@ namespace Aura.Channel.World.Inventory
 					return;
 			}
 
+			// Don't remove if combination is valid, this should allow weapons
+			// to be switched while having a shield equipped.
+			if ((item.HasTag("/righthand/") && !item.HasTag("/bow/")) && (leftItem.HasTag("/lefthand/") && !leftItem.HasTag("/arrow/")))
+				return;
+
 			// Try inventory first.
 			// TODO: List of pockets stuff can be auto-moved to.
 			var success = _pockets[Pocket.Inventory].Add(leftItem);
