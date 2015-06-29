@@ -1698,6 +1698,17 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Changes life and sends stat update.
+		/// </summary>
+		/// <param name="amount"></param>
+		public void ModifyLife(float amount)
+		{
+			this.Life += amount;
+			Send.StatUpdate(this, StatUpdateType.Private, Stat.Life, Stat.LifeInjured);
+			Send.StatUpdate(this, StatUpdateType.Public, Stat.Life, Stat.LifeInjured);
+		}
+
+		/// <summary>
 		/// Increases AP and updates client.
 		/// </summary>
 		/// <param name="amount"></param>

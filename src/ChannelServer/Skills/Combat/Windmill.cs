@@ -6,6 +6,7 @@ using Aura.Channel.Scripting.Scripts;
 using Aura.Channel.Skills.Base;
 using Aura.Channel.Skills.Magic;
 using Aura.Channel.World.Entities;
+using Aura.Data;
 using Aura.Mabi.Const;
 using Aura.Mabi.Network;
 using Aura.Shared.Network;
@@ -187,6 +188,16 @@ namespace Aura.Channel.Skills.Combat
 				var rnd = RandomProvider.Get();
 				var aggroTarget = survived.Random();
 				aggroTarget.Aggro(attacker);
+			}
+
+			// Reduce life in old combat system
+			if (!AuraData.FeaturesDb.IsEnabled("CombatSystemRenewal"))
+			{
+				var tenPercent = attacker.LifeMax / 10;
+				var amount = (attacker.Life < tenPercent ? 2 : tenPercent);
+				attacker.ModifyLife(-amount);
+
+				// TODO: Invincibility
 			}
 
 			// Spin it~
