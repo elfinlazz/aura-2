@@ -16,11 +16,6 @@ namespace Aura.Channel.Network.Sending.Helpers
 	{
 		public static Packet AddCreatureInfo(this Packet packet, Creature creature, CreaturePacketType type)
 		{
-			// Check for MabiPC for private data.
-			var character = creature as PlayerCreature;
-			if (type == CreaturePacketType.Private && character == null)
-				throw new Exception("PlayerCreature required for private creature packet.");
-
 			var pos = creature.GetPosition();
 
 			// Start
@@ -85,7 +80,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 				packet.PutShort(creature.Level);
 				packet.PutInt(creature.TotalLevel - creature.Level);
 				packet.PutShort(0);                  // Max Level (reached ever?)
-				packet.PutShort((short)character.RebirthCount);
+				packet.PutShort((short)creature.RebirthCount);
 				packet.PutShort(0);
 				packet.PutLong(AuraData.ExpDb.CalculateRemaining(creature.Level, creature.Exp) * 1000);
 				packet.PutShort(creature.Age);
@@ -258,7 +253,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			if (type == CreaturePacketType.Private)
 			{
 				// List of available titles
-				var titles = character.Titles.GetList();
+				var titles = creature.Titles.GetList();
 				packet.PutShort((short)titles.Count);
 				foreach (var title in titles)
 				{
@@ -354,7 +349,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 			// --------------------------------------------------------------
 			if (type == CreaturePacketType.Private)
 			{
-				var keywords = character.Keywords.GetList();
+				var keywords = creature.Keywords.GetList();
 				packet.PutShort((short)keywords.Count);
 				foreach (var keyword in keywords)
 					packet.PutUShort(keyword);
@@ -1000,7 +995,7 @@ namespace Aura.Channel.Network.Sending.Helpers
 
 			// Quests
 			// --------------------------------------------------------------
-			var quests = character.Quests.GetIncompleteList();
+			var quests = creature.Quests.GetIncompleteList();
 			packet.PutInt(quests.Count);
 			foreach (var quest in quests)
 				packet.AddQuest(quest);
@@ -1008,8 +1003,8 @@ namespace Aura.Channel.Network.Sending.Helpers
 			// Char
 			// --------------------------------------------------------------
 			packet.PutByte(0);					 // NaoDress (0:normal, 12:??, 13:??)
-			packet.PutLong(character.CreationTime);
-			packet.PutLong(character.LastRebirth);
+			packet.PutLong(creature.CreationTime);
+			packet.PutLong(creature.LastRebirth);
 			packet.PutString("");
 			packet.PutByte(0); // "true" makes character lie on floor?
 			packet.PutByte(2);

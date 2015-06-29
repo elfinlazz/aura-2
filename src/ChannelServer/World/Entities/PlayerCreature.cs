@@ -36,21 +36,6 @@ namespace Aura.Channel.World.Entities
 		public DateTime DeletionTime { get; set; }
 
 		/// <summary>
-		/// Time at which the creature was created.
-		/// </summary>
-		public DateTime CreationTime { get; set; }
-
-		/// <summary>
-		/// Time of last rebirth.
-		/// </summary>
-		public DateTime LastRebirth { get; set; }
-
-		/// <summary>
-		/// How many times the character rebirthed.
-		/// </summary>
-		public int RebirthCount { get; set; }
-
-		/// <summary>
 		/// Time of last login.
 		/// </summary>
 		public DateTime LastLogin { get; set; }
