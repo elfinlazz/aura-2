@@ -73,6 +73,8 @@ namespace Aura.Channel.World.Dungeons.Generation
 			this.isReserved = false;
 			this.PuzzleDoors = new Door[] {null, null, null, null };
 			this.ReservedDoor = new bool[] { false, false, false, false };
+			this.RoomType = RoomType.None;
+			this.RoomIndex = -1;
 		}
 
 		public void SetNeighbor(int direction, RoomTrait room)

@@ -179,10 +179,6 @@ namespace Aura.Channel.World.Dungeons.Generation
 				room = room.Neighbor[move.Direction];
 				depth++;
 			}
-			// I remove first item, to prevent using it for locked place, because there no more places behind it for chest room
-			// but I could use it for self locked place...
-			// todo: allow first door candidate to be used by self locked place.
-			_lockedDoorCandidates.RemoveFirst();
 		}
 
 		/// <summary>
@@ -231,14 +227,34 @@ namespace Aura.Channel.World.Dungeons.Generation
 
 			if (result == null)
 			{
-				//var random_index = (int)this._rng.GetUInt32(0, (uint)count - 1);
-				//result = this._lockedDoorCandidates.ElementAt(random_index);
 				var lockedDoor = _lockedDoorCandidates.Last;
 				if (lockSelf)
 					while (lockedDoor != null && lockedDoor.Value.Room.isReserved)
 						lockedDoor = lockedDoor.Previous;
+				else
+					while (lockedDoor != null)
+					{
+						// Test if there is a free room for unlock place before this door
+						var placeIndex = lockedDoor.Value.PlaceIndex;
+						// Get index of room behind lockedPlace door.
+						placeIndex = this.Places[placeIndex].Room.Neighbor[lockedDoor.Value.Direction].RoomIndex;
+						if (placeIndex == 0 || placeIndex == -1) // should be last room in section.
+							placeIndex = this.Places.Count;
+						--placeIndex;
+						while (placeIndex >= 0 && (placeIndex == lockedDoor.Value.PlaceIndex || this.Places[placeIndex].IsUsed || this.Places[placeIndex].Room.isLocked))
+						{
+							--placeIndex;
+						}
+						if (placeIndex >= 0)
+							break;
+						lockedDoor = lockedDoor.Previous;
+					}
 				if (lockedDoor == null)
-					throw new PuzzleException("Out of candidates for self lock.");
+				{
+					if (lockSelf)
+						throw new PuzzleException("Out of candidates for self lock.");
+					throw new PuzzleException("None of lock candidates can serve as lock with unlock place.");
+				}
 				result = lockedDoor.Value;
 			}
 
@@ -258,6 +274,11 @@ namespace Aura.Channel.World.Dungeons.Generation
 		public int GetUnlock(PuzzlePlace lockedPlace)
 		{
 			var lockedPlaceIndex = lockedPlace.PlaceIndex;
+			// Get index of room behind lockedPlace door.
+			lockedPlaceIndex = this.Places[lockedPlaceIndex].Room.Neighbor[lockedPlace.DoorDirection].RoomIndex;
+			if (lockedPlaceIndex == 0 || lockedPlaceIndex == -1) // should be last room in section.
+				lockedPlaceIndex = this.Places.Count;
+
 			List<int> possiblePlacesOnPath = new List<int>();
 			List<int> possiblePlacesNotOnPath = new List<int>();
 			var deadEnd = -1;
@@ -305,7 +326,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			if (possiblePlacesOnPath.Count == 0 && possiblePlacesNotOnPath.Count == 0)
 			{
 				// Convert locked place room back to alley if there are no more locked doors.
-				room = this.Places[lockedPlaceIndex].Room;
+				room = this.Places[lockedPlace.PlaceIndex].Room;
 				room.SetDoorType(lockedPlace.DoorDirection, (int)DungeonBlockType.Alley);
 				room.SetPuzzleDoor(null, lockedPlace.DoorDirection);
 				var isLockedRoom = room.DoorType.Any(x => (x == (int)DungeonBlockType.DoorWithLock || x == (int)DungeonBlockType.BossDoor));
@@ -336,12 +357,12 @@ namespace Aura.Channel.World.Dungeons.Generation
 				room = room.Neighbor[dir];
 
 				// skip reserved doors
-				if (room.ReservedDoor[Direction.GetOppositeDirection(dir)]) continue;
+				//if (room.ReservedDoor[Direction.GetOppositeDirection(dir)]) continue;
 				// skip reserved places
 				if (room.isReserved) continue;
 
 				var lockedDoorCandidate = new LockedDoorCandidateNode(room, Direction.GetOppositeDirection(dir), room.RoomIndex);
-				_lockedDoorCandidates.AddLast(lockedDoorCandidate);
+				_lockedDoorCandidates.AddFirst(lockedDoorCandidate);
 			}
 			return placeIndex;
 		}
@@ -376,7 +397,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 		}
 
 		/// <summary>
-		/// Remove reserved doors from this._lockedDoorCandidates
+		/// Remove reserved rooms from this._lockedDoorCandidates
 		/// </summary>
 		public void CleanLockedDoorCandidates()
 		{
@@ -384,7 +405,7 @@ namespace Aura.Channel.World.Dungeons.Generation
 			while (node != null)
 			{
 				var next = node.Next;
-				if (node.Value.Room.ReservedDoor[node.Value.Direction]) _lockedDoorCandidates.Remove(node);
+				if (node.Value.Room.isReserved) _lockedDoorCandidates.Remove(node);
 				node = next;
 			}
 		}
