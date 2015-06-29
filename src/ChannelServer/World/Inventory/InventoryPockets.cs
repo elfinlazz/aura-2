@@ -167,10 +167,12 @@ namespace Aura.Channel.World.Inventory
 				{
 					var diff = (ushort)(collidingItem.Data.StackMax - collidingItem.Info.Amount);
 
+					var amount = collidingItem.Info.Amount;
 					collidingItem.Info.Amount += Math.Min(diff, newItem.Info.Amount);
 					newItem.Info.Amount -= Math.Min(diff, newItem.Info.Amount);
 
-					return true;
+					if (amount != collidingItem.Info.Amount)
+						return true;
 				}
 			}
 

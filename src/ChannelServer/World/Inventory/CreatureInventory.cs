@@ -421,7 +421,7 @@ namespace Aura.Channel.World.Inventory
 				return false;
 
 			// If amount differs (item was added to stack)
-			if (collidingItem != null && (item.Info.Amount != amount || item.Info.Amount == 0))
+			if (collidingItem != null && (item.Info.Amount != amount || (item.Info.Amount == 0 && item.Data.Type != ItemType.Sac)))
 			{
 				Send.ItemAmount(_creature, collidingItem);
 
