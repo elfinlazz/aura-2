@@ -124,7 +124,7 @@ namespace Aura.Channel.Skills.Combat
 			// Has to be done here because we can't have an updating unlock
 			// after the combat action, it resets the stun.
 			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
-				target.Unlock(Locks.Move, true);
+				attacker.Unlock(Locks.Move, true);
 
 			var skill = attacker.Skills.Get(SkillId.Counterattack);
 
