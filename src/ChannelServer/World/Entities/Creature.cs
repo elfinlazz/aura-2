@@ -2019,6 +2019,16 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Removes items with the given id from the creature's inventory.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="amount"></param>
+		public void RemoveItem(int itemId, int amount = 1)
+		{
+			this.Inventory.Remove(itemId, amount);
+		}
+
+		/// <summary>
 		/// Activates given Locks for creature.
 		/// </summary>
 		/// <remarks>
