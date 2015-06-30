@@ -3,9 +3,6 @@
 //--- Description -----------------------------------------------------------
 // Second quest in the Uladh beginner quest series, started automatically
 // after talking to Duncan.
-//--- Notes -----------------------------------------------------------------
-// Since we don't have dungeons yet the clear Alby objective can be done by
-// simply talking to Trefor again.
 //---------------------------------------------------------------------------
 
 public class RescueResidentQuestScript : QuestScript
