@@ -176,5 +176,48 @@ namespace Aura.Channel.Network.Sending
 
 			creature.Client.Send(packet);
 		}
+
+		/// <summary>
+		/// Sends SetQuestTimer to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="time">Time in milliseconds</param>
+		/// <param name="task">Task to fulfill</param>
+		/// <param name="deadline">Deadline msg (include {0} where the timer should appear)</param>
+		/// <param name="counter">Counter msg (e.g. "Remaining Sheep: 20")</param>
+		public static void SetQuestTimer(Creature creature, int time, string task, string deadline, string counter, int amount)
+		{
+			var packet = new Packet(Op.SetQuestTimer, MabiId.Broadcast);
+			packet.PutInt(time);
+			packet.PutString(task);
+			packet.PutString(deadline);
+			packet.PutString(counter, amount);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends RemoveQuestTimer to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void RemoveQuestTimer(Creature creature)
+		{
+			var packet = new Packet(Op.RemoveQuestTimer, MabiId.Broadcast);
+
+			creature.Client.Send(packet);
+		}
+
+		/// <summary>
+		/// Sends UpdateQuestTimerCounter to creature's client.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="counter">Counter msg (e.g. "Remaining Sheep: 20")</param>
+		public static void UpdateQuestTimerCounter(Creature creature, string counter, int amount)
+		{
+			var packet = new Packet(Op.UpdateQuestTimerCounter, MabiId.Broadcast);
+			packet.PutString(counter, amount);
+
+			creature.Client.Send(packet);
+		}
 	}
 }
