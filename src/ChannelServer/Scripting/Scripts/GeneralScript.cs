@@ -184,6 +184,15 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Proxy for Localization.Get.
+		/// </summary>
+		/// <param name="phrase"></param>
+		protected string L(string phrase)
+		{
+			return Localization.Get(phrase);
+		}
+
+		/// <summary>
 		/// Returns true if feature is enabled.
 		/// </summary>
 		/// <remarks>

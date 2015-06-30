@@ -7,6 +7,7 @@
 // Beginner Quests
 quests/beginner_uladh/202001_naos_letter.cs
 quests/beginner_uladh/202002_rescue_resident.cs
+quests/beginner_uladh/202003_save_my_sheep.cs
 quests/beginner_uladh/202006_duncans_call.cs
 quests/beginner_uladh/skills_rest.cs
 quests/beginner_uladh/school_1.cs

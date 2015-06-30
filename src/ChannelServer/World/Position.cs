@@ -114,6 +114,20 @@ namespace Aura.Channel.World
 		}
 
 		/// <summary>
+		/// Returns random position in rect, centered on this position.
+		/// </summary>
+		/// <param name="distance"></param>
+		/// <param name="rnd"></param>
+		/// <returns></returns>
+		public Position GetRandomInRect(int width, int height, Random rnd)
+		{
+			var x = rnd.Next(this.X - width / 2, this.X + width / 2 + 1);
+			var y = rnd.Next(this.Y - height / 2, this.Y + height / 2 + 1);
+
+			return new Position((int)x, (int)y);
+		}
+
+		/// <summary>
 		/// Returns position on the line between position and other.
 		/// </summary>
 		/// <remarks>
