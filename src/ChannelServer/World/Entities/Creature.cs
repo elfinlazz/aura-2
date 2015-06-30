@@ -1999,13 +1999,23 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
-		/// Adds item to creature's inventory.
+		/// Adds item to creature's inventory and shows it above head.
 		/// </summary>
 		/// <param name="item"></param>
 		public void GiveItemWithEffect(Item item)
 		{
 			this.GiveItem(item);
 			Send.Effect(this, Effect.PickUpItem, (byte)1, item.Info.Id, item.Info.Color1, item.Info.Color2, item.Info.Color3);
+		}
+
+		/// <summary>
+		/// Adds item to creature's inventory and shows an acquire window.
+		/// </summary>
+		/// <param name="item"></param>
+		public void AcquireItem(Item item)
+		{
+			this.GiveItem(item);
+			Send.AcquireItemInfo(this, item.EntityId);
 		}
 
 		/// <summary>

@@ -41,7 +41,7 @@ public class RabbieDungeonScript : DungeonScript
 		}
 	}
 
-	public override void OnBossDeath(Dungeon dungeon, Creature boss)
+	public override void OnBossDeath(Dungeon dungeon, Creature boss, Creature killer)
 	{
 		if (boss.RaceId != 10101)
 			return;

@@ -65,6 +65,14 @@ namespace Aura.Channel.Scripting.Scripts
 			return AuraData.FeaturesDb.IsEnabled(featureName);
 		}
 
+		/// <summary>
+		/// Changes dungeonName depending on the item, returns true if routing
+		/// was successful, if not, the dungeon was invalid.
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="item"></param>
+		/// <param name="dungeonName"></param>
+		/// <returns></returns>
 		public virtual bool Route(Creature creature, Item item, ref string dungeonName)
 		{
 			return true;
@@ -80,6 +88,7 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Called when the boss door opens.
 		/// </summary>
+		/// <param name="dungeon"></param>
 		public virtual void OnBoss(Dungeon dungeon)
 		{
 		}
@@ -87,13 +96,17 @@ namespace Aura.Channel.Scripting.Scripts
 		/// <summary>
 		/// Called when one of the boss monsters dies.
 		/// </summary>
-		public virtual void OnBossDeath(Dungeon dungeon, Creature deadBoss)
+		/// <param name="dungeon"></param>
+		/// <param name="deadBoss"></param>
+		/// <param name="killer"></param>
+		public virtual void OnBossDeath(Dungeon dungeon, Creature deadBoss, Creature killer)
 		{
 		}
 
 		/// <summary>
 		/// Called when the boss was killed.
 		/// </summary>
+		/// <param name="dungeon"></param>
 		public virtual void OnCleared(Dungeon dungeon)
 		{
 		}
@@ -102,6 +115,8 @@ namespace Aura.Channel.Scripting.Scripts
 		/// Called when a player leaves a dungeon via the first statue,
 		/// logging out, or similar.
 		/// </summary>
+		/// <param name="dungeon"></param>
+		/// <param name="creature"></param>
 		public virtual void OnLeftEarly(Dungeon dungeon, Creature creature)
 		{
 		}

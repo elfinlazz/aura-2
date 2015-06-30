@@ -633,7 +633,7 @@ namespace Aura.Channel.World.Dungeons
 
 			// Call OnBossDeath
 			if (this.Script != null)
-				this.Script.OnBossDeath(this, creature);
+				this.Script.OnBossDeath(this, creature, killer);
 
 			// Complete dungeon when all bosses were killed
 			if (_bossesRemaining == 0)

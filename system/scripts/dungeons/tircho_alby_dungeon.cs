@@ -23,6 +23,13 @@ public class AlbyDungeonScript : DungeonScript
 			return true;
 		}
 
+		// Malcolm's Ring quest dungeon
+		if (item.Info.Id == 63181) // Malcolm's Pass
+		{
+			dungeonName = "tircho_alby_dungeon_tutorial_malcolm";
+			return true;
+		}
+
 		// Alby Beginner
 		if (item.Info.Id == 63140) // Alby Beginner Pass
 		{
