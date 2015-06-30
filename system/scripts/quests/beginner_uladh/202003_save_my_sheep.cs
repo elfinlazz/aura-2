@@ -33,15 +33,13 @@ public class SaveMySheepQuestScript : QuestScript
 		if (npc.QuestActive(this.Id, "talk_deian1") || npc.QuestActive(this.Id, "protect_sheep"))
 		{
 			// Unofficial
-			npc.Msg("Oh, you came. I'm watching the sheep all day, so I don't have time for anything else.<br/>But I need to run an errand, could you watch them for me? Otherwise the wolves will get to them.");
-			npc.Msg("I heard you're pretty strong, so it should be easy. Just protect them for the time displayed in the upper right corner.<button title='I will protect the sheep' keyword='@protect'/><button title='End Conversation' keyword='@end'/>");
+			npc.Msg("I'm glad to see you. I've been stuck here all day!<br/>Can you look after my sheep for a few minutes? I got some business to take care of.<br/>It should be easy, as long as the wolves don't show up.");
+			npc.Msg("Just make sure to keep my sheep safe if wolves show up.<br/>The number of sheep and the time left will display<br/>on the top right corner.");
+			npc.Msg("I hear you're pretty strong, so this should be pretty simple.<br/>Thanks!<button title='Look After Sheep' keyword='@protect'/><button title='Start Another Topic' keyword='@end'/>");
 			var response = await npc.Select();
 
 			if (response != "@protect")
-			{
-				npc.End();
 				return HookResult.Break;
-			}
 
 			npc.Close2();
 			npc.FinishQuest(this.Id, "talk_deian1");
@@ -54,7 +52,7 @@ public class SaveMySheepQuestScript : QuestScript
 		{
 			npc.FinishQuest(this.Id, "talk_deian2");
 
-			npc.Msg("You did it, thanks a lot!");
+			npc.Msg("Wow, good job.<br/>I got everything done thanks to you.<br/>You'll do this again next time, right? Thanks!");
 
 			return HookResult.Break;
 		}
