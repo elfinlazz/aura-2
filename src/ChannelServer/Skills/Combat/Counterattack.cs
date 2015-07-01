@@ -45,19 +45,11 @@ namespace Aura.Channel.Skills.Combat
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
-			// Default lock is Walk|Run, unlock Walk for renovation if a combat
-			// weapon is equipped.
+			// Default lock is Walk|Run,  since renovation you are stopped when
+			// loading counter, previously you kept running till you were at your
+			// destination.
 			if (AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
-			{
-				if (creature.RightHand != null && creature.RightHand.HasTag("/weapontype_combat/"))
-					creature.Unlock(Locks.Walk);
-			}
-			// Server-side TalentRenovationCloseCombat is disabled, send a lock to
-			// the client so it doesn't let the creature move, no matter what.
-			else
-			{
-				creature.Lock(Locks.Move, true);
-			}
+				creature.StopMove();
 
 			return true;
 		}
@@ -72,9 +64,14 @@ namespace Aura.Channel.Skills.Combat
 		{
 			Send.SkillReady(creature, skill.Info.Id);
 
-			// Server-side TalentRenovationCloseCombat is disabled, send a lock to
-			// the client so it doesn't let the creature move, no matter what.
-			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+			// Default lock is Run, lock Walk if no combat weapon is equipped.
+			if (AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+			{
+				if (creature.RightHand == null || !creature.RightHand.HasTag("/weapontype_combat/"))
+					creature.Lock(Locks.Walk);
+			}
+			// Tell client to lock any movement if renovation isn't enabled.
+			else
 				creature.Lock(Locks.Move, true);
 
 			// Training

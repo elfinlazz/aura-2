@@ -52,16 +52,15 @@ namespace Aura.Channel.Skills.Combat
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
-			// Default lock is Walk|Run, lift them depending on whether a
-			// shield is equipped or not.
+			// Default lock is Walk|Run, since renovation you're not able to
+			// move while loading anymore.
 			if (AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
 			{
-				creature.Unlock(Locks.Walk);
-				if (creature.LeftHand != null && creature.LeftHand.IsShield)
-					creature.Unlock(Locks.Run);
+				creature.StopMove();
 			}
 			// Since the client locks Walk|Run by default we have to tell it
-			// to enable walk but disable run (under any circumstances).
+			// to enable walk but disable run (under any circumstances) if
+			// renovation is disabled.
 			else
 			{
 				creature.Lock(Locks.Run, true);
@@ -88,7 +87,7 @@ namespace Aura.Channel.Skills.Combat
 				if (creature.LeftHand == null || !creature.LeftHand.IsShield)
 					creature.Lock(Locks.Run);
 			}
-			// Send lock to client if TalentRenovationCloseCombat isn't enabled,
+			// Send lock to client if renovation isn't enabled,
 			// so it doesn't let the creature run, no matter what.
 			else
 			{
