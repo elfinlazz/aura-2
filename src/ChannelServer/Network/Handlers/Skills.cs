@@ -95,6 +95,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check lock
 			if (!creature.Can(Locks.StartSkills))
 			{
+				Log.Debug("StartSkills locked for '{0}'.", creature.Name);
 				Send.SkillStartSilentCancel(creature, skillId);
 				return;
 			}
@@ -191,6 +192,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check lock
 			if (!creature.Can(Locks.PrepareSkills))
 			{
+				Log.Debug("PrepareSkills locked for '{0}'.", creature.Name);
 				Send.SkillPrepareSilentCancel(creature, skillId);
 				return;
 			}

@@ -48,7 +48,7 @@ namespace Aura.Channel.Network.Sending
 		/// </summary>
 		/// <remarks>
 		/// One of those packets with a success parameter,
-		/// that don't actually support failing.
+		/// that doesn't actually support failing.
 		/// Sends character to a special, client-side-instanced region,
 		/// where he is to meet the given NPC. EnterRegion isn't needed
 		/// for this.

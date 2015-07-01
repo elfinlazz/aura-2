@@ -48,7 +48,10 @@ namespace Aura.Channel.Network.Handlers
 
 			// Check lock
 			if ((source.IsEquip() || target.IsEquip()) && !creature.Can(Locks.ChangeEquipment))
+			{
+				Log.Debug("ChangeEquipment locked for '{0}'.", creature.Name);
 				goto L_Fail;
+			}
 
 			// Check bag
 			if (item.IsBag && target.IsBag() && !ChannelServer.Instance.Conf.World.Bagception)
@@ -108,6 +111,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check lock
 			if (!creature.Can(Locks.PickUpAndDrop))
 			{
+				Log.Debug("PickUpAndDrop locked for '{0}'.", creature.Name);
 				Send.ItemDropR(creature, false);
 				return;
 			}
@@ -161,6 +165,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check lock
 			if (!creature.Can(Locks.PickUpAndDrop))
 			{
+				Log.Debug("PickUpAndDrop locked for '{0}'.", creature.Name);
 				Send.ItemPickUpR(creature, false);
 				return;
 			}
@@ -293,6 +298,7 @@ namespace Aura.Channel.Network.Handlers
 
 			if (!creature.Can(Locks.ChangeEquipment))
 			{
+				Log.Debug("ChangeEquipment locked for '{0}'.", creature.Name);
 				Send.SwitchSetR(creature, false);
 				return;
 			}
@@ -368,7 +374,10 @@ namespace Aura.Channel.Network.Handlers
 
 			// Check lock
 			if (!creature.Can(Locks.UseItem))
+			{
+				Log.Debug("UseItem locked for '{0}'.", creature.Name);
 				goto L_Fail;
+			}
 
 			// Get item
 			var item = creature.Inventory.GetItem(entityId);

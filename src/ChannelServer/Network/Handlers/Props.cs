@@ -32,6 +32,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check lock
 			if (!creature.Can(Locks.Attack))
 			{
+				Log.Debug("Attack locked for '{0}'.", creature.Name);
 				Send.HitPropR(creature, false);
 				return;
 			}

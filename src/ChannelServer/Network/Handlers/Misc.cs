@@ -179,6 +179,7 @@ namespace Aura.Channel.Network.Handlers
 
 			if (!creature.Can(Locks.Gesture))
 			{
+				Log.Debug("Gesture locked for '{0}'.", creature.Name);
 				Send.UseGestureR(creature, false);
 				return;
 			}

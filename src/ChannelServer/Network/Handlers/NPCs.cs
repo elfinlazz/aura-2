@@ -40,6 +40,7 @@ namespace Aura.Channel.Network.Handlers
 			// Check lock
 			if (!creature.Can(Locks.TalkToNpc))
 			{
+				Log.Debug("TalkToNpc locked for '{0}'.", creature.Name);
 				Send.NpcTalkStartR_Fail(creature);
 				return;
 			}
