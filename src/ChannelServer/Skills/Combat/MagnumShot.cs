@@ -87,6 +87,8 @@ namespace Aura.Channel.Skills.Combat
 
 			Send.SkillReady(creature, skill.Info.Id);
 
+			creature.Lock(Locks.Run);
+
 			return true;
 		}
 

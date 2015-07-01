@@ -45,15 +45,19 @@ namespace Aura.Channel.Skills.Combat
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
-			// Disable movement and update client if renovation isn't enabled.
-			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
-				creature.Lock(Locks.Move, true);
-			// Disable running if combat weapon is equipped
-			else if (creature.RightHand != null && creature.RightHand.HasTag("/weapontype_combat/"))
-				creature.Lock(Locks.Run);
-			// Disable movement
+			// Default lock is Walk|Run, unlock Walk for renovation if a combat
+			// weapon is equipped.
+			if (AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+			{
+				if (creature.RightHand != null && creature.RightHand.HasTag("/weapontype_combat/"))
+					creature.Unlock(Locks.Walk);
+			}
+			// Server-side TalentRenovationCloseCombat is disabled, send a lock to
+			// the client so it doesn't let the creature move, no matter what.
 			else
-				creature.Lock(Locks.Move);
+			{
+				creature.Lock(Locks.Move, true);
+			}
 
 			return true;
 		}
@@ -67,6 +71,11 @@ namespace Aura.Channel.Skills.Combat
 		public override bool Ready(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillReady(creature, skill.Info.Id);
+
+			// Server-side TalentRenovationCloseCombat is disabled, send a lock to
+			// the client so it doesn't let the creature move, no matter what.
+			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+				creature.Lock(Locks.Move, true);
 
 			// Training
 			if (skill.Info.Rank == SkillRank.RF)
@@ -82,7 +91,9 @@ namespace Aura.Channel.Skills.Combat
 		/// <param name="skill"></param>
 		public override void Cancel(Creature creature, Skill skill)
 		{
-			// Updating unlock because of the updating lock for pre-renovation
+			// Updating unlock because of the updating lock for pre-renovation.
+			// Since moving isn't locked by default when using a skill it's
+			// apparently not unlocked by default either.
 			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
 				creature.Unlock(Locks.Move, true);
 		}

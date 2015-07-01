@@ -52,12 +52,21 @@ namespace Aura.Channel.Skills.Combat
 			Send.SkillFlashEffect(creature);
 			Send.SkillPrepare(creature, skill.Info.Id, skill.GetCastTime());
 
-			// Disable movement and update client if renovation isn't enabled.
-			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+			// Default lock is Walk|Run, lift them depending on whether a
+			// shield is equipped or not.
+			if (AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+			{
+				creature.Unlock(Locks.Walk);
+				if (creature.LeftHand != null && creature.LeftHand.IsShield)
+					creature.Unlock(Locks.Run);
+			}
+			// Since the client locks Walk|Run by default we have to tell it
+			// to enable walk but disable run (under any circumstances).
+			else
+			{
 				creature.Lock(Locks.Run, true);
-			// Disable running if no shield is equipped
-			else if (creature.LeftHand == null || !creature.LeftHand.IsShield)
-				creature.Lock(Locks.Run);
+				creature.Unlock(Locks.Walk, true);
+			}
 
 			return true;
 		}
@@ -71,6 +80,20 @@ namespace Aura.Channel.Skills.Combat
 		public override bool Ready(Creature creature, Skill skill, Packet packet)
 		{
 			Send.SkillReady(creature, skill.Info.Id);
+
+			// No default locks, set them depending on whether a shield is
+			// equipped or not.
+			if (AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
+			{
+				if (creature.LeftHand == null || !creature.LeftHand.IsShield)
+					creature.Lock(Locks.Run);
+			}
+			// Send lock to client if TalentRenovationCloseCombat isn't enabled,
+			// so it doesn't let the creature run, no matter what.
+			else
+			{
+				creature.Lock(Locks.Run, true);
+			}
 
 			// Training
 			if (skill.Info.Rank == SkillRank.RF)

@@ -154,5 +154,10 @@ namespace Aura.Mabi.Const
 		/// Set on take off and landing
 		/// </summary>
 		Flying = 0xFFFFBDDF,
+
+		/// <summary>
+		/// All locks
+		/// </summary>
+		All = 0xFFFFFFFF,
 	}
 }

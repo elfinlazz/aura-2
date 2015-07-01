@@ -94,6 +94,10 @@ namespace Aura.Channel.Skills.Combat
 
 			Send.SkillReady(creature, skill.Info.Id);
 
+			// Lock running if not elf
+			if (!creature.IsElf)
+				creature.Lock(Locks.Run);
+
 			return true;
 		}
 

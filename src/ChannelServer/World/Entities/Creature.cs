@@ -2053,7 +2053,7 @@ namespace Aura.Channel.World.Entities
 		/// Deactivates given Locks for creature.
 		/// </summary>
 		/// <remarks>
-		/// Unlocking movement on the client resets skill stuns.
+		/// Unlocking movement on the client apparently resets skill stuns.
 		/// </remarks>
 		/// <param name="locks">Locks to deactivate.</param>
 		/// <param name="updateClient">Sends CharacterUnlock to client if true.</param>
