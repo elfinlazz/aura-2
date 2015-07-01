@@ -19,7 +19,7 @@ public class ReachLevl40QuestScript : QuestScript
 		AddObjective("reach_level", "Reach Level 40", 0, 0, 0, ReachLevel(40));
 		AddObjective("talk_duncan", "Talk with Chief Duncan", 1, 15409, 38310, Talk("duncan"));
 
-		AddReward(Exp(150000));
+		AddReward(Exp(15000));
 		
 		AddHook("_duncan", "after_intro", TalkDuncan);
 	}
