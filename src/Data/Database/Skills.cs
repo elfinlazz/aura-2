@@ -18,6 +18,15 @@ namespace Aura.Data.Database
 		public byte MaxRank { get; set; }
 		public SkillType Type { get; set; }
 
+		public Locks PrepareLock { get; set; }
+		public Locks PrepareUnlock { get; set; }
+		public Locks ReadyLock { get; set; }
+		public Locks ReadyUnlock { get; set; }
+		public Locks UseLock { get; set; }
+		public Locks UseUnlock { get; set; }
+		public Locks CompleteLock { get; set; }
+		public Locks CompleteUnlock { get; set; }
+
 		public Dictionary<int, Dictionary<int, SkillRankData>> RankData { get; set; }
 
 		public SkillRankData GetRankData(int rank, int raceId)
@@ -130,7 +139,6 @@ namespace Aura.Data.Database
 
 	/// <summary>
 	/// Indexed by skill id.
-	/// Depends on: SkillRankDb
 	/// </summary>
 	public class SkillDb : DatabaseJsonIndexed<int, SkillData>
 	{
@@ -149,6 +157,16 @@ namespace Aura.Data.Database
 			skillInfo.Name = entry.ReadString("name");
 			skillInfo.MasterTitle = entry.ReadUShort("masterTitle");
 			skillInfo.Type = (SkillType)entry.ReadInt("type", -1);
+
+			// Locks
+			skillInfo.PrepareLock = this.ReadLocks(entry, "prepare", "lock");
+			skillInfo.PrepareUnlock = this.ReadLocks(entry, "prepare", "unlock");
+			skillInfo.ReadyLock = this.ReadLocks(entry, "ready", "lock");
+			skillInfo.ReadyUnlock = this.ReadLocks(entry, "ready", "unlock");
+			skillInfo.UseLock = this.ReadLocks(entry, "use", "lock");
+			skillInfo.UseUnlock = this.ReadLocks(entry, "use", "unlock");
+			skillInfo.CompleteLock = this.ReadLocks(entry, "complete", "lock");
+			skillInfo.CompleteUnlock = this.ReadLocks(entry, "complete", "unlock");
 
 			// Ranks
 			skillInfo.RankData = new Dictionary<int, Dictionary<int, SkillRankData>>();
@@ -231,6 +249,23 @@ namespace Aura.Data.Database
 			}
 
 			this.Entries[skillInfo.Id] = skillInfo;
+		}
+
+		private Locks ReadLocks(JObject entry, string name, string category)
+		{
+			if (!entry.ContainsKey(name))
+				return Locks.None;
+
+			var cat = entry[name] as JObject;
+			if (cat == null)
+				return Locks.None;
+
+			var result = Locks.None;
+			var split = cat.ReadString(category, "").Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var s in split)
+				result |= (Locks)Enum.Parse(typeof(Locks), s.Trim());
+
+			return result;
 		}
 
 		protected override void AfterLoad()

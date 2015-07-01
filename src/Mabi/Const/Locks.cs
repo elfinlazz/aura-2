@@ -16,6 +16,8 @@ namespace Aura.Mabi.Const
 	[Flags]
 	public enum Locks : uint
 	{
+		None = 0x00,
+
 		// ? = 0x01,
 
 		// ? = 0x02,
@@ -40,7 +42,13 @@ namespace Aura.Mabi.Const
 		/// </summary>
 		Run = 0x10,
 
-		// ? = 0x20, (hit? attack and prop hit works)
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Hitting props and attacking still works.
+		/// </remarks>
+		Hit = 0x20,
 
 		/// <summary>
 		/// Prevents changing equipment in any way.
@@ -52,7 +60,13 @@ namespace Aura.Mabi.Const
 		/// </summary>
 		UseItem = 0x80,
 
-		// ? = 0x100, (usemagic? doesn't stop magic skills)
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// Doesn't stop magic skills.
+		/// </remarks>
+		UseMagic = 0x100,
 
 		/// <summary>
 		/// Prevents preparing skills.
@@ -87,7 +101,10 @@ namespace Aura.Mabi.Const
 		/// </remarks>
 		TalkToNpc = 0x1000,
 
-		// ? = 0x2000, (trade? )
+		/// <summary>
+		/// ?
+		/// </summary>
+		Trade = 0x2000,
 
 		/// <summary>
 		/// Prevents chat messages from the character.
