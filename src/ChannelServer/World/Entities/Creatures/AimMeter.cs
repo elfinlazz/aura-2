@@ -59,6 +59,8 @@ namespace Aura.Channel.World.Entities.Creatures
 			// "no skill" ranged.
 			var activeSkillId = this.Creature.Skills.ActiveSkill == null ? 0 : this.Creature.Skills.ActiveSkill.Info.Id;
 
+			this.Creature.StopMove();
+
 			this.StartTime = DateTime.Now;
 			Send.CombatSetAimR(this.Creature, targetEntityId, activeSkillId, 0);
 		}
