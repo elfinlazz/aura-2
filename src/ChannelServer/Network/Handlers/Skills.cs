@@ -384,7 +384,7 @@ namespace Aura.Channel.Network.Handlers
 			try
 			{
 				creature.Unlock(Locks.All);
-				creature.Lock(Locks.ChangeEquipment | Locks.UseItem | Locks.Attack | Locks.TalkToNpc | Locks.Gesture);
+				creature.Lock(Locks.ChanceStance | Locks.Walk | Locks.Run | Locks.ChangeEquipment | Locks.UseItem | Locks.Attack | Locks.PickUpAndDrop | Locks.TalkToNpc | Locks.Gesture);
 				creature.Lock(skill.Data.UseLock);
 				creature.Unlock(skill.Data.UseUnlock);
 
