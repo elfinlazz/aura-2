@@ -82,6 +82,25 @@ namespace Aura.Channel.Skills.Combat
 		}
 
 		/// <summary>
+		/// Resets the skill's cooldown in old combat.
+		/// </summary>
+		/// <remarks>
+		/// Counter doesn't use the new cooldown system, but Vars, similar
+		/// to Final Hit. Var10 is the cooldown for normal hits, Var11 is for
+		/// knuckles. That's why we have to reset it here.
+		/// </remarks>
+		/// <param name="creature"></param>
+		/// <param name="skill"></param>
+		/// <param name="packet"></param>
+		public override void Complete(Creature creature, Skill skill, Packet packet)
+		{
+			base.Complete(creature, skill, packet);
+
+			if (!AuraData.FeaturesDb.IsEnabled("CombatSystemRenewal"))
+				Send.ResetCooldown(creature, skill.Info.Id);
+		}
+
+		/// <summary>
 		/// Cancels special effects.
 		/// </summary>
 		/// <param name="creature"></param>
