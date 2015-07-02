@@ -111,9 +111,11 @@ namespace Aura.Channel.Skills.Combat
 		/// <returns></returns>
 		public static bool Handle(AttackerAction aAction, TargetAction tAction, ref float damage)
 		{
-			// Defense
-			if (!tAction.Creature.Skills.IsReady(SkillId.Defense))
+			var activeSkill = tAction.Creature.Skills.ActiveSkill;
+			if (activeSkill == null || activeSkill.Info.Id != SkillId.Defense || activeSkill.State != SkillState.Ready)
 				return false;
+
+			activeSkill.State = SkillState.Used;
 
 			// Update actions
 			tAction.Type = CombatActionType.Defended;
@@ -122,11 +124,12 @@ namespace Aura.Channel.Skills.Combat
 			aAction.Stun = DefenseAttackerStun;
 
 			// Reduce damage
-			var defenseSkill = tAction.Creature.Skills.Get(SkillId.Defense);
-			if (defenseSkill != null)
-				damage = Math.Max(1, damage - defenseSkill.RankData.Var3);
+			damage = Math.Max(1, damage - activeSkill.RankData.Var3);
 
 			// Updating unlock because of the updating lock for pre-renovation
+			// Other skills actually unlock automatically on the client,
+			// I guess this isn't the case for Defense because it's never
+			// *explicitly* used.
 			if (!AuraData.FeaturesDb.IsEnabled("TalentRenovationCloseCombat"))
 				tAction.Creature.Unlock(Locks.Run, true);
 
