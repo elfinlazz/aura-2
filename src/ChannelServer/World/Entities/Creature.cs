@@ -449,7 +449,7 @@ namespace Aura.Channel.World.Entities
 		/// <remarks>
 		/// This seems to count towards the creature's damage even if a weapon
 		/// is equipped. This assumption is based on the fact that Golems
-		/// have a 0 attack weapon, that would make them almost no damage.
+		/// have a 0 attack weapon, that would make them do almost no damage.
 		/// </remarks>
 		public int AttackMaxBase { get { return this.RaceData.AttackMaxBase; } }
 
