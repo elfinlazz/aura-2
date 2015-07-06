@@ -52,8 +52,14 @@ namespace Aura.Channel.Network.Sending
 			packet.PutInt(pack.Id);
 			packet.PutInt(pack.PrevId);
 			packet.PutByte(pack.Hit);
-			packet.PutByte(pack.MaxHits);
-			packet.PutByte(0);
+			packet.PutByte((byte)pack.Type);
+			packet.PutByte(pack.Flags);
+			if ((pack.Flags & 1) == 1)
+			{
+				packet.PutInt(pack.BlockedByShieldPosX);
+				packet.PutInt(pack.BlockedByShieldPosY);
+				packet.PutLong(pack.ShieldCasterId);
+			}
 
 			// Actions
 			packet.PutInt(pack.Actions.Count);
@@ -68,44 +74,60 @@ namespace Aura.Channel.Network.Sending
 					actionPacket.Clear(Op.CombatAction, action.Creature.EntityId);
 				actionPacket.PutInt(pack.Id);
 				actionPacket.PutLong(action.Creature.EntityId);
-				actionPacket.PutByte((byte)action.Type);
+				actionPacket.PutByte((byte)action.Flags);
 				actionPacket.PutShort(action.Stun);
 				actionPacket.PutUShort((ushort)action.SkillId);
-				actionPacket.PutShort(0);
+				actionPacket.PutUShort((ushort)action.SecondarySkillId);
+
+				// Official name for CombatAction is CombatScene, and both Actions are Combatant.
+				// Official client distinguish between Attacker and Defender simply by checking Flags. tachiorz
 
 				// AttackerAction
+				//if ((action.Flags & CombatActionFlags.Attacker) != 0)
 				if (action.Category == CombatActionCategory.Attack)
 				{
 					var aAction = action as AttackerAction;
 
 					actionPacket.PutLong(aAction.TargetId);
 					actionPacket.PutUInt((uint)aAction.Options);
-					actionPacket.PutByte(0);
-					actionPacket.PutByte((byte)(!aAction.Has(AttackerOptions.KnockBackHit2) ? 2 : 1)); // ?
+					actionPacket.PutByte(aAction.UsedWeaponSet);
+					actionPacket.PutByte(aAction.WeaponParameterType); // !aAction.Has(AttackerOptions.KnockBackHit2) ? 2 : 1)); // ?
 					actionPacket.PutInt(pos.X);
 					actionPacket.PutInt(pos.Y);
-					if (aAction.PropId != 0)
+
+					if ((aAction.Options & AttackerOptions.Dashed) != 0)
+					{
+						actionPacket.PutFloat(0); // DashedPosX
+						actionPacket.PutFloat(0); // DashedPosY
+						actionPacket.PutUInt(0); // DashDelay
+					}
+
+					if ((aAction.Options & AttackerOptions.PhaseAttack) != 0)
+						actionPacket.PutByte(aAction.Phase);
+
+					if ((aAction.Options & AttackerOptions.UseEffect) != 0)
 						actionPacket.PutLong(aAction.PropId);
 				}
 				// TargetAction
+				//if ((action.Flags & CombatActionFlags.TakeHit) != 0)
 				else if (action.Category == CombatActionCategory.Target && !action.Is(CombatActionType.None))
 				{
 					var tAction = action as TargetAction;
 
 					// Target used Defense or Counter
-					if (tAction.Is(CombatActionType.Defended) || tAction.Is(CombatActionType.CounteredHit) || tAction.Is(CombatActionType.CounteredHit2))
+					if ((action.Flags & CombatActionType.Attacker) != 0)
 					{
 						actionPacket.PutLong(tAction.Attacker.EntityId);
-						actionPacket.PutInt(0);
-						actionPacket.PutByte(0);
-						actionPacket.PutByte(1);
+						actionPacket.PutInt(0); // attacker Options
+						actionPacket.PutByte(tAction.UsedWeaponSet);
+						actionPacket.PutByte(tAction.WeaponParameterType);
 						actionPacket.PutInt(pos.X);
 						actionPacket.PutInt(pos.Y);
 					}
 
 					actionPacket.PutUInt((uint)tAction.Options);
 					actionPacket.PutFloat(tAction.Damage);
-					actionPacket.PutFloat(0); // Related to mana damage?
+					actionPacket.PutFloat(tAction.Wound);
 					actionPacket.PutInt((int)tAction.ManaDamage);
 
 					actionPacket.PutFloat(attackerPos.X - pos.X);
@@ -121,7 +143,13 @@ namespace Aura.Channel.Network.Sending
 						}
 					}
 
-					actionPacket.PutByte(0); // PDef? Seen as 0x20 in a normal attack (G18)
+					if ((tAction.Options & TargetOptions.MultiHit) != 0)
+					{
+						actionPacket.PutUInt(0); // MultiHitDamageCount
+						actionPacket.PutUInt(0); // MultiHitDamageShowTime
+					}
+
+					actionPacket.PutByte(tAction.EffectFlags); // PDef? Seen as 0x20 in a normal attack (G18)
 					actionPacket.PutInt(tAction.Delay);
 					actionPacket.PutLong(tAction.Attacker.EntityId);
 				}

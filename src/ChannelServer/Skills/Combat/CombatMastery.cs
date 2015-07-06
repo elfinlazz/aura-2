@@ -77,7 +77,7 @@ namespace Aura.Channel.Skills.Combat
 				var weapon = (i == 1 ? rightWeapon : leftWeapon);
 				var weaponIsKnuckle = (weapon != null && weapon.Data.HasTag("/knuckle/"));
 
-				var aAction = new AttackerAction(CombatActionType.Hit, attacker, skill.Info.Id, targetEntityId);
+				var aAction = new AttackerAction(CombatActionType.Attacker, attacker, skill.Info.Id, targetEntityId);
 				aAction.Set(AttackerOptions.Result);
 
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
@@ -85,14 +85,17 @@ namespace Aura.Channel.Skills.Combat
 
 				var cap = new CombatActionPack(attacker, skill.Info.Id, aAction, tAction);
 				cap.Hit = i;
-				cap.MaxHits = maxHits;
+				cap.Type = (dualWield ? CombatActionPackType.TwinSwordAttack : CombatActionPackType.NormalAttack);
 				cap.PrevId = prevId;
 				prevId = cap.Id;
 
 				// Default attacker options
 				aAction.Set(AttackerOptions.Result);
 				if (dualWield)
+				{
 					aAction.Set(AttackerOptions.DualWield);
+					aAction.WeaponParameterType = (byte)(i == 1 ? 2 : 1);
+				}
 
 				// Base damage
 				var damage = (i == 1 ? attacker.GetRndRightHandDamage() : attacker.GetRndLeftHandDamage());
@@ -120,7 +123,7 @@ namespace Aura.Channel.Skills.Combat
 				// Evaluate caused damage
 				if (!target.IsDead)
 				{
-					if (tAction.Type != CombatActionType.Defended)
+					if (tAction.Flags != CombatActionType.Defended)
 					{
 						target.Stability -= this.GetStabilityReduction(attacker, weapon) / maxHits;
 
@@ -156,12 +159,12 @@ namespace Aura.Channel.Skills.Combat
 
 					// Remove dual wield option if last hit doesn't come from
 					// the second weapon.
-					if (cap.MaxHits != cap.Hit)
+					if ((byte)cap.Type != cap.Hit)
 						aAction.Options &= ~AttackerOptions.DualWield;
 				}
 
 				// Set stun time
-				if (tAction.Type != CombatActionType.Defended)
+				if (tAction.Flags != CombatActionType.Defended)
 				{
 					aAction.Stun = GetAttackerStun(attacker, weapon, tAction.IsKnockBack && skill.Info.Id != SkillId.FinalHit);
 					tAction.Stun = GetTargetStun(attacker, weapon, tAction.IsKnockBack);

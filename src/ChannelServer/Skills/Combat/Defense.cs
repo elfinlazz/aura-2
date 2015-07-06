@@ -118,7 +118,7 @@ namespace Aura.Channel.Skills.Combat
 			activeSkill.State = SkillState.Used;
 
 			// Update actions
-			tAction.Type = CombatActionType.Defended;
+			tAction.Flags = CombatActionType.Defended;
 			tAction.SkillId = SkillId.Defense;
 			tAction.Stun = DefenseTargetStun;
 			aAction.Stun = DefenseAttackerStun;
@@ -180,7 +180,7 @@ namespace Aura.Channel.Skills.Combat
 				return;
 
 			// Did the target successfully defend itself?
-			var defended = (tAction.Type == CombatActionType.Defended);
+			var defended = (tAction.Flags == CombatActionType.Defended);
 
 			// Get skill
 			var attackerSkill = tAction.Attacker.Skills.Get(SkillId.Defense);

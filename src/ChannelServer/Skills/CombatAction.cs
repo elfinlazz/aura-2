@@ -48,7 +48,7 @@ namespace Aura.Channel.Skills
 		/// <summary>
 		/// 1 or 2 (normal vs dual wield)
 		/// </summary>
-		public byte MaxHits { get; set; }
+		public CombatActionPackType Type { get; set; }
 
 		/// <summary>
 		/// Attacking creature.
@@ -61,6 +61,15 @@ namespace Aura.Channel.Skills
 		public SkillId SkillId { get; set; }
 
 		/// <summary>
+		/// Unknown Flags, magic shield related?
+		/// </summary>
+		public byte Flags { get; set ;}
+
+		public int BlockedByShieldPosX { get; set; }
+		public int BlockedByShieldPosY { get; set; }
+		public long ShieldCasterId { get; set; }
+
+		/// <summary>
 		/// Attacker and Target actions.
 		/// </summary>
 		public List<CombatAction> Actions { get; protected set; }
@@ -69,7 +78,7 @@ namespace Aura.Channel.Skills
 		{
 			this.Id = Interlocked.Increment(ref _actionId);
 			this.Hit = 1;
-			this.MaxHits = 1;
+			this.Type = CombatActionPackType.NormalAttack;
 			this.Actions = new List<CombatAction>();
 		}
 
@@ -224,7 +233,7 @@ namespace Aura.Channel.Skills
 		public Creature Creature { get; set; }
 
 		// Type of combat action
-		public CombatActionType Type { get; set; }
+		public CombatActionType Flags { get; set; }
 
 		/// <summary>
 		/// Time before creature can move again.
@@ -235,6 +244,21 @@ namespace Aura.Channel.Skills
 		/// Used skill
 		/// </summary>
 		public SkillId SkillId { get; set; }
+
+		/// <summary>
+		/// Used for alchemy crystals.
+		/// </summary>
+		public SkillId SecondarySkillId { get; set; }
+
+		/// <summary>
+		/// Don't know, seems to be always 0. Attacking with offhand weapon?
+		/// </summary>
+		public byte UsedWeaponSet { get; set; }
+
+		/// <summary>
+		/// Usually 1. 2 seen in dualwield, right or left weapon?
+		/// </summary>
+		public byte WeaponParameterType { get; set; }
 
 		/// <summary>
 		/// Returns true if action is a knock back/down.
@@ -259,7 +283,7 @@ namespace Aura.Channel.Skills
 		/// <returns></returns>
 		public bool Is(CombatActionType type)
 		{
-			return (this.Type == type);
+			return (this.Flags == type);
 		}
 	}
 
@@ -273,6 +297,11 @@ namespace Aura.Channel.Skills
 		/// Attacker options
 		/// </summary>
 		public AttackerOptions Options { get; set; }
+
+		/// <summary>
+		/// Attack Phase. Used in Pummel.
+		/// </summary>
+		public byte Phase { get; set; }
 
 		/// <summary>
 		/// Id of the attacked creature/area
@@ -289,17 +318,18 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public override bool IsKnockBack
 		{
-			get { return this.Has(AttackerOptions.KnockBackHit2) || this.Has(AttackerOptions.KnockBackHit1); }
+			get { return ((uint)this.Options & 0x7CF00) != 0; }
 		}
 
 		public override CombatActionCategory Category { get { return CombatActionCategory.Attack; } }
 
 		public AttackerAction(CombatActionType type, Creature creature, SkillId skillId, long targetId)
 		{
-			this.Type = type;
+			this.Flags = type;
 			this.Creature = creature;
 			this.SkillId = skillId;
 			this.TargetId = targetId;
+			this.WeaponParameterType = 1;
 		}
 
 		/// <summary>
@@ -348,10 +378,14 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public float Damage { get; set; }
 
+		public float Wound { get; set; }
+
 		/// <summary>
 		/// Mana damage (Mana Shield, blue)
 		/// </summary>
 		public float ManaDamage { get; set; }
+
+		public byte EffectFlags { get; set; }
 
 		/// <summary>
 		/// Skill used by the attacker
@@ -375,7 +409,7 @@ namespace Aura.Channel.Skills
 
 		public TargetAction(CombatActionType type, Creature creature, Creature attacker, SkillId skillId)
 		{
-			this.Type = type;
+			this.Flags = type;
 			this.Creature = creature;
 			this.Attacker = attacker;
 			this.SkillId = skillId;
