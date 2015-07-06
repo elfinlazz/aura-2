@@ -11,6 +11,7 @@ quests/beginner_uladh/202003_save_my_sheep.cs
 quests/beginner_uladh/202004_malcolms_ring.cs
 quests/beginner_uladh/202006_duncans_call.cs
 quests/beginner_uladh/202027_playing_instruments.cs
+quests/beginner_uladh/202030_lets_gather_green_gem.cs
 quests/beginner_uladh/skills_rest.cs
 quests/beginner_uladh/school_1.cs
 
