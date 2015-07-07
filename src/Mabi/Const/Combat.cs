@@ -28,6 +28,8 @@ namespace Aura.Mabi.Const
 		/// </summary>
 		UseEffect = 0x08,
 
+		Dashed = 0x10,
+
 		/// <summary>
 		/// Req for some skills (0x20)
 		/// </summary>
@@ -51,6 +53,8 @@ namespace Aura.Mabi.Const
 		/// Missed? (0x800)
 		/// </summary>
 		Missed = 0x800,
+
+		PhaseAttack = 0x1000,
 	}
 
 	[Flags]
@@ -129,6 +133,8 @@ namespace Aura.Mabi.Const
 		/// </remarks>
 		ManaShield = 0x100000,
 
+		MultiHit = 0x2000000,
+
 		// ??? = 0x4000000 // logged on a counter hit / using mana shield
 
 		/// <summary>
@@ -138,6 +144,18 @@ namespace Aura.Mabi.Const
 		/// Always active when creature dies.
 		/// </remarks>
 		FinishingKnockDown = Finished | KnockDownFinish | FinishingHit,
+
+		/// <summary>
+		/// Combined flags for knock back/downs.
+		/// </summary>
+		Downed = 0x7CF00,
+	}
+
+	public enum CombatActionPackType : byte
+	{
+		NormalAttack = 1,
+		TwinSwordAttack = 2,
+		ChainRangeAttack = 3
 	}
 
 	// Most likely flags
@@ -154,27 +172,35 @@ namespace Aura.Mabi.Const
 		/// <summary>
 		/// Simple hit by Source (0x02)
 		/// </summary>
-		Hit = 0x02,
+		Attacker = 0x02,
+
+		Unknown = 0x04,
 
 		/// <summary>
 		/// Both hit at the same time (0x06)
 		/// </summary>
-		SimultaneousHit = 0x06,
+		SimultaneousHit = Attacker | Unknown,
+
+		SkillActive = 0x10,
 
 		/// <summary>
 		/// Alternative target type for Counter? (0x13)
 		/// </summary>
-		CounteredHit2 = 0x13,
+		CounteredHit2 = TakeHit | Attacker | SkillActive,
+
+		SkillSuccess = 0x20,
 
 		/// <summary>
 		/// Smash/Counter (0x32)
 		/// </summary>
-		HardHit = 0x32,
+		HardHit = SkillSuccess | SkillActive | Attacker,
 
 		/// <summary>
 		/// Target type Defense (0x33)
 		/// </summary>
-		Defended = 0x33,
+		Defended = SkillSuccess | SkillActive | Attacker | TakeHit,
+
+		PlayerCharacter = 0x40,
 
 		// Target type with Mana Shield
 		// ??? = 0x41,
@@ -182,17 +208,17 @@ namespace Aura.Mabi.Const
 		/// <summary>
 		/// Passive Damage, Shadow Bunshin/Fireball (0x42)
 		/// </summary>
-		SpecialHit = 0x42,
+		SpecialHit = PlayerCharacter | Attacker,
 
 		/// <summary>
 		/// Target type for Counter (0x53)
 		/// </summary>
-		CounteredHit = 0x53,
+		CounteredHit = PlayerCharacter | SkillActive | Attacker | TakeHit,
 
 		/// <summary>
 		/// Magicbolt, range, doing Counter? (0x72)
 		/// </summary>
-		RangeHit = 0x72,
+		RangeHit = PlayerCharacter | SkillSuccess | SkillActive | Attacker,
 
 		//DefendedHit = 0x73, // ?
 	}
