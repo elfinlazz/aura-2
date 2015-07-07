@@ -159,7 +159,7 @@ namespace Aura.Channel.Skills.Combat
 
 					// Remove dual wield option if last hit doesn't come from
 					// the second weapon.
-					if ((byte)cap.Type != cap.Hit)
+					if (cap.Hit != 2)
 						aAction.Options &= ~AttackerOptions.DualWield;
 				}
 

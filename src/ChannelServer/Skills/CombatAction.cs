@@ -277,13 +277,13 @@ namespace Aura.Channel.Skills
 		public CombatActionPack Pack { get; set; }
 
 		/// <summary>
-		/// Returns true if the given type equals the combat action's type.
+		/// Returns true if the specified flags are set.
 		/// </summary>
-		/// <param name="type"></param>
+		/// <param name="flags"></param>
 		/// <returns></returns>
-		public bool Is(CombatActionType type)
+		public bool Is(CombatActionType flags)
 		{
-			return (this.Flags == type);
+			return flags == this.Flags || (flags != CombatActionType.None && (this.Flags & flags) != 0);
 		}
 	}
 
@@ -318,7 +318,7 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public override bool IsKnockBack
 		{
-			get { return ((uint)this.Options & 0x7CF00) != 0; }
+			get { return this.Has(AttackerOptions.KnockBackHit2) || this.Has(AttackerOptions.KnockBackHit1); }
 		}
 
 		public override CombatActionCategory Category { get { return CombatActionCategory.Attack; } }
@@ -402,7 +402,7 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public override bool IsKnockBack
 		{
-			get { return this.Has(TargetOptions.KnockDownFinish) || this.Has(TargetOptions.Smash) || this.Has(TargetOptions.KnockBack) || this.Has(TargetOptions.KnockDown) || this.Has(TargetOptions.Finished); }
+			get { return this.Has(TargetOptions.Downed); }
 		}
 
 		public override CombatActionCategory Category { get { return CombatActionCategory.Target; } }

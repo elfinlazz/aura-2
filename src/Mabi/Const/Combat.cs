@@ -144,6 +144,11 @@ namespace Aura.Mabi.Const
 		/// Always active when creature dies.
 		/// </remarks>
 		FinishingKnockDown = Finished | KnockDownFinish | FinishingHit,
+
+		/// <summary>
+		/// Combined flags for knock back/downs.
+		/// </summary>
+		Downed = 0x7CF00,
 	}
 
 	public enum CombatActionPackType : byte
