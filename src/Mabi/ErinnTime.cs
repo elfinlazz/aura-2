@@ -101,7 +101,7 @@ namespace Aura.Mabi
 			// Based on the theory that 1 year (1 week realtime) consists of
 			// 7 months (7 days) with 40 days (1440 / 36 min) each.
 			this.Year = (int)Math.Floor((this.DateTime.Ticks - BeginOfTime.Ticks) / TicksPerMinute / 60 / 24 / 280f);
-			this.Month = (int)this.DateTime.DayOfWeek + 1;
+			this.Month = (int)this.DateTime.DayOfWeek;
 			this.Day = (int)Math.Floor((this.DateTime.Hour * 60 + this.DateTime.Minute) / 36f);
 		}
 
@@ -159,15 +159,15 @@ namespace Aura.Mabi
 			format = format.Replace("yy", this.Year.ToString("00"));
 			format = format.Replace("y", this.Year.ToString("0"));
 
-			format = format.Replace("MMMM", Months[this.Month - 1]);
-			format = format.Replace("MM", this.Month.ToString("00"));
-			format = format.Replace("M", this.Month.ToString());
-
 			format = format.Replace("dd", this.Day.ToString("00"));
 			format = format.Replace("d", this.Day.ToString());
 
 			format = format.Replace("tt", (this.Hour < 12 ? "AM" : "PM"));
 			format = format.Replace("t", (this.Hour < 12 ? "A" : "P"));
+
+			format = format.Replace("MMMM", Months[this.Month]);
+			format = format.Replace("MM", this.Month.ToString("00"));
+			format = format.Replace("M", this.Month.ToString());
 
 			return format;
 		}
