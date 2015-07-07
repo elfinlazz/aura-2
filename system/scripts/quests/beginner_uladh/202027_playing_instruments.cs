@@ -18,7 +18,8 @@ public class PlayingInstrumentsQuestScript : QuestScript
 		AddObjective("talk_endelyon", "Talk with Endelyon at the Church", 1, 5975, 36842, Talk("endelyon"));
 
 		AddReward(Exp(900));
-		// AddReward(AP(2)); // EU/Easy Version (212027)
+		if (IsEnabled("G1EasyOverseas"))
+			AddReward(AP(2)); // 2 AP in EU and during "g1_easy_overseas" (212027)
 
 		AddHook("_endelyon", "after_intro", TalkNpc);
 	}

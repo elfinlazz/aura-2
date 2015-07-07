@@ -23,7 +23,10 @@ public class SaveMySheepQuestScript : QuestScript
 
 		AddReward(Exp(900));
 		AddReward(Gold(2600));
-		AddReward(AP(3)); // 6 AP in EU and during "g1_easy_overseas" (212003)
+		if (!IsEnabled("G1EasyOverseas"))
+			AddReward(AP(3));
+		else
+			AddReward(AP(6)); // 6 AP in EU and during "g1_easy_overseas" (212003)
 
 		AddHook("_deian", "after_intro", TalkDeian);
 	}
@@ -32,7 +35,6 @@ public class SaveMySheepQuestScript : QuestScript
 	{
 		if (npc.QuestActive(this.Id, "talk_deian1") || npc.QuestActive(this.Id, "protect_sheep"))
 		{
-			// Unofficial
 			npc.Msg("I'm glad to see you. I've been stuck here all day!<br/>Can you look after my sheep for a few minutes? I got some business to take care of.<br/>It should be easy, as long as the wolves don't show up.");
 			npc.Msg("Just make sure to keep my sheep safe if wolves show up.<br/>The number of sheep and the time left will display<br/>on the top right corner.");
 			npc.Msg("I hear you're pretty strong, so this should be pretty simple.<br/>Thanks!<button title='Look After Sheep' keyword='@protect'/><button title='Start Another Topic' keyword='@end'/>");
@@ -60,7 +62,7 @@ public class SaveMySheepQuestScript : QuestScript
 		return HookResult.Continue;
 	}
 
-	const int Time = 180000/3; // Duration
+	const int Time = 180000 / 3; // Duration
 	const int SheepAmount = 20; // Sheeps to protect
 	const int SheepMinAmount = 5; // Amount you need to save to succeed
 	const int WolfAmount = 10; // Wolves to (re)spawn

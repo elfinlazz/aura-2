@@ -23,7 +23,10 @@ public class MalcolmsRingQuestScript : QuestScript
 		AddReward(Exp(1500));
 		AddReward(Gold(1700));
 		AddReward(Item(2001));
-		AddReward(AP(3));
+		if (!IsEnabled("G1EasyOverseas"))
+			AddReward(AP(3));
+		else
+			AddReward(AP(6)); // 6 AP in EU and during "g1_easy_overseas" (212004)
 
 		AddHook("_malcolm", "after_intro", TalkMalcolm);
 	}

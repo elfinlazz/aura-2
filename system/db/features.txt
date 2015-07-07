@@ -19,6 +19,7 @@
 	{ name: "EnchantEntrust", enabled: true },
 	{ name: "DynamicMonsterAllocation", enabled: true },
 	{ name: "FoodStatLimit", enabled: true },
+	{ name: "G1EasyOverseas", enabled: false },
 	
 	// Season 1
 	{ name: "G1S1", enabled: true, children: [

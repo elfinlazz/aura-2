@@ -16,6 +16,8 @@ public class NaosLetterQuestScript : QuestScript
 		AddObjective("talk_duncan", "Go to Tir Chonaill and deliver the Letter to Chief Duncan.", 1, 15409, 38310, Talk("duncan"));
 
 		AddReward(Exp(100));
+		if (IsEnabled("G1EasyOverseas"))
+			AddReward(AP(3)); // 3 AP in EU and during "g1_easy_overseas" (212001)
 		
 		AddHook("_duncan", "after_intro", TalkDuncan);
 	}
