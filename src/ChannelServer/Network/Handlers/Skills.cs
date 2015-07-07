@@ -587,24 +587,24 @@ namespace Aura.Channel.Network.Handlers
 		/// </summary>
 		/// <param name="client"></param>
 		/// <param name="packet"></param>
-		[PacketHandler(Op.CombatSetAimPerfect)]
-		public void CombatSetAimPerfect(ChannelClient client, Packet packet)
+		[PacketHandler(Op.CombatSetAim2)]
+		public void CombatSetAim2(ChannelClient client, Packet packet)
 		{
-			var isComplete = packet.GetByte();
+			var flag = packet.GetByte();
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
 			// Check skill
 			// TODO: More accurate checks?
 			var activeSkill = creature.Skills.ActiveSkill;
-			if (activeSkill == null || activeSkill.Data.Type != SkillType.RangedCombat)
+			if (activeSkill == null || activeSkill.Data.Type != SkillType.RangedCombat || creature.Target == null)
 			{
 				Log.Debug("CombatSetAim: No active (ranged) skill.");
 				Send.CombatSetAimR(creature, 0, SkillId.None, 0);
 				return;
 			}
 
-			creature.AimMeter.Stop(isComplete);
+			creature.AimMeter.Start(creature.Target.EntityId, flag);
 		}
 
 		/// <summary>

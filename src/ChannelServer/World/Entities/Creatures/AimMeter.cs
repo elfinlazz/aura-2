@@ -53,7 +53,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// Starts aiming timer and sends CombatSetAimR.
 		/// </summary>
 		/// <param name="targetEntityId"></param>
-		public void Start(long targetEntityId)
+		/// <param name="flag"></param>
+		public void Start(long targetEntityId, byte flag=0)
 		{
 			// Use 0 as fallback for now, until we're sure there's no
 			// "no skill" ranged.
@@ -62,7 +63,7 @@ namespace Aura.Channel.World.Entities.Creatures
 			this.Creature.StopMove();
 
 			this.StartTime = DateTime.Now;
-			Send.CombatSetAimR(this.Creature, targetEntityId, activeSkillId, 0);
+			Send.CombatSetAimR(this.Creature, targetEntityId, activeSkillId, flag);
 		}
 
 		/// <summary>

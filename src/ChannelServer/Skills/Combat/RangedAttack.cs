@@ -147,11 +147,17 @@ namespace Aura.Channel.Skills.Combat
 			var targetPos = target.GetPosition();
 			var attackerPos = attacker.GetPosition();
 
+			var actionType = (attacker.IsElf ? CombatActionPackType.ChainRangeAttack : CombatActionPackType.NormalAttack);
+			var stun = (short)(actionType == CombatActionPackType.ChainRangeAttack ? AttackerStunElf : AttackerStun);
+
+			// "Cancels" the skill
+			// 800 = old load time? == aAction.Stun? Varies? Doesn't seem to be a stun.
+			Send.SkillUse(attacker, skill.Info.Id, stun, 1);
+
 			// Check range
 			//if (!attackerPos.InRange(targetPos, attacker.RightHand.OptionInfo.EffectiveRange + 100))
 			//	return CombatSkillResult.OutOfRange;
 
-			var actionType = (attacker.IsElf ? CombatActionPackType.ChainRangeAttack : CombatActionPackType.NormalAttack);
 			var maxHits = (actionType == CombatActionPackType.ChainRangeAttack ? 2 : 1);
 			int prevId = 0;
 
@@ -168,7 +174,7 @@ namespace Aura.Channel.Skills.Combat
 
 				var aAction = new AttackerAction(CombatActionType.RangeHit, attacker, skill.Info.Id, targetEntityId);
 				aAction.Set(AttackerOptions.Result);
-				aAction.Stun = (short)(actionType == CombatActionPackType.ChainRangeAttack ? AttackerStunElf : AttackerStun);
+				aAction.Stun = stun;
 				cap.Add(aAction);
 
 				// Hit by chance
@@ -178,7 +184,7 @@ namespace Aura.Channel.Skills.Combat
 				{
 					var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, target.Skills.ActiveSkill != null ? target.Skills.ActiveSkill.Info.Id : SkillId.CombatMastery);
 					tAction.Set(TargetOptions.Result);
-					tAction.Stun = (short)(actionType == CombatActionPackType.ChainRangeAttack ? TargetStunElf : TargetStun);
+					tAction.Stun = stun;
 					if (actionType == CombatActionPackType.ChainRangeAttack)
 						tAction.EffectFlags = 0x20;
 					cap.Add(tAction);
@@ -258,10 +264,6 @@ namespace Aura.Channel.Skills.Combat
 			// Disable fire arrow effect
 			if (attacker.Temp.FireArrow)
 				Send.Effect(attacker, Effect.FireArrow, false);
-
-			// "Cancels" the skill
-			// 800 = old load time? == aAction.Stun? Varies? Doesn't seem to be a stun.
-			Send.SkillUse(attacker, skill.Info.Id, 800, 1);
 
 			return CombatSkillResult.Okay;
 		}

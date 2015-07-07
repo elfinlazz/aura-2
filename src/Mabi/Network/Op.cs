@@ -297,7 +297,7 @@ namespace Aura.Mabi.Network
 		public const int UnkCombatR = 0x791C; // ?
 		public const int CombatSetAim = 0x791D;
 		public const int CombatSetAimR = 0x791E;
-		public const int CombatSetAimPerfect = 0x791F;
+		public const int CombatSetAim2 = 0x791F;
 		public const int SetCombatTarget = 0x7920;
 		public const int SetFinisher = 0x7921;
 		public const int SetFinisher2 = 0x7922;
