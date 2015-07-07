@@ -104,8 +104,12 @@ namespace Aura.Channel.Skills.Combat
 		public void Use(Creature creature, Skill skill, Packet packet)
 		{
 			var targetEntityId = packet.GetLong();
-			var unk1 = packet.GetInt();
-			var unk2 = packet.GetInt();
+
+			// Similar to WM there is a case where these aren't sent.
+			// Apparently this can happen if you activate the skill while
+			// targetting an enemy.
+			var unk1 = (packet.Peek() != PacketElementType.None ? packet.GetInt() : 0);
+			var unk2 = (packet.Peek() != PacketElementType.None ? packet.GetInt() : 0);
 
 			if (_cm == null)
 				_cm = ChannelServer.Instance.SkillManager.GetHandler<CombatMastery>(SkillId.CombatMastery);
