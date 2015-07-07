@@ -68,10 +68,10 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <summary>
 		/// Stops aiming timer and sends CombatSetAimR.
 		/// </summary>
-		public void Stop()
+		public void Stop(byte flag=0)
 		{
 			this.StartTime = DateTime.MinValue;
-			Send.CombatSetAimR(this.Creature, 0, SkillId.None, 0);
+			Send.CombatSetAimR(this.Creature, 0, SkillId.None, flag);
 		}
 
 		/// <summary>
