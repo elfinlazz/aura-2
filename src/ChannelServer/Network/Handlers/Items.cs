@@ -81,6 +81,10 @@ namespace Aura.Channel.Network.Handlers
 			if (target.IsEquip() && (item.HasTag("/bow/|/crossbow/")) && !creature.Skills.Has(SkillId.RangedAttack))
 				creature.Skills.Give(SkillId.RangedAttack, SkillRank.Novice);
 
+			// Give Playing Instrument when equipping an instrument
+			if (target.IsEquip() && (item.HasTag("/instrument/")) && !creature.Skills.Has(SkillId.PlayingInstrument))
+				creature.Skills.Give(SkillId.PlayingInstrument, SkillRank.Novice);
+
 			// Inform about temp moves (items in temp don't count for quest objectives?)
 			if (source == Pocket.Temporary && target == Pocket.Cursor)
 				ChannelServer.Instance.Events.OnPlayerReceivesItem(creature, item.Info.Id, item.Info.Amount);

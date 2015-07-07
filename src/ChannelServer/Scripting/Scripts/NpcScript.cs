@@ -858,6 +858,16 @@ namespace Aura.Channel.Scripting.Scripts
 		}
 
 		/// <summary>
+		/// Adds item to player's inventory and shows an acquire window.
+		/// </summary>
+		/// <param name="itemId"></param>
+		public void AcquireItem(int itemId)
+		{
+			var item = new Item(itemId);
+			this.Player.AcquireItem(item);
+		}
+
+		/// <summary>
 		/// Adds given amount of gold to the player's inventory.
 		/// </summary>
 		/// <param name="itemId"></param>
