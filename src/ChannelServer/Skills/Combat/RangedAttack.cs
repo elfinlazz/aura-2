@@ -148,11 +148,11 @@ namespace Aura.Channel.Skills.Combat
 			var attackerPos = attacker.GetPosition();
 
 			var actionType = (attacker.IsElf ? CombatActionPackType.ChainRangeAttack : CombatActionPackType.NormalAttack);
-			var stun = (short)(actionType == CombatActionPackType.ChainRangeAttack ? AttackerStunElf : AttackerStun);
+			var attackerStun = (short)(actionType == CombatActionPackType.ChainRangeAttack ? AttackerStunElf : AttackerStun);
 
 			// "Cancels" the skill
 			// 800 = old load time? == aAction.Stun? Varies? Doesn't seem to be a stun.
-			Send.SkillUse(attacker, skill.Info.Id, stun, 1);
+			Send.SkillUse(attacker, skill.Info.Id, attackerStun, 1);
 
 			// Check range
 			//if (!attackerPos.InRange(targetPos, attacker.RightHand.OptionInfo.EffectiveRange + 100))
@@ -176,15 +176,16 @@ namespace Aura.Channel.Skills.Combat
 
 				var aAction = new AttackerAction(CombatActionType.RangeHit, attacker, skill.Info.Id, targetEntityId);
 				aAction.Set(AttackerOptions.Result);
-				aAction.Stun = stun;
+				aAction.Stun = attackerStun;
 				cap.Add(aAction);
 
 				// Hit by chance
 				if (rnd < chance)
 				{
-					var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, target.Skills.ActiveSkill != null ? target.Skills.ActiveSkill.Info.Id : SkillId.CombatMastery);
+					var targetSkill = target.Skills.ActiveSkill != null ? target.Skills.ActiveSkill.Info.Id : SkillId.CombatMastery;
+					var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, targetSkill);
 					tAction.Set(TargetOptions.Result);
-					tAction.Stun = stun;
+					tAction.Stun = (short)(actionType == CombatActionPackType.ChainRangeAttack ? TargetStunElf : TargetStun);
 					if (actionType == CombatActionPackType.ChainRangeAttack)
 						tAction.EffectFlags = 0x20;
 					cap.Add(tAction);
@@ -245,10 +246,13 @@ namespace Aura.Channel.Skills.Combat
 								attacker.Shove(target, KnockBackDistance);
 							}
 						}
+						tAction.Creature.Stun = tAction.Stun;
 					}
 				}
 				else
 					maxHits = 1;
+
+				aAction.Creature.Stun = aAction.Stun;
 
 				// Skill training
 				if (skill.Info.Rank == SkillRank.Novice || skill.Info.Rank == SkillRank.RF)
