@@ -62,15 +62,68 @@ public class StewartScript : NpcScript
 				return;
 
 			case "@repair":
-				Msg("Do you want to repair your magic weapon?<br/>All magic weapons are laden with Mana, so it's impossible to physically fix them.<br/>If you fix them the way blacksmiths fix swords, then they may lose all the magic powers that come with them.");
-				Msg("Unimplemented");
+				Msg("Do you want to repair your magic weapon?<br/>All magic weapons are laden with Mana, so it's impossible to physically fix them.<br/>If you fix them the way blacksmiths fix swords, then they may lose all the magic powers that come with them.<repair rate='95' stringid='(*/magic_school_repairable/*)' />");
+
+				while (true)
+				{
+					var repair = await Select();
+
+					if (!repair.StartsWith("@repair"))
+						break;
+
+					var result = Repair(repair, 95, "/magic_school_repairable/");
+					if (!result.HadGold)
+					{
+						RndMsg(
+							"I'm afraid you don't have enough money to repair the wand...",
+							"I don't think you have enough money to fix it...",
+							"I don't think you have enough money to repair the item..."
+						);
+					}
+					else if (result.Points == 1)
+					{
+						if (result.Fails == 0)
+							RndMsg(
+								"I was able to fix it without any errors.",
+								"1 point has been fixed."
+							);
+						else
+							Msg("Oh no... I think I made a mistake.");
+					}
+					else if (result.Points > 1)
+					{
+						if (result.Fails == 0)
+							RndMsg(
+								"Thankfully, everything went well. I didn't make any mistakes.",
+								"The item is completely repaired."
+						);
+						else
+							// TODO: Use string format once we have XML dialogues.
+							Msg("The item is repaired...but<br/>I was unable to repair " + result.Fails + " point(s). I'm sorry.");
+					}
+				}
+
 				Msg("Please handle with care..");
 				break;
 
 			case "@upgrade":
-				Msg("You want to upgrade something?<br/>First, let me see the item.<br/>Remember that the amount and type of upgrade varies with each item.");
-				Msg("Unimplemented");
-				Msg("Come see me again next time if you have something else to upgrade.");
+				Msg("You want to upgrade something?<br/>First, let me see the item.<br/>Remember that the amount and type of upgrade varies with each item.<upgrade />");
+				
+				while(true)
+				{
+					var reply = await Select();
+					
+					if(!reply.StartsWith("@upgrade:"))
+						break;
+						
+					var result = Upgrade(reply);
+					if(result.Success)
+						Msg("Haha, the upgrade was successful.<br/>Do you have anything else to upgrade?");
+					else
+						Msg("(Error)");
+				}
+
+				Msg("Come see me again next time if you have something else to upgrade.<upgrade hide='true'/>");
 				break;
 		}
 
@@ -291,9 +344,9 @@ public class StewartShop : NpcShopScript
 		Add("Magic Weapons", 40233); // Phoenix Fire Wand
 		Add("Magic Weapons", 40234); // Tikka Wood Healing Wand
 
-		Add("Quest", 70023); // Collecting Quest
-		Add("Quest", 70023); // Collecting Quest
-		Add("Quest", 70023); // Collecting Quest
+		Add("Quest", 70023); // Collecting Quest - 10 Ice Elementals
+		Add("Quest", 70023); // Collecting Quest - 10 Fire Elementals
+		Add("Quest", 70023); // Collecting Quest - 10 Lightning Elementals
 
 		Add("Fomor Scroll", 71072, 1);  // Black Fomor Scroll x1
 		Add("Fomor Scroll", 71072, 10); // Black Fomor Scroll x10
