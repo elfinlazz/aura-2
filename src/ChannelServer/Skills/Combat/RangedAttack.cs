@@ -158,6 +158,8 @@ namespace Aura.Channel.Skills.Combat
 			//if (!attackerPos.InRange(targetPos, attacker.RightHand.OptionInfo.EffectiveRange + 100))
 			//	return CombatSkillResult.OutOfRange;
 
+			var chance = attacker.AimMeter.GetAimChance(target);
+			var rnd = RandomProvider.Get().NextDouble() * 100;
 			var maxHits = (actionType == CombatActionPackType.ChainRangeAttack ? 2 : 1);
 			int prevId = 0;
 
@@ -178,9 +180,7 @@ namespace Aura.Channel.Skills.Combat
 				cap.Add(aAction);
 
 				// Hit by chance
-				var chance = attacker.AimMeter.GetAimChance(target);
-				var rnd = RandomProvider.Get();
-				if (rnd.NextDouble()*100 < chance)
+				if (rnd < chance)
 				{
 					var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, target.Skills.ActiveSkill != null ? target.Skills.ActiveSkill.Info.Id : SkillId.CombatMastery);
 					tAction.Set(TargetOptions.Result);
