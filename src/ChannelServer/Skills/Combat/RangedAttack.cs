@@ -222,6 +222,7 @@ namespace Aura.Channel.Skills.Combat
 					{
 						tAction.Set(TargetOptions.FinishingKnockDown);
 						attacker.Shove(target, KnockBackDistance);
+						maxHits = 1;
 					}
 					else
 					{
