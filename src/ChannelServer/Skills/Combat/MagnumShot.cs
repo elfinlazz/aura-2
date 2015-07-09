@@ -145,6 +145,8 @@ namespace Aura.Channel.Skills.Combat
 			var rnd = RandomProvider.Get();
 			if (rnd.NextDouble() * 100 < chance)
 			{
+				target.StopMove();
+
 				aAction.Set(AttackerOptions.KnockBackHit2);
 
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);

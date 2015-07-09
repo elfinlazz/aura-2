@@ -141,13 +141,6 @@ namespace Aura.Channel.Skills.Combat
 			if (target == null)
 				return CombatSkillResult.InvalidTarget;
 
-			var targetPos = target.GetPosition();
-			var attackerPos = attacker.GetPosition();
-
-			// Check range
-			//if (!attackerPos.InRange(targetPos, attacker.RightHand.OptionInfo.EffectiveRange + 100))
-			//	return CombatSkillResult.OutOfRange;
-
 			// Actions
 			var cap = new CombatActionPack(attacker, skill.Info.Id);
 
@@ -161,6 +154,8 @@ namespace Aura.Channel.Skills.Combat
 			var rnd = RandomProvider.Get();
 			if (rnd.NextDouble() * 100 < chance)
 			{
+				target.StopMove();
+
 				var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, skill.Info.Id);
 				tAction.Set(TargetOptions.Result);
 				tAction.Stun = TargetStun;
