@@ -150,7 +150,7 @@ namespace Aura.Channel.Skills.Combat
 				ManaShield.Handle(target, ref damage, tAction);
 
 				// Clean Hit if not defended nor critical
-				if (!tAction.Is(CombatActionType.Defended) && !tAction.Has(TargetOptions.Critical))
+				if (tAction.SkillId != SkillId.Defense && !tAction.Has(TargetOptions.Critical))
 					tAction.Set(TargetOptions.CleanHit);
 
 				// Take damage if any is left
@@ -160,7 +160,7 @@ namespace Aura.Channel.Skills.Combat
 				// Finish if dead, knock down if not defended
 				if (target.IsDead)
 					tAction.Set(TargetOptions.KnockDownFinish);
-				else if (!tAction.Is(CombatActionType.Defended))
+				else if (tAction.SkillId != SkillId.Defense)
 					tAction.Set(TargetOptions.KnockDown);
 
 				// Anger Management
@@ -170,7 +170,7 @@ namespace Aura.Channel.Skills.Combat
 				// Stun & knock back
 				aAction.Stun = CombatMastery.GetAttackerStun(attacker.AverageKnockCount, attacker.AverageAttackSpeed, true);
 
-				if (!tAction.Is(CombatActionType.Defended))
+				if (tAction.SkillId != SkillId.Defense)
 				{
 					tAction.Stun = CombatMastery.GetTargetStun(attacker.AverageKnockCount, attacker.AverageAttackSpeed, true);
 					target.Stability = Creature.MinStability;
