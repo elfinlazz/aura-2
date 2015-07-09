@@ -582,6 +582,32 @@ namespace Aura.Channel.Network.Handlers
 		}
 
 		/// <summary>
+		/// 2nd type of aim, sent by elf character.
+		/// Completely unsure about purpose. tachiorz
+		/// </summary>
+		/// <param name="client"></param>
+		/// <param name="packet"></param>
+		[PacketHandler(Op.CombatSetAim2)]
+		public void CombatSetAim2(ChannelClient client, Packet packet)
+		{
+			var flag = packet.GetByte();
+
+			var creature = client.GetCreatureSafe(packet.Id);
+
+			// Check skill
+			// TODO: More accurate checks?
+			var activeSkill = creature.Skills.ActiveSkill;
+			if (activeSkill == null || activeSkill.Data.Type != SkillType.RangedCombat || creature.Target == null)
+			{
+				Log.Debug("CombatSetAim: No active (ranged) skill.");
+				Send.CombatSetAimR(creature, 0, SkillId.None, 0);
+				return;
+			}
+
+			creature.AimMeter.Start(creature.Target.EntityId, flag);
+		}
+
+		/// <summary>
 		/// ?
 		/// </summary>
 		/// <remarks>
