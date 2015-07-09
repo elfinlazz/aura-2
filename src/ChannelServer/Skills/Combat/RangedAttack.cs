@@ -154,14 +154,12 @@ namespace Aura.Channel.Skills.Combat
 			// 800 = old load time? == aAction.Stun? Varies? Doesn't seem to be a stun.
 			Send.SkillUse(attacker, skill.Info.Id, attackerStun, 1);
 
-			// Check range
-			//if (!attackerPos.InRange(targetPos, attacker.RightHand.OptionInfo.EffectiveRange + 100))
-			//	return CombatSkillResult.OutOfRange;
-
 			var chance = attacker.AimMeter.GetAimChance(target);
 			var rnd = RandomProvider.Get().NextDouble() * 100;
-			var maxHits = (actionType == CombatActionPackType.ChainRangeAttack ? 2 : 1);
-			int prevId = 0;
+			var successfulHit = (rnd < chance);
+
+			var maxHits = (actionType == CombatActionPackType.ChainRangeAttack && successfulHit ? 2 : 1);
+			var prevId = 0;
 
 			for (byte i = 1; i <= maxHits; ++i)
 			{
@@ -179,12 +177,14 @@ namespace Aura.Channel.Skills.Combat
 				aAction.Stun = attackerStun;
 				cap.Add(aAction);
 
-				// Hit by chance
-				if (rnd < chance)
+				// Target action if hit
+				if (successfulHit)
 				{
-					var targetSkill = target.Skills.ActiveSkill != null ? target.Skills.ActiveSkill.Info.Id : SkillId.CombatMastery;
-					var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, targetSkill);
+					var targetSkillId = target.Skills.ActiveSkill != null ? target.Skills.ActiveSkill.Info.Id : SkillId.CombatMastery;
+
+					var tAction = new TargetAction(CombatActionType.TakeHit, target, attacker, targetSkillId);
 					tAction.Set(TargetOptions.Result);
+					tAction.AttackerSkillId = skill.Info.Id;
 					tAction.Stun = (short)(actionType == CombatActionPackType.ChainRangeAttack ? TargetStunElf : TargetStun);
 					if (actionType == CombatActionPackType.ChainRangeAttack)
 						tAction.EffectFlags = 0x20;
@@ -250,8 +250,6 @@ namespace Aura.Channel.Skills.Combat
 						tAction.Creature.Stun = tAction.Stun;
 					}
 				}
-				else
-					maxHits = 1;
 
 				aAction.Creature.Stun = aAction.Stun;
 
@@ -279,7 +277,7 @@ namespace Aura.Channel.Skills.Combat
 		/// <param name="obj"></param>
 		private void OnCreatureAttacks(TargetAction tAction)
 		{
-			if (tAction.SkillId != SkillId.RangedAttack)
+			if (tAction.AttackerSkillId != SkillId.RangedAttack)
 				return;
 
 			var attackerSkill = tAction.Attacker.Skills.Get(SkillId.RangedAttack);

@@ -54,7 +54,7 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// </summary>
 		/// <param name="targetEntityId"></param>
 		/// <param name="flag"></param>
-		public void Start(long targetEntityId, byte flag=0)
+		public void Start(long targetEntityId, byte flag = 0)
 		{
 			// Use 0 as fallback for now, until we're sure there's no
 			// "no skill" ranged.
@@ -69,7 +69,8 @@ namespace Aura.Channel.World.Entities.Creatures
 		/// <summary>
 		/// Stops aiming timer and sends CombatSetAimR.
 		/// </summary>
-		public void Stop(byte flag=0)
+		/// <param name="flag"></param>
+		public void Stop(byte flag = 0)
 		{
 			this.StartTime = DateTime.MinValue;
 			Send.CombatSetAimR(this.Creature, 0, SkillId.None, flag);

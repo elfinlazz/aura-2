@@ -582,15 +582,20 @@ namespace Aura.Channel.Network.Handlers
 		}
 
 		/// <summary>
-		/// 2nd type of aim, sent by elf character.
-		/// Completely unsure about purpose. tachiorz
+		/// Second type of aiming, used by elves.
 		/// </summary>
+		/// <remarks>
+		/// Exact purpose unknown. tachiorz
+		/// 
+		/// Interestingly there are logs of elves using the normal CombatSetAim
+		/// as well. [exec]
+		/// </remarks>
 		/// <param name="client"></param>
 		/// <param name="packet"></param>
 		[PacketHandler(Op.CombatSetAim2)]
 		public void CombatSetAim2(ChannelClient client, Packet packet)
 		{
-			var flag = packet.GetByte();
+			var flag = packet.GetByte(); // ?
 
 			var creature = client.GetCreatureSafe(packet.Id);
 
@@ -599,7 +604,7 @@ namespace Aura.Channel.Network.Handlers
 			var activeSkill = creature.Skills.ActiveSkill;
 			if (activeSkill == null || activeSkill.Data.Type != SkillType.RangedCombat || creature.Target == null)
 			{
-				Log.Debug("CombatSetAim: No active (ranged) skill.");
+				Log.Debug("CombatSetAim2: No active (ranged) skill or invalid target.");
 				Send.CombatSetAimR(creature, 0, SkillId.None, 0);
 				return;
 			}
