@@ -123,7 +123,7 @@ namespace Aura.Channel.Skills.Combat
 				// Evaluate caused damage
 				if (!target.IsDead)
 				{
-					if (tAction.Flags != CombatActionType.Defended)
+					if (tAction.SkillId != SkillId.Defense)
 					{
 						target.Stability -= this.GetStabilityReduction(attacker, weapon) / maxHits;
 
@@ -164,7 +164,7 @@ namespace Aura.Channel.Skills.Combat
 				}
 
 				// Set stun time
-				if (tAction.Flags != CombatActionType.Defended)
+				if (tAction.SkillId != SkillId.Defense)
 				{
 					aAction.Stun = GetAttackerStun(attacker, weapon, tAction.IsKnockBack && skill.Info.Id != SkillId.FinalHit);
 					tAction.Stun = GetTargetStun(attacker, weapon, tAction.IsKnockBack);
