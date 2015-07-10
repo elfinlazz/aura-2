@@ -147,6 +147,76 @@ namespace Aura.Shared.Database
 
 			return NameCheckResult.Okay;
 		}
+
+		/// <summary>
+		/// Resets password for account to its name.
+		/// </summary>
+		/// <param name="accName"></param>
+		/// <returns></returns>
+		public void SetAccountPassword(string accountName, string password)
+		{
+			using (var conn = this.Connection)
+			using (var mc = new MySqlCommand("UPDATE `accounts` SET `password` = @password WHERE `accountId` = @accountId", conn))
+			{
+				mc.Parameters.AddWithValue("@accountId", accountName);
+				mc.Parameters.AddWithValue("@password", Password.HashRaw(password));
+
+				mc.ExecuteNonQuery();
+			}
+		}
+
+		/// <summary>
+		/// Sets new randomized session key for the account and returns it.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <returns></returns>
+		public long CreateSession(string accountId)
+		{
+			using (var conn = this.Connection)
+			using (var mc = new MySqlCommand("UPDATE `accounts` SET `sessionKey` = @sessionKey WHERE `accountId` = @accountId", conn))
+			{
+				var sessionKey = RandomProvider.Get().NextInt64();
+
+				mc.Parameters.AddWithValue("@accountId", accountId);
+				mc.Parameters.AddWithValue("@sessionKey", sessionKey);
+
+				mc.ExecuteNonQuery();
+
+				return sessionKey;
+			}
+		}
+
+		/// <summary>
+		/// Changes auth level of account.
+		/// </summary>
+		/// <param name="accountId"></param>
+		/// <param name="level"></param>
+		/// <returns></returns>
+		public bool ChangeAuth(string accountId, int level)
+		{
+			using (var conn = this.Connection)
+			using (var cmd = new UpdateCommand("UPDATE `accounts` SET {0} WHERE `accountId` = @accountId", conn))
+			{
+				cmd.AddParameter("@accountId", accountId);
+				cmd.Set("authority", level);
+
+				return (cmd.Execute() > 0);
+			}
+		}
+
+		/// <summary>
+		/// Unsets creature's Initialized creature state flag.
+		/// </summary>
+		/// <param name="creatureId"></param>
+		public void UninitializeCreature(long creatureId)
+		{
+			using (var conn = this.Connection)
+			using (var mc = new MySqlCommand("UPDATE `creatures` SET `state` = `state` & ~1 WHERE `creatureId` = @creatureId", conn))
+			{
+				mc.Parameters.AddWithValue("@creatureId", creatureId);
+				mc.ExecuteNonQuery();
+			}
+		}
 	}
 
 	/// <summary>
