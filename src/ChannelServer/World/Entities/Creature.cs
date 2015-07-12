@@ -2034,6 +2034,12 @@ namespace Aura.Channel.World.Entities
 		/// <remarks>
 		/// Some locks are lifted automatically on Warp, SkillComplete,
 		/// and SkillCancel.
+		/// 
+		/// Only sending the locks when they actually changed can cause problems,
+		/// e.g. if a lock is removed during a cutscene (skill running out)
+		/// the unlock after the cutscene isn't sent.
+		/// The client actually has counted locks, unlike us atm.
+		/// Implementing those will fix the problem. TODO.
 		/// </remarks>
 		/// <param name="locks">Locks to activate.</param>
 		/// <param name="updateClient">Sends CharacterLock to client if true.</param>
@@ -2043,7 +2049,7 @@ namespace Aura.Channel.World.Entities
 			var prev = this.Locks;
 			this.Locks |= locks;
 
-			if (updateClient && prev != this.Locks)
+			if (updateClient /*&& prev != this.Locks*/)
 				Send.CharacterLock(this, locks);
 
 			return this.Locks;
@@ -2063,7 +2069,7 @@ namespace Aura.Channel.World.Entities
 			var prev = this.Locks;
 			this.Locks &= ~locks;
 
-			if (updateClient && prev != this.Locks)
+			if (updateClient /*&& prev != this.Locks*/)
 				Send.CharacterUnlock(this, locks);
 
 			return this.Locks;
