@@ -59,7 +59,7 @@ namespace Aura.Channel.Network.Handlers
 			}
 
 			// Stop aiming when moving
-			if (creature.AimMeter.IsAiming)
+			if (!creature.IsElf && creature.AimMeter.IsAiming)
 				creature.AimMeter.Stop();
 
 			//Position intersection

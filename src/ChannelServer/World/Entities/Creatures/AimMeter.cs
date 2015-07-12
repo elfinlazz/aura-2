@@ -24,6 +24,11 @@ namespace Aura.Channel.World.Entities.Creatures
 		private const int MaxChanceRunning = 90;
 
 		/// <summary>
+		/// Aim offset for an elf.
+		/// </summary>
+		private float _aimOffset = 0f;
+
+		/// <summary>
 		/// Creature this aim meter belongs to.
 		/// </summary>
 		public Creature Creature { get; private set; }
@@ -60,8 +65,17 @@ namespace Aura.Channel.World.Entities.Creatures
 			// "no skill" ranged.
 			var activeSkillId = this.Creature.Skills.ActiveSkill == null ? 0 : this.Creature.Skills.ActiveSkill.Info.Id;
 
-			this.Creature.StopMove();
-
+			if (flag > 0 && this.Creature.IsElf)
+			{
+				var chance = this.GetAimChance(this.Creature.Region.GetCreature(targetEntityId));
+				if (chance > 50f)
+					_aimOffset = 0.5f;
+			}
+			else
+			{
+				this.Creature.StopMove();
+				_aimOffset = 0f;
+			}
 			this.StartTime = DateTime.Now;
 			Send.CombatSetAimR(this.Creature, targetEntityId, activeSkillId, flag);
 		}
@@ -129,7 +143,14 @@ namespace Aura.Channel.World.Entities.Creatures
 			var hitRatio = 1.0;
 			hitRatio = ((d1 - d2) / bowRange) * distance * hitRatio + d2;
 
-			var chance = Math.Sqrt(aimMod / hitRatio) * 100f;
+			var chance = Math.Sqrt(_aimOffset*_aimOffset + aimMod / hitRatio) * 100f;
+
+			// Aim chance for moving elf caps at 50%
+			if (this.Creature.IsMoving && this.Creature.IsElf)
+			{
+				if (chance > 50f)
+					chance = 50f;
+			}
 
 			// 100% after x time (unofficial)
 			if (chance >= 120)
