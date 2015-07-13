@@ -69,14 +69,17 @@ namespace Aura.Channel.World.Entities.Creatures
 			{
 				var chance = this.GetAimChance(this.Creature.Region.GetCreature(targetEntityId));
 				if (chance > 50f)
+				{
 					_aimOffset = 0.5f;
+					this.StartTime = DateTime.Now;
+				}
 			}
 			else
 			{
 				this.Creature.StopMove();
 				_aimOffset = 0f;
+				this.StartTime = DateTime.Now;
 			}
-			this.StartTime = DateTime.Now;
 			Send.CombatSetAimR(this.Creature, targetEntityId, activeSkillId, flag);
 		}
 
