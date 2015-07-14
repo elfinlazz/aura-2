@@ -609,7 +609,10 @@ namespace Aura.Channel.Network.Handlers
 				return;
 			}
 
-			creature.AimMeter.Start(creature.Target.EntityId, flag);
+			if(flag != 0)
+				Send.CombatSetAimR(creature, creature.Target.EntityId, SkillId.None, 1);
+			else
+				creature.AimMeter.Start(creature.Target.EntityId, 1);
 		}
 
 		/// <summary>
