@@ -13,7 +13,8 @@ As such, every user is free to use Aura and choose how to use it.
 Compatibility
 ------------------------------
 Compatibility to all major versions but NA was dropped on
-[2013-09-13 (Aura Legacy)](https://github.com/aura-project/aura_legacy/commit/c6483faace4d79b8f772bee519531718084a243d). Since that time, Aura is kept compatible only to the *latest update* of NA.
+2013-09-13 (in Aura Legacy). Since that time, Aura is kept
+compatible only to the *latest update* of NA.
 
 Requirements
 ------------------------------
@@ -80,7 +81,7 @@ Common problems
 ------------------------------
 
 ### Errors after updates
-Usually all errors are solveable by recompiling, running SQL updates from `sql/`, and deleting the cache folder.
+Usually all errors are solveable by recompiling and deleting the cache folder.
 
 ### Korean message when trying to connect to channel
 This message means that the client wasn't able to connect to the channel,

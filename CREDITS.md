@@ -4,16 +4,16 @@ Developers
 Active developers
 
 * exec
-* Xcelled
-* Cosmos
 
 Inactive Developers
 ==============================
 
 Developers who have been working on Aura at some point
 
+* Cosmos
 * K. (anonymous)
 * Yiting
+* Xcelled
 
 Noteworthy contributors
 ==============================
