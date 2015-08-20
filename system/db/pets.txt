@@ -133,13 +133,17 @@
 { raceId: 471005, name: "Shark Robe Seal", timeLimit: 105, exp: 1.7, height: 0.4, upper: 1.43, lower: 1.45, life: 10, mana: 10, stamina: 10, str: 10, int: 10, dex: 10, will: 10, luck: 2, defense: 0, protection: 2 },
 { raceId: 471006, name: "Skeleton Maid", timeLimit: 117, exp: 1.8, height: 0.46, upper: 1.7, lower: 0.8, life: 68, mana: 32, stamina: 68, str: 38, int: 10, dex: 22, will: 18, luck: 2, defense: 0, protection: 2 },
 { raceId: 471007, name: "Shark Robe Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
-{ raceId: 471010, name: "Lite Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
+{ raceId: 471010, name: "Polar Bear Hat Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
 { raceId: 471011, name: "Cone Hat Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
 { raceId: 490025, name: "Warp Imp", timeLimit: 112, exp: 1.7, height: 0.2, upper: 3.6, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
 { raceId: 490030, name: "Lite Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
 { raceId: 490031, name: "Knitwear Penguin", timeLimit: 92, exp: 1.8, height: 0.8, upper: 1.4, lower: 1.2, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
 { raceId: 490032, name: "Lite Seal", timeLimit: 92, exp: 1.8, height: 0.6, upper: 1.1, lower: 1.0, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
 { raceId: 490043, name: "Cone Hat Penguin", timeLimit: 92, exp: 1.8, height: 0.8, upper: 1.4, lower: 1.2, life: 55, mana: 43, stamina: 32, str: 18, int: 34, dex: 22, will: 32, luck: 25, defense: 0, protection: 2 },
+{ raceId: 490057, name: "Umeboshi Blossom", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 50, stamina: 150, str: 70, int: 20, dex: 40, will: 30, luck: 30, defense: 20, protection: 25 },
+{ raceId: 490058, name: "Handsome Alpaca", timeLimit: 180, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 70, stamina: 80, str: 40, int: 50, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 490061, name: "Recall Imp", timeLimit: 112, exp: 1.7, height: 0.2, upper: 3.6, lower: 1.5, life: 72, mana: 38, stamina: 43, str: 24, int: 31, dex: 26, will: 23, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490064, name: "Tiny Elephant", timeLimit: 82, exp: 1.25, height: 0.7, upper: 1.0, lower: 1.0, life: 58, mana: 32, stamina: 52, str: 30, int: 25, dex: 27, will: 29, luck: 17, defense: 0, protection: 2 },
 { raceId: 500001, name: "Black Mud Crab", timeLimit: 90, exp: 1.6, height: 0.75, upper: 1.0, lower: 1.0, life: 50, mana: 33, stamina: 34, str: 33, int: 40, dex: 27, will: 27, luck: 28, defense: 0, protection: 2 },
 { raceId: 500002, name: "Red Rock Crab", timeLimit: 111, exp: 1.7, height: 0.75, upper: 1.0, lower: 1.0, life: 45, mana: 40, stamina: 39, str: 27, int: 38, dex: 24, will: 30, luck: 29, defense: 0, protection: 2 },
 { raceId: 511001, name: "Monkey", timeLimit: 105, exp: 1.5, height: 0.26, upper: 1.37, lower: 1.3, life: 66, mana: 51, stamina: 44, str: 28, int: 30, dex: 31, will: 14, luck: 17, defense: 0, protection: 2 },
@@ -192,6 +196,10 @@
 { raceId: 450601, name: "Crystal Deer", timeLimit: 92, exp: 1.8, height: 0.65, upper: 1.2, lower: 1.2, life: 70, mana: 45, stamina: 77, str: 38, int: 40, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
 { raceId: 490023, name: "White Flamemare", timeLimit: 124, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 40, stamina: 62, str: 40, int: 25, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
 { raceId: 490024, name: "Crystal Rudolph", timeLimit: 92, exp: 1.8, height: 0.65, upper: 1.2, lower: 1.2, life: 70, mana: 45, stamina: 77, str: 38, int: 40, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490050, name: "Crystal Chime Deer", timeLimit: 92, exp: 1.8, height: 0.65, upper: 1.2, lower: 1.2, life: 70, mana: 45, stamina: 77, str: 38, int: 40, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490052, name: "Celestial Unicorn", timeLimit: 124, exp: 1.8, height: 1.0, upper: 1.0, lower: 1.0, life: 90, mana: 40, stamina: 62, str: 40, int: 25, dex: 36, will: 46, luck: 30, defense: 0, protection: 2 },
+{ raceId: 490054, name: "Solar Stallion", timeLimit: 130, exp: 1.8, height: 0.88, upper: 1.06, lower: 1.1, life: 300, mana: 60, stamina: 150, str: 50, int: 60, dex: 48, will: 46, luck: 30, defense: 15, protection: 20 },
+{ raceId: 490063, name: "Cosmic Stallion", timeLimit: 130, exp: 1.8, height: 0.88, upper: 1.06, lower: 1.1, life: 300, mana: 60, stamina: 150, str: 50, int: 60, dex: 48, will: 46, luck: 30, defense: 15, protection: 20 },
 
 // Snow Mounts
 //---------------------------------------------------------------------------
@@ -237,6 +245,7 @@
 { raceId: 490027, name: "Night Sweeper", timeLimit: 102, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
 { raceId: 490028, name: "Courageous Night Sweeper", timeLimit: 102, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
 { raceId: 490029, name: "Bashful Night Sweeper", timeLimit: 102, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 44, mana: 45, stamina: 43, str: 29, int: 34, dex: 32, will: 22, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490062, name: "Battle Pegasus", timeLimit: 120, exp: 1.75, height: 0.88, upper: 1.06, lower: 1.1, life: 300, mana: 42, stamina: 100, str: 50, int: 60, dex: 48, will: 46, luck: 30, defense: 10, protection: 5 },
 
 // Wild Cats
 //---------------------------------------------------------------------------
@@ -252,6 +261,7 @@
 { raceId: 440512, name: "Cheetah", timeLimit: 39, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
 { raceId: 440513, name: "Cheetah", timeLimit: 39, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8 },
 { raceId: 471008, name: "Pink Cheetah", timeLimit: 90, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 155, mana: 24, stamina: 93, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 15, protection: 8, color1: 0x00EA7F9D, color2: 0x00646E76, color3: 0x0083329D },
+{ raceId: 490051, name: "Albino Tiger", timeLimit: 83, exp: 1.5, height: 1.2, upper: 1.23, lower: 1.5, life: 82, mana: 24, stamina: 70, str: 38, int: 17, dex: 23, will: 26, luck: 17, defense: 0, protection: 2 },
 
 // Dragons
 //---------------------------------------------------------------------------
@@ -275,6 +285,8 @@
 { raceId: 430521, name: "Ice Dragon", timeLimit: 107, exp: 1.75, height: 0.6, upper: 1.1, lower: 1.3, life: 75, mana: 52, stamina: 70, str: 41, int: 50, dex: 38, will: 32, luck: 30, defense: 0, protection: 2 },
 { raceId: 430522, name: "Thunder Dragon", timeLimit: 117, exp: 1.8, height: 0.6, upper: 1.2, lower: 1.3, life: 80, mana: 39, stamina: 77, str: 47, int: 32, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
 { raceId: 430523, name: "Fire Dragon", timeLimit: 95, exp: 1.65, height: 0.6, upper: 1.1, lower: 1.4, life: 70, mana: 29, stamina: 47, str: 37, int: 22, dex: 26, will: 30, luck: 19, defense: 0, protection: 2 },
+{ raceId: 490053, name: "Lightning Dragon", timeLimit: 120, exp: 1.8, height: 0.7, upper: 1.15, lower: 1.24, life: 80, mana: 39, stamina: 77, str: 47, int: 32, dex: 36, will: 40, luck: 29, defense: 0, protection: 2 },
+{ raceId: 490065, name: "Abyss Dragon", timeLimit: 120, exp: 1.75, height: 0.6, upper: 1.1, lower: 1.3, life: 350, mana: 100, stamina: 300, str: 150, int: 100, dex: 45, will: 45, luck: 30, defense: 15, protection: 8 },
 
 // Phoenix
 //---------------------------------------------------------------------------
@@ -294,22 +306,26 @@
 { raceId: 490014, name: "Dark Cloud", timeLimit: 120, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 0, mana: 300, stamina: 44, str: 5, int: 5, dex: 5, will: 5, luck: 10, defense: 15, protection: 50 },
 { raceId: 490017, name: "Nimbus", timeLimit: 120, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 0, mana: 300, stamina: 44, str: 5, int: 5, dex: 5, will: 5, luck: 10, defense: 15, protection: 95 },
 { raceId: 490020, name: "Cloud Pet", timeLimit: 120, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 0, mana: 300, stamina: 44, str: 5, int: 5, dex: 5, will: 5, luck: 10, defense: 15, protection: 50 },
+{ raceId: 490055, name: "Rainbow Nimbus", timeLimit: 120, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 0, mana: 300, stamina: 44, str: 5, int: 5, dex: 5, will: 5, luck: 10, defense: 15, protection: 50 },
 
 // Scooters >_>
 //---------------------------------------------------------------------------
 { raceId: 490018, name: "Scooter", timeLimit: 180, exp: 1.5, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 24, stamina: 300, str: 38, int: 5, dex: 60, will: 5, luck: 25, defense: 5, protection: 50 },
 { raceId: 490021, name: "Bike Pet", timeLimit: 180, exp: 1.5, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 24, stamina: 300, str: 38, int: 5, dex: 60, will: 5, luck: 25, defense: 5, protection: 50 },
+{ raceId: 490056, name: "Tassel Scooter", timeLimit: 180, exp: 1.5, height: 1.0, upper: 1.0, lower: 1.0, life: 200, mana: 24, stamina: 300, str: 38, int: 5, dex: 60, will: 5, luck: 25, defense: 5, protection: 50 },
 
 // Chef Carriage
 //---------------------------------------------------------------------------
 { raceId: 270902, name: "Flying Food Truck", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 24, stamina: 120, str: 80, int: 40, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 { raceId: 490041, name: "Gingerbread Truck", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 24, stamina: 120, str: 80, int: 40, dex: 20, will: 20, luck: 35, defense: 15, protection: 8, color1: 0x00DF7272, color2: 0x00CAAA66, color3: 0x00472827 },
+{ raceId: 490059, name: "Sundae Truck", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 24, stamina: 120, str: 80, int: 40, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 
 // Floral Fairies
 //---------------------------------------------------------------------------
 { raceId: 270903, name: "Floral Fairy", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 40, str: 40, int: 60, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 { raceId: 270904, name: "Floral Fairy (M)", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 40, str: 40, int: 60, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 { raceId: 270905, name: "Floral Fairy (F)", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 40, str: 40, int: 60, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
+{ raceId: 490060, name: "Lemongrass Flora", timeLimit: 180, exp: 1.1, height: 1.0, upper: 1.0, lower: 1.0, life: 150, mana: 120, stamina: 40, str: 40, int: 60, dex: 20, will: 20, luck: 35, defense: 15, protection: 8 },
 
 // The 7 sheep
 //---------------------------------------------------------------------------
@@ -320,6 +336,7 @@
 { raceId: 490038, name: "Gloomy Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
 { raceId: 490039, name: "Cranky Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
 { raceId: 490040, name: "Meany Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
+{ raceId: 490045, name: "Cirque Sheep", timeLimit: 120, exp: 1.35, height: 0.75, upper: 1.0, lower: 1.0, life: 300, mana: 100, stamina: 300, str: 150, int: 50, dex: 40, will: 40, luck: 25, defense: 15, protection: 25 },
 
 // ?
 //---------------------------------------------------------------------------
