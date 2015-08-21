@@ -50,13 +50,11 @@ There are 4 ways **you** can help us to improve Aura:
 
 ### 1. Research
 Do research on NPCs, quests, skills, anything really that isn't implemented yet and
-post it on our [research forum](http://aura-project.org/forum/index.php/forum/33-research/).
+post it on our [research forum](http://aura-project.org/forum/forum/36-research/).
 The information you post will help developers to implement the features. 
 
 ### 2. Bug reports
-Report bugs on [GitHub](https://github.com/aura-project/aura/issues) so they can be fixed ASAP.
-If you're not sure if you've found a bug or not, report it on the [forum](http://aura-project.org/forum/index.php/forum/39-bugs/),
-and we'll clarify for you.
+Report bugs on [GitHub](https://github.com/aura-project/aura/issues), so they can be fixed ASAP.
 
 
 ### 3+4. Code
@@ -96,6 +94,5 @@ Links
 ------------------------------
 * Forums: http://aura-project.org/
 * GitHub: https://github.com/aura-project
-* [![Gitter chat](https://badges.gitter.im/aura-project/aura.png)](https://gitter.im/aura-project/aura)
-* Trello: https://trello.com/b/qnLaezQf/aura
+* Gitter chat: https://gitter.im/aura-project/aura
 * Wiki: http://aura-project.org/wiki
