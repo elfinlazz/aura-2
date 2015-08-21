@@ -1,7 +1,7 @@
 //--- Aura Script -----------------------------------------------------------
-// Alissa, the windmill operator in Tir Chonaill
+// Alissa
 //--- Description -----------------------------------------------------------
-// 
+// Mill Operator
 //---------------------------------------------------------------------------
 
 public class AlissaBaseScript : NpcScript
@@ -27,6 +27,10 @@ public class AlissaBaseScript : NpcScript
 		EquipItem(Pocket.Armor, 15654, 0x00DECDB0, 0x006C7553, 0x009B9E7B);
 		EquipItem(Pocket.Shoe, 17012, 0x00693F1E, 0x00000000, 0x00000000);
 		EquipItem(Pocket.Head, 18406, 0x00DECDB0, 0x00000000, 0x00000000);
+
+		AddGreeting(0, "Hello, we haven't met. My name is Alissa. Your name is <username/>, right?<br/>How did I know?<br/>Haha, it's written above your head. Don't tell me you don't see it?");
+		AddGreeting(1, "Hey, you're back. Hmm...wasn't your name different last time?<br/>Maybe I saw it wrong.");
+		//AddGreeting(2, "You come here pretty often.<br/>It's 'cause you like me huh? Hehe!"); // Not sure if this is 2
 
 		AddPhrase("Hmm... Ferghus must have made another mistake.");
 		AddPhrase("How are you going to make flour without any wheat?");
@@ -54,10 +58,11 @@ public class AlissaBaseScript : NpcScript
 		switch (await Select())
 		{
 			case "@talk":
-				Msg("Hello, we've never met before. My name is Alissa. You have such a pretty name. <username/>...<br/>How did I know that?<br/>Haha, it's written above your head. Don't tell me you don't see it?");
-				//Msg("Hey, what brings you back? Wait...did you change your name?<br/>It's already hard enough trying to memorize everyone's name...");
-				//Msg("You come here pretty often.<br/>It's 'cause you like me huh? Hehe!");
-				await StartConversation();
+				Greet();
+				Msg(Hide.Name, GetMoodString(), FavorExpression());
+				if (Player.Titles.SelectedTitle == 11002)
+					Msg("Huh? <username/>...<br/>You're the Guardian of Erinn?<br/>When did this happen...?<br/>Even I can see that there's something different about you.");
+				await Conversation();
 				break;
 
 			case "@windmill":
@@ -119,12 +124,21 @@ public class AlissaBaseScript : NpcScript
 				Msg("Are you looking for Malcolm's General Shop?<br/>Take the bridge from here and go up the hill.<br/>I would take you, but I have to stay here and work...");
 				break;
 
+			case "shop_grocery":
+				Msg("OK, so you're looking for Caitin?<br/>Her Grocery Shop is very close to the General Shop.<br/>She used to come here very often...<br/>But now, I hardly see her at all.");
+				Msg("Sometimes I need someone to get a few things from Caitin,<br/>so talk to me about 'Regarding Jobs'.");
+				break;
+
 			case "shop_healing":
 				Msg("Dilys's place? Go straight up the hill and follow the road.<br/>If you can't find it, ask someone nearby.<br/>Ahh, I think she's so pretty.<br/>I don't know why she's with Trefor.");
 				break;
 
+			case "shop_inn":
+				Msg("Nora's Inn?<br/>It's...right in front of you, silly!<br/>You should read signs.<br/>Or at least read the NPC names.<br/>Even I know how to read... Hehe!");
+				break;
+
 			case "shop_bank":
-				Msg("You mean Bebhinn's Bank?<br/>...<br/>You have that much money?  You sure don't look it...");
+				Msg("You mean Bebhinn's Bank?<br/>...<br/>You have that much money? You sure don't look it...");
 				break;
 
 			case "shop_smith":
@@ -135,16 +149,58 @@ public class AlissaBaseScript : NpcScript
 				Msg("I want to learn that, too.<br/>It's tiring to stand all day.<br/>I heard Nora uses hotkeys to make it easier.<br/>I wonder why she doesn't teach it to me...");
 				break;
 
+			case "skill_range":
+				Msg("Hmph...I'm disappointed!<br/>Can't you tell the difference between something you should say<br/>and something you shouldn't?<br/>Go and talk to Trefor or something.<br/>He's probably snooping around Dilys's house again.");
+				break;
+
 			case "skill_instrument":
 				Msg("You can practice if you have a lute.<br/>Were you planning to learn the skill without an instrument?");
+				break;
+
+			case "skill_composing":
+				Msg("If it were me, I would rather buy a book.<br/>I don't remember which book exactly, though.<br/>But I think you can buy it at Malcolm's General Shop.");
+				break;
+
+			case "skill_tailoring":
+				Msg("Well, if I knew how, I would make my own clothes...<br/>If you ever learn how, make me an outfit, yea? Yea?");
+				break;
+
+			case "skill_magnum_shot":
+				Msg("How dare you ask a girl that...<br/>What do I look like, huh!?");
 				break;
 
 			case "skill_counter_attack":
 				Msg("It's so annoying to see all these 10 year olds bragging about how they hunted a bear.<br/>Why would they kill animals for fun?<br/>I admit it's tough...<br/>But it's such a senseless act...<br/>A very childish thing to be proud of.");
 				break;
 
+			case "skill_smash":
+				Msg("...<br/>Why do boys like fighting so much? I don't like it.<br/>You're not like that, are you?");
+				break;
+
+			case "skill_gathering":
+				Msg("You need the right tools to gather things.<br/>You need a Sickle to harvest wheat.<br/>You need a Gathering Knife to shear wool.<br/>You need an Axe to gather firewood.");
+				Msg("In the end, nothing is free. You have to work for it.");
+				break;
+
 			case "square":
 				Msg("You will see a big dip when you go up the hill.<br/>There will also be lots of people.<br/>You can't miss it.");
+				break;
+
+			case "pool":
+				Msg("Hello. If it weren't for the Windmill, there would be no water in the reservoir.<br/>Do you see how important my job is?");
+				break;
+
+			case "farmland":
+				Msg("Right. You can harvest wheat from there. Of course, you need permission first.<br/>Then you can grind the crops into flour here.");
+				Msg("But, watch out...<br/>You can't see what's in front of you at the field...<br/>And no one will be there to help you if you accidentally trip and fall.<br/>Be careful.");
+				break;
+
+			case "windmill":
+				Msg("The Windmill is right in front of you. It was built by Ferghus.<br/>Be careful. If it weren't for me watching over it, it would've broken down by now.");
+				break;
+
+			case "brook":
+				Msg("It's the stream right in front of you.<br/>The Windmill is also used to send water up to the reservoir.<br/>Isn't the water so clear? Hehe...");
 				break;
 
 			case "shop_headman":
@@ -159,6 +215,18 @@ public class AlissaBaseScript : NpcScript
 				Msg("By the way, did I tell you?<br/>My sister teaches magic at the School.<br/>I don't know if she's any good though...hehe...");
 				Msg("You know what else? She is crazy about school uniforms.<br/>Her wardrobe is full of them!");
 				Msg("Why does a teacher need to wear a uniform?");
+				break;
+
+			case "skill_windmill":
+				Msg("You can't just operate a windmill.<br/>You need skills. Someone who really knows how. Hehe...<br/>Maybe...someone by the name of Alissa?<br/>If you see someone saying they want to learn the Windmill skill,<br/>bring them to me! I'll show them!");
+				break;
+
+			case "skill_campfire":
+				Msg("Deian boasted to me that he could do it<br/>but he never showed me.<br/>He's always like that though...");
+				break;
+
+			case "shop_restaurant":
+				Msg("Are you hungry? If I weren't working I would make you some food...<br/>I have this secret recipe I got from Caitin!");
 				break;
 
 			case "shop_armory":
@@ -178,14 +246,22 @@ public class AlissaBaseScript : NpcScript
 				Msg("It's so weird. We don't have anything like that here.<br/>But everyone always asks about the Town Office.<br/>Maybe I am the only one who doesn't know about it.<br/>Is it just me?");
 				break;
 
+			case "graveyard":
+				Msg("You're so mean. It's too scary to go there by myself.");
+				break;
+
+			case "skill_fishing":
+				Msg("Fishing?<br/>Umm... People around here fish at the Reservoir over there.<br/>I went up there with Deian before. He said he'd show me how to fish,<br/>but he always caught some weird things instead.<br/>...I don't know. He doesn't seem to be able to do anything right.");
+				break;
+
 			default:
 				RndMsg(
-					"You're expecting too much from me.",
-					"Ah... well, I don't know anything about that.",
 					"You're not testing me, are you?",
+					"You're expecting too much from me.",
+					"Perhaps Caitin might know. Well... Anyway...",
+					"Ah... well, I don't know anything about that.",
 					"Eh... It feels like you're treating me like a child.",
-					"Hmm... I think Ferghus would be able to explain it better. He's across the stream.",
-					"Perhaps Caitin might know. Well... Anyway..."
+					"Hmm... I think Ferghus would be able to explain it better. He's across the stream."
 				);
 				ModifyRelation(0, 0, Random(2));
 				break;
