@@ -99,6 +99,7 @@ public class AlissaBaseScript : NpcScript
 		switch (keyword)
 		{
 			case "personal_info":
+				GiveKeyword("school");
 				Msg("My name? I am Alissa.<br/>I work here at the mill, helping around with chores.<br/>Have you seen my sister? She's at the School.<br/>If you happen to go there, go inside the left building.<br/>She'll be in the magic class.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
