@@ -24,7 +24,7 @@ namespace Aura.Mabi
 		/// <returns></returns>
 		public static string Compress(string str)
 		{
-			var barr = Encoding.Unicode.GetBytes(str + '\0');
+			var barr = Encoding.Unicode.GetBytes(str + '\0'); // Why did we append a null byte... was this required?
 			using (var mout = new MemoryStream())
 			{
 				// Deflate should use optimal compression level by default (0, as defined by .NET 4.5).
@@ -77,7 +77,12 @@ namespace Aura.Mabi
 			using (var df = new DeflateStream(min, CompressionMode.Decompress))
 			{
 				df.CopyTo(mout);
-				return Encoding.Unicode.GetString(mout.ToArray());
+
+				// Get result without null terminator
+				var result = Encoding.Unicode.GetString(mout.ToArray());
+				result = result.Substring(0, result.Length - 1);
+
+				return result;
 			}
 		}
 
