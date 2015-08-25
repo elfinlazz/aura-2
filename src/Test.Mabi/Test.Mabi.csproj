@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{527345E3-44AD-4947-9C2D-8320CB236A3C}</ProjectGuid>
+    <ProjectGuid>{A4FCA69F-A1D9-48C6-BBA5-BD38D0D411A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aura.Tests.Channel</RootNamespace>
-    <AssemblyName>ChannelServer.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Aura.Tests.Mabi</RootNamespace>
+    <AssemblyName>Test.Mabi</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,7 +35,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="xunit">
@@ -42,16 +42,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MabiZip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChannelServer\ChannelServer.csproj">
-      <Project>{1a902e04-6143-4d1d-9074-75eb133cc9e3}</Project>
-      <Name>ChannelServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{2dea473e-6fd9-4875-926e-8a1cf3e89703}</Project>
-      <Name>Data</Name>
+    <ProjectReference Include="..\Mabi\Mabi.csproj">
+      <Project>{68361442-6ad0-4334-816c-c719652f1909}</Project>
+      <Name>Mabi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
