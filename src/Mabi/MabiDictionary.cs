@@ -178,7 +178,11 @@ namespace Aura.Mabi
 		/// <param name="str"></param>
 		public void Parse(string str)
 		{
-			if (string.IsNullOrWhiteSpace(str))
+			if (str == null)
+				throw new ArgumentNullException("str");
+
+			str = str.Trim();
+			if (str == "")
 				return;
 
 			foreach (Match match in Regex.Matches(str, "([^:]+):([^:]+):([^;]*);"))

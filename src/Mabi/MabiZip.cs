@@ -76,7 +76,10 @@ namespace Aura.Mabi
 			using (var min = new MemoryStream(barr))
 			using (var df = new DeflateStream(min, CompressionMode.Decompress))
 			{
-				df.CopyTo(mout);
+				var read = 0;
+				var buffer = new byte[4 * 1024];
+				while ((read = df.Read(buffer, 0, buffer.Length)) > 0)
+					mout.Write(buffer, 0, read);
 
 				// Get result without null terminator
 				var result = Encoding.Unicode.GetString(mout.ToArray());
