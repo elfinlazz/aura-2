@@ -42,6 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MabiDictionary.cs" />
     <Compile Include="MabiZip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
