@@ -2,6 +2,7 @@
 // For more information, see license file in the main folder
 
 using Aura.Data;
+using Aura.Mabi.Util;
 
 namespace Aura.Channel.World.Dungeons.Generation
 {

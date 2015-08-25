@@ -9,29 +9,21 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Aura.Data.Database
+namespace Aura.Mabi.Util
 {
-	[Serializable]
+	/// <summary>
+	/// Exception used in CRandom to notify caller about an expected bug
+	/// where no random number can be generated.
+	/// </summary>
+	/// <remarks>
+	/// There's a bug in this version of MT that Mabi uses, where the result of
+	/// its random functions is "truly" random, because it accesses memory out of
+	/// bounds, where anything could be. Instead of returning random numbers
+	/// we throw an Exception in this case, to let the caller know what's happening,
+	/// and decide how to handle it.
+	/// </remarks>
 	public class CRandomException : Exception
 	{
-		public CRandomException()
-		{
-		}
-
-		public CRandomException(string message)
-			: base(message)
-		{
-		}
-
-		public CRandomException(string message, Exception inner)
-			: base(message, inner)
-		{
-		}
-
-		protected CRandomException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-		}
 	}
 
 	public class CRandom

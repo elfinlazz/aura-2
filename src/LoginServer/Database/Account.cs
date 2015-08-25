@@ -8,6 +8,7 @@ using Aura.Data;
 using Aura.Data.Database;
 using Aura.Shared.Database;
 using Aura.Mabi.Const;
+using Aura.Mabi.Util;
 
 namespace Aura.Login.Database
 {

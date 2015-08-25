@@ -39,11 +39,12 @@
    Any feedback is very welcome.
    http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
+  
+   Implementation by Yiting
 */
 
-namespace Aura.Data
+namespace Aura.Mabi.Util
 {
-	// Implementation by Yiting
 	public class MTRandom
 	{
 		private const int N = 624;

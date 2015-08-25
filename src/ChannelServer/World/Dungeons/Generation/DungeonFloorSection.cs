@@ -9,6 +9,7 @@ using Aura.Data;
 using Aura.Data.Database;
 using Aura.Mabi.Const;
 using Aura.Shared.Util;
+using Aura.Mabi.Util;
 
 namespace Aura.Channel.World.Dungeons.Generation
 {
