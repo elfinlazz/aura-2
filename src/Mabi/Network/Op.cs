@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using System.Reflection;
 namespace Aura.Mabi.Network
 {
 	/// <summary>
@@ -560,6 +561,22 @@ namespace Aura.Mabi.Network
 			public const int ChannelStatus = 0x42420101;
 
 			public const int BroadcastNotice = 0x42420201;
+		}
+
+		/// <summary>
+		/// Returns name of op code, if it's defined.
+		/// </summary>
+		/// <param name="op"></param>
+		/// <returns></returns>
+		public static string GetName(int op)
+		{
+			foreach (var field in typeof(Op).GetFields(BindingFlags.Public | BindingFlags.Static))
+			{
+				if ((int)field.GetValue(null) == op)
+					return field.Name;
+			}
+
+			return "?";
 		}
 	}
 

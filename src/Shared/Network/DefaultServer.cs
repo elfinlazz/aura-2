@@ -68,7 +68,7 @@ namespace Aura.Shared.Network
 					}
 					catch (Exception ex)
 					{
-						Log.Exception(ex, "There has been a problem while handling '{0:X4}'.", packet.Op);
+						Log.Exception(ex, "There has been a problem while handling '{0:X4}', '{1}'.", packet.Op, Op.GetName(packet.Op));
 					}
 				}
 			}

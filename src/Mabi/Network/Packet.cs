@@ -578,7 +578,7 @@ namespace Aura.Mabi.Network
 			var prevPtr = _ptr;
 			_ptr = _bodyStart;
 
-			result.AppendFormat("Op: {0:X08}, Id: {1:X016}" + Environment.NewLine, this.Op, this.Id);
+			result.AppendFormat("Op: {0:X08} {2}, Id: {1:X016}" + Environment.NewLine, this.Op, this.Id, Network.Op.GetName(this.Op));
 
 			PacketElementType type;
 			for (int i = 1; (this.IsValidType(type = this.Peek()) && _ptr < _buffer.Length); ++i)

@@ -30,9 +30,6 @@ namespace Aura.Shared.Network
 		/// <param name="handler"></param>
 		public void Add(int op, PacketHandlerFunc handler)
 		{
-			if (_handlers.ContainsKey(op))
-				Log.Warning("PacketHandlerManager: Overwriting handler for '{0:X4}' with '{1}'.", op, handler.Method.DeclaringType + "." + handler.Method.Name);
-
 			_handlers[op] = handler;
 		}
 
@@ -75,7 +72,7 @@ namespace Aura.Shared.Network
 
 		public virtual void UnknownPacket(TClient client, Packet packet)
 		{
-			Log.Unimplemented("PacketHandlerManager: Handler for '{0:X4}'", packet.Op);
+			Log.Unimplemented("PacketHandlerManager: Handler for '{0:X4}', '{1}'.", packet.Op, Op.GetName(packet.Op));
 			Log.Debug(packet);
 		}
 	}
