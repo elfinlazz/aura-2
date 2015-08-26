@@ -124,7 +124,6 @@
     <Compile Include="Util\Configuration\Files\Localization.cs" />
     <Compile Include="Util\Configuration\Files\Log.cs" />
     <Compile Include="Util\FileReader.cs" />
-    <Compile Include="Util\Float.cs" />
     <Compile Include="Util\Localization.cs" />
     <Compile Include="Util\Log.cs" />
     <Compile Include="Util\CliUtil.cs" />

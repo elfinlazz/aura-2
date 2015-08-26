@@ -38,12 +38,18 @@ namespace Aura.Shared.Util
 			Console.WriteLine("");
 		}
 
+		/// <summary>
+		/// Prefixes window title with an asterisk.
+		/// </summary>
 		public static void LoadingTitle()
 		{
 			if (!Console.Title.StartsWith("* "))
 				Console.Title = "* " + Console.Title;
 		}
 
+		/// <summary>
+		/// Removes asterisks and spaces that were prepended to the window title.
+		/// </summary>
 		public static void RunningTitle()
 		{
 			Console.Title = Console.Title.TrimStart('*', ' ');

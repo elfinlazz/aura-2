@@ -34,11 +34,20 @@ namespace Aura.Channel.Scripting
 	{
 		private Dictionary<string, object> _variables;
 
+		/// <summary>
+		/// Creates new variable manager.
+		/// </summary>
 		public VariableManager()
 		{
 			_variables = new Dictionary<string, object>();
 		}
 
+		/// <summary>
+		/// Sets the given member to the value.
+		/// </summary>
+		/// <param name="binder"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
 		public override bool TrySetMember(SetMemberBinder binder, object value)
 		{
 			lock (_variables)
@@ -46,6 +55,12 @@ namespace Aura.Channel.Scripting
 			return true;
 		}
 
+		/// <summary>
+		/// Returns the value for the given member via result, or null if it doesn't exist.
+		/// </summary>
+		/// <param name="binder"></param>
+		/// <param name="result"></param>
+		/// <returns></returns>
 		public override bool TryGetMember(GetMemberBinder binder, out object result)
 		{
 			lock (_variables)
@@ -54,6 +69,10 @@ namespace Aura.Channel.Scripting
 			return true;
 		}
 
+		/// <summary>
+		/// Returns list of all variables as KeyValue collection.
+		/// </summary>
+		/// <returns></returns>
 		public ICollection<KeyValuePair<string, object>> GetList()
 		{
 			lock (_variables)
@@ -69,12 +88,10 @@ namespace Aura.Channel.Scripting
 		{
 			get
 			{
+				object result;
 				lock (_variables)
-				{
-					object result;
 					_variables.TryGetValue(key, out result);
-					return result;
-				}
+				return result;
 			}
 			set
 			{

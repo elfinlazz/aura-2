@@ -63,7 +63,7 @@ namespace Aura.Channel.Skills
 		/// <summary>
 		/// Unknown Flags, magic shield related?
 		/// </summary>
-		public byte Flags { get; set ;}
+		public byte Flags { get; set; }
 
 		public int BlockedByShieldPosX { get; set; }
 		public int BlockedByShieldPosY { get; set; }
@@ -74,6 +74,9 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public List<CombatAction> Actions { get; protected set; }
 
+		/// <summary>
+		/// Initializes combat action pack.
+		/// </summary>
 		private CombatActionPack()
 		{
 			this.Id = Interlocked.Increment(ref _actionId);
@@ -82,6 +85,11 @@ namespace Aura.Channel.Skills
 			this.Actions = new List<CombatAction>();
 		}
 
+		/// <summary>
+		/// Creates new combat action pack.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skillId"></param>
 		public CombatActionPack(Creature attacker, SkillId skillId)
 			: this()
 		{
@@ -89,6 +97,12 @@ namespace Aura.Channel.Skills
 			this.SkillId = skillId;
 		}
 
+		/// <summary>
+		/// Creates new combat action pack.
+		/// </summary>
+		/// <param name="attacker"></param>
+		/// <param name="skillId"></param>
+		/// <param name="actions"></param>
 		public CombatActionPack(Creature attacker, SkillId skillId, params CombatAction[] actions)
 			: this(attacker, skillId)
 		{
@@ -225,6 +239,15 @@ namespace Aura.Channel.Skills
 		}
 	}
 
+	/// <summary>
+	/// Combat action base class.
+	/// </summary>
+	/// <remarks>
+	/// TODO: Officially there's no differentiation between attacker and target
+	///   actions, it all depends on the flags and options. Now that we have
+	///   the proper enums, we might want to change this as well.
+	///   This will require some changes to the way we handle skill training.
+	/// </remarks>
 	public abstract class CombatAction
 	{
 		/// <summary>
@@ -266,7 +289,7 @@ namespace Aura.Channel.Skills
 		public abstract bool IsKnockBack { get; }
 
 		/// <summary>
-		/// Attack or Target action
+		/// Attack or Target action.
 		/// </summary>
 		public abstract CombatActionCategory Category { get; }
 
@@ -321,8 +344,18 @@ namespace Aura.Channel.Skills
 			get { return this.Has(AttackerOptions.KnockBackHit2) || this.Has(AttackerOptions.KnockBackHit1); }
 		}
 
+		/// <summary>
+		/// Attack or Target action.
+		/// </summary>
 		public override CombatActionCategory Category { get { return CombatActionCategory.Attack; } }
 
+		/// <summary>
+		/// Creates new attacker action.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="creature"></param>
+		/// <param name="skillId"></param>
+		/// <param name="targetId"></param>
 		public AttackerAction(CombatActionType type, Creature creature, SkillId skillId, long targetId)
 		{
 			this.Flags = type;
@@ -378,6 +411,9 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public float Damage { get; set; }
 
+		/// <summary>
+		/// Wounds inflicted in this combat action.
+		/// </summary>
 		public float Wound { get; set; }
 
 		/// <summary>
@@ -385,6 +421,9 @@ namespace Aura.Channel.Skills
 		/// </summary>
 		public float ManaDamage { get; set; }
 
+		/// <summary>
+		/// Action's effect flags.
+		/// </summary>
 		public byte EffectFlags { get; set; }
 
 		/// <summary>
@@ -405,8 +444,18 @@ namespace Aura.Channel.Skills
 			get { return this.Has(TargetOptions.Downed); }
 		}
 
+		/// <summary>
+		/// Attack or Target action.
+		/// </summary>
 		public override CombatActionCategory Category { get { return CombatActionCategory.Target; } }
 
+		/// <summary>
+		/// Creates new target action.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="creature"></param>
+		/// <param name="attacker"></param>
+		/// <param name="skillId"></param>
 		public TargetAction(CombatActionType type, Creature creature, Creature attacker, SkillId skillId)
 		{
 			this.Flags = type;

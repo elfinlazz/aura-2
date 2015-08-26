@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Aura.Shared.Util
 {
@@ -55,7 +56,7 @@ namespace Aura.Shared.Util
 		}
 
 		/// <summary>
-		/// Returns a random item from the given IList
+		/// Returns a random item from the given list.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="list">The list.</param>
@@ -76,6 +77,28 @@ namespace Aura.Shared.Util
 		public static float Between(this Random rnd, float min, float max)
 		{
 			return (float)(min + (rnd.NextDouble() * (max - min)));
+		}
+
+		/// <summary>
+		/// Returns float, formatted with InvariantCulture.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="format"></param>
+		/// <returns></returns>
+		public static string ToInvariant(this float f, string format = "g")
+		{
+			return f.ToString(format, CultureInfo.InvariantCulture);
+		}
+
+		/// <summary>
+		/// Returns float, formatted with InvariantCulture.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="format"></param>
+		/// <returns></returns>
+		public static string ToInvariant(this double f, string format = "g")
+		{
+			return f.ToString(format, CultureInfo.InvariantCulture);
 		}
 	}
 }
