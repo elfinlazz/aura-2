@@ -43,6 +43,14 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
+		/// Creates new variable manager and adds the given values.
+		/// </summary>
+		public VariableManager(IDictionary<string, object> values)
+		{
+			_variables = new Dictionary<string, object>(values);
+		}
+
+		/// <summary>
 		/// Sets the given member to the value.
 		/// </summary>
 		/// <param name="binder"></param>
@@ -73,10 +81,10 @@ namespace Aura.Channel.Scripting
 		/// Returns list of all variables as KeyValue collection.
 		/// </summary>
 		/// <returns></returns>
-		public ICollection<KeyValuePair<string, object>> GetList()
+		public IDictionary<string, object> GetList()
 		{
 			lock (_variables)
-				return _variables.ToList();
+				return new Dictionary<string, object>(_variables);
 		}
 
 		/// <summary>
