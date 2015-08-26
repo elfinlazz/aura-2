@@ -51,6 +51,19 @@ namespace Aura.Channel.Scripting
 		}
 
 		/// <summary>
+		/// Sets given variables.
+		/// </summary>
+		/// <param name="values"></param>
+		public void Load(IDictionary<string, object> values)
+		{
+			lock (_variables)
+			{
+				foreach (var value in values)
+					_variables[value.Key] = value.Value;
+			}
+		}
+
+		/// <summary>
 		/// Sets the given member to the value.
 		/// </summary>
 		/// <param name="binder"></param>

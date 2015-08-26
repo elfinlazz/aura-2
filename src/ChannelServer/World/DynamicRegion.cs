@@ -50,6 +50,10 @@ namespace Aura.Channel.World
 			if (baseRegionInfoData == null)
 				throw new Exception("DynamicRegion: No region info data found for '" + this.BaseId + "'.");
 
+			var baseRegion = ChannelServer.Instance.World.GetRegion(baseRegionId);
+			if (baseRegion != null)
+				this.Properties.Load(baseRegion.Properties.GetList());
+
 			this.BaseName = baseRegionInfoData.Name;
 			this.Id = ChannelServer.Instance.World.DynamicRegions.GetFreeDynamicRegionId();
 			this.Name = "DynamicRegion" + this.Id;

@@ -6,6 +6,12 @@
 
 public class CeoRegionScript : RegionScript
 {
+	public override void LoadProperties()
+	{
+		SetProperty(56, "GuildStonesDisabled", true);
+		SetProperty(56, "PvpDisabled", true);
+	}
+
 	public override void LoadWarps()
 	{
 		// Ceo Cellar

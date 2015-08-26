@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Aura development team - Licensed under GNU GPL
 // For more information, see license file in the main folder
 
+using Aura.Shared.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Aura.Channel.Scripting.Scripts
 		public override bool Init()
 		{
 			this.Load();
+			this.LoadProperties();
 			this.LoadWarps();
 			this.LoadSpawns();
 			this.LoadEvents();
@@ -40,6 +42,28 @@ namespace Aura.Channel.Scripting.Scripts
 
 		public virtual void LoadEvents()
 		{
+		}
+
+		public virtual void LoadProperties()
+		{
+		}
+
+		/// <summary>
+		/// Sets property for given region.
+		/// </summary>
+		/// <param name="regionId"></param>
+		/// <param name="propertyName"></param>
+		/// <param name="value"></param>
+		public void SetProperty(int regionId, string propertyName, object value)
+		{
+			var region = ChannelServer.Instance.World.GetRegion(regionId);
+			if (region == null)
+			{
+				Log.Warning("RegionScript.SetProperty: Region '{0}' doesn't exist.", regionId);
+				return;
+			}
+
+			region.Properties[propertyName] = value;
 		}
 	}
 }

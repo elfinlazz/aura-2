@@ -6,6 +6,13 @@
 
 public class EmainRegionScript : RegionScript
 {
+	public override void LoadProperties()
+	{
+		SetProperty(52, "CampDisabled", true);
+		SetProperty(52, "GuildStonesDisabled", true);
+		SetProperty(52, "PvpDisabled", true);
+	}
+
 	public override void LoadWarps()
 	{
 		// Sen Mag

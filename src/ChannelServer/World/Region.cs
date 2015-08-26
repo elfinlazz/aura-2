@@ -18,6 +18,7 @@ using Boo.Lang.Compiler.TypeSystem;
 using System.Drawing;
 using Aura.Channel.Scripting.Scripts;
 using Aura.Mabi.Network;
+using Aura.Channel.Scripting;
 
 namespace Aura.Channel.World
 {
@@ -71,6 +72,11 @@ namespace Aura.Channel.World
 		public bool IsTemp { get { return (this.IsDynamic || this.IsDungeon); } }
 
 		/// <summary>
+		/// Variable manager containing region's properties.
+		/// </summary>
+		public VariableManager Properties { get; private set; }
+
+		/// <summary>
 		/// Initializes class.
 		/// </summary>
 		/// <param name="regionId"></param>
@@ -93,6 +99,8 @@ namespace Aura.Channel.World
 			_clients = new HashSet<ChannelClient>();
 
 			this.Collisions = new RegionCollision();
+
+			this.Properties = new VariableManager();
 		}
 
 		/// <summary>

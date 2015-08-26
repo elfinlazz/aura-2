@@ -7,6 +7,12 @@
 
 public class SenMagRegionScript : RegionScript
 {
+	public override void LoadProperties()
+	{
+		SetProperty(53, "GuildStonesDisabled", true);
+		SetProperty(53, "PvpDisabled", true);
+	}
+
 	public override void LoadWarps()
 	{
 		// Peaca

@@ -6,6 +6,12 @@
 
 public class SidheRegionScript : RegionScript
 {
+	public override void LoadProperties()
+	{
+		SetProperty(47, "Snow", true);
+		SetProperty(48, "Snow", true);
+	}
+
 	public override void LoadWarps()
 	{
 		// Tir
