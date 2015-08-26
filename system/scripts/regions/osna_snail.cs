@@ -1,5 +1,5 @@
 //--- Aura Script -----------------------------------------------------------
-// Osna Snail (53)
+// Osna Snail (70)
 //--- Description -----------------------------------------------------------
 // Warp and spawn definitions for Osna Snail.
 // Region between Emain and Dunbarton.
