@@ -34,8 +34,8 @@ public class WalterScript : NpcScript
 		AddPhrase("What do you need?");
 	}
 
-    protected override async Task Talk()
-    {
+	protected override async Task Talk()
+	{
 		SetBgm("NPC_Walter.mp3");
 
 		await Intro(
@@ -62,15 +62,69 @@ public class WalterScript : NpcScript
 				return;
 
 			case "@repair":
-				Msg("Repair? What is it that you want to repair? Let's have a look.<br/>I can take care of general goods like instruments, glasses, and tools.<br/>My skills are not what they used to be, so I won't charge you a lot...");
-				Msg("Unimplemented");
+				Msg("Repair? What is it that you want to repair? Let's have a look.<br/>I can take care of general goods like instruments, glasses, and tools.<br/>My skills are not what they used to be, so I won't charge you a lot...<repair rate='92' stringid='(*/misc_repairable/*)|(*/cashchair/*)' />");
+
+				while (true)
+				{
+					var repair = await Select();
+
+					if (!repair.StartsWith("@repair"))
+						break;
+
+					var result = Repair(repair, 92, "/misc_repairable/", "/cashchair/");
+					if (!result.HadGold)
+					{
+						RndMsg(
+							"You got the money?",
+							"You don't even have money and you're asking me to fix this?",
+							"If you want to repair that, bring me the money first."
+						);
+					}
+					else if (result.Points == 1)
+					{
+						if (result.Fails == 0)
+							RndMsg(
+								"1 point has been repaired.",
+								"It's been repaired as you wanted.",
+								"It's done, 1 point."
+							);
+						else
+							Msg("Hmm... I've made some mistakes.");
+					}
+					else if (result.Points > 1)
+					{
+						if (result.Fails == 0)
+							RndMsg(
+								"Perfectly repaired as you wanted.",
+								"It's done."
+						);
+						else
+							// TODO: Use string format once we have XML dialogues.
+							Msg("There have been some mistakes, just " + result.Fails + " point(s)...<br/>Anyway, it's done.");
+					}
+				}
+
 				Msg("If you're not careful with it, it will break easily.<br/>So take good care of it.");
 				break;
 
 			case "@upgrade":
-				Msg("...<br/>Give me what you want to modify.<br/>I'm sure you have checked the number and type of the modification you want?");
-				Msg("Unimplemented");
-				Msg("This is it? Well, then...");
+				Msg("...<br/>Give me what you want to modify.<br/>I'm sure you have checked the number and type of the modification you want?<upgrade />");
+
+				while (true)
+				{
+					var reply = await Select();
+
+					if (!reply.StartsWith("@upgrade:"))
+						break;
+
+					var result = Upgrade(reply);
+					if (result.Success)
+						Msg("Well... It's done.<br/>...More?");
+					else
+						Msg("(Error)");
+				}
+
+				Msg("This is it? Well, then...<upgrade hide='true'/>");
 				break;
 		}
 

@@ -33,47 +33,47 @@ public class TracyScript : NpcScript
 		AddPhrase("Should I take a break now?");
 		AddPhrase("*Yawn*");
 	}
-	
+
 	protected override async Task Talk()
 	{
 		SetBgm("NPC_Tracy.mp3");
-	
+
 		await Intro(
 			"This broad-shouldered man holding a wood-cutting axe in his right hand must have gone through a lot of rough times.",
 			"He's wearing a cap backwards and his bronzed face is covered with a heavy beard.",
 			"Between the wavy strands of his bushy dark brown hair are a pair of bright, playful eyes full of benevolent mischief."
 		);
-		
+
 		Msg("What is it? Come on, spit it out!<br/>I'm a busy man!", Button("Start Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
-		
-		switch(await Select())
+
+		switch (await Select())
 		{
 			case "@talk":
 				Msg("What was your name?<br/>I think... you were the one snickering at my face before...");
 				await StartConversation();
 				break;
-				
+
 			case "@shop":
 				Msg("You need something?");
 				OpenShop("TracyShop");
 				return;
-				
+
 			case "@upgrade":
 				Msg("Somebody told you that modified items are good, right?<br/>Well, if <username/> needs a favor, I guess I must help.<br/>Show me what you want to modify.");
 				Msg("(Unimplemented)");
 				// @end: Msg("Just ask me if you want something modified, man! Anytime, haha!");
 				break;
 		}
-		
+
 		End("Goodbye, <npcname/>. I'll see you later!");
 	}
-	
+
 	protected override async Task Keywords(string keyword)
 	{
 		switch (keyword)
 		{
 			case "personal_info":
-				if(Memory == 1)
+				if (Memory == 1)
 				{
 					Msg("Hey, hey. You're thinking about my name again?<br/>I don't like it myself.");
 					Msg("Stop grinning. Don't give me that look any more. It's really disturbing.");
@@ -224,7 +224,7 @@ public class TracyScript : NpcScript
 				Msg("You need to go to the nearest town to find a Weapons Shop...<br/>Who would want to buy a weapon here, so far away from town?");
 				Msg("Hmm... Now that you say so,<br/>it could be a good idea to open one here.");
 				break;
-				
+
 			case "shop_bookstore":
 				Msg("A bookstore?<br/>haha... You are interested in books?<br/>But you really don't look like one of those bookworms I know...");
 				Msg("The nearest bookstore from here...<br/>Go to Dunbarton.<br/>Check out where it is for yourself.");

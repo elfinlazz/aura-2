@@ -15,15 +15,15 @@ public class RiocardScript : NpcScript
 		SetStand("human/male/anim/male_natural_stand_npc_riocard");
 		SetLocation(31, 15286, 8898, 136);
 
-		AddGreeting(0, "Welcome to the Bangor Pub. Did you come alone?");
-		AddGreeting(1, "You've been here before, haven't you? I recognize your face.");
-
 		EquipItem(Pocket.Face, 4900, 0x009BD3A3, 0x00FFC43A, 0x00496C7C);
 		EquipItem(Pocket.Hair, 4001, 0x00AF7B34, 0x00AF7B34, 0x00AF7B34);
 		EquipItem(Pocket.Armor, 15040, 0x00EFCE4B, 0x00B5C27E, 0x0037553F);
 		EquipItem(Pocket.Shoe, 17010, 0x00512522, 0x009E0075, 0x00B80075);
 		EquipItem(Pocket.Head, 18007, 0x00EFCE4B, 0x006CB4E4, 0x0001A890);
-        
+
+		AddGreeting(0, "Welcome to the Bangor Pub. Did you come alone?");
+		AddGreeting(1, "You've been here before, haven't you? I recognize your face.");
+
 		AddPhrase("I could use a good story right about now.");
 		AddPhrase("I guess taking it easy every now and then isn't such a  bad idea.");
 		AddPhrase("I'm getting bored...");

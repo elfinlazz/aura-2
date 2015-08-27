@@ -99,7 +99,7 @@ public class EavanScript : NpcScript
 				}
 				break;*/
 		}
-		
+
 		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
@@ -120,13 +120,13 @@ public class EavanScript : NpcScript
 				}
 				break;
 
-			case "rumor": 
+			case "rumor":
 				Msg(FavorExpression(), "Dunbarton is a city located near the border of the Kingdom of Aliech.<br/>It attracts a lot of travelers who are looking for adventure.<br/>If you'd like to improve your skills, how about going to the school?");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
 
 			case "about_arbeit":
-				Msg("Unimplemented"); 
+				Msg("Unimplemented");
 				break;
 
 			case "shop_misc":
@@ -234,9 +234,9 @@ public class EavanScript : NpcScript
 	}
 }
 
-public class EavanShop : NpcShopScript 
+public class EavanShop : NpcShopScript
 {
-	public override void Setup() 
+	public override void Setup()
 	{
 		Add("Quest", 70080); // Hunting Quest - 10 Skeleton's Former Scrolls
 		Add("Quest", 70081); // Hunting Quest - 10 Red Skeleton's Former Scrolls

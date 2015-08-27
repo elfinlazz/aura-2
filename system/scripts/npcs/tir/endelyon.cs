@@ -19,48 +19,48 @@ public class EndelyonBaseScript : NpcScript
 		EquipItem(Pocket.Hair, 3022, 0x005E423E, 0x005E423E, 0x005E423E);
 		EquipItem(Pocket.Armor, 15009, 0x00303133, 0x00C6D8EA, 0x00DBC741);
 		EquipItem(Pocket.Shoe, 17015, 0x00303133, 0x00A0927D, 0x004F548D);
-		
+
 		AddPhrase("Hm... Something doesn't feel right.");
 		AddPhrase("Why do people like such things?");
 		AddPhrase("It's so hard to do this all by myself!");
 		AddPhrase("I really need some help here...");
 	}
-	
+
 	protected override async Task Talk()
 	{
 		SetBgm("NPC_Endelyon.mp3");
-	
+
 		await Intro(
 			"An elegant young woman in the simple black dress of a",
 			"Lymilark priestess stands in front of the church."
 		);
-		
+
 		// May I help you on anything else?<button title='End Conversation' keyword='@end' />
 		Msg("May I help you?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
-		
-		switch(await Select())
+
+		switch (await Select())
 		{
 			case "@talk":
 				//Msg("I don't think we've ever met. Nice to meet you.");
 				Msg("Glad to see you again.");
 				await StartConversation();
 				break;
-				
+
 			case "@shop":
 				Msg("What are you looking for?");
 				OpenShop("EndelyonShop");
 				return;
-				
+
 			case "@upgrade":
 				Msg("Are you asking me...to modify your item?<br/>Honestly, I am not sure if I can, but if you still want me to, I'll give it a try.<br/>Please choose an item to modify.");
 				Msg("(Unimplemented)");
 				// @end: Msg("Do you want me to stop...? Well, then... Next time...");
 				break;
 		}
-		
+
 		End();
 	}
-	
+
 	protected override async Task Keywords(string keyword)
 	{
 		switch (keyword)

@@ -22,7 +22,7 @@ public class GlenisScript : NpcScript
 
 		AddGreeting(0, "Are you looking for the Restaurant? This is it.");
 		AddGreeting(1, "What... was your name again?<br/>Bah, my memory is not like it used to be in my old age.");
-        
+
 		AddPhrase("Come buy your food here.");
 		AddPhrase("Flora! Are the ingredients ready?");
 		AddPhrase("Have a nice day today!");
@@ -46,7 +46,7 @@ public class GlenisScript : NpcScript
 
 		Msg("Welcome!<br/>This is Glenis' Restaurant.", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"));
 
-		switch (await Select()) 
+		switch (await Select())
 		{
 			case "@talk":
 				Greet();
@@ -61,7 +61,7 @@ public class GlenisScript : NpcScript
 				OpenShop("GlenisShop");
 				return;
 		}
-		
+
 		End("Thank you, <npcname/>. I'll see you later!");
 	}
 	protected override async Task Keywords(string keyword)
@@ -91,7 +91,7 @@ public class GlenisScript : NpcScript
 
 			case "about_skill":
 				Msg("Ha ha. You've got the look of<br/>someone who can officially use the Cooking skill now.<br/>It makes me happy to know that there's one more person who's going down the same path as I am.<br/>Are you interested in making Assorted Fruits, by any chance?", Button("Of course!", "@fruit01"), Button("I will pass", "@fruit02"));
-				switch(await Select())
+				switch (await Select())
 				{
 					case "@fruit01":
 						Msg("Ah-ha! You certainly have a burning passion for cooking!<br/>Now, calm yourself down,<br/>and pick up the cooking knife and the cooking table.<br/>Make sure you're mixing here.");
@@ -217,7 +217,7 @@ public class GlenisScript : NpcScript
 
 public class GlenisShop : NpcShopScript
 {
-	public override void Setup() 
+	public override void Setup()
 	{
 		Add("Food", 50004);     // Bread
 		Add("Food", 50002);     // Slice of Cheese

@@ -20,7 +20,7 @@ public class ManusScript : NpcScript
 
 		AddGreeting(0, "You look familiar. Haven't we met before?");
 		AddGreeting(1, "I seem to be seeing you often.");
-        
+
 		AddPhrase("A healthy body for a healthy mind!");
 		AddPhrase("Alright! Here we go! Woo-hoo!");
 		AddPhrase("Come! A special potion concocted by Manus for sale now!");
@@ -67,7 +67,7 @@ public class ManusScript : NpcScript
 				else
 				{
 					Msg("My, how did you manage to get hurt this badly?! We'll have to bandage it right now!<br/>Oh, but don't forget that you have to pay the fee. It's 90 Gold.", Button("Receive Treatment", "@gethealing"), Button("Decline", "@cancel"));
-					if(await Select() == "@gethealing")
+					if (await Select() == "@gethealing")
 					{
 						if (Gold >= 90)
 						{
@@ -99,7 +99,7 @@ public class ManusScript : NpcScript
 				else
 				{
 					Msg("How did you get your pet to be hurt this badly?! I'll treat it right now!<br/>By the way, it will cost you 180 Gold. Don't forget that.", Button("Recieve Treatment", "@recieveheal"), Button("Decline the Treatment", "@end"));
-					if(await Select() == "@recieveheal")
+					if (await Select() == "@recieveheal")
 					{
 						if (Gold < 180)
 						{
@@ -115,7 +115,7 @@ public class ManusScript : NpcScript
 				}
 				break;
 		}
-		
+
 		End("Thank you, <npcname/>. I'll see you later!");
 	}
 

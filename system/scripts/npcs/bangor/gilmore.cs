@@ -15,15 +15,15 @@ public class GilmoreScript : NpcScript
 		SetStand("human/male/anim/male_natural_stand_npc_gilmore");
 		SetLocation(31, 10383, 10055, 224);
 
-		AddGreeting(0, "Welcome. I haven't seen you before. I assume you have Gold?<br/>Because, you have no business with me unless you have Gold.");
-		AddGreeting(1, "You are the stingy guy from before. Are you feeling more generous today?");
-
 		EquipItem(Pocket.Face, 4903, 0x00005479, 0x00442064, 0x00240059);
 		EquipItem(Pocket.Hair, 4026, 0x00896D43, 0x00896D43, 0x00896D43);
 		EquipItem(Pocket.Armor, 15003, 0x00B6CAAA, 0x00584232, 0x00100C0A);
 		EquipItem(Pocket.Shoe, 17009, 0x00000000, 0x00A68DC3, 0x0001B24B);
 		EquipItem(Pocket.Head, 18028, 0x00000000, 0x00C8C6C4, 0x00DFE9A7);
-        
+
+		AddGreeting(0, "Welcome. I haven't seen you before. I assume you have Gold?<br/>Because, you have no business with me unless you have Gold.");
+		AddGreeting(1, "You are the stingy guy from before. Are you feeling more generous today?");
+
 		AddPhrase("Business is slow nowadays. Perhaps I should raise the rent.");
 		AddPhrase("Cheap stuff means cheap quality.");
 		AddPhrase("Get lost unless you are going to buy something!");

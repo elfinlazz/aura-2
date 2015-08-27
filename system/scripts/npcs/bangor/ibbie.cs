@@ -24,7 +24,7 @@ public class IbbieScript : NpcScript
 
 		AddGreeting(0, "You must be a visitor in this town, aren't you?</p><username/>...?</p>Me... I'm Ibbie.");
 		AddGreeting(1, "Your name... Tell me your name again...? I'm not used to it yet...");
-        
+
 		AddPhrase("*Cough* *Cough*");
 		AddPhrase("Are you... lonely, too?");
 		AddPhrase("Daddy...");

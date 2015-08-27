@@ -23,7 +23,7 @@ public class EdernScript : NpcScript
 		EquipItem(Pocket.RightHand1, 40024, 0x00FACB5F, 0x004F3C26, 0x00FAB052);
 
 		AddGreeting(0, "Welcome! You look familiar.");
-        
+
 		AddPhrase("A true blacksmith never complains.");
 		AddPhrase("Hahaha...");
 		AddPhrase("Hey! Don't just stand there and make me nervous. If you've got something to say, say it!");

@@ -15,15 +15,15 @@ public class ElenScript : NpcScript
 		SetStand("human/female/anim/female_natural_stand_npc_elen");
 		SetLocation(31, 11353, 12960, 15);
 
-		AddGreeting(0, "Welcome! But... I've never seen you around here before.");
-		AddGreeting(0, "You must be quite interested in the blacksmith work.");
-
 		EquipItem(Pocket.Face, 3900, 0x0061696E, 0x00F30E67, 0x00008289);
 		EquipItem(Pocket.Hair, 3005, 0x00FFE680, 0x00FFE680, 0x00FFE680);
 		EquipItem(Pocket.Armor, 15029, 0x00FFFFFF, 0x00942370, 0x00EFE1C2);
 		EquipItem(Pocket.Shoe, 17019, 0x002B6280, 0x0067676C, 0x00005DAA);
 		EquipItem(Pocket.Head, 18024, 0x007D2224, 0x00FFFFFF, 0x000088CD);
 		EquipItem(Pocket.RightHand1, 40024, 0x00FACB5F, 0x004F3C26, 0x00FAB052);
+
+		AddGreeting(0, "Welcome! But... I've never seen you around here before.");
+		AddGreeting(0, "You must be quite interested in the blacksmith work.");
 
 		AddPhrase("Lets see... I still have some left..");
 		AddPhrase("Nothing is free!");
@@ -324,7 +324,7 @@ public class ElenShop : NpcShopScript
 		Add("Helmet", 18506); // Wing Half Helm 
 		Add("Helmet", 18508); // Slit Full Helm
 		Add("Helmet", 18509); // Bascinet
-		
+
 		Add("Armor", 14006); // Linen Cuirass (F)
 		Add("Armor", 14009); // Linen Cuirass (M)
 		Add("Armor", 14001); // Light Leather Armor (F)
