@@ -15,20 +15,20 @@ public class SpiritBluntMScript : NpcScript
 
 	protected override async Task Talk()
 	{
-		while(true)
+		while (true)
 		{
 			Msg("How are you doing?", Button("Talk", "@talk"), Button("Give Item", "@feed_item"), Button("Repair", "@repair"), Button("Finish Conversation", "@endconvo"));
 			var reply = await Select();
-			
-			if(reply == "@endconvo")
+
+			if (reply == "@endconvo")
 				break;
-				
+
 			Msg("(Unimplemented)");
 		}
-		
+
 		Msg(Expression("good"), "See you another time.");
 	}
-	
+
 	protected override async Task Keywords(string keyword)
 	{
 		switch (keyword)
@@ -37,7 +37,7 @@ public class SpiritBluntMScript : NpcScript
 				RndFavorMsg(
 					"..."
 				);
-				
+
 				break;
 		}
 	}

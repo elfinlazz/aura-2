@@ -23,7 +23,7 @@ public class AranwenScript : NpcScript
 
 		AddGreeting(0, "Yes? Please don't block my view.");
 		AddGreeting(1, "Hmm. <username/>, right?<br/>Of course.");
-        
+
 		AddPhrase("...");
 		AddPhrase("A sword does not betray its own will.");
 		AddPhrase("A sword is not a stick. I don't feel any tension from you!");
@@ -35,7 +35,7 @@ public class AranwenScript : NpcScript
 		AddPhrase("Put more into the wrists!");
 		AddPhrase("That student may need to rest a while.");
 	}
-    
+
 	protected override async Task Talk()
 	{
 		SetBgm("NPC_Aranwen.mp3");
@@ -48,7 +48,7 @@ public class AranwenScript : NpcScript
 
 		Msg("What brings you here?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Modify Item", "@upgrade"));
 
-		switch (await Select()) 
+		switch (await Select())
 		{
 			case "@talk":
 				Greet();
@@ -69,15 +69,15 @@ public class AranwenScript : NpcScript
 			case "@upgrade":
 				Msg("Please select the weapon you'd like to modify.<br/>Each weapon can be modified according to its kind.<upgrade />");
 
-				while(true)
+				while (true)
 				{
 					var reply = await Select();
-					
-					if(!reply.StartsWith("@upgrade:"))
+
+					if (!reply.StartsWith("@upgrade:"))
 						break;
-						
+
 					var result = Upgrade(reply);
-					if(result.Success)
+					if (result.Success)
 						Msg("The modification you've asked for has been done.<br/>Is there anything you want to modify?");
 					else
 						Msg("(Error)");
@@ -85,13 +85,14 @@ public class AranwenScript : NpcScript
 				Msg("A bow is weaker than a crossbow?<br/>That's because you don't know a bow very well.<br/>Crossbows are advanced weapons for sure,<br/>but a weapon that reflects your strength and senses is closer to nature than machinery.<upgrade hide='true'/>");
 				break;
 		}
-		
+
 		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
-	protected override async Task Keywords(string keyword) 
+	protected override async Task Keywords(string keyword)
 	{
-		switch (keyword) {
+		switch (keyword)
+		{
 			case "personal_info":
 				GiveKeyword("school");
 				if (Memory == 1)

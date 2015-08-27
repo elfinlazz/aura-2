@@ -66,7 +66,7 @@ public class NerysScript : NpcScript
 
 			case "@repair":
 				Msg("You can repair weapons, armor, and equipment here.<br/>I use expensive repair tools, so the fee is fairly high. Is that okay with you?<br/>I do make fewer mistakes because of that, though.<repair rate='95' stringid='(*/smith_repairable/*)' />");
-				
+
 				while (true)
 				{
 					var repair = await Select();
@@ -113,16 +113,16 @@ public class NerysScript : NpcScript
 
 			case "@upgrade":
 				Msg("Modification? Pick an item.<br/>I don't have to explain to you about<br/>the number of possible modification and the types, do I?<upgrade />");
-				
-				while(true)
+
+				while (true)
 				{
 					var reply = await Select();
-					
-					if(!reply.StartsWith("@upgrade:"))
+
+					if (!reply.StartsWith("@upgrade:"))
 						break;
-						
+
 					var result = Upgrade(reply);
-					if(result.Success)
+					if (result.Success)
 						Msg("The modification you've asked for has been done.<br/>Is there anything you want to modify?");
 					else
 						Msg("(Error)");
@@ -131,7 +131,7 @@ public class NerysScript : NpcScript
 				Msg("Is that all for today?<br/>Well, come back anytime you need me.<upgrade hide='true'/>");
 				break;
 		}
-		
+
 		End("Thank you, <npcname/>. I'll see you later!");
 	}
 

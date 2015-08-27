@@ -21,7 +21,7 @@ public class AusteynScript : NpcScript
 
 		AddGreeting(0, "Welcome. It must have been a long journey for you. Your legs must be hurting.");
 		AddGreeting(1, "You seem familiar. Have we met before?");
-        
+
 		AddPhrase("*Doze off*");
 		AddPhrase("*Yawn*");
 		AddPhrase("Ah... How boring...");
@@ -37,7 +37,7 @@ public class AusteynScript : NpcScript
 	}
 
 	protected override async Task Talk()
-	{	
+	{
 		SetBgm("NPC_Austeyn.mp3");
 
 		await Intro(
@@ -62,10 +62,10 @@ public class AusteynScript : NpcScript
 				Msg("Do you want to redeem your coupon?<br/>Then please give me the number of the coupon you want to redeem.<br/>Slowly, one digit at a time.", Input("Coupon Exchange", "Enter Coupon Number"));
 				var input = await Select();
 
-				if(input == "@cancel")
+				if (input == "@cancel")
 					return;
 
-				if(!RedeemCoupon(input))
+				if (!RedeemCoupon(input))
 				{
 					Msg("Strange coupon number.<br/>Are you sure that's the right number?<br/>Think about it one more time... carefully.");
 				}
@@ -90,7 +90,7 @@ public class AusteynScript : NpcScript
 				OpenShop("AusteynShop");
 				return;
 		}
-		
+
 		End("Thank you, <npcname/>. I'll see you later!");
 	}
 

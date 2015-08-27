@@ -22,7 +22,7 @@ public class JeniferScript : NpcScript
 
 		AddGreeting(0, "Welcome to the Bangor Pub. Are you a first-time visitor?");
 		AddGreeting(0, "I think I've met you once before... You name is... <username/>, am I right?");
-        
+
 		AddPhrase("Ah, I'm so bored...");
 		AddPhrase("Ah. What an unbelievably beautiful weather...");
 		AddPhrase("I could never keep this place clean... It always gets dirty.");
@@ -132,7 +132,7 @@ public class JeniferScript : NpcScript
 			case "skill_rest":
 				Msg("...Why don't you use it at this Pub? Tee hee.");
 				break;
-				
+
 			case "skill_instrument":
 				Msg("It's a romantic skill.");
 				Msg("You can easily pick it up<br/>as long as you have an instrument...");

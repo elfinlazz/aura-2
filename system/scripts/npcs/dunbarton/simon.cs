@@ -59,7 +59,7 @@ public class SimonScript : NpcScript
 				Msg("Hmm. Take your time to look around.");
 				OpenShop("SimonShop");
 				return;
-				
+
 			case "@repair":
 				Msg("Want to mend your clothes?<br/>Rest assured, I am the best this kingdom has to offer. I never make mistakes.<br/>Because of that, I charge a higher repair fee.<br/>If you can stomach a cheap repair, go find someone else. I only work with top quality.<repair rate='98' stringid='(*/cloth/*)|(*/glove/*)|(*/bracelet/*)|(*/shoes/*)|(*/headgear/*)|(*/robe/*)|(*/headband/*)' />");
 
@@ -104,21 +104,21 @@ public class SimonScript : NpcScript
 					}
 				}
 
-				Msg("No more?<br/>Then, bye!<repair hide='true'/>"); 
+				Msg("No more?<br/>Then, bye!<repair hide='true'/>");
 				break;
-				
+
 			case "@upgrade":
 				Msg("Hmm... You want to modify your clothes? Like custom-made?<br/>Well, show me what you want modified. I'll make sure it fits you like a glove.<br/>But, you know that once I modify it, no one else can wear it anymore, right?<upgrade />");
-				
-				while(true)
+
+				while (true)
 				{
 					var reply = await Select();
-					
-					if(!reply.StartsWith("@upgrade:"))
+
+					if (!reply.StartsWith("@upgrade:"))
 						break;
-						
+
 					var result = Upgrade(reply);
-					if(result.Success)
+					if (result.Success)
 						Msg("Modification done.<br/>Anything else you want modified?");
 					else
 						Msg("(Error)");
@@ -126,7 +126,7 @@ public class SimonScript : NpcScript
 
 				break;
 		}
-		
+
 		End("Thank you, <npcname/>. I'll see you later!");
 	}
 
@@ -154,7 +154,7 @@ public class SimonScript : NpcScript
 				Msg("Aeira at the Bookstore seems to be very interested in music.<br/>If you happen to be interested in music, be nice to her.<br/>She'll give you something good if you become friends.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
-			
+
 			case "about_arbeit":
 				Msg("Unimplemented");
 				// "Do you have any experience in this line of work?<br/>The path of a designer is long and challenging.<br/>If you're feeling confident enough, though, I can entrust you with the work.<br/>
@@ -219,7 +219,7 @@ public class SimonScript : NpcScript
 			case "skill_magnum_shot":
 				Msg("Well, I can't stand that sort of barbaric skill.");
 				break;
-			
+
 			case "skill_counter_attack":
 				Msg("Can't you talk about a more civilized<br/>topic with me?");
 				break;
@@ -236,7 +236,7 @@ public class SimonScript : NpcScript
 			case "farmland":
 				Msg("It's all farmlands around this town.<br/>I guess you haven't been there yet, have you?<br/>There has been a crisis because of rats.");
 				break;
-				
+
 			case "shop_headman":
 				Msg("There's a chief in this town?<br/>I've lived here for a while now,<br/>but that's news to me.");
 				break;
@@ -248,11 +248,11 @@ public class SimonScript : NpcScript
 			case "school":
 				Msg("The School is over there.<br/>Go to the opposite side of the town.<br/>Talk to Stewart or Aranwen and you'll pick up some useful information.");
 				break;
-                
+
 			case "skill_windmill":
 				Msg("Even the name of that skill sounds barbaric.<br/>Ask someone else about it.");
 				break;
-				
+
 			case "shop_restaurant":
 				Msg("The Restaurant? You mean Glenis' place?<br/>It's just over there, too.<br/>Well, I don't have anything to say about that place in particular.");
 				break;
@@ -290,9 +290,9 @@ public class SimonScript : NpcScript
 	}
 }
 
-public class SimonShop : NpcShopScript 
+public class SimonShop : NpcShopScript
 {
-	public override void Setup() 
+	public override void Setup()
 	{
 		Add("Robes", 19003); // Tri-color Robe
 		Add("Robes", 19003); // Tri-color Robe

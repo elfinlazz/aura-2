@@ -15,15 +15,15 @@ public class SpiritSwordFScript : NpcScript
 
 	protected override async Task Talk()
 	{
-		while(true)
+		while (true)
 		{
 			Msg("How are you doing?", Button("Talk", "@talk"), Button("Give Item", "@feed_item"), Button("Repair", "@repair"), Button("Finish Conversation", "@endconvo"));
 			var reply = await Select();
-			
-			if(reply == "@endconvo")
+
+			if (reply == "@endconvo")
 				break;
-			
-			if(reply == "@talk")
+
+			if (reply == "@talk")
 			{
 				Msg(Expression("normal"), "...Alright, what do you want to know?");
 				await Conversation();
@@ -34,14 +34,14 @@ public class SpiritSwordFScript : NpcScript
 				Msg("(Unimplemented)");
 			}
 		}
-		
-		switch(Random(2))
+
+		switch (Random(2))
 		{
 			case 0: Msg(Expression("good"), "See you another time."); break;
 			case 1: Msg(Expression("good"), "Then I'll see you later."); break;
 		}
 	}
-	
+
 	protected override async Task Keywords(string keyword)
 	{
 		switch (keyword)
@@ -57,9 +57,9 @@ public class SpiritSwordFScript : NpcScript
 				// Msg("<face name='despair'/>Let's talk about something else.<br/>That was boring.");
 				// Msg("<face name='bad2'/>I'm furious!");
 				// Msg("<face name='normal'/>Hey, <username/>! Why do you want to ask me that right now?<br/>What a stupid Human! *tsk*");
-				
+
 				Msg(Expression("despair"), "Huh? Why are you interested in that?");
-				
+
 				break;
 		}
 	}

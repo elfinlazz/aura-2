@@ -27,21 +27,21 @@ public class MalcolmBaseScript : NpcScript
 		AddPhrase("I wonder what Nora is doing now...");
 		AddPhrase("These travelers will buy something sooner or later.");
 	}
-	
+
 	protected override async Task Talk()
 	{
 		SetBgm("NPC_Malcolm.mp3");
-	
+
 		await Intro(
 			"While his thin face makes him look weak,",
 			"and his soft and delicate hands seem much too feminine,",
 			"his cool long blonde hair gives him a suave look.",
 			"He looks like he just came out of a workshop since he's wearing a heavy leather apron."
 		);
-		
+
 		Msg("What can I do for you?", Button("Start a Conversation", "@talk"), Button("Shop", "@shop"), Button("Repair Item", "@repair"));
-		
-		switch(await Select())
+
+		switch (await Select())
 		{
 			case "@talk":
 				//Msg("Welcome to the General Shop. This must be your first visit here.");
@@ -51,12 +51,12 @@ public class MalcolmBaseScript : NpcScript
 				//Alternate messages as you talk to him more? Apparently it logs your visits at least to this shop
 				await StartConversation();
 				break;
-				
+
 			case "@shop":
 				Msg("Welcome to Malcolm's General Shop.<br/>Look around as much as you wish. Clothes, accessories and other goods are in stock.");
 				OpenShop("MalcolmShop");
 				return;
-				
+
 			case "@repair":
 				Msg("What item do you want to repair?<br/>You can repair various items such as Music Instruments and Glasses.");
 				Msg("(Unimplemented)");
@@ -64,10 +64,10 @@ public class MalcolmBaseScript : NpcScript
 				//Msg("Let me give you a tip.<br/>If you bless your item with Holy Water of Lymilark,<br/>you can reduce abrasion which means your item will wear off more slowly over time.");
 				break;
 		}
-		
+
 		End("Goodbye, Malcolm. I'll see you later!");
 	}
-	
+
 	protected override async Task Keywords(string keyword)
 	{
 		switch (keyword)

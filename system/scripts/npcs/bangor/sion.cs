@@ -25,7 +25,7 @@ public class SionScript : NpcScript
 
 		AddGreeting(0, "You're not from this town, are you? I don't think I've seen you before.");
 		AddGreeting(1, "Oh! I remember you. We talked before, remember?");
-        
+
 		AddPhrase("Dad should be coming any minute now...");
 		AddPhrase("I want to grow up quickly and be an adult soon.");
 		AddPhrase("I wonder what's for dinner. *Gulp*");
@@ -64,7 +64,7 @@ public class SionScript : NpcScript
 
 			case "@watermill":
 				Msg("Unimplemented");
-				
+
 				/*Msg("Do you want to use the furnace?<br/>You can use it for 1 minute with 100 Gold,<br/>and for 5 minutes with 450 Gold.");
 				Msg("Hehe... It uses firewood, water, and other things...<br/>so I'm sorry but I have to charge you or I lose money.<br/>However, anyone can use it when it's running.", Button("1 Minute", "@1minute"), Button("5 Minutes", "@5minute"), Button("Forget It", "@quit"));
 				

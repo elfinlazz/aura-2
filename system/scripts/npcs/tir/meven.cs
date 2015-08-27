@@ -22,30 +22,30 @@ public class MevenBaseScript : NpcScript
 		AddPhrase("Ah, I forgot I have some plowing to do.");
 		AddPhrase("...");
 	}
-	
+
 	protected override async Task Talk()
 	{
 		SetBgm("NPC_Meven.mp3");
-		
+
 		await Intro(
 			"Dressed in a robe, this composed man of moderate build maintains a very calm posture.",
 			"Every bit of his appearance and the air surrounding him show that he is unfailingly a man of the clergy.",
 			"Silvery hair frames his friendly face, and his gentle eyes suggest a rather quaint and quiet mood with flashes of hidden humor."
 		);
-		
+
 		Msg("Welcome to the Church of Lymilark.", Button("Start a Conversation", "@talk"));
-		
-		switch(await Select())
+
+		switch (await Select())
 		{
 			case "@talk":
 				Msg("It's nice to see you again.");
 				await StartConversation();
 				break;
 		}
-		
+
 		End("Goodbye Meven. I'll see you later!");
 	}
-	
+
 	protected override async Task Keywords(string keyword)
 	{
 		switch (keyword)
@@ -54,7 +54,7 @@ public class MevenBaseScript : NpcScript
 				Msg("I am Priest Meven.<br/>It's so nice to see someone cares for an old man.<br/>Ha ha.<br/>");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
-				
+
 			case "rumor":
 				GiveKeyword("shop_misc");
 				GiveKeyword("shop_grocery");
@@ -62,15 +62,15 @@ public class MevenBaseScript : NpcScript
 				Msg("The General Shop, Grocery Store and the Bank<br/>surround the Square of the town.<br/>A bit higher up the hill is the Chief's House.");
 				ModifyRelation(Random(2), 0, Random(2));
 				break;
-			
+
 			case "about_arbeit":
 				Msg("Hmmm...");
 				break;
-			
+
 			case "shop_misc":
 				Msg("I haven't been to the General Shop for a long time.<br/>I should go and see brother Malcolm someday.<br/>If you happen to pass by the Square,<br/>please give my regards to Malcolm, would you?");
 				break;
-			
+
 			case "shop_grocery":
 				Msg("I can smell something pleasantly appetizing<br/>at meal time from here.<br/>Caitin must be cooking at the Grocery Store up there.");
 				break;
@@ -88,7 +88,7 @@ public class MevenBaseScript : NpcScript
 			case "shop_bank":
 				Msg("It looks like the Bank needs some help these days.<br/>It is not in full operation yet, I'm afraid.<br/>And yet, Bebhinn is trying to handle everything at the Bank all by herself. She's just that stubborn sometimes.<p/>Anyway, it is not for me to decide...<br/>Ah, have you been there? It's just up there.");
 				break;
-				
+
 			case "shop_smith":
 				Msg("That's right, I just remembered I broke my Pickaxe.<br/>I forgot to take it to the Blacksmith's Shop again.");
 				break;
@@ -100,7 +100,7 @@ public class MevenBaseScript : NpcScript
 			case "skill_composing":
 				Msg("Do you want to know about the Composing skill?<br/>Priestess Endelyon is excellent at playing instruments.<br/>She would probably know about writing songs too.<p/>It sounds as if I'm making her<br/>take care of everything.");
 				break;
-				
+
 			case "skill_range":
 				GiveKeyword("bow");
 				Msg("As far as I know, you need a bow before anything else<br/>to attack an enemy from a distance.<br/>You could perhaps learn magic or something<br/>for the same purpose, but<p/>magic requires AP to learn and books are also costly.<br/>So if it's just the long range attack you're interested in,<br/>I suggest you buy a bow and practice on your own.<br/>It would take less time and Gold in the end.");
@@ -211,7 +211,7 @@ public class MevenBaseScript : NpcScript
 			case "musicsheet":
 				Msg("A Music Score? Well...<br/>I think it's better to talk to Priestess Endelyon<br/>if it's music you're interested in.<br/>Much better than an old man like me.<p/>Why don't you go and ask her? She's just right there.<br/>Priestess Endelyon may not look so easy to talk to.<br/>But, she's a kind person.<br/>She will be a great help to you.");
 				break;
-				
+
 			default:
 				RndMsg(
 					"I am sorry, but ignorance is not a sin.",

@@ -108,16 +108,16 @@ public class StewartScript : NpcScript
 
 			case "@upgrade":
 				Msg("You want to upgrade something?<br/>First, let me see the item.<br/>Remember that the amount and type of upgrade varies with each item.<upgrade />");
-				
-				while(true)
+
+				while (true)
 				{
 					var reply = await Select();
-					
-					if(!reply.StartsWith("@upgrade:"))
+
+					if (!reply.StartsWith("@upgrade:"))
 						break;
-						
+
 					var result = Upgrade(reply);
-					if(result.Success)
+					if (result.Success)
 						Msg("Haha, the upgrade was successful.<br/>Do you have anything else to upgrade?");
 					else
 						Msg("(Error)");
