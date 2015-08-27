@@ -1500,9 +1500,9 @@ namespace Aura.Channel.Scripting.Scripts
 			{
 				var useRate = rate;
 
-				// Holy Water (+1%?)
+				// Holy Water
 				if (result.Item.IsBlessed)
-					useRate += 1;
+					useRate = 100 - ((100 - useRate) / 2);
 
 				// Success
 				if (this.Random(100) < useRate)
